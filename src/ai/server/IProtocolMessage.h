@@ -1,0 +1,261 @@
+#pragma once
+#include "Network.h"
+
+#include <stdint.h>
+#include <stddef.h>
+#include <limits.h>
+#include <string>
+#define AI_LIL_ENDIAN  1234
+#define AI_BIG_ENDIAN  4321
+#ifdef __linux__
+#include <endian.h>
+#define AI_BYTEORDER  __BYTE_ORDER
+#else
+#define AI_BYTEORDER   AI_LIL_ENDIAN
+#endif
+
+#if AI_BYTEORDER == AI_LIL_ENDIAN
+#define AI_SwapLE16(X) (X)
+#define AI_SwapLE32(X) (X)
+#define AI_SwapLE64(X) (X)
+#define AI_SwapBE16(X) AI_Swap16(X)
+#define AI_SwapBE32(X) AI_Swap32(X)
+#define AI_SwapBE64(X) AI_Swap64(X)
+#else
+#define AI_SwapLE16(X) AI_Swap16(X)
+#define AI_SwapLE32(X) AI_Swap32(X)
+#define AI_SwapLE64(X) AI_Swap64(X)
+#define AI_SwapBE16(X) (X)
+#define AI_SwapBE32(X) (X)
+#define AI_SwapBE64(X) (X)
+#endif
+
+namespace ai {
+
+typedef int ProtocolId;
+
+extern const ProtocolId PROTO_STATE;
+extern const ProtocolId PROTO_CHARACTER_DETAILS;
+extern const ProtocolId PROTO_SELECT;
+
+class IProtocolMessage {
+private:
+#if defined(__GNUC__) && defined(__i386__)
+	inline uint16_t AI_Swap16(uint16_t x) {
+		__asm__("xchgb %b0,%h0": "=q"(x):"0"(x));
+		return x;
+	}
+#elif defined(__GNUC__) && defined(__x86_64__)
+	inline uint16_t AI_Swap16(uint16_t x) {
+		__asm__("xchgb %b0,%h0": "=Q"(x):"0"(x));
+		return x;
+	}
+#else
+	inline uint16_t AI_Swap16(uint16_t x)
+	{
+		return static_cast<uint16_t>((x << 8) | (x >> 8));
+	}
+#endif
+
+#if defined(__GNUC__) && defined(__i386__)
+	inline uint32_t AI_Swap32(uint32_t x) {
+		__asm__("bswap %0": "=r"(x):"0"(x));
+		return x;
+	}
+#elif defined(__GNUC__) && defined(__x86_64__)
+	inline uint32_t AI_Swap32(uint32_t x) {
+		__asm__("bswapl %0": "=r"(x):"0"(x));
+		return x;
+	}
+#else
+	inline uint32_t AI_Swap32(uint32_t x)
+	{
+		return static_cast<uint32_t>((x << 24) | ((x << 8) & 0x00FF0000) | ((x >> 8) & 0x0000FF00) | (x >> 24));
+	}
+#endif
+
+#if defined(__GNUC__) && defined(__i386__)
+	inline uint64_t AI_Swap64(uint64_t x) {
+		union {
+			struct {
+				uint32_t a, b;
+			}s;
+			uint64_t u;
+		}v;
+		v.u = x;
+		__asm__("bswapl %0 ; bswapl %1 ; xchgl %0,%1": "=r"(v.s.a), "=r"(v.s.b):"0"(v.s.a), "1"(v.s. b));
+		return v.u;
+	}
+#elif defined(__GNUC__) && defined(__x86_64__)
+	inline uint64_t AI_Swap64(uint64_t x) {
+		__asm__("bswapq %0": "=r"(x):"0"(x));
+		return x;
+	}
+#else
+	inline uint64_t AI_Swap64(uint64_t x) {
+		/* Separate into high and low 32-bit values and swap them */
+		const uint32_t lo = static_cast<uint32_t>(x & 0xFFFFFFFF);
+		x >>= 32;
+		const uint32_t hi = static_cast<uint32_t>(x & 0xFFFFFFFF);
+		x = AI_Swap32(lo);
+		x <<= 32;
+		x |= AI_Swap32(hi);
+		return x;
+	}
+#endif
+
+protected:
+	const ProtocolId& _id;
+
+	void addByte(streamContainer& out, uint8_t byte) const;
+	void addBool(streamContainer& out, bool value) const;
+	void addShort(streamContainer& out, int16_t word) const;
+	void addInt(streamContainer& out, int32_t dword) const;
+	void addLong(streamContainer& out, int64_t dword) const;
+	void addFloat(streamContainer& out, float value) const;
+	void addString(streamContainer& out, const std::string& string) const;
+
+	bool readBool(streamContainer& in) const;
+	uint8_t readByte(streamContainer& in) const;
+	int16_t readShort(streamContainer& in) const;
+	int32_t readInt(streamContainer& in) const;
+	int64_t readLong(streamContainer& in) const;
+	float readFloat(streamContainer& in) const;
+	std::string readString(streamContainer& in) const;
+
+public:
+	IProtocolMessage(const ProtocolId& id) :
+			_id(id) {
+	}
+
+	virtual ~IProtocolMessage() {
+	}
+
+	inline const ProtocolId& getId() const {
+		return _id;
+	}
+
+	virtual void serialize(streamContainer& out) const = 0;
+};
+
+inline void IProtocolMessage::addByte(streamContainer& out, uint8_t byte) const {
+	out.push_back(byte);
+}
+
+inline void IProtocolMessage::addBool(streamContainer& out, bool value) const {
+	out.push_back(value);
+}
+
+inline bool IProtocolMessage::readBool(streamContainer& in) const {
+	return readByte(in) == 1;
+}
+
+inline uint8_t IProtocolMessage::readByte(streamContainer& in) const {
+	const uint8_t b = in.front();
+	in.pop_front();
+	return b;
+}
+
+inline void IProtocolMessage::addFloat(streamContainer& out, float value) const {
+	union toint {
+		float f;
+		uint32_t i;
+	} tmp;
+	tmp.f = value;
+	addInt(out, tmp.i);
+}
+
+inline float IProtocolMessage::readFloat(streamContainer& in) const {
+	union toint {
+		float f;
+		uint32_t i;
+	} tmp;
+	tmp.i = readInt(in);
+	return tmp.f;
+}
+
+inline std::string IProtocolMessage::readString(streamContainer& in) const {
+	std::string strbuff;
+	strbuff.reserve(64);
+	for (;;) {
+		const char chr = in.front();
+		in.pop_front();
+		if (chr == '\0')
+			break;
+		strbuff += chr;
+	}
+	return strbuff;
+}
+
+inline void IProtocolMessage::addString(streamContainer& out, const std::string& string) const {
+	const int length = string.length();
+	for (int i = 0; i < length; i++) {
+		out.push_back(uint8_t(string[i]));
+	}
+	out.push_back(uint8_t('\0'));
+}
+
+inline void IProtocolMessage::addShort(streamContainer& out, int16_t word) const {
+	const int16_t swappedWord = AI_SwapLE16(word);
+	out.push_back(uint8_t(swappedWord));
+	out.push_back(uint8_t(swappedWord >> CHAR_BIT));
+}
+
+inline void IProtocolMessage::addInt(streamContainer& out, int32_t dword) const {
+	int32_t swappedDWord = AI_SwapLE32(dword);
+	out.push_back(uint8_t(swappedDWord));
+	out.push_back(uint8_t(swappedDWord >>= CHAR_BIT));
+	out.push_back(uint8_t(swappedDWord >>= CHAR_BIT));
+	out.push_back(uint8_t(swappedDWord >> CHAR_BIT));
+}
+
+inline void IProtocolMessage::addLong(streamContainer& out, int64_t dword) const {
+	int64_t swappedDWord = AI_SwapLE64(dword);
+	out.push_back(uint8_t(swappedDWord));
+	out.push_back(uint8_t(swappedDWord >>= CHAR_BIT));
+	out.push_back(uint8_t(swappedDWord >>= CHAR_BIT));
+	out.push_back(uint8_t(swappedDWord >>= CHAR_BIT));
+	out.push_back(uint8_t(swappedDWord >>= CHAR_BIT));
+	out.push_back(uint8_t(swappedDWord >>= CHAR_BIT));
+	out.push_back(uint8_t(swappedDWord >>= CHAR_BIT));
+	out.push_back(uint8_t(swappedDWord >> CHAR_BIT));
+}
+
+inline int16_t IProtocolMessage::readShort(streamContainer& in) const {
+	char buf[2];
+	const int l = sizeof(buf);
+	for (int i = 0; i < l; ++i) {
+		buf[i] = in.front();
+		in.pop_front();
+	}
+	in.pop_front();
+	const int16_t *word = (const int16_t*) (void*) &buf;
+	const int16_t val = AI_SwapLE16(*word);
+	return val;
+}
+
+inline int32_t IProtocolMessage::readInt(streamContainer& in) const {
+	char buf[4];
+	const int l = sizeof(buf);
+	for (int i = 0; i < l; ++i) {
+		buf[i] = in.front();
+		in.pop_front();
+	}
+	const int32_t *word = (const int32_t*) (void*) &buf;
+	const int32_t val = AI_SwapLE32(*word);
+	return val;
+}
+
+inline int64_t IProtocolMessage::readLong(streamContainer& in) const {
+	char buf[8];
+	const int l = sizeof(buf);
+	for (int i = 0; i < l; ++i) {
+		buf[i] = in.front();
+		in.pop_front();
+	}
+	const int64_t *word = (const int64_t*) (void*) &buf;
+	const int64_t val = AI_SwapLE64(*word);
+	return val;
+}
+
+}

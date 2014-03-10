@@ -1,0 +1,58 @@
+#pragma once
+
+#include <vector>
+#include <aggro/Entry.h>
+
+namespace ai {
+
+class AI;
+
+class AggroMgr {
+public:
+	typedef std::vector<EntryPtr> Entries;
+protected:
+	Entries _entries;
+
+	long _lastUpdateTime;
+
+	/**
+	 * @brief Remove the entries from the list that have no aggro left.
+	 * This list is ordered, so we will only remove the last X elements.
+	 */
+	void cleanupList();
+public:
+	AggroMgr();
+	virtual ~AggroMgr();
+
+	/**
+	 * @brief this will update the aggro list according to the reduction type of an entry.
+	 * @param[in] currentMillis The current milliseconds to use to update the aggro value of the entries.
+	 */
+	void update(long currentMillis);
+
+	/**
+	 * @brief will increase the aggro
+	 * @param[in,out] entity The entity to increase the aggro against
+	 * @param[in] amount The amount to increase the aggro for
+	 */
+	void addAggro(AI& entity, float amount);
+
+	/**
+	 * @return All the aggro entries
+	 */
+	const Entries& getEntries() const {
+		return _entries;
+	}
+
+	/**
+	 * @brief Get the entry with the highest aggro value.
+	 */
+	EntryPtr getHighestEntry() const {
+		if (_entries.empty())
+			return EntryPtr();
+
+		return _entries[0];
+	}
+};
+
+}

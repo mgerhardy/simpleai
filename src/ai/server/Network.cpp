@@ -1,0 +1,219 @@
+#include "Network.h"
+#include <iostream>
+#include "IProtocolMessage.h"
+#include "IProtocolHandler.h"
+#include "ProtocolHandlerRegistry.h"
+#include "ProtocolMessageFactory.h"
+#ifdef WIN32
+#define cleanup() WSACleanup()
+#else
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/ioctl.h>
+#include <sys/time.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <netinet/in.h>
+#include <netinet/tcp.h>
+#include <sys/socket.h>
+#include <net/if.h>
+#include <netdb.h>
+#include <signal.h>
+#define closesocket close
+#define INVALID_SOCKET  -1
+#define SOCKET_ERROR    -1
+#define cleanup()
+#endif
+#include <string.h>
+#include <deque>
+
+namespace ai {
+
+Network::Network(int port, const std::string& hostname) :
+		_port(port), _hostname(hostname), _socketFD(INVALID_SOCKET), _maxFD(0) {
+	FD_ZERO(&_readFDSet);
+	FD_ZERO(&_writeFDSet);
+}
+
+Network::~Network() {
+	closesocket(_socketFD);
+	cleanup();
+}
+
+bool Network::start() {
+#ifdef WIN32
+	WSADATA wsaData;
+	const int wsaResult = WSAStartup(MAKEWORD(2,2), &wsaData);
+	if (wsaResult != NO_ERROR) {
+		return false;
+	}
+#else
+	signal(SIGPIPE, SIG_IGN);
+#endif
+
+	FD_ZERO(&_readFDSet);
+	FD_ZERO(&_writeFDSet);
+
+	_socketFD = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if (_socketFD == INVALID_SOCKET) {
+		cleanup();
+		return false;
+	}
+	struct sockaddr_in sin;
+	memset(&sin, 0, sizeof(sin));
+	sin.sin_family = AF_INET;
+	sin.sin_addr.s_addr = INADDR_ANY;
+	sin.sin_port = htons(_port);
+
+	int t = 1;
+#ifdef _WIN32
+	if (setsockopt(_socketFD, SOL_SOCKET, SO_REUSEADDR, (char*) &t, sizeof(t)) != 0) {
+#else
+	if (setsockopt(_socketFD, SOL_SOCKET, SO_REUSEADDR, &t, sizeof(t)) != 0) {
+#endif
+		closesocket(_socketFD);
+		return false;
+	}
+
+	if (bind(_socketFD, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
+		// Handle the error.
+		cleanup();
+		FD_CLR(_socketFD, &_readFDSet);
+		FD_CLR(_socketFD, &_writeFDSet);
+		closesocket(_socketFD);
+		_socketFD = INVALID_SOCKET;
+		return false;
+	}
+
+	if (listen(_socketFD, 5) < 0) {
+		// Handle the error.
+		cleanup();
+		closesocket(_socketFD);
+		_socketFD = INVALID_SOCKET;
+		return false;
+	}
+
+#ifdef O_NONBLOCK
+	fcntl(_socketFD, F_SETFL, O_NONBLOCK);
+#endif
+#ifdef WIN32
+	unsigned long mode = 1;
+	ioctlsocket(_socketFD, FIONBIO, &mode);
+#endif
+
+	_maxFD = std::max(_socketFD + 1, _maxFD);
+	FD_SET(_socketFD, &_readFDSet);
+
+	return true;
+}
+
+Network::ClientSocketsIter Network::closeClient(ClientSocketsIter& i) {
+	const SOCKET clientSocket = i->socket;
+	FD_CLR(clientSocket, &_readFDSet);
+	FD_CLR(clientSocket, &_writeFDSet);
+	closesocket(clientSocket);
+	i->socket = INVALID_SOCKET;
+	std::cout << "close connection" << std::endl << std::flush;
+	return _clientSockets.erase(i);
+}
+
+void Network::update(uint32_t deltaTime) {
+	fd_set readFDsOut;
+	fd_set writeFDsOut;
+
+	memcpy(&readFDsOut, &_readFDSet, sizeof(readFDsOut));
+	memcpy(&writeFDsOut, &_writeFDSet, sizeof(writeFDsOut));
+
+	struct timeval tv;
+	const int timeout = 10;
+	tv.tv_sec = timeout / 1000;
+	tv.tv_usec = 1000 * (timeout % 1000);
+	const int ready = select(_maxFD, &readFDsOut, &writeFDsOut, nullptr, &tv);
+	if (ready < 0) {
+		return;
+	}
+	if (_socketFD != INVALID_SOCKET && FD_ISSET(_socketFD, &readFDsOut)) {
+		const SOCKET clientSocket = accept(_socketFD, nullptr, 0);
+		if (clientSocket != INVALID_SOCKET) {
+			_maxFD = std::max(clientSocket + 1, _maxFD);
+			FD_SET(clientSocket, &_readFDSet);
+			_clientSockets.push_back(Client(clientSocket));
+			std::cout << "new connection" << std::endl << std::flush;
+		}
+	}
+
+	ClientId clientId = 0;
+	for (ClientSocketsIter i = _clientSockets.begin(); i != _clientSockets.end(); ++clientId) {
+		Client& client = *i;
+		const SOCKET clientSocket = client.socket;
+		if (clientSocket == INVALID_SOCKET) {
+			++i;
+			continue;
+		}
+
+		if (FD_ISSET(clientSocket, &writeFDsOut)) {
+			if (!client.out.empty()) {
+				char buf[4096];
+				int len = std::min(sizeof(buf), client.out.size());
+				for (int n = 0; n < len; ++n) {
+					buf[n] = client.out.at(n);
+				}
+				len = send(clientSocket, buf, len, 0);
+				if (len < 0) {
+					i = closeClient(i);
+					continue;
+				}
+				for (int n = 0; n < len; ++n) {
+					client.out.pop_front();
+				}
+			} else if (client.finished) {
+				i = closeClient(i);
+				continue;
+			}
+		}
+
+		if (FD_ISSET(clientSocket, &readFDsOut)) {
+			char buf[4096];
+			const int len = recv(clientSocket, buf, sizeof(buf), 0);
+			if (len < 0) {
+				i = closeClient(i);
+				continue;
+			}
+			for (int n = 0; n < len; ++n) {
+				client.in.push_back(buf[n]);
+			}
+			++i;
+			continue;
+		}
+
+		if (client.in.empty()) {
+			++i;
+			continue;
+		}
+
+		IProtocolMessage* msg = ProtocolMessageFactory::get().create(client.in);
+		if (msg != nullptr) {
+			IProtocolHandler* handler = ProtocolHandlerRegistry::get().getHandler(*msg);
+			if (handler != nullptr)
+				handler->execute(clientId, *msg);
+			delete msg;
+		} else {
+			i = closeClient(i);
+			continue;
+		}
+		++i;
+	}
+}
+
+void Network::broadcast(const IProtocolMessage& msg) {
+	for (ClientSocketsIter i = _clientSockets.begin(); i != _clientSockets.end(); ++i) {
+		Client& client = *i;
+		msg.serialize(client.out);
+		if (client.socket != INVALID_SOCKET)
+			FD_SET(client.socket, &_writeFDSet);
+		else
+			i = closeClient(i);
+	}
+}
+
+}

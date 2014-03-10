@@ -1,13 +1,37 @@
-# Compiled Object files
-*.slo
-*.lo
+# Object files
 *.o
 
-# Compiled Dynamic libraries
+# Libraries
+*.lib
+*.a
+*.lo
+*.la
+
+# Shared objects (inc. Windows DLLs)
+*.dll
 *.so
+*.so.*
 *.dylib
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+# Executables
+*.exe
+*.out
+*.app
+
+# Eclipse project files
+/Debug
+
+.deps
+.libs
+
+/aclocal.m4
+/configure
+/autom4te.cache
+Makefile.in
+Makefile
+/config.log
+/config.status
+/libsimpleai.pc
+/libtool
+
+*~

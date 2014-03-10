@@ -1,0 +1,5 @@
+/config.*
+/*sh
+/*.log
+/depcomp
+/missing
