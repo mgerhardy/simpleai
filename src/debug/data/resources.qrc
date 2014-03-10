@@ -1,0 +1,8 @@
+<RCC>
+	<qresource prefix="/">
+		<file>images/splash.png</file>
+	</qresource>
+</RCC>
+<!--
+for i in $(find images/ -type f | sort); do echo "<file>$i</file>"; done
+-->

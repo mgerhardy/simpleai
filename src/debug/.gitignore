@@ -1,0 +1,12 @@
+/simpleai-debugger
+/Makefile
+/*.pro.user
+/.moc
+/.obj
+/.rcc
+/*_plugin_import.cpp
+/release
+/*.Debug
+/*.Release
+/debug
+/.settings
