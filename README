@@ -7,3 +7,4 @@ Features:
 * LUA script interface to create the trees - but every other data source
   is possible, too
 * Network based remote debugging
+* QT5 based remote debugger
