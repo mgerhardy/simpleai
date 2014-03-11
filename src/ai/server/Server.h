@@ -30,6 +30,7 @@ public:
 
 	// call then when you spawn a new @code AI that should be traceable via the debug viewer
 	bool addAI(AI& ai);
+	bool removeAI(AI& ai);
 	// call this to update the server - should get called somewhere from your game tick
 	void update(uint32_t deltaTime);
 };

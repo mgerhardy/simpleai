@@ -1,4 +1,6 @@
 #include "AIDebuggerWindow.h"
+#include "AIDebugger.h"
+#include "MapView.h"
 #include "ConnectDialog.h"
 #include <AI.h>
 #include <QMenuBar>
@@ -65,11 +67,7 @@ QWidget *AIDebuggerWindow::createBottomWidget() {
 	QHBoxLayout *bottomLayout = new QHBoxLayout;
 
 	_nodeTree = new NodeTreeWidget(_debugger);
-	_nodeTree->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
 	_stateTable = new StateTable(_debugger);
-	_stateTable->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
-
 	bottomLayout->addWidget(_nodeTree);
 	bottomLayout->addWidget(_stateTable);
 	bottomWidget->setLayout(bottomLayout);
@@ -80,7 +78,7 @@ void AIDebuggerWindow::connectToAIServer() {
 	ConnectDialog d;
 	const int state = d.run();
 	const short port = d.getPort();
-	const QString hostname = d.getHostname();
+	const QString& hostname = d.getHostname();
 	if (state == QDialog::Accepted && _debugger.connectToAIServer(hostname, port)) {
 		_statusBarLabel->setText(tr("connected to %1:%2").arg(hostname).arg(port));
 	} else {

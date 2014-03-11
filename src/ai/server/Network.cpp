@@ -26,6 +26,7 @@
 #endif
 #include <string.h>
 #include <deque>
+#include <algorithm>
 
 namespace ai {
 
@@ -193,8 +194,8 @@ void Network::update(uint32_t deltaTime) {
 
 		IProtocolMessage* msg = ProtocolMessageFactory::get().create(client.in);
 		if (msg != nullptr) {
-			IProtocolHandler* handler = ProtocolHandlerRegistry::get().getHandler(*msg);
-			if (handler != nullptr)
+			ProtocolHandlerPtr handler = ProtocolHandlerRegistry::get().getHandler(*msg);
+			if (handler)
 				handler->execute(clientId, *msg);
 			delete msg;
 		} else {
@@ -206,13 +207,18 @@ void Network::update(uint32_t deltaTime) {
 }
 
 void Network::broadcast(const IProtocolMessage& msg) {
+	streamContainer out;
+	msg.serialize(out);
 	for (ClientSocketsIter i = _clientSockets.begin(); i != _clientSockets.end(); ++i) {
 		Client& client = *i;
-		msg.serialize(client.out);
-		if (client.socket != INVALID_SOCKET)
-			FD_SET(client.socket, &_writeFDSet);
-		else
+		if (client.socket == INVALID_SOCKET) {
 			i = closeClient(i);
+			continue;
+		}
+
+		IProtocolMessage::addInt(client.out, (int)out.size());
+		std::copy(out.begin(), out.end(), std::back_inserter(client.out));
+		FD_SET(client.socket, &_writeFDSet);
 	}
 }
 

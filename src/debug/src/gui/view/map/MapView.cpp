@@ -1,6 +1,7 @@
 #include "MapView.h"
 #include "AIDebugger.h"
 #include "MapScene.h"
+#include "MapItem.h"
 
 namespace ai {
 namespace debug {
@@ -8,7 +9,7 @@ namespace debug {
 MapView::MapView(AIDebugger& debugger) :
 		QGraphicsView(), _debugger(debugger) {
 	setRenderHints(QPainter::Antialiasing);
-
+	setInteractive(true);
 	_scene = new MapScene();
 	setScene(_scene);
 }
@@ -18,13 +19,11 @@ MapView::~MapView() {
 }
 
 void MapView::updateMapView() {
-	delete _scene;
-	_scene = new MapScene();
-	setScene(_scene);
-
+	_scene->clear();
 	const AIDebugger::Entities& e = _debugger.getEntities();
 	for (AIDebugger::EntitiesIter i = e.begin(); i != e.end(); ++i) {
-		_scene->addRect(0, 0, 10, 10);
+		MapItem* item = new MapItem(*i, _debugger);
+		_scene->addItem(item);
 	}
 
 	QWidget* viewPort = viewport();

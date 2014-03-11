@@ -11,25 +11,25 @@ Pathfinder::~Pathfinder() {
 }
 
 ai::MoveState Pathfinder::move(ai::AI& entity, const ai::AIPosition& to, std::list<ai::AIPosition>& route) {
-	ai::ICharacter& chr = entity.getCharacter();
-	ai::AIPosition pos = getRandomDirection(chr);
-	pos += chr.getPosition();
-	route.push_back(pos);
-	return ai::SUCCESSFUL;
-}
+	if (to.x() < 0 || to.y() < 0)
+		return ai::IMPOSSIBLE;
+	if (to.x() >= _width || to.y() >= _height)
+		return ai::IMPOSSIBLE;
 
-ai::AIPosition Pathfinder::getRandomDirection(ai::ICharacter& chr) {
-	const ai::AIPosition& pos = chr.getPosition();
-	ai::AIPosition move(3, 3);
-	if (pos.x() + move.x() < 0)
-		move.setX(0);
-	else if (pos.x() + move.x() >= _width)
-		move.setX(0);
-	if (pos.y() + move.y() < 0)
-		move.setY(0);
-	else if (pos.y() + move.y() >= _height)
-		move.setY(0);
-	return move;
+	ai::ICharacter& chr = entity.getCharacter();
+	ai::AIPosition pos = chr.getPosition();
+
+	while (pos != to) {
+		const float x = to.x() - pos.x() > 0.0f ? 1.0f : -1.0f;
+		const float y = to.y() - pos.y() > 0.0f ? 1.0f : -1.0f;
+		pos.setX(pos.x() + x);
+		pos.setY(pos.y() + y);
+
+		// plain 2d - no z
+		route.push_back(pos);
+	}
+
+	return ai::SUCCESSFUL;
 }
 
 }

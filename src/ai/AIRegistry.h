@@ -14,11 +14,12 @@ struct TreeNodeFactoryContext {
 };
 
 struct ConditionFactoryContext {
-	std::string name;
+	// Parameters for the condition - can get hand over to the ctor in your factory implementation.
 	std::string parameters;
+	// Some conditions have child conditions
 	Conditions conditions;
-	ConditionFactoryContext(const std::string& _name, const std::string& _parameters = "") :
-		name(_name), parameters(_parameters) {
+	ConditionFactoryContext(const std::string& _parameters = "") :
+		parameters(_parameters) {
 	}
 };
 
@@ -37,7 +38,7 @@ public:
 };
 
 /**
- * @brief The place to register your @c ITask and @c ICondition at
+ * @brief The place to register your @c TreeNode and @c ICondition at
  */
 class AIRegistry: public IAIFactory {
 protected:

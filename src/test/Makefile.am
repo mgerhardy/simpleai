@@ -5,6 +5,7 @@ tests_SOURCES = \
 	TestAll.cpp \
 	TestShared.cpp \
 	ParserTest.cpp \
+	GeneralTest.cpp \
 	AggroTest.cpp \
 	\
 	gtest/src/gtest.cc \

@@ -20,6 +20,8 @@ HEADERS += src/AIDebugger.h \
            src/gui/view/list/EntityList.h \
            src/gui/view/map/MapScene.h \
            src/gui/view/map/MapView.h \
+           src/gui/view/map/MapItem.h \
+           src/gui/view/tree/NodeTreeItem.h \
            src/gui/view/tree/NodeTreeWidget.h \
            src/gui/view/state/StateTable.h \
            src/gui/widget/IComboBox.h
@@ -32,6 +34,8 @@ SOURCES += src/Main.cpp \
            src/gui/view/list/EntityList.cpp \
            src/gui/view/map/MapScene.cpp \
            src/gui/view/map/MapView.cpp \
+           src/gui/view/map/MapItem.cpp \
+           src/gui/view/tree/NodeTreeItem.cpp \
            src/gui/view/tree/NodeTreeWidget.cpp \
            src/gui/view/state/StateTable.cpp \
            src/gui/widget/IComboBox.cpp

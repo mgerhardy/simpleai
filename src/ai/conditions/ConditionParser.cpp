@@ -21,14 +21,17 @@ bool ConditionParser::fillInnerConditions(ConditionFactoryContext& ctx, const st
 				return false;
 		}
 	} else {
-		const std::size_t n = conditionStr.find("(");
+		std::string parameters = getBetween(conditionStr, "{", "}");
+		std::size_t n = conditionStr.find("{");
+		if (n == std::string::npos)
+			n = conditionStr.find("(");
 		std::string name;
 		if (n != std::string::npos) {
 			name = conditionStr.substr(0, n);
 		} else {
 			name = conditionStr;
 		}
-		ConditionFactoryContext ctxInner(name);
+		ConditionFactoryContext ctxInner(parameters);
 		if (n != std::string::npos) {
 			const std::size_t r = conditionStr.rfind(")");
 			if (r == std::string::npos) {
@@ -60,7 +63,7 @@ ConditionPtr ConditionParser::getCondition() {
 	} else {
 		name = _conditionString;
 	}
-	ConditionFactoryContext ctx(name, parameters);
+	ConditionFactoryContext ctx(parameters);
 	if (n != std::string::npos) {
 		const std::size_t r = _conditionString.rfind(")");
 		if (r == std::string::npos) {

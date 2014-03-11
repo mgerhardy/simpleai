@@ -2,7 +2,6 @@
 
 #include <QGraphicsView>
 #include <AI.h>
-#include <server/AIStubTypes.h>
 
 namespace ai {
 namespace debug {
@@ -14,14 +13,12 @@ class MapView: public QGraphicsView {
 	Q_OBJECT
 private:
 	MapScene *_scene;
+	AIDebugger& _debugger;
 public:
 	MapView(AIDebugger& debugger);
 	virtual ~MapView();
 
 	void updateMapView();
-
-private:
-	AIDebugger& _debugger;
 };
 
 }

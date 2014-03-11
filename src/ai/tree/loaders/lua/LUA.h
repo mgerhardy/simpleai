@@ -27,7 +27,7 @@ private:
 	std::string _error;
 
 public:
-	LUA ();
+	LUA (bool debug = false);
 	~LUA ();
 
 	inline lua_State* getState () const;

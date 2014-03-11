@@ -10,7 +10,7 @@ protected:
 	int _width;
 	int _height;
 
-	ai::AIPosition getRandomDirection(ai::ICharacter& chr);
+	inline const ai::AIPosition& getRandomDirection() const;
 public:
 	Pathfinder(int width, int height);
 	virtual ~Pathfinder();

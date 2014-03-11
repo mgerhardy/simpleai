@@ -77,7 +77,12 @@ public:
 	}
 
 	inline bool operator ==(const AIPosition& other) const {
-		return _x == other._x && _y == other._y && _z == other._z;
+		const float epsilon = 0.00001f;
+		return ::fabs(_x - other._x) < epsilon && ::fabs(_y - other._y) < epsilon && ::fabs(_z - other._z) < epsilon;
+	}
+
+	inline bool operator !=(const AIPosition& other) const {
+		return !(operator ==(other));
 	}
 
 	inline float distance(const AIPosition& pos) const {

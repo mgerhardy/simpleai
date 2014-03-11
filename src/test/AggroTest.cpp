@@ -11,10 +11,11 @@ public:
 			ai::AI entity(chr, ai::TreeNodePtr(), _pathfinder);
 			mgr.addAggro(entity, i);
 			const ai::EntryPtr& entry = mgr.getHighestEntry();
-			entry->setReduceByValue(i);
 			ASSERT_TRUE(entry)<< "Highest entry not set but aggro was added";
 			ASSERT_EQ(id, entry->getEntity().getCharacter().getId())<< "Highest entry not what it should be";
+			entry->setReduceByValue(i);
 		}
+		// TODO: doesn't work - entity is out of scope already
 		mgr.update(1000);
 		ASSERT_EQ(0u, mgr.getEntries().size());
 		ASSERT_TRUE(mgr.getEntries().empty());

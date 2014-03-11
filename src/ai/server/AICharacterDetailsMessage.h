@@ -36,7 +36,6 @@ public:
 
 	AICharacterDetailsMessage(streamContainer& in) :
 			IProtocolMessage(PROTO_CHARACTER_DETAILS) {
-		in.pop_front();
 		_chrId = readInt(in);
 		readAggro(in, _aggro);
 		_aggro.setId(_chrId);

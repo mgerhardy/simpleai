@@ -17,7 +17,6 @@ public:
 
 	AISelectMessage(streamContainer& in) :
 			IProtocolMessage(PROTO_SELECT) {
-		in.pop_front();
 		_chrId = readInt(in);
 	}
 

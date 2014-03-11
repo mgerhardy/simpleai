@@ -8,7 +8,8 @@ namespace ai {
 
 Server::Server(int port, const std::string& hostname) :
 		_network(port, hostname), _selectedCharacterId(-1) {
-	ai::ProtocolHandlerRegistry::get().registerHandler(ai::PROTO_SELECT, this);
+	ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
+	r.registerHandler(ai::PROTO_SELECT, ProtocolHandlerPtr(this, ProtocolHandlerNopDeleter()));
 }
 
 Server::~Server() {
@@ -27,6 +28,15 @@ bool Server::addAI(AI& ai) {
 	if (_ais.find(id) != _ais.end())
 		return false;
 	_ais.insert(std::make_pair(id, &ai));
+	return true;
+}
+
+bool Server::removeAI(AI& ai) {
+	const CharacterId& id = ai.getCharacter().getId();
+	AIMapIter i = _ais.find(id);
+	if (i == _ais.end())
+		return false;
+	_ais.erase(i);
 	return true;
 }
 

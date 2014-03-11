@@ -10,6 +10,7 @@
 #include "Pathfinder.h"
 #include "actions/ExampleTask.h"
 #include "actions/Move.h"
+#include "GameEntity.h"
 
 int main(int argc, char **argv) {
 	if (argc <= 1) {
@@ -17,9 +18,6 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	ai::CharacterId characterId = 1;
-	ai::ICharacter character(characterId);
-	ai::example::Pathfinder pathFinder(600, 600);
 	ai::AIRegistry registry;
 
 	registry.registerNodeFactory("Move", ai::example::Move::FACTORY);
@@ -63,16 +61,30 @@ int main(int argc, char **argv) {
 	else
 		std::cout << "Started the server and accept connections on port " << port << std::endl;
 
-	ai::AI ai(character, root, pathFinder);
-	server.addAI(ai);
-	long runs = 100000;
-	long n = runs;
-	for (;--n;) {
+	ai::example::Pathfinder pathFinder(600, 600);
+
+	std::vector<GameEntity*> entities;
+	for (int i = 0; i < 100; ++i) {
+		entities.push_back(new GameEntity(i, root, pathFinder, server));
+	}
+
+	long frames = 10000;
+	long frame = frames;
+	const int fps = 20;
+	const long microseconds = 1000000 / fps;
+	for (;--frame;) {
 		const uint32_t dt = 1;
-		ai.update(dt);
-		server.update(dt);
-		std::cout << (runs - n) << "/" << runs << "    \r" << std::flush;
-		usleep(1000);
+		for (std::vector<GameEntity*>::iterator i = entities.begin(); i != entities.end(); ++i) {
+			(*i)->update(dt);
+		}
+		if ((frame % 10) == 0)
+			server.update(dt);
+		std::cout << (frames - frame) << "/" << frames << "    \r" << std::flush;
+		usleep(microseconds);
+	}
+
+	for (std::vector<GameEntity*>::iterator i = entities.begin(); i != entities.end(); ++i) {
+		delete *i;
 	}
 
 	return 0;

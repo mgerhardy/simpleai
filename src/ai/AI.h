@@ -11,12 +11,27 @@ namespace ai {
 
 #define NOTHING_SELECTED (-1)
 
+/**
+ * @brief This is the type the library works with. It interacts with it's real world entity by
+ * the @c ICharacter interface.
+ *
+ * Each ai entity has a @c AggroMgr assigned that is updated with each tick. The character also
+ * holds a reference to the @c IPathfinder that should be used to move the attached @c ICharacter
+ * through the world.
+ */
 class AI {
 	friend class TreeNode;
 protected:
+	/**
+	 * If a node is no longer active, it gets reset. This map holds the state about the resets.
+	 */
 	typedef std::map<int, bool> ResetStates;
 	ResetStates _resetStates;
 
+	/**
+	 * Often qc Selector states must be stored to continue in the next step at a particular
+	 * position in the behaviour tree. This map is doing exactly this.
+	 */
 	typedef std::map<int, int> SelectorStates;
 	SelectorStates _selectorStates;
 
@@ -38,10 +53,15 @@ public:
 	 */
 	virtual void update(long currentMillis);
 
+	/**
+	 * @brief don't update the entity as long as it is paused
+	 * @sa isPause()
+	 */
 	void setPause(bool pause);
 
 	/**
 	 * @brief don't update the entity as long as it is paused
+	 * @sa setPause()
 	 */
 	bool isPause() const;
 
@@ -53,6 +73,9 @@ public:
 	 * @brief Set a new behaviour and returns the old one
 	 */
 	TreeNodePtr setBehaviour(TreeNodePtr newBehaviour);
+	/**
+	 * @return The real world entity reference
+	 */
 	ICharacter& getCharacter() const;
 	AggroMgr& getAggroMgr();
 	IPathfinder& getPathfinder();

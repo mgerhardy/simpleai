@@ -9,6 +9,7 @@ StateTable::StateTable(AIDebugger& debugger) :
 	_model = new QStandardItemModel(0, 1, this);
 	_model->setHorizontalHeaderItem(0, new QStandardItem(tr("State")));
 	setModel(_model);
+	setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 }
 
 StateTable::~StateTable() {
@@ -19,6 +20,7 @@ void StateTable::setSelected(const ai::AIStateTree* ai) {
 
 	if (_selected == nullptr) {
 		_model->clear();
+		update();
 		return;
 	}
 

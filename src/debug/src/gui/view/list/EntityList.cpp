@@ -15,14 +15,16 @@ EntityList::~EntityList() {
 }
 
 void EntityList::updateEntityList() {
+	_model->clear();
 	const AIDebugger::Entities& entities = _debugger.getEntities();
 	for (AIDebugger::EntitiesIter i = entities.begin(); i != entities.end(); ++i) {
-		const ai::CharacterId& id = i->getId();
+		const AIStateTree& ai = *i;
+		const ai::CharacterId& id = ai.getId();
 		const QString idStr = QString::number(id);
-		QList<QStandardItem*> list = _model->findItems(idStr);
-		if (!list.empty())
-			continue;
 		QStandardItem *row = new QStandardItem(idStr);
+		if (_debugger.isSelected(ai)) {
+			//row->setBackground();
+		}
 		_model->appendRow(row);
 	}
 	_model->sort(0);
@@ -34,6 +36,8 @@ void EntityList::updateEntityList() {
 		selectRow(list.at(0)->row());
 	}
 }
+
+// _aiDebugger.select(_tree);
 
 }
 }

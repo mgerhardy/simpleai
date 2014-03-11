@@ -61,7 +61,7 @@ void LUAType::addFunction (const std::string& name, lua_CFunction func)
 	lua_setfield(_state, -2, name.c_str());
 }
 
-LUA::LUA ()
+LUA::LUA (bool debug)
 {
 	_state = luaL_newstate();
 
@@ -71,9 +71,11 @@ LUA::LUA ()
 	lua_atpanic(_state, panicCB);
 
 	int mask = 0;
-	mask |= LUA_MASKCALL;
-	mask |= LUA_MASKRET;
-	mask |= LUA_MASKLINE;
+	if (debug) {
+		mask |= LUA_MASKCALL;
+		mask |= LUA_MASKRET;
+		mask |= LUA_MASKLINE;
+	}
 
 	// Register debug callback function
 	lua_sethook(_state, debugHook, mask, 0);

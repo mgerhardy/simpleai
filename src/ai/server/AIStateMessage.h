@@ -65,7 +65,6 @@ public:
 
 	AIStateMessage(streamContainer& in) :
 			IProtocolMessage(PROTO_STATE) {
-		in.pop_front();
 		const int treeSize = readInt(in);
 		for (int i = 0; i < treeSize; ++i) {
 			readTree(in);

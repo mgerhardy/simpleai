@@ -1,8 +1,9 @@
 #pragma once
 
 #include <vector>
-#include "MapView.h"
+#include <AI.h>
 #include <server/AIStateMessage.h>
+#include <server/AICharacterDetailsMessage.h>
 #include <server/AIStubTypes.h>
 #include <server/IProtocolHandler.h>
 #include <QTcpSocket>
@@ -11,14 +12,11 @@
 #include <QFile>
 
 namespace ai {
-
 namespace debug {
 
-class AIDebugger;
+class MapView;
 
-PROTOCOL_HANDLER(AIStateMessage);
-
-class AIDebugger: public QApplication, public AIStateMessageHandler {
+class AIDebugger: public QApplication {
 	Q_OBJECT
 public:
 	typedef std::vector<AIStateTree> Entities;
@@ -27,14 +25,15 @@ protected:
 	typedef Entities::iterator Iter;
 	Entities _entities;
 
+	ai::streamContainer _stream;
+
 	bool _running;
 	long _time;
 
 	ai::CharacterId _selectedId;
+	std::vector<AIStateAggroEntry> _aggro;
 
 	QTcpSocket _socket;
-
-	void executeAIStateMessage(const ai::AIStateMessage& msg) override;
 
 private slots:
 	void readTcpData();
@@ -43,12 +42,14 @@ public:
 	virtual ~AIDebugger();
 
 	const Entities& getEntities() const;
+	void setEntities(const Entities& entities);
+	void setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro);
 
 	int run();
 	bool connectToAIServer(const QString& hostname, short port);
 
 	bool isSelected(const ai::AIStateTree& ai) const;
-	const ai::AIStateTree* getSelected() const;
+	const ai::AIStateTree* getSelected();
 	void select(const ai::AIStateTree& ai);
 	void unselect();
 
@@ -57,12 +58,17 @@ public:
 	void stop();
 };
 
-inline MapView* AIDebugger::createMapWidget() {
-	return new MapView(*this);
-}
-
 inline void AIDebugger::stop() {
 	_running = false;
+}
+
+inline void AIDebugger::setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro) {
+	_selectedId = id;
+	_aggro = aggro.getAggro();
+}
+
+inline void AIDebugger::setEntities(const Entities& entities) {
+	_entities = entities;
 }
 
 inline const AIDebugger::Entities& AIDebugger::getEntities() const {

@@ -22,7 +22,7 @@ protected:
 private slots:
 	void apply() {
 		onApply();
-		//emit accept();
+		emit accept();
 	}
 
 public:

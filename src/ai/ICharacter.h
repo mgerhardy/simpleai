@@ -6,6 +6,12 @@ namespace ai {
 
 typedef int CharacterId;
 
+/**
+ * @brief Class that should be extended by the ai controlled entity class.
+ *
+ * It uses a @c CharacterId to identify the character in the game. The @c AI class
+ * has a reference to its controlled @c ICharacter instance.
+ */
 class ICharacter {
 protected:
 	CharacterId _id;
