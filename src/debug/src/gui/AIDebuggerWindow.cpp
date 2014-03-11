@@ -95,7 +95,6 @@ void AIDebuggerWindow::about() {
 void AIDebuggerWindow::tick() {
 	const ai::AIStateTree* selected = _debugger.getSelected();
 	_stateTable->setSelected(selected);
-	_nodeTree->setSelected(selected);
 	_entityList->updateEntityList();
 	_mapView->updateMapView();
 }
