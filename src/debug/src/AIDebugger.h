@@ -16,18 +16,9 @@ namespace debug {
 
 class AIDebugger;
 
-class Handler: public ai::IProtocolHandler {
-private:
-	AIDebugger* _debugger;
-public:
-	Handler(AIDebugger* debugger) :
-			_debugger(debugger) {
-	}
+PROTOCOL_HANDLER(AIStateMessage);
 
-	void execute(const ClientId& clientId, const IProtocolMessage& message) override;
-};
-
-class AIDebugger: public QApplication {
+class AIDebugger: public QApplication, public AIStateMessageHandler {
 	Q_OBJECT
 public:
 	typedef std::vector<AIStateTree> Entities;
@@ -42,7 +33,8 @@ protected:
 	ai::CharacterId _selectedId;
 
 	QTcpSocket _socket;
-	Handler _handler;
+
+	void executeAIStateMessage(const ai::AIStateMessage& msg) override;
 
 private slots:
 	void readTcpData();
@@ -55,7 +47,6 @@ public:
 	int run();
 	bool connectToAIServer(const QString& hostname, short port);
 
-	void setEntities(const Entities& entities);
 	bool isSelected(const ai::AIStateTree& ai) const;
 	const ai::AIStateTree* getSelected() const;
 	void select(const ai::AIStateTree& ai);

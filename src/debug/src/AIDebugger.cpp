@@ -13,13 +13,8 @@
 namespace ai {
 namespace debug {
 
-void Handler::execute(const ClientId& /*clientId*/, const IProtocolMessage& message) {
-	const AIStateMessage& msg = static_cast<const AIStateMessage&>(message);
-	_debugger->setEntities(msg.getTrees());
-}
-
 AIDebugger::AIDebugger(int argc, char** argv) :
-		QApplication(argc, argv), _running(true), _time(0L), _selectedId(-1), _socket(this), _handler(this) {
+		QApplication(argc, argv), _running(true), _time(0L), _selectedId(-1), _socket(this) {
 #ifdef Q_WS_X11
 	QApplication::setGraphicsSystem(QLatin1String("raster"));
 #endif
@@ -32,14 +27,14 @@ AIDebugger::AIDebugger(int argc, char** argv) :
 
 	connect(&_socket, SIGNAL(readyRead()), SLOT(readTcpData()));
 
-	ai::ProtocolHandlerRegistry::get().registerHandler(ai::PROTO_STATE, &_handler);
+	ai::ProtocolHandlerRegistry::get().registerHandler(ai::PROTO_STATE, this);
 }
 
 AIDebugger::~AIDebugger() {
 }
 
-void AIDebugger::setEntities (const Entities& entities) {
-	_entities = entities;
+void AIDebugger::executeAIStateMessage(const AIStateMessage& msg) {
+	_entities = msg.getTrees();
 }
 
 bool AIDebugger::isSelected(const ai::AIStateTree& ai) const {

@@ -6,7 +6,7 @@ TARGET = simpleai-debugger
 DEPENDPATH += . \
               src \
               src/gui
-INCLUDEPATH += . src src/gui src/gui/dialog src/gui/widget src/gui/view/map src/gui/view/tree src/gui/view/state src/gui/view/list
+INCLUDEPATH += . src src/gui src/gui/dialog src/gui/widget src/gui/view/map src/gui/view/tree src/gui/view/state src/gui/view/list src/common
 
 CONFIG += qt
 

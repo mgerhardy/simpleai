@@ -40,7 +40,7 @@ int IDialog::run() {
 
 	show();
 	exec();
-	return 0;
+	return result();
 }
 
 void IDialog::addButtons(QBoxLayout& layout) {

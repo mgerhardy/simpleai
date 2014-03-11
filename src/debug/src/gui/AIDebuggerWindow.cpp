@@ -78,10 +78,10 @@ QWidget *AIDebuggerWindow::createBottomWidget() {
 
 void AIDebuggerWindow::connectToAIServer() {
 	ConnectDialog d;
-	d.run();
+	const int state = d.run();
 	const short port = d.getPort();
 	const QString hostname = d.getHostname();
-	if (_debugger.connectToAIServer(hostname, port)) {
+	if (state == QDialog::Accepted && _debugger.connectToAIServer(hostname, port)) {
 		_statusBarLabel->setText(tr("connected to %1:%2").arg(hostname).arg(port));
 	} else {
 		_statusBarLabel->setText(tr("not connected"));

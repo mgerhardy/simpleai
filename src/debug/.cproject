@@ -42,6 +42,7 @@
 									<listOptionValue builtIn="false" value="/usr/include/qt5/QtWidgets"/>
 									<listOptionValue builtIn="false" value="/usr/include/qt5/QtNetwork"/>
 									<listOptionValue builtIn="false" value="/usr/include/c++/4.7"/>
+									<listOptionValue builtIn="false" value="/usr/include/simpleai"/>
 								</option>
 								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.2059217639" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
