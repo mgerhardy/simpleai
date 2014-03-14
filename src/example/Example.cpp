@@ -14,7 +14,7 @@
 
 int main(int argc, char **argv) {
 	if (argc <= 1) {
-		std::cerr << "usage: example behaviourtree.lua" << std::endl;
+		std::cerr << "usage: example behaviourtree.lua [amount]" << std::endl;
 		return EXIT_FAILURE;
 	}
 
@@ -32,6 +32,12 @@ int main(int argc, char **argv) {
 		std::cerr << "could not load " << filename << std::endl;
 		return EXIT_FAILURE;
 	}
+
+	int amount = 100;
+	if (argc >= 3) {
+		amount = atoi(argv[2]);
+	}
+
 	std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
 	if (!loader.init(str)) {
 		std::cerr << "could not load the tree" << std::endl;
@@ -64,7 +70,7 @@ int main(int argc, char **argv) {
 	ai::example::Pathfinder pathFinder(600, 600);
 
 	std::vector<GameEntity*> entities;
-	for (int i = 0; i < 100; ++i) {
+	for (int i = 0; i < amount; ++i) {
 		entities.push_back(new GameEntity(i, root, pathFinder, server));
 	}
 
