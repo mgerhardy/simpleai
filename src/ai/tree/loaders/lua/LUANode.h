@@ -28,11 +28,11 @@ public:
 		_condition = condition;
 	}
 
-	inline std::vector<LUANode*>& getChildren() {
+	inline const std::vector<LUANode*>& getChildren() const {
 		return _children;
 	}
 
-	inline LUACondition* getCondition() {
+	inline LUACondition* getCondition() const {
 		return _condition;
 	}
 
