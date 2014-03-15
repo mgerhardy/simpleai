@@ -4,7 +4,7 @@
 namespace ai {
 
 TreeNodeStatus PrioritySelector::execute(AI& entity, long currentMillis) {
-	if (TreeNode::execute(entity, currentMillis) == CANNOTEXECUTE)
+	if (Selector::execute(entity, currentMillis) == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
 
 	TreeNodes::iterator i = _children.begin();

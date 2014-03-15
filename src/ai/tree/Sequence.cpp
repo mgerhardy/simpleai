@@ -4,7 +4,7 @@
 namespace ai {
 
 TreeNodeStatus Sequence::execute(AI& entity, long currentMillis) {
-	TreeNode::execute(entity, currentMillis);
+	Selector::execute(entity, currentMillis);
 
 	TreeNodeStatus result = FINISHED;
 	const int progress = std::max(0, getSelectorState(entity));

@@ -10,7 +10,7 @@ void Parallel::getChildrenState(const AI& entity, std::vector<bool>& active) con
 }
 
 TreeNodeStatus Parallel::execute(AI& entity, long currentMillis) {
-	if (TreeNode::execute(entity, currentMillis) == CANNOTEXECUTE)
+	if (Selector::execute(entity, currentMillis) == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
 
 	bool totalStatus = false;
