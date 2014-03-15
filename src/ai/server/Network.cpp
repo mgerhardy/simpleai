@@ -207,6 +207,8 @@ void Network::update(uint32_t deltaTime) {
 }
 
 void Network::broadcast(const IProtocolMessage& msg) {
+	if (_clientSockets.empty())
+		return;
 	streamContainer out;
 	msg.serialize(out);
 	for (ClientSocketsIter i = _clientSockets.begin(); i != _clientSockets.end(); ++i) {
