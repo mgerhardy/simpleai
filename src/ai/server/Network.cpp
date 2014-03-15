@@ -194,7 +194,7 @@ void Network::update(uint32_t deltaTime) {
 
 		IProtocolMessage* msg = ProtocolMessageFactory::get().create(client.in);
 		if (msg != nullptr) {
-			ProtocolHandlerPtr handler = ProtocolHandlerRegistry::get().getHandler(*msg);
+			const ProtocolHandlerPtr& handler = ProtocolHandlerRegistry::get().getHandler(*msg);
 			if (handler)
 				handler->execute(clientId, *msg);
 			delete msg;
