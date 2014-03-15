@@ -2,9 +2,6 @@
 
 #include <common/Compiler.h>
 #include <tree/loaders/ITreeLoader.h>
-#include <string>
-#include <map>
-#include <vector>
 
 struct LUA;
 
