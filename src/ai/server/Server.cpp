@@ -90,7 +90,7 @@ void Server::broadcastCharacterDetails() {
 	const ai::AggroMgr::Entries& entries = ai->getAggroMgr().getEntries();
 	for (ai::AggroMgr::Entries::const_iterator i = entries.begin(); i != entries.end(); ++i) {
 		const EntryPtr& e = *i;
-		aggroVector.push_back(AIStateAggroEntry(e->getEntity().getCharacter().getId(), e->getAggro()));
+		aggroVector.push_back(AIStateAggroEntry(e->getCharacterId(), e->getAggro()));
 	}
 
 	const AIStateAggro aggro(_selectedCharacterId, aggroVector);

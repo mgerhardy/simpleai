@@ -15,11 +15,15 @@ protected:
 
 	long _lastUpdateTime;
 
+	bool _dirty;
+
 	/**
 	 * @brief Remove the entries from the list that have no aggro left.
-	 * This list is ordered, so we will only remove the last X elements.
+	 * This list is ordered, so we will only remove the first X elements.
 	 */
 	void cleanupList();
+
+	inline void sort();
 public:
 	AggroMgr();
 	virtual ~AggroMgr();
@@ -35,7 +39,7 @@ public:
 	 * @param[in,out] entity The entity to increase the aggro against
 	 * @param[in] amount The amount to increase the aggro for
 	 */
-	void addAggro(AI& entity, float amount);
+	Entry* addAggro(AI& entity, float amount);
 
 	/**
 	 * @return All the aggro entries
@@ -47,12 +51,7 @@ public:
 	/**
 	 * @brief Get the entry with the highest aggro value.
 	 */
-	EntryPtr getHighestEntry() const {
-		if (_entries.empty())
-			return EntryPtr();
-
-		return _entries[0];
-	}
+	EntryPtr getHighestEntry();
 };
 
 }

@@ -5,7 +5,7 @@
 namespace ai {
 
 AggroMgr::AggroMgr() :
-		_lastUpdateTime(0L) {
+		_lastUpdateTime(0L), _dirty(false) {
 }
 
 AggroMgr::~AggroMgr() {
@@ -13,7 +13,7 @@ AggroMgr::~AggroMgr() {
 
 void AggroMgr::cleanupList() {
 	std::size_t remove = 0u;
-	for (Entries::reverse_iterator i = _entries.rbegin(); i != _entries.rend(); ++i) {
+	for (Entries::iterator i = _entries.begin(); i != _entries.end(); ++i) {
 		const float aggroValue = (*i)->getAggro();
 		if (aggroValue > 0.0f)
 			break;
@@ -28,15 +28,19 @@ void AggroMgr::cleanupList() {
 	if (size == remove)
 		_entries.clear();
 	else
-		_entries.resize(size - remove);
+		_entries.erase(_entries.begin(), _entries.begin() + remove);
 }
 
 void AggroMgr::update(long currentMillis) {
+	const long delta = currentMillis - _lastUpdateTime;
 	const std::size_t size = _entries.size();
 	for (std::size_t i = 0; i < size; ++i)
-		_entries[i]->reduceByTime(currentMillis - _lastUpdateTime);
+		_dirty |= _entries[i]->reduceByTime(delta);
 
-	cleanupList();
+	if (_dirty) {
+		sort();
+		cleanupList();
+	}
 	_lastUpdateTime = currentMillis;
 }
 
@@ -49,21 +53,48 @@ public:
 	}
 
 	bool operator()(const EntryPtr &n1) {
-		return n1->getEntity().getCharacter().getId() == _id;
+		return n1->getCharacterId() == _id;
 	}
 };
 
-void AggroMgr::addAggro(AI& entity, float amount) {
-	const CharacterIdPredicate p(entity.getCharacter().getId());
+bool EntrySorter(const EntryPtr& a, const EntryPtr& b) {
+	return a->getAggro() < b->getAggro();
+}
+
+inline void AggroMgr::sort() {
+	if (!_dirty)
+		return;
+	std::sort(_entries.begin(), _entries.end(), EntrySorter);
+	_dirty = false;
+}
+
+Entry* AggroMgr::addAggro(AI& entity, float amount) {
+	const CharacterId id = entity.getCharacter().getId();
+	const CharacterIdPredicate p(id);
 	Entries::const_iterator i = std::find_if(_entries.begin(), _entries.end(), p);
 	if (i == _entries.end()) {
-		const EntryPtr newEntry(new Entry(entity));
-		newEntry->addAggro(amount);
+		Entry* e = new Entry(id, amount);
+		const EntryPtr newEntry(e);
 		_entries.push_back(newEntry);
-	} else {
-		(*i)->addAggro(amount);
+		_dirty = true;
+		return e;
 	}
-	std::sort(_entries.begin(), _entries.end());
+
+	(*i)->addAggro(amount);
+	_dirty = true;
+	return i->get();
+}
+
+/**
+ * @brief Get the entry with the highest aggro value.
+ */
+EntryPtr AggroMgr::getHighestEntry() {
+	if (_entries.empty())
+		return EntryPtr();
+
+	sort();
+
+	return _entries.back();
 }
 
 }

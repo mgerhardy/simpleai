@@ -2,10 +2,9 @@
 
 #include <common/Pointers.h>
 #include <common/Compiler.h>
+#include <ICharacter.h>
 
 namespace ai {
-
-class AI;
 
 enum ReductionType {
 	DISABLED, RATIO, VALUE,
@@ -18,14 +17,14 @@ protected:
 	float _reduceRatioSecond;
 	float _reduceValueSecond;
 	ReductionType _reduceType;
-	AI& _ai;
+	CharacterId _id;
 
 	void reduceByRatio(float ratio);
 	void reduceByValue(float value);
 
 public:
-	Entry(AI& ai) :
-			_aggro(0.0f), _minAggro(0.0f), _reduceRatioSecond(0.0f), _reduceValueSecond(0.0f), _reduceType(DISABLED), _ai(ai) {
+	Entry(const CharacterId& id, float aggro = 0.0f) :
+			_aggro(aggro), _minAggro(0.0f), _reduceRatioSecond(0.0f), _reduceValueSecond(0.0f), _reduceType(DISABLED), _id(id) {
 	}
 	virtual ~Entry() {
 	}
@@ -34,11 +33,13 @@ public:
 	void addAggro(float aggro);
 	void setReduceByRatio(float reductionRatioPerSecond, float minimumAggro);
 	void setReduceByValue(float reductionValuePerSecond);
-	void reduceByTime(long millis);
+	/**
+	 * @return @c true if any reduction was done
+	 */
+	bool reduceByTime(long millis);
 	void resetAggro();
 
-	AI& getEntity();
-
+	const CharacterId& getCharacterId() const;
 	bool operator <(Entry& other) const;
 };
 
@@ -59,16 +60,16 @@ inline void Entry::setReduceByValue(float degValueSecond) {
 	_reduceValueSecond = degValueSecond;
 }
 
-inline void Entry::reduceByTime(long millis) {
+inline bool Entry::reduceByTime(long millis) {
 	switch (_reduceType) {
 	case RATIO:
 		reduceByRatio((millis / 1000.0f) * _reduceRatioSecond);
-		break;
+		return true;
 	case VALUE:
 		reduceByValue((millis / 1000.0f) * _reduceValueSecond);
-		break;
+		return true;
 	default:
-		break;
+		return false;
 	}
 }
 
@@ -99,8 +100,8 @@ inline bool Entry::operator <(Entry& other) const {
 	return _aggro < other._aggro;
 }
 
-inline AI& Entry::getEntity() {
-	return _ai;
+inline const CharacterId& Entry::getCharacterId() const {
+	return _id;
 }
 
 }
