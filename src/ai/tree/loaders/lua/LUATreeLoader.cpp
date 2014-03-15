@@ -48,7 +48,7 @@ bool LUATreeLoader::init(const std::string& luaString) {
 	}
 
 	if (_treeMap.empty()) {
-		_error = "no behaviour trees specified";
+		_error = "No behaviour trees specified";
 		return false;
 	}
 	return true;
