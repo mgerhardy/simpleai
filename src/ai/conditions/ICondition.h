@@ -59,7 +59,8 @@ private: \
 	CONDITION_CLASS(ConditionName) \
 public: \
 	static ConditionPtr& get() { \
-		static ConditionPtr _instance(new ConditionName(), Deleter()); \
+		static ConditionName _conditionInstance; \
+		static ConditionPtr _instance(&_conditionInstance, Deleter()); \
 		return _instance; \
 	} \
 	CONDITION_FACTORY_SINGLETON
