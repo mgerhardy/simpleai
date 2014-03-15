@@ -39,6 +39,7 @@ enum TreeNodeStatus {
 
 #define NODE_FACTORY \
 	class Factory: public ITreeNodeFactory { \
+	public: \
 		TreeNodePtr create (const TreeNodeFactoryContext *ctx) const; \
 	}; \
 	static Factory FACTORY;

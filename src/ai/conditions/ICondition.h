@@ -34,6 +34,7 @@ public: \
 #define CONDITION_FACTORY \
 public: \
 	class Factory: public IConditionFactory { \
+	public: \
 		ConditionPtr create (const ConditionFactoryContext *ctx) const; \
 	}; \
 	static Factory FACTORY;
