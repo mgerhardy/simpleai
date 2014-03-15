@@ -5,7 +5,7 @@ namespace ai {
 
 int TreeNode::_nextId = 0;
 
-TreeNode::TreeNode(const std::string& name, ConditionPtr condition) :
+TreeNode::TreeNode(const std::string& name, const ConditionPtr& condition) :
 		_id(_nextId++), _name(name), _condition(condition), _lastRunMillis(-1) {
 }
 

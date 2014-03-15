@@ -71,7 +71,7 @@ protected:
 	void setSelectorState(AI& entity, int selected);
 
 public:
-	TreeNode(const std::string& name, ConditionPtr condition = True::get());
+	TreeNode(const std::string& name, const ConditionPtr& condition = True::get());
 	virtual ~TreeNode();
 	/**
 	 * @brief Return the unique id for this node.
