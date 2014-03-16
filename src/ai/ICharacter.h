@@ -30,7 +30,7 @@ public:
 
 	CharacterId getId() const;
 	void setPosition(const AIPosition& position);
-	AIPosition& getPosition();
+	const AIPosition& getPosition() const;
 };
 
 inline void ICharacter::setPosition(const AIPosition& position) {
@@ -49,7 +49,7 @@ inline CharacterId ICharacter::getId() const {
 	return _id;
 }
 
-inline AIPosition& ICharacter::getPosition() {
+inline const AIPosition& ICharacter::getPosition() const {
 	return _position;
 }
 
