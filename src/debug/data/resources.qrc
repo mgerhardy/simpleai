@@ -4,6 +4,8 @@
 		<file>images/connect.png</file>
 		<file>images/exit.png</file>
 		<file>images/about.png</file>
+		<file>images/zoomin.png</file>
+		<file>images/zoomout.png</file>
 	</qresource>
 </RCC>
 <!--

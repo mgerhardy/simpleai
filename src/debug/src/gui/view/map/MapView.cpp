@@ -12,6 +12,7 @@ MapView::MapView(AIDebugger& debugger) :
 	setInteractive(true);
 	_scene = new MapScene();
 	setScene(_scene);
+	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 MapView::~MapView() {

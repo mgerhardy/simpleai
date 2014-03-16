@@ -9,6 +9,7 @@
 #include "EntityList.h"
 #include "AggroTable.h"
 #include "MapView.h"
+#include "MapFrame.h"
 #include "NodeTreeWidget.h"
 
 namespace ai {
@@ -40,7 +41,7 @@ AIDebuggerWindow::AIDebuggerWindow(AIDebugger& debugger) :
 }
 
 AIDebuggerWindow::~AIDebuggerWindow() {
-	delete _mapView;
+	delete _mapFrame;
 	delete _entityList;
 	delete _statusBarLabel;
 	delete _selectedLabel;
@@ -64,13 +65,12 @@ QWidget *AIDebuggerWindow::createTopWidget() {
 	QWidget *topWidget = new QWidget;
 	QHBoxLayout *topLayout = new QHBoxLayout;
 
-	_mapView = _debugger.createMapWidget();
-	_mapView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	_mapFrame = new MapFrame(_debugger);
 
 	_entityList = new EntityList(_debugger);
 	_entityList->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 
-	topLayout->addWidget(_mapView);
+	topLayout->addWidget(_mapFrame);
 	topLayout->addWidget(_entityList);
 	topWidget->setLayout(topLayout);
 	return topWidget;
@@ -115,7 +115,7 @@ void AIDebuggerWindow::tick() {
 	}
 	_stateTable->updateStateTable();
 	_entityList->updateEntityList();
-	_mapView->updateMapView();
+	_mapFrame->updateMapFrame();
 	_nodeTree->updateTreeWidget();
 }
 

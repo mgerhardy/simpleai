@@ -5,7 +5,6 @@
 #include <QMainWindow>
 #include <QToolBar>
 
-
 namespace ai {
 
 class AIDebugger;
@@ -16,7 +15,7 @@ class StateTable;
 class EntityList;
 class AggroTable;
 class NodeTreeWidget;
-class MapView;
+class MapFrame;
 
 class AIDebuggerWindow: public QMainWindow {
 Q_OBJECT
@@ -40,7 +39,7 @@ private:
 
 	NodeTreeWidget *_nodeTree;
 	StateTable *_stateTable;
-	MapView *_mapView;
+	MapFrame *_mapFrame;
 	EntityList *_entityList;
 	AggroTable *_aggroTable;
 	QMenu *_fileMenu;
