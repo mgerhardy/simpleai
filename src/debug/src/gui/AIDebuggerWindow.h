@@ -42,6 +42,7 @@ private:
 	QAction *_exitAction;
 	QAction *_aboutAction;
 	QLabel *_statusBarLabel;
+	QLabel *_selectedLabel;
 
 	AIDebugger& _debugger;
 };

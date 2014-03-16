@@ -3,6 +3,7 @@
 #include "MapView.h"
 #include <tree/loaders/lua/LUATreeLoader.h>
 #include <server/IProtocolMessage.h>
+#include <server/AISelectMessage.h>
 #include <server/ProtocolMessageFactory.h>
 #include <server/ProtocolHandlerRegistry.h>
 #include <QFileDialog>
@@ -26,7 +27,7 @@ public:
 	}
 
 	void executeAIStateMessage(const ai::AIStateMessage& msg) override {
-		_aiDebugger.setEntities(msg.getTrees());
+		_aiDebugger.setEntities(msg.getStates());
 	}
 };
 
@@ -39,7 +40,7 @@ public:
 	}
 
 	void executeAICharacterDetailsMessage(const ai::AICharacterDetailsMessage& msg) override {
-		_aiDebugger.setCharacterDetails(msg.getCharacterId(), msg.getAggro());
+		_aiDebugger.setCharacterDetails(msg.getCharacterId(), msg.getAggro(), msg.getNode());
 	}
 };
 
@@ -66,28 +67,46 @@ AIDebugger::AIDebugger(int argc, char** argv) :
 AIDebugger::~AIDebugger() {
 }
 
-bool AIDebugger::isSelected(const ai::AIStateTree& ai) const {
+bool AIDebugger::isSelected(const ai::AIStateWorld& ai) const {
 	return _selectedId == ai.getId();
 }
 
-const ai::AIStateTree* AIDebugger::getSelected() {
-	if (_selectedId == -1)
-		return nullptr;
-	for (AIDebugger::EntitiesIter i = _entities.begin(); i != _entities.end(); ++i) {
-		if (i->getId() == _selectedId)
-			return &*i;
-	}
-	unselect();
-	return nullptr;
+const CharacterId& AIDebugger::getSelected() const {
+	return _selectedId;
 }
 
-void AIDebugger::select(const ai::AIStateTree& ai) {
-	_selectedId = ai.getId();
-	qDebug() << "select entity " << _selectedId;
+void AIDebugger::select(const ai::AIStateWorld& ai) {
+	writeMessage(AISelectMessage(ai.getId()));
+}
+
+bool AIDebugger::writeMessage(const IProtocolMessage& msg) {
+	if (_socket.state() != QAbstractSocket::ConnectedState) {
+		return false;
+	}
+	streamContainer out;
+	msg.serialize(out);
+	QByteArray temp;
+	QDataStream data(&temp, QIODevice::ReadWrite);
+	const uint32_t size = out.size();
+	streamContainer sizeC;
+	IProtocolMessage::addInt(sizeC, size);
+	for (streamContainer::iterator i = sizeC.begin(); i != sizeC.end(); ++i) {
+		const uint8_t byte = *i;
+		data << byte;
+	}
+	for (streamContainer::iterator i = out.begin(); i != out.end(); ++i) {
+		const uint8_t byte = *i;
+		data << byte;
+	}
+	_socket.write(temp);
+	return true;
 }
 
 void AIDebugger::unselect() {
+	writeMessage(AISelectMessage(-1));
 	_selectedId = -1;
+	_aggro.clear();
+	_node = AIStateNode();
 	qDebug() << "unselect entity";
 }
 
@@ -112,26 +131,25 @@ bool AIDebugger::connectToAIServer(const QString& hostname, short port) {
 }
 
 void AIDebugger::readTcpData() {
-	_socket.waitForReadyRead();
-	const QByteArray& data = _socket.readAll();
-	for (int i = 0; i < data.size(); ++i) {
-		_stream.push_back(data[i]);
-	}
-	qDebug() << "read " << data.size() << " bytes";
-	ai::ProtocolMessageFactory& mf = ai::ProtocolMessageFactory::get();
-	for (;;) {
-		ai::IProtocolMessage* msg = mf.create(_stream);
-		if (msg == nullptr)
-			break;
-		qDebug() << "got message";
-		ai::ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
-		ai::ProtocolHandlerPtr handler = r.getHandler(*msg);
-		if (handler) {
-			handler->execute(1, *msg);
-		} else {
-			qDebug() << "no handler for " << msg->getId();
-			_socket.close();
-			break;
+	while(_socket.bytesAvailable() > 0) {
+		const QByteArray& data = _socket.readAll();
+		for (int i = 0; i < data.count(); ++i) {
+			_stream.push_back(data[i]);
+		}
+		ai::ProtocolMessageFactory& mf = ai::ProtocolMessageFactory::get();
+		for (;;) {
+			ai::IProtocolMessage* msg = mf.create(_stream);
+			if (msg == nullptr)
+				break;
+			ai::ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
+			ai::ProtocolHandlerPtr handler = r.getHandler(*msg);
+			if (handler) {
+				handler->execute(1, *msg);
+			} else {
+				qDebug() << "no handler for " << msg->getId();
+				_socket.close();
+				break;
+			}
 		}
 	}
 }

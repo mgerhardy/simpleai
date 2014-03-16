@@ -3,6 +3,7 @@
 #include "AIStubTypes.h"
 #include "AICharacterDetailsMessage.h"
 #include "ProtocolHandlerRegistry.h"
+#include <iostream>
 
 namespace ai {
 
@@ -58,18 +59,10 @@ void Server::addChildren(AIStateNode& parent, AI& ai, const TreeNodes& children)
 void Server::broadcastState() {
 	AIStateMessage msg;
 	for (AIMapConstIter i = _ais.begin(); i != _ais.end(); ++i) {
-		AI& ai = *i->second;
-		const TreeNodePtr& behaviour = ai.getBehaviour();
-		const std::string& name = behaviour->getName();
-		const TreeNodes& children = behaviour->getChildren();
-		const ConditionPtr& condition = behaviour->getCondition();
-		const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
-		// TODO: node->isActive
-		const bool active = /* node->isActive(ai) */ false;
-		AIStateNode root(name, conditionStr, behaviour->getLastRunMillis(), active);
-		addChildren(root, ai, children);
-		AIStateTree b(ai.getCharacter().getId(), ai.getCharacter().getPosition(), root);
-		msg.addTree(b);
+		const AI& ai = *i->second;
+		const ICharacter& chr = ai.getCharacter();
+		AIStateWorld b(chr.getId(), chr.getPosition());
+		msg.addState(b);
 	}
 	_network.broadcast(msg);
 }
@@ -79,22 +72,32 @@ void Server::broadcastCharacterDetails() {
 		return;
 
 	AIMapConstIter i = _ais.find(_selectedCharacterId);
-	if (i != _ais.end()) {
+	if (i == _ais.end()) {
 		_selectedCharacterId = -1;
 		return;
 	}
 
 	std::vector<AIStateAggroEntry> aggroVector;
 
-	ai::AI *ai = i->second;
-	const ai::AggroMgr::Entries& entries = ai->getAggroMgr().getEntries();
+	ai::AI& ai = *i->second;
+	const TreeNodePtr& behaviour = ai.getBehaviour();
+	const std::string& name = behaviour->getName();
+	const TreeNodes& children = behaviour->getChildren();
+	const ConditionPtr& condition = behaviour->getCondition();
+	const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
+	// TODO: node->isActive
+	const bool active = /* node->isActive(ai) */ false;
+	AIStateNode root(name, conditionStr, behaviour->getLastRunMillis(), active);
+	addChildren(root, ai, children);
+
+	AIStateAggro aggro;
+	const ai::AggroMgr::Entries& entries = ai.getAggroMgr().getEntries();
 	for (ai::AggroMgr::Entries::const_iterator i = entries.begin(); i != entries.end(); ++i) {
 		const EntryPtr& e = *i;
-		aggroVector.push_back(AIStateAggroEntry(e->getCharacterId(), e->getAggro()));
+		aggro.addAggro(AIStateAggroEntry(e->getCharacterId(), e->getAggro()));
 	}
 
-	const AIStateAggro aggro(_selectedCharacterId, aggroVector);
-	const AICharacterDetailsMessage msg(_selectedCharacterId, aggro);
+	const AICharacterDetailsMessage msg(_selectedCharacterId, aggro, root);
 	_network.broadcast(msg);
 }
 

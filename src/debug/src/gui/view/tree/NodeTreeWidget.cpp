@@ -15,12 +15,12 @@ NodeTreeWidget::~NodeTreeWidget() {
 }
 
 void NodeTreeWidget::updateTreeWidget() {
-	const ai::AIStateTree* tree = _debugger.getSelected();
-	if (tree == nullptr) {
+	const ai::CharacterId id = _debugger.getSelected();
+	if (id == -1) {
 		_scene->clear();
 		return;
 	}
-	const AIStateNode& node = tree->getNode();
+	const AIStateNode& node = _debugger.getNode();
 	buildTreeItems(node, nullptr);
 }
 

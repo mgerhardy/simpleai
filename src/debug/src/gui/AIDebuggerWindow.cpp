@@ -17,7 +17,9 @@ AIDebuggerWindow::AIDebuggerWindow(AIDebugger& debugger) :
 	createMenus();
 
 	_statusBarLabel = new QLabel(tr("not connected"));
+	_selectedLabel = new QLabel(tr("nothing selected"));
 	statusBar()->addWidget(_statusBarLabel);
+	statusBar()->addWidget(_selectedLabel);
 
 	resize(1024, 768);
 	setWindowTitle(tr("AI Debugger"));
@@ -31,6 +33,7 @@ AIDebuggerWindow::~AIDebuggerWindow() {
 	delete _mapView;
 	delete _entityList;
 	delete _statusBarLabel;
+	delete _selectedLabel;
 	delete _nodeTree;
 	delete _stateTable;
 }
@@ -91,8 +94,13 @@ void AIDebuggerWindow::about() {
 }
 
 void AIDebuggerWindow::tick() {
-	const ai::AIStateTree* selected = _debugger.getSelected();
-	_stateTable->setSelected(selected);
+	const ai::CharacterId& id = _debugger.getSelected();
+	if (id == -1) {
+		_selectedLabel->setText(tr("nothing selected"));
+	} else {
+		_selectedLabel->setText(tr("selected %1").arg(id));
+	}
+	_stateTable->updateStateTable();
 	_entityList->updateEntityList();
 	_mapView->updateMapView();
 }

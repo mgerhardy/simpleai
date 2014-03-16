@@ -11,10 +11,10 @@ class AIDebugger;
 
 class MapItem: public QGraphicsItem {
 private:
-	const AIStateTree& _tree;
+	const AIStateWorld& _state;
 	AIDebugger& _aiDebugger;
 public:
-	MapItem(const AIStateTree& tree, AIDebugger& aiDebugger);
+	MapItem(const AIStateWorld& state, AIDebugger& aiDebugger);
 	virtual ~MapItem();
 
 	QRectF boundingRect() const override;

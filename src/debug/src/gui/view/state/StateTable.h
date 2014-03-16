@@ -13,12 +13,11 @@ class StateTable: public QTableView {
 private:
 	QStandardItemModel *_model;
 	AIDebugger& _debugger;
-	const ai::AIStateTree* _selected;
 public:
 	StateTable(AIDebugger& debugger);
 	virtual ~StateTable();
 
-	void setSelected(const ai::AIStateTree* ai);
+	void updateStateTable();
 };
 
 }

@@ -7,11 +7,11 @@
 namespace ai {
 namespace debug {
 
-MapItem::MapItem (const AIStateTree& tree, AIDebugger& aiDebugger) :
-		QGraphicsItem(), _tree(tree), _aiDebugger(aiDebugger) {
+MapItem::MapItem (const AIStateWorld& state, AIDebugger& aiDebugger) :
+		QGraphicsItem(), _state(state), _aiDebugger(aiDebugger) {
 	setFlags(ItemIsSelectable);
-	setPos(worldToMap(tree.getPosition()));
-	setZValue((qreal)tree.getPosition().z());
+	setPos(worldToMap(state.getPosition()));
+	setZValue((qreal)state.getPosition().z());
 }
 
 MapItem::~MapItem () {
@@ -30,7 +30,7 @@ void MapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 	Q_UNUSED(option);
 	Q_UNUSED(widget);
 	QBrush b = painter->brush();
-	const bool selected = _aiDebugger.isSelected(_tree);
+	const bool selected = _aiDebugger.isSelected(_state);
 	QColor color = selected ? QColor::fromRgb(200, 0, 0) : QColor::fromRgb(255, 0, 0);
 	painter->setBrush(color);
 	painter->drawEllipse(pos(), 10.0, 10.0);
@@ -39,7 +39,7 @@ void MapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 void MapItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	QGraphicsItem::mousePressEvent(event);
-	_aiDebugger.select(_tree);
+	_aiDebugger.select(_state);
 	update();
 }
 

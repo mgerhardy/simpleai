@@ -1,5 +1,4 @@
 #include "Network.h"
-#include <iostream>
 #include "IProtocolMessage.h"
 #include "IProtocolHandler.h"
 #include "ProtocolHandlerRegistry.h"
@@ -114,7 +113,6 @@ Network::ClientSocketsIter Network::closeClient(ClientSocketsIter& i) {
 	FD_CLR(clientSocket, &_writeFDSet);
 	closesocket(clientSocket);
 	i->socket = INVALID_SOCKET;
-	std::cout << "close connection" << std::endl << std::flush;
 	return _clientSockets.erase(i);
 }
 
@@ -139,7 +137,6 @@ void Network::update(uint32_t deltaTime) {
 			_maxFD = std::max(clientSocket + 1, _maxFD);
 			FD_SET(clientSocket, &_readFDSet);
 			_clientSockets.push_back(Client(clientSocket));
-			std::cout << "new connection" << std::endl << std::flush;
 		}
 	}
 
@@ -183,13 +180,6 @@ void Network::update(uint32_t deltaTime) {
 			for (int n = 0; n < len; ++n) {
 				client.in.push_back(buf[n]);
 			}
-			++i;
-			continue;
-		}
-
-		if (client.in.empty()) {
-			++i;
-			continue;
 		}
 
 		IProtocolMessage* msg = ProtocolMessageFactory::get().create(client.in);
@@ -198,9 +188,6 @@ void Network::update(uint32_t deltaTime) {
 			if (handler)
 				handler->execute(clientId, *msg);
 			delete msg;
-		} else {
-			i = closeClient(i);
-			continue;
 		}
 		++i;
 	}

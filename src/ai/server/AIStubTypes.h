@@ -15,27 +15,10 @@ struct AIStateAggroEntry {
 
 class AIStateAggro {
 private:
-	ai::CharacterId _id;
 	std::vector<AIStateAggroEntry> _aggro;
 public:
-	AIStateAggro(const ai::CharacterId& id, const std::vector<AIStateAggroEntry>& aggro) :
-			_id(id), _aggro(aggro) {
-	}
-
-	AIStateAggro() :
-			_id(-1) {
-	}
-
-	inline void setId(const CharacterId& id) {
-		_id = id;
-	}
-
 	inline void addAggro(const AIStateAggroEntry& entry) {
 		_aggro.push_back(entry);
-	}
-
-	inline const ai::CharacterId& getId() const {
-		return _id;
 	}
 
 	inline const std::vector<AIStateAggroEntry>& getAggro() const {
@@ -54,6 +37,10 @@ private:
 public:
 	AIStateNode(const std::string& name, const std::string& condition, long lastRun, bool state) :
 			_name(name), _condition(condition), _lastRun(lastRun), _state(state) {
+	}
+
+	AIStateNode() :
+			_lastRun(0L), _state(false) {
 	}
 
 	void addChildren(const AIStateNode& child) {
@@ -78,29 +65,6 @@ public:
 
 	inline bool getState() const {
 		return _state;
-	}
-};
-
-class AIStateTree {
-private:
-	AIStateNode _node;
-	ai::CharacterId _id;
-	ai::AIPosition _position;
-public:
-	AIStateTree(const ai::CharacterId& id, const ai::AIPosition& position, const AIStateNode& node) :
-			_node(node), _id(id), _position(position) {
-	}
-
-	inline const AIStateNode& getNode() const {
-		return _node;
-	}
-
-	inline const ai::CharacterId& getId() const {
-		return _id;
-	}
-
-	inline const ai::AIPosition& getPosition() const {
-		return _position;
 	}
 };
 

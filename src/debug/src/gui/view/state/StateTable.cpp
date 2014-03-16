@@ -4,7 +4,7 @@ namespace ai {
 namespace debug {
 
 StateTable::StateTable(AIDebugger& debugger) :
-		QTableView(), _debugger(debugger), _selected(nullptr) {
+		QTableView(), _debugger(debugger) {
 	setFixedWidth(140);
 	_model = new QStandardItemModel(0, 1, this);
 	_model->setHorizontalHeaderItem(0, new QStandardItem(tr("State")));
@@ -15,10 +15,9 @@ StateTable::StateTable(AIDebugger& debugger) :
 StateTable::~StateTable() {
 }
 
-void StateTable::setSelected(const ai::AIStateTree* ai) {
-	_selected = ai;
-
-	if (_selected == nullptr) {
+void StateTable::updateStateTable() {
+	const CharacterId& id = _debugger.getSelected();
+	if (id == -1) {
 		_model->clear();
 		update();
 		return;

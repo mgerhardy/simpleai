@@ -19,7 +19,7 @@ class MapView;
 class AIDebugger: public QApplication {
 	Q_OBJECT
 public:
-	typedef std::vector<AIStateTree> Entities;
+	typedef std::vector<AIStateWorld> Entities;
 	typedef Entities::const_iterator EntitiesIter;
 protected:
 	typedef Entities::iterator Iter;
@@ -32,8 +32,11 @@ protected:
 
 	ai::CharacterId _selectedId;
 	std::vector<AIStateAggroEntry> _aggro;
+	AIStateNode _node;
 
 	QTcpSocket _socket;
+
+	bool writeMessage(const IProtocolMessage& msg);
 
 private slots:
 	void readTcpData();
@@ -43,14 +46,16 @@ public:
 
 	const Entities& getEntities() const;
 	void setEntities(const Entities& entities);
-	void setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro);
+	void setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node);
+	const AIStateNode& getNode() const;
+	const std::vector<AIStateAggroEntry>& getAggro() const;
 
 	int run();
 	bool connectToAIServer(const QString& hostname, short port);
 
-	bool isSelected(const ai::AIStateTree& ai) const;
-	const ai::AIStateTree* getSelected();
-	void select(const ai::AIStateTree& ai);
+	bool isSelected(const ai::AIStateWorld& ai) const;
+	const CharacterId& getSelected() const;
+	void select(const ai::AIStateWorld& ai);
 	void unselect();
 
 	virtual MapView* createMapWidget();
@@ -62,9 +67,18 @@ inline void AIDebugger::stop() {
 	_running = false;
 }
 
-inline void AIDebugger::setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro) {
+inline void AIDebugger::setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node) {
 	_selectedId = id;
 	_aggro = aggro.getAggro();
+	_node = node;
+}
+
+inline const std::vector<AIStateAggroEntry>& AIDebugger::getAggro() const {
+	return _aggro;
+}
+
+inline const AIStateNode& AIDebugger::getNode() const {
+	return _node;
 }
 
 inline void AIDebugger::setEntities(const Entities& entities) {
