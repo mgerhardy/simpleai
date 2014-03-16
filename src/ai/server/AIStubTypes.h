@@ -104,4 +104,22 @@ public:
 	}
 };
 
+class AIStateWorld {
+private:
+	ai::CharacterId _id;
+	ai::AIPosition _position;
+public:
+	AIStateWorld(const ai::CharacterId& id, const ai::AIPosition& position) :
+			_id(id), _position(position) {
+	}
+
+	inline const ai::CharacterId& getId() const {
+		return _id;
+	}
+
+	inline const ai::AIPosition& getPosition() const {
+		return _position;
+	}
+};
+
 }
