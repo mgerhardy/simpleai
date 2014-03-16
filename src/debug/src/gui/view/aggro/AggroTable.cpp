@@ -11,8 +11,7 @@ AggroTable::AggroTable(AIDebugger& debugger) :
 	setModel(&_proxyModel);
 	setAlternatingRowColors(true);
 	setSortingEnabled(true);
-	setSelectionMode(QAbstractItemView::SingleSelection);
-	setSelectionBehavior(QAbstractItemView::SelectRows);
+	setSelectionMode(QAbstractItemView::NoSelection);
 	verticalHeader()->hide();
 	setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 }
