@@ -1,10 +1,10 @@
 #pragma once
 
 #include <QTableView>
-#include "EntityListModel.h"
 #include <QSortFilterProxyModel>
 
 #include "AIDebugger.h"
+#include "EntityListModel.h"
 
 namespace ai {
 namespace debug {

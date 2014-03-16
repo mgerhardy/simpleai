@@ -6,7 +6,7 @@ TARGET = simpleai-debugger
 DEPENDPATH += . \
               src \
               src/gui
-INCLUDEPATH += . src src/gui src/gui/dialog src/gui/widget src/gui/view/map src/gui/view/tree src/gui/view/state src/gui/view/list src/common
+INCLUDEPATH += . src src/gui src/gui/dialog src/gui/widget src/gui/view/map src/gui/view/tree src/gui/view/aggro src/gui/view/state src/gui/view/list src/common
 
 CONFIG += qt
 
@@ -25,6 +25,9 @@ HEADERS += src/AIDebugger.h \
            src/gui/view/tree/NodeTreeItem.h \
            src/gui/view/tree/NodeTreeWidget.h \
            src/gui/view/state/StateTable.h \
+           src/gui/view/state/StateTableModel.h \
+           src/gui/view/aggro/AggroTable.h \
+           src/gui/view/aggro/AggroTableModel.h \
            src/gui/widget/IComboBox.h
 
 SOURCES += src/Main.cpp \
@@ -40,6 +43,9 @@ SOURCES += src/Main.cpp \
            src/gui/view/tree/NodeTreeItem.cpp \
            src/gui/view/tree/NodeTreeWidget.cpp \
            src/gui/view/state/StateTable.cpp \
+           src/gui/view/state/StateTableModel.cpp \
+           src/gui/view/aggro/AggroTable.cpp \
+           src/gui/view/aggro/AggroTableModel.cpp \
            src/gui/widget/IComboBox.cpp
 
 RESOURCES += data/resources.qrc

@@ -1,11 +1,15 @@
-#include "AIDebuggerWindow.h"
-#include "AIDebugger.h"
-#include "MapView.h"
-#include "ConnectDialog.h"
-#include <AI.h>
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QStatusBar>
+
+#include "AIDebugger.h"
+#include "AIDebuggerWindow.h"
+#include "ConnectDialog.h"
+#include "StateTable.h"
+#include "EntityList.h"
+#include "AggroTable.h"
+#include "MapView.h"
+#include "NodeTreeWidget.h"
 
 namespace ai {
 namespace debug {
@@ -42,6 +46,7 @@ AIDebuggerWindow::~AIDebuggerWindow() {
 	delete _selectedLabel;
 	delete _nodeTree;
 	delete _stateTable;
+	delete _aggroTable;
 }
 
 void AIDebuggerWindow::createView() {
@@ -76,8 +81,10 @@ QWidget *AIDebuggerWindow::createBottomWidget() {
 	QHBoxLayout *bottomLayout = new QHBoxLayout;
 
 	_nodeTree = new NodeTreeWidget(_debugger);
+	_aggroTable = new AggroTable(_debugger);
 	_stateTable = new StateTable(_debugger);
 	bottomLayout->addWidget(_nodeTree);
+	bottomLayout->addWidget(_aggroTable);
 	bottomLayout->addWidget(_stateTable);
 	bottomWidget->setLayout(bottomLayout);
 	return bottomWidget;

@@ -5,13 +5,18 @@
 #include <QMainWindow>
 #include <QToolBar>
 
-#include "AIDebugger.h"
-#include "StateTable.h"
-#include "EntityList.h"
-#include "NodeTreeWidget.h"
 
 namespace ai {
+
+class AIDebugger;
+
 namespace debug {
+
+class StateTable;
+class EntityList;
+class AggroTable;
+class NodeTreeWidget;
+class MapView;
 
 class AIDebuggerWindow: public QMainWindow {
 Q_OBJECT
@@ -37,6 +42,7 @@ private:
 	StateTable *_stateTable;
 	MapView *_mapView;
 	EntityList *_entityList;
+	AggroTable *_aggroTable;
 	QMenu *_fileMenu;
 	QMenu *_helpMenu;
 	QAction *_connectAction;

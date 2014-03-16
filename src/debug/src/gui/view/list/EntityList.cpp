@@ -1,13 +1,12 @@
 #include "EntityList.h"
 #include <QHeaderView>
-#include <QStringListModel>
 
 namespace ai {
 namespace debug {
 
 EntityList::EntityList(AIDebugger& debugger) :
 		QTableView(), _model(debugger), _debugger(debugger) {
-	setFixedWidth(140);
+	setFixedWidth(100);
 	_proxyModel.setSourceModel(&_model);
 	setModel(&_proxyModel);
 	setAlternatingRowColors(true);

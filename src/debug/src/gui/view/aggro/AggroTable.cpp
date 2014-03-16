@@ -1,12 +1,12 @@
-#include "StateTable.h"
+#include "AggroTable.h"
 #include <QHeaderView>
 
 namespace ai {
 namespace debug {
 
-StateTable::StateTable(AIDebugger& debugger) :
+AggroTable::AggroTable(AIDebugger& debugger) :
 		QTableView(), _model(debugger), _debugger(debugger) {
-	setFixedWidth(180);
+	setFixedWidth(120);
 	_proxyModel.setSourceModel(&_model);
 	setModel(&_proxyModel);
 	setAlternatingRowColors(true);
@@ -17,10 +17,10 @@ StateTable::StateTable(AIDebugger& debugger) :
 	setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 }
 
-StateTable::~StateTable() {
+AggroTable::~AggroTable() {
 }
 
-void StateTable::updateStateTable() {
+void AggroTable::updateAggroTable() {
 	_model.update();
 }
 
