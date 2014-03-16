@@ -10,6 +10,9 @@
 namespace ai {
 namespace debug {
 
+/**
+ * @brief Shows the behaviour tree for the current selected entity
+ */
 class NodeTreeWidget: public QGraphicsView {
 Q_OBJECT
 private:

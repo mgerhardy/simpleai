@@ -18,6 +18,7 @@ HEADERS += src/AIDebugger.h \
            src/gui/dialog/ConnectDialog.h \
            src/gui/dialog/IDialog.h \
            src/gui/view/list/EntityList.h \
+           src/gui/view/list/EntityListModel.h \
            src/gui/view/map/MapScene.h \
            src/gui/view/map/MapView.h \
            src/gui/view/map/MapItem.h \
@@ -32,6 +33,7 @@ SOURCES += src/Main.cpp \
            src/gui/dialog/ConnectDialog.cpp \
            src/gui/dialog/IDialog.cpp \
            src/gui/view/list/EntityList.cpp \
+           src/gui/view/list/EntityListModel.cpp \
            src/gui/view/map/MapScene.cpp \
            src/gui/view/map/MapView.cpp \
            src/gui/view/map/MapItem.cpp \

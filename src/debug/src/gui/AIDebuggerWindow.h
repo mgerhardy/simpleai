@@ -3,6 +3,7 @@
 #include <QtGui>
 #include <QLabel>
 #include <QMainWindow>
+#include <QToolBar>
 
 #include "AIDebugger.h"
 #include "StateTable.h"
@@ -43,6 +44,7 @@ private:
 	QAction *_aboutAction;
 	QLabel *_statusBarLabel;
 	QLabel *_selectedLabel;
+	QToolBar *_toolbar;
 
 	AIDebugger& _debugger;
 };

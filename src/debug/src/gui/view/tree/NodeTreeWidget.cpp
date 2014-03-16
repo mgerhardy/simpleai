@@ -15,9 +15,9 @@ NodeTreeWidget::~NodeTreeWidget() {
 }
 
 void NodeTreeWidget::updateTreeWidget() {
-	const ai::CharacterId id = _debugger.getSelected();
+	_scene->clear();
+	const ai::CharacterId& id = _debugger.getSelected();
 	if (id == -1) {
-		_scene->clear();
 		return;
 	}
 	const AIStateNode& node = _debugger.getNode();

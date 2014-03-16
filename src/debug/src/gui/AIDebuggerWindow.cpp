@@ -21,6 +21,12 @@ AIDebuggerWindow::AIDebuggerWindow(AIDebugger& debugger) :
 	statusBar()->addWidget(_statusBarLabel);
 	statusBar()->addWidget(_selectedLabel);
 
+	_toolbar = addToolBar("");
+	_toolbar->setMovable(false);
+	_toolbar->setFloatable(false);
+	_toolbar->addAction(_connectAction);
+	addToolBar(Qt::TopToolBarArea, _toolbar);
+
 	resize(1024, 768);
 	setWindowTitle(tr("AI Debugger"));
 
@@ -90,7 +96,7 @@ void AIDebuggerWindow::connectToAIServer() {
 }
 
 void AIDebuggerWindow::about() {
-	QMessageBox::about(this, tr("About"), tr("AI debug visualization for libsimpleai."));
+	QMessageBox::about(this, tr("About"), tr("AI debug visualization for libsimpleai.<br />Grab the latest version at <a href=\"https://github.com/mgerhardy/simpleai\">github</a>"));
 }
 
 void AIDebuggerWindow::tick() {
@@ -103,6 +109,7 @@ void AIDebuggerWindow::tick() {
 	_stateTable->updateStateTable();
 	_entityList->updateEntityList();
 	_mapView->updateMapView();
+	_nodeTree->updateTreeWidget();
 }
 
 void AIDebuggerWindow::createMenus() {
@@ -119,15 +126,18 @@ void AIDebuggerWindow::createActions() {
 	_connectAction = new QAction(tr("C&onnect"), this);
 	_connectAction->setShortcuts(QKeySequence::Open);
 	_connectAction->setStatusTip(tr("Connect to AI server"));
+	_connectAction->setIcon(QIcon(":/images/connect.png"));
 	connect(_connectAction, SIGNAL(triggered()), this, SLOT(connectToAIServer()));
 
 	_exitAction = new QAction(tr("E&xit"), this);
 	_exitAction->setShortcuts(QKeySequence::Quit);
 	_exitAction->setStatusTip(tr("Exit the application"));
+	_exitAction->setIcon(QIcon(":/images/exit.png"));
 	connect(_exitAction, SIGNAL(triggered()), this, SLOT(close()));
 
 	_aboutAction = new QAction(tr("&About"), this);
 	_aboutAction->setStatusTip(tr("Show the application's About box"));
+	_aboutAction->setIcon(QIcon(":/images/about.png"));
 	connect(_aboutAction, SIGNAL(triggered()), this, SLOT(about()));
 }
 

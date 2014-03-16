@@ -1,36 +1,41 @@
 #include "EntityList.h"
+#include <QHeaderView>
+#include <QStringListModel>
 
 namespace ai {
 namespace debug {
 
 EntityList::EntityList(AIDebugger& debugger) :
-		QTableView(), _debugger(debugger) {
+		QTableView(), _model(debugger), _debugger(debugger) {
 	setFixedWidth(140);
-	_model = new QStandardItemModel(0, 1, this);
-	_model->setHorizontalHeaderItem(0, new QStandardItem(tr("Entity")));
-	setModel(_model);
+	_proxyModel.setSourceModel(&_model);
+	setModel(&_proxyModel);
+	setAlternatingRowColors(true);
+	setSortingEnabled(true);
+	setSelectionMode(QAbstractItemView::SingleSelection);
+	setSelectionBehavior(QAbstractItemView::SelectRows);
+	verticalHeader()->hide();
+
+	connect(selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(selectEntity(QModelIndex,QModelIndex)));
 }
 
 EntityList::~EntityList() {
 }
 
 void EntityList::updateEntityList() {
-	_model->clear();
-	const AIDebugger::Entities& entities = _debugger.getEntities();
-	for (AIDebugger::EntitiesIter i = entities.begin(); i != entities.end(); ++i) {
-		const AIStateWorld& ai = *i;
-		const ai::CharacterId& id = ai.getId();
-		const QString idStr = QString::number(id);
-		QStandardItem *row = new QStandardItem(idStr);
-		if (_debugger.isSelected(ai)) {
-			//row->setBackground();
-		}
-		_model->appendRow(row);
-	}
-	_model->sort(0);
+	_model.update();
 }
 
-// _aiDebugger.select(_tree);
+void EntityList::selectEntity(const QModelIndex &current, const QModelIndex &previous) {
+	Q_UNUSED(previous);
+	const AIStateWorld* state = _model.getEntity(_proxyModel.mapToSource(current));
+	if (state == nullptr) {
+		qDebug() << "Error selecting entity from list for index " << current;
+		return;
+	}
+	_debugger.select(*state);
+}
+
 
 }
 }

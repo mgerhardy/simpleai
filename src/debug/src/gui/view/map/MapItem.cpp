@@ -31,7 +31,7 @@ void MapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 	Q_UNUSED(widget);
 	QBrush b = painter->brush();
 	const bool selected = _aiDebugger.isSelected(_state);
-	QColor color = selected ? QColor::fromRgb(200, 0, 0) : QColor::fromRgb(255, 0, 0);
+	QColor color = selected ? QColor::fromRgb(200, 200, 0) : QColor::fromRgb(255, 0, 0);
 	painter->setBrush(color);
 	painter->drawEllipse(pos(), 10.0, 10.0);
 	painter->setBrush(b);
