@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <tree/TreeNode.h>
+#include <tree/loaders/lua/LUACondition.h>
 
 namespace ai {
 
@@ -26,6 +27,7 @@ public:
 
 	inline void setCondition(LUACondition *condition) {
 		_condition = condition;
+		_node->setCondition(condition->getCondition());
 	}
 
 	inline const std::vector<LUANode*>& getChildren() const {

@@ -6,14 +6,14 @@ namespace ai {
 
 class LUACondition {
 private:
-	std::string _name;
+	const ConditionPtr& _condition;
 public:
-	LUACondition(const std::string& name) :
-			_name(name) {
+	LUACondition(const ConditionPtr& condition) :
+			_condition(condition) {
 	}
 
-	inline const std::string& getName () const {
-		return _name;
+	inline const ConditionPtr& getCondition() const {
+		return _condition;
 	}
 };
 

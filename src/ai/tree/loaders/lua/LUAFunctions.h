@@ -61,7 +61,7 @@ static int luaNode_ToString(lua_State * l) {
 	const LUANode *node = luaGetNodeContext(l, 1);
 	const LUACondition* condition = node->getCondition();
 	lua_pushfstring(l, "node: %d children [condition: %s]", (int)node->getChildren().size(),
-			condition ? condition->getName().c_str() : "no condition");
+			condition ? condition->getCondition()->getName().c_str() : "no condition");
 	return 1;
 }
 
@@ -105,8 +105,13 @@ static int luaNode_SetCondition(lua_State * l) {
 	LUACondition** udata = LUA::newUserdata<LUACondition>(l, "Condition");
 
 	ConditionParser parser(ctx->getAIFactory(), conditionExpression);
+	const ConditionPtr& condition = parser.getCondition();
+	if (!node) {
+		LUA::returnError(l, "Could not create a node for " + conditionExpression);
+		return 0;
+	}
 
-	*udata = new LUACondition(conditionExpression);
+	*udata = new LUACondition(condition);
 	node->setCondition(*udata);
 	return 1;
 }

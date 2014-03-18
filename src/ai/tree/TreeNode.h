@@ -85,6 +85,7 @@ public:
 	long getLastRunMillis() const;
 	const std::string& getName() const;
 	const ConditionPtr& getCondition() const;
+	void setCondition(const ConditionPtr& condition);
 	const TreeNodes& getChildren() const;
 
 	/**
@@ -117,6 +118,10 @@ inline long TreeNode::getLastRunMillis() const {
 
 inline const ConditionPtr& TreeNode::getCondition() const {
 	return _condition;
+}
+
+inline void TreeNode::setCondition(const ConditionPtr& condition) {
+	_condition = condition;
 }
 
 inline const TreeNodes& TreeNode::getChildren() const {
