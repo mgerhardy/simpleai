@@ -34,3 +34,9 @@ TEST_F(ParserTest, testParseTreeNode) {
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_TRUE(c) << parser.getError();
 }
+
+TEST_F(ParserTest, testParseIdleNode) {
+	ai::TreeNodeParser parser(_registry, "Idle{1000}");
+	const ai::TreeNodePtr& c = parser.getTreeNode();
+	ASSERT_TRUE(c) << parser.getError();
+}
