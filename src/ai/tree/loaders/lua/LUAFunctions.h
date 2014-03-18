@@ -95,6 +95,9 @@ static int luaNode_AddNode(lua_State * l) {
 
 	TreeNodeFactoryContext factoryCtx(name, "", True::get());
 	*udata = node->addChild(id, factoryCtx);
+	if (*udata == nullptr) {
+		LUA::returnError(l, "Could not create a node for " + id);
+	}
 	return 1;
 }
 
