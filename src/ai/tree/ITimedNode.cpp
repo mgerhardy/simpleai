@@ -8,7 +8,10 @@ namespace ai {
 
 ITimedNode::ITimedNode(const std::string& name, const std::string& parameters, const ConditionPtr& condition) :
 		TreeNode(name, parameters, condition), _timerMillis(-1) {
-	_millis = ::atol(parameters.c_str());
+	if (!parameters.empty())
+		_millis = ::atol(parameters.c_str());
+	else
+		_millis = 1000L;
 }
 
 ITimedNode::~ITimedNode() {
