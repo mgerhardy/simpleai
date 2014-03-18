@@ -9,7 +9,9 @@ namespace debug {
 MapView::MapView(AIDebugger& debugger) :
 		QGraphicsView(), _debugger(debugger) {
 	setRenderHints(QPainter::Antialiasing);
-	setInteractive(true);
+	setInteractive(false);
+	setDragMode(QGraphicsView::ScrollHandDrag);
+
 	_scene = new MapScene();
 	setScene(_scene);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
