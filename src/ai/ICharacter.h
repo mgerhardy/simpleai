@@ -44,7 +44,7 @@ inline void ICharacter::setPosition(const AIPosition& position) {
 }
 
 inline void ICharacter::setAttribute(const std::string& key, const std::string& value) {
-	_attributes.insert(std::make_pair(key, value));
+	_attributes[key] = value;
 }
 
 inline const CharacterAttributes& ICharacter::getAttributes() const {
