@@ -97,7 +97,7 @@ void Server::broadcastCharacterDetails() {
 		aggro.addAggro(AIStateAggroEntry(e->getCharacterId(), e->getAggro()));
 	}
 
-	const AICharacterDetailsMessage msg(_selectedCharacterId, aggro, root);
+	const AICharacterDetailsMessage msg(_selectedCharacterId, aggro, root, ai.getCharacter().getAttributes());
 	_network.broadcast(msg);
 }
 

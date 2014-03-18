@@ -14,6 +14,7 @@ public:
 			ai::ICharacter(id), _ai(*this, root, pathfinder), _server(server) {
 		setPosition(pathfinder.getStartPosition());
 		_server.addAI(_ai);
+		setAttribute("Name", "Foobar");
 	}
 
 	~GameEntity () {
@@ -21,6 +22,9 @@ public:
 	}
 
 	void update(uint32_t deltaTime) {
+		std::stringstream ss;
+		ss << _position.x() << ":" << _position.y();
+		setAttribute("Position", ss.str());
 		_ai.update(deltaTime);
 	}
 

@@ -1,10 +1,13 @@
 #pragma once
 
 #include <common/AIPosition.h>
+#include <string>
 
 namespace ai {
 
 typedef int CharacterId;
+
+typedef std::map<std::string, std::string> CharacterAttributes;
 
 /**
  * @brief Class that should be extended by the ai controlled entity class.
@@ -16,6 +19,7 @@ class ICharacter {
 protected:
 	CharacterId _id;
 	AIPosition _position;
+	CharacterAttributes _attributes;
 
 public:
 	ICharacter(CharacterId id) :
@@ -31,10 +35,20 @@ public:
 	CharacterId getId() const;
 	void setPosition(const AIPosition& position);
 	const AIPosition& getPosition() const;
+	void setAttribute(const std::string& key, const std::string& value);
+	const CharacterAttributes& getAttributes() const;
 };
 
 inline void ICharacter::setPosition(const AIPosition& position) {
 	_position = position;
+}
+
+inline void ICharacter::setAttribute(const std::string& key, const std::string& value) {
+	_attributes.insert(std::make_pair(key, value));
+}
+
+inline const CharacterAttributes& ICharacter::getAttributes() const {
+	return _attributes;
 }
 
 inline bool ICharacter::operator ==(const ICharacter& character) const {

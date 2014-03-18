@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QAbstractTableModel>
+#include <QList>
+#include <string>
 
 #include "AIDebugger.h"
 
@@ -11,6 +13,7 @@ class StateTableModel: public QAbstractTableModel {
 Q_OBJECT
 private:
 	AIDebugger& _debugger;
+	QList<std::string> _list;
 public:
 	StateTableModel(AIDebugger& debugger);
 	~StateTableModel();

@@ -33,6 +33,7 @@ protected:
 	ai::CharacterId _selectedId;
 	std::vector<AIStateAggroEntry> _aggro;
 	AIStateNode _node;
+	CharacterAttributes _attributes;
 
 	QTcpSocket _socket;
 
@@ -46,8 +47,9 @@ public:
 
 	const Entities& getEntities() const;
 	void setEntities(const Entities& entities);
-	void setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node);
+	void setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node, const CharacterAttributes& attributes);
 	const AIStateNode& getNode() const;
+	const CharacterAttributes& getAttributes() const;
 	const std::vector<AIStateAggroEntry>& getAggro() const;
 
 	int run();
@@ -67,10 +69,11 @@ inline void AIDebugger::stop() {
 	_running = false;
 }
 
-inline void AIDebugger::setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node) {
+inline void AIDebugger::setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node, const CharacterAttributes& attributes) {
 	_selectedId = id;
 	_aggro = aggro.getAggro();
 	_node = node;
+	_attributes = attributes;
 }
 
 inline const std::vector<AIStateAggroEntry>& AIDebugger::getAggro() const {
@@ -79,6 +82,10 @@ inline const std::vector<AIStateAggroEntry>& AIDebugger::getAggro() const {
 
 inline const AIStateNode& AIDebugger::getNode() const {
 	return _node;
+}
+
+inline const CharacterAttributes& AIDebugger::getAttributes() const {
+	return _attributes;
 }
 
 inline void AIDebugger::setEntities(const Entities& entities) {

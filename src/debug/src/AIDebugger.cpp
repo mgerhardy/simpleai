@@ -40,7 +40,7 @@ public:
 	}
 
 	void executeAICharacterDetailsMessage(const ai::AICharacterDetailsMessage& msg) override {
-		_aiDebugger.setCharacterDetails(msg.getCharacterId(), msg.getAggro(), msg.getNode());
+		_aiDebugger.setCharacterDetails(msg.getCharacterId(), msg.getAggro(), msg.getNode(), msg.getAttributes());
 	}
 };
 

@@ -11,8 +11,10 @@ private:
 	CharacterId _chrId;
 	const AIStateAggro* _aggroPtr;
 	const AIStateNode* _rootPtr;
+	const CharacterAttributes* _attributesPtr;
 	AIStateAggro _aggro;
 	AIStateNode _root;
+	CharacterAttributes _attributes;
 
 	AIStateNode readNode (streamContainer& in) {
 		const std::string& name = readString(in);
@@ -58,16 +60,34 @@ private:
 		}
 	}
 
+	void writeAttributes(streamContainer& out, const CharacterAttributes& a) const {
+		addShort(out, a.size());
+		for (CharacterAttributes::const_iterator i = a.begin(); i != a.end(); ++i) {
+			addString(out, i->first);
+			addString(out, i->second);
+		}
+	}
+
+	void readAttributes(streamContainer& in, CharacterAttributes& attributes) const {
+		const int size = readShort(in);
+		for (int i = 0; i < size; ++i) {
+			const std::string& key = readString(in);
+			const std::string& value = readString(in);
+			attributes.insert(std::make_pair(key, value));
+		}
+	}
+
 public:
-	AICharacterDetailsMessage(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& root) :
-			IProtocolMessage(PROTO_CHARACTER_DETAILS), _chrId(id), _aggroPtr(&aggro), _rootPtr(&root) {
+	AICharacterDetailsMessage(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& root, const CharacterAttributes& attributes) :
+			IProtocolMessage(PROTO_CHARACTER_DETAILS), _chrId(id), _aggroPtr(&aggro), _rootPtr(&root), _attributesPtr(&attributes) {
 	}
 
 	AICharacterDetailsMessage(streamContainer& in) :
-			IProtocolMessage(PROTO_CHARACTER_DETAILS), _aggroPtr(nullptr), _rootPtr(nullptr) {
+			IProtocolMessage(PROTO_CHARACTER_DETAILS), _aggroPtr(nullptr), _rootPtr(nullptr), _attributesPtr(nullptr) {
 		_chrId = readInt(in);
 		readAggro(in, _aggro);
 		_root = readNode(in);
+		readAttributes(in, _attributes);
 	}
 
 	void serialize(streamContainer& out) const override {
@@ -75,6 +95,7 @@ public:
 		addInt(out, _chrId);
 		writeAggro(out, *_aggroPtr);
 		writeNode(out, *_rootPtr);
+		writeAttributes(out, *_attributesPtr);
 	}
 
 	inline const CharacterId& getCharacterId() const {
@@ -87,6 +108,10 @@ public:
 
 	inline const AIStateNode& getNode() const {
 		return _root;
+	}
+
+	inline const CharacterAttributes& getAttributes () const {
+		return _attributes;
 	}
 };
 

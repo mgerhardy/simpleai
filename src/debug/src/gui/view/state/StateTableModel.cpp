@@ -13,12 +13,16 @@ StateTableModel::~StateTableModel() {
 
 void StateTableModel::update() {
 	beginResetModel();
+	const CharacterAttributes& a = _debugger.getAttributes();
+	_list.clear();
+	for (CharacterAttributes::const_iterator i = a.begin(); i != a.end(); ++i) {
+		_list.push_back(i->first);
+	}
 	endResetModel();
 }
 
 int StateTableModel::rowCount(const QModelIndex & /*parent*/) const {
-	// TODO:
-	return 0;
+	return _list.size();
 }
 
 int StateTableModel::columnCount(const QModelIndex & /*parent*/) const {
@@ -48,9 +52,12 @@ QVariant StateTableModel::data(const QModelIndex &index, int role) const {
 	if (role == Qt::DisplayRole) {
 		switch (index.column()) {
 		case 0:
-			return "";
-		case 1:
-			return "";
+			return QString::fromStdString(_list[index.row()]);
+		case 1: {
+			const CharacterAttributes& a = _debugger.getAttributes();
+			const std::string& key = _list[index.row()];
+			return QString::fromStdString(a.find(key)->second);
+		}
 		default:
 			break;
 		}
