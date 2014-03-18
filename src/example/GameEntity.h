@@ -10,8 +10,9 @@ private:
 	std::list<ai::AIPosition> _route;
 
 public:
-	GameEntity (const ai::CharacterId& id, const ai::TreeNodePtr& root, ai::IPathfinder& pathfinder, ai::Server& server) :
+	GameEntity (const ai::CharacterId& id, const ai::TreeNodePtr& root, ai::example::Pathfinder& pathfinder, ai::Server& server) :
 			ai::ICharacter(id), _ai(*this, root, pathfinder), _server(server) {
+		setPosition(pathfinder.getStartPosition());
 		_server.addAI(_ai);
 	}
 

@@ -1,4 +1,5 @@
 #include "Pathfinder.h"
+#include <stdlib.h>
 
 namespace ai {
 namespace example {
@@ -30,6 +31,13 @@ ai::MoveState Pathfinder::move(ai::AI& entity, const ai::AIPosition& to, std::li
 	}
 
 	return ai::SUCCESSFUL;
+}
+
+ai::AIPosition Pathfinder::getStartPosition() {
+	const int x = rand() % _width;
+	const int y = rand() % _height;
+	const float z = 0.0f;
+	return ai::AIPosition(x, y, z);
 }
 
 }

@@ -16,6 +16,9 @@ public:
 	virtual ~Pathfinder();
 
 	ai::MoveState move(ai::AI& entity, const ai::AIPosition& to, std::list<ai::AIPosition>& route) override;
+
+	// returns a random start position within the boundaries
+	ai::AIPosition getStartPosition();
 };
 
 }
