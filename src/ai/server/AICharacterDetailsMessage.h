@@ -21,7 +21,7 @@ private:
 		const std::string& condition = readString(in);
 		const int64_t lastRun = readLong(in);
 		const bool state = readBool(in);
-		const uint8_t childrenCount = readByte(in);
+		const uint8_t childrenCount = readShort(in);
 		AIStateNode node(name, condition, lastRun, state);
 		for (uint8_t i = 0; i < childrenCount; ++i) {
 			const AIStateNode& child = readNode(in);
@@ -36,7 +36,7 @@ private:
 		addLong(out, node.getLastRun());
 		addBool(out, node.getState());
 		const std::vector<AIStateNode>& children = node.getChildren();
-		addByte(out, children.size());
+		addShort(out, children.size());
 		for (std::vector<AIStateNode>::const_iterator i = children.begin(); i != children.end(); ++i) {
 			writeNode(out, *i);
 		}

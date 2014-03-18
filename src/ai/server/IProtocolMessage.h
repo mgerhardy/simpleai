@@ -189,7 +189,7 @@ inline std::string IProtocolMessage::readString(streamContainer& in) {
 
 inline void IProtocolMessage::addString(streamContainer& out, const std::string& string) {
 	const int length = string.length();
-	for (int i = 0; i < length; i++) {
+	for (int i = 0; i < length; ++i) {
 		out.push_back(uint8_t(string[i]));
 	}
 	out.push_back(uint8_t('\0'));
@@ -228,7 +228,6 @@ inline int16_t IProtocolMessage::readShort(streamContainer& in) {
 		buf[i] = in.front();
 		in.pop_front();
 	}
-	in.pop_front();
 	const int16_t *word = (const int16_t*) (void*) &buf;
 	const int16_t val = AI_SwapLE16(*word);
 	return val;
