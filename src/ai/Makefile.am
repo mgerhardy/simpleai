@@ -14,6 +14,8 @@ libsimpleai_la_SOURCES = \
 	tree/Sequence.cpp \
 	tree/PrioritySelector.cpp \
 	tree/Parallel.cpp \
+	tree/Idle.cpp \
+	tree/ITimedNode.cpp \
 	tree/TreeNode.cpp \
 	tree/TreeNodeParser.cpp \
 	tree/ITask.cpp \
@@ -38,6 +40,8 @@ nobase_library_include_HEADERS = \
 	aggro/AggroMgr.h \
 	tree/Invert.h \
 	tree/Parallel.h \
+	tree/Idle.h \
+	tree/ITimedNode.h \
 	tree/TreeNode.h \
 	tree/ITask.h \
 	tree/TreeNodeParser.h \

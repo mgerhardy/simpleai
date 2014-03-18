@@ -2,6 +2,7 @@
 #include <tree/TreeNode.h>
 #include <conditions/ICondition.h>
 #include <tree/Invert.h>
+#include <tree/Idle.h>
 #include <tree/Parallel.h>
 #include <tree/PrioritySelector.h>
 #include <tree/Sequence.h>
@@ -30,6 +31,7 @@ AIRegistry::TreeNodeFactory::TreeNodeFactory() {
 	R(Parallel);
 	R(PrioritySelector);
 	R(Sequence);
+	R(Idle);
 }
 
 #undef R
