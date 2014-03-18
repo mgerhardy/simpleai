@@ -27,10 +27,6 @@ TreeNodeStatus Parallel::execute(AI& entity, long currentMillis) {
 	return totalStatus ? RUNNING : FINISHED;
 }
 
-TreeNodePtr Parallel::Factory::create(const TreeNodeFactoryContext *ctx) const {
-	return TreeNodePtr(new Parallel(ctx->name, ctx->parameters, ctx->condition));
-}
-
-Parallel::Factory Parallel::FACTORY;
+NODE_FACTORY_IMPL(Parallel)
 
 }

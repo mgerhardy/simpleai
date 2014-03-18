@@ -44,11 +44,7 @@ public:
 	}
 };
 
-TreeNodePtr Move::Factory::create(const TreeNodeFactoryContext *ctx) const {
-	return TreeNodePtr(new Move(ctx->name, ctx->parameters, ctx->condition));
-}
-
-Move::Factory Move::FACTORY;
+NODE_FACTORY_IMPL(Move)
 
 }
 }

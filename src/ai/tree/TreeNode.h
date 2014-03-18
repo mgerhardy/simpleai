@@ -44,6 +44,12 @@ enum TreeNodeStatus {
 	}; \
 	static Factory FACTORY;
 
+#define NODE_FACTORY_IMPL(NodeName) \
+	TreeNodePtr NodeName::Factory::create(const TreeNodeFactoryContext *ctx) const { \
+		return TreeNodePtr(new NodeName(ctx->name, ctx->parameters, ctx->condition)); \
+	} \
+	NodeName::Factory NodeName::FACTORY;
+
 #define NODE_CLASS(NodeName) \
 	NodeName(const std::string& name, const std::string& parameters, const ConditionPtr& condition) : \
 		TreeNode(name, parameters, condition) { \

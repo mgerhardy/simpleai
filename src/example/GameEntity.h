@@ -22,10 +22,10 @@ public:
 	}
 
 	void update(uint32_t deltaTime) {
+		_ai.update(deltaTime);
 		std::stringstream ss;
 		ss << _position.x() << ":" << _position.y();
 		setAttribute("Position", ss.str());
-		_ai.update(deltaTime);
 	}
 
 	inline std::list<ai::AIPosition>& getRoute () {

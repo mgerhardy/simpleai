@@ -26,10 +26,6 @@ TreeNodeStatus PrioritySelector::execute(AI& entity, long currentMillis) {
 	return FINISHED;
 }
 
-TreeNodePtr PrioritySelector::Factory::create(const TreeNodeFactoryContext *ctx) const {
-	return TreeNodePtr(new PrioritySelector(ctx->name, ctx->parameters, ctx->condition));
-}
-
-PrioritySelector::Factory PrioritySelector::FACTORY;
+NODE_FACTORY_IMPL(PrioritySelector)
 
 }

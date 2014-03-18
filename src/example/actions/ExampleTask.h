@@ -17,11 +17,7 @@ public:
 	}
 };
 
-TreeNodePtr ExampleTask::Factory::create(const TreeNodeFactoryContext *ctx) const {
-	return TreeNodePtr(new ExampleTask(ctx->name, ctx->parameters, ctx->condition));
-}
-
-ExampleTask::Factory ExampleTask::FACTORY;
+NODE_FACTORY_IMPL(ExampleTask)
 
 }
 }
