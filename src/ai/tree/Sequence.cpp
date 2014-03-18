@@ -39,7 +39,7 @@ void Sequence::resetState(AI& entity) {
 }
 
 TreeNodePtr Sequence::Factory::create(const TreeNodeFactoryContext *ctx) const {
-	return TreeNodePtr(new Sequence(ctx->name));
+	return TreeNodePtr(new Sequence(ctx->name, ctx->parameters, ctx->condition));
 }
 
 Sequence::Factory Sequence::FACTORY;

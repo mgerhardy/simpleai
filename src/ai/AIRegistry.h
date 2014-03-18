@@ -8,8 +8,9 @@ namespace ai {
 struct TreeNodeFactoryContext {
 	std::string name;
 	std::string parameters;
-	TreeNodeFactoryContext(const std::string& _name, const std::string& _parameters = "") :
-			name(_name), parameters(_parameters) {
+	ConditionPtr condition;
+	TreeNodeFactoryContext(const std::string& _name, const std::string& _parameters, const ConditionPtr& _condition) :
+			name(_name), parameters(_parameters), condition(_condition) {
 	}
 };
 
@@ -18,7 +19,7 @@ struct ConditionFactoryContext {
 	std::string parameters;
 	// Some conditions have child conditions
 	Conditions conditions;
-	ConditionFactoryContext(const std::string& _parameters = "") :
+	ConditionFactoryContext(const std::string& _parameters) :
 		parameters(_parameters) {
 	}
 };

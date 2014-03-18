@@ -3,8 +3,8 @@
 
 namespace ai {
 
-ITask::ITask(const std::string& name, const ConditionPtr& condition) :
-		TreeNode(name, condition) {
+ITask::ITask(const std::string& name, const std::string& parameters, const ConditionPtr& condition) :
+		TreeNode(name, parameters, condition) {
 }
 
 ITask::~ITask() {

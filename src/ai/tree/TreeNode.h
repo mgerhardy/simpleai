@@ -45,11 +45,8 @@ enum TreeNodeStatus {
 	static Factory FACTORY;
 
 #define NODE_CLASS(NodeName) \
-	NodeName(const std::string& name, ConditionPtr condition) : \
-		TreeNode(name, condition) { \
-	} \
-	NodeName(const std::string& name) : \
-		TreeNode(name) { \
+	NodeName(const std::string& name, const std::string& parameters, const ConditionPtr& condition) : \
+		TreeNode(name, parameters, condition) { \
 	} \
 	virtual ~NodeName() { \
 	} \
@@ -62,6 +59,7 @@ protected:
 	int _id;
 	TreeNodes _children;
 	std::string _name;
+	std::string _parameters;
 	ConditionPtr _condition;
 	long _lastRunMillis;
 
@@ -72,7 +70,7 @@ protected:
 	void setSelectorState(AI& entity, int selected);
 
 public:
-	TreeNode(const std::string& name, const ConditionPtr& condition = True::get());
+	TreeNode(const std::string& name, const std::string& parameters, const ConditionPtr& condition);
 	virtual ~TreeNode();
 	/**
 	 * @brief Return the unique id for this node.

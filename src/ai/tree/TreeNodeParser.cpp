@@ -12,7 +12,7 @@ TreeNodeParser::~TreeNodeParser() {
 
 TreeNodePtr TreeNodeParser::getTreeNode() {
 	std::string name;
-	const std::string parameters = getBetween(_taskString, "{", "}");
+	const std::string& parameters = getBetween(_taskString, "{", "}");
 	std::size_t n = _taskString.find("{");
 	if (n == std::string::npos)
 		n = _taskString.find("(");
@@ -21,7 +21,7 @@ TreeNodePtr TreeNodeParser::getTreeNode() {
 	} else {
 		name = _taskString;
 	}
-	const TreeNodeFactoryContext factoryCtx(name, parameters);
+	const TreeNodeFactoryContext factoryCtx(name, parameters, True::get());
 	return _aiFactory.createNode(name, factoryCtx);
 }
 }

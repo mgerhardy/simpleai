@@ -15,8 +15,8 @@ namespace ai {
  */
 class Invert: public TreeNode {
 public:
-	Invert(const std::string& name) :
-			TreeNode(name) {
+	Invert(const std::string& name, const std::string& parameters, const ConditionPtr& condition) :
+			TreeNode(name, parameters, condition) {
 	}
 	virtual ~Invert() {}
 

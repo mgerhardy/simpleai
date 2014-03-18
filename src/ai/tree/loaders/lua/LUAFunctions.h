@@ -93,7 +93,7 @@ static int luaNode_AddNode(lua_State * l) {
 	const std::string name = luaL_checkstring(l, 3);
 	LUANode** udata = LUA::newUserdata<LUANode>(l, "Node");
 
-	TreeNodeFactoryContext factoryCtx(name);
+	TreeNodeFactoryContext factoryCtx(name, "", True::get());
 	*udata = node->addChild(id, factoryCtx);
 	return 1;
 }
