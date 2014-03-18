@@ -24,8 +24,8 @@ class AI;
  * @brief Macro to simplify the condition creation. Just give the class name of the condition as parameter.
  */
 #define CONDITION_CLASS(ConditionName) \
-	ConditionName() : \
-		ICondition(#ConditionName) { \
+	ConditionName(const std::string& parameters = "") : \
+		ICondition(#ConditionName, parameters) { \
 	} \
 public: \
 	virtual ~ConditionName() { \
@@ -47,6 +47,12 @@ public: \
 		} \
 	}; \
 	static Factory FACTORY;
+
+#define CONDITION_FACTORY_IMPL(ConditionName) \
+	ConditionPtr ConditionName::Factory::create(const ConditionFactoryContext *ctx) const { \
+		return ConditionPtr(new ConditionName(ctx->parameters)); \
+	} \
+	ConditionName::Factory ConditionName::FACTORY;
 
 /**
  * @brief Macro to create a singleton conditions for very easy conditions without a state.
@@ -79,6 +85,7 @@ protected:
 	static int _nextId;
 	int _id;
 	const std::string _name;
+	const std::string _parameters;
 
 	/**
 	 * @brief Override this method to get a more detailed result in @c getNameWithConditions
@@ -90,8 +97,8 @@ protected:
 	virtual void getConditionNameWithValue(std::stringstream& /* s */, AI& /* entity */) {
 	}
 public:
-	ICondition(const std::string& name) :
-			_id(_nextId++), _name(name) {
+	ICondition(const std::string& name, const std::string& parameters) :
+			_id(_nextId++), _name(name), _parameters(parameters) {
 	}
 
 	virtual ~ICondition() {

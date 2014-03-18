@@ -15,7 +15,7 @@ protected:
 
 public:
 	Or(const Conditions& conditions) :
-			ICondition("Or"), _conditions(conditions) {
+			ICondition("Or", ""), _conditions(conditions) {
 	}
 	virtual ~Or() {
 	}

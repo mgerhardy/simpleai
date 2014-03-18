@@ -11,7 +11,8 @@ namespace ai {
  */
 class HasEnemies: public ICondition {
 public:
-	CONDITION_CLASS_SINGLETON(HasEnemies);
+	CONDITION_CLASS(HasEnemies)
+	CONDITION_FACTORY
 
 	bool evaluate(AI& entity) override;
 };

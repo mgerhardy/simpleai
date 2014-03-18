@@ -15,7 +15,7 @@ protected:
 
 public:
 	And(const Conditions& conditions) :
-			ICondition("And"), _conditions(conditions) {
+			ICondition("And", ""), _conditions(conditions) {
 	}
 	virtual ~And() {
 	}

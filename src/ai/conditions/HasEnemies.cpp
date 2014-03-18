@@ -7,6 +7,6 @@ bool HasEnemies::evaluate(AI& entity) {
 	return entity.getAggroMgr().getHighestEntry();
 }
 
-HasEnemies::Factory HasEnemies::FACTORY;
+CONDITION_FACTORY_IMPL(HasEnemies)
 
 }

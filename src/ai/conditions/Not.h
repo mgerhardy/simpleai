@@ -18,7 +18,7 @@ protected:
 
 public:
 	Not(const ConditionPtr& condition) :
-			ICondition("Not"), _condition(condition) {
+			ICondition("Not", ""), _condition(condition) {
 	}
 	virtual ~Not() {
 	}
