@@ -5,11 +5,8 @@
 namespace ai {
 
 #define TASK_CLASS(TaskName) \
-	TaskName(const std::string& name, ConditionPtr condition) : \
+	TaskName(const std::string& name, const ConditionPtr& condition = True::get()) : \
 			ITask(name, condition) { \
-	} \
-	TaskName(const std::string& name) : \
-			ITask(name) { \
 	} \
 	virtual ~TaskName() { \
 	}
@@ -20,8 +17,7 @@ protected:
 
 	virtual void init() {}
 public:
-	ITask(const std::string& name, ConditionPtr condition);
-	ITask(const std::string& name);
+	ITask(const std::string& name, const ConditionPtr& condition = True::get());
 	virtual ~ITask();
 
 	virtual TreeNodeStatus doAction(AI& entity) = 0;
