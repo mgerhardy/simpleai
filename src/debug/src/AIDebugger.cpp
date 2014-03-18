@@ -1,12 +1,10 @@
 #include "AIDebugger.h"
 #include "AIDebuggerWindow.h"
 #include "MapView.h"
-#include <tree/loaders/lua/LUATreeLoader.h>
 #include <server/IProtocolMessage.h>
 #include <server/AISelectMessage.h>
 #include <server/ProtocolMessageFactory.h>
 #include <server/ProtocolHandlerRegistry.h>
-#include <QFileDialog>
 #include <QSplashScreen>
 #include <QtCore>
 #include <vector>
