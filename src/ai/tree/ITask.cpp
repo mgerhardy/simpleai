@@ -5,7 +5,6 @@ namespace ai {
 
 ITask::ITask(const std::string& name, const ConditionPtr& condition) :
 		TreeNode(name, condition) {
-	init();
 }
 
 ITask::~ITask() {

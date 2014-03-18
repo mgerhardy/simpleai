@@ -5,11 +5,8 @@
 namespace ai {
 
 #define SELECTOR_CLASS(NodeName) \
-	NodeName(const std::string& name, ConditionPtr condition) : \
+	NodeName(const std::string& name, const ConditionPtr& condition = True::get()) : \
 		Selector(name, condition) { \
-	} \
-	NodeName(const std::string& name) : \
-		Selector(name) { \
 	} \
 	virtual ~NodeName() { \
 	} \
