@@ -5,7 +5,7 @@ class AggroTest: public TestSuite {
 public:
 	void doMassTest(int max) {
 		std::vector<SharedPtr<TestEntity> > ais;
-		ai::AggroMgr mgr;
+		ai::AggroMgr mgr(max);
 		for (int i = 1; i <= max; ++i) {
 			const ai::CharacterId id = i;
 			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _pathfinder);
@@ -39,16 +39,24 @@ TEST_F(AggroTest, testAggroMgr50) {
 	doMassTest(50);
 }
 
+TEST_F(AggroTest, testAggroMgr500) {
+	doMassTest(500);
+}
+
 TEST_F(AggroTest, testAggroMgr5000) {
 	doMassTest(5000);
 }
 
-TEST_F(AggroTest, testAggroMgr50000) {
-	doMassTest(50000);
+TEST_F(AggroTest, testAggroMgr10000) {
+	doMassTest(10000);
 }
 
-TEST_F(AggroTest, testAggroMgr500000) {
-	doMassTest(500000);
+TEST_F(AggroTest, testAggroMgr20000) {
+	doMassTest(20000);
+}
+
+TEST_F(AggroTest, testAggroMgr50000) {
+	doMassTest(50000);
 }
 
 TEST_F(AggroTest, testAggroMgrDegradeValue) {
