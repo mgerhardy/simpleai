@@ -36,6 +36,10 @@ int main(int argc, char **argv) {
 	int amount = 100;
 	if (argc >= 3) {
 		amount = atoi(argv[2]);
+		if (amount <= 0) {
+			std::cerr << "invalid amount given" << std::endl;
+			return EXIT_FAILURE;
+		}
 	}
 
 	std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
