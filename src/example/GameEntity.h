@@ -21,6 +21,14 @@ public:
 		_server.removeAI(_ai);
 	}
 
+	operator ai::AI& () {
+		return _ai;
+	}
+
+	ai::Entry* addAggro(GameEntity& entity, float aggro) {
+		return _ai.getAggroMgr().addAggro(entity, aggro);
+	}
+
 	void update(uint32_t deltaTime) {
 		_ai.update(deltaTime);
 		std::stringstream ss;
