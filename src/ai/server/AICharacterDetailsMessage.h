@@ -78,6 +78,10 @@ private:
 	}
 
 public:
+	/**
+	 * Make sure that none of the given references is destroyed, for performance reasons we are only storing the
+	 * pointers to those instances in this class. So they need to stay valid until they are serialized.
+	 */
 	AICharacterDetailsMessage(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& root, const CharacterAttributes& attributes) :
 			IProtocolMessage(PROTO_CHARACTER_DETAILS), _chrId(id), _aggroPtr(&aggro), _rootPtr(&root), _attributesPtr(&attributes) {
 	}
