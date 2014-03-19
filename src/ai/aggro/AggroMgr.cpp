@@ -4,8 +4,10 @@
 
 namespace ai {
 
-AggroMgr::AggroMgr() :
+AggroMgr::AggroMgr(int expectedEntrySize) :
 		_lastUpdateTime(0L), _dirty(false) {
+	if (expectedEntrySize > 0)
+		_entries.reserve(expectedEntrySize);
 }
 
 AggroMgr::~AggroMgr() {

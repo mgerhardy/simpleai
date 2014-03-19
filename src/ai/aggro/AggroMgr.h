@@ -25,7 +25,7 @@ protected:
 
 	inline void sort();
 public:
-	AggroMgr();
+	AggroMgr(int expectedEntrySize = 0);
 	virtual ~AggroMgr();
 
 	/**
