@@ -117,6 +117,7 @@ void AIDebuggerWindow::tick() {
 	_entityList->updateEntityList();
 	_mapFrame->updateMapFrame();
 	_nodeTree->updateTreeWidget();
+	_aggroTable->updateAggroTable();
 }
 
 void AIDebuggerWindow::createMenus() {
