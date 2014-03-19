@@ -78,6 +78,11 @@ int main(int argc, char **argv) {
 		entities.push_back(new GameEntity(i, root, pathFinder, server));
 	}
 
+	for (std::vector<GameEntity*>::iterator i = entities.begin() + 1; i != entities.end(); ++i) {
+		ai::Entry* e = entities[0]->addAggro(**i, 1000.0f);
+		e->setReduceByValue(1.0f);
+	}
+
 	long frames = 10000;
 	long frame = frames;
 	const int fps = 20;
