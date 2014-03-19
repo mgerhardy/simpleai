@@ -41,17 +41,18 @@ bool Server::removeAI(AI& ai) {
 	return true;
 }
 
-void Server::addChildren(AIStateNode& parent, AI& ai, const TreeNodes& children) const {
-	for (TreeNodes::const_iterator i = children.begin(); i != children.end(); ++i) {
-		const TreeNodePtr& node = *i;
+void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai, const TreeNodes& children) const {
+	std::vector<bool> active;
+	node->getChildrenState(ai, active);
+	const int length = children.size();
+	for (int i = 0; i < length; ++i) {
+		const TreeNodePtr& node = children[i];
 		const std::string& name = node->getName();
 		const TreeNodes& children = node->getChildren();
 		const ConditionPtr& condition = node->getCondition();
 		const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
-		// TODO: node->isActive
-		const bool active = /* node->isActive(ai) */ false;
-		AIStateNode child(name, conditionStr, node->getLastRunMillis(), active);
-		addChildren(child, ai, children);
+		AIStateNode child(name, conditionStr, node->getLastRunMillis(), active[i]);
+		addChildren(node, child, ai, children);
 		parent.addChildren(child);
 	}
 }
@@ -85,10 +86,8 @@ void Server::broadcastCharacterDetails() {
 	const TreeNodes& children = behaviour->getChildren();
 	const ConditionPtr& condition = behaviour->getCondition();
 	const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
-	// TODO: node->isActive
-	const bool active = /* node->isActive(ai) */ false;
-	AIStateNode root(name, conditionStr, behaviour->getLastRunMillis(), active);
-	addChildren(root, ai, children);
+	AIStateNode root(name, conditionStr, behaviour->getLastRunMillis(), false);
+	addChildren(behaviour, root, ai, children);
 
 	AIStateAggro aggro;
 	const ai::AggroMgr::Entries& entries = ai.getAggroMgr().getEntries();

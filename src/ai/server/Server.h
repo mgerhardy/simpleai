@@ -18,7 +18,7 @@ protected:
 	Network _network;
 	CharacterId _selectedCharacterId;
 
-	void addChildren(AIStateNode& parent, AI& ai, const TreeNodes& children) const;
+	void addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai, const TreeNodes& children) const;
 	void broadcastState();
 	void broadcastCharacterDetails();
 	void select(const ClientId& clientId, const CharacterId& id) override;
