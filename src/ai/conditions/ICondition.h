@@ -114,7 +114,7 @@ public:
 	/**
 	 * @brief Returns the short name of the condition - without any related conditions or results.
 	 */
-	virtual const std::string& getName() const;
+	const std::string& getName() const;
 
 	/**
 	 * @brief Returns the full condition string with all related conditions and results of the evaluation method
@@ -130,21 +130,19 @@ public:
 		s << "]";
 		return s.str();
 	}
+
+	friend inline std::ostream& operator<<(std::ostream& stream, const ICondition& condition) {
+		stream << condition._name;
+		stream << "[";
+		stream << condition._parameters;
+		stream << "]";
+		return stream;
+	}
 };
 
 inline const std::string& ICondition::getName() const {
 	return _name;
 }
 
-inline std::ostream& operator<<(std::ostream& stream, const ICondition& condition) {
-	stream << condition.getName();
-	stream << "[";
-	// TODO: parameters
-	stream << "]";
-	stream << "{";
-	// TODO: children
-	stream << "}";
-	return stream;
-}
 
 }

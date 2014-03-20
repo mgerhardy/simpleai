@@ -108,6 +108,26 @@ public:
 	virtual void resetState(AI& entity);
 
 	virtual void addChild(const TreeNodePtr& child);
+
+	friend inline std::ostream& operator<<(std::ostream& stream, const TreeNode& node) {
+		stream << node._name;
+		const TreeNodes& children = node._children;
+		const ConditionPtr& condition = node._condition;
+		if (condition) {
+			stream << "(";
+			stream << *condition.get();
+			stream << ")";
+		}
+		stream << "[";
+		stream << node._parameters;
+		stream << "]";
+		stream << "{";
+		for (TreeNodes::const_iterator i = children.begin(); i != children.end(); ++i) {
+			stream << *i;
+		}
+		stream << "}";
+	    return stream;
+	}
 };
 
 inline int TreeNode::getId() const {
@@ -136,26 +156,6 @@ inline const TreeNodes& TreeNode::getChildren() const {
 
 inline void TreeNode::addChild(const TreeNodePtr& child) {
 	_children.push_back(child);
-}
-
-inline std::ostream& operator<<(std::ostream& stream, const TreeNode& node) {
-	stream << node.getName();
-	const TreeNodes& children = node.getChildren();
-	const ConditionPtr& condition = node.getCondition();
-	if (condition) {
-		stream << "(";
-		stream << *condition.get();
-		stream << ")";
-	}
-	stream << "[";
-	// TODO: parameters
-	stream << "]";
-	stream << "{";
-	for (TreeNodes::const_iterator i = children.begin(); i != children.end(); ++i) {
-		stream << *i;
-	}
-	stream << "}";
-    return stream;
 }
 
 }
