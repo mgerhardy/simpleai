@@ -65,18 +65,11 @@ int main(int argc, char **argv) {
 	std::cout << "successfully loaded the behaviour tree " << name << std::endl;
 	std::cout << "now run this behaviour tree for some time: " << std::endl << *root.get() << std::endl;
 
-	const short port = 12345;
-	ai::Server server(port);
-	if (!server.start())
-		std::cerr << "Could not start the server" << std::endl;
-	else
-		std::cout << "Started the server and accept connections on port " << port << std::endl;
-
 	ai::example::GameMap gameMap(600, 600);
 	ai::example::Pathfinder pathFinder(gameMap);
 
 	for (int i = 0; i < amount; ++i) {
-		ai::example::GameEntity* e = gameMap.addEntity(new ai::example::GameEntity(i, root, pathFinder, server));
+		ai::example::GameEntity* e = gameMap.addEntity(new ai::example::GameEntity(i, root, pathFinder));
 		e->setPosition(gameMap.getStartPosition());
 	}
 
@@ -94,8 +87,6 @@ int main(int argc, char **argv) {
 	for (;--frame;) {
 		const uint32_t dt = 1;
 		gameMap.update(dt);
-		if ((frame % 10) == 0)
-			server.update(dt);
 		std::cout << (frames - frame) << "/" << frames << "    \r" << std::flush;
 		usleep(microseconds);
 	}

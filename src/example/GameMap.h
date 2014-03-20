@@ -3,19 +3,27 @@
 #include <common/Compiler.h>
 #include "GameEntity.h"
 #include <vector>
+#include <iostream>
 
 namespace ai {
 namespace example {
+
+#define PORT 12345
 
 class GameMap: public ai::IMap {
 private:
 	int _width;
 	int _height;
 	std::vector<ai::example::GameEntity*> _entities;
+	ai::Server _server;
 
 public:
 	GameMap (int width, int height) :
-			IMap(), _width(width), _height(height) {
+			IMap(), _width(width), _height(height), _server(PORT) {
+		if (!_server.start())
+			std::cerr << "Could not start the server" << std::endl;
+		else
+			std::cout << "Started the server and accept connections on port " << PORT << std::endl;
 	}
 
 	~GameMap () {
@@ -30,6 +38,7 @@ public:
 
 	inline GameEntity* addEntity (GameEntity* entity) {
 		_entities.push_back(entity);
+		_server.addAI(*entity);
 		return entity;
 	}
 
@@ -37,6 +46,7 @@ public:
 		for (std::vector<ai::example::GameEntity*>::iterator i = _entities.begin(); i != _entities.end(); ++i) {
 			(*i)->update(dt);
 		}
+		_server.update(dt);
 	}
 
 	bool isBlocked (const ai::AIPosition& pos) const override {

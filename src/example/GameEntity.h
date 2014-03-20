@@ -9,18 +9,15 @@ namespace example {
 class GameEntity : public ai::ICharacter {
 private:
 	ai::AI _ai;
-	ai::Server& _server;
 	std::list<ai::AIPosition> _route;
 
 public:
-	GameEntity (const ai::CharacterId& id, const ai::TreeNodePtr& root, ai::example::Pathfinder& pathfinder, ai::Server& server) :
-			ai::ICharacter(id), _ai(*this, root, pathfinder), _server(server) {
-		_server.addAI(_ai);
+	GameEntity (const ai::CharacterId& id, const ai::TreeNodePtr& root, ai::example::Pathfinder& pathfinder) :
+			ai::ICharacter(id), _ai(*this, root, pathfinder) {
 		setAttribute("Name", "Foobar");
 	}
 
 	~GameEntity () {
-		_server.removeAI(_ai);
 	}
 
 	operator ai::AI& () {
