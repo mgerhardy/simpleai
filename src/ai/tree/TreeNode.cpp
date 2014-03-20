@@ -47,6 +47,10 @@ void TreeNode::setResetSinceLastExec(AI& entity, bool status) {
 	entity._resetStates[getId()] = status;
 }
 
+void TreeNode::addChild(const TreeNodePtr& child) {
+	_children.push_back(child);
+}
+
 int TreeNode::getSelectorState(const AI& entity) const {
 	AI::SelectorStates::const_iterator i = entity._selectorStates.find(getId());
 	if (i == entity._selectorStates.end())

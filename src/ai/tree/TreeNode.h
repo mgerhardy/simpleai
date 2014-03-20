@@ -108,7 +108,7 @@ public:
 	 */
 	virtual void resetState(AI& entity);
 
-	void addChild(const TreeNodePtr& child);
+	virtual void addChild(const TreeNodePtr& child);
 
 	std::ostream& print(std::ostream& stream, int level) const override;
 };
@@ -135,10 +135,6 @@ inline void TreeNode::setCondition(const ConditionPtr& condition) {
 
 inline const TreeNodes& TreeNode::getChildren() const {
 	return _children;
-}
-
-inline void TreeNode::addChild(const TreeNodePtr& child) {
-	_children.push_back(child);
 }
 
 }
