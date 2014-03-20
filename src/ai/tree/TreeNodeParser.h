@@ -15,7 +15,7 @@ public:
 	TreeNodeParser(const IAIFactory& aiFactory, const std::string& taskString);
 	virtual ~TreeNodeParser();
 
-	TreeNodePtr getTreeNode();
+	TreeNodePtr getTreeNode(const std::string& name = "");
 };
 
 }

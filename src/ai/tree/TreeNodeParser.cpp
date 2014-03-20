@@ -10,18 +10,18 @@ TreeNodeParser::TreeNodeParser(const IAIFactory& aiFactory, const std::string& t
 TreeNodeParser::~TreeNodeParser() {
 }
 
-TreeNodePtr TreeNodeParser::getTreeNode() {
-	std::string name;
+TreeNodePtr TreeNodeParser::getTreeNode(const std::string& name) {
+	std::string nodeType;
 	const std::string& parameters = getBetween(_taskString, "{", "}");
 	std::size_t n = _taskString.find("{");
 	if (n == std::string::npos)
 		n = _taskString.find("(");
 	if (n != std::string::npos) {
-		name = _taskString.substr(0, n);
+		nodeType = _taskString.substr(0, n);
 	} else {
-		name = _taskString;
+		nodeType = _taskString;
 	}
-	const TreeNodeFactoryContext factoryCtx(name, parameters, True::get());
-	return _aiFactory.createNode(name, factoryCtx);
+	const TreeNodeFactoryContext factoryCtx(name.empty() ? nodeType : name, parameters, True::get());
+	return _aiFactory.createNode(nodeType, factoryCtx);
 }
 }

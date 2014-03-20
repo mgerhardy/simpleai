@@ -71,7 +71,7 @@ static int luaTree_CreateRoot(lua_State * l) {
 	const std::string name = luaL_checkstring(l, 3);
 
 	TreeNodeParser parser(ctx->getAIFactory(), id);
-	const TreeNodePtr& node = parser.getTreeNode();
+	const TreeNodePtr& node = parser.getTreeNode(name);
 	if (!node) {
 		LUA::returnError(l, "Could not create a node for " + id);
 		return 0;

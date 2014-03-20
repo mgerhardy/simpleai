@@ -78,8 +78,6 @@ void Server::broadcastCharacterDetails() {
 		return;
 	}
 
-	std::vector<AIStateAggroEntry> aggroVector;
-
 	ai::AI& ai = *i->second;
 	const TreeNodePtr& behaviour = ai.getBehaviour();
 	const std::string& name = behaviour->getName();
