@@ -13,13 +13,13 @@ private:
 protected:
 	void setError(const std::string& error);
 
-	inline std::string eraseAllSpaces(const std::string& str) {
+	inline std::string eraseAllSpaces(const std::string& str) const {
 		std::string tmp = str;
 		tmp.erase(std::remove(tmp.begin(), tmp.end(), ' '), tmp.end());
 		return tmp;
 	}
 
-	inline void splitString(const std::string& string, std::vector<std::string>& tokens, const std::string& delimiters = "()") {
+	inline void splitString(const std::string& string, std::vector<std::string>& tokens, const std::string& delimiters = "()") const {
 		// Skip delimiters at beginning.
 		std::string::size_type lastPos = string.find_first_not_of(delimiters, 0);
 		// Find first "non-delimiter".
