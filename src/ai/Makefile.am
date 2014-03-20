@@ -58,6 +58,7 @@ nobase_library_include_HEADERS = \
 	common/AIPosition.h \
 	common/AIException.h \
 	pathfinding/IPathfinder.h \
+	pathfinding/IMap.h \
 	server/AIStateMessage.h \
 	server/AISelectMessage.h \
 	server/AICharacterDetailsMessage.h \

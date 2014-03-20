@@ -10,7 +10,12 @@ example_LDADD = \
 
 example_CPPFLAGS =
 
-include_HEADERS =
+include_HEADERS = \
+	actions/Move.h \
+	actions/ExampleTask.h \
+	GameEntity.h \
+	GameMap.h \
+	Pathfinder.h
 
 EXTRA_DIST = behaviours.lua
 

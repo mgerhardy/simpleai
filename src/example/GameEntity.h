@@ -3,6 +3,9 @@
 #include <AI.h>
 #include <list>
 
+namespace ai {
+namespace example {
+
 class GameEntity : public ai::ICharacter {
 private:
 	ai::AI _ai;
@@ -12,7 +15,6 @@ private:
 public:
 	GameEntity (const ai::CharacterId& id, const ai::TreeNodePtr& root, ai::example::Pathfinder& pathfinder, ai::Server& server) :
 			ai::ICharacter(id), _ai(*this, root, pathfinder), _server(server) {
-		setPosition(pathfinder.getStartPosition());
 		_server.addAI(_ai);
 		setAttribute("Name", "Foobar");
 	}
@@ -25,11 +27,11 @@ public:
 		return _ai;
 	}
 
-	ai::Entry* addAggro(GameEntity& entity, float aggro) {
+	ai::Entry* addAggro (GameEntity& entity, float aggro) {
 		return _ai.getAggroMgr().addAggro(entity, aggro);
 	}
 
-	void update(uint32_t deltaTime) {
+	void update (uint32_t deltaTime) {
 		_ai.update(deltaTime);
 		std::stringstream ss;
 		ss << _position.x() << ":" << _position.y();
@@ -40,3 +42,6 @@ public:
 		return _route;
 	}
 };
+
+}
+}

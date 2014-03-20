@@ -4,17 +4,15 @@
 namespace ai {
 namespace example {
 
-Pathfinder::Pathfinder(int width, int height) :
-		IPathfinder(), _width(width), _height(height) {
+Pathfinder::Pathfinder(const ai::IMap& map) :
+		IPathfinder(), _map(map) {
 }
 
 Pathfinder::~Pathfinder() {
 }
 
 ai::MoveState Pathfinder::move(ai::AI& entity, const ai::AIPosition& to, std::list<ai::AIPosition>& route) {
-	if (to.x() < 0 || to.y() < 0)
-		return ai::IMPOSSIBLE;
-	if (to.x() >= _width || to.y() >= _height)
+	if (_map.isBlocked(to))
 		return ai::IMPOSSIBLE;
 
 	ai::ICharacter& chr = entity.getCharacter();
@@ -31,13 +29,6 @@ ai::MoveState Pathfinder::move(ai::AI& entity, const ai::AIPosition& to, std::li
 	}
 
 	return ai::SUCCESSFUL;
-}
-
-ai::AIPosition Pathfinder::getStartPosition() {
-	const int x = rand() % _width;
-	const int y = rand() % _height;
-	const float z = 0.0f;
-	return ai::AIPosition(x, y, z);
 }
 
 }

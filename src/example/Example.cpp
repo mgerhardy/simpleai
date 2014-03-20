@@ -11,6 +11,7 @@
 #include "actions/ExampleTask.h"
 #include "actions/Move.h"
 #include "GameEntity.h"
+#include "GameMap.h"
 
 int main(int argc, char **argv) {
 	if (argc <= 1) {
@@ -71,14 +72,17 @@ int main(int argc, char **argv) {
 	else
 		std::cout << "Started the server and accept connections on port " << port << std::endl;
 
-	ai::example::Pathfinder pathFinder(600, 600);
+	ai::example::GameMap gameMap(600, 600);
+	ai::example::Pathfinder pathFinder(gameMap);
 
-	std::vector<GameEntity*> entities;
 	for (int i = 0; i < amount; ++i) {
-		entities.push_back(new GameEntity(i, root, pathFinder, server));
+		ai::example::GameEntity* e = gameMap.addEntity(new ai::example::GameEntity(i, root, pathFinder, server));
+		e->setPosition(gameMap.getStartPosition());
 	}
 
-	for (std::vector<GameEntity*>::iterator i = entities.begin() + 1; i != entities.end(); ++i) {
+	// TODO: remove me once we have an attack
+	std::vector<ai::example::GameEntity*>& entities = gameMap.getEntities();
+	for (std::vector<ai::example::GameEntity*>::iterator i = entities.begin() + 1; i != entities.end(); ++i) {
 		ai::Entry* e = entities[0]->addAggro(**i, 1000.0f);
 		e->setReduceByValue(1.0f);
 	}
@@ -89,17 +93,11 @@ int main(int argc, char **argv) {
 	const long microseconds = 1000000 / fps;
 	for (;--frame;) {
 		const uint32_t dt = 1;
-		for (std::vector<GameEntity*>::iterator i = entities.begin(); i != entities.end(); ++i) {
-			(*i)->update(dt);
-		}
+		gameMap.update(dt);
 		if ((frame % 10) == 0)
 			server.update(dt);
 		std::cout << (frames - frame) << "/" << frames << "    \r" << std::flush;
 		usleep(microseconds);
-	}
-
-	for (std::vector<GameEntity*>::iterator i = entities.begin(); i != entities.end(); ++i) {
-		delete *i;
 	}
 
 	return 0;
