@@ -20,7 +20,7 @@ public:
 
 	virtual TreeNodeStatus doAction(AI& entity) = 0;
 
-	void addChild(TreeNodePtr& child) override;
+	void addChild(const TreeNodePtr& child) override;
 };
 
 }

@@ -21,7 +21,7 @@ TreeNodeStatus ITask::execute(AI& entity, long deltaMillis) {
 	}
 }
 
-void ITask::addChild(TreeNodePtr& child) {
+void ITask::addChild(const TreeNodePtr& child) {
 	throw AIException("An action node may not have a child");
 }
 
