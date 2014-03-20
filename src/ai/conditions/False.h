@@ -12,6 +12,8 @@ public:
 	CONDITION_CLASS_SINGLETON(False);
 
 	bool evaluate(AI& entity) override;
+
+	std::ostream& print(std::ostream& stream, int level) const override;
 };
 
 inline bool False::evaluate(AI& entity) {

@@ -4,6 +4,7 @@
 #include <string>
 #include <common/Pointers.h>
 #include <common/Compiler.h>
+#include <common/IPrintable.h>
 #include <conditions/ICondition.h>
 #include <conditions/True.h>
 
@@ -59,7 +60,7 @@ enum TreeNodeStatus {
 	\
 	NODE_FACTORY
 
-class TreeNode {
+class TreeNode : public IPrintable {
 protected:
 	static int _nextId;
 	int _id;
@@ -107,27 +108,9 @@ public:
 	 */
 	virtual void resetState(AI& entity);
 
-	virtual void addChild(const TreeNodePtr& child);
+	void addChild(const TreeNodePtr& child);
 
-	friend inline std::ostream& operator<<(std::ostream& stream, const TreeNode& node) {
-		stream << node._name;
-		const TreeNodes& children = node._children;
-		const ConditionPtr& condition = node._condition;
-		if (condition) {
-			stream << "(";
-			stream << *condition.get();
-			stream << ")";
-		}
-		stream << "[";
-		stream << node._parameters;
-		stream << "]";
-		stream << "{";
-		for (TreeNodes::const_iterator i = children.begin(); i != children.end(); ++i) {
-			stream << *i;
-		}
-		stream << "}";
-	    return stream;
-	}
+	std::ostream& print(std::ostream& stream, int level) const override;
 };
 
 inline int TreeNode::getId() const {

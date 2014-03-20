@@ -21,10 +21,13 @@ bool ConditionParser::fillInnerConditions(ConditionFactoryContext& ctx, const st
 				return false;
 		}
 	} else {
-		const std::string& parameters = getBetween(conditionStr, "{", "}");
-		std::size_t n = conditionStr.find("{");
-		if (n == std::string::npos)
-			n = conditionStr.find("(");
+		std::string parameters;
+		std::size_t n = conditionStr.find("(");
+		if (n == std::string::npos || conditionStr.find("{") < n) {
+			parameters = getBetween(conditionStr, "{", "}");
+			n = conditionStr.find("{");
+		}
+
 		std::string name;
 		if (n != std::string::npos) {
 			name = conditionStr.substr(0, n);
@@ -32,6 +35,7 @@ bool ConditionParser::fillInnerConditions(ConditionFactoryContext& ctx, const st
 			name = conditionStr;
 		}
 		ConditionFactoryContext ctxInner(parameters);
+		n = conditionStr.find("(");
 		if (n != std::string::npos) {
 			const std::size_t r = conditionStr.rfind(")");
 			if (r == std::string::npos) {
@@ -53,10 +57,12 @@ bool ConditionParser::fillInnerConditions(ConditionFactoryContext& ctx, const st
 }
 
 ConditionPtr ConditionParser::getCondition() {
-	const std::string& parameters = getBetween(_conditionString, "{", "}");
-	std::size_t n = _conditionString.find("{");
-	if (n == std::string::npos)
-		n = _conditionString.find("(");
+	std::string parameters;
+	std::size_t n = _conditionString.find("(");
+	if (n == std::string::npos || _conditionString.find("{") < n) {
+		parameters = getBetween(_conditionString, "{", "}");
+		n = _conditionString.find("{");
+	}
 	std::string name;
 	if (n != std::string::npos) {
 		name = _conditionString.substr(0, n);
@@ -64,6 +70,7 @@ ConditionPtr ConditionParser::getCondition() {
 		name = _conditionString;
 	}
 	ConditionFactoryContext ctx(parameters);
+	n = _conditionString.find("(");
 	if (n != std::string::npos) {
 		const std::size_t r = _conditionString.rfind(")");
 		if (r == std::string::npos) {

@@ -51,6 +51,7 @@ nobase_library_include_HEADERS = \
 	tree/loaders/lua/LUATreeLoader.h \
 	common/Enum.h \
 	common/IFactoryRegistry.h \
+	common/IPrintable.h \
 	common/IParser.h \
 	common/Compiler.h \
 	common/NonCopyable.h \

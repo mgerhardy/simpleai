@@ -27,6 +27,16 @@ bool Or::evaluate(AI& entity) {
 	return false;
 }
 
+std::ostream& Or::print(std::ostream& stream, int level) const {
+	ICondition::print(stream, level);
+	stream << "{";
+	for (Conditions::const_iterator i = _conditions.begin(); i != _conditions.end(); ++i) {
+		(*i)->print(stream, level + 1);
+	}
+	stream << "}";
+	return stream;
+}
+
 Or::Factory Or::FACTORY;
 
 }

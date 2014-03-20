@@ -13,6 +13,7 @@
 
 #include <common/Compiler.h>
 #include <common/Pointers.h>
+#include <common/IPrintable.h>
 
 #include <AIRegistry.h>
 
@@ -80,7 +81,7 @@ typedef std::vector<ConditionPtr> Conditions;
  * A condition can be placed on a @c TreeNode to decide which node is going to get executed. In general they are stateless.
  * If they are not, it should explicitly get noted.
  */
-class ICondition {
+class ICondition : public IPrintable {
 protected:
 	static int _nextId;
 	int _id;
@@ -131,18 +132,11 @@ public:
 		return s.str();
 	}
 
-	friend inline std::ostream& operator<<(std::ostream& stream, const ICondition& condition) {
-		stream << condition._name;
-		stream << "[";
-		stream << condition._parameters;
-		stream << "]";
-		return stream;
-	}
+	std::ostream& print(std::ostream& stream, int level) const override;
 };
 
 inline const std::string& ICondition::getName() const {
 	return _name;
 }
-
 
 }

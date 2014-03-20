@@ -38,14 +38,20 @@ protected:
 	inline std::string getBetween (const std::string& str, const std::string& tokenStart, const std::string& tokenEnd) {
 		const std::size_t start = str.find(tokenStart);
 		if (start == std::string::npos)
-			return str;
+			return "";
 
 		const std::size_t end = str.find(tokenEnd);
 		if (end == std::string::npos) {
 			setError("syntax error - expected " + tokenEnd);
 			return "";
 		}
-		return str.substr(start + 1, end - 1);
+		const size_t startIndex = start + 1;
+		const size_t endIndex = end - startIndex;
+		if (endIndex <= 0) {
+			return "";
+		}
+		const std::string& between = str.substr(startIndex, endIndex);
+		return between;
 	}
 
 public:

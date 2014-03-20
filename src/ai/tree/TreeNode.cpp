@@ -58,4 +58,33 @@ void TreeNode::setSelectorState(AI& entity, int selected) {
 	entity._selectorStates[getId()] = selected;
 }
 
+std::ostream& TreeNode::print(std::ostream& stream, int level) const {
+	for (int i = 0; i < level; ++i) {
+		stream << '\t';
+	}
+	if (_condition) {
+		stream << "if (";
+		_condition->print(stream, level);
+		stream << ") => ";
+	}
+	stream << _name;
+	stream << "(";
+	if (!_parameters.empty()) {
+		stream << "\"" << _parameters << "\"";
+	}
+	stream << ")";
+	if (!_children.empty()) {
+		stream << " {" << std::endl;
+		for (TreeNodes::const_iterator i = _children.begin(); i != _children.end(); ++i) {
+			(*i)->print(stream, level + 1);
+		}
+		for (int i = 0; i < level; ++i) {
+			stream << '\t';
+		}
+		stream << "}";
+	}
+	stream << std::endl;
+	return stream;
+}
+
 }

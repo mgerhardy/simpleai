@@ -26,6 +26,8 @@ public:
 	CONDITION_FACTORY
 
 	bool evaluate(AI& entity) override;
+
+	std::ostream& print(std::ostream& stream, int level) const override;
 };
 
 inline bool Not::evaluate(AI& entity) {
