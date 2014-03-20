@@ -16,7 +16,7 @@ class Sequence: public Selector {
 public:
 	SELECTOR_CLASS(Sequence);
 
-	TreeNodeStatus execute(AI& entity, long currentMillis) override;
+	TreeNodeStatus execute(AI& entity, long deltaMillis) override;
 	void resetState(AI& entity) override;
 };
 

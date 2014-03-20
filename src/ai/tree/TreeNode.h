@@ -67,10 +67,11 @@ protected:
 	std::string _name;
 	std::string _parameters;
 	ConditionPtr _condition;
-	long _lastRunMillis;
+	long _lastExecMillis;
+	long _time;
 
-	bool getResetSinceLastRun(const AI& entity) const;
-	void setResetSinceLastRun(AI& entity, bool status);
+	bool getResetSinceLastExec(const AI& entity) const;
+	void setResetSinceLastExec(AI& entity, bool status);
 
 	int getSelectorState(const AI& entity) const;
 	void setSelectorState(AI& entity, int selected);
@@ -87,8 +88,7 @@ public:
 	/**
 	 * @brief Returns the time in milliseconds when this node was last run. This is only updated if @c #execute() was called
 	 */
-	// TODO: rename to getLastExecMillis
-	long getLastRunMillis() const;
+	long getLastExecMillis() const;
 	const std::string& getName() const;
 	const ConditionPtr& getCondition() const;
 	void setCondition(const ConditionPtr& condition);
@@ -138,8 +138,8 @@ inline const std::string& TreeNode::getName() const {
 	return _name;
 }
 
-inline long TreeNode::getLastRunMillis() const {
-	return _lastRunMillis;
+inline long TreeNode::getLastExecMillis() const {
+	return _lastExecMillis;
 }
 
 inline const ConditionPtr& TreeNode::getCondition() const {

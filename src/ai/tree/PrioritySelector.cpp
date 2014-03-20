@@ -3,14 +3,14 @@
 
 namespace ai {
 
-TreeNodeStatus PrioritySelector::execute(AI& entity, long currentMillis) {
-	if (Selector::execute(entity, currentMillis) == CANNOTEXECUTE)
+TreeNodeStatus PrioritySelector::execute(AI& entity, long deltaMillis) {
+	if (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
 
 	TreeNodes::iterator i = _children.begin();
 	for (; i != _children.end(); ++i) {
 		const TreeNodePtr& child = *i;
-		const TreeNodeStatus result = child->execute(entity, currentMillis);
+		const TreeNodeStatus result = child->execute(entity, deltaMillis);
 		if (result != RUNNING)
 			child->resetState(entity);
 

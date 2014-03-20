@@ -3,8 +3,8 @@
 
 namespace ai {
 
-TreeNodeStatus Sequence::execute(AI& entity, long currentMillis) {
-	Selector::execute(entity, currentMillis);
+TreeNodeStatus Sequence::execute(AI& entity, long deltaMillis) {
+	Selector::execute(entity, deltaMillis);
 
 	TreeNodeStatus result = FINISHED;
 	const int progress = std::max(0, getSelectorState(entity));
@@ -13,7 +13,7 @@ TreeNodeStatus Sequence::execute(AI& entity, long currentMillis) {
 	for (std::size_t i = progress; i < size; i++) {
 		TreeNodePtr& child = _children[i];
 
-		result = child->execute(entity, currentMillis);
+		result = child->execute(entity, deltaMillis);
 
 		if (result == RUNNING) {
 			setSelectorState(entity, i);

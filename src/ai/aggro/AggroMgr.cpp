@@ -5,7 +5,7 @@
 namespace ai {
 
 AggroMgr::AggroMgr(int expectedEntrySize) :
-		_lastUpdateTime(0L), _dirty(false) {
+		_dirty(false) {
 	if (expectedEntrySize > 0)
 		_entries.reserve(expectedEntrySize);
 }
@@ -33,17 +33,15 @@ void AggroMgr::cleanupList() {
 		_entries.erase(_entries.begin(), _entries.begin() + remove);
 }
 
-void AggroMgr::update(long currentMillis) {
-	const long delta = currentMillis - _lastUpdateTime;
+void AggroMgr::update(long deltaMillis) {
 	const std::size_t size = _entries.size();
 	for (std::size_t i = 0; i < size; ++i)
-		_dirty |= _entries[i]->reduceByTime(delta);
+		_dirty |= _entries[i]->reduceByTime(deltaMillis);
 
 	if (_dirty) {
 		sort();
 		cleanupList();
 	}
-	_lastUpdateTime = currentMillis;
 }
 
 class CharacterIdPredicate {

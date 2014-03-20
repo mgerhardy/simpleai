@@ -15,23 +15,18 @@ namespace ai {
  */
 class Invert: public TreeNode {
 public:
-	Invert(const std::string& name, const std::string& parameters, const ConditionPtr& condition) :
-			TreeNode(name, parameters, condition) {
-	}
-	virtual ~Invert() {}
+	NODE_CLASS(Invert)
 
-	NODE_FACTORY
-
-	TreeNodeStatus execute(AI& entity, long currentMillis) override {
+	TreeNodeStatus execute(AI& entity, long deltaMillis) override {
 		if (_children.size() != 1) {
 			throw AIException("Invert can not have more than one child");
 		}
 
-		if (TreeNode::execute(entity, currentMillis) == CANNOTEXECUTE)
+		if (TreeNode::execute(entity, deltaMillis) == CANNOTEXECUTE)
 			return CANNOTEXECUTE;
 
 		const TreeNodePtr& treeNode = *_children.begin();
-		const TreeNodeStatus status = treeNode->execute(entity, currentMillis);
+		const TreeNodeStatus status = treeNode->execute(entity, deltaMillis);
 		if (status == FINISHED)
 			return FAILED;
 		else if (status == FAILED)

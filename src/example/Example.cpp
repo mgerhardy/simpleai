@@ -19,8 +19,8 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
+	// define your own tasks and conditions
 	ai::AIRegistry registry;
-
 	registry.registerNodeFactory("Move", ai::example::Move::FACTORY);
 	registry.registerNodeFactory("ExampleTask", ai::example::ExampleTask::FACTORY);
 
@@ -85,8 +85,7 @@ int main(int argc, char **argv) {
 	const int fps = 20;
 	const long microseconds = 1000000 / fps;
 	for (;--frame;) {
-		const uint32_t dt = 1;
-		gameMap.update(dt);
+		gameMap.update(1000 / fps);
 		std::cout << (frames - frame) << "/" << frames << "    \r" << std::flush;
 		usleep(microseconds);
 	}

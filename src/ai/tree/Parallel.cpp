@@ -5,19 +5,19 @@ namespace ai {
 
 void Parallel::getChildrenState(const AI& entity, std::vector<bool>& active) const {
 	for (TreeNodes::const_iterator i = _children.begin(); i != _children.end(); ++i) {
-		active.push_back(!getResetSinceLastRun(entity));
+		active.push_back(!getResetSinceLastExec(entity));
 	}
 }
 
-TreeNodeStatus Parallel::execute(AI& entity, long currentMillis) {
-	if (Selector::execute(entity, currentMillis) == CANNOTEXECUTE)
+TreeNodeStatus Parallel::execute(AI& entity, long deltaMillis) {
+	if (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
 
 	bool totalStatus = false;
 	const std::size_t size = _children.size();
 	for (std::size_t i = 0; i < size; ++i) {
 		TreeNodePtr& child = _children[i];
-		const bool isActive = child->execute(entity, currentMillis) == RUNNING;
+		const bool isActive = child->execute(entity, deltaMillis) == RUNNING;
 		if (!isActive) {
 			child->resetState(entity);
 		}

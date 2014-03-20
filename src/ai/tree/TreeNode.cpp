@@ -6,28 +6,29 @@ namespace ai {
 int TreeNode::_nextId = 0;
 
 TreeNode::TreeNode(const std::string& name, const std::string& parameters, const ConditionPtr& condition) :
-		_id(_nextId++), _name(name), _parameters(parameters), _condition(condition), _lastRunMillis(-1) {
+		_id(_nextId++), _name(name), _parameters(parameters), _condition(condition), _lastExecMillis(-1L), _time(0L) {
 }
 
 TreeNode::~TreeNode() {
 }
 
-TreeNodeStatus TreeNode::execute(AI& entity, long currentMillis) {
+TreeNodeStatus TreeNode::execute(AI& entity, long deltaMillis) {
+	_time += deltaMillis;
 	if (!_condition->evaluate(entity))
 		return CANNOTEXECUTE;
 
-	_lastRunMillis = currentMillis;
+	_lastExecMillis = _time;
 	return FINISHED;
 }
 
 void TreeNode::resetState(AI& entity) {
-	if (getResetSinceLastRun(entity))
+	if (getResetSinceLastExec(entity))
 		return;
 
 	for (TreeNodes::iterator i = _children.begin(); i != _children.end(); ++i)
 		(*i)->resetState(entity);
 
-	setResetSinceLastRun(entity, true);
+	setResetSinceLastExec(entity, true);
 }
 
 void TreeNode::getChildrenState(const AI& entity, std::vector<bool>& active) const {
@@ -35,14 +36,14 @@ void TreeNode::getChildrenState(const AI& entity, std::vector<bool>& active) con
 		active.push_back(false);
 }
 
-bool TreeNode::getResetSinceLastRun(const AI& entity) const {
+bool TreeNode::getResetSinceLastExec(const AI& entity) const {
 	AI::ResetStates::const_iterator i = entity._resetStates.find(getId());
 	if (i == entity._resetStates.end())
 		return false;
 	return i->second;
 }
 
-void TreeNode::setResetSinceLastRun(AI& entity, bool status) {
+void TreeNode::setResetSinceLastExec(AI& entity, bool status) {
 	entity._resetStates[getId()] = status;
 }
 

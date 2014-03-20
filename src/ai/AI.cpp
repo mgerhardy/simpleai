@@ -11,13 +11,13 @@ AI::AI(ICharacter& character, TreeNodePtr behaviour, IPathfinder& pathfinder) :
 AI::~AI() {
 }
 
-void AI::update(long currentMillis) {
-	_aggroList.update(currentMillis);
+void AI::update(long deltaMillis) {
+	_aggroList.update(deltaMillis);
 
 	if (isPause())
 		return;
 
-	_behaviour->execute(*this, currentMillis);
+	_behaviour->execute(*this, deltaMillis);
 }
 
 }

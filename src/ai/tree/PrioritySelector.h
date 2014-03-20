@@ -14,7 +14,7 @@ class PrioritySelector: public Selector {
 public:
 	SELECTOR_CLASS(PrioritySelector);
 
-	TreeNodeStatus execute(AI& entity, long currentMillis) override;
+	TreeNodeStatus execute(AI& entity, long deltaMillis) override;
 };
 
 }
