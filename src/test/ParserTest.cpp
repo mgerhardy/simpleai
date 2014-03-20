@@ -58,3 +58,15 @@ TEST_F(ParserTest, testParseIdleNode) {
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_TRUE(c) << parser.getError();
 }
+
+TEST_F(ParserTest, testParseIdleNodeNoParam) {
+	ai::TreeNodeParser parser(_registry, "Idle");
+	const ai::TreeNodePtr& c = parser.getTreeNode();
+	ASSERT_TRUE(c) << parser.getError();
+}
+
+TEST_F(ParserTest, testParseUnknown) {
+	ai::TreeNodeParser parser(_registry, "Unknown");
+	const ai::TreeNodePtr& c = parser.getTreeNode();
+	ASSERT_FALSE(c) << parser.getError();
+}
