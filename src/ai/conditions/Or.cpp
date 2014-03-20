@@ -29,11 +29,11 @@ bool Or::evaluate(AI& entity) {
 
 std::ostream& Or::print(std::ostream& stream, int level) const {
 	ICondition::print(stream, level);
-	stream << "{";
+	stream << "(";
 	for (Conditions::const_iterator i = _conditions.begin(); i != _conditions.end(); ++i) {
-		(*i)->print(stream, level + 1);
+		(*i)->print(stream, level);
 	}
-	stream << "}";
+	stream << ")";
 	return stream;
 }
 

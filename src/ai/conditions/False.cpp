@@ -4,7 +4,7 @@ namespace ai {
 
 False::Factory False::FACTORY;
 
-std::ostream& False::print(std::ostream& stream, int level) const {
+std::ostream& False::print(std::ostream& stream, int) const {
 	stream << _name;
 	return stream;
 }

@@ -31,7 +31,7 @@ std::ostream& And::print(std::ostream& stream, int level) const {
 	ICondition::print(stream, level);
 	stream << "(";
 	for (Conditions::const_iterator i = _conditions.begin(); i != _conditions.end();) {
-		(*i)->print(stream, level + 1);
+		(*i)->print(stream, level);
 		++i;
 		if (i != _conditions.end())
 			stream << ",";

@@ -4,7 +4,7 @@ namespace ai {
 
 int ICondition::_nextId = 0;
 
-std::ostream& ICondition::print(std::ostream& stream, int level) const {
+std::ostream& ICondition::print(std::ostream& stream, int) const {
 	stream << _name;
 	if (!_parameters.empty()) {
 		stream << "(\"";
