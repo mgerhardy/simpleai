@@ -39,6 +39,7 @@ private:
 	QLabel *createLabel(const QString &text) const;
 
 	NodeTreeView *_nodeTree;
+	MapFrame *_nodeTreeFrame;
 	StateTable *_stateTable;
 	MapFrame *_mapFrame;
 	MapView *_mapWidget;

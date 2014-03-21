@@ -41,6 +41,7 @@ AIDebuggerWindow::AIDebuggerWindow(AIDebugger& debugger) :
 }
 
 AIDebuggerWindow::~AIDebuggerWindow() {
+	delete _nodeTreeFrame;
 	delete _mapFrame;
 	delete _entityList;
 	delete _statusBarLabel;
@@ -82,9 +83,10 @@ QWidget *AIDebuggerWindow::createBottomWidget() {
 	QHBoxLayout *bottomLayout = new QHBoxLayout;
 
 	_nodeTree = new NodeTreeView(_debugger);
+	_nodeTreeFrame = new MapFrame(_nodeTree);
 	_aggroTable = new AggroTable(_debugger);
 	_stateTable = new StateTable(_debugger);
-	bottomLayout->addWidget(_nodeTree);
+	bottomLayout->addWidget(_nodeTreeFrame);
 	bottomLayout->addWidget(_aggroTable);
 	bottomLayout->addWidget(_stateTable);
 	bottomWidget->setLayout(bottomLayout);
