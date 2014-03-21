@@ -1,4 +1,4 @@
-#include "MapZoomWidget.h"
+#include "ZoomWidget.h"
 
 #include <QStyle>
 #include <qmath.h>
@@ -6,18 +6,18 @@
 namespace ai {
 namespace debug {
 
-MapZoomWidget::MapZoomWidget(QGraphicsView& gview, QWidget* parent) :
+ZoomWidget::ZoomWidget(QGraphicsView& gview, QWidget* parent) :
 		QWidget(parent), _graphicsView(gview), _zoomSlider(), _zoomInButton(), _zoomOutButton() {
 	setLayout(createLayout());
 }
 
-MapZoomWidget::~MapZoomWidget() {
+ZoomWidget::~ZoomWidget() {
 	disconnect(&_zoomSlider, 0, this, SLOT(setupZoomMatrix()));
 	disconnect(&_zoomInButton, 0, this, SLOT(zoomIn()));
 	disconnect(&_zoomOutButton, 0, this, SLOT(zoomOut()));
 }
 
-QVBoxLayout* MapZoomWidget::createLayout() {
+QVBoxLayout* ZoomWidget::createLayout() {
 	const int size = style()->pixelMetric(QStyle::PM_ToolBarIconSize);
 	QSize icosize(size, size);
 
@@ -53,32 +53,32 @@ QVBoxLayout* MapZoomWidget::createLayout() {
 	return layout;
 }
 
-void MapZoomWidget::setupZoomMatrix() {
+void ZoomWidget::setupZoomMatrix() {
 	const qreal scale = qPow(2.0, (_zoomSlider.value() - 100) / 20.0);
 	QMatrix matrix;
 	matrix.scale(scale, scale);
 	_graphicsView.setMatrix(matrix);
 }
 
-void MapZoomWidget::setAutoRepeatInterval(int interval) {
+void ZoomWidget::setAutoRepeatInterval(int interval) {
 	_zoomInButton.setAutoRepeatInterval(interval);
 	_zoomOutButton.setAutoRepeatInterval(interval);
 }
 
-void MapZoomWidget::setValueRange(int min, int max) {
+void ZoomWidget::setValueRange(int min, int max) {
 	_zoomSlider.setMinimum(min);
 	_zoomSlider.setMaximum(max);
 }
 
-void MapZoomWidget::setValue(int value) {
+void ZoomWidget::setValue(int value) {
 	_zoomSlider.setValue(value);
 }
 
-void MapZoomWidget::zoomIn(int level) {
+void ZoomWidget::zoomIn(int level) {
 	_zoomSlider.setValue(_zoomSlider.value() + level);
 }
 
-void MapZoomWidget::zoomOut(int level) {
+void ZoomWidget::zoomOut(int level) {
 	_zoomSlider.setValue(_zoomSlider.value() - level);
 }
 

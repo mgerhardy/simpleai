@@ -9,11 +9,11 @@
 namespace ai {
 namespace debug {
 
-class MapZoomWidget: public QWidget {
+class ZoomWidget: public QWidget {
 	Q_OBJECT
 public:
-	MapZoomWidget(QGraphicsView& gview, QWidget* parent = nullptr);
-	~MapZoomWidget();
+	ZoomWidget(QGraphicsView& gview, QWidget* parent = nullptr);
+	~ZoomWidget();
 
 	void setAutoRepeatInterval(int interval);
 	void setValueRange(int min, int max);

@@ -6,16 +6,16 @@
 namespace ai {
 namespace debug {
 
-class MapZoomWidget;
+class ZoomWidget;
 
-class MapFrame: public QFrame {
+class ZoomFrame: public QFrame {
 	Q_OBJECT
 protected:
-	MapZoomWidget* _zoomWidget;
+	ZoomWidget* _zoomWidget;
 	QGraphicsView* _graphicsView;
 public:
-	MapFrame(QGraphicsView* graphicsView, QWidget* parent = nullptr);
-	virtual ~MapFrame();
+	ZoomFrame(QGraphicsView* graphicsView, QWidget* parent = nullptr);
+	virtual ~ZoomFrame();
 
 	void zoomIn(int level);
 	void zoomOut(int level);

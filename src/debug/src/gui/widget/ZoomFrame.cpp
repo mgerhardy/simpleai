@@ -1,13 +1,13 @@
-#include "MapFrame.h"
+#include "ZoomFrame.h"
 #include "MapScene.h"
 #include "MapView.h"
-#include "MapZoomWidget.h"
+#include "ZoomWidget.h"
 #include "AIDebugger.h"
 
 namespace ai {
 namespace debug {
 
-MapFrame::MapFrame(QGraphicsView* graphicsView, QWidget* parent) :
+ZoomFrame::ZoomFrame(QGraphicsView* graphicsView, QWidget* parent) :
 		QFrame(parent), _zoomWidget(nullptr), _graphicsView(graphicsView) {
 	setFrameStyle(Sunken | StyledPanel);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -16,7 +16,7 @@ MapFrame::MapFrame(QGraphicsView* graphicsView, QWidget* parent) :
 	_graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
 	_graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 	_graphicsView->setInteractive(false);
-	_zoomWidget = new MapZoomWidget(*_graphicsView);
+	_zoomWidget = new ZoomWidget(*_graphicsView);
 
 	QGridLayout* topLayout = new QGridLayout;
 	topLayout->addWidget(_graphicsView, 1, 0);
@@ -24,16 +24,16 @@ MapFrame::MapFrame(QGraphicsView* graphicsView, QWidget* parent) :
 	setLayout(topLayout);
 }
 
-MapFrame::~MapFrame() {
+ZoomFrame::~ZoomFrame() {
 	delete _graphicsView;
 	delete _zoomWidget;
 }
 
-void MapFrame::zoomIn(int level) {
+void ZoomFrame::zoomIn(int level) {
 	_zoomWidget->zoomIn(level);
 }
 
-void MapFrame::zoomOut(int level) {
+void ZoomFrame::zoomOut(int level) {
 	_zoomWidget->zoomOut(level);
 }
 

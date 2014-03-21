@@ -9,7 +9,7 @@
 #include "EntityList.h"
 #include "AggroTable.h"
 #include "MapView.h"
-#include "MapFrame.h"
+#include "ZoomFrame.h"
 #include "NodeTreeView.h"
 
 namespace ai {
@@ -67,7 +67,7 @@ QWidget *AIDebuggerWindow::createTopWidget() {
 	QHBoxLayout *topLayout = new QHBoxLayout;
 
 	_mapWidget = _debugger.createMapWidget();
-	_mapFrame = new MapFrame(_mapWidget);
+	_mapFrame = new ZoomFrame(_mapWidget);
 
 	_entityList = new EntityList(_debugger);
 	_entityList->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
@@ -83,7 +83,7 @@ QWidget *AIDebuggerWindow::createBottomWidget() {
 	QHBoxLayout *bottomLayout = new QHBoxLayout;
 
 	_nodeTree = new NodeTreeView(_debugger);
-	_nodeTreeFrame = new MapFrame(_nodeTree);
+	_nodeTreeFrame = new ZoomFrame(_nodeTree);
 	_aggroTable = new AggroTable(_debugger);
 	_stateTable = new StateTable(_debugger);
 	bottomLayout->addWidget(_nodeTreeFrame);

@@ -15,7 +15,7 @@ class StateTable;
 class EntityList;
 class AggroTable;
 class NodeTreeView;
-class MapFrame;
+class ZoomFrame;
 class MapView;
 
 class AIDebuggerWindow: public QMainWindow {
@@ -39,9 +39,9 @@ private:
 	QLabel *createLabel(const QString &text) const;
 
 	NodeTreeView *_nodeTree;
-	MapFrame *_nodeTreeFrame;
+	ZoomFrame *_nodeTreeFrame;
 	StateTable *_stateTable;
-	MapFrame *_mapFrame;
+	ZoomFrame *_mapFrame;
 	MapView *_mapWidget;
 	EntityList *_entityList;
 	AggroTable *_aggroTable;
