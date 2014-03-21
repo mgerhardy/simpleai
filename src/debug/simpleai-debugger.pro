@@ -8,7 +8,7 @@ DEPENDPATH += . \
               src/gui
 INCLUDEPATH += . src src/gui src/gui/dialog src/gui/widget src/gui/view/map src/gui/view/tree src/gui/view/aggro src/gui/view/state src/gui/view/list src/common
 
-CONFIG += qt
+CONFIG += qt debug_and_release
 
 QMAKE_CXXFLAGS += -std=c++0x
 
