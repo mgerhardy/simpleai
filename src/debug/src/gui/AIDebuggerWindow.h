@@ -14,7 +14,7 @@ namespace debug {
 class StateTable;
 class EntityList;
 class AggroTable;
-class NodeTreeWidget;
+class NodeTreeView;
 class MapFrame;
 class MapView;
 
@@ -38,7 +38,7 @@ private:
 	QWidget *createBottomWidget();
 	QLabel *createLabel(const QString &text) const;
 
-	NodeTreeWidget *_nodeTree;
+	NodeTreeView *_nodeTree;
 	StateTable *_stateTable;
 	MapFrame *_mapFrame;
 	MapView *_mapWidget;

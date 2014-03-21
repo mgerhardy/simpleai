@@ -23,7 +23,7 @@ HEADERS += src/AIDebugger.h \
            src/gui/view/map/MapView.h \
            src/gui/view/map/MapItem.h \
            src/gui/view/tree/NodeTreeItem.h \
-           src/gui/view/tree/NodeTreeWidget.h \
+           src/gui/view/tree/NodeTreeView.h \
            src/gui/view/state/StateTable.h \
            src/gui/view/state/StateTableModel.h \
            src/gui/view/aggro/AggroTable.h \
@@ -43,7 +43,7 @@ SOURCES += src/Main.cpp \
            src/gui/view/map/MapView.cpp \
            src/gui/view/map/MapItem.cpp \
            src/gui/view/tree/NodeTreeItem.cpp \
-           src/gui/view/tree/NodeTreeWidget.cpp \
+           src/gui/view/tree/NodeTreeView.cpp \
            src/gui/view/state/StateTable.cpp \
            src/gui/view/state/StateTableModel.cpp \
            src/gui/view/aggro/AggroTable.cpp \

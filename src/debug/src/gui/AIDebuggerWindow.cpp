@@ -10,7 +10,7 @@
 #include "AggroTable.h"
 #include "MapView.h"
 #include "MapFrame.h"
-#include "NodeTreeWidget.h"
+#include "NodeTreeView.h"
 
 namespace ai {
 namespace debug {
@@ -81,7 +81,7 @@ QWidget *AIDebuggerWindow::createBottomWidget() {
 	QWidget *bottomWidget = new QWidget;
 	QHBoxLayout *bottomLayout = new QHBoxLayout;
 
-	_nodeTree = new NodeTreeWidget(_debugger);
+	_nodeTree = new NodeTreeView(_debugger);
 	_aggroTable = new AggroTable(_debugger);
 	_stateTable = new StateTable(_debugger);
 	bottomLayout->addWidget(_nodeTree);

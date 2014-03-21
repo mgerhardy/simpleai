@@ -1,20 +1,20 @@
-#include "NodeTreeWidget.h"
+#include "NodeTreeView.h"
 #include <AI.h>
 
 namespace ai {
 namespace debug {
 
-NodeTreeWidget::NodeTreeWidget(AIDebugger& debugger) :
+NodeTreeView::NodeTreeView(AIDebugger& debugger) :
 		QGraphicsView(), _debugger(debugger) {
 	_scene = new QGraphicsScene(this);
 	setScene(_scene);
 }
 
-NodeTreeWidget::~NodeTreeWidget() {
+NodeTreeView::~NodeTreeView() {
 	delete _scene;
 }
 
-void NodeTreeWidget::updateTreeWidget() {
+void NodeTreeView::updateTreeWidget() {
 	_scene->clear();
 	const ai::CharacterId& id = _debugger.getSelected();
 	if (id == -1) {
@@ -25,7 +25,7 @@ void NodeTreeWidget::updateTreeWidget() {
 	buildTreeItems(maxChild, 0, node, nullptr);
 }
 
-int NodeTreeWidget::getMaxChild(const AIStateNode& node, int maxChild) const {
+int NodeTreeView::getMaxChild(const AIStateNode& node, int maxChild) const {
 	const std::vector<AIStateNode>& children = node.getChildren();
 	const size_t size = children.size();
 	maxChild += size - 1;
@@ -35,7 +35,7 @@ int NodeTreeWidget::getMaxChild(const AIStateNode& node, int maxChild) const {
 	return maxChild;
 }
 
-void NodeTreeWidget::buildTreeItems(int maxChild, int child, const AIStateNode& node, NodeTreeItem* parent) {
+void NodeTreeView::buildTreeItems(int maxChild, int child, const AIStateNode& node, NodeTreeItem* parent) {
 	NodeTreeItem* thisNode = new NodeTreeItem(maxChild, child, node, parent);
 	_scene->addItem(thisNode);
 	const std::vector<AIStateNode>& children = node.getChildren();

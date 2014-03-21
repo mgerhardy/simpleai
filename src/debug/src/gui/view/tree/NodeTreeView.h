@@ -13,7 +13,7 @@ namespace debug {
 /**
  * @brief Shows the behaviour tree for the current selected entity
  */
-class NodeTreeWidget: public QGraphicsView {
+class NodeTreeView: public QGraphicsView {
 Q_OBJECT
 private:
 	AIDebugger& _debugger;
@@ -22,8 +22,8 @@ private:
 	void buildTreeItems(int maxChild, int child, const AIStateNode& node, NodeTreeItem* parent);
 	int getMaxChild(const AIStateNode& node, int maxChild) const;
 public:
-	NodeTreeWidget(AIDebugger& debugger);
-	virtual ~NodeTreeWidget();
+	NodeTreeView(AIDebugger& debugger);
+	virtual ~NodeTreeView();
 
 	void updateTreeWidget();
 };
