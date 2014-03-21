@@ -58,7 +58,11 @@ public:
 };
 
 bool EntrySorter(const EntryPtr& a, const EntryPtr& b) {
-	return a->getAggro() < b->getAggro();
+	if (a->getAggro() > b->getAggro())
+		return false;
+	if (::fabs(a->getAggro() - b->getAggro()) < 0.0000001f)
+		return a->getCharacterId() < b->getCharacterId();
+	return true;
 }
 
 inline void AggroMgr::sort() {
