@@ -21,7 +21,7 @@ private:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
 
 public:
-	NodeTreeItem (const AIStateNode& node, NodeTreeItem* parent);
+	NodeTreeItem (int maxChild, int child, const AIStateNode& node, NodeTreeItem* parent);
 	virtual ~NodeTreeItem ();
 };
 

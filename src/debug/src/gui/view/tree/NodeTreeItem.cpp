@@ -8,19 +8,37 @@ namespace ai {
 namespace debug {
 
 namespace {
-const int padding = 3;
-const int width = 100;
-const int height = 50;
-const int fontSize = 10;
-const int conditionIndent = 3;
+const qreal padding = 3;
+const qreal horizontalSpacing = 40;
+const qreal verticalSpacing = 10;
+const qreal width = 130;
+const qreal height = 50;
+const qreal fontSize = 10;
+const qreal conditionIndent = 3;
 const QColor backgroundColor = QColor::fromRgb(32, 32, 32, 64);
 const QFont font("Times", fontSize);
 }
 
-NodeTreeItem::NodeTreeItem (const AIStateNode& node, NodeTreeItem* parent) :
+// TODO: items might still overlap
+NodeTreeItem::NodeTreeItem (int maxChild, int child, const AIStateNode& node, NodeTreeItem* parent) :
 		QGraphicsItem(), _node(node), _parent(parent) {
+	const size_t size = _parent == nullptr ? 1 : _parent->_node.getChildren().size();
+	const qreal maxHeight = maxChild * height;
+	const qreal half = maxHeight / 2.0;
+	qreal y;
+	if (size <= 1) {
+		y = 0.0;
+	} else {
+		const qreal boxHeight = height + verticalSpacing;
+		const qreal parentCenter = height / 2.0;
+		const qreal startY = ((size * height) + (size - 1) * verticalSpacing) / -2.0;
+		y = parentCenter + startY + child * boxHeight;
+	}
 	if (_parent != nullptr) {
-		setPos(_parent->pos() + QPointF(width, 0.0));
+		setPos(_parent->pos() + QPointF(width + horizontalSpacing, y));
+	} else {
+		y = half - height / 2.0;
+		setPos(0.0, y);
 	}
 }
 
@@ -49,7 +67,32 @@ void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 	QBrush b = painter->brush();
 	painter->setBrush(backgroundColor);
-	painter->drawRect(0, 0, width, height);
+	painter->drawRect(0.0, 0.0, width, height);
+
+	const std::vector<AIStateNode>& c = _node.getChildren();
+	if (!c.empty()) {
+		const qreal verticalLine = width + horizontalSpacing / 2.0;
+		// horizontal line
+		painter->drawLine(width, height / 2.0, verticalLine, height / 2.0);
+		const int size = c.size();
+		const qreal boxHeight = height + verticalSpacing;
+		const qreal parentCenter = height / 2.0;
+		const qreal startY = ((size * height) + (size - 1) * verticalSpacing) / -2.0;
+		const qreal verticalLineTop = parentCenter + startY + height / 2.0;
+		const qreal verticalLineBottom = parentCenter - startY - height / 2.0;
+		// vertical line
+		painter->drawLine(verticalLine, verticalLineTop, verticalLine, verticalLineBottom);
+		// upper horizontal line
+		const qreal horizontalLine = verticalLine + horizontalSpacing / 2.0;
+		painter->drawLine(verticalLine, verticalLineTop, horizontalLine, verticalLineTop);
+		for (int i = 1; i < size - 1; ++i) {
+			const qreal verticalLineToChildrenY = verticalLineTop + boxHeight * i;
+			painter->drawLine(verticalLine, verticalLineToChildrenY, horizontalLine, verticalLineToChildrenY);
+		}
+		// upper horizontal line
+		painter->drawLine(verticalLine, verticalLineBottom, horizontalLine, verticalLineBottom);
+	}
+
 	painter->setBrush(b);
 }
 
