@@ -16,6 +16,7 @@ const qreal height = 50;
 const qreal fontSize = 10;
 const qreal conditionIndent = 3;
 const QColor backgroundColor = QColor::fromRgb(32, 32, 32, 64);
+const QColor activeBackgroundColor = QColor::fromRgb(255, 0, 0, 128);
 const QFont font("Times", fontSize);
 }
 
@@ -57,6 +58,7 @@ void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *opt
 	const int lineGap = fontMetrics.lineSpacing();
 	painter->setFont(font);
 	painter->save();
+	const bool active = _node.getState();
 	QRect rect(bounding.x() + padding, bounding.y() + padding, bounding.width() - 2 * padding,
 			bounding.height() - 2 * padding);
 	painter->drawText(rect, QString::fromStdString(_node.getName()));
@@ -66,7 +68,10 @@ void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *opt
 	painter->restore();
 
 	QBrush b = painter->brush();
-	painter->setBrush(backgroundColor);
+	if (active)
+		painter->setBrush(activeBackgroundColor);
+	else
+		painter->setBrush(backgroundColor);
 	painter->drawRect(0.0, 0.0, width, height);
 
 	const std::vector<AIStateNode>& c = _node.getChildren();
