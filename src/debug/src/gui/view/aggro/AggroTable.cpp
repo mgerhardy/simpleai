@@ -6,14 +6,16 @@ namespace debug {
 
 AggroTable::AggroTable(AIDebugger& debugger) :
 		QTableView(), _model(debugger), _debugger(debugger) {
-	setFixedWidth(120);
+	setFixedWidth(160);
 	_proxyModel.setSourceModel(&_model);
 	setModel(&_proxyModel);
 	setAlternatingRowColors(true);
-	setSortingEnabled(true);
+	resizeColumnsToContents();
+	setSortingEnabled(false);
 	setSelectionMode(QAbstractItemView::NoSelection);
 	verticalHeader()->hide();
 	setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
+	horizontalHeader()->setStretchLastSection(true);
 }
 
 AggroTable::~AggroTable() {

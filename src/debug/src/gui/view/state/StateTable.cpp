@@ -10,10 +10,12 @@ StateTable::StateTable(AIDebugger& debugger) :
 	_proxyModel.setSourceModel(&_model);
 	setModel(&_proxyModel);
 	setAlternatingRowColors(true);
+	resizeColumnsToContents();
 	setSortingEnabled(true);
 	setSelectionMode(QAbstractItemView::NoSelection);
 	verticalHeader()->hide();
 	setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
+	horizontalHeader()->setStretchLastSection(true);
 }
 
 StateTable::~StateTable() {
