@@ -84,7 +84,7 @@ void Server::broadcastCharacterDetails() {
 	const TreeNodes& children = behaviour->getChildren();
 	const ConditionPtr& condition = behaviour->getCondition();
 	const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
-	AIStateNode root(name, conditionStr, behaviour->getLastExecMillis(), false);
+	AIStateNode root(name, conditionStr, behaviour->getLastExecMillis(), true);
 	addChildren(behaviour, root, ai, children);
 
 	AIStateAggro aggro;
