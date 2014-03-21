@@ -46,7 +46,6 @@ AIDebuggerWindow::~AIDebuggerWindow() {
 	delete _entityList;
 	delete _statusBarLabel;
 	delete _selectedLabel;
-	delete _nodeTree;
 	delete _stateTable;
 	delete _aggroTable;
 }
