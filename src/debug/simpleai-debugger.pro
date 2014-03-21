@@ -22,14 +22,14 @@ HEADERS += src/AIDebugger.h \
            src/gui/view/map/MapScene.h \
            src/gui/view/map/MapView.h \
            src/gui/view/map/MapItem.h \
-           src/gui/view/map/MapFrame.h \
-           src/gui/view/map/MapZoomWidget.h \
            src/gui/view/tree/NodeTreeItem.h \
            src/gui/view/tree/NodeTreeWidget.h \
            src/gui/view/state/StateTable.h \
            src/gui/view/state/StateTableModel.h \
            src/gui/view/aggro/AggroTable.h \
            src/gui/view/aggro/AggroTableModel.h \
+           src/gui/widget/MapFrame.h \
+           src/gui/widget/MapZoomWidget.h \
            src/gui/widget/IComboBox.h
 
 SOURCES += src/Main.cpp \
@@ -42,14 +42,14 @@ SOURCES += src/Main.cpp \
            src/gui/view/map/MapScene.cpp \
            src/gui/view/map/MapView.cpp \
            src/gui/view/map/MapItem.cpp \
-           src/gui/view/map/MapFrame.cpp \
-           src/gui/view/map/MapZoomWidget.cpp \
            src/gui/view/tree/NodeTreeItem.cpp \
            src/gui/view/tree/NodeTreeWidget.cpp \
            src/gui/view/state/StateTable.cpp \
            src/gui/view/state/StateTableModel.cpp \
            src/gui/view/aggro/AggroTable.cpp \
            src/gui/view/aggro/AggroTableModel.cpp \
+           src/gui/widget/MapFrame.cpp \
+           src/gui/widget/MapZoomWidget.cpp \
            src/gui/widget/IComboBox.cpp
 
 RESOURCES += data/resources.qrc

@@ -7,12 +7,10 @@
 namespace ai {
 namespace debug {
 
-MapFrame::MapFrame(AIDebugger& debugger, QWidget* parent) :
-		QFrame(parent), _graphicsView(nullptr), _zoomWidget(
-				nullptr), _debugger(debugger) {
+MapFrame::MapFrame(QGraphicsView* graphicsView, QWidget* parent) :
+		QFrame(parent), _zoomWidget(nullptr), _graphicsView(graphicsView) {
 	setFrameStyle(Sunken | StyledPanel);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	_graphicsView = _debugger.createMapWidget();
 	_graphicsView->setRenderHint(QPainter::Antialiasing, false);
 	_graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
 	_graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
@@ -29,10 +27,6 @@ MapFrame::MapFrame(AIDebugger& debugger, QWidget* parent) :
 MapFrame::~MapFrame() {
 	delete _graphicsView;
 	delete _zoomWidget;
-}
-
-void MapFrame::updateMapFrame() {
-	_graphicsView->updateMapView();
 }
 
 void MapFrame::zoomIn(int level) {

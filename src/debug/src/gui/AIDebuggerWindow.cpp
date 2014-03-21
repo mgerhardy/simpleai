@@ -65,7 +65,8 @@ QWidget *AIDebuggerWindow::createTopWidget() {
 	QWidget *topWidget = new QWidget;
 	QHBoxLayout *topLayout = new QHBoxLayout;
 
-	_mapFrame = new MapFrame(_debugger);
+	_mapWidget = _debugger.createMapWidget();
+	_mapFrame = new MapFrame(_mapWidget);
 
 	_entityList = new EntityList(_debugger);
 	_entityList->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
@@ -115,7 +116,7 @@ void AIDebuggerWindow::tick() {
 	}
 	_stateTable->updateStateTable();
 	_entityList->updateEntityList();
-	_mapFrame->updateMapFrame();
+	_mapWidget->updateMapView();
 	_nodeTree->updateTreeWidget();
 	_aggroTable->updateAggroTable();
 }

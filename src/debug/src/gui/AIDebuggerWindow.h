@@ -16,6 +16,7 @@ class EntityList;
 class AggroTable;
 class NodeTreeWidget;
 class MapFrame;
+class MapView;
 
 class AIDebuggerWindow: public QMainWindow {
 Q_OBJECT
@@ -40,6 +41,7 @@ private:
 	NodeTreeWidget *_nodeTree;
 	StateTable *_stateTable;
 	MapFrame *_mapFrame;
+	MapView *_mapWidget;
 	EntityList *_entityList;
 	AggroTable *_aggroTable;
 	QMenu *_fileMenu;
