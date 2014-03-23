@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
 	registry.registerNodeFactory("ExampleTask", ai::example::ExampleTask::FACTORY);
 
 	ai::LUATreeLoader loader(registry);
-	const std::string name = "walk";
+	const std::string name = "example";
 
 	const std::string filename = argv[1];
 	std::ifstream t(filename.c_str());

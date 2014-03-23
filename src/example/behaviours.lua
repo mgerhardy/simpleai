@@ -1,5 +1,5 @@
 function init ()
-	local tree = AI.createTree("walk")
+	local tree = AI.createTree("example")
 	local rootNode = tree:createRoot("Sequence", "root");
 	rootNode:addNode("Idle{500}", "idle500")
 	rootNode:addNode("Move", "move"):setCondition("Not(HasEnemies)")
