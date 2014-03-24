@@ -91,15 +91,12 @@ int main(int argc, char **argv) {
 		e->setReduceByValue(1.0f + rand() % 3);
 	}
 
-	long frames = 10000;
-	long frame = frames;
 	uint32_t timeLast = getCurrentMillis();
-	for (; --frame;) {
+	for (;;) {
 		const uint32_t timeNow = getCurrentMillis();
 		const uint32_t dt = timeNow - timeLast;
 		timeLast = timeNow;
 		gameMap.update(dt);
-		std::cout << (frames - frame) << "/" << frames << "    \r" << std::flush;
 		sleep(0);
 	}
 
