@@ -51,7 +51,8 @@ public: \
 
 #define CONDITION_FACTORY_IMPL(ConditionName) \
 	ConditionPtr ConditionName::Factory::create(const ConditionFactoryContext *ctx) const { \
-		return ConditionPtr(new ConditionName(ctx->parameters)); \
+		ConditionName* c = new ConditionName(ctx->parameters); \
+		return ConditionPtr(c); \
 	} \
 	ConditionName::Factory ConditionName::FACTORY;
 
@@ -67,8 +68,9 @@ private: \
 	CONDITION_CLASS(ConditionName) \
 public: \
 	static ConditionPtr& get() { \
-		static ConditionName _conditionInstance; \
-		static ConditionPtr _instance(&_conditionInstance, Deleter()); \
+		static ConditionName* c = nullptr; \
+		if (c == nullptr) { c = new ConditionName; } \
+		static ConditionPtr _instance(c); \
 		return _instance; \
 	} \
 	CONDITION_FACTORY_SINGLETON
