@@ -24,6 +24,9 @@ TreeNodeStatus Parallel::execute(AI& entity, long deltaMillis) {
 		totalStatus |= isActive;
 	}
 
+	if (!totalStatus) {
+		resetState(entity);
+	}
 	return totalStatus ? RUNNING : FINISHED;
 }
 
