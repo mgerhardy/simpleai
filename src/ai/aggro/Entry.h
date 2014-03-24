@@ -55,9 +55,9 @@ inline void Entry::setReduceByRatio(float reduceRatioSecond, float minAggro) {
 	_minAggro = minAggro;
 }
 
-inline void Entry::setReduceByValue(float degValueSecond) {
+inline void Entry::setReduceByValue(float reduceValueSecond) {
 	_reduceType = VALUE;
-	_reduceValueSecond = degValueSecond;
+	_reduceValueSecond = reduceValueSecond;
 }
 
 inline bool Entry::reduceByTime(long millis) {

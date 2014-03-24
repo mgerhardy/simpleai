@@ -14,7 +14,7 @@ private:
 public:
 	GameEntity (const ai::CharacterId& id, const ai::TreeNodePtr& root, ai::example::Pathfinder& pathfinder) :
 			ai::ICharacter(id), _ai(*this, root, pathfinder) {
-		setAttribute("Name", "Foobar");
+		setAttribute("Name", "Example");
 	}
 
 	~GameEntity () {
