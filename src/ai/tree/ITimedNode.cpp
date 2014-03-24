@@ -7,7 +7,7 @@ namespace ai {
 #define NOTSTARTED -1
 
 ITimedNode::ITimedNode(const std::string& name, const std::string& parameters, const ConditionPtr& condition) :
-		TreeNode(name, parameters, condition), _timerMillis(-1) {
+		TreeNode(name, parameters, condition), _timerMillis(NOTSTARTED) {
 	if (!parameters.empty())
 		_millis = ::atol(parameters.c_str());
 	else
