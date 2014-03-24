@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	int amount = 100;
+	int amount = 1;
 	if (argc >= 3) {
 		amount = atoi(argv[2]);
 		if (amount <= 0) {
