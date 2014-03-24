@@ -54,19 +54,7 @@ void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *opt
 	Q_UNUSED(option);
 	Q_UNUSED(widget);
 	const QRectF bounding = boundingRect();
-	QFontMetrics fontMetrics(font, painter->device());
-	const int lineGap = fontMetrics.lineSpacing();
-	painter->setFont(font);
-	painter->save();
 	const bool active = _node.getState();
-	QRect rect(bounding.x() + padding, bounding.y() + padding, bounding.width() - 2 * padding,
-			bounding.height() - 2 * padding);
-	painter->drawText(rect, QString::fromStdString(_node.getName()));
-	rect.setY(rect.y() + fontSize + lineGap);
-	rect.setX(rect.x() + conditionIndent);
-	painter->drawText(rect, QString::fromStdString(_node.getCondition()));
-	painter->restore();
-
 	QBrush b = painter->brush();
 	if (active)
 		painter->setBrush(activeBackgroundColor);
@@ -99,6 +87,18 @@ void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *opt
 	}
 
 	painter->setBrush(b);
+
+	QFontMetrics fontMetrics(font, painter->device());
+	const int lineGap = fontMetrics.lineSpacing();
+	painter->setFont(font);
+	painter->save();
+	QRect rect(bounding.x() + padding, bounding.y() + padding, bounding.width() - 2 * padding,
+			bounding.height() - 2 * padding);
+	painter->drawText(rect, QString::fromStdString(_node.getName()));
+	rect.setY(rect.y() + fontSize + lineGap);
+	rect.setX(rect.x() + conditionIndent);
+	painter->drawText(rect, QString::fromStdString(_node.getCondition()));
+	painter->restore();
 }
 
 }
