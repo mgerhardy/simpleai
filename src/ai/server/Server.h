@@ -19,7 +19,7 @@ protected:
 	CharacterId _selectedCharacterId;
 	uint32_t _time;
 
-	void addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai, const TreeNodes& children) const;
+	void addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) const;
 	void broadcastState();
 	void broadcastCharacterDetails();
 	void select(const ClientId& clientId, const CharacterId& id) override;
