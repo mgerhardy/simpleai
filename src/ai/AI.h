@@ -29,7 +29,7 @@ protected:
 	ResetStates _resetStates;
 
 	/**
-	 * Often qc Selector states must be stored to continue in the next step at a particular
+	 * Often @c Selector states must be stored to continue in the next step at a particular
 	 * position in the behaviour tree. This map is doing exactly this.
 	 */
 	typedef std::map<int, int> SelectorStates;
