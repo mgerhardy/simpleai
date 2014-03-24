@@ -21,9 +21,9 @@ public:
 	ITimedNode(const std::string& name, const std::string& parameters, const ConditionPtr& condition);
 	virtual ~ITimedNode();
 
-	TreeNodeStatus execute(AI& entity, long currentMillis);
+	TreeNodeStatus execute(AI& entity, long deltaMillis);
 
-	virtual TreeNodeStatus executeTimed(AI& entity, long currentMillis) = 0;
+	virtual TreeNodeStatus executeTimed(AI& entity, long deltaMillis) = 0;
 };
 
 }

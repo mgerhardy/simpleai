@@ -8,7 +8,7 @@ class Idle: public ai::ITimedNode {
 public:
 	TIMERNODE_CLASS(Idle);
 
-	TreeNodeStatus executeTimed(AI& entity, long currentMillis) override;
+	TreeNodeStatus executeTimed(AI& entity, long deltaMillis) override;
 };
 
 }

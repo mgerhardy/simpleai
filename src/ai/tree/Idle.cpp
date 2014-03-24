@@ -2,7 +2,7 @@
 
 namespace ai {
 
-TreeNodeStatus Idle::executeTimed(AI& entity, long currentMillis) {
+TreeNodeStatus Idle::executeTimed(AI& entity, long deltaMillis) {
 	return RUNNING;
 }
 

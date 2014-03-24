@@ -17,17 +17,20 @@ ITimedNode::ITimedNode(const std::string& name, const std::string& parameters, c
 ITimedNode::~ITimedNode() {
 }
 
-TreeNodeStatus ITimedNode::execute(AI& entity, long currentMillis) {
+TreeNodeStatus ITimedNode::execute(AI& entity, long deltaMillis) {
+	const TreeNodeStatus result = TreeNode::execute(entity, deltaMillis);
+	if (result == CANNOTEXECUTE)
+		return CANNOTEXECUTE;
 	if (_timerMillis == NOTSTARTED) {
 		_timerMillis = _millis;
-	} else if (_timerMillis - currentMillis > 0) {
-		_timerMillis -= currentMillis;
+	} else if (_timerMillis - deltaMillis > 0) {
+		_timerMillis -= deltaMillis;
 	} else {
 		_timerMillis = NOTSTARTED;
 		return FINISHED;
 	}
 
-	return executeTimed(entity, currentMillis);
+	return executeTimed(entity, deltaMillis);
 }
 
 }
