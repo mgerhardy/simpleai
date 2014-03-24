@@ -3,6 +3,8 @@
 #include <fstream>
 #include <streambuf>
 #include <cstdlib>
+#include <sys/time.h>
+#include <unistd.h>
 #include <AI.h>
 #include <unistd.h>
 #include <tree/loaders/lua/LUATreeLoader.h>
@@ -13,6 +15,13 @@
 #include "actions/Print.h"
 #include "GameEntity.h"
 #include "GameMap.h"
+
+static inline uint32_t getCurrentMillis () {
+	struct timeval now;
+	gettimeofday(&now, NULL);
+	const uint32_t ms = now.tv_sec * 1000 + now.tv_usec / 1000;
+	return ms;
+}
 
 int main(int argc, char **argv) {
 	if (argc <= 1) {
@@ -84,12 +93,14 @@ int main(int argc, char **argv) {
 
 	long frames = 10000;
 	long frame = frames;
-	const int fps = 20;
-	const long microseconds = 1000000 / fps;
-	for (;--frame;) {
-		gameMap.update(1000 / fps);
+	uint32_t timeLast = getCurrentMillis();
+	for (; --frame;) {
+		const uint32_t timeNow = getCurrentMillis();
+		const uint32_t dt = timeNow - timeLast;
+		timeLast = timeNow;
+		gameMap.update(dt);
 		std::cout << (frames - frame) << "/" << frames << "    \r" << std::flush;
-		usleep(microseconds);
+		sleep(0);
 	}
 
 	return 0;
