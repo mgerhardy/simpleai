@@ -8,7 +8,7 @@
 namespace ai {
 
 Server::Server(int port, const std::string& hostname) :
-		_network(port, hostname), _selectedCharacterId(-1) {
+		_network(port, hostname), _selectedCharacterId(-1), _time(0L) {
 	ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
 	r.registerHandler(ai::PROTO_SELECT, ProtocolHandlerPtr(this, ProtocolHandlerNopDeleter()));
 }
@@ -51,7 +51,7 @@ void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai, c
 		const TreeNodes& children = node->getChildren();
 		const ConditionPtr& condition = node->getCondition();
 		const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
-		AIStateNode child(name, conditionStr, node->getLastExecMillis(), active[i]);
+		AIStateNode child(name, conditionStr, _time - node->getLastExecMillis(), active[i]);
 		addChildren(node, child, ai, children);
 		parent.addChildren(child);
 	}
@@ -79,13 +79,13 @@ void Server::broadcastCharacterDetails() {
 	}
 
 	ai::AI& ai = *i->second;
-	const TreeNodePtr& behaviour = ai.getBehaviour();
-	const std::string& name = behaviour->getName();
-	const TreeNodes& children = behaviour->getChildren();
-	const ConditionPtr& condition = behaviour->getCondition();
+	const TreeNodePtr& node = ai.getBehaviour();
+	const std::string& name = node->getName();
+	const TreeNodes& children = node->getChildren();
+	const ConditionPtr& condition = node->getCondition();
 	const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
-	AIStateNode root(name, conditionStr, behaviour->getLastExecMillis(), true);
-	addChildren(behaviour, root, ai, children);
+	AIStateNode root(name, conditionStr, _time - node->getLastExecMillis(), true);
+	addChildren(node, root, ai, children);
 
 	AIStateAggro aggro;
 	const ai::AggroMgr::Entries& entries = ai.getAggroMgr().getEntries();
@@ -99,6 +99,7 @@ void Server::broadcastCharacterDetails() {
 }
 
 void Server::update(uint32_t deltaTime) {
+	_time += deltaTime;
 	broadcastState();
 	broadcastCharacterDetails();
 	_network.update(deltaTime);

@@ -101,7 +101,7 @@ public:
 	 */
 	virtual void getChildrenState(const AI& entity, std::vector<bool>& active) const;
 
-	virtual TreeNodeStatus execute(AI& entity, long currentMillis);
+	virtual TreeNodeStatus execute(AI& entity, long deltaMillis);
 
 	/**
 	 * @brief Reset the states in the node and also in the entity

@@ -17,6 +17,7 @@ protected:
 	AIMap _ais;
 	Network _network;
 	CharacterId _selectedCharacterId;
+	uint32_t _time;
 
 	void addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai, const TreeNodes& children) const;
 	void broadcastState();
