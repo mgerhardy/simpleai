@@ -14,8 +14,10 @@ TreeNode::~TreeNode() {
 
 TreeNodeStatus TreeNode::execute(AI& entity, long deltaMillis) {
 	_time += deltaMillis;
-	if (!_condition->evaluate(entity))
+	setResetSinceLastExec(entity, false);
+	if (!_condition->evaluate(entity)) {
 		return CANNOTEXECUTE;
+	}
 
 	_lastExecMillis = _time;
 	return FINISHED;
