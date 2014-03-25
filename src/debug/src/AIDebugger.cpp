@@ -43,7 +43,7 @@ public:
 };
 
 AIDebugger::AIDebugger(int argc, char** argv) :
-		QApplication(argc, argv), _running(true), _time(0L), _selectedId(-1), _socket(this)
+		QApplication(argc, argv), _running(true), _time(0L), _selectedId(-1), _socket(this), _pause(false)
 {
 #ifdef Q_WS_X11
 	QApplication::setGraphicsSystem(QLatin1String("raster"));
@@ -71,6 +71,11 @@ bool AIDebugger::isSelected(const ai::AIStateWorld& ai) const {
 
 const CharacterId& AIDebugger::getSelected() const {
 	return _selectedId;
+}
+
+void AIDebugger::togglePause() {
+	_pause = !_pause;
+	writeMessage(AIPauseMessage(_pause));
 }
 
 void AIDebugger::select(const ai::AIStateWorld& ai) {

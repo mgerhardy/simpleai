@@ -37,6 +37,7 @@ typedef int ProtocolId;
 extern const ProtocolId PROTO_STATE;
 extern const ProtocolId PROTO_CHARACTER_DETAILS;
 extern const ProtocolId PROTO_SELECT;
+extern const ProtocolId PROTO_PAUSE;
 
 class IProtocolMessage {
 private:

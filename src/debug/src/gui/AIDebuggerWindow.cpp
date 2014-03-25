@@ -92,6 +92,10 @@ QWidget *AIDebuggerWindow::createBottomWidget() {
 	return bottomWidget;
 }
 
+void AIDebuggerWindow::pauseAI() {
+	_debugger.togglePause();
+}
+
 void AIDebuggerWindow::connectToAIServer() {
 	ConnectDialog d;
 	const int state = d.run();
@@ -138,6 +142,11 @@ void AIDebuggerWindow::createActions() {
 	_connectAction->setStatusTip(tr("Connect to AI server"));
 	_connectAction->setIcon(QIcon(":/images/connect.png"));
 	connect(_connectAction, SIGNAL(triggered()), this, SLOT(connectToAIServer()));
+
+	_pauseAction = new QAction(tr("Pause"), this);
+	_pauseAction->setStatusTip(tr("Freeze the ai controlled entities"));
+	_pauseAction->setIcon(QIcon(":/images/pause.png"));
+	connect(_pauseAction, SIGNAL(triggered()), this, SLOT(pauseAI()));
 
 	_exitAction = new QAction(tr("E&xit"), this);
 	_exitAction->setShortcuts(QKeySequence::Quit);

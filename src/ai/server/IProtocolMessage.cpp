@@ -4,5 +4,6 @@ namespace ai {
 const ProtocolId PROTO_STATE = 1;
 const ProtocolId PROTO_CHARACTER_DETAILS = 2;
 const ProtocolId PROTO_SELECT = 3;
+const ProtocolId PROTO_PAUSE = 4;
 }
 

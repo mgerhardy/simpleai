@@ -28,6 +28,7 @@ private slots:
 	void about();
 	void tick();
 	void connectToAIServer();
+	void pauseAI();
 
 private:
 	void createView();
@@ -48,6 +49,7 @@ private:
 	QMenu *_fileMenu;
 	QMenu *_helpMenu;
 	QAction *_connectAction;
+	QAction *_pauseAction;
 	QAction *_exitAction;
 	QAction *_aboutAction;
 	QLabel *_statusBarLabel;

@@ -62,6 +62,7 @@ nobase_library_include_HEADERS = \
 	pathfinding/IMap.h \
 	server/AIStateMessage.h \
 	server/AISelectMessage.h \
+	server/AIPauseMessage.h \
 	server/AICharacterDetailsMessage.h \
 	server/AIStubTypes.h \
 	server/IProtocolHandler.h \

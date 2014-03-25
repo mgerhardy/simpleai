@@ -3,6 +3,7 @@
 #include <vector>
 #include <AI.h>
 #include <server/AIStateMessage.h>
+#include <server/AIPauseMessage.h>
 #include <server/AICharacterDetailsMessage.h>
 #include <server/AIStubTypes.h>
 #include <server/IProtocolHandler.h>
@@ -36,6 +37,7 @@ protected:
 	CharacterAttributes _attributes;
 
 	QTcpSocket _socket;
+	bool _pause;
 
 	bool writeMessage(const IProtocolMessage& msg);
 
@@ -58,6 +60,7 @@ public:
 	bool isSelected(const ai::AIStateWorld& ai) const;
 	const CharacterId& getSelected() const;
 	void select(const ai::AIStateWorld& ai);
+	void togglePause();
 	void unselect();
 
 	virtual MapView* createMapWidget();
