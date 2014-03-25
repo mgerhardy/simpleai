@@ -1,7 +1,6 @@
 #pragma once
 
 #include "IProtocolMessage.h"
-#include <vector>
 
 namespace ai {
 
