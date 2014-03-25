@@ -12,11 +12,10 @@ AI::~AI() {
 }
 
 void AI::update(long deltaMillis) {
-	_aggroList.update(deltaMillis);
-
 	if (isPause())
 		return;
 
+	_aggroList.update(deltaMillis);
 	_behaviour->execute(*this, deltaMillis);
 }
 
