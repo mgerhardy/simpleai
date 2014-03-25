@@ -36,7 +36,7 @@ void MapView::updateMapView() {
 	QWidget* viewPort = viewport();
 	viewPort->update();
 	if (centerOnItem != nullptr)
-		centerOn(centerOnItem);
+		ensureVisible(centerOnItem);
 }
 
 }
