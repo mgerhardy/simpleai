@@ -29,12 +29,19 @@ QRectF MapItem::boundingRect() const {
 void MapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
 	Q_UNUSED(option);
 	Q_UNUSED(widget);
+	const qreal lod = option->levelOfDetailFromTransform(painter->worldTransform());
+
 	QBrush b = painter->brush();
 	const bool selected = _aiDebugger.isSelected(_state);
 	QColor color = selected ? QColor::fromRgb(200, 200, 0) : QColor::fromRgb(255, 0, 0);
 	painter->setBrush(color);
 	painter->drawEllipse(pos(), 10.0, 10.0);
 	painter->setBrush(b);
+
+	if (lod < 0.2)
+		return;
+
+	// TODO: direction, move target, name, id
 }
 
 void MapItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
