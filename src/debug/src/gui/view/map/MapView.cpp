@@ -24,13 +24,19 @@ MapView::~MapView() {
 void MapView::updateMapView() {
 	_scene->clear();
 	const AIDebugger::Entities& e = _debugger.getEntities();
+	const CharacterId& id = _debugger.getSelected();
+	MapItem* centerOnItem = nullptr;
 	for (AIDebugger::EntitiesIter i = e.begin(); i != e.end(); ++i) {
 		MapItem* item = new MapItem(*i, _debugger);
 		_scene->addItem(item);
+		if (i->getId() == id) {
+			centerOnItem = item;
+		}
 	}
-
 	QWidget* viewPort = viewport();
 	viewPort->update();
+	if (centerOnItem != nullptr)
+		centerOn(centerOnItem);
 }
 
 }
