@@ -25,6 +25,8 @@ libsimpleai_la_SOURCES = \
 	tree/loaders/lua/LUATreeLoader.cpp \
 	server/IProtocolMessage.cpp \
 	server/ProtocolMessageFactory.cpp \
+	server/PauseHandler.cpp \
+	server/SelectHandler.cpp \
 	server/Server.cpp \
 	server/Network.cpp \
 	AIRegistry.cpp \
@@ -67,6 +69,7 @@ nobase_library_include_HEADERS = \
 	server/AIStubTypes.h \
 	server/IProtocolHandler.h \
 	server/IProtocolMessage.h \
+	server/PauseHandler.h \
 	server/SelectHandler.h \
 	server/Network.h \
 	server/ProtocolHandlerRegistry.h \

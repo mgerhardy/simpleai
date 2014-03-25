@@ -52,7 +52,13 @@ public:
 	bool start();
 	void update(uint32_t deltaTime);
 
+	int getConnectedClients() const;
+
 	void broadcast(const IProtocolMessage& msg);
 };
+
+inline int Network::getConnectedClients() const {
+	return _clientSockets.size();
+}
 
 }

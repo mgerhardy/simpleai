@@ -30,6 +30,7 @@ AIDebuggerWindow::AIDebuggerWindow(AIDebugger& debugger) :
 	_toolbar->setMovable(false);
 	_toolbar->setFloatable(false);
 	_toolbar->addAction(_connectAction);
+	_toolbar->addAction(_pauseAction);
 	addToolBar(Qt::TopToolBarArea, _toolbar);
 
 	resize(1024, 768);

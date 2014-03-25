@@ -2,6 +2,7 @@
 #include "IProtocolMessage.h"
 #include "AIStateMessage.h"
 #include "AICharacterDetailsMessage.h"
+#include "AIPauseMessage.h"
 #include "AISelectMessage.h"
 
 namespace ai {
@@ -9,16 +10,21 @@ namespace ai {
 ProtocolMessageFactory::ProtocolMessageFactory() {
 }
 
-IProtocolMessage *ProtocolMessageFactory::create(streamContainer& in) {
+bool ProtocolMessageFactory::isNewMessageAvailable(const streamContainer& in) const {
 	const int32_t size = IProtocolMessage::peekInt(in);
 	if (size == -1) {
-		return nullptr;
+		// not enough data yet, wait a little bit more
+		return false;
 	}
 	const int streamSize = in.size();
 	if (size > streamSize) {
 		// not enough data yet, wait a little bit more
-		return nullptr;
+		return false;
 	}
+	return true;
+}
+
+IProtocolMessage *ProtocolMessageFactory::create(streamContainer& in) {
 	// remove the size from the stream
 	in.erase(in.begin(), in.begin() + 4);
 	// get the message type
@@ -28,6 +34,8 @@ IProtocolMessage *ProtocolMessageFactory::create(streamContainer& in) {
 		return new AIStateMessage(in);
 	} else if (type == PROTO_SELECT) {
 		return new AISelectMessage(in);
+	} else if (type == PROTO_PAUSE) {
+		return new AIPauseMessage(in);
 	} else if (type == PROTO_CHARACTER_DETAILS) {
 		return new AICharacterDetailsMessage(in);
 	}

@@ -3,25 +3,33 @@
 #include "AIStubTypes.h"
 #include "AICharacterDetailsMessage.h"
 #include "ProtocolHandlerRegistry.h"
-#include <iostream>
 
 namespace ai {
 
 Server::Server(int port, const std::string& hostname) :
-		_network(port, hostname), _selectedCharacterId(-1), _time(0L) {
+		_network(port, hostname), _selectedCharacterId(-1), _time(0L), _selectHandler(*this), _pauseHandler(*this), _pause(false) {
 	ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
-	r.registerHandler(ai::PROTO_SELECT, ProtocolHandlerPtr(this, ProtocolHandlerNopDeleter()));
+	r.registerHandler(ai::PROTO_SELECT, ProtocolHandlerPtr(&_selectHandler, ProtocolHandlerNopDeleter()));
+	r.registerHandler(ai::PROTO_PAUSE, ProtocolHandlerPtr(&_pauseHandler, ProtocolHandlerNopDeleter()));
 }
 
 Server::~Server() {
 }
 
-void Server::select(const ClientId& clientId, const CharacterId& id) {
+void Server::select(const ClientId& /*clientId*/, const CharacterId& id) {
 	_selectedCharacterId = id;
 }
 
 bool Server::start() {
 	return _network.start();
+}
+
+void Server::pause(const ClientId& /*clientId*/, bool pause) {
+	_pause = pause;
+	for (AIMapIter i = _ais.begin(); i != _ais.end(); ++i) {
+		AI& ai = *i->second;
+		ai.setPause(pause);
+	}
 }
 
 bool Server::addAI(AI& ai) {
@@ -99,8 +107,13 @@ void Server::broadcastCharacterDetails() {
 
 void Server::update(uint32_t deltaTime) {
 	_time += deltaTime;
-	broadcastState();
-	broadcastCharacterDetails();
+	const int clients = _network.getConnectedClients();
+	if (clients > 0) {
+		broadcastState();
+		broadcastCharacterDetails();
+	} else if (_pause) {
+		pause(1, false);
+	}
 	_network.update(deltaTime);
 }
 

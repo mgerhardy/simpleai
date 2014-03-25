@@ -2,6 +2,7 @@
 
 #include <common/AIPosition.h>
 #include <string>
+#include <map>
 
 namespace ai {
 

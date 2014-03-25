@@ -182,12 +182,18 @@ void Network::update(uint32_t deltaTime) {
 			}
 		}
 
-		IProtocolMessage* msg = ProtocolMessageFactory::get().create(client.in);
-		if (msg != nullptr) {
-			const ProtocolHandlerPtr& handler = ProtocolHandlerRegistry::get().getHandler(*msg);
-			if (handler)
-				handler->execute(clientId, *msg);
-			delete msg;
+		ProtocolMessageFactory& factory = ProtocolMessageFactory::get();
+		if (factory.isNewMessageAvailable(client.in)) {
+			IProtocolMessage* msg = factory.create(client.in);
+			if (msg == nullptr) {
+				i = closeClient(i);
+				continue;
+			} else {
+				const ProtocolHandlerPtr& handler = ProtocolHandlerRegistry::get().getHandler(*msg);
+				if (handler)
+					handler->execute(clientId, *msg);
+				delete msg;
+			}
 		}
 		++i;
 	}

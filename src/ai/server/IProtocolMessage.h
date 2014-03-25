@@ -118,7 +118,7 @@ public:
 	static bool readBool(streamContainer& in);
 	static uint8_t readByte(streamContainer& in);
 	static int16_t readShort(streamContainer& in);
-	static int32_t peekInt(streamContainer& in);
+	static int32_t peekInt(const streamContainer& in);
 	static int32_t readInt(streamContainer& in);
 	static int64_t readLong(streamContainer& in);
 	static float readFloat(streamContainer& in);
@@ -246,7 +246,7 @@ inline int32_t IProtocolMessage::readInt(streamContainer& in) {
 	return val;
 }
 
-inline int32_t IProtocolMessage::peekInt(streamContainer& in) {
+inline int32_t IProtocolMessage::peekInt(const streamContainer& in) {
 	char buf[4];
 	const int l = sizeof(buf);
 	streamContainer::const_iterator it = in.begin();

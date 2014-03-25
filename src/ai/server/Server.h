@@ -4,12 +4,13 @@
 #include <tree/TreeNode.h>
 #include "Network.h"
 #include "SelectHandler.h"
+#include "PauseHandler.h"
 
 namespace ai {
 
 class AIStateNode;
 
-class Server : public SelectHandler {
+class Server {
 protected:
 	typedef std::map<CharacterId, AI*> AIMap;
 	typedef AIMap::const_iterator AIMapConstIter;
@@ -18,16 +19,21 @@ protected:
 	Network _network;
 	CharacterId _selectedCharacterId;
 	uint32_t _time;
+	SelectHandler _selectHandler;
+	PauseHandler _pauseHandler;
+	bool _pause;
 
 	void addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) const;
 	void broadcastState();
 	void broadcastCharacterDetails();
-	void select(const ClientId& clientId, const CharacterId& id) override;
 public:
 	Server(int port = 10001, const std::string& hostname = "0.0.0.0");
 	virtual ~Server();
 
 	bool start();
+
+	void select(const ClientId& clientId, const CharacterId& id);
+	void pause(const ClientId& clientId, bool pause);
 
 	// call then when you spawn a new @code AI that should be traceable via the debug viewer
 	bool addAI(AI& ai);

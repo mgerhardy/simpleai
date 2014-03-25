@@ -141,9 +141,14 @@ void AIDebugger::readTcpData() {
 		}
 		ai::ProtocolMessageFactory& mf = ai::ProtocolMessageFactory::get();
 		for (;;) {
-			ai::IProtocolMessage* msg = mf.create(_stream);
-			if (msg == nullptr)
+			if (!mf.isNewMessageAvailable(_stream))
 				break;
+			ai::IProtocolMessage* msg = mf.create(_stream);
+			if (msg == nullptr) {
+				qDebug() << "unknown server message - disconnecting";
+				_socket.close();
+				break;
+			}
 			ai::ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
 			ai::ProtocolHandlerPtr handler = r.getHandler(*msg);
 			if (handler) {
