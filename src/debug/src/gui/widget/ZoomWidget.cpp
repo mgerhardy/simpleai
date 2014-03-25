@@ -45,8 +45,7 @@ QVBoxLayout* ZoomWidget::createLayout() {
 	layout->addWidget(&_zoomSlider);
 	layout->addWidget(&_zoomOutButton);
 
-	connect(&_zoomSlider, SIGNAL(valueChanged(int)), this,
-	SLOT(setupZoomMatrix()));
+	connect(&_zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(setupZoomMatrix()));
 	connect(&_zoomInButton, SIGNAL(clicked()), this, SLOT(zoomIn()));
 	connect(&_zoomOutButton, SIGNAL(clicked()), this, SLOT(zoomOut()));
 

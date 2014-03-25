@@ -8,7 +8,6 @@ NodeTreeView::NodeTreeView(AIDebugger& debugger) :
 		QGraphicsView(), _debugger(debugger) {
 	_scene = new QGraphicsScene(this);
 	setScene(_scene);
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 NodeTreeView::~NodeTreeView() {

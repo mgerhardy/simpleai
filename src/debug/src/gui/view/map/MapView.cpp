@@ -8,16 +8,8 @@ namespace debug {
 
 MapView::MapView(AIDebugger& debugger) :
 		QGraphicsView(), _debugger(debugger) {
-	setRenderHint(QPainter::Antialiasing, false);
-	setDragMode(QGraphicsView::ScrollHandDrag);
-	setOptimizationFlags(QGraphicsView::DontSavePainterState);
-	setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-	setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-	setInteractive(false);
-
 	_scene = new MapScene();
 	setScene(_scene);
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 MapView::~MapView() {
