@@ -53,6 +53,7 @@ QRectF NodeTreeItem::boundingRect () const {
 void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
 	Q_UNUSED(option);
 	Q_UNUSED(widget);
+	const qreal lod = option->levelOfDetailFromTransform(painter->worldTransform());
 	const QRectF bounding = boundingRect();
 	const bool active = _node.getState();
 	QBrush b = painter->brush();
@@ -87,6 +88,9 @@ void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *opt
 	}
 
 	painter->setBrush(b);
+
+	if (lod < 0.4)
+		return;
 
 	QFontMetrics fontMetrics(font, painter->device());
 	const int lineGap = fontMetrics.lineSpacing();
