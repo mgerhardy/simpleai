@@ -24,7 +24,6 @@ public slots:
 	void zoomOut(int level = 1);
 
 private slots:
-	QVBoxLayout* createLayout();
 	void setupZoomMatrix();
 
 private:

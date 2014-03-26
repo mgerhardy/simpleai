@@ -8,16 +8,6 @@ namespace debug {
 
 ZoomWidget::ZoomWidget(QGraphicsView& gview, QWidget* parent) :
 		QWidget(parent), _graphicsView(gview), _zoomSlider(), _zoomInButton(), _zoomOutButton() {
-	setLayout(createLayout());
-}
-
-ZoomWidget::~ZoomWidget() {
-	disconnect(&_zoomSlider, 0, this, SLOT(setupZoomMatrix()));
-	disconnect(&_zoomInButton, 0, this, SLOT(zoomIn()));
-	disconnect(&_zoomOutButton, 0, this, SLOT(zoomOut()));
-}
-
-QVBoxLayout* ZoomWidget::createLayout() {
 	const int size = style()->pixelMetric(QStyle::PM_ToolBarIconSize);
 	QSize icosize(size, size);
 
@@ -48,8 +38,13 @@ QVBoxLayout* ZoomWidget::createLayout() {
 	connect(&_zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(setupZoomMatrix()));
 	connect(&_zoomInButton, SIGNAL(clicked()), this, SLOT(zoomIn()));
 	connect(&_zoomOutButton, SIGNAL(clicked()), this, SLOT(zoomOut()));
+	setLayout(layout);
+}
 
-	return layout;
+ZoomWidget::~ZoomWidget() {
+	disconnect(&_zoomSlider, 0, this, SLOT(setupZoomMatrix()));
+	disconnect(&_zoomInButton, 0, this, SLOT(zoomIn()));
+	disconnect(&_zoomOutButton, 0, this, SLOT(zoomOut()));
 }
 
 void ZoomWidget::setupZoomMatrix() {
