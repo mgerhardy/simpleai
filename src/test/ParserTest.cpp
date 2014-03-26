@@ -35,6 +35,12 @@ TEST_F(ParserTest, testParseConditionAndNotInnerOuterParam) {
 	ASSERT_TRUE(c) << parser.getError();
 }
 
+TEST_F(ParserTest, testParseConditionAndWithNot) {
+	ai::ConditionParser parser(_registry, "And(Not(HasEnemies),Not(HasEnemies))");
+	const ai::ConditionPtr& c = parser.getCondition();
+	ASSERT_TRUE(c) << parser.getError();
+}
+
 TEST_F(ParserTest, testParseConditionParmEverywhere) {
 	ai::ConditionParser parser(_registry, "And{1}(Not{3}(HasEnemies{3}),True{1})");
 	const ai::ConditionPtr& c = parser.getCondition();

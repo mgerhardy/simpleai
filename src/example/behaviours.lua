@@ -6,5 +6,5 @@ function init ()
 	prioSelector:addNode("Idle{3000}", "idle3000"):setCondition("HasEnemies")
 	prioSelector:addNode("Idle{1000}", "idle1000")
 	rootNode:addNode("Idle{3000}", "idle3000")
-	rootNode:addNode("Move", "move"):setCondition("Not(HasEnemies)")
+	rootNode:addNode("Move", "move"):setCondition("And(Not(HasEnemies),Not(IsMoving))")
 end

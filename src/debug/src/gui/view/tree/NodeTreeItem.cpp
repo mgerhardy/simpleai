@@ -8,13 +8,12 @@ namespace ai {
 namespace debug {
 
 namespace {
-const qreal padding = 3;
+const qreal padding = 1;
 const qreal horizontalSpacing = 40;
 const qreal verticalSpacing = 10;
 const qreal width = 130;
-const qreal height = 50;
+const qreal height = 60;
 const qreal fontSize = 10;
-const qreal conditionIndent = 3;
 const QColor backgroundColor = QColor::fromRgb(32, 32, 32, 64);
 const QColor activeBackgroundColor = QColor::fromRgb(255, 0, 0, 128);
 const QFont font("Times", fontSize);
@@ -93,14 +92,36 @@ void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *opt
 		return;
 
 	QFontMetrics fontMetrics(font, painter->device());
-	const int lineGap = fontMetrics.lineSpacing();
 	painter->setFont(font);
 	painter->save();
 	QRect rect(bounding.x() + padding, bounding.y() + padding, bounding.width() - 2 * padding,
 			bounding.height() - 2 * padding);
 	painter->drawText(rect, QString::fromStdString(_node.getName()));
-	rect.setY(rect.y() + fontSize + lineGap);
-	rect.setX(rect.x() + conditionIndent);
+	rect.setY(rect.y() + fontMetrics.lineSpacing());
+	const TreeNodeStatus status = _node.getStatus();
+	QString stateString;
+	switch (status) {
+	case UNKNOWN:
+		stateString = "UNKNOWN";
+		break;
+	case CANNOTEXECUTE:
+		stateString = "CANNOTEXECUTE";
+		break;
+	case RUNNING:
+		stateString = "RUNNING";
+		break;
+	case FAILED:
+		stateString = "FAILED";
+		break;
+	case FINISHED:
+		stateString = "FINISHED";
+		break;
+	case EXCEPTION:
+		stateString = "EXCEPTION";
+		break;
+	}
+	painter->drawText(rect, stateString);
+	rect.setY(rect.y() + fontMetrics.lineSpacing());
 	painter->drawText(rect, QString::fromStdString(_node.getCondition()));
 	painter->restore();
 }

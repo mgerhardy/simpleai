@@ -110,7 +110,7 @@ static int luaNode_SetCondition(lua_State * l) {
 	ConditionParser parser(ctx->getAIFactory(), conditionExpression);
 	const ConditionPtr& condition = parser.getCondition();
 	if (!condition) {
-		LUA::returnError(l, "Could not create a node for " + conditionExpression);
+		LUA::returnError(l, "Could not create a condition for " + conditionExpression + ": " + parser.getError());
 		return 0;
 	}
 

@@ -13,6 +13,7 @@
 #include "actions/ExampleTask.h"
 #include "actions/Move.h"
 #include "actions/Print.h"
+#include "conditions/IsMoving.h"
 #include "GameEntity.h"
 #include "GameMap.h"
 
@@ -34,6 +35,7 @@ int main(int argc, char **argv) {
 	registry.registerNodeFactory("Move", ai::example::Move::FACTORY);
 	registry.registerNodeFactory("Print", ai::example::Print::FACTORY);
 	registry.registerNodeFactory("ExampleTask", ai::example::ExampleTask::FACTORY);
+	registry.registerConditionFactory("IsMoving", ai::example::IsMoving::FACTORY);
 
 	ai::LUATreeLoader loader(registry);
 	const std::string name = "example";
