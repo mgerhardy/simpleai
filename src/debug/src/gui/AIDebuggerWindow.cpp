@@ -37,6 +37,7 @@ AIDebuggerWindow::AIDebuggerWindow(AIDebugger& debugger) :
 	resize(1024, 768);
 	setWindowTitle(tr("AI Debugger"));
 
+	// TODO: react on network input from the AIDebugger and remove this timer
 	QTimer *timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
 	timer->start(500);
