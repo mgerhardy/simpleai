@@ -1,6 +1,7 @@
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QStatusBar>
+#include <QSplitter>
 
 #include "AIDebugger.h"
 #include "AIDebuggerWindow.h"
@@ -63,8 +64,7 @@ void AIDebuggerWindow::createView() {
 }
 
 QWidget *AIDebuggerWindow::createTopWidget() {
-	QWidget *topWidget = new QWidget;
-	QHBoxLayout *topLayout = new QHBoxLayout;
+	QSplitter *splitter = new QSplitter;
 
 	_mapWidget = _debugger.createMapWidget();
 	_mapFrame = new ZoomFrame(_mapWidget);
@@ -72,25 +72,21 @@ QWidget *AIDebuggerWindow::createTopWidget() {
 	_entityList = new EntityList(_debugger);
 	_entityList->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 
-	topLayout->addWidget(_mapFrame);
-	topLayout->addWidget(_entityList);
-	topWidget->setLayout(topLayout);
-	return topWidget;
+	splitter->addWidget(_mapFrame);
+	splitter->addWidget(_entityList);
+	return splitter;
 }
 
 QWidget *AIDebuggerWindow::createBottomWidget() {
-	QWidget *bottomWidget = new QWidget;
-	QHBoxLayout *bottomLayout = new QHBoxLayout;
-
+	QSplitter *splitter = new QSplitter;
 	_nodeTree = new NodeTreeView(_debugger);
 	_nodeTreeFrame = new ZoomFrame(_nodeTree);
 	_aggroTable = new AggroTable(_debugger);
 	_stateTable = new StateTable(_debugger);
-	bottomLayout->addWidget(_nodeTreeFrame);
-	bottomLayout->addWidget(_aggroTable);
-	bottomLayout->addWidget(_stateTable);
-	bottomWidget->setLayout(bottomLayout);
-	return bottomWidget;
+	splitter->addWidget(_nodeTreeFrame);
+	splitter->addWidget(_aggroTable);
+	splitter->addWidget(_stateTable);
+	return splitter;
 }
 
 void AIDebuggerWindow::pauseAI() {
