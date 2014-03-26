@@ -22,6 +22,8 @@ public:
 	QPointF worldToMap(const AIPosition& position) const;
 
 protected:
+	virtual void renderDetails(QPainter *painter, qreal lod);
+
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 };

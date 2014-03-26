@@ -38,10 +38,10 @@ void MapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 	painter->drawEllipse(pos(), 10.0, 10.0);
 	painter->setBrush(b);
 
-	if (lod < 0.2)
-		return;
+	renderDetails(painter, lod);
+}
 
-	// TODO: direction, move target, name, id
+void MapItem::renderDetails(QPainter* /*painter*/, qreal /*lod*/) {
 }
 
 void MapItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
