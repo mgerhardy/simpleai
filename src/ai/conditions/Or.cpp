@@ -10,12 +10,14 @@ ConditionPtr Or::Factory::create(const ConditionFactoryContext *ctx) const {
 
 void Or::getConditionNameWithValue(std::stringstream& s, AI& entity) {
 	bool first = true;
+	s << "(";
 	for (Conditions::iterator i = _conditions.begin(); i != _conditions.end(); ++i) {
 		if (!first)
-			s << "|";
-		s << (*i)->getName() << "[" << ((*i)->evaluate(entity) ? "1" : "0") << "]";
+			s << ",";
+		s << (*i)->getNameWithConditions(entity);
 		first = false;
 	}
+	s << ")";
 }
 
 bool Or::evaluate(AI& entity) {

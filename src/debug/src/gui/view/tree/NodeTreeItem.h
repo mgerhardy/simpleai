@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QGraphicsItem>
 #include <QStyleOptionGraphicsItem>
+#include <QFontMetrics>
 
 #include <server/AIStubTypes.h>
 
@@ -13,9 +14,14 @@ namespace debug {
 class AIDebugger;
 
 class NodeTreeItem : public QGraphicsItem {
-private:
+protected:
 	const AIStateNode& _node;
 	NodeTreeItem* _parent;
+	QString _condition;
+	QString _name;
+	int _width;
+	int _height;
+	int _lineHeight;
 
 	QRectF boundingRect() const override;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;

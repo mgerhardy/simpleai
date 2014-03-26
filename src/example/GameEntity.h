@@ -38,6 +38,10 @@ public:
 	inline std::list<ai::AIPosition>& getRoute () {
 		return _route;
 	}
+
+	inline const std::list<ai::AIPosition>& getRoute () const {
+		return _route;
+	}
 };
 
 }

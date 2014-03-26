@@ -12,7 +12,7 @@ public:
 	CONDITION_FACTORY
 
 	bool evaluate(AI& entity) override {
-		GameEntity& chr = static_cast<GameEntity&>(entity.getCharacter());
+		const GameEntity& chr = static_cast<const GameEntity&>(entity.getCharacter());
 		return !chr.getRoute().empty();
 	}
 };

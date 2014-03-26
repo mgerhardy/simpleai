@@ -12,8 +12,7 @@ protected:
 	ConditionPtr _condition;
 
 	void getConditionNameWithValue(std::stringstream& s, AI& entity) {
-		const bool val = _condition->evaluate(entity);
-		s << "[" << _condition->getName() << "[" << (val ? "1" : "0") << "]]";
+		s << "(" << _condition->getNameWithConditions(entity) << ")";
 	}
 
 public:
