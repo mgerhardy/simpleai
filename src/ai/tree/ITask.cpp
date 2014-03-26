@@ -12,12 +12,12 @@ ITask::~ITask() {
 
 TreeNodeStatus ITask::execute(AI& entity, long deltaMillis) {
 	if (TreeNode::execute(entity, deltaMillis) == CANNOTEXECUTE)
-		return CANNOTEXECUTE;
+		return state(CANNOTEXECUTE);
 
 	try {
-		return doAction(entity);
+		return state(doAction(entity));
 	} catch (std::exception& e) {
-		return EXCEPTION;
+		return state(EXCEPTION);
 	}
 }
 

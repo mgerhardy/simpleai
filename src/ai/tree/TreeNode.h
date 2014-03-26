@@ -15,6 +15,7 @@ typedef SharedPtr<TreeNode> TreeNodePtr;
 typedef std::vector<TreeNodePtr> TreeNodes;
 
 enum TreeNodeStatus {
+	UNKNOWN,
 	/**
 	 * Not every condition is met in order to run this node
 	 * In general this means that the attached condition has to evaluate to @c true
@@ -70,9 +71,15 @@ protected:
 	ConditionPtr _condition;
 	long _lastExecMillis;
 	long _time;
+	TreeNodeStatus _lastStatus;
 
 	bool getResetSinceLastExec(const AI& entity) const;
 	void setResetSinceLastExec(AI& entity, bool status);
+
+	inline TreeNodeStatus state(TreeNodeStatus treeNodeState) {
+		_lastStatus = treeNodeState;
+		return treeNodeState;
+	}
 
 	int getSelectorState(const AI& entity) const;
 	void setSelectorState(AI& entity, int selected);
@@ -94,6 +101,7 @@ public:
 	const ConditionPtr& getCondition() const;
 	void setCondition(const ConditionPtr& condition);
 	const TreeNodes& getChildren() const;
+	TreeNodeStatus getLastStatus() const;
 
 	/**
 	 * @brief Get the state of all child nodes for the given entity
@@ -137,4 +145,7 @@ inline const TreeNodes& TreeNode::getChildren() const {
 	return _children;
 }
 
+inline TreeNodeStatus TreeNode::getLastStatus() const {
+	return _lastStatus;
+}
 }

@@ -20,17 +20,17 @@ ITimedNode::~ITimedNode() {
 TreeNodeStatus ITimedNode::execute(AI& entity, long deltaMillis) {
 	const TreeNodeStatus result = TreeNode::execute(entity, deltaMillis);
 	if (result == CANNOTEXECUTE)
-		return CANNOTEXECUTE;
+		return state(CANNOTEXECUTE);
 	if (_timerMillis == NOTSTARTED) {
 		_timerMillis = _millis;
 	} else if (_timerMillis - deltaMillis > 0) {
 		_timerMillis -= deltaMillis;
 	} else {
 		_timerMillis = NOTSTARTED;
-		return FINISHED;
+		return state(FINISHED);
 	}
 
-	return executeTimed(entity, deltaMillis);
+	return state(executeTimed(entity, deltaMillis));
 }
 
 }

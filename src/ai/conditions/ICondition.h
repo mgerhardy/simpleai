@@ -43,7 +43,7 @@ public: \
 #define CONDITION_FACTORY_SINGLETON \
 public: \
 	class Factory: public IConditionFactory { \
-		ConditionPtr create (const ConditionFactoryContext *ctx) const { \
+		ConditionPtr create (const ConditionFactoryContext */*ctx*/) const { \
 			return get(); \
 		} \
 	}; \

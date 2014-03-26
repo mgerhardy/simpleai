@@ -11,7 +11,7 @@ void Parallel::getChildrenState(const AI& entity, std::vector<bool>& active) con
 
 TreeNodeStatus Parallel::execute(AI& entity, long deltaMillis) {
 	if (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)
-		return CANNOTEXECUTE;
+		return state(CANNOTEXECUTE);
 
 	bool totalStatus = false;
 	const std::size_t size = _children.size();
@@ -27,7 +27,7 @@ TreeNodeStatus Parallel::execute(AI& entity, long deltaMillis) {
 	if (!totalStatus) {
 		resetState(entity);
 	}
-	return totalStatus ? RUNNING : FINISHED;
+	return state(totalStatus ? RUNNING : FINISHED);
 }
 
 NODE_FACTORY_IMPL(Parallel)

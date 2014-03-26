@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <AI.h>
+#include <tree/TreeNode.h>
 
 namespace ai {
 
@@ -33,14 +34,15 @@ private:
 	typedef std::vector<AIStateNode> NodeVector;
 	NodeVector _children;
 	long _lastRun;
-	bool _state;
+	TreeNodeStatus _status;
+	bool _active;
 public:
-	AIStateNode(const std::string& name, const std::string& condition, long lastRun, bool state) :
-			_name(name), _condition(condition), _lastRun(lastRun), _state(state) {
+	AIStateNode(const std::string& name, const std::string& condition, long lastRun, TreeNodeStatus status, bool active) :
+			_name(name), _condition(condition), _lastRun(lastRun), _status(status), _active(active) {
 	}
 
 	AIStateNode() :
-			_lastRun(0L), _state(false) {
+			_lastRun(0L), _status(UNKNOWN), _active(false) {
 	}
 
 	void addChildren(const AIStateNode& child) {
@@ -63,8 +65,12 @@ public:
 		return _lastRun;
 	}
 
-	inline bool getState() const {
-		return _state;
+	inline TreeNodeStatus getStatus() const {
+		return _status;
+	}
+
+	inline bool isActive() const {
+		return _active;
 	}
 };
 

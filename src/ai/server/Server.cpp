@@ -59,7 +59,7 @@ void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) c
 		const std::string& name = node->getName();
 		const ConditionPtr& condition = node->getCondition();
 		const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
-		AIStateNode child(name, conditionStr, _time - node->getLastExecMillis(), active[i]);
+		AIStateNode child(name, conditionStr, _time - node->getLastExecMillis(), node->getLastStatus(), active[i]);
 		addChildren(node, child, ai);
 		parent.addChildren(child);
 	}
@@ -91,7 +91,7 @@ void Server::broadcastCharacterDetails() {
 	const std::string& name = node->getName();
 	const ConditionPtr& condition = node->getCondition();
 	const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
-	AIStateNode root(name, conditionStr, _time - node->getLastExecMillis(), true);
+	AIStateNode root(name, conditionStr, _time - node->getLastExecMillis(), node->getLastStatus(), true);
 	addChildren(node, root, ai);
 
 	AIStateAggro aggro;

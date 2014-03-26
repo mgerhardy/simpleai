@@ -55,7 +55,7 @@ void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *opt
 	Q_UNUSED(widget);
 	const qreal lod = option->levelOfDetailFromTransform(painter->worldTransform());
 	const QRectF bounding = boundingRect();
-	const bool active = _node.getState();
+	const bool active = _node.isActive();
 	QBrush b = painter->brush();
 	if (active)
 		painter->setBrush(activeBackgroundColor);

@@ -30,7 +30,7 @@ TreeNodeStatus Sequence::execute(AI& entity, long deltaMillis) {
 		resetState(entity);
 	}
 
-	return result;
+	return state(result);
 }
 
 void Sequence::resetState(AI& entity) {

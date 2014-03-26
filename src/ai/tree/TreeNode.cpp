@@ -6,7 +6,8 @@ namespace ai {
 int TreeNode::_nextId = 0;
 
 TreeNode::TreeNode(const std::string& name, const std::string& parameters, const ConditionPtr& condition) :
-		_id(_nextId++), _name(name), _parameters(parameters), _condition(condition), _lastExecMillis(-1L), _time(0L) {
+		_id(_nextId++), _name(name), _parameters(parameters), _condition(condition), _lastExecMillis(-1L), _time(0L),
+		_lastStatus(UNKNOWN) {
 }
 
 TreeNode::~TreeNode() {
@@ -16,11 +17,11 @@ TreeNodeStatus TreeNode::execute(AI& entity, long deltaMillis) {
 	_time += deltaMillis;
 	setResetSinceLastExec(entity, false);
 	if (!_condition->evaluate(entity)) {
-		return CANNOTEXECUTE;
+		return state(CANNOTEXECUTE);
 	}
 
 	_lastExecMillis = _time;
-	return FINISHED;
+	return state(FINISHED);
 }
 
 void TreeNode::resetState(AI& entity) {

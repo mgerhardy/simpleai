@@ -23,19 +23,19 @@ public:
 		}
 
 		if (TreeNode::execute(entity, deltaMillis) == CANNOTEXECUTE)
-			return CANNOTEXECUTE;
+			return state(CANNOTEXECUTE);
 
 		const TreeNodePtr& treeNode = *_children.begin();
 		const TreeNodeStatus status = treeNode->execute(entity, deltaMillis);
 		if (status == FINISHED)
-			return FAILED;
+			return state(FAILED);
 		else if (status == FAILED)
-			return FINISHED;
+			return state(FINISHED);
 		else if (status == EXCEPTION)
-			return EXCEPTION;
+			return state(EXCEPTION);
 		else if (status == CANNOTEXECUTE)
-			return FINISHED;
-		return RUNNING;
+			return state(FINISHED);
+		return state(RUNNING);
 	}
 };
 

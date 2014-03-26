@@ -6,7 +6,7 @@ namespace ai {
 TreeNodeStatus PrioritySelector::execute(AI& entity, long deltaMillis) {
 	setSelectorState(entity, NOTHING_SELECTED);
 	if (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)
-		return CANNOTEXECUTE;
+		return state(CANNOTEXECUTE);
 
 	const std::size_t size = _children.size();
 	for (std::size_t i = 0; i < size; i++) {
@@ -24,10 +24,10 @@ TreeNodeStatus PrioritySelector::execute(AI& entity, long deltaMillis) {
 			_children[i]->resetState(entity);
 		}
 
-		return result;
+		return state(result);
 	}
 
-	return FINISHED;
+	return state(FINISHED);
 }
 
 NODE_FACTORY_IMPL(PrioritySelector)
