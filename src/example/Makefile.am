@@ -13,6 +13,7 @@ example_CPPFLAGS = -Wall
 include_HEADERS = \
 	actions/Move.h \
 	actions/ExampleTask.h \
+	conditions/IsMoving.h \
 	GameEntity.h \
 	GameMap.h \
 	Pathfinder.h
