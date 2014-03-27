@@ -9,41 +9,20 @@ namespace debug {
 
 namespace {
 const qreal padding = 1;
-const qreal horizontalSpacing = 40;
-const qreal verticalSpacing = 10;
 const qreal fontSize = 10;
 const QColor backgroundColor = QColor::fromRgb(32, 32, 32, 64);
 const QColor activeBackgroundColor = QColor::fromRgb(255, 0, 0, 128);
 const QFont font("Times", fontSize);
 }
 
-// TODO: items might still overlap
-NodeTreeItem::NodeTreeItem (int maxChild, int child, const AIStateNode& node, NodeTreeItem* parent) :
-		QGraphicsItem(), _node(node), _parent(parent), _height(60) {
+NodeTreeItem::NodeTreeItem (const AIStateNode& node, NodeTreeItem* parent, int height, int horizontalSpacing, int verticalSpacing) :
+		QGraphicsItem(), _node(node), _parent(parent), _height(height), _horizontalSpacing(
+				horizontalSpacing), _verticalSpacing(verticalSpacing) {
 	_condition = QString::fromStdString(_node.getCondition());
 	_name = QString::fromStdString(_node.getName());
 	QFontMetrics fontMetrics(font);
 	_width = std::max(130, std::max(fontMetrics.width(_name), fontMetrics.width(_condition)));
 	_lineHeight = fontMetrics.lineSpacing();
-
-	const size_t size = _parent == nullptr ? 1 : _parent->_node.getChildren().size();
-	const qreal maxHeight = maxChild * _height;
-	const qreal half = maxHeight / 2.0;
-	qreal y;
-	if (size <= 1) {
-		y = 0.0;
-	} else {
-		const qreal boxHeight = _height + verticalSpacing;
-		const qreal parentCenter = _height / 2.0;
-		const qreal startY = ((size * _height) + (size - 1) * verticalSpacing) / -2.0;
-		y = parentCenter + startY + child * boxHeight;
-	}
-	if (_parent != nullptr) {
-		setPos(_parent->pos() + QPointF(_parent->_width + horizontalSpacing, y));
-	} else {
-		y = half - _height / 2.0;
-		setPos(0.0, y);
-	}
 }
 
 NodeTreeItem::~NodeTreeItem () {
@@ -67,19 +46,19 @@ void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 	const std::vector<AIStateNode>& c = _node.getChildren();
 	if (!c.empty()) {
-		const qreal verticalLine = _width + horizontalSpacing / 2.0;
+		const qreal verticalLine = _width + _horizontalSpacing / 2.0;
 		// horizontal line
 		painter->drawLine(_width, _height / 2.0, verticalLine, _height / 2.0);
 		const int size = c.size();
-		const qreal boxHeight = _height + verticalSpacing;
+		const qreal boxHeight = _height + _verticalSpacing;
 		const qreal parentCenter = _height / 2.0;
-		const qreal startY = ((size * _height) + (size - 1) * verticalSpacing) / -2.0;
+		const qreal startY = ((size * _height) + (size - 1) * _verticalSpacing) / -2.0;
 		const qreal verticalLineTop = parentCenter + startY + _height / 2.0;
 		const qreal verticalLineBottom = parentCenter - startY - _height / 2.0;
 		// vertical line
 		painter->drawLine(verticalLine, verticalLineTop, verticalLine, verticalLineBottom);
 		// upper horizontal line
-		const qreal horizontalLine = verticalLine + horizontalSpacing / 2.0;
+		const qreal horizontalLine = verticalLine + _horizontalSpacing / 2.0;
 		painter->drawLine(verticalLine, verticalLineTop, horizontalLine, verticalLineTop);
 		for (int i = 1; i < size - 1; ++i) {
 			const qreal verticalLineToChildrenY = verticalLineTop + boxHeight * i;

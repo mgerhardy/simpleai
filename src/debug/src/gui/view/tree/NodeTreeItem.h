@@ -22,13 +22,19 @@ protected:
 	int _width;
 	int _height;
 	int _lineHeight;
+	int _horizontalSpacing;
+	int _verticalSpacing;
 
 	QRectF boundingRect() const override;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
 
 public:
-	NodeTreeItem (int maxChild, int child, const AIStateNode& node, NodeTreeItem* parent);
+	NodeTreeItem (const AIStateNode& node, NodeTreeItem* parent, int height, int horizontalSpacing, int verticalSpacing);
 	virtual ~NodeTreeItem ();
+
+	inline int width() const { return _width; }
+	inline int height() const { return _height; }
+	inline int getSize() const { return _node.getChildren().size(); }
 };
 
 }

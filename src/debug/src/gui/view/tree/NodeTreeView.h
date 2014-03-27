@@ -21,6 +21,7 @@ private:
 
 	void buildTreeItems(int maxChild, int child, const AIStateNode& node, NodeTreeItem* parent);
 	int getMaxChild(const AIStateNode& node, int maxChild) const;
+	void place(NodeTreeItem* node, NodeTreeItem* parent, int maxChild, int child);
 public:
 	NodeTreeView(AIDebugger& debugger);
 	virtual ~NodeTreeView();
