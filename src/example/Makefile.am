@@ -8,7 +8,7 @@ example_SOURCES = \
 example_LDADD = \
 	../ai/libsimpleai.la
 
-example_CPPFLAGS =
+example_CPPFLAGS = -Wall
 
 include_HEADERS = \
 	actions/Move.h \
