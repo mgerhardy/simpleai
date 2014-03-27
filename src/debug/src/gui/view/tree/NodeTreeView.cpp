@@ -11,17 +11,15 @@ namespace ai {
 namespace debug {
 
 NodeTreeView::NodeTreeView(AIDebugger& debugger) :
-		QGraphicsView(), _debugger(debugger) {
-	_scene = new QGraphicsScene(this);
-	setScene(_scene);
+		QGraphicsView(), _debugger(debugger), _scene(this) {
+	setScene(&_scene);
 }
 
 NodeTreeView::~NodeTreeView() {
-	delete _scene;
 }
 
 void NodeTreeView::updateTreeWidget() {
-	_scene->clear();
+	_scene.clear();
 	const ai::CharacterId& id = _debugger.getSelected();
 	if (id == -1) {
 		return;

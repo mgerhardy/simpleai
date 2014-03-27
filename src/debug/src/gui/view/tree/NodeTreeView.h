@@ -17,7 +17,7 @@ class NodeTreeView: public QGraphicsView {
 Q_OBJECT
 private:
 	AIDebugger& _debugger;
-	QGraphicsScene* _scene;
+	QGraphicsScene _scene;
 
 	void buildTreeItems(int maxChild, int child, const AIStateNode& node, NodeTreeItem* parent);
 	int getMaxChild(const AIStateNode& node, int maxChild) const;
