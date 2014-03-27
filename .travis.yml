@@ -3,11 +3,17 @@ compiler:
   - gcc
   - clang
 
-script: ./configure && make && ./src/test/tests
+script:
+  - ./configure --prefix=/usr
+  - make
+  - sudo make install
+  - ./src/test/tests
+  - cd src/debug && qmake -qt=qt5 && make
 
 before_install:
+  - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
   - sudo apt-get update -qq
-  - sudo apt-get install -q -y qt5-default
+  - sudo apt-get install -qq -y qt5-default
 
 notifications:
   email: true
