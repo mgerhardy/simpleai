@@ -34,56 +34,62 @@ libsimpleai_la_SOURCES = \
 	
 library_includedir = $(includedir)/simpleai
 nobase_library_include_HEADERS = \
-	AI.h \
-	SimpleAI.h \
-	ICharacter.h \
-	IAIFactory.h \
-	AIRegistry.h \
-	aggro/Entry.h \
 	aggro/AggroMgr.h \
-	tree/Invert.h \
-	tree/Parallel.h \
-	tree/Idle.h \
-	tree/ITimedNode.h \
-	tree/TreeNode.h \
-	tree/ITask.h \
-	tree/TreeNodeParser.h \
-	tree/PrioritySelector.h \
-	tree/Sequence.h \
-	tree/loaders/ITreeLoader.h \
-	tree/loaders/lua/LUATreeLoader.h \
+	aggro/Entry.h \
+	AI.h \
+	AIRegistry.h \
+	common/AIException.h \
+	common/AIPosition.h \
+	common/Compiler.h \
 	common/Enum.h \
 	common/IFactoryRegistry.h \
-	common/IPrintable.h \
 	common/IParser.h \
-	common/Compiler.h \
+	common/IPrintable.h \
 	common/NonCopyable.h \
 	common/Pointers.h \
-	common/AIPosition.h \
-	common/AIException.h \
-	pathfinding/IPathfinder.h \
+	conditions/And.h \
+	conditions/ConditionParser.h \
+	conditions/False.h \
+	conditions/HasEnemies.h \
+	conditions/ICondition.h \
+	conditions/Not.h \
+	conditions/Or.h \
+	conditions/True.h \
+	IAIFactory.h \
+	ICharacter.h \
 	pathfinding/IMap.h \
-	server/AIStateMessage.h \
-	server/AISelectMessage.h \
-	server/AIPauseMessage.h \
+	pathfinding/IPathfinder.h \
 	server/AICharacterDetailsMessage.h \
+	server/AIPauseMessage.h \
+	server/AISelectMessage.h \
+	server/AIStateMessage.h \
 	server/AIStubTypes.h \
 	server/IProtocolHandler.h \
 	server/IProtocolMessage.h \
-	server/PauseHandler.h \
-	server/SelectHandler.h \
 	server/Network.h \
+	server/PauseHandler.h \
 	server/ProtocolHandlerRegistry.h \
 	server/ProtocolMessageFactory.h \
+	server/SelectHandler.h \
 	server/Server.h \
-	conditions/ConditionParser.h \
-	conditions/Not.h \
-	conditions/False.h \
-	conditions/HasEnemies.h \
-	conditions/True.h \
-	conditions/Or.h \
-	conditions/ICondition.h \
-	conditions/And.h
+	SimpleAI.h \
+	tree/Idle.h \
+	tree/Invert.h \
+	tree/ITask.h \
+	tree/ITimedNode.h \
+	tree/loaders/ITreeLoader.h \
+	tree/loaders/lua/LUACondition.h \
+	tree/loaders/lua/LUAFunctions.h \
+	tree/loaders/lua/LUA.h \
+	tree/loaders/lua/LUANode.h \
+	tree/loaders/lua/LUATree.h \
+	tree/loaders/lua/LUATreeLoader.h \
+	tree/Parallel.h \
+	tree/PrioritySelector.h \
+	tree/Selector.h \
+	tree/Sequence.h \
+	tree/TreeNode.h \
+	tree/TreeNodeParser.h
 
 EXTRA_DIST =
 
