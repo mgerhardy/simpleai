@@ -1,9 +1,6 @@
 #pragma once
-#include <common/Compiler.h>
 #include <gtest/gtest.h>
-#include <AI.h>
-#include <AIRegistry.h>
-#include <pathfinding/IPathfinder.h>
+#include <SimpleAI.h>
 #include "TestEntity.h"
 #include <sstream>
 

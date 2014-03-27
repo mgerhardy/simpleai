@@ -1,5 +1,4 @@
 #include "GeneralTest.h"
-#include <AI.h>
 
 class GeneralTest: public TestSuite {
 };

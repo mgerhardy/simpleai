@@ -33,16 +33,23 @@
  */
 #pragma once
 
+#include "common/Compiler.h"
+
 #include "AI.h"
-#include "pathfinding/IMap.h"
-#include "pathfinding/IPathfinder.h"
 #include "AIRegistry.h"
 #include "ICharacter.h"
+
 #include "tree/TreeNode.h"
 #include "tree/ITask.h"
 #include "tree/ITimedNode.h"
-#include "conditions/ICondition.h"
+#include "tree/TreeNodeParser.h"
+#include "tree/Sequence.h"
+#include "tree/Idle.h"
 #include "tree/loaders/lua/LUATreeLoader.h"
+
+#include "pathfinding/IMap.h"
+#include "pathfinding/IPathfinder.h"
+
 #include "server/Server.h"
 #include "server/IProtocolHandler.h"
 #include "server/ProtocolHandlerRegistry.h"
@@ -51,4 +58,7 @@
 #include "server/AIPauseMessage.h"
 #include "server/AISelectMessage.h"
 #include "server/AIStateMessage.h"
-#include "common/Compiler.h"
+
+#include "conditions/ICondition.h"
+#include "conditions/ConditionParser.h"
+#include "conditions/True.h"

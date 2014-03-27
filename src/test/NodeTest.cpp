@@ -1,7 +1,4 @@
 #include "NodeTest.h"
-#include <tree/Sequence.h>
-#include <conditions/True.h>
-#include <tree/Idle.h>
 
 class NodeTest: public TestSuite {
 };

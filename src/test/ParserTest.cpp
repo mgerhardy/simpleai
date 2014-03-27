@@ -1,6 +1,4 @@
 #include "ParserTest.h"
-#include <conditions/ConditionParser.h>
-#include <tree/TreeNodeParser.h>
 
 class ParserTest: public TestSuite {
 };

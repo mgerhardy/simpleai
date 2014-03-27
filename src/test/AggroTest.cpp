@@ -1,5 +1,4 @@
 #include "AggroTest.h"
-#include <AI.h>
 
 class AggroTest: public TestSuite {
 public:

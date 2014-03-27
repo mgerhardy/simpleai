@@ -1,6 +1,6 @@
 #pragma once
 
-#include <AI.h>
+#include <SimpleAI.h>
 #include <list>
 
 class TestEntity : public ai::ICharacter {
