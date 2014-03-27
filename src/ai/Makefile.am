@@ -2,35 +2,35 @@ lib_LTLIBRARIES = libsimpleai.la
 
 libsimpleai_la_SOURCES = \
 	aggro/AggroMgr.cpp \
+	AI.cpp \
+	AIRegistry.cpp \
 	conditions/And.cpp \
+	conditions/ConditionParser.cpp \
 	conditions/False.cpp \
 	conditions/HasEnemies.cpp \
 	conditions/ICondition.cpp \
 	conditions/Not.cpp \
 	conditions/Or.cpp \
 	conditions/True.cpp \
-	conditions/ConditionParser.cpp \
-	tree/Invert.cpp \
-	tree/Sequence.cpp \
-	tree/PrioritySelector.cpp \
-	tree/Parallel.cpp \
+	server/IProtocolMessage.cpp \
+	server/Network.cpp \
+	server/PauseHandler.cpp \
+	server/ProtocolMessageFactory.cpp \
+	server/SelectHandler.cpp \
+	server/Server.cpp \
 	tree/Idle.cpp \
-	tree/ITimedNode.cpp \
-	tree/TreeNode.cpp \
-	tree/TreeNodeParser.cpp \
+	tree/Invert.cpp \
 	tree/ITask.cpp \
+	tree/ITimedNode.cpp \
 	tree/loaders/lua/LUA.cpp \
 	tree/loaders/lua/LUANode.cpp \
 	tree/loaders/lua/LUATree.cpp \
 	tree/loaders/lua/LUATreeLoader.cpp \
-	server/IProtocolMessage.cpp \
-	server/ProtocolMessageFactory.cpp \
-	server/PauseHandler.cpp \
-	server/SelectHandler.cpp \
-	server/Server.cpp \
-	server/Network.cpp \
-	AIRegistry.cpp \
-	AI.cpp
+	tree/Parallel.cpp \
+	tree/PrioritySelector.cpp \
+	tree/Sequence.cpp \
+	tree/TreeNode.cpp \
+	tree/TreeNodeParser.cpp
 	
 library_includedir = $(includedir)/simpleai
 nobase_library_include_HEADERS = \
