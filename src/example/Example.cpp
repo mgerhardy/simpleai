@@ -5,10 +5,7 @@
 #include <cstdlib>
 #include <sys/time.h>
 #include <unistd.h>
-#include <AI.h>
-#include <unistd.h>
-#include <tree/loaders/lua/LUATreeLoader.h>
-#include <server/Server.h>
+#include <SimpleAI.h>
 #include "Pathfinder.h"
 #include "actions/ExampleTask.h"
 #include "actions/Move.h"

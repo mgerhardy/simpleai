@@ -35,6 +35,7 @@ libsimpleai_la_SOURCES = \
 library_includedir = $(includedir)/simpleai
 nobase_library_include_HEADERS = \
 	AI.h \
+	SimpleAI.h \
 	ICharacter.h \
 	IAIFactory.h \
 	AIRegistry.h \

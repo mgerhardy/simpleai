@@ -1,6 +1,5 @@
 #pragma once
 
-#include <common/Compiler.h>
 #include "GameEntity.h"
 #include <vector>
 #include <iostream>

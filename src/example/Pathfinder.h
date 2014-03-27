@@ -1,7 +1,6 @@
 #pragma once
 
-#include <AI.h>
-#include <pathfinding/IMap.h>
+#include <SimpleAI.h>
 
 namespace ai {
 namespace example {
