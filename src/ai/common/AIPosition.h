@@ -76,6 +76,61 @@ public:
 		return std::sqrt(_x * _x + _y * _y + _z * _z);
 	}
 
+	inline double angle() const {
+		const double angle = ::atan2(_y, _x);
+		return angle;
+	}
+
+	inline double radians() const {
+		const double radians = M_PI / 180.0 * angle();
+		return radians;
+	}
+
+	inline AIPosition mix(const AIPosition& end, const float mix) {
+		const float number = 1.0f - mix;
+		const float x = _x * number + end._x * mix;
+		const float y = _y * number + end._y * mix;
+		const float z = _z * number + end._z * mix;
+		return AIPosition(x, y, z);
+	}
+
+	inline AIPosition normalize() const {
+		const float norm = 1.0f / length();
+		const float x = _x * norm;
+		const float y = _y * norm;
+		const float z = _z * norm;
+		return AIPosition(x, y, z);
+	}
+
+	inline AIPosition advance(const AIPosition& direction, const float scale) const {
+		const float x = _x + scale * direction._x;
+		const float y = _y + scale * direction._y;
+		const float z = _z + scale * direction._z;
+		return AIPosition(x, y, z);
+	}
+
+	inline AIPosition inverse() const {
+		const float x = -_x;
+		const float y = -_y;
+		const float z = -_z;
+		return AIPosition(x, y, z);
+	}
+
+	inline void inverse() {
+		_x = -_x;
+		_y = -_y;
+		_z = -_z;
+	}
+
+	inline float normalize() {
+		const float l = length();
+		const float norm = 1.0f / l;
+		_x *= norm;
+		_y *= norm;
+		_z *= norm;
+		return l;
+	}
+
 	inline bool operator ==(const AIPosition& other) const {
 		const float epsilon = 0.00001f;
 		return ::fabs(_x - other._x) < epsilon && ::fabs(_y - other._y) < epsilon && ::fabs(_z - other._z) < epsilon;
