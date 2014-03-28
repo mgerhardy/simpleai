@@ -66,7 +66,7 @@ void NodeTreeView::place(NodeTreeItem* node, NodeTreeItem* parent, int maxChild,
 void NodeTreeView::buildTreeItems(int maxChild, int child, const AIStateNode& node, NodeTreeItem* parent) {
 	NodeTreeItem* thisNode = new NodeTreeItem(node, parent, nodeHeight, horizontalSpacing, verticalSpacing);
 	place(thisNode, parent, maxChild, child);
-	_scene->addItem(thisNode);
+	_scene.addItem(thisNode);
 	const std::vector<AIStateNode>& children = node.getChildren();
 	child = 0;
 	for (std::vector<AIStateNode>::const_iterator i = children.begin(); i != children.end(); ++i, ++child) {
