@@ -68,4 +68,14 @@ inline const AIPosition& ICharacter::getPosition() const {
 	return _position;
 }
 
+template <typename CharacterType>
+inline const CharacterType& character_cast(const ICharacter& character) {
+	return static_cast<const CharacterType&>(character);
+}
+
+template <typename CharacterType>
+inline CharacterType& character_cast(ICharacter& character) {
+	return static_cast<CharacterType&>(character);
+}
+
 }

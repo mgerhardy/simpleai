@@ -26,7 +26,7 @@ public:
 	NODE_FACTORY
 
 	TreeNodeStatus doAction(AI& entity) {
-		GameEntity& chr = static_cast<GameEntity&>(entity.getCharacter());
+		GameEntity& chr = character_cast<GameEntity>(entity.getCharacter());
 		std::list<ai::AIPosition>& _route = chr.getRoute();
 		if (!_route.empty()) {
 			const ai::AIPosition& pos = *_route.begin();
