@@ -18,10 +18,10 @@ TreeNodeStatus Sequence::execute(AI& entity, long deltaMillis) {
 		if (result == RUNNING) {
 			setSelectorState(entity, i);
 			break;
-		} else if (result == CANNOTEXECUTE) {
+		} else if (result == CANNOTEXECUTE || result == FAILED) {
 			resetState(entity);
-			continue;
-		} else if (result == FAILED || result == EXCEPTION) {
+			break;
+		} else if (result == EXCEPTION) {
 			break;
 		}
 	}
