@@ -51,6 +51,8 @@
 #include "tree/TreeNodeParser.h"
 #include "tree/loaders/lua/LUATreeLoader.h"
 
+#include "group/GroupMgr.h"
+
 #include "pathfinding/IMap.h"
 #include "pathfinding/IPathfinder.h"
 

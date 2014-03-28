@@ -12,6 +12,7 @@ libsimpleai_la_SOURCES = \
 	conditions/Not.cpp \
 	conditions/Or.cpp \
 	conditions/True.cpp \
+	group/GroupMgr.cpp \
 	server/IProtocolMessage.cpp \
 	server/Network.cpp \
 	server/PauseHandler.cpp \
@@ -57,6 +58,7 @@ nobase_library_include_HEADERS = \
 	conditions/True.h \
 	IAIFactory.h \
 	ICharacter.h \
+	group/GroupMgr.h \
 	pathfinding/IMap.h \
 	pathfinding/IPathfinder.h \
 	server/AICharacterDetailsMessage.h \

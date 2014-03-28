@@ -7,7 +7,7 @@ public:
 		ai::AggroMgr mgr(max);
 		for (int i = 1; i <= max; ++i) {
 			const ai::CharacterId id = i;
-			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _pathfinder);
+			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _pathfinder, _groupManager);
 			ais.push_back(SharedPtr<TestEntity>(e));
 			ai::Entry* entry = mgr.addAggro(*e, i);
 			entry->setReduceByValue(i);
@@ -24,7 +24,7 @@ public:
 TEST_F(AggroTest, testAggroMgr) {
 	ai::AggroMgr mgr;
 	const ai::CharacterId id = 1;
-	TestEntity entity(id, ai::TreeNodePtr(), _pathfinder);
+	TestEntity entity(id, ai::TreeNodePtr(), _pathfinder, _groupManager);
 	mgr.addAggro(entity, 1.0f);
 	const ai::EntryPtr& entry = mgr.getHighestEntry();
 	ASSERT_TRUE(entry)<< "Highest entry not set but aggro was added";
@@ -50,21 +50,13 @@ TEST_F(AggroTest, testAggroMgr10000) {
 	doMassTest(10000);
 }
 
-TEST_F(AggroTest, testAggroMgr20000) {
-	doMassTest(20000);
-}
-
-TEST_F(AggroTest, testAggroMgr50000) {
-	doMassTest(50000);
-}
-
 TEST_F(AggroTest, testAggroMgrDegradeValue) {
 	const float expectedAggro = 1.0f;
 	const int seconds = 2;
 	const float reduceBySecond = 0.1f;
 	ai::AggroMgr mgr;
 	const ai::CharacterId id = 1;
-	TestEntity entity(id, ai::TreeNodePtr(), _pathfinder);
+	TestEntity entity(id, ai::TreeNodePtr(), _pathfinder, _groupManager);
 	mgr.addAggro(entity, expectedAggro);
 	const ai::EntryPtr& entry = mgr.getHighestEntry();
 	entry->setReduceByValue(reduceBySecond);

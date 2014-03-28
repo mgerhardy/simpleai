@@ -17,7 +17,7 @@ TEST_F(NodeTest, testSequence) {
 	node->addChild(idle1);
 	node->addChild(idle2);
 
-	TestEntity e(1, node, _pathfinder);
+	TestEntity e(1, node, _pathfinder, _groupManager);
 	e.update(1);
 	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus());
 	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus());
@@ -42,7 +42,7 @@ TEST_F(NodeTest, testIdle) {
 	ai::Idle::Factory f;
 	ai::TreeNodeFactoryContext ctx("testidle", "1000", ai::True::get());
 	ai::TreeNodePtr node = f.create(&ctx);
-	TestEntity entity(1, ai::TreeNodePtr(), _pathfinder);
+	TestEntity entity(1, ai::TreeNodePtr(), _pathfinder, _groupManager);
 	ASSERT_EQ(ai::RUNNING, node->execute(entity, 1));
 	ASSERT_EQ(ai::FINISHED, node->execute(entity, 1000));
 }
@@ -61,7 +61,7 @@ TEST_F(NodeTest, testParallel) {
 	node->addChild(idle1);
 	node->addChild(idle2);
 
-	TestEntity e(1, node, _pathfinder);
+	TestEntity e(1, node, _pathfinder, _groupManager);
 	e.update(1);
 	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus());
 	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus());
@@ -87,7 +87,7 @@ TEST_F(NodeTest, testPrioritySelector) {
 	node->addChild(idle1);
 	node->addChild(idle2);
 
-	TestEntity e(1, node, _pathfinder);
+	TestEntity e(1, node, _pathfinder, _groupManager);
 	e.update(1);
 	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus());
 	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus());
@@ -113,7 +113,7 @@ TEST_F(NodeTest, testPrioritySelectorWithCondition) {
 	node->addChild(idle1);
 	node->addChild(idle2);
 
-	TestEntity e(1, node, _pathfinder);
+	TestEntity e(1, node, _pathfinder, _groupManager);
 	e.update(1);
 	ASSERT_EQ(ai::CANNOTEXECUTE, idle1->getLastStatus());
 	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus());

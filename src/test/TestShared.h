@@ -8,6 +8,7 @@ class TestSuite: public ::testing::Test {
 protected:
 	ai::AIRegistry _registry;
 	ai::NOPPathfinder _pathfinder;
+	ai::GroupMgr _groupManager;
 
 	std::string printAggroList(ai::AggroMgr& aggroMgr) const {
 		const ai::AggroMgr::Entries& e = aggroMgr.getEntries();

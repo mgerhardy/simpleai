@@ -12,8 +12,8 @@ private:
 	std::list<ai::AIPosition> _route;
 
 public:
-	GameEntity (const ai::CharacterId& id, const ai::TreeNodePtr& root, ai::example::Pathfinder& pathfinder) :
-			ai::ICharacter(id), _ai(*this, root, pathfinder) {
+	GameEntity (const ai::CharacterId& id, const ai::TreeNodePtr& root, ai::example::Pathfinder& pathfinder, ai::GroupMgr& groupManager) :
+			ai::ICharacter(id), _ai(*this, root, pathfinder, groupManager) {
 		setAttribute("Name", "Example");
 	}
 

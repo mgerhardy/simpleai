@@ -8,6 +8,7 @@ tests_SOURCES = \
 	NodeTest.cpp \
 	GeneralTest.cpp \
 	AggroTest.cpp \
+	GroupTest.cpp \
 	\
 	gtest/src/gtest.cc \
 	gtest/src/gtest-death-test.cc \

@@ -8,8 +8,8 @@ private:
 	ai::AI _ai;
 
 public:
-	TestEntity (const ai::CharacterId& id, const ai::TreeNodePtr& root, ai::IPathfinder& pathfinder) :
-			ai::ICharacter(id), _ai(*this, root, pathfinder) {
+	TestEntity (const ai::CharacterId& id, const ai::TreeNodePtr& root, ai::IPathfinder& pathfinder, ai::GroupMgr& groupManager) :
+			ai::ICharacter(id), _ai(*this, root, pathfinder, groupManager) {
 	}
 
 	~TestEntity () {
