@@ -44,6 +44,8 @@
 #include "tree/ITimedNode.h"
 #include "tree/TreeNodeParser.h"
 #include "tree/Sequence.h"
+#include "tree/Parallel.h"
+#include "tree/PrioritySelector.h"
 #include "tree/Idle.h"
 #include "tree/loaders/lua/LUATreeLoader.h"
 
