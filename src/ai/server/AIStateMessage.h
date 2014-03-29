@@ -16,17 +16,19 @@ private:
 		const float x = readFloat(in);
 		const float y = readFloat(in);
 		const float z = readFloat(in);
-		const ai::AIPosition position(x, y, z);
-		const AIStateWorld tree(id, position);
+		const float orientation = readFloat(in);
+		const ai::Vector3f position(x, y, z);
+		const AIStateWorld tree(id, position, orientation);
 		_states.push_back(tree);
 	}
 
 	void writeState (streamContainer& out, const AIStateWorld& state) const {
 		addInt(out, state.getId());
-		const ai::AIPosition& position = state.getPosition();
+		const ai::Vector3f& position = state.getPosition();
 		addFloat(out, position.x());
 		addFloat(out, position.y());
 		addFloat(out, position.z());
+		addFloat(out, state.getOrientation());
 	}
 
 public:

@@ -8,17 +8,17 @@ namespace example {
 
 class Move: public ITask {
 private:
-	inline ai::AIPosition getRandomDirection() const {
+	inline ai::Vector3f getRandomDirection() const {
 		// yes, not really random due to the modulo, but... oh well
 		const int r = rand() % 4;
 		if (r == 0) {
-			return ai::AIPosition(1, 0);
+			return ai::Vector3f(1, 0);
 		} else if (r == 1) {
-			return ai::AIPosition(-1, 0);
+			return ai::Vector3f(-1, 0);
 		} else if (r == 2) {
-			return ai::AIPosition(0, 1);
+			return ai::Vector3f(0, 1);
 		}
-		return ai::AIPosition(0, -1);
+		return ai::Vector3f(0, -1);
 	}
 
 public:
@@ -27,18 +27,15 @@ public:
 
 	TreeNodeStatus doAction(AI& entity) {
 		GameEntity& chr = character_cast<GameEntity>(entity.getCharacter());
-		std::list<ai::AIPosition>& _route = chr.getRoute();
-		if (!_route.empty()) {
-			const ai::AIPosition& pos = *_route.begin();
-			chr.setPosition(pos);
-			_route.erase(_route.begin());
+		std::list<ai::MoveVector>& route = chr.getRoute();
+		if (!route.empty()) {
 			return RUNNING;
 		}
-		AIPosition position = chr.getPosition();
+		Vector3f position = chr.getPosition();
 		for (int i = 0; i < 10; ++i) {
 			position += getRandomDirection();
 		}
-		if (entity.getPathfinder().move(entity, position, _route) == SUCCESSFUL)
+		if (entity.getPathfinder().move(entity, position, route) == SUCCESSFUL)
 			return RUNNING;
 		return FAILED;
 	}

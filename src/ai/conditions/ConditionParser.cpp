@@ -6,7 +6,7 @@ namespace ai {
 
 ConditionParser::ConditionParser(const IAIFactory& aiFactory, const std::string& conditionString) :
 		IParser(), _aiFactory(aiFactory) {
-	_conditionString = eraseAllSpaces(conditionString);
+	_conditionString = ai::Str::eraseAllSpaces(conditionString);
 }
 
 ConditionParser::~ConditionParser() {
@@ -14,7 +14,7 @@ ConditionParser::~ConditionParser() {
 
 bool ConditionParser::fillInnerConditions(ConditionFactoryContext& ctx, const std::string conditionStr) {
 	std::vector<std::string> conditions;
-	splitString(conditionStr, conditions, ",");
+	ai::Str::splitString(conditionStr, conditions, ",");
 	if (conditions.size() > 1) {
 		for (std::vector<std::string>::const_iterator i = conditions.begin(); i != conditions.end(); ++i) {
 			if (!fillInnerConditions(ctx, *i))

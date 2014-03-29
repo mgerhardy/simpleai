@@ -1,6 +1,6 @@
 #pragma once
 
-#include <common/AIPosition.h>
+#include <common/Vector3f.h>
 #include <string>
 #include <map>
 
@@ -19,12 +19,13 @@ typedef std::map<std::string, std::string> CharacterAttributes;
 class ICharacter {
 protected:
 	CharacterId _id;
-	AIPosition _position;
+	Vector3f _position;
+	float _orientation;
 	CharacterAttributes _attributes;
 
 public:
 	ICharacter(CharacterId id) :
-			_id(id) {
+			_id(id), _orientation(0.0f) {
 	}
 
 	virtual ~ICharacter() {
@@ -34,14 +35,24 @@ public:
 	bool operator !=(const ICharacter& character) const;
 
 	CharacterId getId() const;
-	void setPosition(const AIPosition& position);
-	const AIPosition& getPosition() const;
+	void setPosition(const Vector3f& position);
+	const Vector3f& getPosition() const;
+	void setOrientation(float orientation);
+	float getOrientation() const;
 	void setAttribute(const std::string& key, const std::string& value);
 	const CharacterAttributes& getAttributes() const;
 };
 
-inline void ICharacter::setPosition(const AIPosition& position) {
+inline void ICharacter::setPosition(const Vector3f& position) {
 	_position = position;
+}
+
+inline void ICharacter::setOrientation (float orientation) {
+	_orientation = orientation;
+}
+
+inline float ICharacter::getOrientation () const {
+	return _orientation;
 }
 
 inline void ICharacter::setAttribute(const std::string& key, const std::string& value) {
@@ -64,7 +75,7 @@ inline CharacterId ICharacter::getId() const {
 	return _id;
 }
 
-inline const AIPosition& ICharacter::getPosition() const {
+inline const Vector3f& ICharacter::getPosition() const {
 	return _position;
 }
 

@@ -8,7 +8,7 @@ public:
 	{
 	}
 
-	virtual bool isBlocked (const AIPosition& pos) const = 0;
+	virtual bool isBlocked (const Vector3f& pos) const = 0;
 };
 
 }

@@ -27,11 +27,11 @@ TEST_F(GroupTest, testGroupAveragePosition) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
 	TestEntity entity1(1, ai::TreeNodePtr(), _pathfinder, groupMgr);
-	entity1.setPosition(ai::AIPosition(1.0f, 1.0f, 0.0f));
+	entity1.setPosition(ai::Vector3f(1.0f, 1.0f, 0.0f));
 	ASSERT_TRUE(groupMgr.add(id, &entity1));
 	TestEntity entity2(2, ai::TreeNodePtr(), _pathfinder, groupMgr);
-	entity2.setPosition(ai::AIPosition(3.0f, 3.0f, 0.0f));
+	entity2.setPosition(ai::Vector3f(3.0f, 3.0f, 0.0f));
 	ASSERT_TRUE(groupMgr.add(id, &entity2));
-	ai::AIPosition avg = groupMgr.getPosition(id);
-	ASSERT_EQ(ai::AIPosition(2.0f, 2.0f, 0.0f), avg);
+	ai::Vector3f avg = groupMgr.getPosition(id);
+	ASSERT_EQ(ai::Vector3f(2.0f, 2.0f, 0.0f), avg);
 }

@@ -40,7 +40,7 @@ AIDebuggerWindow::AIDebuggerWindow(AIDebugger& debugger) :
 	// TODO: react on network input from the AIDebugger and remove this timer
 	QTimer *timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
-	timer->start(500);
+	timer->start(20);
 }
 
 AIDebuggerWindow::~AIDebuggerWindow() {

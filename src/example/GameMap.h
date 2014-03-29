@@ -48,7 +48,7 @@ public:
 		_server.update(dt);
 	}
 
-	bool isBlocked (const ai::AIPosition& pos) const override {
+	bool isBlocked (const ai::Vector3f& pos) const override {
 		if (pos.x() < 0.0f || pos.x() >= _width)
 			return true;
 		if (pos.y() < 0.0f || pos.y() >= _height)
@@ -57,11 +57,11 @@ public:
 	}
 
 	// returns a random start position within the boundaries
-	ai::AIPosition getStartPosition() const {
+	ai::Vector3f getStartPosition() const {
 		const int x = rand() % _width;
 		const int y = rand() % _height;
 		const float z = 0.0f;
-		return ai::AIPosition(x, y, z);
+		return ai::Vector3f(x, y, z);
 	}
 };
 

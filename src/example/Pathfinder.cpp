@@ -11,12 +11,15 @@ Pathfinder::Pathfinder(const ai::IMap& map) :
 Pathfinder::~Pathfinder() {
 }
 
-ai::MoveState Pathfinder::move(ai::AI& entity, const ai::AIPosition& to, std::list<ai::AIPosition>& route) {
+ai::MoveState Pathfinder::move(ai::AI& entity, const ai::Vector3f& to, std::list<ai::MoveVector>& route) {
 	if (_map.isBlocked(to))
 		return ai::IMPOSSIBLE;
 
+#if 0
 	ai::ICharacter& chr = entity.getCharacter();
-	ai::AIPosition pos = chr.getPosition();
+	ai::MoveVector mv(ai::Vector3f(), chr.getDirection());
+	const ai::Vector3f& pos = chr.getPosition();
+
 
 	while (pos != to) {
 		const float x = to.x() - pos.x() > 0.0f ? 1.0f : -1.0f;
@@ -27,6 +30,7 @@ ai::MoveState Pathfinder::move(ai::AI& entity, const ai::AIPosition& to, std::li
 		// plain 2d - no z
 		route.push_back(pos);
 	}
+#endif
 
 	return ai::SUCCESSFUL;
 }

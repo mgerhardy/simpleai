@@ -27,7 +27,7 @@ public:
 	/**
 	 * @brief Calculate the average position of the group
 	 */
-	AIPosition getPosition(GroupId id) const;
+	Vector3f getPosition(GroupId id) const;
 
 	// TODO:
 	// wait

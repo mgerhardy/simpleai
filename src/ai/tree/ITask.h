@@ -4,12 +4,14 @@
 
 namespace ai {
 
-#define TASK_CLASS(TaskName) \
+#define TASK_CLASS_CTOR(TaskName) \
 	TaskName(const std::string& name, const std::string& parameters, const ConditionPtr& condition) : \
-			ITask(name, parameters, condition) { \
-	} \
-	virtual ~TaskName() { \
-	}
+			ITask(name, parameters, condition)
+#define TASK_CLASS_DTOR(TaskName) virtual ~TaskName()
+
+#define TASK_CLASS(TaskName) \
+	TASK_CLASS_CTOR(TaskName) {}\
+	TASK_CLASS_DTOR(TaskName) {}
 
 class ITask: public TreeNode {
 protected:

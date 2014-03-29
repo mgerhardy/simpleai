@@ -5,29 +5,29 @@
 
 namespace ai {
 
-class AIPosition {
+class Vector3f {
 private:
 	float _x;
 	float _y;
 	float _z;
 public:
-	AIPosition() :
+	Vector3f() :
 			_x(0.0f), _y(0.0f), _z(0.0f) {
 	}
 
-	AIPosition(const float x, const float y) :
+	Vector3f(const float x, const float y) :
 			_x(x), _y(y), _z(0.0f) {
 	}
 
-	AIPosition(const AIPosition& pos) :
+	Vector3f(const Vector3f& pos) :
 			_x(pos._x), _y(pos._y), _z(pos._z) {
 	}
 
-	AIPosition(const float x, const float y, const float z) :
+	Vector3f(const float x, const float y, const float z) :
 			_x(x), _y(y), _z(z) {
 	}
 
-	virtual ~AIPosition() {
+	virtual ~Vector3f() {
 	}
 
 	inline void setX(float x) {
@@ -54,13 +54,21 @@ public:
 		return _z;
 	}
 
-	inline void operator +=(const AIPosition& pos) {
+	inline void operator +=(const Vector3f& pos) {
 		_x += pos._x;
 		_y += pos._y;
 		_z += pos._z;
 	}
 
-	inline void operator -=(const AIPosition& pos) {
+	inline Vector3f operator +(const Vector3f& pos) const {
+		return Vector3f(_x + pos._x, _y + pos._y, _z + pos._z);
+	}
+
+	inline Vector3f operator *(const float scalar) const {
+		return Vector3f(_x * scalar, _y + scalar, _z + scalar);
+	}
+
+	inline void operator -=(const Vector3f& pos) {
 		_x -= pos._x;
 		_y -= pos._y;
 		_z -= pos._z;
@@ -73,7 +81,11 @@ public:
 	}
 
 	inline float length() const {
-		return std::sqrt(_x * _x + _y * _y + _z * _z);
+		return std::sqrt(squareLength());
+	}
+
+	inline float squareLength() const {
+		return _x * _x + _y * _y + _z * _z;
 	}
 
 	inline double angle() const {
@@ -86,34 +98,38 @@ public:
 		return radians;
 	}
 
-	inline AIPosition mix(const AIPosition& end, const float mix) {
+	static inline Vector3f fromRadians(double radians) {
+        return Vector3f(sin(radians), 0.0, cos(radians));
+	}
+
+	inline Vector3f mix(const Vector3f& end, const float mix) {
 		const float number = 1.0f - mix;
 		const float x = _x * number + end._x * mix;
 		const float y = _y * number + end._y * mix;
 		const float z = _z * number + end._z * mix;
-		return AIPosition(x, y, z);
+		return Vector3f(x, y, z);
 	}
 
-	inline AIPosition normalize() const {
+	inline Vector3f normalize() const {
 		const float norm = 1.0f / length();
 		const float x = _x * norm;
 		const float y = _y * norm;
 		const float z = _z * norm;
-		return AIPosition(x, y, z);
+		return Vector3f(x, y, z);
 	}
 
-	inline AIPosition advance(const AIPosition& direction, const float scale) const {
+	inline Vector3f advance(const Vector3f& direction, const float scale) const {
 		const float x = _x + scale * direction._x;
 		const float y = _y + scale * direction._y;
 		const float z = _z + scale * direction._z;
-		return AIPosition(x, y, z);
+		return Vector3f(x, y, z);
 	}
 
-	inline AIPosition inverse() const {
+	inline Vector3f inverse() const {
 		const float x = -_x;
 		const float y = -_y;
 		const float z = -_z;
-		return AIPosition(x, y, z);
+		return Vector3f(x, y, z);
 	}
 
 	inline void inverse() {
@@ -131,26 +147,26 @@ public:
 		return l;
 	}
 
-	inline bool operator ==(const AIPosition& other) const {
+	inline bool operator ==(const Vector3f& other) const {
 		const float epsilon = 0.00001f;
 		return ::fabs(_x - other._x) < epsilon && ::fabs(_y - other._y) < epsilon && ::fabs(_z - other._z) < epsilon;
 	}
 
-	inline bool operator !=(const AIPosition& other) const {
+	inline bool operator !=(const Vector3f& other) const {
 		return !(operator ==(other));
 	}
 
-	inline float distance(const AIPosition& pos) const {
-		const AIPosition c(_x - pos._x, _y - pos._y, _z - pos._z);
+	inline float distance(const Vector3f& pos) const {
+		const Vector3f c(_x - pos._x, _y - pos._y, _z - pos._z);
 		return c.length();
 	}
 
-	inline float dot(const AIPosition& pos) const {
+	inline float dot(const Vector3f& pos) const {
 		return _x * pos._x + _y * _y + _z * pos._z;
 	}
 
-	inline AIPosition cross(const AIPosition& pos) const {
-		return AIPosition(_y * pos._z - _z * pos._y, _z * pos._x - _x * pos._z, _x * pos._y - _y * pos._x);
+	inline Vector3f cross(const Vector3f& pos) const {
+		return Vector3f(_y * pos._z - _z * pos._y, _z * pos._x - _x * pos._z, _x * pos._y - _y * pos._x);
 	}
 };
 

@@ -70,7 +70,7 @@ void Server::broadcastState() {
 	for (AIMapConstIter i = _ais.begin(); i != _ais.end(); ++i) {
 		const AI& ai = *i->second;
 		const ICharacter& chr = ai.getCharacter();
-		AIStateWorld b(chr.getId(), chr.getPosition());
+		AIStateWorld b(chr.getId(), chr.getPosition(), chr.getOrientation());
 		msg.addState(b);
 	}
 	_network.broadcast(msg);

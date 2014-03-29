@@ -4,7 +4,7 @@ namespace ai {
 
 TreeNodeParser::TreeNodeParser(const IAIFactory& aiFactory, const std::string& taskString) :
 		IParser(), _aiFactory(aiFactory) {
-	_taskString = eraseAllSpaces(taskString);
+	_taskString = ai::Str::eraseAllSpaces(taskString);
 }
 
 TreeNodeParser::~TreeNodeParser() {

@@ -32,7 +32,7 @@ libsimpleai_la_SOURCES = \
 	tree/Sequence.cpp \
 	tree/TreeNode.cpp \
 	tree/TreeNodeParser.cpp
-	
+
 library_includedir = $(includedir)/simpleai
 nobase_library_include_HEADERS = \
 	aggro/AggroMgr.h \
@@ -40,14 +40,17 @@ nobase_library_include_HEADERS = \
 	AI.h \
 	AIRegistry.h \
 	common/AIException.h \
-	common/AIPosition.h \
+	common/Vector3f.h \
 	common/Compiler.h \
 	common/Enum.h \
 	common/IFactoryRegistry.h \
 	common/IParser.h \
 	common/IPrintable.h \
+	common/Math.h \
 	common/NonCopyable.h \
 	common/Pointers.h \
+	common/Random.h \
+	common/String.h \
 	conditions/And.h \
 	conditions/ConditionParser.h \
 	conditions/False.h \

@@ -77,17 +77,22 @@ public:
 class AIStateWorld {
 private:
 	ai::CharacterId _id;
-	ai::AIPosition _position;
+	ai::Vector3f _position;
+	float _orientation;
 public:
-	AIStateWorld(const ai::CharacterId& id, const ai::AIPosition& position) :
-			_id(id), _position(position) {
+	AIStateWorld(const ai::CharacterId& id, const ai::Vector3f& position, float orientation) :
+			_id(id), _position(position), _orientation(orientation) {
 	}
 
 	inline const ai::CharacterId& getId() const {
 		return _id;
 	}
 
-	inline const ai::AIPosition& getPosition() const {
+	inline float getOrientation() const {
+		return _orientation;
+	}
+
+	inline const ai::Vector3f& getPosition() const {
 		return _position;
 	}
 };

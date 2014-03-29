@@ -9,6 +9,7 @@
 #include "Pathfinder.h"
 #include "actions/ExampleTask.h"
 #include "actions/Move.h"
+#include "actions/Wander.h"
 #include "actions/Print.h"
 #include "conditions/IsMoving.h"
 #include "GameEntity.h"
@@ -27,9 +28,12 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
+	srand(getCurrentMillis());
+
 	// define your own tasks and conditions
 	ai::AIRegistry registry;
 	registry.registerNodeFactory("Move", ai::example::Move::FACTORY);
+	registry.registerNodeFactory("Wander", ai::example::Wander::FACTORY);
 	registry.registerNodeFactory("Print", ai::example::Print::FACTORY);
 	registry.registerNodeFactory("ExampleTask", ai::example::ExampleTask::FACTORY);
 	registry.registerConditionFactory("IsMoving", ai::example::IsMoving::FACTORY);
@@ -81,6 +85,7 @@ int main(int argc, char **argv) {
 
 	for (int i = 0; i < amount; ++i) {
 		ai::example::GameEntity* e = gameMap.addEntity(new ai::example::GameEntity(i, root, pathFinder, groupManager));
+		groupManager.add(1, e);
 		e->setPosition(gameMap.getStartPosition());
 	}
 

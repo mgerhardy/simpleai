@@ -9,11 +9,12 @@ namespace example {
 class GameEntity : public ai::ICharacter {
 private:
 	ai::AI _ai;
-	std::list<ai::AIPosition> _route;
+	std::list<ai::MoveVector> _route;
+	float _speed;
 
 public:
 	GameEntity (const ai::CharacterId& id, const ai::TreeNodePtr& root, ai::example::Pathfinder& pathfinder, ai::GroupMgr& groupManager) :
-			ai::ICharacter(id), _ai(*this, root, pathfinder, groupManager) {
+			ai::ICharacter(id), _ai(*this, root, pathfinder, groupManager), _speed(0.1f) {
 		setAttribute("Name", "Example");
 	}
 
@@ -35,12 +36,20 @@ public:
 		setAttribute("Position", ss.str());
 	}
 
-	inline std::list<ai::AIPosition>& getRoute () {
+	inline std::list<ai::MoveVector>& getRoute () {
 		return _route;
 	}
 
-	inline const std::list<ai::AIPosition>& getRoute () const {
+	inline const std::list<ai::MoveVector>& getRoute () const {
 		return _route;
+	}
+
+	inline void setSpeed (float speed) {
+		_speed = speed;
+	}
+
+	inline float getSpeed () const {
+		return _speed;
 	}
 };
 

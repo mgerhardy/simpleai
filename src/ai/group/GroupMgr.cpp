@@ -28,8 +28,8 @@ bool GroupMgr::remove(GroupId id, ICharacter* character) {
 	return true;
 }
 
-AIPosition GroupMgr::getPosition(GroupId id) const {
-	AIPosition averagePosition;
+Vector3f GroupMgr::getPosition(GroupId id) const {
+	Vector3f averagePosition;
 	GroupMembersConstIter i = _members.find(id);
 	if (i == _members.end())
 		return averagePosition;

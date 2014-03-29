@@ -13,6 +13,8 @@ example_CPPFLAGS = -Wall
 include_HEADERS = \
 	actions/Move.h \
 	actions/ExampleTask.h \
+	actions/Wander.h \
+	actions/Print.h \
 	conditions/IsMoving.h \
 	GameEntity.h \
 	GameMap.h \
