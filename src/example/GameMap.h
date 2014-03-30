@@ -11,14 +11,13 @@ namespace example {
 
 class GameMap: public ai::IMap {
 private:
-	int _width;
-	int _height;
+	int _size;
 	std::vector<ai::example::GameEntity*> _entities;
 	ai::Server _server;
 
 public:
-	GameMap (int width, int height) :
-			IMap(), _width(width), _height(height), _server(PORT) {
+	GameMap (int size) :
+			IMap(), _size(size), _server(PORT) {
 		if (!_server.start())
 			std::cerr << "Could not start the server" << std::endl;
 		else
@@ -43,23 +42,23 @@ public:
 
 	inline void update (uint32_t dt) {
 		for (std::vector<ai::example::GameEntity*>::iterator i = _entities.begin(); i != _entities.end(); ++i) {
-			(*i)->update(dt);
+			(*i)->update(dt, _size);
 		}
 		_server.update(dt);
 	}
 
 	bool isBlocked (const ai::Vector3f& pos) const override {
-		if (pos.x() < 0.0f || pos.x() >= _width)
+		if (pos.x() < -_size || pos.x() >= _size)
 			return true;
-		if (pos.y() < 0.0f || pos.y() >= _height)
+		if (pos.y() < -_size || pos.y() >= _size)
 			return true;
 		return false;
 	}
 
 	// returns a random start position within the boundaries
 	ai::Vector3f getStartPosition() const {
-		const int x = rand() % _width;
-		const int y = rand() % _height;
+		const int x = (rand() % (2 * _size)) - _size;
+		const int y = (rand() % (2 * _size)) - _size;
 		const float z = 0.0f;
 		return ai::Vector3f(x, y, z);
 	}

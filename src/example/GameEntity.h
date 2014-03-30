@@ -30,9 +30,20 @@ public:
 		return _ai.getAggroMgr().addAggro(entity, aggro);
 	}
 
-	void update (uint32_t deltaTime) {
+	void update (uint32_t deltaTime, int size) {
 		_ai.update(deltaTime);
 		std::stringstream ss;
+		if (_position.x() < -size) {
+			_position.setX(size);
+		} else if (_position.x() > size) {
+			_position.setX(-size);
+		}
+		if (_position.y() < -size) {
+			_position.setY(size);
+		} else if (_position.y() >= size) {
+			_position.setY(-size);
+		}
+
 		ss << _position.x() << ":" << _position.y();
 		setAttribute("Id", Str::toString(getId()));
 		setAttribute("Position", ss.str());

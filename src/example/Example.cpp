@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
 	std::cout << "now run this behaviour tree for some time: " << std::endl << *root.get() << std::endl;
 
 	ai::GroupMgr groupManager;
-	ai::example::GameMap gameMap(600, 600);
+	ai::example::GameMap gameMap(300);
 	ai::example::Pathfinder pathFinder(gameMap);
 
 	for (int i = 0; i < amount; ++i) {
