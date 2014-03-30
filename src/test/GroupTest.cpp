@@ -41,8 +41,12 @@ TEST_F(GroupTest, testGroupSize) {
 	ASSERT_TRUE(groupMgr.add(id, &entity1));
 	TestEntity entity2(2, ai::TreeNodePtr(), _pathfinder, groupMgr);
 	ASSERT_TRUE(groupMgr.add(id, &entity2));
-	ASSERT_EQ(&entity1, *groupMgr.getGroupMembers(id).first);
-	ASSERT_EQ(&entity2, *(++groupMgr.getGroupMembers(id).first));
+	std::pair<ai::GroupMembersSetIter, ai::GroupMembersSetIter> members = groupMgr.getGroupMembers(id);
+	ASSERT_EQ(2, std::distance(members.first, members.second));
+	ASSERT_EQ(&entity1, *members.first);
+	++members.first;
+	ASSERT_NE(members.first, members.second);
+	ASSERT_EQ(&entity2, *members.first);
 }
 
 TEST_F(GroupTest, testGroupAveragePosition) {
