@@ -29,11 +29,11 @@ public:
 		ICharacter& chr = entity.getCharacter();
 		const float deltaSeconds = static_cast<float>(deltaMillis) / 1000.0f;
 
-		const ai::movement::Wander w(chr, chr.getSpeed(), _rotation);
-		const ai::movement::SteeringData& d = w.execute();
+		const movement::Wander w(chr, chr.getSpeed(), _rotation);
+		const MoveVector& mv = w.execute();
 
-		chr.setPosition(chr.getPosition() + (d.linear * deltaSeconds));
-		chr.setOrientation(fmodf(chr.getOrientation() + d.angular * deltaSeconds, M_2PI));
+		chr.setPosition(chr.getPosition() + (mv.getVector() * deltaSeconds));
+		chr.setOrientation(fmodf(chr.getOrientation() + mv.getRotation() * deltaSeconds, M_2PI));
 		return FINISHED;
 	}
 };

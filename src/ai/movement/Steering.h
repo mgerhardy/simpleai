@@ -6,11 +6,6 @@
 namespace ai {
 namespace movement {
 
-struct SteeringData {
-	Vector3f linear;
-	float angular;
-};
-
 class ISteering {
 protected:
 	ICharacter& _character;
@@ -20,7 +15,7 @@ public:
 			_character(character), _speed(speed) {
 	}
 	virtual ~ISteering() {}
-	virtual SteeringData execute () const = 0;
+	virtual MoveVector execute () const = 0;
 };
 
 class Wander: public ISteering {
@@ -31,15 +26,9 @@ public:
 			ISteering(character, speed), _rotation(rotation) {
 	}
 
-	SteeringData execute () const override {
-		SteeringData d;
-
-		d.linear = Vector3f::fromRadians(_character.getOrientation());
-		d.linear *= _speed;
-
-		const float change = ai::randomBinomial();
-		d.angular = change * _rotation;
-
+	MoveVector execute () const override {
+		const Vector3f v = Vector3f::fromRadians(_character.getOrientation()) * _speed;
+		const MoveVector d(v, ai::randomBinomial() * _rotation);
 		return d;
 	}
 };
