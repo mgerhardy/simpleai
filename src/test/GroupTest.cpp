@@ -1,6 +1,27 @@
 #include "GroupTest.h"
 
 class GroupTest: public TestSuite {
+public:
+	void doMassTest(int max) {
+		std::vector<SharedPtr<TestEntity> > ais;
+		ai::GroupMgr mgr;
+		for (int i = 1; i <= max; ++i) {
+			const ai::CharacterId id = i;
+			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _pathfinder, _groupManager);
+			ais.push_back(SharedPtr<TestEntity>(e));
+			mgr.add(1, e);
+		}
+		const std::pair<ai::GroupMembersSetIter, ai::GroupMembersSetIter>& members = mgr.getGroupMembers(1);
+		const int n = std::distance(members.first, members.second);
+		ASSERT_EQ(max, n);
+
+		for (std::vector<SharedPtr<TestEntity> >::iterator i = ais.begin(); i != ais.end(); ++i) {
+			mgr.remove(1, i->get());
+		}
+		const std::pair<ai::GroupMembersSetIter, ai::GroupMembersSetIter>& membersEmpty = mgr.getGroupMembers(1);
+		const int nEmpty = std::distance(membersEmpty.first, membersEmpty.second);
+		ASSERT_EQ(0, nEmpty);
+	}
 };
 
 TEST_F(GroupTest, testGroupAddRemove) {
@@ -35,4 +56,12 @@ TEST_F(GroupTest, testGroupAveragePosition) {
 	ASSERT_TRUE(groupMgr.add(id, &entity2));
 	ai::Vector3f avg = groupMgr.getPosition(id);
 	ASSERT_EQ(ai::Vector3f(2.0f, 2.0f, 0.0f), avg);
+}
+
+TEST_F(GroupTest, testGroupMass1000) {
+	doMassTest(1000);
+}
+
+TEST_F(GroupTest, testGroupMass10000) {
+	doMassTest(10000);
 }

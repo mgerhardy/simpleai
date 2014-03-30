@@ -15,6 +15,8 @@ typedef GroupMembers::iterator GroupMembersIter;
 typedef GroupMembers::const_iterator GroupMembersConstIter;
 
 class GroupMgr {
+private:
+	GroupMembersSet _empty;
 protected:
 	GroupMembers _members;
 public:

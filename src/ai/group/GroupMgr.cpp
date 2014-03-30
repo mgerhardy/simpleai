@@ -48,6 +48,9 @@ Vector3f GroupMgr::getPosition(GroupId id) const {
 
 std::pair<GroupMembersSetIter, GroupMembersSetIter> GroupMgr::getGroupMembers(GroupId id) {
 	GroupMembersIter i = _members.find(id);
+	if (i == _members.end()) {
+		return std::pair<GroupMembersSetIter, GroupMembersSetIter>(_empty.begin(), _empty.end());
+	}
 	return std::pair<GroupMembersSetIter, GroupMembersSetIter>(i->second.begin(), i->second.end());
 }
 
