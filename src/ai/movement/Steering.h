@@ -27,7 +27,7 @@ public:
 	}
 
 	MoveVector execute () const override {
-		const Vector3f v = Vector3f::fromRadians(_character.getOrientation()) * _speed;
+		const Vector3f& v = Vector3f::fromRadians(_character.getOrientation()) * _speed;
 		const MoveVector d(v, ai::randomBinomial() * _rotation);
 		return d;
 	}
