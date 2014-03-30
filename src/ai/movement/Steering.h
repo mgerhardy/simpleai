@@ -18,6 +18,33 @@ public:
 	virtual MoveVector execute () const = 0;
 };
 
+class TargetSeek: public ISteering {
+protected:
+	Vector3f _target;
+public:
+	TargetSeek(ICharacter& character, float speed, const Vector3f& target) :
+			ISteering(character, speed), _target(target) {
+	}
+
+	MoveVector execute () const override {
+		Vector3f v = _target;
+		v -= _character.getPosition();
+		if (v.squareLength() > 0) {
+			v.normalize();
+			v *= _speed;
+		}
+		const MoveVector d(v, 0.0f);
+		return d;
+	}
+};
+
+class GroupSeek: public TargetSeek {
+public:
+	GroupSeek(AI& ai, float speed, GroupId groupId) :
+		TargetSeek(ai.getCharacter(), speed, ai.getGroupMgr().getPosition(groupId)) {
+	}
+};
+
 class Wander: public ISteering {
 protected:
 	float _rotation;
