@@ -10,6 +10,7 @@ TEST_F(GroupTest, testGroupAddRemove) {
 	ASSERT_TRUE(groupMgr.add(id, &entity1));
 	ASSERT_FALSE(groupMgr.remove(0, &entity1));
 	ASSERT_TRUE(groupMgr.remove(id, &entity1));
+	ASSERT_FALSE(groupMgr.remove(id, &entity1));
 }
 
 TEST_F(GroupTest, testGroupSize) {
