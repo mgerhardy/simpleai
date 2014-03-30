@@ -27,6 +27,8 @@ bool GroupMgr::remove(GroupId id, ICharacter* character) {
 	if (si == i->second.end())
 		return false;
 	i->second.erase(si);
+	if (i->second.empty())
+		_members.erase(i);
 	return true;
 }
 
