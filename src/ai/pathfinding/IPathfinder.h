@@ -1,9 +1,9 @@
 #pragma once
 
 #include <list>
-#include <common/Vector3f.h>
-#include <common/Compiler.h>
-#include <common/Math.h>
+#include "common/Vector3f.h"
+#include "common/Compiler.h"
+#include "common/Math.h"
 #include <cmath>
 
 namespace ai {

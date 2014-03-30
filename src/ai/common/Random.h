@@ -4,12 +4,16 @@
 
 namespace ai {
 
-inline float randomReal (float max = 1.0f) {
+inline void randomSeed (unsigned int seed) {
+	srand(seed);
+}
+
+inline float randomf (float max = 1.0f) {
 	return max * (float(rand()) / RAND_MAX);
 }
 
 inline float randomBinomial (float max = 1.0f) {
-	return randomReal(max) - randomReal(max);
+	return randomf(max) - randomf(max);
 }
 
 }

@@ -36,6 +36,7 @@
 #include "common/Compiler.h"
 #include "common/String.h"
 #include "common/Math.h"
+#include "common/Random.h"
 
 #include "AI.h"
 #include "AIRegistry.h"
@@ -54,6 +55,8 @@
 #include "tree/loaders/lua/LUATreeLoader.h"
 
 #include "group/GroupMgr.h"
+
+#include "movement/Steering.h"
 
 #include "pathfinding/IMap.h"
 #include "pathfinding/IPathfinder.h"

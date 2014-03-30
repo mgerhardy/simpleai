@@ -6,6 +6,7 @@ tests_SOURCES = \
 	TestShared.cpp \
 	ParserTest.cpp \
 	NodeTest.cpp \
+	MovementTest.cpp \
 	GeneralTest.cpp \
 	AggroTest.cpp \
 	GroupTest.cpp \
