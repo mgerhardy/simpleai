@@ -11,6 +11,7 @@ Features:
 * Aggro list implementation
 * Several standard selectors and conditions
 * Group management
+* Movement implementations for steering
 * Network based remote debugging
 * QT5 based remote debugger
 
