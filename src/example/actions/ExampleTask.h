@@ -11,7 +11,7 @@ public:
 	TASK_CLASS(ExampleTask);
 	NODE_FACTORY
 
-	TreeNodeStatus doAction(AI& entity) {
+	TreeNodeStatus doAction(AI& entity, long deltaMillis) override {
 		//ICharacter& chr = entity.getCharacter();
 		return FINISHED;
 	}

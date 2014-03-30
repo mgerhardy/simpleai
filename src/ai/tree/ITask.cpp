@@ -15,7 +15,7 @@ TreeNodeStatus ITask::execute(AI& entity, long deltaMillis) {
 		return state(CANNOTEXECUTE);
 
 	try {
-		return state(doAction(entity));
+		return state(doAction(entity, deltaMillis));
 	} catch (std::exception& e) {
 		return state(EXCEPTION);
 	}

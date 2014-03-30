@@ -10,12 +10,13 @@ class GameEntity : public ai::ICharacter {
 private:
 	ai::AI _ai;
 	std::list<ai::MoveVector> _route;
-	float _speed;
 
 public:
-	GameEntity (const ai::CharacterId& id, const ai::TreeNodePtr& root, ai::example::Pathfinder& pathfinder, ai::GroupMgr& groupManager) :
-			ai::ICharacter(id), _ai(*this, root, pathfinder, groupManager), _speed(0.1f) {
+	GameEntity(const ai::CharacterId& id, const ai::TreeNodePtr& root,
+			ai::example::Pathfinder& pathfinder, ai::GroupMgr& groupManager) :
+			ai::ICharacter(id), _ai(*this, root, pathfinder, groupManager) {
 		setAttribute("Name", "Example");
+		setSpeed(10.0f);
 	}
 
 	~GameEntity () {
@@ -33,7 +34,10 @@ public:
 		_ai.update(deltaTime);
 		std::stringstream ss;
 		ss << _position.x() << ":" << _position.y();
+		setAttribute("Id", Str::toString(getId()));
 		setAttribute("Position", ss.str());
+		setAttribute("Speed", Str::toString(getSpeed()));
+		setAttribute("Orientation", Str::toString(toDegrees(getOrientation())));
 	}
 
 	inline std::list<ai::MoveVector>& getRoute () {
@@ -42,14 +46,6 @@ public:
 
 	inline const std::list<ai::MoveVector>& getRoute () const {
 		return _route;
-	}
-
-	inline void setSpeed (float speed) {
-		_speed = speed;
-	}
-
-	inline float getSpeed () const {
-		return _speed;
 	}
 };
 

@@ -5,14 +5,13 @@
 #include <iostream>
 
 namespace ai {
-namespace example {
 
 class Print: public ITask {
 public:
 	TASK_CLASS(Print);
 	NODE_FACTORY
 
-	TreeNodeStatus doAction(AI& entity) {
+	TreeNodeStatus doAction(AI& entity, long deltaMillis) override {
 		std::cout << _parameters << std::endl;
 		return FINISHED;
 	}
@@ -20,5 +19,4 @@ public:
 
 NODE_FACTORY_IMPL(Print)
 
-}
 }

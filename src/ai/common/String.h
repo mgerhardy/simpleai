@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
 #include <algorithm>
 
 namespace ai {
@@ -27,6 +28,21 @@ inline void splitString(const std::string& string, std::vector<std::string>& tok
 		// Find next "non-delimiter"
 		pos = string.find_first_of(delimiters, lastPos);
 	}
+}
+
+inline int toInt(const std::string& str) {
+	return ::atoi(str.c_str());
+}
+
+inline float toFloat(const std::string& str) {
+	return ::atof(str.c_str());
+}
+
+template <typename T>
+inline std::string toString(T input) {
+	std::stringstream ss;
+	ss << input;
+	return ss.str();
 }
 
 }

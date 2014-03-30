@@ -21,11 +21,13 @@ protected:
 	CharacterId _id;
 	Vector3f _position;
 	float _orientation;
+	// m/s
+	float _speed;
 	CharacterAttributes _attributes;
 
 public:
 	ICharacter(CharacterId id) :
-			_id(id), _orientation(0.0f) {
+			_id(id), _orientation(0.0f), _speed(0.0f) {
 	}
 
 	virtual ~ICharacter() {
@@ -39,6 +41,8 @@ public:
 	const Vector3f& getPosition() const;
 	void setOrientation(float orientation);
 	float getOrientation() const;
+	void setSpeed(float speed);
+	float getSpeed() const;
 	void setAttribute(const std::string& key, const std::string& value);
 	const CharacterAttributes& getAttributes() const;
 };
@@ -77,6 +81,14 @@ inline CharacterId ICharacter::getId() const {
 
 inline const Vector3f& ICharacter::getPosition() const {
 	return _position;
+}
+
+inline void ICharacter::setSpeed(float speed) {
+	_speed = speed;
+}
+
+inline float ICharacter::getSpeed() const {
+	return _speed;
 }
 
 template <typename CharacterType>

@@ -20,7 +20,7 @@ public:
 	ITask(const std::string& name, const std::string& parameters, const ConditionPtr& condition);
 	virtual ~ITask();
 
-	virtual TreeNodeStatus doAction(AI& entity) = 0;
+	virtual TreeNodeStatus doAction(AI& entity, long deltaMillis) = 0;
 
 	void addChild(const TreeNodePtr& child) override;
 };

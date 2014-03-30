@@ -1,17 +1,19 @@
-#include <AIRegistry.h>
-#include <tree/TreeNode.h>
-#include <conditions/ICondition.h>
-#include <tree/Invert.h>
-#include <tree/Idle.h>
-#include <tree/Parallel.h>
-#include <tree/PrioritySelector.h>
-#include <tree/Sequence.h>
-#include <conditions/And.h>
-#include <conditions/False.h>
-#include <conditions/HasEnemies.h>
-#include <conditions/Not.h>
-#include <conditions/Or.h>
-#include <conditions/True.h>
+#include "AIRegistry.h"
+#include "tree/TreeNode.h"
+#include "conditions/ICondition.h"
+#include "tree/Invert.h"
+#include "tree/Idle.h"
+#include "tree/Print.h"
+#include "tree/Wander.h"
+#include "tree/Parallel.h"
+#include "tree/PrioritySelector.h"
+#include "tree/Sequence.h"
+#include "conditions/And.h"
+#include "conditions/False.h"
+#include "conditions/HasEnemies.h"
+#include "conditions/Not.h"
+#include "conditions/Or.h"
+#include "conditions/True.h"
 
 namespace ai {
 
@@ -31,6 +33,8 @@ AIRegistry::TreeNodeFactory::TreeNodeFactory() {
 	R(Parallel);
 	R(PrioritySelector);
 	R(Sequence);
+	R(Print);
+	R(Wander);
 	R(Idle);
 }
 

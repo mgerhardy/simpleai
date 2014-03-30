@@ -62,6 +62,7 @@ nobase_library_include_HEADERS = \
 	IAIFactory.h \
 	ICharacter.h \
 	group/GroupMgr.h \
+	movement/Steering.h \
 	pathfinding/IMap.h \
 	pathfinding/IPathfinder.h \
 	server/AICharacterDetailsMessage.h \
@@ -90,11 +91,13 @@ nobase_library_include_HEADERS = \
 	tree/loaders/lua/LUATree.h \
 	tree/loaders/lua/LUATreeLoader.h \
 	tree/Parallel.h \
+	tree/Print.h \
 	tree/PrioritySelector.h \
 	tree/Selector.h \
 	tree/Sequence.h \
 	tree/TreeNode.h \
-	tree/TreeNodeParser.h
+	tree/TreeNodeParser.h \
+	tree/Wander.h
 
 EXTRA_DIST =
 

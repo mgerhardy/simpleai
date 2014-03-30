@@ -113,6 +113,7 @@ void Server::update(uint32_t deltaTime) {
 		broadcastCharacterDetails();
 	} else if (_pause) {
 		pause(1, false);
+		_selectedCharacterId = -1;
 	}
 	_network.update(deltaTime);
 }

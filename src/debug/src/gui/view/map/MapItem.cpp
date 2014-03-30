@@ -39,6 +39,14 @@ void MapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 	painter->drawEllipse(pos(), 10.0, 10.0);
 	painter->setBrush(b);
 
+	QPoint endPos;
+	const float radians = _state.getOrientation();
+	QPointF direction(sin(radians), cos(radians));
+	const float scaleV = 30.0f;
+	endPos.setX(pos().x() + scaleV * direction.x());
+	endPos.setY(pos().y() + scaleV * direction.y());
+	painter->drawLine(pos(), endPos);
+
 	renderDetails(painter, lod);
 }
 

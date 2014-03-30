@@ -9,8 +9,6 @@
 #include "Pathfinder.h"
 #include "actions/ExampleTask.h"
 #include "actions/Move.h"
-#include "actions/Wander.h"
-#include "actions/Print.h"
 #include "conditions/IsMoving.h"
 #include "GameEntity.h"
 #include "GameMap.h"
@@ -33,8 +31,6 @@ int main(int argc, char **argv) {
 	// define your own tasks and conditions
 	ai::AIRegistry registry;
 	registry.registerNodeFactory("Move", ai::example::Move::FACTORY);
-	registry.registerNodeFactory("Wander", ai::example::Wander::FACTORY);
-	registry.registerNodeFactory("Print", ai::example::Print::FACTORY);
 	registry.registerNodeFactory("ExampleTask", ai::example::ExampleTask::FACTORY);
 	registry.registerConditionFactory("IsMoving", ai::example::IsMoving::FACTORY);
 
