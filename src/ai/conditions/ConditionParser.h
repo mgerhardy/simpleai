@@ -12,6 +12,7 @@ private:
 	const IAIFactory& _aiFactory;
 	std::string _conditionString;
 
+	void splitConditions(const std::string& string, std::vector<std::string>& tokens) const;
 	bool fillInnerConditions(ConditionFactoryContext& ctx, const std::string inner);
 
 public:

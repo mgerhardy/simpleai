@@ -12,9 +12,35 @@ ConditionParser::ConditionParser(const IAIFactory& aiFactory, const std::string&
 ConditionParser::~ConditionParser() {
 }
 
+void ConditionParser::splitConditions(const std::string& string, std::vector<std::string>& tokens) const {
+	bool inParameter = false;
+	bool inChildren = false;
+	std::string token;
+	for (std::string::const_iterator i = string.begin(); i != string.end(); ++i) {
+		if (*i == '{')
+			inParameter = true;
+		else if (*i == '}')
+			inParameter = false;
+		else if (*i == '(')
+			inChildren = true;
+		else if (*i == ')')
+			inChildren = false;
+
+		if (!inParameter && !inChildren) {
+			if (*i == ',') {
+				tokens.push_back(token);
+				token.clear();
+				continue;
+			}
+		}
+		token.push_back(*i);
+	}
+	tokens.push_back(token);
+}
+
 bool ConditionParser::fillInnerConditions(ConditionFactoryContext& ctx, const std::string conditionStr) {
 	std::vector<std::string> conditions;
-	ai::Str::splitString(conditionStr, conditions, ",");
+	splitConditions(conditionStr, conditions);
 	if (conditions.size() > 1) {
 		for (std::vector<std::string>::const_iterator i = conditions.begin(); i != conditions.end(); ++i) {
 			if (!fillInnerConditions(ctx, *i))
