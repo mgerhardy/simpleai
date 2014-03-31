@@ -15,6 +15,19 @@ AC_PROG_INSTALL
 AC_HEADER_STDC
 AC_CONFIG_MACRO_DIR([m4])
 
+AC_MSG_CHECKING([Compiling with clang])
+AC_COMPILE_IFELSE(
+[AC_LANG_PROGRAM([], [[
+#ifndef __clang__
+#error "NO CLANG"
+#endif
+]])],
+[CLANG=yes], [CLANG=no])
+AC_MSG_RESULT([$CLANG])
+if test "x$CLANG" = "xyes"; then
+	CXXLAGS="$CXXFLAGS -Weverything"
+fi
+
 AC_CHECK_PROGS([DOXYGEN], [doxygen])
 if test -z "$DOXYGEN";
    then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
