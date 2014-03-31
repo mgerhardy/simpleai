@@ -8,7 +8,7 @@ namespace ai {
 
 class ProtocolHandlerRegistry {
 private:
-	typedef std::map<uint32_t, ProtocolHandlerPtr> ProtocolHandlers;
+	typedef std::map<ProtocolId, ProtocolHandlerPtr> ProtocolHandlers;
 	ProtocolHandlers _registry;
 
 	ProtocolHandlerRegistry() {

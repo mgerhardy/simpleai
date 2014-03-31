@@ -10,13 +10,13 @@ TreeNodeStatus Sequence::execute(AI& entity, long deltaMillis) {
 	const int progress = std::max(0, getSelectorState(entity));
 
 	const std::size_t size = _children.size();
-	for (std::size_t i = progress; i < size; i++) {
+	for (std::size_t i = static_cast<std::size_t>(progress); i < size; i++) {
 		TreeNodePtr& child = _children[i];
 
 		result = child->execute(entity, deltaMillis);
 
 		if (result == RUNNING) {
-			setSelectorState(entity, i);
+			setSelectorState(entity, static_cast<int>(i));
 			break;
 		} else if (result == CANNOTEXECUTE || result == FAILED) {
 			resetState(entity);

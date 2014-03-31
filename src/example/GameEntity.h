@@ -30,7 +30,7 @@ public:
 		return _ai.getAggroMgr().addAggro(entity, aggro);
 	}
 
-	void update (uint32_t deltaTime, int size) {
+	void update (long deltaTime, int size) {
 		_ai.update(deltaTime);
 		std::stringstream ss;
 		if (_position.x() < -size) {

@@ -22,7 +22,7 @@ private:
 		const int64_t lastRun = readLong(in);
 		const TreeNodeStatus status = static_cast<TreeNodeStatus>(readByte(in));
 		const bool active = readBool(in);
-		const uint8_t childrenCount = readShort(in);
+		const int16_t childrenCount = readShort(in);
 		AIStateNode node(name, condition, lastRun, status, active);
 		for (uint8_t i = 0; i < childrenCount; ++i) {
 			const AIStateNode& child = readNode(in);
@@ -38,7 +38,7 @@ private:
 		addByte(out, node.getStatus());
 		addBool(out, node.isActive());
 		const std::vector<AIStateNode>& children = node.getChildren();
-		addShort(out, children.size());
+		addShort(out, static_cast<int16_t>(children.size()));
 		for (std::vector<AIStateNode>::const_iterator i = children.begin(); i != children.end(); ++i) {
 			writeNode(out, *i);
 		}
@@ -46,7 +46,7 @@ private:
 
 	void writeAggro(streamContainer& out, const AIStateAggro& aggro) const {
 		const std::vector<AIStateAggroEntry>& a = aggro.getAggro();
-		addShort(out, a.size());
+		addShort(out, static_cast<int16_t>(a.size()));
 		for (std::vector<AIStateAggroEntry>::const_iterator i = a.begin(); i != a.end(); ++i) {
 			addInt(out, i->id);
 			addFloat(out, i->aggro);
@@ -63,7 +63,7 @@ private:
 	}
 
 	void writeAttributes(streamContainer& out, const CharacterAttributes& a) const {
-		addShort(out, a.size());
+		addShort(out, static_cast<int16_t>(a.size()));
 		for (CharacterAttributes::const_iterator i = a.begin(); i != a.end(); ++i) {
 			addString(out, i->first);
 			addString(out, i->second);

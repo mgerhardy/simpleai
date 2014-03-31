@@ -40,7 +40,7 @@ public:
 		return entity;
 	}
 
-	inline void update (uint32_t dt) {
+	inline void update (long dt) {
 		for (std::vector<ai::example::GameEntity*>::iterator i = _entities.begin(); i != _entities.end(); ++i) {
 			(*i)->update(dt, _size);
 		}

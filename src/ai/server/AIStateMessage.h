@@ -50,7 +50,7 @@ public:
 
 	void serialize(streamContainer& out) const override {
 		addByte(out, _id);
-		addInt(out, _states.size());
+		addInt(out, static_cast<int>(_states.size()));
 		for (States::const_iterator i = _states.begin(); i != _states.end(); ++i) {
 			writeState(out, *i);
 		}

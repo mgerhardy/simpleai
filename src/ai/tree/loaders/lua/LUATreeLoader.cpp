@@ -4,12 +4,6 @@
 
 namespace ai {
 
-#ifdef DEBUG
-#define checkStack(state) StackChecker(state)
-#else
-#define checkStack(state)
-#endif
-
 LUATreeLoader::LUATreeLoader(const IAIFactory& aiFactory) :
 		ITreeLoader(aiFactory), _lua(new LUA()) {
 	luaL_Reg createTree = { "createTree", luaMain_CreateTree };

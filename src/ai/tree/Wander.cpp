@@ -5,7 +5,7 @@
 
 namespace ai {
 
-TreeNodeStatus Wander::doAction(AI& entity, long deltaMillis) override {
+TreeNodeStatus Wander::doAction(AI& entity, long deltaMillis) {
 	ICharacter& chr = entity.getCharacter();
 
 	const movement::Wander w(chr, chr.getSpeed(), _rotation);

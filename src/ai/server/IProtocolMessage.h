@@ -32,7 +32,7 @@
 
 namespace ai {
 
-typedef int ProtocolId;
+typedef uint8_t ProtocolId;
 
 extern const ProtocolId PROTO_STATE;
 extern const ProtocolId PROTO_CHARACTER_DETAILS;
@@ -160,7 +160,7 @@ inline uint8_t IProtocolMessage::readByte(streamContainer& in) {
 inline void IProtocolMessage::addFloat(streamContainer& out, float value) {
 	union toint {
 		float f;
-		uint32_t i;
+		int32_t i;
 	} tmp;
 	tmp.f = value;
 	addInt(out, tmp.i);
@@ -169,7 +169,7 @@ inline void IProtocolMessage::addFloat(streamContainer& out, float value) {
 inline float IProtocolMessage::readFloat(streamContainer& in) {
 	union toint {
 		float f;
-		uint32_t i;
+		int32_t i;
 	} tmp;
 	tmp.i = readInt(in);
 	return tmp.f;
@@ -179,7 +179,7 @@ inline std::string IProtocolMessage::readString(streamContainer& in) {
 	std::string strbuff;
 	strbuff.reserve(64);
 	for (;;) {
-		const char chr = in.front();
+		const char chr = static_cast<char>(in.front());
 		in.pop_front();
 		if (chr == '\0')
 			break;
@@ -189,8 +189,8 @@ inline std::string IProtocolMessage::readString(streamContainer& in) {
 }
 
 inline void IProtocolMessage::addString(streamContainer& out, const std::string& string) {
-	const int length = string.length();
-	for (int i = 0; i < length; ++i) {
+	const std::size_t length = string.length();
+	for (std::size_t i = 0; i < length; ++i) {
 		out.push_back(uint8_t(string[i]));
 	}
 	out.push_back(uint8_t('\0'));
@@ -223,7 +223,7 @@ inline void IProtocolMessage::addLong(streamContainer& out, int64_t dword) {
 }
 
 inline int16_t IProtocolMessage::readShort(streamContainer& in) {
-	char buf[2];
+	uint8_t buf[2];
 	const int l = sizeof(buf);
 	for (int i = 0; i < l; ++i) {
 		buf[i] = in.front();
@@ -235,7 +235,7 @@ inline int16_t IProtocolMessage::readShort(streamContainer& in) {
 }
 
 inline int32_t IProtocolMessage::readInt(streamContainer& in) {
-	char buf[4];
+	uint8_t buf[4];
 	const int l = sizeof(buf);
 	for (int i = 0; i < l; ++i) {
 		buf[i] = in.front();
@@ -247,7 +247,7 @@ inline int32_t IProtocolMessage::readInt(streamContainer& in) {
 }
 
 inline int32_t IProtocolMessage::peekInt(const streamContainer& in) {
-	char buf[4];
+	uint8_t buf[4];
 	const int l = sizeof(buf);
 	streamContainer::const_iterator it = in.begin();
 	for (int i = 0; i < l; ++i) {
@@ -262,7 +262,7 @@ inline int32_t IProtocolMessage::peekInt(const streamContainer& in) {
 }
 
 inline int64_t IProtocolMessage::readLong(streamContainer& in) {
-	char buf[8];
+	uint8_t buf[8];
 	const int l = sizeof(buf);
 	for (int i = 0; i < l; ++i) {
 		buf[i] = in.front();

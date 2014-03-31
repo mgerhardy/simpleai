@@ -3,7 +3,7 @@
 #include <common/Compiler.h>
 #include <tree/loaders/ITreeLoader.h>
 
-struct LUA;
+class LUA;
 
 namespace ai {
 

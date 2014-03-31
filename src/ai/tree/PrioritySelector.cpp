@@ -13,7 +13,7 @@ TreeNodeStatus PrioritySelector::execute(AI& entity, long deltaMillis) {
 		const TreeNodePtr& child = _children[i];
 		const TreeNodeStatus result = child->execute(entity, deltaMillis);
 		if (result == RUNNING)
-			setSelectorState(entity, i);
+			setSelectorState(entity, static_cast<int>(i));
 		else
 			child->resetState(entity);
 

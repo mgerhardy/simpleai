@@ -18,11 +18,11 @@ namespace ai {
 
 class IProtocolMessage;
 typedef uint8_t ClientId;
-typedef std::deque<char> streamContainer;
+typedef std::deque<uint8_t> streamContainer;
 
 class Network {
 protected:
-	int _port;
+	uint16_t _port;
 	std::string _hostname;
 	// the socket file descriptor
 	SOCKET _socketFD;
@@ -46,11 +46,11 @@ protected:
 	ClientSockets _clientSockets;
 	ClientSocketsIter closeClient (ClientSocketsIter& i);
 public:
-	Network(int port = 10001, const std::string& hostname = "0.0.0.0");
+	Network(uint16_t port = 10001, const std::string& hostname = "0.0.0.0");
 	virtual ~Network();
 
 	bool start();
-	void update(uint32_t deltaTime);
+	void update(long deltaTime);
 
 	int getConnectedClients() const;
 
@@ -58,7 +58,7 @@ public:
 };
 
 inline int Network::getConnectedClients() const {
-	return _clientSockets.size();
+	return static_cast<int>(_clientSockets.size());
 }
 
 }

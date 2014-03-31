@@ -11,7 +11,7 @@ Pathfinder::Pathfinder(const ai::IMap& map) :
 Pathfinder::~Pathfinder() {
 }
 
-ai::MoveState Pathfinder::move(ai::AI& entity, const ai::Vector3f& to, std::list<ai::MoveVector>& route) {
+ai::MoveState Pathfinder::move(ai::AI& /*entity*/, const ai::Vector3f& to, std::list<ai::MoveVector>& /*route*/) {
 	if (_map.isBlocked(to))
 		return ai::IMPOSSIBLE;
 

@@ -6,7 +6,7 @@
 
 namespace ai {
 
-Server::Server(int port, const std::string& hostname) :
+Server::Server(uint16_t port, const std::string& hostname) :
 		_network(port, hostname), _selectedCharacterId(-1), _time(0L), _selectHandler(*this), _pauseHandler(*this), _pause(false) {
 	ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
 	r.registerHandler(ai::PROTO_SELECT, ProtocolHandlerPtr(&_selectHandler, ProtocolHandlerNopDeleter()));
@@ -53,14 +53,15 @@ void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) c
 	const TreeNodes& children = node->getChildren();
 	std::vector<bool> active;
 	node->getChildrenState(ai, active);
-	const int length = children.size();
-	for (int i = 0; i < length; ++i) {
-		const TreeNodePtr& node = children[i];
-		const std::string& name = node->getName();
-		const ConditionPtr& condition = node->getCondition();
+	const std::size_t length = children.size();
+	for (std::size_t i = 0; i < length; ++i) {
+		const TreeNodePtr& childNode = children[i];
+		const std::string& name = childNode->getName();
+		const ConditionPtr& condition = childNode->getCondition();
 		const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
-		AIStateNode child(name, conditionStr, _time - node->getLastExecMillis(), node->getLastStatus(), active[i]);
-		addChildren(node, child, ai);
+		const long delta = _time - childNode->getLastExecMillis();
+		AIStateNode child(name, conditionStr, delta, childNode->getLastStatus(), active[i]);
+		addChildren(childNode, child, ai);
 		parent.addChildren(child);
 	}
 }
@@ -96,8 +97,8 @@ void Server::broadcastCharacterDetails() {
 
 	AIStateAggro aggro;
 	const ai::AggroMgr::Entries& entries = ai.getAggroMgr().getEntries();
-	for (ai::AggroMgr::Entries::const_iterator i = entries.begin(); i != entries.end(); ++i) {
-		const EntryPtr& e = *i;
+	for (ai::AggroMgr::Entries::const_iterator it = entries.begin(); it != entries.end(); ++it) {
+		const EntryPtr& e = *it;
 		aggro.addAggro(AIStateAggroEntry(e->getCharacterId(), e->getAggro()));
 	}
 
@@ -105,7 +106,7 @@ void Server::broadcastCharacterDetails() {
 	_network.broadcast(msg);
 }
 
-void Server::update(uint32_t deltaTime) {
+void Server::update(long deltaTime) {
 	_time += deltaTime;
 	const int clients = _network.getConnectedClients();
 	if (clients > 0) {

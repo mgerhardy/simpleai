@@ -19,7 +19,7 @@ public:
 		return _ai;
 	}
 
-	void update(uint32_t deltaTime) {
+	void update(long deltaTime) {
 		_ai.update(deltaTime);
 	}
 };

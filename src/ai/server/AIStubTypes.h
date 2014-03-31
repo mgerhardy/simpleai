@@ -33,11 +33,11 @@ private:
 	std::string _condition;
 	typedef std::vector<AIStateNode> NodeVector;
 	NodeVector _children;
-	long _lastRun;
+	int64_t _lastRun;
 	TreeNodeStatus _status;
 	bool _active;
 public:
-	AIStateNode(const std::string& name, const std::string& condition, long lastRun, TreeNodeStatus status, bool active) :
+	AIStateNode(const std::string& name, const std::string& condition, int64_t lastRun, TreeNodeStatus status, bool active) :
 			_name(name), _condition(condition), _lastRun(lastRun), _status(status), _active(active) {
 	}
 
@@ -61,7 +61,7 @@ public:
 		return _condition;
 	}
 
-	inline long getLastRun() const {
+	inline int64_t getLastRun() const {
 		return _lastRun;
 	}
 

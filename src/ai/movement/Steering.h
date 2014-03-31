@@ -93,8 +93,8 @@ struct WeightedData {
 	const ISteering *steering;
 	const float weight;
 
-	WeightedData(const ISteering *steering, float weight = 1.0f) :
-			steering(steering), weight(weight) {
+	WeightedData(const ISteering *_steering, float _weight = 1.0f) :
+			steering(_steering), weight(_weight) {
 		assert(weight > 0.0001f);
 	}
 };

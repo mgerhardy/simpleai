@@ -16,12 +16,12 @@ TreeNodeStatus ITask::execute(AI& entity, long deltaMillis) {
 
 	try {
 		return state(doAction(entity, deltaMillis));
-	} catch (std::exception& e) {
+	} catch (std::exception&) {
 		return state(EXCEPTION);
 	}
 }
 
-void ITask::addChild(const TreeNodePtr& child) {
+void ITask::addChild(const TreeNodePtr& /*child*/) {
 	throw AIException("An action node may not have a child");
 }
 

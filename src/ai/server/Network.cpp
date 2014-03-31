@@ -20,7 +20,6 @@
 #include <signal.h>
 #define closesocket close
 #define INVALID_SOCKET  -1
-#define SOCKET_ERROR    -1
 #define cleanup()
 #endif
 #include <string.h>
@@ -29,7 +28,7 @@
 
 namespace ai {
 
-Network::Network(int port, const std::string& hostname) :
+Network::Network(uint16_t port, const std::string& hostname) :
 		_port(port), _hostname(hostname), _socketFD(INVALID_SOCKET), _maxFD(0) {
 	FD_ZERO(&_readFDSet);
 	FD_ZERO(&_writeFDSet);
@@ -116,7 +115,7 @@ Network::ClientSocketsIter Network::closeClient(ClientSocketsIter& i) {
 	return _clientSockets.erase(i);
 }
 
-void Network::update(uint32_t deltaTime) {
+void Network::update(long /*deltaTime*/) {
 	fd_set readFDsOut;
 	fd_set writeFDsOut;
 
@@ -151,17 +150,17 @@ void Network::update(uint32_t deltaTime) {
 
 		if (FD_ISSET(clientSocket, &writeFDsOut)) {
 			if (!client.out.empty()) {
-				char buf[4096];
-				int len = std::min(sizeof(buf), client.out.size());
-				for (int n = 0; n < len; ++n) {
+				uint8_t buf[4096];
+				const std::size_t len = std::min(sizeof(buf), client.out.size());
+				for (std::size_t n = 0; n < len; ++n) {
 					buf[n] = client.out.at(n);
 				}
-				len = send(clientSocket, buf, len, 0);
-				if (len < 0) {
+				const int sent = send(clientSocket, buf, len, 0);
+				if (sent < 0) {
 					i = closeClient(i);
 					continue;
 				}
-				for (int n = 0; n < len; ++n) {
+				for (int n = 0; n < sent; ++n) {
 					client.out.pop_front();
 				}
 			} else if (client.finished) {
@@ -171,7 +170,7 @@ void Network::update(uint32_t deltaTime) {
 		}
 
 		if (FD_ISSET(clientSocket, &readFDsOut)) {
-			char buf[4096];
+			uint8_t buf[4096];
 			const int len = recv(clientSocket, buf, sizeof(buf), 0);
 			if (len < 0) {
 				i = closeClient(i);

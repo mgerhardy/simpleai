@@ -296,12 +296,18 @@ void LUA::getKeyValueMap (std::map<std::string, std::string>& map, const char *k
 
 int LUA::getIntValue (const std::string& path, int defaultValue)
 {
-	return atoi(getString(path).c_str());
+	const std::string& str = getString(path);
+	if (str.empty())
+		return defaultValue;
+	return atoi(str.c_str());
 }
 
 float LUA::getFloatValue (const std::string& path, float defaultValue)
 {
-	return atof(getString(path).c_str());
+	const std::string& str = getString(path);
+	if (str.empty())
+		return defaultValue;
+	return static_cast<float>(atof(str.c_str()));
 }
 
 void LUA::getGlobalKeyValue (const std::string& name)
@@ -313,7 +319,7 @@ void LUA::getGlobalKeyValue (const std::string& name)
 int LUA::getTable (const std::string& name)
 {
 	lua_getfield(_state, -1, name.c_str());
-	return lua_rawlen(_state, -1);
+	return static_cast<int>(lua_rawlen(_state, -1));
 }
 
 std::string LUA::getTableString (int i)
@@ -336,7 +342,7 @@ int LUA::getTableInteger (int i)
 float LUA::getTableFloat (int i)
 {
 	lua_rawgeti(_state, -1, i);
-	const float val = lua_tonumber(_state, -1);
+	const float val = static_cast<float>(lua_tonumber(_state, -1));
 	pop();
 	return val;
 }

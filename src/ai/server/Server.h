@@ -18,7 +18,7 @@ protected:
 	AIMap _ais;
 	Network _network;
 	CharacterId _selectedCharacterId;
-	uint32_t _time;
+	long _time;
 	SelectHandler _selectHandler;
 	PauseHandler _pauseHandler;
 	bool _pause;
@@ -27,7 +27,7 @@ protected:
 	void broadcastState();
 	void broadcastCharacterDetails();
 public:
-	Server(int port = 10001, const std::string& hostname = "0.0.0.0");
+	Server(uint16_t port = 10001, const std::string& hostname = "0.0.0.0");
 	virtual ~Server();
 
 	bool start();
@@ -39,7 +39,7 @@ public:
 	bool addAI(AI& ai);
 	bool removeAI(AI& ai);
 	// call this to update the server - should get called somewhere from your game tick
-	void update(uint32_t deltaTime);
+	void update(long deltaTime);
 };
 
 }

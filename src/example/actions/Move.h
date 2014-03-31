@@ -22,10 +22,10 @@ private:
 	}
 
 public:
-	TASK_CLASS(Move);
+	TASK_CLASS(Move)
 	NODE_FACTORY
 
-	TreeNodeStatus doAction(AI& entity, long deltaMillis) override {
+	TreeNodeStatus doAction(AI& entity, long /*deltaMillis*/) override {
 		GameEntity& chr = character_cast<GameEntity>(entity.getCharacter());
 		std::list<ai::MoveVector>& route = chr.getRoute();
 		if (!route.empty()) {

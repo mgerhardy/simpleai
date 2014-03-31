@@ -8,10 +8,10 @@ namespace example {
 
 class ExampleTask: public ITask {
 public:
-	TASK_CLASS(ExampleTask);
+	TASK_CLASS(ExampleTask)
 	NODE_FACTORY
 
-	TreeNodeStatus doAction(AI& entity, long deltaMillis) override {
+	TreeNodeStatus doAction(AI& /*entity*/, long /*deltaMillis*/) override {
 		//ICharacter& chr = entity.getCharacter();
 		return FINISHED;
 	}

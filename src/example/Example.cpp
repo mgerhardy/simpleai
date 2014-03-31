@@ -13,10 +13,10 @@
 #include "GameEntity.h"
 #include "GameMap.h"
 
-static inline uint32_t getCurrentMillis () {
+static inline long getCurrentMillis () {
 	struct timeval now;
 	gettimeofday(&now, NULL);
-	const uint32_t ms = now.tv_sec * 1000 + now.tv_usec / 1000;
+	const long ms = now.tv_sec * 1000l + now.tv_usec / 1000l;
 	return ms;
 }
 
@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	srand(getCurrentMillis());
+	srand(static_cast<uint32_t>(getCurrentMillis()));
 
 	// define your own tasks and conditions
 	ai::AIRegistry registry;
@@ -95,15 +95,13 @@ int main(int argc, char **argv) {
 		e->setReduceByValue(1.0f + rand() % 3);
 	}
 
-	uint32_t timeLast = getCurrentMillis();
+	long timeLast = getCurrentMillis();
 	for (;;) {
-		const uint32_t timeNow = getCurrentMillis();
-		const uint32_t dt = timeNow - timeLast;
+		const long timeNow = getCurrentMillis();
+		const long dt = timeNow - timeLast;
 		timeLast = timeNow;
 		if (dt > 0)
 			gameMap.update(dt);
 		sleep(0);
 	}
-
-	return 0;
 }

@@ -5,7 +5,7 @@
 
 namespace ai {
 
-TreeNodeStatus FollowGroup::doAction(AI& entity, long deltaMillis) override {
+TreeNodeStatus FollowGroup::doAction(AI& entity, long deltaMillis) {
 	if (_groupId == -1)
 		return FAILED;
 	ICharacter& chr = entity.getCharacter();

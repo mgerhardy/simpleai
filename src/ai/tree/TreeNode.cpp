@@ -34,7 +34,7 @@ void TreeNode::resetState(AI& entity) {
 	setResetSinceLastExec(entity, true);
 }
 
-void TreeNode::getChildrenState(const AI& entity, std::vector<bool>& active) const {
+void TreeNode::getChildrenState(const AI& /*entity*/, std::vector<bool>& active) const {
 	for (TreeNodes::const_iterator i = _children.begin(); i != _children.end(); ++i)
 		active.push_back(false);
 }
