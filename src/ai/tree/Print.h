@@ -8,10 +8,10 @@ namespace ai {
 
 class Print: public ITask {
 public:
-	TASK_CLASS(Print);
+	TASK_CLASS(Print)
 	NODE_FACTORY
 
-	TreeNodeStatus doAction(AI& entity, long deltaMillis) override {
+	TreeNodeStatus doAction(AI& /*entity*/, long /*deltaMillis*/) override {
 		std::cout << _parameters << std::endl;
 		return FINISHED;
 	}

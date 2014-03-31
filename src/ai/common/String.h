@@ -35,7 +35,7 @@ inline int toInt(const std::string& str) {
 }
 
 inline float toFloat(const std::string& str) {
-	return ::atof(str.c_str());
+	return static_cast<float>(::atof(str.c_str()));
 }
 
 template <typename T>

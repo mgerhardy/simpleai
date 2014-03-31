@@ -18,7 +18,7 @@ namespace ai {
  */
 class Selector: public TreeNode {
 public:
-	NODE_CLASS(Selector);
+	NODE_CLASS(Selector)
 
 	virtual void getChildrenState(const AI& entity, std::vector<bool>& active) const override {
 		int n = 0;

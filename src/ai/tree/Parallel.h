@@ -12,7 +12,7 @@ namespace ai {
  */
 class Parallel: public Selector {
 public:
-	SELECTOR_CLASS(Parallel);
+	SELECTOR_CLASS(Parallel)
 
 	void getChildrenState(const AI& entity, std::vector<bool>& active) const override;
 	/**

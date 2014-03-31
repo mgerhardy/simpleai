@@ -3,7 +3,7 @@
 
 namespace ai {
 
-bool IsCloseToGroup::evaluate(AI& entity) override {
+bool IsCloseToGroup::evaluate(AI& entity) {
 	if (_groupId == -1)
 		return false;
 

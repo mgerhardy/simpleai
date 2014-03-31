@@ -69,6 +69,7 @@ int GroupMgr::getGroupSize(GroupId id) const {
 }
 
 bool GroupMgr::isInAnyGroup(const ICharacter& character) const {
+	(void)character;
 	// TODO: implement me
 	return false;
 }

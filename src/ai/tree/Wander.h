@@ -15,7 +15,7 @@ protected:
 public:
 	TASK_CLASS_CTOR(Wander) {
 		if (_parameters.empty()) {
-			_rotation = 8.0 * M_PI;
+			_rotation = 8.0f * static_cast<float>(M_PI);
 		} else {
 			_rotation = Str::toFloat(_parameters);
 		}

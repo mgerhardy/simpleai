@@ -11,8 +11,6 @@ public:
 	AIException(const std::string& reason) :
 			_reason(reason) {
 	}
-	virtual ~AIException() {
-	}
 
 	const std::string& getMessage() const;
 };

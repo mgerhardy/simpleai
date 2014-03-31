@@ -12,7 +12,7 @@ namespace ai {
  */
 class PrioritySelector: public Selector {
 public:
-	SELECTOR_CLASS(PrioritySelector);
+	SELECTOR_CLASS(PrioritySelector)
 
 	TreeNodeStatus execute(AI& entity, long deltaMillis) override;
 };

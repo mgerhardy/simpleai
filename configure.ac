@@ -25,8 +25,9 @@ AC_COMPILE_IFELSE(
 [CLANG=yes], [CLANG=no])
 AC_MSG_RESULT([$CLANG])
 if test "x$CLANG" = "xyes"; then
-	CXXLAGS="$CXXFLAGS -Weverything"
+	AM_CXXFLAGS="$AM_CXXFLAGS -Weverything -Wno-global-constructors -Wno-c++98-compat -Wno-padded -Wno-weak-vtables -Wno-exit-time-destructors"
 fi
+AM_CXXFLAGS="$AM_CXXFLAGS -std=c++11"
 
 AC_CHECK_PROGS([DOXYGEN], [doxygen])
 if test -z "$DOXYGEN";

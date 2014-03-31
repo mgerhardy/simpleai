@@ -14,7 +14,7 @@ namespace ai {
  */
 class Sequence: public Selector {
 public:
-	SELECTOR_CLASS(Sequence);
+	SELECTOR_CLASS(Sequence)
 
 	TreeNodeStatus execute(AI& entity, long deltaMillis) override;
 	void resetState(AI& entity) override;

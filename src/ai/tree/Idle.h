@@ -6,7 +6,7 @@ namespace ai {
 
 class Idle: public ai::ITimedNode {
 public:
-	TIMERNODE_CLASS(Idle);
+	TIMERNODE_CLASS(Idle)
 
 	TreeNodeStatus executeTimed(AI& entity, long deltaMillis) override;
 };

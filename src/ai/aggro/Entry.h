@@ -26,8 +26,6 @@ public:
 	Entry(const CharacterId& id, float aggro = 0.0f) :
 			_aggro(aggro), _minAggro(0.0f), _reduceRatioSecond(0.0f), _reduceValueSecond(0.0f), _reduceType(DISABLED), _id(id) {
 	}
-	virtual ~Entry() {
-	}
 
 	float getAggro() const;
 	void addAggro(float aggro);

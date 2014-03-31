@@ -28,9 +28,6 @@ public:
 			_x(x), _y(y), _z(z) {
 	}
 
-	virtual ~Vector3f() {
-	}
-
 	inline void setX(float x) {
 		_x = x;
 	}

@@ -4,7 +4,7 @@
 
 namespace ai {
 
-AggroMgr::AggroMgr(int expectedEntrySize) :
+AggroMgr::AggroMgr(std::size_t expectedEntrySize) :
 		_dirty(false) {
 	if (expectedEntrySize > 0)
 		_entries.reserve(expectedEntrySize);
@@ -14,7 +14,7 @@ AggroMgr::~AggroMgr() {
 }
 
 void AggroMgr::cleanupList() {
-	std::size_t remove = 0u;
+	Entries::iterator::difference_type remove = 0;
 	for (Entries::iterator i = _entries.begin(); i != _entries.end(); ++i) {
 		const float aggroValue = (*i)->getAggro();
 		if (aggroValue > 0.0f)
@@ -23,10 +23,10 @@ void AggroMgr::cleanupList() {
 		++remove;
 	}
 
-	if (remove == 0u)
+	if (remove == 0)
 		return;
 
-	const std::size_t size = _entries.size();
+	const int size = static_cast<int>(_entries.size());
 	if (size == remove)
 		_entries.clear();
 	else
@@ -57,7 +57,7 @@ public:
 	}
 };
 
-bool EntrySorter(const EntryPtr& a, const EntryPtr& b) {
+static bool EntrySorter(const EntryPtr& a, const EntryPtr& b) {
 	if (a->getAggro() > b->getAggro())
 		return false;
 	if (::fabs(a->getAggro() - b->getAggro()) < 0.0000001f)

@@ -23,7 +23,7 @@ protected:
 
 	inline void sort();
 public:
-	AggroMgr(int expectedEntrySize = 0);
+	AggroMgr(std::size_t expectedEntrySize = 0u);
 	virtual ~AggroMgr();
 
 	/**

@@ -9,14 +9,14 @@ namespace ai {
  */
 class False: public ICondition {
 public:
-	CONDITION_CLASS_SINGLETON(False);
+	CONDITION_CLASS_SINGLETON(False)
 
 	bool evaluate(AI& entity) override;
 
 	std::ostream& print(std::ostream& stream, int level) const override;
 };
 
-inline bool False::evaluate(AI& entity) {
+inline bool False::evaluate(AI& /*entity*/) {
 	return false;
 }
 
