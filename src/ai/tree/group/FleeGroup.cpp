@@ -1,17 +1,16 @@
-#include "FollowGroup.h"
+#include "FleeGroup.h"
 #include "common/Math.h"
 #include "common/Random.h"
 #include "movement/Steering.h"
-#include <iostream>
 
 namespace ai {
 
-TreeNodeStatus FollowGroup::doAction(AI& entity, long deltaMillis) override {
+TreeNodeStatus FleeGroup::doAction(AI& entity, long deltaMillis) override {
 	if (_groupId == -1)
 		return FAILED;
 	ICharacter& chr = entity.getCharacter();
 
-	const movement::GroupSeek w(entity, chr.getSpeed(), _groupId);
+	const movement::GroupFlee w(entity, chr.getSpeed(), _groupId);
 	const MoveVector& mv = w.execute();
 
 	const float deltaSeconds = static_cast<float>(deltaMillis) / 1000.0f;
@@ -20,6 +19,6 @@ TreeNodeStatus FollowGroup::doAction(AI& entity, long deltaMillis) override {
 	return FINISHED;
 }
 
-NODE_FACTORY_IMPL(FollowGroup)
+NODE_FACTORY_IMPL(FleeGroup)
 
 }

@@ -21,7 +21,8 @@ libsimpleai_la_SOURCES = \
 	server/ProtocolMessageFactory.cpp \
 	server/SelectHandler.cpp \
 	server/Server.cpp \
-	tree/FollowGroup.cpp \
+	tree/group/FleeGroup.cpp \
+	tree/group/FollowGroup.cpp \
 	tree/Idle.cpp \
 	tree/Invert.cpp \
 	tree/ITask.cpp \
@@ -85,7 +86,8 @@ nobase_library_include_HEADERS = \
 	server/SelectHandler.h \
 	server/Server.h \
 	SimpleAI.h \
-	tree/FollowGroup.h \
+	tree/group/FleeGroup.h \
+	tree/group/FollowGroup.h \
 	tree/Idle.h \
 	tree/Invert.h \
 	tree/ITask.h \

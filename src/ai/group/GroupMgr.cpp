@@ -68,6 +68,11 @@ int GroupMgr::getGroupSize(GroupId id) const {
 	return std::distance(members.first, members.second);
 }
 
+bool GroupMgr::isInAnyGroup(const ICharacter& character) const {
+	// TODO: implement me
+	return false;
+}
+
 bool GroupMgr::isInGroup(GroupId id, const ICharacter& character) const {
 	const std::pair<GroupMembersSetIter, GroupMembersSetIter>& members = getGroupMembers(id);
 	for (GroupMembersSetIter i = members.first; i != members.second; ++i) {

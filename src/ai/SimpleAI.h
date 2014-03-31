@@ -52,7 +52,8 @@
 #include "tree/ITask.h"
 #include "tree/ITimedNode.h"
 #include "tree/TreeNodeParser.h"
-#include "tree/FollowGroup.h"
+#include "tree/group/FleeGroup.h"
+#include "tree/group/FollowGroup.h"
 #include "tree/Wander.h"
 #include "tree/loaders/lua/LUATreeLoader.h"
 

@@ -12,7 +12,10 @@ private:
 
 	IsInGroup(const std::string& parameters) :
 		ICondition("IsInGroup", parameters) {
-		_groupId = Str::toInt(_parameters);
+		if (_parameters.empty())
+			_groupId = -1;
+		else
+			_groupId = Str::toInt(_parameters);
 	}
 public:
 	virtual ~IsInGroup() {

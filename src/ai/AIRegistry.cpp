@@ -8,7 +8,8 @@
 #include "tree/Parallel.h"
 #include "tree/PrioritySelector.h"
 #include "tree/Sequence.h"
-#include "tree/FollowGroup.h"
+#include "tree/group/FollowGroup.h"
+#include "tree/group/FleeGroup.h"
 #include "conditions/And.h"
 #include "conditions/False.h"
 #include "conditions/HasEnemies.h"
@@ -41,6 +42,7 @@ AIRegistry::TreeNodeFactory::TreeNodeFactory() {
 	R(Print);
 	R(Wander);
 	R(FollowGroup);
+	R(FleeGroup);
 	R(Idle);
 }
 

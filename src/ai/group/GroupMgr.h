@@ -46,6 +46,8 @@ public:
 
 	int getGroupSize(GroupId id) const;
 
+	bool isInAnyGroup(const ICharacter& character) const;
+
 	bool isInGroup(GroupId id, const ICharacter& character) const;
 
 	bool isGroupLeader(GroupId id, const ICharacter& character) const;
