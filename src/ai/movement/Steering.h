@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AI.h"
 #include "common/Math.h"
 #include "common/Random.h"
 #include "common/Compiler.h"

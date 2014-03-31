@@ -2,22 +2,22 @@
 
 #include "tree/ITask.h"
 #include "common/String.h"
-#include "common/Math.h"
+#include "group/GroupMgr.h"
 
 namespace ai {
 
 /**
- * Wander forward in the current direction
+ * Follow a particular group to its average position
  */
-class Wander: public ITask {
+class FollowGroup: public ITask {
 protected:
-	float _rotation;
+	GroupId _groupId;
 public:
-	TASK_CLASS_CTOR(Wander) {
+	TASK_CLASS_CTOR(FollowGroup) {
 		if (_parameters.empty()) {
-			_rotation = 8.0 * M_PI;
+			_groupId = -1;
 		} else {
-			_rotation = Str::toFloat(_parameters);
+			_groupId = Str::toInt(_parameters);
 		}
 	}
 	NODE_FACTORY
