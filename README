@@ -3,6 +3,8 @@ simpleai
 
 SimpleAI is a small C++ AI behaviour tree library released under MIT.
 
+I've written a small blog entry about it here: http://mgerhardy.blogspot.de/2014/03/simpleai-debugger-simpleai-last-few.html
+
 Features:
 -----------------
 * LUA script interface to create the trees - but every other data source
