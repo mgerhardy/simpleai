@@ -4,14 +4,14 @@
 #include <cmath>
 
 namespace ai {
-const double M_2PI = 6.28318530717958647692;
+const float M_2PI = 2.0f * static_cast<float>(M_PI);
 
 inline float toRadians (float degree) {
-	return degree * M_PI / 180.0f;
+	return degree * static_cast<float>(M_PI) / 180.0f;
 }
 
 inline float toDegrees (float radians) {
-	return radians * 180.0f / M_PI;
+	return radians * 180.0f / static_cast<float>(M_PI);
 }
 
 }

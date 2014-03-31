@@ -7,7 +7,7 @@
 namespace ai {
 
 enum ReductionType {
-	DISABLED, RATIO, VALUE,
+	DISABLED, RATIO, VALUE
 };
 
 class Entry {
@@ -68,7 +68,7 @@ inline bool Entry::reduceByTime(long millis) {
 	case VALUE:
 		reduceByValue((millis / 1000.0f) * _reduceValueSecond);
 		return true;
-	default:
+	case DISABLED:
 		return false;
 	}
 }

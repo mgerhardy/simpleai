@@ -97,7 +97,9 @@ protected:
 	 * @param[in,out] entity The entity that is used to evaluate a condition
 	 * @sa getNameWithConditions
 	 */
-	virtual void getConditionNameWithValue(std::stringstream& /* s */, AI& /* entity */) {
+	virtual void getConditionNameWithValue(std::stringstream& s, AI& entity) {
+		(void)entity;
+		(void)s;
 	}
 public:
 	ICondition(const std::string& name, const std::string& parameters) :

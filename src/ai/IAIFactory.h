@@ -14,8 +14,8 @@ class ICondition;
 typedef SharedPtr<ICondition> ConditionPtr;
 typedef std::vector<ConditionPtr> Conditions;
 
-class TreeNodeFactoryContext;
-class ConditionFactoryContext;
+struct TreeNodeFactoryContext;
+struct ConditionFactoryContext;
 
 class IAIFactory {
 public:

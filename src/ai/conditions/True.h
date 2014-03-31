@@ -9,7 +9,7 @@ namespace ai {
  */
 class True: public ICondition {
 public:
-	CONDITION_CLASS_SINGLETON(True);
+	CONDITION_CLASS_SINGLETON(True)
 
 	bool evaluate(AI& entity) override;
 

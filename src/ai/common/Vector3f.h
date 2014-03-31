@@ -99,8 +99,8 @@ public:
 		return radians;
 	}
 
-	static inline Vector3f fromRadians(double radians) {
-        return Vector3f(sin(radians), 0.0, cos(radians));
+	static inline Vector3f fromRadians(float radians) {
+		return Vector3f(sinf(radians), 0.0f, cosf(radians));
 	}
 
 	inline Vector3f mix(const Vector3f& end, const float mix) {
