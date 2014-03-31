@@ -65,7 +65,7 @@ public:
 	}
 
 	inline Vector3f operator *(const float scalar) const {
-		return Vector3f(_x * scalar, _y + scalar, _z + scalar);
+		return Vector3f(_x * scalar, _y * scalar, _z * scalar);
 	}
 
 	inline void operator -=(const Vector3f& pos) {
