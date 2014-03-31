@@ -50,7 +50,7 @@ public:
 	bool isBlocked (const ai::Vector3f& pos) const override {
 		if (pos.x() < -_size || pos.x() >= _size)
 			return true;
-		if (pos.y() < -_size || pos.y() >= _size)
+		if (pos.z() < -_size || pos.z() >= _size)
 			return true;
 		return false;
 	}
@@ -58,8 +58,8 @@ public:
 	// returns a random start position within the boundaries
 	ai::Vector3f getStartPosition() const {
 		const int x = (rand() % (2 * _size)) - _size;
-		const int y = (rand() % (2 * _size)) - _size;
-		const float z = 0.0f;
+		const float y = 0.0f;
+		const int z = (rand() % (2 * _size)) - _size;
 		return ai::Vector3f(x, y, z);
 	}
 };

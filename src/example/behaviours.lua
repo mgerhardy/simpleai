@@ -6,6 +6,6 @@ function init ()
 --	prioSelector:addNode("Idle{3000}", "idle3000"):setCondition("HasEnemies")
 --	prioSelector:addNode("Idle{1000}", "idle1000")
 --	rootNode:addNode("Idle{20}", "idle20")
---	rootNode:addNode("Wander", "wander")
+	rootNode:addNode("Wander", "wander") --:setCondition("IsInGroup")
 	rootNode:addNode("FollowGroup{1}", "followgroup")
 end

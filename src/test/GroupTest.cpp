@@ -15,6 +15,8 @@ public:
 		const int n = std::distance(members.first, members.second);
 		ASSERT_EQ(max, n);
 
+		ASSERT_EQ(max, mgr.getGroupSize(1));
+
 		for (std::vector<SharedPtr<TestEntity> >::iterator i = ais.begin(); i != ais.end(); ++i) {
 			mgr.remove(1, i->get());
 		}

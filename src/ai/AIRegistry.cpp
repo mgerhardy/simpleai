@@ -15,6 +15,8 @@
 #include "conditions/Not.h"
 #include "conditions/Or.h"
 #include "conditions/True.h"
+#include "conditions/IsInGroup.h"
+#include "conditions/IsGroupLeader.h"
 
 namespace ai {
 
@@ -27,6 +29,8 @@ AIRegistry::ConditionFactory::ConditionFactory() {
 	R(Not);
 	R(Or);
 	R(True);
+	R(IsGroupLeader);
+	R(IsInGroup);
 }
 
 AIRegistry::TreeNodeFactory::TreeNodeFactory() {

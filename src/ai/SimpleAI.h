@@ -77,6 +77,8 @@
 #include "conditions/ConditionParser.h"
 #include "conditions/False.h"
 #include "conditions/HasEnemies.h"
+#include "conditions/IsGroupLeader.h"
+#include "conditions/IsInGroup.h"
 #include "conditions/Not.h"
 #include "conditions/Or.h"
 #include "conditions/True.h"

@@ -46,12 +46,35 @@ Vector3f GroupMgr::getPosition(GroupId id) const {
 	return averagePosition;
 }
 
-std::pair<GroupMembersSetIter, GroupMembersSetIter> GroupMgr::getGroupMembers(GroupId id) {
-	GroupMembersIter i = _members.find(id);
+std::pair<GroupMembersSetIter, GroupMembersSetIter> GroupMgr::getGroupMembers(GroupId id) const {
+	GroupMembersConstIter i = _members.find(id);
 	if (i == _members.end()) {
 		return std::pair<GroupMembersSetIter, GroupMembersSetIter>(_empty.begin(), _empty.end());
 	}
 	return std::pair<GroupMembersSetIter, GroupMembersSetIter>(i->second.begin(), i->second.end());
+}
+
+bool GroupMgr::isGroupLeader(GroupId id, const ICharacter& character) const {
+	const std::pair<GroupMembersSetIter, GroupMembersSetIter>& members = getGroupMembers(id);
+	if (members.first == members.second)
+		return false;
+	if ((*members.first)->getId() == character.getId())
+		return true;
+	return false;
+}
+
+int GroupMgr::getGroupSize(GroupId id) const {
+	const std::pair<GroupMembersSetIter, GroupMembersSetIter>& members = getGroupMembers(id);
+	return std::distance(members.first, members.second);
+}
+
+bool GroupMgr::isInGroup(GroupId id, const ICharacter& character) const {
+	const std::pair<GroupMembersSetIter, GroupMembersSetIter>& members = getGroupMembers(id);
+	for (GroupMembersSetIter i = members.first; i != members.second; ++i) {
+		if ((*i)->getId() == character.getId())
+			return true;
+	}
+	return false;
 }
 
 }

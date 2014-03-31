@@ -16,7 +16,7 @@ public:
 			ai::example::Pathfinder& pathfinder, ai::GroupMgr& groupManager) :
 			ai::ICharacter(id), _ai(*this, root, pathfinder, groupManager) {
 		setAttribute("Name", "Example");
-		setSpeed(10.0f);
+		setSpeed(id == 0 ? 50.0f : 10.0f);
 	}
 
 	~GameEntity () {
