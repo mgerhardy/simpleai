@@ -24,9 +24,9 @@ AC_COMPILE_IFELSE(
 ]])],
 [CLANG=yes], [CLANG=no])
 AC_MSG_RESULT([$CLANG])
-if test "x$CLANG" = "xyes"; then
-	AM_CXXFLAGS="$AM_CXXFLAGS -Weverything -Wno-error"
-fi
+#if test "x$CLANG" = "xyes"; then
+#AM_CXXFLAGS="$AM_CXXFLAGS -Weverything -Wno-error"
+#fi
 AM_CXXFLAGS="$AM_CXXFLAGS -std=c++11"
 
 AC_CHECK_PROGS([DOXYGEN], [doxygen])
