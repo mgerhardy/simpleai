@@ -97,7 +97,8 @@ int main(int argc, char **argv) {
 		const uint32_t timeNow = getCurrentMillis();
 		const uint32_t dt = timeNow - timeLast;
 		timeLast = timeNow;
-		gameMap.update(dt);
+		if (dt > 0)
+			gameMap.update(dt);
 		sleep(0);
 	}
 
