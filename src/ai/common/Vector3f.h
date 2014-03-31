@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 #include <cmath>
+#include <iostream>
 
 namespace ai {
 
@@ -169,5 +170,9 @@ public:
 		return Vector3f(_y * pos._z - _z * pos._y, _z * pos._x - _x * pos._z, _x * pos._y - _y * pos._x);
 	}
 };
+
+inline std::ostream& operator<<(std::ostream& output, const Vector3f& p) {
+	return output << "(" << p.x() << "," << p.y() << "," << p.z() << ")";
+}
 
 }
