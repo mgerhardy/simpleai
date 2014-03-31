@@ -48,11 +48,23 @@ TEST_F(ParserTest, testParseConditionParmEverywhere) {
 TEST_F(ParserTest, testParseFail) {
 	ai::ConditionParser parser(_registry, "And(Not(HasEnemies{3},True)");
 	const ai::ConditionPtr& c = parser.getCondition();
-	ASSERT_FALSE(c);
+	ASSERT_FALSE(c) << parser.getError();
+}
+
+TEST_F(ParserTest, testParseConditionNodeMultipleParamsAsChild) {
+	ai::ConditionParser parser(_registry, "Not(IsCloseToGroup{1,10})");
+	const ai::ConditionPtr& c = parser.getCondition();
+	ASSERT_TRUE(c) << parser.getError();
 }
 
 TEST_F(ParserTest, testParseTreeNode) {
 	ai::TreeNodeParser parser(_registry, "Invert{1}");
+	const ai::TreeNodePtr& c = parser.getTreeNode();
+	ASSERT_TRUE(c) << parser.getError();
+}
+
+TEST_F(ParserTest, testParseTreeNodeMultipleParams) {
+	ai::TreeNodeParser parser(_registry, "Invert{1,1000}");
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_TRUE(c) << parser.getError();
 }

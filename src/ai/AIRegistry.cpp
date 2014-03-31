@@ -18,6 +18,7 @@
 #include "conditions/True.h"
 #include "conditions/IsInGroup.h"
 #include "conditions/IsGroupLeader.h"
+#include "conditions/IsCloseToGroup.h"
 
 namespace ai {
 
@@ -32,6 +33,7 @@ AIRegistry::ConditionFactory::ConditionFactory() {
 	R(True);
 	R(IsGroupLeader);
 	R(IsInGroup);
+	R(IsCloseToGroup);
 }
 
 AIRegistry::TreeNodeFactory::TreeNodeFactory() {

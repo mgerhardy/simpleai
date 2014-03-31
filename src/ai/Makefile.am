@@ -9,6 +9,7 @@ libsimpleai_la_SOURCES = \
 	conditions/False.cpp \
 	conditions/HasEnemies.cpp \
 	conditions/ICondition.cpp \
+	conditions/IsCloseToGroup.cpp \
 	conditions/IsGroupLeader.cpp \
 	conditions/IsInGroup.cpp \
 	conditions/Not.cpp \
@@ -61,6 +62,7 @@ nobase_library_include_HEADERS = \
 	conditions/False.h \
 	conditions/HasEnemies.h \
 	conditions/ICondition.h \
+	conditions/IsCloseToGroup.h \
 	conditions/IsGroupLeader.h \
 	conditions/IsInGroup.h \
 	conditions/Not.h \

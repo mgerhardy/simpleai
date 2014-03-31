@@ -13,6 +13,6 @@ TEST_F(MovementTest, testWander) {
 	EXPECT_NEAR(11.2f, mv.getRotation(), 0.01f);
 	EXPECT_NEAR(fmodf(11.2f, (float)ai::M_2PI), mv.getOrientation(1.0f), 0.01f);
 	const ai::Vector3f& v = mv.getVector();
-	const ai::Vector3f expected(8.41471f, 10.0f, 10.5403f);
+	const ai::Vector3f expected(8.41471f, 0.0f, 5.40302f);
 	ASSERT_EQ(expected, v);
 }
