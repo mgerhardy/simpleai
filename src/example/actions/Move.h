@@ -12,13 +12,13 @@ private:
 		// yes, not really random due to the modulo, but... oh well
 		const int r = rand() % 4;
 		if (r == 0) {
-			return ai::Vector3f(1, 0);
+			return ai::Vector3f(1, 0, 0);
 		} else if (r == 1) {
-			return ai::Vector3f(-1, 0);
+			return ai::Vector3f(-1, 0, 0);
 		} else if (r == 2) {
-			return ai::Vector3f(0, 1);
+			return ai::Vector3f(0, 0, 1);
 		}
-		return ai::Vector3f(0, -1);
+		return ai::Vector3f(0, 0, -1);
 	}
 
 public:

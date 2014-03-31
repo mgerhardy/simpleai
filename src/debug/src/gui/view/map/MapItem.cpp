@@ -20,7 +20,7 @@ MapItem::~MapItem () {
 
 QPointF MapItem::worldToMap(const Vector3f& position) const {
 	// TODO:
-	return QPointF((qreal)position.x(), (qreal)position.y());
+	return QPointF((qreal)position.x(), (qreal)position.z());
 }
 
 QRectF MapItem::boundingRect() const {

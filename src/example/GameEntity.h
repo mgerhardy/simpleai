@@ -38,11 +38,12 @@ public:
 		} else if (_position.x() > size) {
 			_position.setX(-size);
 		}
-		if (_position.y() < -size) {
-			_position.setY(size);
-		} else if (_position.y() >= size) {
-			_position.setY(-size);
+		if (_position.z() < -size) {
+			_position.setZ(size);
+		} else if (_position.z() > size) {
+			_position.setZ(-size);
 		}
+		_position.setY(0.0f);
 
 		ss << _position.x() << ":" << _position.y();
 		setAttribute("Id", Str::toString(getId()));
