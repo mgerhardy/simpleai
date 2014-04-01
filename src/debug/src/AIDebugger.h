@@ -18,6 +18,12 @@ namespace debug {
 class MapView;
 class AIDebuggerWindow;
 
+/**
+ * @brief This is the remote debugger for the ai entities.
+ *
+ * You can extend this class and override AIDebugger::createMapWidget to create our own @c MapView instance
+ * to render additional details to your characters or even the map the entities are spawned on.
+ */
 class AIDebugger: public QApplication {
 	Q_OBJECT
 friend class PauseHandler;
@@ -49,10 +55,19 @@ public:
 	AIDebugger(int argc, char** argv);
 	virtual ~AIDebugger();
 
+	/**
+	 * @return The list of ai controlled entities
+	 */
 	const Entities& getEntities() const;
 	void setEntities(const Entities& entities);
 	void setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node, const CharacterAttributes& attributes);
+	/**
+	 * @return The behaviour tree node that is assigned to the selected entity
+	 */
 	const AIStateNode& getNode() const;
+	/**
+	 * @return The key/value pairs of attributes that are assigned on the server side to the selected ai entity
+	 */
 	const CharacterAttributes& getAttributes() const;
 	const std::vector<AIStateAggroEntry>& getAggro() const;
 
