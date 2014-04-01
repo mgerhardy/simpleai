@@ -15,6 +15,7 @@ typedef GroupMembers::iterator GroupMembersIter;
 typedef GroupMembers::const_iterator GroupMembersConstIter;
 
 /**
+ * @brief Maintains the groups a @c ICharacter can be in.
  * @note Keep in mind that if you destroy an @c ICharacter somewhere in the game, to also
  * remove it from the groups
  */

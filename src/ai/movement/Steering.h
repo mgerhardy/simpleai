@@ -1,3 +1,7 @@
+/**
+ * @file
+ * @brief Defines some basic movement algorithms like Wandering, Seeking and Fleeing.
+ */
 #pragma once
 
 #include "AI.h"
@@ -8,6 +12,9 @@
 namespace ai {
 namespace movement {
 
+/**
+ * @brief Steering interface
+ */
 class ISteering {
 protected:
 	ICharacter& _character;
@@ -20,6 +27,9 @@ public:
 	virtual MoveVector execute () const = 0;
 };
 
+/**
+ * @brief Seeks a particular target
+ */
 class TargetSeek: public ISteering {
 protected:
 	Vector3f _target;
@@ -40,6 +50,9 @@ public:
 	}
 };
 
+/**
+ * @brief Flees from a particular target
+ */
 class TargetFlee: public ISteering {
 protected:
 	Vector3f _target;
@@ -60,6 +73,9 @@ public:
 	}
 };
 
+/**
+ * @brief Seeks a particular group
+ */
 class GroupSeek: public TargetSeek {
 public:
 	GroupSeek(AI& ai, float speed, GroupId groupId) :
@@ -67,6 +83,9 @@ public:
 	}
 };
 
+/**
+ * @brief Flees from a particular group
+ */
 class GroupFlee: public TargetFlee {
 public:
 	GroupFlee(AI& ai, float speed, GroupId groupId) :
@@ -74,6 +93,11 @@ public:
 	}
 };
 
+/**
+ * @brief Moves forward in the direction the character is currently facing into. Changes
+ * orientation (resp. rotation) in a range of [-rotation,rotation] where more weight is
+ * given to keep the current orientation.
+ */
 class Wander: public ISteering {
 protected:
 	float _rotation;
@@ -89,6 +113,9 @@ public:
 	}
 };
 
+/**
+ * @brief Steering and weight as input for @c WeightedSteering
+ */
 struct WeightedData {
 	const ISteering *steering;
 	const float weight;
@@ -101,6 +128,9 @@ struct WeightedData {
 typedef std::vector<WeightedData> WeightedSteerings;
 typedef WeightedSteerings::const_iterator WeightedSteeringsIter;
 
+/**
+ * This class allows you to weight several steering methods and get a blended @c MoveVector out of it.
+ */
 class WeightedSteering {
 private:
 	WeightedSteerings _steerings;
