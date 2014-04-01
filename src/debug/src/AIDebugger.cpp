@@ -43,7 +43,7 @@ public:
 };
 
 AIDebugger::AIDebugger(int argc, char** argv) :
-		QApplication(argc, argv), _running(true), _time(0L), _selectedId(-1), _socket(this), _pause(false)
+		QApplication(argc, argv), _running(true), _selectedId(-1), _socket(this), _pause(false)
 {
 #ifdef Q_WS_X11
 	QApplication::setGraphicsSystem(QLatin1String("raster"));
@@ -56,6 +56,7 @@ AIDebugger::AIDebugger(int argc, char** argv) :
 #endif
 
 	connect(&_socket, SIGNAL(readyRead()), SLOT(readTcpData()));
+	connect(&_socket, SIGNAL(disconnected()), SLOT(onDisconnect()));
 
 	ai::ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
 	r.registerHandler(ai::PROTO_STATE, ProtocolHandlerPtr(new StateHandler(*this)));
@@ -73,9 +74,12 @@ const CharacterId& AIDebugger::getSelected() const {
 	return _selectedId;
 }
 
-void AIDebugger::togglePause() {
-	_pause = !_pause;
-	writeMessage(AIPauseMessage(_pause));
+bool AIDebugger::togglePause() {
+	const bool newPauseMode = !_pause;
+	if (writeMessage(AIPauseMessage(newPauseMode))) {
+		_pause = newPauseMode;
+	}
+	return _pause;
 }
 
 void AIDebugger::select(const ai::AIStateWorld& ai) {
@@ -133,10 +137,16 @@ bool AIDebugger::connectToAIServer(const QString& hostname, short port) {
 	return false;
 }
 
+void AIDebugger::onDisconnect() {
+	_pause = false;
+	_selectedId = -1;
+}
+
 void AIDebugger::readTcpData() {
 	while(_socket.bytesAvailable() > 0) {
 		const QByteArray& data = _socket.readAll();
-		for (int i = 0; i < data.count(); ++i) {
+		const int n = data.count();
+		for (int i = 0; i < n; ++i) {
 			_stream.push_back(data[i]);
 		}
 		ai::ProtocolMessageFactory& mf = ai::ProtocolMessageFactory::get();

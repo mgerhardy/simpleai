@@ -91,7 +91,12 @@ QWidget *AIDebuggerWindow::createBottomWidget() {
 }
 
 void AIDebuggerWindow::pauseAI() {
-	_debugger.togglePause();
+	const bool pause = _debugger.togglePause();
+	if (pause) {
+		_pauseAction->setIcon(QIcon(":/images/pause.png"));
+	} else {
+		_pauseAction->setIcon(QIcon(":/images/continue.png"));
+	}
 }
 
 void AIDebuggerWindow::connectToAIServer() {

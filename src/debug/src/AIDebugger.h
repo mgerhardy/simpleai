@@ -29,7 +29,6 @@ protected:
 	ai::streamContainer _stream;
 
 	bool _running;
-	long _time;
 
 	ai::CharacterId _selectedId;
 	std::vector<AIStateAggroEntry> _aggro;
@@ -43,6 +42,7 @@ protected:
 
 private slots:
 	void readTcpData();
+	void onDisconnect();
 public:
 	AIDebugger(int argc, char** argv);
 	virtual ~AIDebugger();
@@ -60,7 +60,7 @@ public:
 	bool isSelected(const ai::AIStateWorld& ai) const;
 	const CharacterId& getSelected() const;
 	void select(const ai::AIStateWorld& ai);
-	void togglePause();
+	bool togglePause();
 	void unselect();
 
 	virtual MapView* createMapWidget();
