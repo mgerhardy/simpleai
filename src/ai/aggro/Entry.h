@@ -70,8 +70,9 @@ inline bool Entry::reduceByTime(long millis) {
 		reduceByValue((millis / 1000.0f) * _reduceValueSecond);
 		return true;
 	case DISABLED:
-		return false;
+		break;
 	}
+	return false;
 }
 
 inline void Entry::reduceByRatio(float ratio) {
