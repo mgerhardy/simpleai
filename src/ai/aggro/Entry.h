@@ -10,6 +10,9 @@ enum ReductionType {
 	DISABLED, RATIO, VALUE
 };
 
+/**
+ * @brief One entry for the @c AggroMgr
+ */
 class Entry {
 protected:
 	float _aggro;

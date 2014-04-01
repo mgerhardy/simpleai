@@ -7,6 +7,9 @@ namespace ai {
 
 class AI;
 
+/**
+ * @brief Manages the aggro values for one @c AI instance. There are several ways to degrade the aggro values.
+ */
 class AggroMgr {
 public:
 	typedef std::vector<EntryPtr> Entries;
