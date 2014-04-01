@@ -30,6 +30,7 @@ void Server::pause(const ClientId& /*clientId*/, bool pause) {
 		AI& ai = *i->second;
 		ai.setPause(pause);
 	}
+	_network.broadcast(AIPauseMessage(_pause));
 }
 
 bool Server::addAI(AI& ai) {

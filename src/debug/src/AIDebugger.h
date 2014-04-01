@@ -16,9 +16,11 @@ namespace ai {
 namespace debug {
 
 class MapView;
+class AIDebuggerWindow;
 
 class AIDebugger: public QApplication {
 	Q_OBJECT
+friend class PauseHandler;
 public:
 	typedef std::vector<AIStateWorld> Entities;
 	typedef Entities::const_iterator EntitiesIter;
@@ -34,7 +36,7 @@ protected:
 	std::vector<AIStateAggroEntry> _aggro;
 	AIStateNode _node;
 	CharacterAttributes _attributes;
-
+	AIDebuggerWindow *_window;
 	QTcpSocket _socket;
 	bool _pause;
 
@@ -60,12 +62,15 @@ public:
 	bool isSelected(const ai::AIStateWorld& ai) const;
 	const CharacterId& getSelected() const;
 	void select(const ai::AIStateWorld& ai);
-	bool togglePause();
+	void togglePause();
 	void unselect();
 
 	virtual MapView* createMapWidget();
 
 	void stop();
+
+signals:
+	void onPause(bool pause);
 };
 
 inline void AIDebugger::stop() {

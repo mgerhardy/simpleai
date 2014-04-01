@@ -15,6 +15,7 @@ namespace debug {
 
 PROTOCOL_HANDLER(AIStateMessage);
 PROTOCOL_HANDLER(AICharacterDetailsMessage);
+PROTOCOL_HANDLER(AIPauseMessage);
 
 class StateHandler: public AIStateMessageHandler {
 private:
@@ -42,6 +43,20 @@ public:
 	}
 };
 
+class PauseHandler: public AIPauseMessageHandler {
+private:
+	AIDebugger& _aiDebugger;
+public:
+	PauseHandler (AIDebugger& aiDebugger) :
+			_aiDebugger(aiDebugger) {
+	}
+
+	void executeAIPauseMessage(const ai::AIPauseMessage& msg) override {
+		_aiDebugger._pause = msg.isPause();
+		emit _aiDebugger.onPause(msg.isPause());
+	}
+};
+
 AIDebugger::AIDebugger(int argc, char** argv) :
 		QApplication(argc, argv), _running(true), _selectedId(-1), _socket(this), _pause(false)
 {
@@ -61,6 +76,9 @@ AIDebugger::AIDebugger(int argc, char** argv) :
 	ai::ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
 	r.registerHandler(ai::PROTO_STATE, ProtocolHandlerPtr(new StateHandler(*this)));
 	r.registerHandler(ai::PROTO_CHARACTER_DETAILS, ProtocolHandlerPtr(new CharacterHandler(*this)));
+	r.registerHandler(ai::PROTO_PAUSE, ProtocolHandlerPtr(new PauseHandler(*this)));
+
+	_window = new AIDebuggerWindow(*this);
 }
 
 AIDebugger::~AIDebugger() {
@@ -74,12 +92,9 @@ const CharacterId& AIDebugger::getSelected() const {
 	return _selectedId;
 }
 
-bool AIDebugger::togglePause() {
+void AIDebugger::togglePause() {
 	const bool newPauseMode = !_pause;
-	if (writeMessage(AIPauseMessage(newPauseMode))) {
-		_pause = newPauseMode;
-	}
-	return _pause;
+	writeMessage(AIPauseMessage(newPauseMode));
 }
 
 void AIDebugger::select(const ai::AIStateWorld& ai) {
@@ -124,8 +139,7 @@ int AIDebugger::run() {
 	processEvents();
 
 	splash.close();
-	AIDebuggerWindow w(*this);
-	w.show();
+	_window->show();
 	return exec();
 }
 
@@ -140,6 +154,8 @@ bool AIDebugger::connectToAIServer(const QString& hostname, short port) {
 void AIDebugger::onDisconnect() {
 	_pause = false;
 	_selectedId = -1;
+	_aggro.clear();
+	_node = AIStateNode();
 }
 
 void AIDebugger::readTcpData() {

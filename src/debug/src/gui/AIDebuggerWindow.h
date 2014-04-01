@@ -28,7 +28,8 @@ private slots:
 	void about();
 	void tick();
 	void connectToAIServer();
-	void pauseAI();
+	void requestPause();
+	void setPause(bool pause);
 
 private:
 	void createView();

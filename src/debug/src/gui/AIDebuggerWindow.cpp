@@ -37,6 +37,8 @@ AIDebuggerWindow::AIDebuggerWindow(AIDebugger& debugger) :
 	resize(1024, 768);
 	setWindowTitle(tr("AI Debugger"));
 
+	connect(&_debugger, SIGNAL(onPause(bool)), SLOT(setPause(bool)));
+
 	// TODO: react on network input from the AIDebugger and remove this timer
 	QTimer *timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
@@ -90,13 +92,16 @@ QWidget *AIDebuggerWindow::createBottomWidget() {
 	return splitter;
 }
 
-void AIDebuggerWindow::pauseAI() {
-	const bool pause = _debugger.togglePause();
+void AIDebuggerWindow::setPause(bool pause) {
 	if (pause) {
 		_pauseAction->setIcon(QIcon(":/images/pause.png"));
 	} else {
 		_pauseAction->setIcon(QIcon(":/images/continue.png"));
 	}
+}
+
+void AIDebuggerWindow::requestPause() {
+	_debugger.togglePause();
 }
 
 void AIDebuggerWindow::connectToAIServer() {
@@ -148,8 +153,8 @@ void AIDebuggerWindow::createActions() {
 
 	_pauseAction = new QAction(tr("Pause"), this);
 	_pauseAction->setStatusTip(tr("Freeze the ai controlled entities"));
-	_pauseAction->setIcon(QIcon(":/images/pause.png"));
-	connect(_pauseAction, SIGNAL(triggered()), this, SLOT(pauseAI()));
+	_pauseAction->setIcon(QIcon(":/images/continue.png"));
+	connect(_pauseAction, SIGNAL(triggered()), this, SLOT(requestPause()));
 
 	_exitAction = new QAction(tr("E&xit"), this);
 	_exitAction->setShortcuts(QKeySequence::Quit);
