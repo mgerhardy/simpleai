@@ -4,6 +4,11 @@
 
 namespace ai {
 
+/**
+ * @brief Message for the remote debugging interface
+ *
+ * If this is received from the server, it will pause the execution of the behaviour tree
+ */
 class AIPauseMessage: public IProtocolMessage {
 private:
 	bool _pause;

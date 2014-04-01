@@ -17,7 +17,7 @@ class AIStateNode;
  * sure to remove it when you remove that particular @c AI instance from your world.
  *
  * The server will broadcast the world state - that is: It will send out an @c AIStateMessage to all connected
- * clients. If someone selected a particular @c AI instances by sending @c AISelectMessage to the server, it
+ * clients. If someone selected a particular @c AI instance by sending @c AISelectMessage to the server, it
  * will also broadcast an @c AICharacterDetailsMessage to all connected clients.
  */
 class Server {

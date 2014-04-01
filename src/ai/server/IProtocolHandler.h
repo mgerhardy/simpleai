@@ -6,6 +6,11 @@
 
 namespace ai {
 
+/**
+ * @brief Interface for the execution of assigned IProtocolMessage
+ *
+ * @note Register handler implementations at the @c ProtocolHandlerRegistry
+ */
 class IProtocolHandler {
 public:
 	virtual ~IProtocolHandler() {

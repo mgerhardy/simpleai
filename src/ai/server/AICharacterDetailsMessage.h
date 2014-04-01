@@ -6,6 +6,11 @@
 
 namespace ai {
 
+/**
+ * @brief Message for the remote debugging interface
+ *
+ * If someone selected a character this message gets broadcasted.
+ */
 class AICharacterDetailsMessage: public IProtocolMessage {
 private:
 	CharacterId _chrId;

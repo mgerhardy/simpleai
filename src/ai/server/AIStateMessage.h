@@ -6,6 +6,11 @@
 
 namespace ai {
 
+/**
+ * @brief Message for the remote debugging interface
+ *
+ * State of the world. You receive basic information about every watched AI controller entity
+ */
 class AIStateMessage: public IProtocolMessage {
 private:
 	typedef std::vector<AIStateWorld> States;

@@ -5,6 +5,11 @@
 
 namespace ai {
 
+/**
+ * @brief Message for the remote debugging interface
+ *
+ * Select a particular character to get detailed information about its state
+ */
 class AISelectMessage: public IProtocolMessage {
 private:
 	ai::CharacterId _chrId;
