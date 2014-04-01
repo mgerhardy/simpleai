@@ -58,7 +58,7 @@ public:
 };
 
 AIDebugger::AIDebugger(int argc, char** argv) :
-		QApplication(argc, argv), _running(true), _selectedId(-1), _socket(this), _pause(false)
+		QApplication(argc, argv), _selectedId(-1), _socket(this), _pause(false)
 {
 #ifdef Q_WS_X11
 	QApplication::setGraphicsSystem(QLatin1String("raster"));

@@ -36,8 +36,6 @@ protected:
 
 	ai::streamContainer _stream;
 
-	bool _running;
-
 	ai::CharacterId _selectedId;
 	std::vector<AIStateAggroEntry> _aggro;
 	AIStateNode _node;
@@ -85,15 +83,9 @@ public:
 
 	virtual MapView* createMapWidget();
 
-	void stop();
-
 signals:
 	void onPause(bool pause);
 };
-
-inline void AIDebugger::stop() {
-	_running = false;
-}
 
 inline void AIDebugger::setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node, const CharacterAttributes& attributes) {
 	_selectedId = id;
