@@ -107,12 +107,16 @@ bool Network::start() {
 }
 
 Network::ClientSocketsIter Network::closeClient(ClientSocketsIter& i) {
-	const SOCKET clientSocket = i->socket;
+	closeClient(*i);
+	return _clientSockets.erase(i);
+}
+
+void Network::closeClient(Client& client) {
+	const SOCKET clientSocket = client.socket;
 	FD_CLR(clientSocket, &_readFDSet);
 	FD_CLR(clientSocket, &_writeFDSet);
 	closesocket(clientSocket);
-	i->socket = INVALID_SOCKET;
-	return _clientSockets.erase(i);
+	client.socket = INVALID_SOCKET;
 }
 
 void Network::update(long /*deltaTime*/) {
@@ -144,7 +148,7 @@ void Network::update(long /*deltaTime*/) {
 		Client& client = *i;
 		const SOCKET clientSocket = client.socket;
 		if (clientSocket == INVALID_SOCKET) {
-			++i;
+			i = closeClient(i);
 			continue;
 		}
 
@@ -214,6 +218,21 @@ void Network::broadcast(const IProtocolMessage& msg) {
 		std::copy(out.begin(), out.end(), std::back_inserter(client.out));
 		FD_SET(client.socket, &_writeFDSet);
 	}
+}
+
+bool Network::sendToClient(Client& client, const IProtocolMessage& msg) {
+	streamContainer out;
+	msg.serialize(out);
+
+	if (client.socket == INVALID_SOCKET) {
+		closeClient(client);
+		return false;
+	}
+
+	IProtocolMessage::addInt(client.out, (int)out.size());
+	std::copy(out.begin(), out.end(), std::back_inserter(client.out));
+	FD_SET(client.socket, &_writeFDSet);
+	return true;
 }
 
 }

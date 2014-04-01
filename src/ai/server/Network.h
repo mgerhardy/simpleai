@@ -45,6 +45,7 @@ protected:
 	typedef ClientSockets::iterator ClientSocketsIter;
 	ClientSockets _clientSockets;
 	ClientSocketsIter closeClient (ClientSocketsIter& i);
+	void closeClient(Client& client);
 public:
 	Network(uint16_t port = 10001, const std::string& hostname = "0.0.0.0");
 	virtual ~Network();
@@ -55,6 +56,7 @@ public:
 	int getConnectedClients() const;
 
 	void broadcast(const IProtocolMessage& msg);
+	bool sendToClient(Client& client, const IProtocolMessage& msg);
 };
 
 inline int Network::getConnectedClients() const {
