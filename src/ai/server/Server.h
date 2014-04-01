@@ -20,7 +20,7 @@ class AIStateNode;
  * clients. If someone selected a particular @c AI instance by sending @c AISelectMessage to the server, it
  * will also broadcast an @c AICharacterDetailsMessage to all connected clients.
  */
-class Server {
+class Server: public INetworkListener {
 protected:
 	typedef std::map<CharacterId, AI*> AIMap;
 	typedef AIMap::const_iterator AIMapConstIter;
@@ -36,6 +36,7 @@ protected:
 	void addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) const;
 	void broadcastState();
 	void broadcastCharacterDetails();
+	void onConnect(Client* client) override;
 public:
 	Server(uint16_t port = 10001, const std::string& hostname = "0.0.0.0");
 	virtual ~Server();

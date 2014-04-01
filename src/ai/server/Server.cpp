@@ -20,6 +20,10 @@ void Server::select(const ClientId& /*clientId*/, const CharacterId& id) {
 	_selectedCharacterId = id;
 }
 
+void Server::onConnect(Client* client) {
+	_network.sendToClient(client, AIPauseMessage(_pause));
+}
+
 bool Server::start() {
 	return _network.start();
 }

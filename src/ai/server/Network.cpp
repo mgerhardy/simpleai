@@ -25,6 +25,7 @@
 #include <string.h>
 #include <deque>
 #include <algorithm>
+#include <cassert>
 
 namespace ai {
 
@@ -117,6 +118,9 @@ void Network::closeClient(Client& client) {
 	FD_CLR(clientSocket, &_writeFDSet);
 	closesocket(clientSocket);
 	client.socket = INVALID_SOCKET;
+	for (Listeners::iterator i = _listeners.begin(); i != _listeners.end(); ++i) {
+		(*i)->onDisconnect(&client);
+	}
 }
 
 void Network::update(long /*deltaTime*/) {
@@ -139,7 +143,11 @@ void Network::update(long /*deltaTime*/) {
 		if (clientSocket != INVALID_SOCKET) {
 			_maxFD = std::max(clientSocket + 1, _maxFD);
 			FD_SET(clientSocket, &_readFDSet);
-			_clientSockets.push_back(Client(clientSocket));
+			Client c(clientSocket);
+			_clientSockets.push_back(c);
+			for (Listeners::iterator i = _listeners.begin(); i != _listeners.end(); ++i) {
+				(*i)->onConnect(&c);
+			}
 		}
 	}
 
@@ -220,18 +228,19 @@ void Network::broadcast(const IProtocolMessage& msg) {
 	}
 }
 
-bool Network::sendToClient(Client& client, const IProtocolMessage& msg) {
+bool Network::sendToClient(Client* client, const IProtocolMessage& msg) {
+	assert(client != nullptr);
 	streamContainer out;
 	msg.serialize(out);
 
-	if (client.socket == INVALID_SOCKET) {
-		closeClient(client);
+	if (client->socket == INVALID_SOCKET) {
+		closeClient(*client);
 		return false;
 	}
 
-	IProtocolMessage::addInt(client.out, (int)out.size());
-	std::copy(out.begin(), out.end(), std::back_inserter(client.out));
-	FD_SET(client.socket, &_writeFDSet);
+	IProtocolMessage::addInt(client->out, (int)out.size());
+	std::copy(out.begin(), out.end(), std::back_inserter(client->out));
+	FD_SET(client->socket, &_writeFDSet);
 	return true;
 }
 
