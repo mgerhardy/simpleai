@@ -80,7 +80,7 @@ typedef SharedPtr<ICondition> ConditionPtr;
 typedef std::vector<ConditionPtr> Conditions;
 
 /**
- * A condition can be placed on a @c TreeNode to decide which node is going to get executed. In general they are stateless.
+ * @brief A condition can be placed on a @c TreeNode to decide which node is going to get executed. In general they are stateless.
  * If they are not, it should explicitly get noted.
  */
 class ICondition : public IPrintable {

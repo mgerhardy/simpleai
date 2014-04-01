@@ -5,9 +5,7 @@
 namespace ai {
 
 /**
- * @brief This condition checks whether there is a aggro entry available.
- *
- * @sa AggroMgr
+ * @brief This condition checks whether there is an aggro @c Entry in the @¢ AggroMgr available.
  */
 class HasEnemies: public ICondition {
 public:
