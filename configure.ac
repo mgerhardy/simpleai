@@ -81,7 +81,7 @@ simpleai $VERSION: Automatic configuration OK.
 
   Configuration summary:
     Platform: .......... $host
-    Compiler: .......... $CC
+    Compiler: .......... $CXX
     C++ Flags: ......... $CXXFLAGS
     Libraries: ......... $LIBS
     Linking: ........... $LDFLAGS
