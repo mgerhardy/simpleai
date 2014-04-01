@@ -109,14 +109,20 @@ public:
 	}
 
 	inline const AIStateAggro& getAggro() const {
+		if (_aggroPtr)
+			return *_aggroPtr;
 		return _aggro;
 	}
 
 	inline const AIStateNode& getNode() const {
+		if (_rootPtr)
+			return *_rootPtr;
 		return _root;
 	}
 
 	inline const CharacterAttributes& getAttributes () const {
+		if (_attributesPtr)
+			return *_attributesPtr;
 		return _attributes;
 	}
 };
