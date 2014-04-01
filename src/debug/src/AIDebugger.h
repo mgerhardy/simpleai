@@ -71,6 +71,9 @@ public:
 	const CharacterAttributes& getAttributes() const;
 	const std::vector<AIStateAggroEntry>& getAggro() const;
 
+	/**
+	 * @brief Start the debugger - call this from your main method
+	 */
 	int run();
 	bool connectToAIServer(const QString& hostname, short port);
 
