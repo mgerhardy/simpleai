@@ -129,7 +129,7 @@ typedef std::vector<WeightedData> WeightedSteerings;
 typedef WeightedSteerings::const_iterator WeightedSteeringsIter;
 
 /**
- * This class allows you to weight several steering methods and get a blended @c MoveVector out of it.
+ * @brief This class allows you to weight several steering methods and get a blended @c MoveVector out of it.
  */
 class WeightedSteering {
 private:
