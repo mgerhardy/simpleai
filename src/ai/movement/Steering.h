@@ -94,9 +94,10 @@ public:
 };
 
 /**
- * @brief Moves forward in the direction the character is currently facing into. Changes
- * orientation (resp. rotation) in a range of [-rotation,rotation] where more weight is
- * given to keep the current orientation.
+ * @brief Moves forward in the direction the character is currently facing into.
+ *
+ * Changes orientation (resp. rotation) in a range of [-rotation,rotation] where more
+ * weight is given to keep the current orientation.
  */
 class Wander: public ISteering {
 protected:
