@@ -35,8 +35,8 @@ class INetworkListener {
 public:
 	virtual ~INetworkListener() {}
 
-	virtual void onConnect(Client* client) {}
-	virtual void onDisconnect(Client* client) {}
+	virtual void onConnect(Client*) {}
+	virtual void onDisconnect(Client*) {}
 };
 
 class Network {
