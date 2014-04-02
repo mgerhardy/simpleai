@@ -87,7 +87,7 @@ public:
 	}
 
 	inline double angle() const {
-		const double angle = ::atan2(_y, _x);
+		const double angle = ::atan2(_z, _x);
 		return angle;
 	}
 
