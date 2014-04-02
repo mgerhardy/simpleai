@@ -5,6 +5,8 @@
  *
  * SimpleAI is a small C++ AI behaviour tree library
  *
+ * - [GitHub page](http://github.com/mgerhardy/simpleai/)
+ *
  * @section legal Legal
  *
  * Copyright (C) 2014 Martin Gerhardy <martin.gerhardy@gmail.com>

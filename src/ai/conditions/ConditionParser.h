@@ -7,6 +7,13 @@ namespace ai {
 
 class IAIFactory;
 
+/**
+ * @brief Transforms the string representation of a condition with all its sub conditions and
+ * parameters into a @c ICondition instance.
+ *
+ * @c #ConditionName{Parameters}(#SubCondition{SubConditionParameters},...)
+ * Parameters and subconditions are both optional.
+ */
 class ConditionParser : public IParser {
 private:
 	const IAIFactory& _aiFactory;
