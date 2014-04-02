@@ -6,6 +6,11 @@
 
 namespace ai {
 
+/**
+ * @brief Evaluates to true if you are the first member in a particular group
+ *
+ * The parameter that is expected is the group id
+ */
 class IsGroupLeader: public ICondition {
 private:
 	GroupId _groupId;
