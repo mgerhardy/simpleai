@@ -40,6 +40,9 @@ public:
 	void setPosition(const Vector3f& position);
 	const Vector3f& getPosition() const;
 	void setOrientation(float orientation);
+	/**
+	 * @return the radians around the y (up) axis
+	 */
 	float getOrientation() const;
 	void setSpeed(float speed);
 	float getSpeed() const;

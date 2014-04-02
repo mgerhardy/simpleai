@@ -18,10 +18,10 @@ namespace movement {
 class ISteering {
 protected:
 	ICharacter& _character;
-	float _speed;
+	float _acceleration;
 public:
-	ISteering(ICharacter& character, float speed) :
-			_character(character), _speed(speed) {
+	ISteering(ICharacter& character, float acceleration) :
+			_character(character), _acceleration(acceleration) {
 	}
 	virtual ~ISteering() {}
 	virtual MoveVector execute () const = 0;
@@ -43,7 +43,7 @@ public:
 		v -= _character.getPosition();
 		if (v.squareLength() > 0) {
 			v.normalize();
-			v *= _speed;
+			v *= _acceleration;
 		}
 		const MoveVector d(v, 0.0f);
 		return d;
@@ -66,7 +66,7 @@ public:
 		v -= _target;
 		if (v.squareLength() > 0) {
 			v.normalize();
-			v *= _speed;
+			v *= _acceleration;
 		}
 		const MoveVector d(v, 0.0f);
 		return d;
@@ -107,7 +107,7 @@ public:
 	}
 
 	MoveVector execute () const override {
-		const Vector3f& v = Vector3f::fromRadians(_character.getOrientation()) * _speed;
+		const Vector3f& v = Vector3f::fromRadians(_character.getOrientation()) * _acceleration;
 		const MoveVector d(v, ai::randomBinomial() * _rotation);
 		return d;
 	}
