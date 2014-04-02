@@ -39,6 +39,7 @@ public:
 	 * @brief will increase the aggro
 	 * @param[in,out] entity The entity to increase the aggro against
 	 * @param[in] amount The amount to increase the aggro for
+	 * @return The aggro @c Entry that was added or updated. Useful for changing the reduce type or amount.
 	 */
 	Entry* addAggro(AI& entity, float amount);
 
@@ -51,6 +52,8 @@ public:
 
 	/**
 	 * @brief Get the entry with the highest aggro value.
+	 *
+	 * @note Might execute a sort on the list if its dirty
 	 */
 	EntryPtr getHighestEntry();
 };

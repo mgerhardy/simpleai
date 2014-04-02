@@ -1,4 +1,3 @@
-HasEnemies default parameter -1 means: Has any enemy - every other means: Has exactly n enemies (if n > 0)
 Fix Treenode rendering (maxChild)
 Center on selected entity
 configure switch to enable the example (should be disabled by default)

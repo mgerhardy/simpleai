@@ -89,9 +89,6 @@ Entry* AggroMgr::addAggro(AI& entity, float amount) {
 	return i->get();
 }
 
-/**
- * @brief Get the entry with the highest aggro value.
- */
 EntryPtr AggroMgr::getHighestEntry() {
 	if (_entries.empty())
 		return EntryPtr();
