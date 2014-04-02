@@ -91,6 +91,11 @@ public:
 		return angle;
 	}
 
+	inline double orientation() const {
+		const double orientation = ::atan2(_x, _z);
+		return orientation;
+	}
+
 	inline double radians() const {
 		const double radians = M_PI / 180.0 * angle();
 		return radians;
