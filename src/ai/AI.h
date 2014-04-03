@@ -19,6 +19,10 @@ namespace ai {
  * Each ai entity has a @c AggroMgr assigned that is updated with each tick. The character also
  * holds a reference to the @c IPathfinder that should be used to move the attached @c ICharacter
  * through the world.
+ *
+ * A behaviour can be replaced at runtime with @c AI::setBehaviour
+ *
+ * You can set single @c AI instances to no longer update their state by calling @c AI::setPause
  */
 class AI {
 	friend class TreeNode;
