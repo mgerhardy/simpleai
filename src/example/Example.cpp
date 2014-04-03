@@ -81,12 +81,6 @@ int main(int argc, char **argv) {
 
 	for (int i = 0; i < amount; ++i) {
 		ai::example::GameEntity* e = gameMap.addEntity(new ai::example::GameEntity(i, root, pathFinder, groupManager));
-		if (i == 0)
-			groupManager.add(1, e);
-		else if (i < 10)
-			groupManager.add(2, e);
-		else
-			groupManager.add(3, e);
 		e->setPosition(gameMap.getStartPosition());
 	}
 

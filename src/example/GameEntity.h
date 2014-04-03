@@ -10,16 +10,29 @@ class GameEntity : public ai::ICharacter {
 private:
 	ai::AI _ai;
 	std::list<ai::MoveVector> _route;
+	GroupId _groupId;
 
 public:
 	GameEntity(const ai::CharacterId& id, const ai::TreeNodePtr& root,
 			ai::example::Pathfinder& pathfinder, ai::GroupMgr& groupManager) :
 			ai::ICharacter(id), _ai(*this, root, pathfinder, groupManager) {
 		setAttribute("Name", "Example");
-		setSpeed(id == 0 ? 50.0f : 30.0f);
+		setSpeed(50.0f);
+		if (id == 0)
+			_groupId = 1;
+		else if (id < 10)
+			_groupId = 2;
+		else
+			_groupId = 3;
+
+		setAttribute("Group", Str::toString(_groupId));
+		setAttribute("Id", Str::toString(getId()));
+
+		_ai.getGroupMgr().add(_groupId, this);
 	}
 
 	~GameEntity () {
+		_ai.getGroupMgr().remove(_groupId, this);
 	}
 
 	operator ai::AI& () {
@@ -46,7 +59,6 @@ public:
 		_position.setY(0.0f);
 
 		ss << _position.x() << ":" << _position.y();
-		setAttribute("Id", Str::toString(getId()));
 		setAttribute("Position", ss.str());
 		setAttribute("Speed", Str::toString(getSpeed()));
 		setAttribute("Orientation", Str::toString(toDegrees(getOrientation())));

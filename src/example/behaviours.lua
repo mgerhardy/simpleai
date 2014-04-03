@@ -1,7 +1,7 @@
 function init ()
 	local example = AI.createTree("example")
 	local rootNodeExample = example:createRoot("PrioritySelector", "root")
-		local group1Node = rootNodeExample:addNode("Parallel", "attacker")
+		local group1Node = rootNodeExample:addNode("PrioritySelector", "group1")
 			group1Node:setCondition("IsInGroup{1}")
 			group1Node:addNode("FleeGroup{3}", "fleefromgroup3"):setCondition("IsCloseToGroup{3,50}")
 			group1Node:addNode("Wander", "wander")
