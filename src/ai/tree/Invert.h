@@ -1,8 +1,8 @@
 #pragma once
 
-#include <tree/TreeNode.h>
-#include <common/AIException.h>
-#include <AIRegistry.h>
+#include "tree/TreeNode.h"
+#include "common/AIException.h"
+#include "AIRegistry.h"
 
 namespace ai {
 

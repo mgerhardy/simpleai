@@ -2,11 +2,11 @@
 
 #include <vector>
 #include <string>
-#include <common/Pointers.h>
-#include <common/Compiler.h>
-#include <common/IPrintable.h>
-#include <conditions/ICondition.h>
-#include <conditions/True.h>
+#include "common/Pointers.h"
+#include "common/Compiler.h"
+#include "common/IPrintable.h"
+#include "conditions/ICondition.h"
+#include "conditions/True.h"
 
 namespace ai {
 
@@ -61,6 +61,15 @@ enum TreeNodeStatus {
 	\
 	NODE_FACTORY
 
+/**
+ * @brief The base class for all behaviour tree actions.
+ *
+ * @c TreeNode::execute is triggered with each @c AI::update.
+ * Also the attached @c ICondition is evaluated here. States are stored on the
+ * connected @c AI instance. Don't store states on tree nodes, because they can
+ * be reused for multiple @c AI instances. Always use the @c AI or @c ICharacter
+ * to store your state!
+ */
 class TreeNode : public IPrintable {
 protected:
 	static int _nextId;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <tree/TreeNode.h>
+#include "tree/TreeNode.h"
 
 namespace ai {
 
@@ -14,7 +14,9 @@ namespace ai {
 	NODE_FACTORY
 
 /**
- * http://aigamedev.com/open/article/selector/
+ * @brief Base class for all type of @c TreeNode selectors.
+ *
+ * [AiGameDev](http://aigamedev.com/open/article/selector/)
  */
 class Selector: public TreeNode {
 public:

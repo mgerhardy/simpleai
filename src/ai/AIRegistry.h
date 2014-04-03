@@ -1,7 +1,7 @@
 #pragma once
 
-#include <IAIFactory.h>
-#include <common/IFactoryRegistry.h>
+#include "IAIFactory.h"
+#include "common/IFactoryRegistry.h"
 
 namespace ai {
 

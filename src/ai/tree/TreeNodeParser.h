@@ -1,12 +1,20 @@
 #pragma once
 
-#include <tree/TreeNode.h>
-#include <common/IParser.h>
+#include "tree/TreeNode.h"
+#include "common/IParser.h"
 
 namespace ai {
 
 class IAIFactory;
 
+/**
+ * @brief Transforms the string representation of a @c TreeNode with all its
+ * parameters into a @c TreeNode instance.
+ *
+ * @c #NodeName{Parameters}
+ * Parameters are by default optional - but that really depends on the
+ * @c TreeNode implementation.
+ */
 class TreeNodeParser: public IParser {
 private:
 	const IAIFactory& _aiFactory;

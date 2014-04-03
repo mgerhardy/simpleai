@@ -1,5 +1,5 @@
-#include <tree/Sequence.h>
-#include <AI.h>
+#include "tree/Sequence.h"
+#include "AI.h"
 
 namespace ai {
 

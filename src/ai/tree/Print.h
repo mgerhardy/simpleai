@@ -1,7 +1,7 @@
 #pragma once
 
-#include <AI.h>
-#include <tree/ITask.h>
+#include "AI.h"
+#include "tree/ITask.h"
 #include <iostream>
 
 namespace ai {

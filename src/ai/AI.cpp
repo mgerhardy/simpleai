@@ -1,6 +1,6 @@
-#include <AI.h>
-#include <common/AIException.h>
-#include <tree/TreeNode.h>
+#include "AI.h"
+#include "common/AIException.h"
+#include "tree/TreeNode.h"
 
 namespace ai {
 

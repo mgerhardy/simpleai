@@ -1,6 +1,6 @@
 #pragma once
 
-#include <tree/Selector.h>
+#include "tree/Selector.h"
 
 namespace ai {
 
@@ -10,7 +10,7 @@ namespace ai {
  * is continued at the last running children or from the start again if no such
  * children exists.
  *
- * http://aigamedev.com/open/article/sequence/
+ * [AiGameDev](http://aigamedev.com/open/article/sequence/)
  */
 class Sequence: public Selector {
 public:
