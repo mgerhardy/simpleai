@@ -81,7 +81,7 @@ public:
 	/**
 	 * @brief Set a new behaviour and returns the old one
 	 */
-	TreeNodePtr setBehaviour(TreeNodePtr newBehaviour);
+	TreeNodePtr setBehaviour(const TreeNodePtr& newBehaviour);
 	/**
 	 * @return The real world entity reference
 	 */
@@ -95,7 +95,7 @@ inline TreeNodePtr AI::getBehaviour() const {
 	return _behaviour;
 }
 
-inline TreeNodePtr AI::setBehaviour(TreeNodePtr newBehaviour) {
+inline TreeNodePtr AI::setBehaviour(const TreeNodePtr& newBehaviour) {
 	TreeNodePtr current = _behaviour;
 	_behaviour = newBehaviour;
 	return current;
