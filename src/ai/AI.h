@@ -52,7 +52,7 @@ public:
 	 * @param pathfinder Some pathfinder implementation
 	 * @param groupManager Some group manager implementation
 	 */
-	AI(ICharacter& character, TreeNodePtr behaviour, IPathfinder& pathfinder, GroupMgr& groupManager);
+	AI(ICharacter& character, const TreeNodePtr& behaviour, IPathfinder& pathfinder, GroupMgr& groupManager);
 	virtual ~AI();
 
 	/**
