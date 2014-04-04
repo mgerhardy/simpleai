@@ -32,6 +32,8 @@ public:
 	NodeTreeItem (const AIStateNode& node, NodeTreeItem* parent, int height, int horizontalSpacing, int verticalSpacing);
 	virtual ~NodeTreeItem ();
 
+	inline NodeTreeItem* getParent() { return _parent; }
+	inline const AIStateNode& getNode() { return _node; }
 	inline int width() const { return _width; }
 	inline int height() const { return _height; }
 	inline int getSize() const { return _node.getChildren().size(); }
