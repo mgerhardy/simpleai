@@ -140,6 +140,15 @@ int AIDebugger::run() {
 
 	splash.close();
 	_window->show();
+
+	const QList<QString>& args = QCoreApplication::arguments();
+	if (args.size() == 3) {
+		const QString hostname = args.at(1);
+		const short port = args.at(2).toShort();
+		qDebug() << "connect to " << hostname << " on port " << port;
+		_window->connectToAIServer(hostname, port);
+	}
+
 	return exec();
 }
 

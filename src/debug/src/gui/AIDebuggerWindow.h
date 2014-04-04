@@ -24,6 +24,8 @@ public:
 	AIDebuggerWindow(AIDebugger& debugger);
 	virtual ~AIDebuggerWindow();
 
+	void connectToAIServer(const QString& hostname, short port);
+
 private slots:
 	void about();
 	void tick();

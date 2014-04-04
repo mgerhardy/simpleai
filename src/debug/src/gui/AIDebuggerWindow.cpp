@@ -104,16 +104,24 @@ void AIDebuggerWindow::requestPause() {
 	_debugger.togglePause();
 }
 
-void AIDebuggerWindow::connectToAIServer() {
-	ConnectDialog d;
-	const int state = d.run();
-	const short port = d.getPort();
-	const QString& hostname = d.getHostname();
-	if (state == QDialog::Accepted && _debugger.connectToAIServer(hostname, port)) {
+void AIDebuggerWindow::connectToAIServer(const QString& hostname, short port) {
+	if (_debugger.connectToAIServer(hostname, port)) {
 		_statusBarLabel->setText(tr("connected to %1:%2").arg(hostname).arg(port));
 	} else {
 		_statusBarLabel->setText(tr("not connected"));
 	}
+}
+
+void AIDebuggerWindow::connectToAIServer() {
+	ConnectDialog d;
+	const int state = d.run();
+	if (state != QDialog::Accepted) {
+		_statusBarLabel->setText(tr("not connected"));
+		return;
+	}
+	const short port = d.getPort();
+	const QString& hostname = d.getHostname();
+	connectToAIServer(hostname, port);
 }
 
 void AIDebuggerWindow::about() {
