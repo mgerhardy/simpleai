@@ -8,7 +8,7 @@ namespace ai {
 namespace debug {
 
 MapItem::MapItem (const AIStateWorld& state, AIDebugger& aiDebugger) :
-		QGraphicsItem(), _state(state), _aiDebugger(aiDebugger) {
+		QGraphicsItem(), _state(state), _aiDebugger(aiDebugger), _detailLod(0.4f) {
 	setFlags(ItemIsSelectable);
 	setPos(worldToMap(state.getPosition()));
 	_orientation = state.getOrientation();
@@ -19,12 +19,11 @@ MapItem::~MapItem () {
 }
 
 QPointF MapItem::worldToMap(const Vector3f& position) const {
-	// TODO:
 	return QPointF((qreal)position.x(), (qreal)position.z());
 }
 
 QRectF MapItem::boundingRect() const {
-	return QRectF(0, 0, 10, 10);
+	return QRectF(-30, -30, 30, 30);
 }
 
 void MapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -39,18 +38,19 @@ void MapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 	painter->drawEllipse(pos(), 10.0, 10.0);
 	painter->setBrush(b);
 
+	renderDetails(painter, lod);
+}
+
+void MapItem::renderDetails(QPainter* painter, qreal lod) {
+	if (lod < _detailLod)
+		return;
+
 	QPoint endPos;
-	const float radians = _state.getOrientation();
-	QPointF direction(sin(radians), cos(radians));
+	QPointF direction(sin(_orientation), cos(_orientation));
 	const float scaleV = 30.0f;
 	endPos.setX(pos().x() + scaleV * direction.x());
 	endPos.setY(pos().y() + scaleV * direction.y());
 	painter->drawLine(pos(), endPos);
-
-	renderDetails(painter, lod);
-}
-
-void MapItem::renderDetails(QPainter* /*painter*/, qreal /*lod*/) {
 }
 
 void MapItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {

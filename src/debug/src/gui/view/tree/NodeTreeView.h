@@ -19,9 +19,7 @@ private:
 	AIDebugger& _debugger;
 	QGraphicsScene _scene;
 
-	void buildTreeItems(int maxChild, int child, const AIStateNode& node, NodeTreeItem* parent);
-	int getMaxChild(const AIStateNode& node, int maxChild) const;
-	void place(NodeTreeItem* node, NodeTreeItem* parent, int maxChild, int child);
+	NodeTreeItem* buildTreeItems(const AIStateNode& node, NodeTreeItem* parent);
 public:
 	NodeTreeView(AIDebugger& debugger);
 	virtual ~NodeTreeView();

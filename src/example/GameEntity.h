@@ -57,6 +57,7 @@ public:
 			_position.setZ(-size);
 		}
 		_position.setY(0.0f);
+		// TODO: switch direction when the respawn on another side of the map
 
 		ss << _position.x() << ":" << _position.y();
 		setAttribute("Position", ss.str());

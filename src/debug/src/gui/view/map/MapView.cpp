@@ -7,6 +7,9 @@ namespace debug {
 
 MapView::MapView(AIDebugger& debugger) :
 		QGraphicsView(), _debugger(debugger) {
+	_scene.setItemIndexMethod(QGraphicsScene::NoIndex);
+	// FIXME: use the smart update
+	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 	setScene(&_scene);
 }
 
@@ -20,19 +23,10 @@ MapItem* MapView::createMapItem(const AIStateWorld& state) {
 void MapView::updateMapView() {
 	_scene.clear();
 	const AIDebugger::Entities& e = _debugger.getEntities();
-	const CharacterId& id = _debugger.getSelected();
-	MapItem* centerOnItem = nullptr;
 	for (AIDebugger::EntitiesIter i = e.begin(); i != e.end(); ++i) {
 		MapItem* item = createMapItem(*i);
 		_scene.addItem(item);
-		if (i->getId() == id) {
-			centerOnItem = item;
-		}
 	}
-	QWidget* viewPort = viewport();
-	viewPort->update();
-	if (centerOnItem != nullptr)
-		ensureVisible(centerOnItem);
 }
 
 }

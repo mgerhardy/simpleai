@@ -12,9 +12,12 @@ class AIDebugger;
 class MapScene;
 class MapItem;
 
+/**
+ * @brief The view that renders your map with all the ai controlled entities.
+ */
 class MapView: public QGraphicsView {
 	Q_OBJECT
-private:
+protected:
 	MapScene _scene;
 	AIDebugger& _debugger;
 public:

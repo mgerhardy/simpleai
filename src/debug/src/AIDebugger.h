@@ -81,6 +81,10 @@ public:
 	void togglePause();
 	void unselect();
 
+	/**
+	 * @brief override this if you would like to create your own @c MapView implementation that renders
+	 * for example more details of your map.
+	 */
 	virtual MapView* createMapWidget();
 
 signals:
