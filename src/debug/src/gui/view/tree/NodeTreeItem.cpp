@@ -99,15 +99,14 @@ void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *opt
 		painter->setBrush(backgroundColor);
 	painter->drawRect(0.0f, 0.0f, _width, _height);
 
-	const std::vector<AIStateNode>& c = _node.getChildren();
-	if (!c.empty()) {
+	if (!_children.empty()) {
 		// location of the vertical line
 		const float seperatorX = _width + _horizontalSpacing / 2.0f;
-		// draw the (right) vertical line for connecting the children
+		// draw the (right) vertical line for connecting the parent with the separator vertical line
 		painter->drawLine(_width, _height / 2.0f, seperatorX, _height / 2.0f);
 		foreach (NodeTreeItem* child, _children) {
 			const QPointF& childPos = getChildPos(child);
-			// draw the (left) vertical line for connecting to the parent
+			// draw the (left) vertical line for connecting the separator with the children's left side
 			painter->drawLine(seperatorX, childPos.y(), childPos.x(), childPos.y());
 		}
 		// draw the vertical connection line

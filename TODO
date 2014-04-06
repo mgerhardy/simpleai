@@ -1,4 +1,3 @@
-Fix Treenode rendering (maxChild)
 Center on selected entity
 configure switch to enable the example (should be disabled by default)
 configure switch to enable the tests (should be disabled by default)
