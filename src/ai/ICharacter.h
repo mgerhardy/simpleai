@@ -7,6 +7,19 @@
 namespace ai {
 
 /**
+ * @brief Defines some standard names for @c ICharacter attributes. None of these must be used. But if you
+ * use them, the remote debugger can make use of known values to render more information in to the view.
+ */
+namespace attributes {
+/**
+ * @brief Attribute for the name of an entity
+ */
+const char* const NAME = "Name";
+const char* const GROUP = "Group";
+const char* const ID = "Id";
+}
+
+/**
  * @brief Defines the type of the id to identify an ai controlled entity.
  *
  * @note @c -1 is reserved. You should use ids >= 0

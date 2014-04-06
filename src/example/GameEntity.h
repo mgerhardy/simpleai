@@ -16,7 +16,7 @@ public:
 	GameEntity(const ai::CharacterId& id, const ai::TreeNodePtr& root,
 			ai::example::Pathfinder& pathfinder, ai::GroupMgr& groupManager) :
 			ai::ICharacter(id), _ai(*this, root, pathfinder, groupManager) {
-		setAttribute("Name", "Example");
+		setAttribute(ai::attributes::NAME, "Example");
 		setSpeed(50.0f);
 		if (id == 0)
 			_groupId = 1;
@@ -25,8 +25,8 @@ public:
 		else
 			_groupId = 3;
 
-		setAttribute("Group", Str::toString(_groupId));
-		setAttribute("Id", Str::toString(getId()));
+		setAttribute(ai::attributes::GROUP, Str::toString(_groupId));
+		setAttribute(ai::attributes::ID, Str::toString(getId()));
 
 		_ai.getGroupMgr().add(_groupId, this);
 	}
