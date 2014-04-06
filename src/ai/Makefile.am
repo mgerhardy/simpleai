@@ -16,7 +16,6 @@ libsimpleai_la_SOURCES = \
 	conditions/Or.cpp \
 	conditions/True.cpp \
 	group/GroupMgr.cpp \
-	server/IProtocolMessage.cpp \
 	server/Network.cpp \
 	server/PauseHandler.cpp \
 	server/ProtocolMessageFactory.cpp \

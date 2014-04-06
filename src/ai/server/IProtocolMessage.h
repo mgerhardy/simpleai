@@ -34,10 +34,10 @@ namespace ai {
 
 typedef uint8_t ProtocolId;
 
-extern const ProtocolId PROTO_STATE;
-extern const ProtocolId PROTO_CHARACTER_DETAILS;
-extern const ProtocolId PROTO_SELECT;
-extern const ProtocolId PROTO_PAUSE;
+const ProtocolId PROTO_STATE = 1;
+const ProtocolId PROTO_CHARACTER_DETAILS = 2;
+const ProtocolId PROTO_SELECT = 3;
+const ProtocolId PROTO_PAUSE = 4;
 
 class IProtocolMessage {
 private:
