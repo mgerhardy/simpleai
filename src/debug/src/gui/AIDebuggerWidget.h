@@ -2,13 +2,11 @@
 
 #include <QtGui>
 #include <QLabel>
-#include <QMainWindow>
 #include <QToolBar>
+#include <QStatusBar>
+#include <QMenu>
 
 namespace ai {
-
-class AIDebugger;
-
 namespace debug {
 
 class StateTable;
@@ -17,14 +15,26 @@ class AggroTable;
 class NodeTreeView;
 class ZoomFrame;
 class MapView;
+class AIDebugger;
 
-class AIDebuggerWindow: public QMainWindow {
+class AIDebuggerWidget: public QWidget {
 Q_OBJECT
 public:
-	AIDebuggerWindow(AIDebugger& debugger);
-	virtual ~AIDebuggerWindow();
+	AIDebuggerWidget(AIDebugger& debugger);
+	virtual ~AIDebuggerWidget();
 
 	void connectToAIServer(const QString& hostname, short port);
+
+	void contributeToStatusBar(QStatusBar* statusBar);
+	void contributeToToolBar(QToolBar* toolBar);
+	void contributeToFileMenu(QMenu *fileMenu);
+	void contributeToHelpMenu(QMenu *helpMenu);
+
+	void removeFromStatusBar(QStatusBar* statusBar);
+	void removeFromToolBar(QToolBar* toolBar);
+	void removeFromFileMenu(QMenu *fileMenu);
+	void removeFromHelpMenu(QMenu *helpMenu);
+
 
 private slots:
 	void about();
@@ -36,7 +46,6 @@ private slots:
 private:
 	void createView();
 	void createActions();
-	void createMenus();
 
 	QWidget *createTopWidget();
 	QWidget *createBottomWidget();
@@ -49,15 +58,11 @@ private:
 	MapView *_mapWidget;
 	EntityList *_entityList;
 	AggroTable *_aggroTable;
-	QMenu *_fileMenu;
-	QMenu *_helpMenu;
 	QAction *_connectAction;
 	QAction *_pauseAction;
-	QAction *_exitAction;
 	QAction *_aboutAction;
 	QLabel *_statusBarLabel;
 	QLabel *_selectedLabel;
-	QToolBar *_toolbar;
 
 	AIDebugger& _debugger;
 };

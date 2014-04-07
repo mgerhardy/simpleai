@@ -8,7 +8,6 @@
 #include <server/AIStubTypes.h>
 #include <server/IProtocolHandler.h>
 #include <QTcpSocket>
-#include <QApplication>
 #include <QSettings>
 #include <QFile>
 
@@ -16,7 +15,7 @@ namespace ai {
 namespace debug {
 
 class MapView;
-class AIDebuggerWindow;
+class AIDebuggerWidget;
 
 /**
  * @brief This is the remote debugger for the ai entities.
@@ -24,7 +23,7 @@ class AIDebuggerWindow;
  * You can extend this class and override AIDebugger::createMapWidget to create our own @c MapView instance
  * to render additional details to your characters or even the map the entities are spawned on.
  */
-class AIDebugger: public QApplication {
+class AIDebugger: public QObject {
 	Q_OBJECT
 friend class PauseHandler;
 public:
@@ -40,7 +39,7 @@ protected:
 	std::vector<AIStateAggroEntry> _aggro;
 	AIStateNode _node;
 	CharacterAttributes _attributes;
-	AIDebuggerWindow *_window;
+	AIDebuggerWidget *_window;
 	QTcpSocket _socket;
 	bool _pause;
 
@@ -50,7 +49,7 @@ private slots:
 	void readTcpData();
 	void onDisconnect();
 public:
-	AIDebugger(int argc, char** argv);
+	AIDebugger();
 	virtual ~AIDebugger();
 
 	/**
@@ -80,6 +79,8 @@ public:
 	void select(const ai::AIStateWorld& ai);
 	void togglePause();
 	void unselect();
+
+	inline AIDebuggerWidget* getWindow() { return _window; }
 
 	/**
 	 * @brief override this if you would like to create your own @c MapView implementation that renders

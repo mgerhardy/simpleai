@@ -1,11 +1,10 @@
 #include "AIDebugger.h"
-#include "AIDebuggerWindow.h"
+#include "AIDebuggerWidget.h"
 #include "MapView.h"
 #include <server/IProtocolMessage.h>
 #include <server/AISelectMessage.h>
 #include <server/ProtocolMessageFactory.h>
 #include <server/ProtocolHandlerRegistry.h>
-#include <QSplashScreen>
 #include <QtCore>
 #include <vector>
 #include "Version.h"
@@ -57,19 +56,9 @@ public:
 	}
 };
 
-AIDebugger::AIDebugger(int argc, char** argv) :
-		QApplication(argc, argv), _selectedId(-1), _socket(this), _pause(false)
+AIDebugger::AIDebugger() :
+		QObject(), _selectedId(-1), _socket(this), _pause(false)
 {
-#ifdef Q_WS_X11
-	QApplication::setGraphicsSystem(QLatin1String("raster"));
-#endif
-	setOrganizationDomain("simpleai");
-	setApplicationName("simpleai");
-	setApplicationVersion(VERSION);
-#ifdef Q_WS_MAC
-	a.setAttribute(Qt::AA_DontShowIconsInMenus);
-#endif
-
 	connect(&_socket, SIGNAL(readyRead()), SLOT(readTcpData()));
 	connect(&_socket, SIGNAL(disconnected()), SLOT(onDisconnect()));
 
@@ -78,7 +67,7 @@ AIDebugger::AIDebugger(int argc, char** argv) :
 	r.registerHandler(ai::PROTO_CHARACTER_DETAILS, ProtocolHandlerPtr(new CharacterHandler(*this)));
 	r.registerHandler(ai::PROTO_PAUSE, ProtocolHandlerPtr(new PauseHandler(*this)));
 
-	_window = new AIDebuggerWindow(*this);
+	_window = new AIDebuggerWidget(*this);
 }
 
 AIDebugger::~AIDebugger() {
@@ -130,26 +119,6 @@ void AIDebugger::unselect() {
 	_aggro.clear();
 	_node = AIStateNode();
 	qDebug() << "unselect entity";
-}
-
-int AIDebugger::run() {
-	QSplashScreen splash(QPixmap(":/images/splash.jpg"));
-	splash.show();
-	splash.showMessage(tr("Loading..."), Qt::AlignLeft | Qt::AlignTop, Qt::black);
-	processEvents();
-
-	splash.close();
-	_window->show();
-
-	const QList<QString>& args = QCoreApplication::arguments();
-	if (args.size() == 3) {
-		const QString hostname = args.at(1);
-		const short port = args.at(2).toShort();
-		qDebug() << "connect to " << hostname << " on port " << port;
-		_window->connectToAIServer(hostname, port);
-	}
-
-	return exec();
 }
 
 bool AIDebugger::connectToAIServer(const QString& hostname, short port) {

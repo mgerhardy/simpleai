@@ -1,8 +1,8 @@
+#include "AIApplication.h"
 #include "AIDebugger.h"
-
-#include <cstdlib>
+#include "AIDebuggerWidget.h"
 
 int main(int argc, char **argv) {
-	ai::debug::AIDebugger debugger(argc, argv);
-	return debugger.run();
+	ai::debug::AIApplication app(argc, argv);
+	return app.exec();
 }

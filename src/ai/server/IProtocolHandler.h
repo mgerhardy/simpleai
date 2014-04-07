@@ -6,6 +6,8 @@
 
 namespace ai {
 
+typedef uint8_t ClientId;
+
 /**
  * @brief Interface for the execution of assigned IProtocolMessage
  *

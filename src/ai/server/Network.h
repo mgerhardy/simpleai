@@ -1,10 +1,10 @@
 #pragma once
 
-#include <common/Compiler.h>
+#include "common/Compiler.h"
+#include "IProtocolHandler.h"
 #include <string>
 #include <stdint.h>
 #include <list>
-#include <deque>
 #ifdef WIN32
 #include <winsock2.h>
 #include <ws2tcpip.h>
@@ -17,8 +17,6 @@
 namespace ai {
 
 class IProtocolMessage;
-typedef uint8_t ClientId;
-typedef std::deque<uint8_t> streamContainer;
 
 struct Client {
 	Client(SOCKET _socket) :

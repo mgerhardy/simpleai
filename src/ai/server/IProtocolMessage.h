@@ -1,10 +1,10 @@
 #pragma once
-#include "Network.h"
 
 #include <stdint.h>
 #include <stddef.h>
 #include <limits.h>
 #include <string>
+#include <deque>
 #define AI_LIL_ENDIAN  1234
 #define AI_BIG_ENDIAN  4321
 #ifdef __linux__
@@ -33,6 +33,7 @@
 namespace ai {
 
 typedef uint8_t ProtocolId;
+typedef std::deque<uint8_t> streamContainer;
 
 const ProtocolId PROTO_STATE = 1;
 const ProtocolId PROTO_CHARACTER_DETAILS = 2;

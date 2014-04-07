@@ -4,7 +4,7 @@
 #include <QSplitter>
 
 #include "AIDebugger.h"
-#include "AIDebuggerWindow.h"
+#include "AIDebuggerWidget.h"
 #include "ConnectDialog.h"
 #include "StateTable.h"
 #include "EntityList.h"
@@ -16,26 +16,13 @@
 namespace ai {
 namespace debug {
 
-AIDebuggerWindow::AIDebuggerWindow(AIDebugger& debugger) :
-		QMainWindow(), _debugger(debugger) {
+AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger) :
+		QWidget(), _debugger(debugger) {
 	createView();
 	createActions();
-	createMenus();
 
 	_statusBarLabel = new QLabel(tr("not connected"));
 	_selectedLabel = new QLabel(tr("nothing selected"));
-	statusBar()->addWidget(_statusBarLabel);
-	statusBar()->addWidget(_selectedLabel);
-
-	_toolbar = addToolBar("");
-	_toolbar->setMovable(false);
-	_toolbar->setFloatable(false);
-	_toolbar->addAction(_connectAction);
-	_toolbar->addAction(_pauseAction);
-	addToolBar(Qt::TopToolBarArea, _toolbar);
-
-	resize(1024, 768);
-	setWindowTitle(tr("AI Debugger"));
 
 	connect(&_debugger, SIGNAL(onPause(bool)), SLOT(setPause(bool)));
 
@@ -45,7 +32,7 @@ AIDebuggerWindow::AIDebuggerWindow(AIDebugger& debugger) :
 	timer->start(20);
 }
 
-AIDebuggerWindow::~AIDebuggerWindow() {
+AIDebuggerWidget::~AIDebuggerWidget() {
 	delete _nodeTreeFrame;
 	delete _mapFrame;
 	delete _entityList;
@@ -55,18 +42,51 @@ AIDebuggerWindow::~AIDebuggerWindow() {
 	delete _aggroTable;
 }
 
-void AIDebuggerWindow::createView() {
-	QWidget *widget = new QWidget;
-	setCentralWidget(widget);
+void AIDebuggerWidget::contributeToStatusBar(QStatusBar* statusBar) {
+	statusBar->addWidget(_statusBarLabel);
+	statusBar->addWidget(_selectedLabel);
+}
 
+void AIDebuggerWidget::contributeToToolBar(QToolBar* toolBar) {
+	toolBar->addAction(_connectAction);
+	toolBar->addAction(_pauseAction);
+}
+
+void AIDebuggerWidget::contributeToFileMenu(QMenu *fileMenu) {
+	fileMenu->addAction(_connectAction);
+}
+
+void AIDebuggerWidget::contributeToHelpMenu(QMenu *helpMenu) {
+	helpMenu->addAction(_aboutAction);
+}
+
+void AIDebuggerWidget::removeFromStatusBar(QStatusBar* statusBar) {
+	statusBar->removeWidget(_statusBarLabel);
+	statusBar->removeWidget(_selectedLabel);
+}
+
+void AIDebuggerWidget::removeFromToolBar(QToolBar* toolBar) {
+	toolBar->removeAction(_connectAction);
+	toolBar->removeAction(_pauseAction);
+}
+
+void AIDebuggerWidget::removeFromFileMenu(QMenu *fileMenu) {
+	fileMenu->removeAction(_connectAction);
+}
+
+void AIDebuggerWidget::removeFromHelpMenu(QMenu *helpMenu) {
+	helpMenu->removeAction(_aboutAction);
+}
+
+void AIDebuggerWidget::createView() {
 	QVBoxLayout *layout = new QVBoxLayout;
 	layout->setMargin(2);
 	layout->addWidget(createTopWidget());
 	layout->addWidget(createBottomWidget());
-	widget->setLayout(layout);
+	setLayout(layout);
 }
 
-QWidget *AIDebuggerWindow::createTopWidget() {
+QWidget *AIDebuggerWidget::createTopWidget() {
 	QSplitter *splitter = new QSplitter;
 
 	_mapWidget = _debugger.createMapWidget();
@@ -80,7 +100,7 @@ QWidget *AIDebuggerWindow::createTopWidget() {
 	return splitter;
 }
 
-QWidget *AIDebuggerWindow::createBottomWidget() {
+QWidget *AIDebuggerWidget::createBottomWidget() {
 	QSplitter *splitter = new QSplitter;
 	_nodeTree = new NodeTreeView(_debugger);
 	_nodeTreeFrame = new ZoomFrame(_nodeTree);
@@ -92,7 +112,7 @@ QWidget *AIDebuggerWindow::createBottomWidget() {
 	return splitter;
 }
 
-void AIDebuggerWindow::setPause(bool pause) {
+void AIDebuggerWidget::setPause(bool pause) {
 	if (pause) {
 		_pauseAction->setIcon(QIcon(":/images/pause.png"));
 	} else {
@@ -100,11 +120,11 @@ void AIDebuggerWindow::setPause(bool pause) {
 	}
 }
 
-void AIDebuggerWindow::requestPause() {
+void AIDebuggerWidget::requestPause() {
 	_debugger.togglePause();
 }
 
-void AIDebuggerWindow::connectToAIServer(const QString& hostname, short port) {
+void AIDebuggerWidget::connectToAIServer(const QString& hostname, short port) {
 	if (_debugger.connectToAIServer(hostname, port)) {
 		_statusBarLabel->setText(tr("connected to %1:%2").arg(hostname).arg(port));
 	} else {
@@ -112,7 +132,7 @@ void AIDebuggerWindow::connectToAIServer(const QString& hostname, short port) {
 	}
 }
 
-void AIDebuggerWindow::connectToAIServer() {
+void AIDebuggerWidget::connectToAIServer() {
 	ConnectDialog d;
 	const int state = d.run();
 	if (state != QDialog::Accepted) {
@@ -124,11 +144,11 @@ void AIDebuggerWindow::connectToAIServer() {
 	connectToAIServer(hostname, port);
 }
 
-void AIDebuggerWindow::about() {
+void AIDebuggerWidget::about() {
 	QMessageBox::about(this, tr("About"), tr("AI debug visualization for libsimpleai.<br />Grab the latest version at <a href=\"https://github.com/mgerhardy/simpleai\">github</a>"));
 }
 
-void AIDebuggerWindow::tick() {
+void AIDebuggerWidget::tick() {
 	const ai::CharacterId& id = _debugger.getSelected();
 	if (id == -1) {
 		_selectedLabel->setText(tr("nothing selected"));
@@ -142,17 +162,7 @@ void AIDebuggerWindow::tick() {
 	_aggroTable->updateAggroTable();
 }
 
-void AIDebuggerWindow::createMenus() {
-	_fileMenu = menuBar()->addMenu(tr("&File"));
-	_fileMenu->addAction(_connectAction);
-	_fileMenu->addSeparator();
-	_fileMenu->addAction(_exitAction);
-
-	_helpMenu = menuBar()->addMenu(tr("&Help"));
-	_helpMenu->addAction(_aboutAction);
-}
-
-void AIDebuggerWindow::createActions() {
+void AIDebuggerWidget::createActions() {
 	_connectAction = new QAction(tr("C&onnect"), this);
 	_connectAction->setShortcuts(QKeySequence::Open);
 	_connectAction->setStatusTip(tr("Connect to AI server"));
@@ -164,19 +174,13 @@ void AIDebuggerWindow::createActions() {
 	_pauseAction->setIcon(QIcon(":/images/continue.png"));
 	connect(_pauseAction, SIGNAL(triggered()), this, SLOT(requestPause()));
 
-	_exitAction = new QAction(tr("E&xit"), this);
-	_exitAction->setShortcuts(QKeySequence::Quit);
-	_exitAction->setStatusTip(tr("Exit the application"));
-	_exitAction->setIcon(QIcon(":/images/exit.png"));
-	connect(_exitAction, SIGNAL(triggered()), this, SLOT(close()));
-
 	_aboutAction = new QAction(tr("&About"), this);
 	_aboutAction->setStatusTip(tr("Show the application's About box"));
 	_aboutAction->setIcon(QIcon(":/images/about.png"));
 	connect(_aboutAction, SIGNAL(triggered()), this, SLOT(about()));
 }
 
-QLabel *AIDebuggerWindow::createLabel(const QString &text) const {
+QLabel *AIDebuggerWidget::createLabel(const QString &text) const {
 	QLabel *label = new QLabel(text);
 	label->setAlignment(Qt::AlignCenter);
 	label->setMargin(2);

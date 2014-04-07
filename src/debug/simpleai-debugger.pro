@@ -13,8 +13,10 @@ CONFIG += qt debug_and_release
 QMAKE_CXXFLAGS += -std=c++0x
 
 # Input
-HEADERS += src/AIDebugger.h \
-           src/gui/AIDebuggerWindow.h \
+HEADERS += \
+           src/AIApplication.h \
+           src/AIDebugger.h \
+           src/gui/AIDebuggerWidget.h \
            src/gui/dialog/ConnectDialog.h \
            src/gui/dialog/IDialog.h \
            src/gui/view/list/EntityList.h \
@@ -32,9 +34,11 @@ HEADERS += src/AIDebugger.h \
            src/gui/widget/ZoomWidget.h \
            src/gui/widget/IComboBox.h
 
-SOURCES += src/Main.cpp \
+SOURCES += \
+           src/Main.cpp \
+           src/AIApplication.cpp \
            src/AIDebugger.cpp \
-           src/gui/AIDebuggerWindow.cpp \
+           src/gui/AIDebuggerWidget.cpp \
            src/gui/dialog/ConnectDialog.cpp \
            src/gui/dialog/IDialog.cpp \
            src/gui/view/list/EntityList.cpp \
