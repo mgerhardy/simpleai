@@ -7,13 +7,23 @@
 namespace ai {
 
 Server::Server(uint16_t port, const std::string& hostname) :
-		_network(port, hostname), _selectedCharacterId(-1), _time(0L), _selectHandler(*this), _pauseHandler(*this), _pause(false) {
+		_network(port, hostname), _selectedCharacterId(-1), _time(0L), _selectHandler(*this), _pauseHandler(*this), _resetHandler(*this), _stepHandler(*this), _pause(false) {
 	ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
 	r.registerHandler(ai::PROTO_SELECT, ProtocolHandlerPtr(&_selectHandler, ProtocolHandlerNopDeleter()));
 	r.registerHandler(ai::PROTO_PAUSE, ProtocolHandlerPtr(&_pauseHandler, ProtocolHandlerNopDeleter()));
+	r.registerHandler(ai::PROTO_RESET, ProtocolHandlerPtr(&_resetHandler, ProtocolHandlerNopDeleter()));
+	r.registerHandler(ai::PROTO_STEP, ProtocolHandlerPtr(&_stepHandler, ProtocolHandlerNopDeleter()));
 }
 
 Server::~Server() {
+}
+
+void Server::step() {
+	std::cerr << "Step" << std::endl;
+}
+
+void Server::reset() {
+	std::cerr << "Reset" << std::endl;
 }
 
 void Server::select(const ClientId& /*clientId*/, const CharacterId& id) {

@@ -41,6 +41,8 @@ private slots:
 	void tick();
 	void connectToAIServer();
 	void requestPause();
+	void requestStep();
+	void requestReset();
 	void setPause(bool pause);
 
 private:
@@ -60,6 +62,8 @@ private:
 	AggroTable *_aggroTable;
 	QAction *_connectAction;
 	QAction *_pauseAction;
+	QAction *_stepAction;
+	QAction *_resetAction;
 	QAction *_aboutAction;
 	QLabel *_statusBarLabel;
 	QLabel *_selectedLabel;

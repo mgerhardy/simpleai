@@ -5,6 +5,8 @@
 #include "Network.h"
 #include "SelectHandler.h"
 #include "PauseHandler.h"
+#include "ResetHandler.h"
+#include "StepHandler.h"
 
 namespace ai {
 
@@ -31,6 +33,8 @@ protected:
 	long _time;
 	SelectHandler _selectHandler;
 	PauseHandler _pauseHandler;
+	ResetHandler _resetHandler;
+	StepHandler _stepHandler;
 	bool _pause;
 
 	void addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) const;
@@ -55,6 +59,16 @@ public:
 	 * @brief Will pause/unpause the execution of the behaviour trees for all watched @c AI instances.
 	 */
 	void pause(const ClientId& clientId, bool pause);
+
+	/**
+	 * @brief Performs one step of the ai in pause mode
+	 */
+	void step();
+
+	/**
+	 * @brief Resets the ai states
+	 */
+	void reset();
 
 	/**
 	 * @brief call then when you spawn a new @code AI that should be traceable via the debug viewer.

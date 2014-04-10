@@ -141,7 +141,9 @@ public:
 		return _id;
 	}
 
-	virtual void serialize(streamContainer& out) const {}
+	virtual void serialize(streamContainer& out) const {
+		addByte(out, _id);
+	}
 };
 
 inline void IProtocolMessage::addByte(streamContainer& out, uint8_t byte) {

@@ -40,6 +40,11 @@ AIDebuggerWidget::~AIDebuggerWidget() {
 	delete _selectedLabel;
 	delete _stateTable;
 	delete _aggroTable;
+	delete _pauseAction;
+	delete _resetAction;
+	delete _stepAction;
+	delete _connectAction;
+	delete _aboutAction;
 }
 
 void AIDebuggerWidget::contributeToStatusBar(QStatusBar* statusBar) {
@@ -50,6 +55,8 @@ void AIDebuggerWidget::contributeToStatusBar(QStatusBar* statusBar) {
 void AIDebuggerWidget::contributeToToolBar(QToolBar* toolBar) {
 	toolBar->addAction(_connectAction);
 	toolBar->addAction(_pauseAction);
+	toolBar->addAction(_stepAction);
+	toolBar->addAction(_resetAction);
 }
 
 void AIDebuggerWidget::contributeToFileMenu(QMenu *fileMenu) {
@@ -68,6 +75,8 @@ void AIDebuggerWidget::removeFromStatusBar(QStatusBar* statusBar) {
 void AIDebuggerWidget::removeFromToolBar(QToolBar* toolBar) {
 	toolBar->removeAction(_connectAction);
 	toolBar->removeAction(_pauseAction);
+	toolBar->removeAction(_stepAction);
+	toolBar->removeAction(_resetAction);
 }
 
 void AIDebuggerWidget::removeFromFileMenu(QMenu *fileMenu) {
@@ -118,6 +127,14 @@ void AIDebuggerWidget::setPause(bool pause) {
 	} else {
 		_pauseAction->setIcon(QIcon(":/images/continue.png"));
 	}
+}
+
+void AIDebuggerWidget::requestStep() {
+	_debugger.step();
+}
+
+void AIDebuggerWidget::requestReset() {
+	_debugger.reset();
 }
 
 void AIDebuggerWidget::requestPause() {
@@ -173,6 +190,16 @@ void AIDebuggerWidget::createActions() {
 	_pauseAction->setStatusTip(tr("Freeze the ai controlled entities"));
 	_pauseAction->setIcon(QIcon(":/images/continue.png"));
 	connect(_pauseAction, SIGNAL(triggered()), this, SLOT(requestPause()));
+
+	_stepAction = new QAction(tr("Step"), this);
+	_stepAction->setStatusTip(tr("Performs one step while ai is in pause mode"));
+	_stepAction->setIcon(QIcon(":/images/step.png"));
+	connect(_stepAction, SIGNAL(triggered()), this, SLOT(requestStep()));
+
+	_resetAction = new QAction(tr("Reset"), this);
+	_resetAction->setStatusTip(tr("Resets the states of the ai"));
+	_resetAction->setIcon(QIcon(":/images/reset.png"));
+	connect(_resetAction, SIGNAL(triggered()), this, SLOT(requestReset()));
 
 	_aboutAction = new QAction(tr("&About"), this);
 	_aboutAction->setStatusTip(tr("Show the application's About box"));

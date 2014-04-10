@@ -121,6 +121,14 @@ void AIDebugger::unselect() {
 	qDebug() << "unselect entity";
 }
 
+void AIDebugger::step() {
+	writeMessage(IProtocolMessage(ai::PROTO_STEP));
+}
+
+void AIDebugger::reset() {
+	writeMessage(IProtocolMessage(ai::PROTO_RESET));
+}
+
 bool AIDebugger::connectToAIServer(const QString& hostname, short port) {
 	_socket.connectToHost(hostname, port);
 	if (_socket.waitForConnected()) {

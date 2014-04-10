@@ -19,8 +19,10 @@ libsimpleai_la_SOURCES = \
 	server/Network.cpp \
 	server/PauseHandler.cpp \
 	server/ProtocolMessageFactory.cpp \
+	server/ResetHandler.cpp \
 	server/SelectHandler.cpp \
 	server/Server.cpp \
+	server/StepHandler.cpp \
 	tree/group/FleeGroup.cpp \
 	tree/group/FollowGroup.cpp \
 	tree/Idle.cpp \
@@ -84,8 +86,10 @@ nobase_library_include_HEADERS = \
 	server/PauseHandler.h \
 	server/ProtocolHandlerRegistry.h \
 	server/ProtocolMessageFactory.h \
+	server/ResetHandler.h \
 	server/SelectHandler.h \
 	server/Server.h \
+	server/StepHandler.h \
 	SimpleAI.h \
 	tree/group/FleeGroup.h \
 	tree/group/FollowGroup.h \

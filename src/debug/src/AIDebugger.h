@@ -79,6 +79,8 @@ public:
 	void select(const ai::AIStateWorld& ai);
 	void togglePause();
 	void unselect();
+	void step();
+	void reset();
 
 	inline AIDebuggerWidget* getWindow() { return _window; }
 
