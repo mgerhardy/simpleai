@@ -4,7 +4,7 @@
 namespace ai {
 
 void ResetHandler::execute(const ClientId& clientId, const IProtocolMessage& message) {
-	_server.step();
+	_server.reset();
 }
 
 }
