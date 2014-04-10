@@ -1,0 +1,47 @@
+#pragma once
+
+#include "IProtocolMessage.h"
+#include "ICharacter.h"
+
+namespace ai {
+
+/**
+ * @brief Message for the remote debugging interface
+ *
+ * Get a list of all potential subsets that can be selected by @c AIChangeMessage
+ */
+class AINamesMessage: public IProtocolMessage {
+private:
+	std::vector<std::string> _names;
+	const std::vector<std::string>* _namesPtr;
+
+public:
+	AINamesMessage(const std::vector<std::string>& names) :
+			IProtocolMessage(PROTO_NAMES), _namesPtr(&names) {
+	}
+
+	AINamesMessage(streamContainer& in) :
+			IProtocolMessage(PROTO_NAMES), _namesPtr(nullptr) {
+		const int size = readInt(in);
+		for (int i = 0; i < size; ++i) {
+			_names.push_back(readString(in));
+		}
+	}
+
+	void serialize(streamContainer& out) const override {
+		addByte(out, _id);
+		const int size = _namesPtr->size();
+		addInt(out, size);
+		for (int i = 0; i < size; ++i) {
+			addString(out, (*_namesPtr)[i]);
+		}
+	}
+
+	inline const std::vector<std::string>& getNames() const {
+		if (_namesPtr)
+			return *_namesPtr;
+		return _names;
+	}
+};
+
+}

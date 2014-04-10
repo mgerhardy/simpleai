@@ -4,6 +4,8 @@
 #include "AICharacterDetailsMessage.h"
 #include "AIPauseMessage.h"
 #include "AISelectMessage.h"
+#include "AINamesMessage.h"
+#include "AIChangeMessage.h"
 
 namespace ai {
 
@@ -36,6 +38,12 @@ IProtocolMessage *ProtocolMessageFactory::create(streamContainer& in) {
 		return new AISelectMessage(in);
 	} else if (type == PROTO_PAUSE) {
 		return new AIPauseMessage(in);
+	} else if (type == PROTO_NAMES) {
+		return new AINamesMessage(in);
+	} else if (type == PROTO_CHANGE) {
+		return new AIChangeMessage(in);
+	} else if (type == PROTO_RESET || type == PROTO_STEP) {
+		return new IProtocolMessage(type);
 	} else if (type == PROTO_CHARACTER_DETAILS) {
 		return new AICharacterDetailsMessage(in);
 	}

@@ -39,6 +39,10 @@ const ProtocolId PROTO_STATE = 1;
 const ProtocolId PROTO_CHARACTER_DETAILS = 2;
 const ProtocolId PROTO_SELECT = 3;
 const ProtocolId PROTO_PAUSE = 4;
+const ProtocolId PROTO_CHANGE = 5;
+const ProtocolId PROTO_NAMES = 6;
+const ProtocolId PROTO_RESET = 7;
+const ProtocolId PROTO_STEP = 8;
 
 class IProtocolMessage {
 private:
@@ -137,7 +141,7 @@ public:
 		return _id;
 	}
 
-	virtual void serialize(streamContainer& out) const = 0;
+	virtual void serialize(streamContainer& out) const {}
 };
 
 inline void IProtocolMessage::addByte(streamContainer& out, uint8_t byte) {

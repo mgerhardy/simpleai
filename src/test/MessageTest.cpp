@@ -65,6 +65,22 @@ TEST_F(MessageTest, testAIPauseMessage) {
 	}
 }
 
+TEST_F(MessageTest, testAINamesMessage) {
+	std::vector<std::string> names;
+	names.push_back("Test");
+	ai::AINamesMessage m(names);
+	ai::AINamesMessage* d = serializeDeserialize(m);
+	ASSERT_EQ(m.getId(), d->getId());
+	ASSERT_EQ("Test", d->getNames()[0]);
+}
+
+TEST_F(MessageTest, testAIChangeMessage) {
+	ai::AIChangeMessage m("Test");
+	ai::AIChangeMessage* d = serializeDeserialize(m);
+	ASSERT_EQ(m.getId(), d->getId());
+	ASSERT_EQ("Test", d->getName());
+}
+
 TEST_F(MessageTest, testAISelectMessage) {
 	ai::AISelectMessage m(1);
 	ai::AISelectMessage* d = serializeDeserialize(m);
