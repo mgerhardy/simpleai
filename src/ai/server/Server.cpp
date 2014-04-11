@@ -19,11 +19,21 @@ Server::~Server() {
 }
 
 void Server::step() {
-	std::cerr << "Step" << std::endl;
+	for (AIMapIter i = _ais.begin(); i != _ais.end(); ++i) {
+		AI& ai = *i->second;
+		if (!ai.isPause())
+			continue;
+		ai.setPause(false);
+		ai.update(1L);
+		ai.setPause(true);
+	}
 }
 
 void Server::reset() {
-	std::cerr << "Reset" << std::endl;
+	for (AIMapIter i = _ais.begin(); i != _ais.end(); ++i) {
+		AI& ai = *i->second;
+		ai.getBehaviour()->resetState(ai);
+	}
 }
 
 void Server::select(const ClientId& /*clientId*/, const CharacterId& id) {
