@@ -109,7 +109,7 @@ private:
 #endif
 
 protected:
-	const ProtocolId& _id;
+	const ProtocolId _id;
 
 public:
 	static void addByte(streamContainer& out, uint8_t byte);
