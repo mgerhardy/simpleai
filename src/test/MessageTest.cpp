@@ -98,3 +98,15 @@ TEST_F(MessageTest, testAIStateMessage) {
 	ASSERT_EQ(1, d->getStates()[0].getId());
 	ASSERT_FLOAT_EQ(1.0f, d->getStates()[0].getOrientation());
 }
+
+TEST_F(MessageTest, testIProtocolMessageStep) {
+	ai::IProtocolMessage m(ai::PROTO_STEP);
+	ai::IProtocolMessage* d = serializeDeserialize(m);
+	ASSERT_EQ(m.getId(), d->getId());
+}
+
+TEST_F(MessageTest, testIProtocolMessageReset) {
+	ai::IProtocolMessage m(ai::PROTO_RESET);
+	ai::IProtocolMessage* d = serializeDeserialize(m);
+	ASSERT_EQ(m.getId(), d->getId());
+}
