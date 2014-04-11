@@ -146,6 +146,10 @@ void AIDebugger::reset() {
 	writeMessage(IProtocolMessage(ai::PROTO_RESET));
 }
 
+void AIDebugger::change(const QString& name) {
+	writeMessage(AIChangeMessage(name.toStdString()));
+}
+
 bool AIDebugger::connectToAIServer(const QString& hostname, short port) {
 	_socket.connectToHost(hostname, port, QAbstractSocket::ReadWrite, QAbstractSocket::AnyIPProtocol);
 	if (_socket.waitForConnected()) {

@@ -13,6 +13,7 @@ EntityList::EntityList(AIDebugger& debugger) :
 	setSortingEnabled(true);
 	setSelectionMode(QAbstractItemView::SingleSelection);
 	setSelectionBehavior(QAbstractItemView::SelectRows);
+	setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 	verticalHeader()->hide();
 
 	connect(selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(selectEntity(QModelIndex,QModelIndex)));

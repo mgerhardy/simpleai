@@ -24,6 +24,7 @@ AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger) :
 	_statusBarLabel = new QLabel(tr("not connected"));
 	_selectedLabel = new QLabel(tr("nothing selected"));
 
+	connect(_namesComboBox, SIGNAL(activated(const QString&)), SLOT(change(const QString&)));
 	connect(&_debugger, SIGNAL(onPause(bool)), SLOT(setPause(bool)));
 	connect(&_debugger, SIGNAL(onNamesReceived(const std::vector<std::string>&)), SLOT(setNames(const std::vector<std::string>&)));
 	connect(&_debugger, SIGNAL(disconnected()), SLOT(onDisconnect()));
@@ -112,18 +113,20 @@ QWidget *AIDebuggerWidget::createTopWidget() {
 	_mapWidget = _debugger.createMapWidget();
 	_mapFrame = new ZoomFrame(_mapWidget);
 
-	_namesComboBox = new QComboBox();
-
 	_entityList = new EntityList(_debugger);
-	_entityList->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
+	_namesComboBox = new QComboBox();
+	_namesComboBox->setFixedWidth(_entityList->width());
+	_namesComboBox->addItem(tr("None"));
 
 	splitter->addWidget(_mapFrame);
 
 	QVBoxLayout *vbox = new QVBoxLayout();
+	vbox->setMargin(0);
 	vbox->addWidget(_namesComboBox);
 	vbox->addWidget(_entityList);
 
 	QWidget *widget = new QWidget();
+	widget->setFixedWidth(_entityList->width());
 	widget->setLayout(vbox);
 	splitter->addWidget(widget);
 
@@ -144,6 +147,10 @@ QWidget *AIDebuggerWidget::createBottomWidget() {
 
 void AIDebuggerWidget::onDisconnect() {
 	_statusBarLabel->setText(tr("not connected"));
+}
+
+void AIDebuggerWidget::change(const QString& name) {
+	_debugger.change(name);
 }
 
 void AIDebuggerWidget::setPause(bool pause) {

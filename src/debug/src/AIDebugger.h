@@ -81,6 +81,7 @@ public:
 	void unselect();
 	void step();
 	void reset();
+	void change(const QString& name);
 
 	inline AIDebuggerWidget* getWindow() { return _window; }
 
