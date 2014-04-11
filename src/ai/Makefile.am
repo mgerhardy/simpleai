@@ -75,7 +75,9 @@ nobase_library_include_HEADERS = \
 	movement/Steering.h \
 	pathfinding/IMap.h \
 	pathfinding/IPathfinder.h \
+	server/AIChangeMessage.h \
 	server/AICharacterDetailsMessage.h \
+	server/AINamesMessage.h \
 	server/AIPauseMessage.h \
 	server/AISelectMessage.h \
 	server/AIStateMessage.h \
