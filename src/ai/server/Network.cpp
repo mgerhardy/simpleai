@@ -222,7 +222,7 @@ void Network::broadcast(const IProtocolMessage& msg) {
 			continue;
 		}
 
-		IProtocolMessage::addInt(client.out, (int)out.size());
+		IProtocolMessage::addInt(client.out, static_cast<int32_t>(out.size()));
 		std::copy(out.begin(), out.end(), std::back_inserter(client.out));
 		FD_SET(client.socket, &_writeFDSet);
 	}
@@ -238,7 +238,7 @@ bool Network::sendToClient(Client* client, const IProtocolMessage& msg) {
 		return false;
 	}
 
-	IProtocolMessage::addInt(client->out, (int)out.size());
+	IProtocolMessage::addInt(client->out, static_cast<int32_t>(out.size()));
 	std::copy(out.begin(), out.end(), std::back_inserter(client->out));
 	FD_SET(client->socket, &_writeFDSet);
 	return true;
