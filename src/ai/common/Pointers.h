@@ -7,7 +7,7 @@
 template<typename T>
 class ScopedPtr: public NonCopyable {
 public:
-	explicit ScopedPtr (T* const p = 0) :
+	explicit ScopedPtr (T* const p = nullptr) :
 			p_(p)
 	{
 	}
