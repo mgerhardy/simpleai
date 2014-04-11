@@ -25,6 +25,8 @@ AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger) :
 	_selectedLabel = new QLabel(tr("nothing selected"));
 
 	connect(&_debugger, SIGNAL(onPause(bool)), SLOT(setPause(bool)));
+	connect(&_debugger, SIGNAL(onNamesReceived(const std::vector<std::string>&)), SLOT(setNames(const std::vector<std::string>&)));
+	connect(&_debugger, SIGNAL(disconnected()), SLOT(onDisconnect()));
 
 	// TODO: react on network input from the AIDebugger and remove this timer
 	QTimer *timer = new QTimer(this);
@@ -45,6 +47,15 @@ AIDebuggerWidget::~AIDebuggerWidget() {
 	delete _stepAction;
 	delete _connectAction;
 	delete _aboutAction;
+	delete _namesComboBox;
+}
+
+void AIDebuggerWidget::setNames(const std::vector<std::string>& names) {
+	_names = names;
+	for (std::vector<std::string>::const_iterator i = _names.begin(); i != _names.end(); ++i) {
+		_namesComboBox->addItem(QString::fromStdString(*i));
+	}
+	_namesComboBox->setEnabled(!_names.empty());
 }
 
 void AIDebuggerWidget::contributeToStatusBar(QStatusBar* statusBar) {
@@ -101,11 +112,21 @@ QWidget *AIDebuggerWidget::createTopWidget() {
 	_mapWidget = _debugger.createMapWidget();
 	_mapFrame = new ZoomFrame(_mapWidget);
 
+	_namesComboBox = new QComboBox();
+
 	_entityList = new EntityList(_debugger);
 	_entityList->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 
 	splitter->addWidget(_mapFrame);
-	splitter->addWidget(_entityList);
+
+	QVBoxLayout *vbox = new QVBoxLayout();
+	vbox->addWidget(_namesComboBox);
+	vbox->addWidget(_entityList);
+
+	QWidget *widget = new QWidget();
+	widget->setLayout(vbox);
+	splitter->addWidget(widget);
+
 	return splitter;
 }
 
@@ -119,6 +140,10 @@ QWidget *AIDebuggerWidget::createBottomWidget() {
 	splitter->addWidget(_aggroTable);
 	splitter->addWidget(_stateTable);
 	return splitter;
+}
+
+void AIDebuggerWidget::onDisconnect() {
+	_statusBarLabel->setText(tr("not connected"));
 }
 
 void AIDebuggerWidget::setPause(bool pause) {

@@ -3,6 +3,8 @@
 #include "MapView.h"
 #include <server/IProtocolMessage.h>
 #include <server/AISelectMessage.h>
+#include <server/AIChangeMessage.h>
+#include <server/AINamesMessage.h>
 #include <server/ProtocolMessageFactory.h>
 #include <server/ProtocolHandlerRegistry.h>
 #include <QtCore>
@@ -15,6 +17,7 @@ namespace debug {
 PROTOCOL_HANDLER(AIStateMessage);
 PROTOCOL_HANDLER(AICharacterDetailsMessage);
 PROTOCOL_HANDLER(AIPauseMessage);
+PROTOCOL_HANDLER(AINamesMessage);
 
 class StateHandler: public AIStateMessageHandler {
 private:
@@ -42,6 +45,19 @@ public:
 	}
 };
 
+class NamesHandler: public AINamesMessageHandler {
+private:
+	AIDebugger& _aiDebugger;
+public:
+	NamesHandler (AIDebugger& aiDebugger) :
+			_aiDebugger(aiDebugger) {
+	}
+
+	void executeAINamesMessage(const ai::AINamesMessage& msg) override {
+		emit _aiDebugger.onNamesReceived(msg.getNames());
+	}
+};
+
 class PauseHandler: public AIPauseMessageHandler {
 private:
 	AIDebugger& _aiDebugger;
@@ -66,6 +82,7 @@ AIDebugger::AIDebugger() :
 	r.registerHandler(ai::PROTO_STATE, ProtocolHandlerPtr(new StateHandler(*this)));
 	r.registerHandler(ai::PROTO_CHARACTER_DETAILS, ProtocolHandlerPtr(new CharacterHandler(*this)));
 	r.registerHandler(ai::PROTO_PAUSE, ProtocolHandlerPtr(new PauseHandler(*this)));
+	r.registerHandler(ai::PROTO_NAMES, ProtocolHandlerPtr(new NamesHandler(*this)));
 
 	_window = new AIDebuggerWidget(*this);
 }
@@ -130,9 +147,24 @@ void AIDebugger::reset() {
 }
 
 bool AIDebugger::connectToAIServer(const QString& hostname, short port) {
-	_socket.connectToHost(hostname, port);
+	_socket.connectToHost(hostname, port, QAbstractSocket::ReadWrite, QAbstractSocket::AnyIPProtocol);
 	if (_socket.waitForConnected()) {
 		return true;
+	}
+	const QAbstractSocket::SocketError socketError = _socket.error();
+	switch (socketError) {
+	case QAbstractSocket::RemoteHostClosedError:
+		qDebug() << "The connection was closed by the host";
+		break;
+	case QAbstractSocket::HostNotFoundError:
+		qDebug() << "The host was not found. Please check the host name and port settings";
+		break;
+	case QAbstractSocket::ConnectionRefusedError:
+		qDebug() << "The connection was refused by the peer";
+		break;
+	default:
+		qDebug() << "Socket error: " << socketError;
+		break;
 	}
 	return false;
 }
@@ -142,6 +174,7 @@ void AIDebugger::onDisconnect() {
 	_selectedId = -1;
 	_aggro.clear();
 	_node = AIStateNode();
+	emit disconnect();
 }
 
 void AIDebugger::readTcpData() {

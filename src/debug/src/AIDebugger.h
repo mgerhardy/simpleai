@@ -92,6 +92,8 @@ public:
 
 signals:
 	void onPause(bool pause);
+	void disconnected();
+	void onNamesReceived(const std::vector<std::string>& names);
 };
 
 inline void AIDebugger::setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node, const CharacterAttributes& attributes) {

@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QToolBar>
 #include <QStatusBar>
+#include <QComboBox>
 #include <QMenu>
 
 namespace ai {
@@ -44,6 +45,8 @@ private slots:
 	void requestStep();
 	void requestReset();
 	void setPause(bool pause);
+	void onDisconnect();
+	void setNames(const std::vector<std::string>& names);
 
 private:
 	void createView();
@@ -67,8 +70,10 @@ private:
 	QAction *_aboutAction;
 	QLabel *_statusBarLabel;
 	QLabel *_selectedLabel;
+	QComboBox *_namesComboBox;
 
 	AIDebugger& _debugger;
+	std::vector<std::string> _names;
 };
 
 }
