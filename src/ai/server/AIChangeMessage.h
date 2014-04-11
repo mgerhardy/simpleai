@@ -8,6 +8,7 @@ namespace ai {
  * @brief Message for the remote debugging interface
  *
  * Allows to select a particular subset of entities to receive the state for
+ * by handling the @c AINamesMessage
  */
 class AIChangeMessage: public IProtocolMessage {
 private:

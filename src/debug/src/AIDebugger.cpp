@@ -139,11 +139,11 @@ void AIDebugger::unselect() {
 }
 
 void AIDebugger::step() {
-	writeMessage(IProtocolMessage(ai::PROTO_STEP));
+	writeMessage(AIStepMessage());
 }
 
 void AIDebugger::reset() {
-	writeMessage(IProtocolMessage(ai::PROTO_RESET));
+	writeMessage(AIResetMessage());
 }
 
 void AIDebugger::change(const QString& name) {

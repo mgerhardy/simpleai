@@ -280,4 +280,17 @@ inline int64_t IProtocolMessage::readLong(streamContainer& in) {
 	return val;
 }
 
+#define PROTO_MSG(name, id) class name : public IProtocolMessage { public: name() : IProtocolMessage(id) {} }
+
+/**
+ * @brief Perform one step if the ai controlled entities are in paused mode
+ *
+ * Also see @c AIPauseMessage
+ */
+PROTO_MSG(AIStepMessage, PROTO_STEP);
+/**
+ * @brief Reset the behaviour tree states for all ai controlled entities
+ */
+PROTO_MSG(AIResetMessage, PROTO_RESET);
+
 }

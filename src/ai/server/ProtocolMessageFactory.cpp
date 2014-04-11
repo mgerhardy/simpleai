@@ -42,8 +42,10 @@ IProtocolMessage *ProtocolMessageFactory::create(streamContainer& in) {
 		return new AINamesMessage(in);
 	} else if (type == PROTO_CHANGE) {
 		return new AIChangeMessage(in);
-	} else if (type == PROTO_RESET || type == PROTO_STEP) {
-		return new IProtocolMessage(type);
+	} else if (type == PROTO_RESET) {
+		return new AIResetMessage();
+	} else if (type == PROTO_STEP) {
+		return new AIStepMessage();
 	} else if (type == PROTO_CHARACTER_DETAILS) {
 		return new AICharacterDetailsMessage(in);
 	}

@@ -7,7 +7,12 @@ namespace ai {
 /**
  * @brief Message for the remote debugging interface
  *
- * If this is received from the server, it will pause the execution of the behaviour tree
+ * If this is received on the server side, it will pause the execution of
+ * the behaviour tree for all ai controlled entities. You can then step
+ * the execution of all those entities by sending a @c AIStepMessage
+ *
+ * The server is sending the @AIPauseMessage back to the clients so they know
+ * whether it worked or not.
  */
 class AIPauseMessage: public IProtocolMessage {
 private:
