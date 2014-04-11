@@ -195,15 +195,14 @@ void Network::update(long /*deltaTime*/) {
 
 		ProtocolMessageFactory& factory = ProtocolMessageFactory::get();
 		if (factory.isNewMessageAvailable(client.in)) {
-			IProtocolMessage* msg = factory.create(client.in);
-			if (msg == nullptr) {
+			ScopedPtr<IProtocolMessage> msg(factory.create(client.in));
+			if (!msg) {
 				i = closeClient(i);
 				continue;
 			} else {
 				const ProtocolHandlerPtr& handler = ProtocolHandlerRegistry::get().getHandler(*msg);
 				if (handler)
 					handler->execute(clientId, *msg);
-				delete msg;
 			}
 		}
 		++i;
