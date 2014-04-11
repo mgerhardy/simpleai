@@ -123,9 +123,9 @@ QWidget *AIDebuggerWidget::createBottomWidget() {
 
 void AIDebuggerWidget::setPause(bool pause) {
 	if (pause) {
-		_pauseAction->setIcon(QIcon(":/images/pause.png"));
-	} else {
 		_pauseAction->setIcon(QIcon(":/images/continue.png"));
+	} else {
+		_pauseAction->setIcon(QIcon(":/images/pause.png"));
 	}
 }
 
@@ -188,7 +188,7 @@ void AIDebuggerWidget::createActions() {
 
 	_pauseAction = new QAction(tr("Pause"), this);
 	_pauseAction->setStatusTip(tr("Freeze the ai controlled entities"));
-	_pauseAction->setIcon(QIcon(":/images/continue.png"));
+	_pauseAction->setIcon(QIcon(":/images/pause.png"));
 	connect(_pauseAction, SIGNAL(triggered()), this, SLOT(requestPause()));
 
 	_stepAction = new QAction(tr("Step"), this);
