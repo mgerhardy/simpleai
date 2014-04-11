@@ -25,6 +25,7 @@ public class AINamesMessage extends ProtocolMessage {
 
     @Override
     public void serialize(DataOutput out) throws IOException {
+	out.writeByte( _id );
 	out.writeInt(_names.size());
 	for (final String i : _names) {
 	    out.writeUTF(i);

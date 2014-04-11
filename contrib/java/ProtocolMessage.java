@@ -15,6 +15,10 @@ abstract class ProtocolMessage {
 
     protected byte _id;
 
+    public byte getId() {
+	return _id;
+    }
+
     protected ProtocolMessage(byte protoCharacterDetails) {
 	_id = protoCharacterDetails;
     }
