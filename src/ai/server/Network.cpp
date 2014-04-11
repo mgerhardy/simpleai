@@ -199,11 +199,10 @@ void Network::update(long /*deltaTime*/) {
 			if (!msg) {
 				i = closeClient(i);
 				continue;
-			} else {
-				const ProtocolHandlerPtr& handler = ProtocolHandlerRegistry::get().getHandler(*msg);
-				if (handler)
-					handler->execute(clientId, *msg);
 			}
+			const ProtocolHandlerPtr& handler = ProtocolHandlerRegistry::get().getHandler(*msg);
+			if (handler)
+				handler->execute(clientId, *msg);
 		}
 		++i;
 	}
