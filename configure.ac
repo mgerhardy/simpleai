@@ -40,33 +40,30 @@ AM_COND_IF([HAVE_DOXYGEN], [AC_CONFIG_FILES([docs/Doxyfile])])
 CXXFLAGS=$OLD_CXXFLAGS
 
 AC_MSG_CHECKING([whether to build with debug information])
-AC_ARG_ENABLE([debug],
-    [AS_HELP_STRING([--enable-debug],
-        [enable debug data generation (def=no)])],
-    [debugit="$enableval"],
-    [debugit=no])
-AC_MSG_RESULT([$debugit])
-
-if test x"$debugit" = x"yes"; then
+AC_ARG_ENABLE(debug,AS_HELP_STRING([--enable-debug=@<:@no/yes@:>@],[enable debug data generation]),,[enable_debug=no])
+if test "x$enable_debug" != "xno" ; then
     AC_DEFINE([DEBUG],[],[Debug Mode])
     AM_CXXFLAGS="$AM_CXXFLAGS -g -Wall -Werror -Wno-uninitialized -O0"
 else
     AC_DEFINE([NDEBUG],[],[No-debug Mode])
     AM_CXXFLAGS="$AM_CXXFLAGS -O3"
 fi
+AC_MSG_RESULT([$enable_debug])
 
+AC_MSG_CHECKING([whether to build with gprof support])
 AC_ARG_ENABLE(gprof,AS_HELP_STRING([--enable-gprof=@<:@no/yes@:>@],[build with support for gprof]),,[enable_gprof=no])
 if test "x$enable_gprof" != "xno" ; then
 	AM_CXXFLAGS="$AM_CXXFLAGS -pg"
-	LDFLAGS="$LDFLAGS -pg"
+	AM_LDFLAGS="$AM_LDFLAGS -pg"
 fi
+AC_MSG_RESULT([$enable_gprof])
 
 # libm
 AC_CHECK_LIB(m, sqrt,, [AC_MSG_ERROR([requires math library])])
 MATH_LIBS=-lm
-AC_SUBST(MATH_LIBS)
 
-AC_SUBST(LDFLAGS)
+AC_SUBST([MATH_LIBS])
+AC_SUBST([AM_LDFLAGS])
 AC_SUBST([AM_CXXFLAGS])
 
 LT_INIT
@@ -89,9 +86,9 @@ simpleai $VERSION: Automatic configuration OK.
   Configuration summary:
     Platform: .......... $host
     Compiler: .......... $CXX
-    C++ Flags: ......... $CXXFLAGS
+    C++ Flags: ......... $AM_CXXFLAGS
     Libraries: ......... $LIBS
-    Linking: ........... $LDFLAGS
+    Linking: ........... $AM_LDFLAGS
 
 Type 'make' to build simpleai.  Type 'make install' to install it.
 ])
