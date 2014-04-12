@@ -30,9 +30,9 @@ private:
 	void writeState (streamContainer& out, const AIStateWorld& state) const {
 		addInt(out, state.getId());
 		const ai::Vector3f& position = state.getPosition();
-		addFloat(out, position.x());
-		addFloat(out, position.y());
-		addFloat(out, position.z());
+		addFloat(out, position.x);
+		addFloat(out, position.y);
+		addFloat(out, position.z);
 		addFloat(out, state.getOrientation());
 	}
 

@@ -90,7 +90,7 @@ TEST_F(MessageTest, testAISelectMessage) {
 
 TEST_F(MessageTest, testAIStateMessage) {
 	ai::AIStateMessage m;
-	ai::AIStateWorld state(1, ai::Vector3f(), 1.0f);
+	ai::AIStateWorld state(1, ai::Vector3f::ZERO, 1.0f);
 	m.addState(state);
 	ai::AIStateMessage* d = serializeDeserialize(m);
 	ASSERT_EQ(m.getId(), d->getId());

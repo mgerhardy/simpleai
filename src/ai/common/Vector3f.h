@@ -6,76 +6,59 @@
 
 namespace ai {
 
-class Vector3f {
-private:
-	float _x;
-	float _y;
-	float _z;
-public:
+struct Vector3f {
+	float x;
+	float y;
+	float z;
+
 	Vector3f() :
-			_x(0.0f), _y(0.0f), _z(0.0f) {
+			x(0.0f), y(0.0f), z(0.0f) {
 	}
 
-	Vector3f(const float x, const float y) :
-			_x(x), _y(y), _z(0.0f) {
+	Vector3f(const float _x, const float _y) :
+			x(_x), y(_y), z(0.0f) {
 	}
 
 	Vector3f(const Vector3f& pos) :
-			_x(pos._x), _y(pos._y), _z(pos._z) {
+			x(pos.x), y(pos.y), z(pos.z) {
 	}
 
-	Vector3f(const float x, const float y, const float z) :
-			_x(x), _y(y), _z(z) {
-	}
-
-	inline void setX(float x) {
-		_x = x;
-	}
-
-	inline void setY(float y) {
-		_y = y;
-	}
-
-	inline void setZ(float z) {
-		_z = z;
-	}
-
-	inline float x() const {
-		return _x;
-	}
-
-	inline float y() const {
-		return _y;
-	}
-
-	inline float z() const {
-		return _z;
+	Vector3f(const float _x, const float _y, const float _z) :
+			x(_x), y(_y), z(_z) {
 	}
 
 	inline void operator +=(const Vector3f& pos) {
-		_x += pos._x;
-		_y += pos._y;
-		_z += pos._z;
+		x += pos.x;
+		y += pos.y;
+		z += pos.z;
 	}
 
-	inline Vector3f operator +(const Vector3f& pos) const {
-		return Vector3f(_x + pos._x, _y + pos._y, _z + pos._z);
+	inline Vector3f operator -() const {
+		return inverse();
+	}
+
+	inline float operator () (int32_t i) const {
+		return (&x)[i];
+	}
+
+	inline float& operator () (int32_t i) {
+		return (&x)[i];
 	}
 
 	inline Vector3f operator *(const float scalar) const {
-		return Vector3f(_x * scalar, _y * scalar, _z * scalar);
+		return Vector3f(x * scalar, y * scalar, z * scalar);
 	}
 
 	inline void operator -=(const Vector3f& pos) {
-		_x -= pos._x;
-		_y -= pos._y;
-		_z -= pos._z;
+		x -= pos.x;
+		y -= pos.y;
+		z -= pos.z;
 	}
 
 	inline void operator *=(const float scalar) {
-		_x *= scalar;
-		_y *= scalar;
-		_z *= scalar;
+		x *= scalar;
+		y *= scalar;
+		z *= scalar;
 	}
 
 	inline float length() const {
@@ -83,16 +66,16 @@ public:
 	}
 
 	inline float squareLength() const {
-		return _x * _x + _y * _y + _z * _z;
+		return x * x + y * y + z * z;
 	}
 
 	inline double angle() const {
-		const double angle = ::atan2(_z, _x);
+		const double angle = ::atan2(z, x);
 		return angle;
 	}
 
 	inline double orientation() const {
-		const double orientation = ::atan2(_x, _z);
+		const double orientation = ::atan2(x, z);
 		return orientation;
 	}
 
@@ -107,52 +90,52 @@ public:
 
 	inline Vector3f mix(const Vector3f& end, const float mix) {
 		const float number = 1.0f - mix;
-		const float x = _x * number + end._x * mix;
-		const float y = _y * number + end._y * mix;
-		const float z = _z * number + end._z * mix;
+		const float x = x * number + end.x * mix;
+		const float y = y * number + end.y * mix;
+		const float z = z * number + end.z * mix;
 		return Vector3f(x, y, z);
 	}
 
 	inline Vector3f normalize() const {
 		const float norm = 1.0f / length();
-		const float x = _x * norm;
-		const float y = _y * norm;
-		const float z = _z * norm;
+		const float x = x * norm;
+		const float y = y * norm;
+		const float z = z * norm;
 		return Vector3f(x, y, z);
 	}
 
 	inline Vector3f advance(const Vector3f& direction, const float scale) const {
-		const float x = _x + scale * direction._x;
-		const float y = _y + scale * direction._y;
-		const float z = _z + scale * direction._z;
+		const float x = x + scale * direction.x;
+		const float y = y + scale * direction.y;
+		const float z = z + scale * direction.z;
 		return Vector3f(x, y, z);
 	}
 
 	inline Vector3f inverse() const {
-		const float x = -_x;
-		const float y = -_y;
-		const float z = -_z;
+		const float x = -x;
+		const float y = -y;
+		const float z = -z;
 		return Vector3f(x, y, z);
 	}
 
 	inline void inverse() {
-		_x = -_x;
-		_y = -_y;
-		_z = -_z;
+		x = -x;
+		y = -y;
+		z = -z;
 	}
 
 	inline float normalize() {
 		const float l = length();
 		const float norm = 1.0f / l;
-		_x *= norm;
-		_y *= norm;
-		_z *= norm;
+		x *= norm;
+		y *= norm;
+		z *= norm;
 		return l;
 	}
 
 	inline bool operator ==(const Vector3f& other) const {
 		const float epsilon = 0.00001f;
-		return ::fabs(_x - other._x) < epsilon && ::fabs(_y - other._y) < epsilon && ::fabs(_z - other._z) < epsilon;
+		return ::fabs(x - other.x) < epsilon && ::fabs(y - other.y) < epsilon && ::fabs(z - other.z) < epsilon;
 	}
 
 	inline bool operator !=(const Vector3f& other) const {
@@ -160,23 +143,41 @@ public:
 	}
 
 	inline float distance(const Vector3f& pos) const {
-		const Vector3f c(_x - pos._x, _y - pos._y, _z - pos._z);
+		const Vector3f c(x - pos.x, y - pos.y, z - pos.z);
 		return c.length();
 	}
 
 	inline float dot(const Vector3f& pos) const {
-		return _x * pos._x + _y * _y + _z * pos._z;
+		return x * pos.x + y * y + z * pos.z;
 	}
 
 	inline Vector3f cross(const Vector3f& pos) const {
-		return Vector3f(_y * pos._z - _z * pos._y, _z * pos._x - _x * pos._z, _x * pos._y - _y * pos._x);
+		return Vector3f(y * pos.z - z * pos.y, z * pos.x - x * pos.z, x * pos.y - y * pos.x);
 	}
 
 	static Vector3f ZERO;
 };
 
 inline std::ostream& operator<<(std::ostream& output, const Vector3f& p) {
-	return output << "(" << p.x() << "," << p.y() << "," << p.z() << ")";
+	return output << "(" << p.x << "," << p.y << "," << p.z << ")";
+}
+
+inline Vector3f operator-(const Vector3f& lhs, const Vector3f& rhs) {
+	const float x = lhs.x - rhs.x;
+	const float y = lhs.y - rhs.y;
+	const float z = lhs.z - rhs.z;
+	return Vector3f(x, y, z);
+}
+
+inline Vector3f operator+(const Vector3f& lhs, const Vector3f& rhs) {
+	const float x = lhs.x + rhs.x;
+	const float y = lhs.y + rhs.y;
+	const float z = lhs.z + rhs.z;
+	return Vector3f(x, y, z);
+}
+
+inline Vector3f operator*(float scalar, const Vector3f& a) {
+	return Vector3f(scalar * a.x, scalar * a.y, scalar * a.z);
 }
 
 }

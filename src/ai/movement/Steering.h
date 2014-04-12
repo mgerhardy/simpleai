@@ -39,8 +39,7 @@ public:
 	}
 
 	MoveVector execute () const override {
-		Vector3f v = _target;
-		v -= _character.getPosition();
+		Vector3f v = _target - _character.getPosition();
 		if (v.squareLength() > 0) {
 			v.normalize();
 			v *= _acceleration;

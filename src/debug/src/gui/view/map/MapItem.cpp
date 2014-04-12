@@ -12,14 +12,14 @@ MapItem::MapItem (const AIStateWorld& state, AIDebugger& aiDebugger) :
 	setFlags(ItemIsSelectable);
 	setPos(worldToMap(state.getPosition()));
 	_orientation = state.getOrientation();
-	setZValue((qreal)state.getPosition().z());
+	setZValue((qreal)state.getPosition().z);
 }
 
 MapItem::~MapItem () {
 }
 
 QPointF MapItem::worldToMap(const Vector3f& position) const {
-	return QPointF((qreal)position.x(), (qreal)position.z());
+	return QPointF((qreal)position.x, (qreal)position.z);
 }
 
 QRectF MapItem::boundingRect() const {

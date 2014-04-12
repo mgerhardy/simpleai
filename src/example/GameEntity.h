@@ -46,20 +46,20 @@ public:
 	void update (long deltaTime, int size) {
 		_ai.update(deltaTime);
 		std::stringstream ss;
-		if (_position.x() < -size) {
-			_position.setX(size);
-		} else if (_position.x() > size) {
-			_position.setX(-size);
+		if (_position.x < -size) {
+			_position.x = size;
+		} else if (_position.x > size) {
+			_position.x = -size;
 		}
-		if (_position.z() < -size) {
-			_position.setZ(size);
-		} else if (_position.z() > size) {
-			_position.setZ(-size);
+		if (_position.z < -size) {
+			_position.z = size;
+		} else if (_position.z > size) {
+			_position.z = -size;
 		}
-		_position.setY(0.0f);
+		_position.y = 0.0f;
 		// TODO: switch direction when the respawn on another side of the map
 
-		ss << _position.x() << ":" << _position.y();
+		ss << _position;
 		setAttribute("Position", ss.str());
 		setAttribute("Speed", Str::toString(getSpeed()));
 		setAttribute("Orientation", Str::toString(toDegrees(getOrientation())));
