@@ -55,11 +55,18 @@ else
     AM_CXXFLAGS="$AM_CXXFLAGS -O3"
 fi
 
+AC_ARG_ENABLE(gprof,AS_HELP_STRING([--enable-gprof=@<:@no/yes@:>@],[build with support for gprof]),,[enable_gprof=no])
+if test "x$enable_gprof" != "xno" ; then
+	AM_CXXFLAGS="$AM_CXXFLAGS -pg"
+	LDFLAGS="$LDFLAGS -pg"
+fi
+
 # libm
 AC_CHECK_LIB(m, sqrt,, [AC_MSG_ERROR([requires math library])])
 MATH_LIBS=-lm
 AC_SUBST(MATH_LIBS)
 
+AC_SUBST(LDFLAGS)
 AC_SUBST([AM_CXXFLAGS])
 
 LT_INIT
