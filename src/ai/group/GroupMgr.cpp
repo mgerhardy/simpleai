@@ -33,13 +33,13 @@ bool GroupMgr::remove(GroupId id, ICharacter* character) {
 }
 
 Vector3f GroupMgr::getPosition(GroupId id) const {
-	Vector3f averagePosition;
 	GroupMembersConstIter i = _members.find(id);
 	if (i == _members.end())
-		return averagePosition;
+		return Vector3f::ZERO;
 
+	Vector3f averagePosition;
 	for (GroupMembersSetConstIter si = i->second.begin(); si != i->second.end(); ++si) {
-		ICharacter* character = *si;
+		const ICharacter* character = *si;
 		averagePosition += character->getPosition();
 	}
 	averagePosition *= 1.0f / (float) i->second.size();

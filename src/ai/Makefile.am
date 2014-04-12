@@ -4,6 +4,7 @@ libsimpleai_la_SOURCES = \
 	aggro/AggroMgr.cpp \
 	AI.cpp \
 	AIRegistry.cpp \
+	common/Vector3f.cpp \
 	conditions/And.cpp \
 	conditions/ConditionParser.cpp \
 	conditions/False.cpp \

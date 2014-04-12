@@ -171,6 +171,8 @@ public:
 	inline Vector3f cross(const Vector3f& pos) const {
 		return Vector3f(_y * pos._z - _z * pos._y, _z * pos._x - _x * pos._z, _x * pos._y - _y * pos._x);
 	}
+
+	static Vector3f ZERO;
 };
 
 inline std::ostream& operator<<(std::ostream& output, const Vector3f& p) {
