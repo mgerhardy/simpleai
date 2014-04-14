@@ -1,11 +1,12 @@
 package com.github.simpleai;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AIStateNode {
     private String _name;
     private String _condition;
-    private List<AIStateNode> _children;
+    private List<AIStateNode> _children = new ArrayList<AIStateNode>();
     private final long _lastRun;
     private final TreeNodeStatus _status;
     private final boolean _active;

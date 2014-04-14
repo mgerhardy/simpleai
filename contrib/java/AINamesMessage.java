@@ -19,16 +19,16 @@ public class AINamesMessage extends ProtocolMessage {
 	int size = in.readInt();
 	_names = new ArrayList<String>(size);
 	for (int i = 0; i < size; ++i) {
-	    _names.add(in.readUTF());
+	    _names.add(readString(in));
 	}
     }
 
     @Override
     public void serialize(DataOutput out) throws IOException {
-	out.writeByte( _id );
+	out.writeByte(_id);
 	out.writeInt(_names.size());
 	for (final String i : _names) {
-	    out.writeUTF(i);
+	    writeString(out, i);
 	}
     }
 

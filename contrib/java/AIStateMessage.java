@@ -3,10 +3,11 @@ package com.github.simpleai;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AIStateMessage extends ProtocolMessage {
-    private List<AIStateWorld> _states;
+    private List<AIStateWorld> _states = new ArrayList<AIStateWorld>();
 
     public AIStateMessage() {
 	super(PROTO_STATE);

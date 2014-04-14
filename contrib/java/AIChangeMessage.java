@@ -9,7 +9,7 @@ public class AIChangeMessage extends ProtocolMessage {
 
     public AIChangeMessage(DataInput in) throws IOException {
 	super(PROTO_CHANGE);
-	_name = in.readUTF();
+	_name = readString(in);
     }
 
     public AIChangeMessage(String name) {
@@ -23,6 +23,6 @@ public class AIChangeMessage extends ProtocolMessage {
 
     public void serialize(DataOutput out) throws IOException {
 	out.writeByte(_id);
-	out.writeUTF(_name);
+	writeString(out, _name);
     }
 }

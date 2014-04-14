@@ -56,15 +56,15 @@ public class AICharacterDetailsMessage extends ProtocolMessage {
 	    throws IOException {
 	final int size = in.readShort();
 	for (int i = 0; i < size; ++i) {
-	    final String key = in.readUTF();
-	    final String value = in.readUTF();
+	    final String key = readString(in);
+	    final String value = readString(in);
 	    attributes.put(key, value);
 	}
     }
 
     private AIStateNode readNode(DataInput in) throws IOException {
-	final String name = in.readUTF();
-	final String condition = in.readUTF();
+	final String name = readString(in);
+	final String condition = readString(in);
 	final long lastRun = in.readLong();
 	final TreeNodeStatus status = TreeNodeStatus.values()[in.readByte()];
 	final boolean active = in.readBoolean();
@@ -100,15 +100,15 @@ public class AICharacterDetailsMessage extends ProtocolMessage {
 	    throws IOException {
 	out.writeShort((short) a.size());
 	for (final Entry<String, String> i : a.entrySet()) {
-	    out.writeUTF(i.getKey());
-	    out.writeUTF(i.getValue());
+	    writeString(out, i.getKey());
+	    writeString(out, i.getValue());
 	}
     }
 
     private void writeNode(DataOutput out, final AIStateNode node)
 	    throws IOException {
-	out.writeUTF(node.getName());
-	out.writeUTF(node.getCondition());
+	writeString(out, node.getName());
+	writeString(out, node.getCondition());
 	out.writeLong(node.getLastRun());
 	out.writeByte((byte) node.getStatus().ordinal());
 	out.writeBoolean(node.isActive());
