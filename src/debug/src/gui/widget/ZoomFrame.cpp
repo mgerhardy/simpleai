@@ -10,7 +10,6 @@ namespace debug {
 ZoomFrame::ZoomFrame(QGraphicsView* graphicsView, QWidget* parent) :
 		QFrame(parent), _zoomWidget(nullptr), _graphicsView(graphicsView) {
 	setFrameStyle(Sunken | StyledPanel);
-	setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 	_graphicsView->setRenderHint(QPainter::Antialiasing, false);
 	_graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
 	//_graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
