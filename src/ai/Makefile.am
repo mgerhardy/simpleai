@@ -30,10 +30,6 @@ libsimpleai_la_SOURCES = \
 	tree/Invert.cpp \
 	tree/ITask.cpp \
 	tree/ITimedNode.cpp \
-	tree/loaders/lua/LUA.cpp \
-	tree/loaders/lua/LUANode.cpp \
-	tree/loaders/lua/LUATree.cpp \
-	tree/loaders/lua/LUATreeLoader.cpp \
 	tree/Parallel.cpp \
 	tree/PrioritySelector.cpp \
 	tree/Sequence.cpp \
@@ -101,12 +97,6 @@ nobase_library_include_HEADERS = \
 	tree/ITask.h \
 	tree/ITimedNode.h \
 	tree/loaders/ITreeLoader.h \
-	tree/loaders/lua/LUACondition.h \
-	tree/loaders/lua/LUAFunctions.h \
-	tree/loaders/lua/LUA.h \
-	tree/loaders/lua/LUANode.h \
-	tree/loaders/lua/LUATree.h \
-	tree/loaders/lua/LUATreeLoader.h \
 	tree/Parallel.h \
 	tree/Print.h \
 	tree/PrioritySelector.h \
@@ -116,14 +106,36 @@ nobase_library_include_HEADERS = \
 	tree/TreeNodeParser.h \
 	tree/Wander.h
 
+if AI_ENABLE_LUA
+libsimpleai_la_SOURCES += \
+	tree/loaders/lua/LUA.cpp \
+	tree/loaders/lua/LUANode.cpp \
+	tree/loaders/lua/LUATree.cpp \
+	tree/loaders/lua/LUATreeLoader.cpp
+
+nobase_library_include_HEADERS += \
+	tree/loaders/lua/LUACondition.h \
+	tree/loaders/lua/LUAFunctions.h \
+	tree/loaders/lua/LUA.h \
+	tree/loaders/lua/LUANode.h \
+	tree/loaders/lua/LUATree.h \
+	tree/loaders/lua/LUATreeLoader.h
+endif
+
 EXTRA_DIST =
 
-INCLUDES = -I$(top_srcdir)/include -I$(top_builddir)/include -I$(top_builddir)/src/libs/lua
+INCLUDES = -I$(top_srcdir)/include -I$(top_builddir)/include
+
+if AI_ENABLE_LUA
+INCLUDES += -I$(top_builddir)/src/libs/lua
+endif
 
 libsimpleai_la_CFLAGS = -Wall -DLUA_USE_LONGJMP
 
-libsimpleai_la_LDFLAGS = -no-undefined -release @VERSION@ -lm
+libsimpleai_la_LDFLAGS = -no-undefined -release @VERSION@
 
-libsimpleai_la_LIBADD = \
-	@MATH_LIBS@ \
-	../libs/libexternal.la
+libsimpleai_la_LIBADD = @MATH_LIBS@
+
+if AI_ENABLE_LUA
+libsimpleai_la_LIBADD += ../libs/lua/liblua.la
+endif

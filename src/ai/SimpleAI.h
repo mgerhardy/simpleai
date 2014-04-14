@@ -35,6 +35,7 @@
  */
 #pragma once
 
+#include "Config.h"
 #include "common/Compiler.h"
 #include "common/String.h"
 #include "common/Math.h"

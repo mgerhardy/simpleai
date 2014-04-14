@@ -1,1 +1,1 @@
-SUBDIRS = libs ai example test
+SUBDIRS = libs ai @MODULES@

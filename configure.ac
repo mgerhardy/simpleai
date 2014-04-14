@@ -1,6 +1,6 @@
 AC_INIT(simpleai, 0.1, mgerhardy@github)
 AC_CONFIG_AUX_DIR(config)
-AC_CONFIG_HEADER([src/config.h])
+AC_CONFIG_HEADER([src/ai/Config.h])
 
 AM_INIT_AUTOMAKE
 AC_SUBST(VERSION)
@@ -43,25 +43,62 @@ AC_MSG_CHECKING([whether to build with debug information])
 AC_ARG_ENABLE(debug,AS_HELP_STRING([--enable-debug=@<:@no/yes@:>@],[enable debug data generation]),,[enable_debug=no])
 if test "x$enable_debug" != "xno" ; then
     AC_DEFINE([DEBUG],[],[Debug Mode])
-    AM_CXXFLAGS="$AM_CXXFLAGS -g -Wall -Werror -Wno-uninitialized -O0"
+    AM_CXXFLAGS="-g -Wall -Werror -Wno-uninitialized -O0 $AM_CXXFLAGS"
 else
     AC_DEFINE([NDEBUG],[],[No-debug Mode])
-    AM_CXXFLAGS="$AM_CXXFLAGS -O3"
+    AM_CXXFLAGS="-O3 -Wall $AM_CXXFLAGS"
 fi
 AC_MSG_RESULT([$enable_debug])
 
 AC_MSG_CHECKING([whether to build with gprof support])
 AC_ARG_ENABLE(gprof,AS_HELP_STRING([--enable-gprof=@<:@no/yes@:>@],[build with support for gprof]),,[enable_gprof=no])
 if test "x$enable_gprof" != "xno" ; then
-	AM_CXXFLAGS="$AM_CXXFLAGS -pg"
-	AM_LDFLAGS="$AM_LDFLAGS -pg"
+	AM_CXXFLAGS="-pg $AM_CXXFLAGS"
+	AM_LDFLAGS="-pg $AM_LDFLAGS"
 fi
 AC_MSG_RESULT([$enable_gprof])
+
+AC_MSG_CHECKING([whether to build with lua support])
+AC_ARG_ENABLE(lua,AS_HELP_STRING([--enable-lua=@<:@no/yes@:>@],[build with support for lua]),,[enable_lua=yes])
+if test "x$enable_lua" = "xyes" ; then
+	AC_SUBST([AI_ENABLE_LUA],1)
+	EXTERNAL_DEPENDENCIES="lua $EXTERNAL_DEPENDENCIES"
+else
+	AC_SUBST([AI_ENABLE_LUA],0)
+fi
+AM_CONDITIONAL(AI_ENABLE_LUA,test "x$enable_lua" = "xyes")
+AC_MSG_RESULT([$enable_lua])
+
+if test "x$enable_lua" != "xno" ; then
+	AC_MSG_CHECKING([whether to build the example])
+	AC_ARG_ENABLE(example,AS_HELP_STRING([--enable-example=@<:@no/yes@:>@],[build the example project]),,[enable_example=no])
+	AC_MSG_RESULT([$enable_example])
+	if test "x$enable_example" = "xno" ; then
+		AC_SUBST([AI_NO_EXAMPLE],1)
+	else
+		 MODULES="example $MODULES"
+	fi
+else
+	enable_example=no
+	AC_MSG_NOTICE([skipping example because it needs lua])
+	AC_SUBST([AI_NO_EXAMPLE],1)
+fi
+
+AC_MSG_CHECKING([whether to build the tests])
+AC_ARG_ENABLE(tests,AS_HELP_STRING([--enable-tests=@<:@no/yes@:>@],[build the tests]),,[enable_tests=no])
+AC_MSG_RESULT([$enable_tests])
+if test "x$enable_tests" = "xno" ; then
+	AC_SUBST([AI_NO_TESTS],1)
+else
+	MODULES="test $MODULES"
+fi
 
 # libm
 AC_CHECK_LIB(m, sqrt,, [AC_MSG_ERROR([requires math library])])
 MATH_LIBS=-lm
 
+AC_SUBST([EXTERNAL_DEPENDENCIES])
+AC_SUBST([MODULES])
 AC_SUBST([MATH_LIBS])
 AC_SUBST([AM_LDFLAGS])
 AC_SUBST([AM_CXXFLAGS])
@@ -76,6 +113,7 @@ AC_OUTPUT(
 	src/example/Makefile
 	src/test/Makefile
 	src/libs/Makefile
+	src/libs/lua/Makefile
 	docs/Makefile
 	libsimpleai.pc
 )
@@ -89,6 +127,11 @@ simpleai $VERSION: Automatic configuration OK.
     C++ Flags: ......... $AM_CXXFLAGS
     Libraries: ......... $LIBS
     Linking: ........... $AM_LDFLAGS
+    Example: ........... $enable_example
+    Tests: ............. $enable_tests
+    LUA: ............... $enable_lua
+    External: .......... $EXTERNAL_DEPENDENCIES
+    Modules: ........... $MODULES
 
 Type 'make' to build simpleai.  Type 'make install' to install it.
 ])
