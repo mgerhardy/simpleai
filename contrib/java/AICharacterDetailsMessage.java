@@ -25,6 +25,9 @@ public class AICharacterDetailsMessage extends ProtocolMessage {
 	    final AIStateNode root, final Map<String, String> attributes) {
 	super(PROTO_CHARACTER_DETAILS);
 	_chrId = id;
+	_aggro = aggro;
+	_root = root;
+	_attributes = attributes;
     }
 
     public AIStateAggro getAggro() {
