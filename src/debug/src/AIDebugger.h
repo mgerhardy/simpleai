@@ -32,6 +32,10 @@ public:
 protected:
 	typedef Entities::iterator Iter;
 	Entities _entities;
+	ai::IProtocolHandler *_stateHandler;
+	ai::IProtocolHandler *_characterHandler;
+	ai::IProtocolHandler *_pauseHandler;
+	ai::IProtocolHandler *_namesHandler;
 
 	ai::streamContainer _stream;
 

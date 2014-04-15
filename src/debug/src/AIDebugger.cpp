@@ -73,21 +73,26 @@ public:
 };
 
 AIDebugger::AIDebugger() :
-		QObject(), _selectedId(-1), _socket(this), _pause(false)
-{
+		QObject(), _stateHandler(new StateHandler(*this)), _characterHandler(new CharacterHandler(*this)),
+				_pauseHandler(new PauseHandler(*this)), _namesHandler(new NamesHandler(*this)),
+				_selectedId(-1), _socket(this), _pause(false) {
 	connect(&_socket, SIGNAL(readyRead()), SLOT(readTcpData()));
 	connect(&_socket, SIGNAL(disconnected()), SLOT(onDisconnect()));
 
 	ai::ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
-	r.registerHandler(ai::PROTO_STATE, ProtocolHandlerPtr(new StateHandler(*this)));
-	r.registerHandler(ai::PROTO_CHARACTER_DETAILS, ProtocolHandlerPtr(new CharacterHandler(*this)));
-	r.registerHandler(ai::PROTO_PAUSE, ProtocolHandlerPtr(new PauseHandler(*this)));
-	r.registerHandler(ai::PROTO_NAMES, ProtocolHandlerPtr(new NamesHandler(*this)));
+	r.registerHandler(ai::PROTO_STATE, _stateHandler);
+	r.registerHandler(ai::PROTO_CHARACTER_DETAILS, _characterHandler);
+	r.registerHandler(ai::PROTO_PAUSE, _pauseHandler);
+	r.registerHandler(ai::PROTO_NAMES, _namesHandler);
 
 	_window = new AIDebuggerWidget(*this);
 }
 
 AIDebugger::~AIDebugger() {
+	delete _stateHandler;
+	delete _characterHandler;
+	delete _pauseHandler;
+	delete _namesHandler;
 }
 
 bool AIDebugger::isSelected(const ai::AIStateWorld& ai) const {
@@ -199,7 +204,7 @@ void AIDebugger::readTcpData() {
 				break;
 			}
 			ai::ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
-			ai::ProtocolHandlerPtr handler = r.getHandler(*msg);
+			ai::IProtocolHandler* handler = r.getHandler(*msg);
 			if (handler) {
 				handler->execute(1, *msg);
 			} else {

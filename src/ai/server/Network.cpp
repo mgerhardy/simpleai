@@ -200,7 +200,7 @@ void Network::update(long /*deltaTime*/) {
 				i = closeClient(i);
 				continue;
 			}
-			const ProtocolHandlerPtr& handler = ProtocolHandlerRegistry::get().getHandler(*msg);
+			IProtocolHandler* handler = ProtocolHandlerRegistry::get().getHandler(*msg);
 			if (handler)
 				handler->execute(clientId, *msg);
 		}

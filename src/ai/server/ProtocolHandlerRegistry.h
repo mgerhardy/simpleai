@@ -8,7 +8,7 @@ namespace ai {
 
 class ProtocolHandlerRegistry {
 private:
-	typedef std::map<ProtocolId, ProtocolHandlerPtr> ProtocolHandlers;
+	typedef std::map<ProtocolId, IProtocolHandler*> ProtocolHandlers;
 	ProtocolHandlers _registry;
 
 	ProtocolHandlerRegistry() {
@@ -24,16 +24,16 @@ public:
 		_registry.clear();
 	}
 
-	inline void registerHandler(const ProtocolId& type, const ProtocolHandlerPtr& handler) {
+	inline void registerHandler(const ProtocolId& type, IProtocolHandler* handler) {
 		_registry.insert(std::make_pair(type, handler));
 	}
 
-	inline ProtocolHandlerPtr getHandler(const IProtocolMessage& msg) {
+	inline IProtocolHandler* getHandler(const IProtocolMessage& msg) {
 		ProtocolHandlers::iterator i = _registry.find(msg.getId());
 		if (i != _registry.end())
 			return i->second;
 
-		return ProtocolHandlerPtr();
+		return nullptr;
 	}
 };
 
