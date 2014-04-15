@@ -21,6 +21,10 @@ public:
 			_node(node), _condition(nullptr), _tree(tree) {
 	}
 
+	~LUANode() {
+		delete _condition;
+	}
+
 	inline TreeNodePtr& getTreeNode() {
 		return _node;
 	}

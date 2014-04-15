@@ -50,9 +50,6 @@ static int luaTree_ToString(lua_State * l) {
 
 static int luaNode_GC(lua_State * l) {
 	LUANode *node = luaGetNodeContext(l, 1);
-	LUACondition* condition = node->getCondition();
-	if (condition != nullptr)
-		delete condition;
 	delete node;
 	return 0;
 }
