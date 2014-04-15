@@ -36,17 +36,17 @@ public:
 	void removeFromFileMenu(QMenu *fileMenu);
 	void removeFromHelpMenu(QMenu *helpMenu);
 
+	void tick();
 
 private slots:
 	void about();
-	void tick();
 	void connectToAIServer();
 	void requestPause();
 	void requestStep();
 	void requestReset();
 	void setPause(bool pause);
 	void onDisconnect();
-	void change(const QString&);
+	void change(const QString &);
 	void setNames(const std::vector<std::string>& names);
 
 private:
@@ -74,7 +74,7 @@ private:
 	QComboBox *_namesComboBox;
 
 	AIDebugger& _debugger;
-	std::vector<std::string> _names;
+	QString _name;
 };
 
 }

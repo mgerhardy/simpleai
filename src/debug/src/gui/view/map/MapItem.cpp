@@ -45,12 +45,14 @@ void MapItem::renderDetails(QPainter* painter, qreal lod) {
 	if (lod < _detailLod)
 		return;
 
-	QPoint endPos;
-	QPointF direction(sin(_orientation), cos(_orientation));
-	const float scaleV = 30.0f;
-	endPos.setX(pos().x() + scaleV * direction.x());
-	endPos.setY(pos().y() + scaleV * direction.y());
-	painter->drawLine(pos(), endPos);
+	if (_orientation >= 0.0) {
+		QPoint endPos;
+		QPointF direction(sin(_orientation), cos(_orientation));
+		const float scaleV = 30.0f;
+		endPos.setX(pos().x() + scaleV * direction.x());
+		endPos.setY(pos().y() + scaleV * direction.y());
+		painter->drawLine(pos(), endPos);
+	}
 }
 
 void MapItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {

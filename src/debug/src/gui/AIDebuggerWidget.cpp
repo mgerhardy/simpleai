@@ -24,15 +24,10 @@ AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger) :
 	_statusBarLabel = new QLabel(tr("not connected"));
 	_selectedLabel = new QLabel(tr("nothing selected"));
 
-	connect(_namesComboBox, SIGNAL(activated(const QString&)), SLOT(change(const QString&)));
+	connect(_namesComboBox, SIGNAL(activated(const QString &)), SLOT(change(const QString &)));
 	connect(&_debugger, SIGNAL(onPause(bool)), SLOT(setPause(bool)));
 	connect(&_debugger, SIGNAL(onNamesReceived(const std::vector<std::string>&)), SLOT(setNames(const std::vector<std::string>&)));
 	connect(&_debugger, SIGNAL(disconnected()), SLOT(onDisconnect()));
-
-	// TODO: react on network input from the AIDebugger and remove this timer
-	QTimer *timer = new QTimer(this);
-	connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
-	timer->start(20);
 }
 
 AIDebuggerWidget::~AIDebuggerWidget() {
@@ -52,12 +47,14 @@ AIDebuggerWidget::~AIDebuggerWidget() {
 }
 
 void AIDebuggerWidget::setNames(const std::vector<std::string>& names) {
-	_names = names;
-	_namesComboBox->clear();
-	for (std::vector<std::string>::const_iterator i = _names.begin(); i != _names.end(); ++i) {
-		_namesComboBox->addItem(QString::fromStdString(*i));
+	QStringList list;
+	for (std::vector<std::string>::const_iterator i = names.begin(); i != names.end(); ++i) {
+		list << QString::fromStdString(*i);
 	}
-	_namesComboBox->setEnabled(!_names.empty());
+	const QString name = _namesComboBox->currentText();
+	_namesComboBox->clear();
+	_namesComboBox->insertItems(0, list);
+	_namesComboBox->setEnabled(!names.empty());
 }
 
 void AIDebuggerWidget::contributeToStatusBar(QStatusBar* statusBar) {
@@ -150,7 +147,8 @@ void AIDebuggerWidget::onDisconnect() {
 	_statusBarLabel->setText(tr("not connected"));
 }
 
-void AIDebuggerWidget::change(const QString& name) {
+void AIDebuggerWidget::change(const QString &name) {
+	_name = name;
 	_debugger.change(name);
 }
 

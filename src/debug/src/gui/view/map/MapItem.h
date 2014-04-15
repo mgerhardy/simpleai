@@ -3,6 +3,7 @@
 #include <QGraphicsItem>
 #include <QStyleOptionGraphicsItem>
 #include <server/AIStubTypes.h>
+#include <common/Compiler.h>
 
 namespace ai {
 namespace debug {

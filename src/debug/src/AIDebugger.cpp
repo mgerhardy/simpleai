@@ -187,7 +187,7 @@ void AIDebugger::onDisconnect() {
 }
 
 void AIDebugger::readTcpData() {
-	while(_socket.bytesAvailable() > 0) {
+	while (_socket.bytesAvailable() > 0) {
 		const QByteArray& data = _socket.readAll();
 		const int n = data.count();
 		for (int i = 0; i < n; ++i) {
@@ -213,6 +213,7 @@ void AIDebugger::readTcpData() {
 				break;
 			}
 		}
+		_window->tick();
 	}
 }
 
