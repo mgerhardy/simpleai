@@ -53,6 +53,7 @@ AIDebuggerWidget::~AIDebuggerWidget() {
 
 void AIDebuggerWidget::setNames(const std::vector<std::string>& names) {
 	_names = names;
+	_namesComboBox->clear();
 	for (std::vector<std::string>::const_iterator i = _names.begin(); i != _names.end(); ++i) {
 		_namesComboBox->addItem(QString::fromStdString(*i));
 	}
