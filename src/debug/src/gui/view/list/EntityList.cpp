@@ -6,7 +6,7 @@ namespace debug {
 
 EntityList::EntityList(AIDebugger& debugger) :
 		QTableView(), _model(debugger), _debugger(debugger) {
-	setFixedWidth(100);
+	setFixedWidth(130);
 	_proxyModel.setSourceModel(&_model);
 	setModel(&_proxyModel);
 	setAlternatingRowColors(true);
