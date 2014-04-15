@@ -36,7 +36,7 @@ public:
 		}
 	}
 
-	bool addTree(const std::string& name, TreeNodePtr& root) {
+	bool addTree(const std::string& name, const TreeNodePtr& root) {
 		if (!root) {
 			_error = "Empty behaviour tree with id " + name + " given";
 			return false;
