@@ -9,7 +9,7 @@ inline void randomSeed (unsigned int seed) {
 }
 
 inline float randomf (float max = 1.0f) {
-	return max * (float(rand()) / RAND_MAX);
+	return max * (static_cast<float>(rand()) / static_cast<float>(RAND_MAX));
 }
 
 inline float randomBinomial (float max = 1.0f) {

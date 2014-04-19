@@ -55,11 +55,6 @@ public:
 	}
 
 	virtual MoveState move(AI& entity, const Vector3f& to, std::list<MoveVector>& route) = 0;
-
-	virtual MoveState move(AI& entity, const Vector3f& to) {
-		std::list<MoveVector> route;
-		return move(entity, to, route);
-	}
 };
 
 class NOPPathfinder: public IPathfinder {
@@ -67,7 +62,7 @@ public:
 	virtual ~NOPPathfinder() {
 	}
 
-	MoveState move(AI& /*entity*/, const Vector3f& /*to*/, std::list<MoveVector>& /*route*/) {
+	MoveState move(AI& /*entity*/, const Vector3f& /*to*/, std::list<MoveVector>& /*route*/) override {
 		return SUCCESSFUL;
 	}
 };

@@ -3,7 +3,7 @@
 
 namespace ai {
 
-void ResetHandler::execute(const ClientId& clientId, const IProtocolMessage& message) {
+void ResetHandler::execute(const ClientId& /*clientId*/, const IProtocolMessage& /*message*/) {
 	_server.reset();
 }
 

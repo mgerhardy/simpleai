@@ -20,8 +20,7 @@ class IProtocolMessage;
 
 struct Client {
 	Client(SOCKET _socket) :
-			socket(_socket) {
-		finished = false;
+			socket(_socket), finished(false) {
 	}
 	SOCKET socket;
 	bool finished;

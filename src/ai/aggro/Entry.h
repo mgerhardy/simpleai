@@ -63,12 +63,16 @@ inline void Entry::setReduceByValue(float reduceValueSecond) {
 
 inline bool Entry::reduceByTime(long millis) {
 	switch (_reduceType) {
-	case RATIO:
-		reduceByRatio((millis / 1000.0f) * _reduceRatioSecond);
+	case RATIO: {
+		const float f = static_cast<float>(millis) / 1000.0f;
+		reduceByRatio(f * _reduceRatioSecond);
 		return true;
-	case VALUE:
-		reduceByValue((millis / 1000.0f) * _reduceValueSecond);
+	}
+	case VALUE: {
+		const float f = static_cast<float>(millis) / 1000.0f;
+		reduceByValue(f * _reduceValueSecond);
 		return true;
+	}
 	case DISABLED:
 		break;
 	}

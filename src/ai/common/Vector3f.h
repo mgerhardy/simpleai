@@ -70,29 +70,29 @@ struct Vector3f {
 	}
 
 	inline double angle() const {
-		const double angle = ::atan2(z, x);
-		return angle;
+		const double _angle = ::atan2(z, x);
+		return _angle;
 	}
 
 	inline double orientation() const {
-		const double orientation = ::atan2(x, z);
-		return orientation;
+		const double _orientation = ::atan2(x, z);
+		return _orientation;
 	}
 
 	inline double radians() const {
-		const double radians = M_PI / 180.0 * angle();
-		return radians;
+		const double _radians = M_PI / 180.0 * angle();
+		return _radians;
 	}
 
 	static inline Vector3f fromRadians(float radians) {
 		return Vector3f(sinf(radians), 0.0f, cosf(radians));
 	}
 
-	inline Vector3f mix(const Vector3f& end, const float mix) {
-		const float number = 1.0f - mix;
-		const float _x = x * number + end.x * mix;
-		const float _y = y * number + end.y * mix;
-		const float _z = z * number + end.z * mix;
+	inline Vector3f mix(const Vector3f& end, const float _mix) {
+		const float number = 1.0f - _mix;
+		const float _x = x * number + end.x * _mix;
+		const float _y = y * number + end.y * _mix;
+		const float _z = z * number + end.z * _mix;
 		return Vector3f(_x, _y, _z);
 	}
 

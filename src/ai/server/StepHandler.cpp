@@ -3,7 +3,7 @@
 
 namespace ai {
 
-void StepHandler::execute(const ClientId& clientId, const IProtocolMessage& message) {
+void StepHandler::execute(const ClientId& /*clientId*/, const IProtocolMessage& /*message*/) {
 	_server.step();
 }
 

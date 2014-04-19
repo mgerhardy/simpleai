@@ -48,11 +48,11 @@ bool Server::start() {
 	return _network.start();
 }
 
-void Server::pause(const ClientId& /*clientId*/, bool pause) {
-	_pause = pause;
+void Server::pause(const ClientId& /*clientId*/, bool state) {
+	_pause = state;
 	for (AIMapIter i = _ais.begin(); i != _ais.end(); ++i) {
 		AI& ai = *i->second;
-		ai.setPause(pause);
+		ai.setPause(_pause);
 	}
 	_network.broadcast(AIPauseMessage(_pause));
 }
