@@ -90,32 +90,32 @@ struct Vector3f {
 
 	inline Vector3f mix(const Vector3f& end, const float mix) {
 		const float number = 1.0f - mix;
-		const float x = x * number + end.x * mix;
-		const float y = y * number + end.y * mix;
-		const float z = z * number + end.z * mix;
-		return Vector3f(x, y, z);
+		const float _x = x * number + end.x * mix;
+		const float _y = y * number + end.y * mix;
+		const float _z = z * number + end.z * mix;
+		return Vector3f(_x, _y, _z);
 	}
 
 	inline Vector3f normalize() const {
 		const float norm = 1.0f / length();
-		const float x = x * norm;
-		const float y = y * norm;
-		const float z = z * norm;
-		return Vector3f(x, y, z);
+		const float _x = x * norm;
+		const float _y = y * norm;
+		const float _z = z * norm;
+		return Vector3f(_x, _y, _z);
 	}
 
 	inline Vector3f advance(const Vector3f& direction, const float scale) const {
-		const float x = x + scale * direction.x;
-		const float y = y + scale * direction.y;
-		const float z = z + scale * direction.z;
-		return Vector3f(x, y, z);
+		const float _x = x + scale * direction.x;
+		const float _y = y + scale * direction.y;
+		const float _z = z + scale * direction.z;
+		return Vector3f(_x, _y, _z);
 	}
 
 	inline Vector3f inverse() const {
-		const float x = -x;
-		const float y = -y;
-		const float z = -z;
-		return Vector3f(x, y, z);
+		const float _x = -x;
+		const float _y = -y;
+		const float _z = -z;
+		return Vector3f(_x, _y, _z);
 	}
 
 	inline void inverse() {

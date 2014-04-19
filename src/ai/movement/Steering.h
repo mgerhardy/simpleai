@@ -142,7 +142,7 @@ public:
 	MoveVector execute () const {
 		float totalWeight = 0.0f;
 		Vector3f vecBlended;
-		float angularBlended;
+		float angularBlended = 0.0f;
 		for (WeightedSteeringsIter i = _steerings.begin(); i != _steerings.end(); ++i) {
 			const WeightedData& wd = *i;
 			const float weight = wd.weight;
