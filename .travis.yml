@@ -1,8 +1,5 @@
 language: cpp
 
-env:
-  - CC="ccache gcc"
-
 compiler:
   - gcc
   - clang
