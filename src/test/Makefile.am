@@ -28,4 +28,4 @@ tests_LDFLAGS = -pthread
 
 include_HEADERS =
 
-INCLUDES = -I$(top_srcdir)/src/ai -I$(top_builddir)/src/ai -I$(top_builddir)/src/test/gtest/include -I$(top_builddir)/src/test/gtest
+AM_CPPFLAGS = -I$(top_srcdir)/src/ai -I$(top_builddir)/src/ai -I$(top_builddir)/src/test/gtest/include -I$(top_builddir)/src/test/gtest
