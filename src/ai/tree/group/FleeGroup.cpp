@@ -15,7 +15,7 @@ TreeNodeStatus FleeGroup::doAction(AI& entity, long deltaMillis) {
 
 	const float deltaSeconds = static_cast<float>(deltaMillis) / 1000.0f;
 	chr.setPosition(chr.getPosition() + (mv.getVector() * deltaSeconds));
-	chr.setOrientation(mv.getVector().orientation());
+	chr.setOrientation(static_cast<float>(mv.getVector().orientation()));
 	return FINISHED;
 }
 
