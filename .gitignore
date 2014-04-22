@@ -33,6 +33,7 @@ Makefile
 /config.status
 /libsimpleai.pc
 /libtool
+/INSTALL
 
 *~
 
