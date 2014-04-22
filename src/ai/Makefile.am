@@ -130,7 +130,7 @@ if AI_ENABLE_LUA
 INCLUDES += -I$(top_builddir)/src/libs/lua
 endif
 
-libsimpleai_la_CFLAGS = -Wall -DLUA_USE_LONGJMP
+libsimpleai_la_CXXFLAGS = -DLUA_USE_LONGJMP -Wall -pedantic -Wextra -Wabi -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-declarations -Wmissing-format-attribute -Wno-long-long -Woverloaded-virtual -Wpacked -Wredundant-decls -Wshadow -Wsign-promo -Wno-sign-compare
 
 libsimpleai_la_LDFLAGS = -no-undefined -release @VERSION@
 
