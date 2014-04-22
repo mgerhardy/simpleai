@@ -65,7 +65,7 @@ bool GroupMgr::isGroupLeader(GroupId id, const ICharacter& character) const {
 
 int GroupMgr::getGroupSize(GroupId id) const {
 	const std::pair<GroupMembersSetIter, GroupMembersSetIter>& members = getGroupMembers(id);
-	return std::distance(members.first, members.second);
+	return static_cast<int>(std::distance(members.first, members.second));
 }
 
 bool GroupMgr::isInAnyGroup(const ICharacter& character) const {

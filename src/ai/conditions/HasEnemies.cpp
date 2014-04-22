@@ -18,7 +18,7 @@ bool HasEnemies::evaluate(AI& entity) {
 		const bool hasEnemy = mgr.getHighestEntry().get() != nullptr;
 		return hasEnemy;
 	}
-	const int size = mgr.getEntries().size();
+	const int size = static_cast<int>(mgr.getEntries().size());
 	return size >= _enemyCount;
 }
 

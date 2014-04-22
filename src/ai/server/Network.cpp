@@ -167,12 +167,12 @@ void Network::update(long /*deltaTime*/) {
 				for (std::size_t n = 0; n < len; ++n) {
 					buf[n] = client.out.at(n);
 				}
-				const int sent = send(clientSocket, buf, len, 0);
+				const ssize_t sent = send(clientSocket, buf, len, 0);
 				if (sent < 0) {
 					i = closeClient(i);
 					continue;
 				}
-				for (int n = 0; n < sent; ++n) {
+				for (ssize_t n = 0; n < sent; ++n) {
 					client.out.pop_front();
 				}
 			} else if (client.finished) {
@@ -183,12 +183,12 @@ void Network::update(long /*deltaTime*/) {
 
 		if (FD_ISSET(clientSocket, &readFDsOut)) {
 			uint8_t buf[4096];
-			const int len = recv(clientSocket, buf, sizeof(buf), 0);
+			const ssize_t len = recv(clientSocket, buf, sizeof(buf), 0);
 			if (len < 0) {
 				i = closeClient(i);
 				continue;
 			}
-			for (int n = 0; n < len; ++n) {
+			for (ssize_t n = 0; n < len; ++n) {
 				client.in.push_back(buf[n]);
 			}
 		}
