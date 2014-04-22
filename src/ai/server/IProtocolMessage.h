@@ -44,6 +44,11 @@ const ProtocolId PROTO_NAMES = 6;
 const ProtocolId PROTO_RESET = 7;
 const ProtocolId PROTO_STEP = 8;
 
+/**
+ * @brief A protocol message is used for the serialization of the ai states for remote debugging
+ *
+ * @note Message byte order is big endian
+ */
 class IProtocolMessage {
 private:
 #if defined(__GNUC__) && defined(__i386__)
