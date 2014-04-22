@@ -162,7 +162,7 @@ int LUA::getValueIntegerFromTable (const char * key, int defaultValue)
 		return defaultValue;
 	}
 
-	const int rtn = lua_tointeger(_state, -1);
+	const int rtn = static_cast<int>(lua_tointeger(_state, -1));
 	lua_pop(_state, 1);
 	return rtn;
 }
