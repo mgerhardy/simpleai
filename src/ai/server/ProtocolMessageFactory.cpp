@@ -18,7 +18,7 @@ bool ProtocolMessageFactory::isNewMessageAvailable(const streamContainer& in) co
 		// not enough data yet, wait a little bit more
 		return false;
 	}
-	const int streamSize = static_cast<int>(in.size()) - sizeof(int32_t);
+	const int streamSize = static_cast<int>(in.size() - sizeof(int32_t));
 	if (size > streamSize) {
 		// not enough data yet, wait a little bit more
 		return false;

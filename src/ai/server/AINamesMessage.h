@@ -29,9 +29,9 @@ public:
 
 	void serialize(streamContainer& out) const override {
 		addByte(out, _id);
-		const int size = _namesPtr->size();
+		const std::size_t size = _namesPtr->size();
 		addInt(out, size);
-		for (int i = 0; i < size; ++i) {
+		for (std::size_t i = 0; i < size; ++i) {
 			addString(out, (*_namesPtr)[i]);
 		}
 	}
