@@ -45,7 +45,6 @@ nobase_library_include_HEADERS = \
 	AIRegistry.h \
 	common/AIException.h \
 	common/Vector3f.h \
-	common/Compiler.h \
 	common/Enum.h \
 	common/IFactoryRegistry.h \
 	common/IParser.h \
