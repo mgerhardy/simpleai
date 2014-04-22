@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
 	}
 
 	std::cout << "successfully loaded the behaviour tree " << name << std::endl;
-	std::cout << "now run this behaviour tree for some time: " << std::endl << *root.get() << std::endl;
+	std::cout << "now run this behaviour tree with " << amount << " entities for some time: " << std::endl << *root.get() << std::endl;
 
 	ai::GroupMgr groupManager;
 	ai::example::GameMap gameMap(300);
