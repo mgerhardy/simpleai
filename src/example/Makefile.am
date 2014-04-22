@@ -20,4 +20,4 @@ example_CXXFLAGS = $(AM_CXXFLAGS) -Wall -pedantic -Wextra -Wabi -Wcast-qual -Wco
 
 EXTRA_DIST = behaviours.lua
 
-INCLUDES = -I$(top_srcdir)/src/ai -I$(top_builddir)/src/ai
+AM_CPPFLAGS = -I$(top_srcdir)/src/ai -I$(top_builddir)/src/ai

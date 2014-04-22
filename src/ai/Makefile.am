@@ -124,10 +124,10 @@ endif
 
 EXTRA_DIST =
 
-INCLUDES = -I$(top_srcdir)/include -I$(top_builddir)/include
+AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_builddir)/include
 
 if AI_ENABLE_LUA
-INCLUDES += -I$(top_builddir)/src/libs/lua
+AM_CPPFLAGS += -I$(top_builddir)/src/libs/lua
 endif
 
 libsimpleai_la_CXXFLAGS = $(AM_CXXFLAGS) -DLUA_USE_LONGJMP -Wall -pedantic -Wextra -Wabi -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-declarations -Wmissing-format-attribute -Wno-long-long -Woverloaded-virtual -Wpacked -Wredundant-decls -Wshadow -Wsign-promo -Wno-sign-compare
