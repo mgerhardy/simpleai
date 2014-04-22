@@ -13,7 +13,7 @@ public:
 			entry->setReduceByValue(i);
 		}
 		const ai::EntryPtr& entry = mgr.getHighestEntry();
-		ASSERT_TRUE(entry)<< "Highest entry not set but aggro was added";
+		ASSERT_NE(nullptr, entry.get()) << "Highest entry not set but aggro was added";
 		ASSERT_EQ(max, entry->getCharacterId())<< "Highest entry not what it should be. " << printAggroList(mgr);
 		mgr.update(1000);
 		ASSERT_EQ(0u, mgr.getEntries().size());
@@ -27,7 +27,7 @@ TEST_F(AggroTest, testAggroMgr) {
 	TestEntity entity(id, ai::TreeNodePtr(), _pathfinder, _groupManager);
 	mgr.addAggro(entity, 1.0f);
 	const ai::EntryPtr& entry = mgr.getHighestEntry();
-	ASSERT_TRUE(entry)<< "Highest entry not set but aggro was added";
+	ASSERT_NE(nullptr, entry.get()) << "Highest entry not set but aggro was added";
 	ASSERT_EQ(id, entry->getCharacterId())<< "Highest entry not what it should be";
 	mgr.addAggro(entity, 1.0f);
 	ASSERT_EQ(1u, mgr.getEntries().size())<< "Aggrolist contains more entries than expected";
@@ -60,7 +60,7 @@ TEST_F(AggroTest, testAggroMgrDegradeValue) {
 	mgr.addAggro(entity, expectedAggro);
 	const ai::EntryPtr& entry = mgr.getHighestEntry();
 	entry->setReduceByValue(reduceBySecond);
-	ASSERT_TRUE(entry)<< "Highest entry not set but aggro was added";
+	ASSERT_NE(nullptr, entry.get()) << "Highest entry not set but aggro was added";
 	ASSERT_EQ(id, entry->getCharacterId())<< "Highest entry not what it should be";
 	const float aggro = entry->getAggro();
 	ASSERT_FLOAT_EQ(expectedAggro, aggro);

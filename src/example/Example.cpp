@@ -87,8 +87,8 @@ int main(int argc, char **argv) {
 	// TODO: remove me once we have an attack
 	std::vector<ai::example::GameEntity*>& entities = gameMap.getEntities();
 	for (std::vector<ai::example::GameEntity*>::iterator i = entities.begin() + 1; i != entities.end(); ++i) {
-		ai::Entry* e = entities[0]->addAggro(**i, 1000.0f + (rand() % 1000));
-		e->setReduceByValue(1.0f + rand() % 3);
+		ai::Entry* e = entities[0]->addAggro(**i, 1000.0f + static_cast<float>(rand() % 1000));
+		e->setReduceByValue(1.0f + static_cast<float>(rand() % 3));
 	}
 
 	long timeLast = getCurrentMillis();

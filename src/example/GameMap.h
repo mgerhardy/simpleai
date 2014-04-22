@@ -60,7 +60,7 @@ public:
 		const int x = (rand() % (2 * _size)) - _size;
 		const float y = 0.0f;
 		const int z = (rand() % (2 * _size)) - _size;
-		return ai::Vector3f(x, y, z);
+		return ai::Vector3f(static_cast<float>(x), y, static_cast<float>(z));
 	}
 };
 
