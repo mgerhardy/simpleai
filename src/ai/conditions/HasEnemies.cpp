@@ -13,8 +13,11 @@ HasEnemies::HasEnemies(const std::string& parameters) :
 
 bool HasEnemies::evaluate(AI& entity) {
 	AggroMgr& mgr = entity.getAggroMgr();
-	if (_enemyCount == -1)
-		return mgr.getHighestEntry();
+	if (_enemyCount == -1) {
+		// TODO: check why boolean operator isn't working here
+		const bool hasEnemy = mgr.getHighestEntry().get() != nullptr;
+		return hasEnemy;
+	}
 	const int size = mgr.getEntries().size();
 	return size >= _enemyCount;
 }

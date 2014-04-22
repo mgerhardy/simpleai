@@ -39,6 +39,7 @@ AM_COND_IF([HAVE_DOXYGEN], [AC_CONFIG_FILES([docs/Doxyfile])])
 # reset compiler flags to initial flags
 CXXFLAGS=$OLD_CXXFLAGS
 
+AM_CXXFLAGS="-std=c++0x"
 AC_MSG_CHECKING([whether to build with debug information])
 AC_ARG_ENABLE(debug,AS_HELP_STRING([--enable-debug=@<:@no/yes@:>@],[enable debug data generation]),,[enable_debug=no])
 if test "x$enable_debug" != "xno" ; then

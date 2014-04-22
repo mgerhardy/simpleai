@@ -11,11 +11,10 @@
 #include <vector>
 #include <sstream>
 
-#include <common/Compiler.h>
-#include <common/Pointers.h>
-#include <common/IPrintable.h>
+#include "common/Pointers.h"
+#include "common/IPrintable.h"
 
-#include <AIRegistry.h>
+#include "AIRegistry.h"
 
 namespace ai {
 

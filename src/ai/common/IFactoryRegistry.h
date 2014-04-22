@@ -2,7 +2,6 @@
 
 #include <common/NonCopyable.h>
 #include <common/Pointers.h>
-#include <common/Compiler.h>
 
 template<class TYPE, class CTX>
 class IFactory {

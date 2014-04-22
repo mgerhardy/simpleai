@@ -3,7 +3,6 @@
 #include <vector>
 #include <string>
 #include "common/Pointers.h"
-#include "common/Compiler.h"
 #include "common/IPrintable.h"
 #include "conditions/ICondition.h"
 #include "conditions/True.h"

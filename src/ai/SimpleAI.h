@@ -35,7 +35,6 @@
  */
 #pragma once
 
-#include "common/Compiler.h"
 #include "common/String.h"
 #include "common/Math.h"
 #include "common/Random.h"

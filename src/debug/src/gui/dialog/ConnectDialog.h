@@ -1,7 +1,6 @@
 #pragma once
 
 #include "IDialog.h"
-#include <common/Compiler.h>
 
 #include <QLineEdit>
 #include <QGroupBox>

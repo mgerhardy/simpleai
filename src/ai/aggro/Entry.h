@@ -1,7 +1,6 @@
 #pragma once
 
 #include <common/Pointers.h>
-#include <common/Compiler.h>
 #include <ICharacter.h>
 
 namespace ai {

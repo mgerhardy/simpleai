@@ -7,7 +7,7 @@
 #include "AI.h"
 #include "common/Math.h"
 #include "common/Random.h"
-#include "common/Compiler.h"
+#include <cassert>
 
 namespace ai {
 namespace movement {

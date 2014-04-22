@@ -1,6 +1,5 @@
 #pragma once
 
-#include "common/Compiler.h"
 #include "IProtocolHandler.h"
 #include <string>
 #include <stdint.h>

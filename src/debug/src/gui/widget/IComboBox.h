@@ -1,7 +1,5 @@
 #pragma once
 
-#include <common/Compiler.h>
-
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QVBoxLayout>

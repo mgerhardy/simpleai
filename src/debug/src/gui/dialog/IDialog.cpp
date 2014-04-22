@@ -1,5 +1,4 @@
 #include "IDialog.h"
-#include <common/Compiler.h>
 
 #include <QGroupBox>
 #include <QCheckBox>

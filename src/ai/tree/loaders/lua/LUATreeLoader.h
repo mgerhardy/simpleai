@@ -1,7 +1,6 @@
 #pragma once
 
-#include <common/Compiler.h>
-#include <tree/loaders/ITreeLoader.h>
+#include "tree/loaders/ITreeLoader.h"
 
 class LUA;
 

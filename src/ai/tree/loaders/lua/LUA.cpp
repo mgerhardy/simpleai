@@ -2,7 +2,6 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <sstream>
-#include <common/Compiler.h>
 #include <iostream>
 
 class StackChecker {

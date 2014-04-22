@@ -2,7 +2,6 @@
 
 #include <list>
 #include "common/Vector3f.h"
-#include "common/Compiler.h"
 #include "common/Math.h"
 #include <cmath>
 

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <common/Compiler.h>
-#include <common/Pointers.h>
+#include "common/Pointers.h"
 #include <string>
 #include <vector>
 #include <map>
