@@ -333,7 +333,7 @@ std::string LUA::getTableString (int i)
 int LUA::getTableInteger (int i)
 {
 	lua_rawgeti(_state, -1, i);
-	const int val = lua_tointeger(_state, -1);
+	const int val = static_cast<int>(lua_tointeger(_state, -1));
 	pop();
 	return val;
 }

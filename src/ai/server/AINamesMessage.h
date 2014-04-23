@@ -30,8 +30,8 @@ public:
 	void serialize(streamContainer& out) const override {
 		addByte(out, _id);
 		const std::size_t size = _namesPtr->size();
-		addInt(out, size);
-		for (std::size_t i = 0; i < size; ++i) {
+		addInt(out, static_cast<int>(size));
+		for (std::size_t i = 0U; i < size; ++i) {
 			addString(out, (*_namesPtr)[i]);
 		}
 	}
