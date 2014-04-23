@@ -38,12 +38,5 @@ inline float toFloat(const std::string& str) {
 	return static_cast<float>(::atof(str.c_str()));
 }
 
-template <typename T>
-inline std::string toString(T input) {
-	std::stringstream ss;
-	ss << input;
-	return ss.str();
-}
-
 }
 }

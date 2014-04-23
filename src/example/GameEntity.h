@@ -25,8 +25,8 @@ public:
 		else
 			_groupId = 3;
 
-		setAttribute(ai::attributes::GROUP, Str::toString(_groupId));
-		setAttribute(ai::attributes::ID, Str::toString(getId()));
+		setAttribute(ai::attributes::GROUP, std::to_string(_groupId));
+		setAttribute(ai::attributes::ID, std::to_string(getId()));
 
 		_ai.getGroupMgr().add(_groupId, this);
 	}
@@ -62,8 +62,8 @@ public:
 
 		ss << _position;
 		setAttribute("Position", ss.str());
-		setAttribute("Speed", Str::toString(getSpeed()));
-		setAttribute("Orientation", Str::toString(toDegrees(getOrientation())));
+		setAttribute("Speed", std::to_string(getSpeed()));
+		setAttribute("Orientation", std::to_string(toDegrees(getOrientation())));
 	}
 
 	inline std::list<ai::MoveVector>& getRoute () {
