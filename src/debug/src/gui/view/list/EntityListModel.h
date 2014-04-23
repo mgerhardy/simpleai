@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QAbstractTableModel>
+#include <QTableView>
 
 #include "AIDebugger.h"
 
@@ -11,8 +12,9 @@ class EntityListModel: public QAbstractTableModel {
 Q_OBJECT
 private:
 	AIDebugger& _debugger;
+	QTableView* _parent;
 public:
-	EntityListModel(AIDebugger& debugger);
+	EntityListModel(AIDebugger& debugger, QTableView *parent);
 	~EntityListModel();
 
 	inline const AIDebugger::Entities& getEntities() const {

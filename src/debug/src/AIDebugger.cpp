@@ -207,9 +207,11 @@ void AIDebugger::readTcpData() {
 			ai::IProtocolHandler* handler = r.getHandler(*msg);
 			if (handler) {
 				handler->execute(1, *msg);
+				delete msg;
 			} else {
 				qDebug() << "no handler for " << msg->getId();
 				_socket.close();
+				delete msg;
 				break;
 			}
 		}
