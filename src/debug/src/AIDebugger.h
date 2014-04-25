@@ -31,19 +31,28 @@ public:
 	typedef Entities::const_iterator EntitiesIter;
 protected:
 	typedef Entities::iterator Iter;
+	// all the entities that are send by the ai debug server
 	Entities _entities;
+
+	// the network protocol message handlers
 	ai::IProtocolHandler *_stateHandler;
 	ai::IProtocolHandler *_characterHandler;
 	ai::IProtocolHandler *_pauseHandler;
 	ai::IProtocolHandler *_namesHandler;
 
+	// The buffer where we store our network data until we can read one complete protocol message.
 	ai::streamContainer _stream;
 
+	// the current selected entity id
 	ai::CharacterId _selectedId;
+	// the aggro list of the current selected entity
 	std::vector<AIStateAggroEntry> _aggro;
+	// the behaviour tree states of the current selected entity
 	AIStateNode _node;
+	// the attributes of the current selected entity
 	CharacterAttributes _attributes;
 	AIDebuggerWidget *_window;
+	// the socket of the ai debug server
 	QTcpSocket _socket;
 	bool _pause;
 

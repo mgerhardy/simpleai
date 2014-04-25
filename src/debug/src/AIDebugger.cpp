@@ -116,10 +116,13 @@ bool AIDebugger::writeMessage(const IProtocolMessage& msg) {
 	if (_socket.state() != QAbstractSocket::ConnectedState) {
 		return false;
 	}
+	// serialize into streamcontainer to get the final size
 	streamContainer out;
 	msg.serialize(out);
+	// now put the serialized message into the byte array
 	QByteArray temp;
 	QDataStream data(&temp, QIODevice::ReadWrite);
+	// add the framing size int
 	const uint32_t size = out.size();
 	streamContainer sizeC;
 	IProtocolMessage::addInt(sizeC, size);
@@ -127,10 +130,12 @@ bool AIDebugger::writeMessage(const IProtocolMessage& msg) {
 		const uint8_t byte = *i;
 		data << byte;
 	}
+	// add the real message
 	for (streamContainer::iterator i = out.begin(); i != out.end(); ++i) {
 		const uint8_t byte = *i;
 		data << byte;
 	}
+	// now write everything to the socket
 	_socket.write(temp);
 	return true;
 }
@@ -189,6 +194,8 @@ void AIDebugger::onDisconnect() {
 void AIDebugger::readTcpData() {
 	while (_socket.bytesAvailable() > 0) {
 		const QByteArray& data = _socket.readAll();
+		// read everything that is currently available from the socket
+		// and store it in our buffer
 		const int n = data.count();
 		for (int i = 0; i < n; ++i) {
 			_stream.push_back(data[i]);
