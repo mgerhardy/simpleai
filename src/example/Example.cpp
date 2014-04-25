@@ -3,8 +3,6 @@
 #include <fstream>
 #include <streambuf>
 #include <cstdlib>
-#include <sys/time.h>
-#include <unistd.h>
 #include <SimpleAI.h>
 #include "Pathfinder.h"
 #include "actions/ExampleTask.h"
@@ -12,13 +10,8 @@
 #include "conditions/IsMoving.h"
 #include "GameEntity.h"
 #include "GameMap.h"
-
-static inline long getCurrentMillis () {
-	struct timeval now;
-	gettimeofday(&now, NULL);
-	const long ms = now.tv_sec * 1000l + now.tv_usec / 1000l;
-	return ms;
-}
+#include <chrono>
+#include <thread>
 
 int main(int argc, char **argv) {
 	if (argc <= 1) {
@@ -26,7 +19,7 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	srand(static_cast<uint32_t>(getCurrentMillis()));
+	srand(1);
 
 	// define your own tasks and conditions
 	ai::AIRegistry registry;
@@ -91,13 +84,13 @@ int main(int argc, char **argv) {
 		e->setReduceByValue(1.0f + static_cast<float>(rand() % 3));
 	}
 
-	long timeLast = getCurrentMillis();
+	const std::chrono::milliseconds delay(10);
+	auto timeLast = std::chrono::steady_clock::now();
 	for (;;) {
-		const long timeNow = getCurrentMillis();
-		const long dt = timeNow - timeLast;
+		const auto timeNow = std::chrono::steady_clock::now();
+		const auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - timeLast).count();
 		timeLast = timeNow;
-		if (dt > 0)
-			gameMap.update(dt);
-		sleep(0);
+		gameMap.update(static_cast<uint32_t>(dt));
+		std::this_thread::sleep_for(delay);
 	}
 }
