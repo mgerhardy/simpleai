@@ -9,6 +9,11 @@ namespace debug {
 
 class AIDebugger;
 
+/**
+ * @brief Represents one entity in the world
+ *
+ * @note If you want to show additional details for an entity, see the @c MapView class
+ */
 class MapItem: public QGraphicsItem {
 protected:
 	const AIStateWorld& _state;

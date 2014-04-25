@@ -14,6 +14,9 @@ class MapItem;
 
 /**
  * @brief The view that renders your map with all the ai controlled entities.
+ *
+ * @note If you want to render additional details to an entity, extend this class to override
+ * MapView::createMapItem and provide your own @c MapItem there.
  */
 class MapView: public QGraphicsView {
 	Q_OBJECT

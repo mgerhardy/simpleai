@@ -63,6 +63,9 @@ public:
 	 */
 	void removeFromHelpMenu(QMenu *helpMenu);
 
+	/**
+	 * @brief This must be called in order to update all the widgets
+	 */
 	void tick();
 
 private slots:
