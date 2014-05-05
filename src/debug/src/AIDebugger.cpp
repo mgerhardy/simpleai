@@ -204,7 +204,7 @@ void AIDebugger::readTcpData() {
 		for (;;) {
 			if (!mf.isNewMessageAvailable(_stream))
 				break;
-			ai::IProtocolMessage* msg = mf.create(_stream);
+			std::unique_ptr<ai::IProtocolMessage> msg(mf.create(_stream));
 			if (msg == nullptr) {
 				qDebug() << "unknown server message - disconnecting";
 				_socket.close();
@@ -214,11 +214,9 @@ void AIDebugger::readTcpData() {
 			ai::IProtocolHandler* handler = r.getHandler(*msg);
 			if (handler) {
 				handler->execute(1, *msg);
-				delete msg;
 			} else {
 				qDebug() << "no handler for " << msg->getId();
 				_socket.close();
-				delete msg;
 				break;
 			}
 		}
