@@ -59,11 +59,8 @@ QVariant EntityListModel::headerData(int section, Qt::Orientation orientation,
 QVariant EntityListModel::data(const QModelIndex &index, int role) const {
 	const AIStateWorld* id = getEntity(index);
 	if (role == Qt::DisplayRole) {
-		switch (index.column()) {
-		case 0:
+		if (index.column() == 0) {
 			return id->getId();
-		default:
-			break;
 		}
 	} else if (role == Qt::BackgroundColorRole) {
 		if (_debugger.isSelected(*id)) {
