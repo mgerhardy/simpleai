@@ -45,21 +45,13 @@ QVariant EntityListModel::headerData(int section, Qt::Orientation orientation,
 		int role) const {
 	if (orientation != Qt::Horizontal)
 		return QVariant();
+	if (section != 0)
+		return QVariant();
 
 	if (role == Qt::DisplayRole) {
-		switch (section) {
-		case 0:
-			return tr("Entities");
-		default:
-			break;
-		}
+		return tr("Entities");
 	} else if (role == Qt::ToolTipRole) {
-		switch (section) {
-		case 0:
-			return tr("The character id");
-		default:
-			break;
-		}
+		return tr("The character id");
 	}
 	return QVariant();
 }
