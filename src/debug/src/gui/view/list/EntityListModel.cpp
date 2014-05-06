@@ -12,25 +12,8 @@ EntityListModel::~EntityListModel() {
 }
 
 void EntityListModel::update() {
-	QModelIndexList selectedList = _parent->selectionModel()->selectedRows();
-	QModelIndex scrollTopIndex = _parent->indexAt(QPoint(1, 1));
-	QModelIndex scrollBottomIndex = _parent->indexAt(QPoint(1, _parent->height() - 1));
-
 	beginResetModel();
 	endResetModel();
-
-	if (scrollBottomIndex.row() == -1) {
-		_parent->scrollToBottom();
-	} else {
-		_parent->scrollTo(scrollTopIndex);
-	}
-
-	if (selectedList.count() > 0
-			&& (selectedList.at(0).row() >= scrollTopIndex.row())
-			&& (scrollBottomIndex.row() == -1
-					|| scrollBottomIndex.row() > selectedList.at(0).row())) {
-		_parent->selectRow(selectedList.at(0).row());
-	}
 }
 
 int EntityListModel::rowCount(const QModelIndex & /*parent*/) const {
