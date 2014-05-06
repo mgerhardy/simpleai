@@ -2,6 +2,7 @@
 #include <QMessageBox>
 #include <QStatusBar>
 #include <QSplitter>
+#include <QTimer>
 
 #include "AIDebugger.h"
 #include "AIDebuggerWidget.h"
@@ -28,6 +29,10 @@ AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger) :
 	connect(&_debugger, SIGNAL(onPause(bool)), SLOT(setPause(bool)));
 	connect(&_debugger, SIGNAL(onNamesReceived(const std::vector<std::string>&)), SLOT(setNames(const std::vector<std::string>&)));
 	connect(&_debugger, SIGNAL(disconnected()), SLOT(onDisconnect()));
+
+	QTimer *timer = new QTimer(this);
+	connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
+	timer->start(500);
 }
 
 AIDebuggerWidget::~AIDebuggerWidget() {

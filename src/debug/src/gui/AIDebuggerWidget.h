@@ -63,12 +63,11 @@ public:
 	 */
 	void removeFromHelpMenu(QMenu *helpMenu);
 
+private slots:
 	/**
 	 * @brief This must be called in order to update all the widgets
 	 */
 	void tick();
-
-private slots:
 	void about();
 	void connectToAIServer();
 	void requestPause();

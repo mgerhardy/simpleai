@@ -221,7 +221,6 @@ void AIDebugger::readTcpData() {
 				break;
 			}
 		}
-		_window->tick();
 	}
 }
 
