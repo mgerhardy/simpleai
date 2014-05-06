@@ -5,7 +5,7 @@ namespace ai {
 namespace debug {
 
 AggroTable::AggroTable(AIDebugger& debugger) :
-		QTableView(), _model(debugger), _debugger(debugger) {
+		QTableView(), _model(debugger, this), _debugger(debugger) {
 	setFixedWidth(160);
 	_proxyModel.setSourceModel(&_model);
 	setModel(&_proxyModel);

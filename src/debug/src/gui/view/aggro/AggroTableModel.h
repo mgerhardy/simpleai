@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QAbstractTableModel>
+#include <QTableView>
 
 #include "AIDebugger.h"
 
@@ -11,8 +12,9 @@ class AggroTableModel: public QAbstractTableModel {
 Q_OBJECT
 private:
 	AIDebugger& _debugger;
+	QTableView* _parent;
 public:
-	AggroTableModel(AIDebugger& debugger);
+	AggroTableModel(AIDebugger& debugger, QTableView *parent);
 	~AggroTableModel();
 
 	inline const AIDebugger::Entities& getEntities() const {
