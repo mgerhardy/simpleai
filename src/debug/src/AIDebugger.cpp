@@ -161,6 +161,7 @@ void AIDebugger::change(const QString& name) {
 }
 
 bool AIDebugger::connectToAIServer(const QString& hostname, short port) {
+	_socket.close();
 	_socket.connectToHost(hostname, port, QAbstractSocket::ReadWrite, QAbstractSocket::AnyIPProtocol);
 	if (_socket.waitForConnected()) {
 		return true;
