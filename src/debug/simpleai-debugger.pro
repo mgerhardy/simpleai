@@ -58,7 +58,7 @@ SOURCES += \
 
 RESOURCES += data/resources.qrc
 FORMS +=
-TRANSLATIONS +=
+TRANSLATIONS += data/simpleai_de_DE.ts
 
 win32:RC_FILE = src/app.rc
 #unix:ICON = src/images/icon.icns

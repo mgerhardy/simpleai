@@ -7,6 +7,7 @@
 #include <QString>
 #include <QToolBar>
 #include <QMenuBar>
+#include <QTranslator>
 
 namespace ai {
 namespace debug {
@@ -47,6 +48,15 @@ AIApplication::AIApplication(int argc, char** argv) :
 		qDebug() << "connect to " << hostname << " on port " << port;
 		_widget->connectToAIServer(hostname, port);
 	}
+
+	QTranslator qtTranslator;
+	qtTranslator.load("qt_" + QLocale::system().name(),
+			QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	installTranslator(&qtTranslator);
+
+	QTranslator simpleaiTranslator;
+	simpleaiTranslator.load(applicationName() + "_" + QLocale::system().name(), ":/data/");
+	installTranslator(&simpleaiTranslator);
 }
 
 AIApplication::~AIApplication() {
