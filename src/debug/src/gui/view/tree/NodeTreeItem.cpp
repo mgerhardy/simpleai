@@ -1,5 +1,6 @@
 #include "NodeTreeItem.h"
 #include "AIDebugger.h"
+#include "Common.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QFont>
@@ -14,6 +15,18 @@ const QColor backgroundColor = QColor::fromRgb(32, 32, 32, 64);
 const QColor activeBackgroundColor = QColor::fromRgb(255, 0, 0, 128);
 const QFont font("Times", fontSize);
 const QFontMetrics fontMetrics(font);
+
+#define E(x) #x
+const char *stateNames[] = {
+E(UNKNOWN),
+E(CANNOTEXECUTE),
+E(RUNNING),
+E(FAILED),
+E(FINISHED),
+E(EXCEPTION)
+};
+#undef E
+COMPILE_TIME_ASSERT(ARRAY_LENGTH(stateNames) == MAX_TREENODESTATUS);
 }
 
 NodeTreeItem::NodeTreeItem (const AIStateNode& node, NodeTreeItem* parent, int height, int horizontalSpacing, int verticalSpacing) :
@@ -128,27 +141,7 @@ void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *opt
 	painter->drawText(rect, _name);
 	rect.setY(rect.y() + _lineHeight);
 	const TreeNodeStatus status = _node.getStatus();
-	QString stateString;
-	switch (status) {
-	case UNKNOWN:
-		stateString = "UNKNOWN";
-		break;
-	case CANNOTEXECUTE:
-		stateString = "CANNOTEXECUTE";
-		break;
-	case RUNNING:
-		stateString = "RUNNING";
-		break;
-	case FAILED:
-		stateString = "FAILED";
-		break;
-	case FINISHED:
-		stateString = "FINISHED";
-		break;
-	case EXCEPTION:
-		stateString = "EXCEPTION";
-		break;
-	}
+	const QString stateString = stateNames[status];
 	painter->drawText(rect, stateString);
 	rect.setY(rect.y() + _lineHeight);
 	painter->drawText(rect, _condition);
