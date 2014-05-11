@@ -11,7 +11,7 @@ void Parallel::getRunningChildren(const AI& entity, std::vector<bool>& active) c
 
 TreeNodeStatus Parallel::execute(AI& entity, long deltaMillis) {
 	if (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)
-		return state(CANNOTEXECUTE);
+		return CANNOTEXECUTE;
 
 	bool totalStatus = false;
 	const std::size_t size = _children.size();
