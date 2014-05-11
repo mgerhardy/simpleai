@@ -4,7 +4,8 @@
 namespace ai {
 
 TreeNodeStatus Sequence::execute(AI& entity, long deltaMillis) {
-	Selector::execute(entity, deltaMillis);
+	if (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)
+		return CANNOTEXECUTE;
 
 	TreeNodeStatus result = FINISHED;
 	const int progress = std::max(0, getSelectorState(entity));
