@@ -3,13 +3,12 @@
 #include <QGraphicsView>
 #include <AI.h>
 #include <server/AIStubTypes.h>
-#include "MapScene.h"
+#include <QGraphicsScene>
 
 namespace ai {
 namespace debug {
 
 class AIDebugger;
-class MapScene;
 class MapItem;
 
 /**
@@ -21,7 +20,7 @@ class MapItem;
 class MapView: public QGraphicsView {
 	Q_OBJECT
 protected:
-	MapScene _scene;
+	QGraphicsScene _scene;
 	AIDebugger& _debugger;
 public:
 	MapView(AIDebugger& debugger);

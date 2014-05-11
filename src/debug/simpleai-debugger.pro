@@ -21,7 +21,6 @@ HEADERS += \
            src/gui/dialog/IDialog.h \
            src/gui/view/list/EntityList.h \
            src/gui/view/list/EntityListModel.h \
-           src/gui/view/map/MapScene.h \
            src/gui/view/map/MapView.h \
            src/gui/view/map/MapItem.h \
            src/gui/view/tree/NodeTreeItem.h \
@@ -43,7 +42,6 @@ SOURCES += \
            src/gui/dialog/IDialog.cpp \
            src/gui/view/list/EntityList.cpp \
            src/gui/view/list/EntityListModel.cpp \
-           src/gui/view/map/MapScene.cpp \
            src/gui/view/map/MapView.cpp \
            src/gui/view/map/MapItem.cpp \
            src/gui/view/tree/NodeTreeItem.cpp \

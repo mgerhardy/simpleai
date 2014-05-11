@@ -1,5 +1,4 @@
 #include "ZoomFrame.h"
-#include "MapScene.h"
 #include "MapView.h"
 #include "ZoomWidget.h"
 #include "AIDebugger.h"
