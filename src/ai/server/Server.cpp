@@ -78,14 +78,16 @@ void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) c
 	const TreeNodes& children = node->getChildren();
 	std::vector<bool> currentlyRunning;
 	node->getRunningChildren(ai, currentlyRunning);
+	const long aiTime = ai._time;
 	const std::size_t length = children.size();
 	for (std::size_t i = 0; i < length; ++i) {
 		const TreeNodePtr& childNode = children[i];
 		const std::string& name = childNode->getName();
 		const ConditionPtr& condition = childNode->getCondition();
 		const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
-		const long delta = _time - childNode->getLastExecMillis();
-		AIStateNode child(name, conditionStr, delta, childNode->getLastStatus(), currentlyRunning[i]);
+		const long lastRun = childNode->getLastExecMillis(ai);
+		const long delta = lastRun == -1 ? -1 : aiTime - lastRun;
+		AIStateNode child(name, conditionStr, delta, childNode->getLastStatus(ai), currentlyRunning[i]);
 		addChildren(childNode, child, ai);
 		parent.addChildren(child);
 	}
@@ -117,7 +119,7 @@ void Server::broadcastCharacterDetails() {
 	const std::string& name = node->getName();
 	const ConditionPtr& condition = node->getCondition();
 	const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
-	AIStateNode root(name, conditionStr, _time - node->getLastExecMillis(), node->getLastStatus(), true);
+	AIStateNode root(name, conditionStr, _time - node->getLastExecMillis(ai), node->getLastStatus(ai), true);
 	addChildren(node, root, ai);
 
 	AIStateAggro aggro;

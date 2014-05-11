@@ -4,6 +4,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QFont>
+#include <QDateTime>
 
 namespace ai {
 namespace debug {
@@ -142,7 +143,10 @@ void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *opt
 	rect.setY(rect.y() + _lineHeight);
 	const TreeNodeStatus status = _node.getStatus();
 	const QString stateString = stateNames[status];
-	painter->drawText(rect, stateString);
+	const int64_t lastRun = _node.getLastRun();
+	qDebug() << "last run: " << _node.getLastRun();
+	const QString lastRunStr = QString::number(lastRun);
+	painter->drawText(rect, stateString + " - " + lastRunStr);
 	rect.setY(rect.y() + _lineHeight);
 	painter->drawText(rect, _condition);
 	painter->restore();

@@ -79,19 +79,12 @@ protected:
 	std::string _name;
 	std::string _parameters;
 	ConditionPtr _condition;
-	long _lastExecMillis;
-	long _time;
-	TreeNodeStatus _lastStatus;
 
 	void setResetSinceLastExec(AI& entity, bool status);
-
-	inline TreeNodeStatus state(TreeNodeStatus treeNodeState) {
-		_lastStatus = treeNodeState;
-		return treeNodeState;
-	}
-
+	TreeNodeStatus state(AI& entity, TreeNodeStatus treeNodeState);
 	int getSelectorState(const AI& entity) const;
 	void setSelectorState(AI& entity, int selected);
+	void setLastExecMillis(AI& entity);
 
 public:
 	TreeNode(const std::string& name, const std::string& parameters, const ConditionPtr& condition);
@@ -105,12 +98,10 @@ public:
 	/**
 	 * @brief Returns the time in milliseconds when this node was last run. This is only updated if @c #execute() was called
 	 */
-	long getLastExecMillis() const;
 	const std::string& getName() const;
 	const ConditionPtr& getCondition() const;
 	void setCondition(const ConditionPtr& condition);
 	const TreeNodes& getChildren() const;
-	TreeNodeStatus getLastStatus() const;
 	bool getResetSinceLastExec(const AI& entity) const;
 
 	/**
@@ -118,6 +109,8 @@ public:
 	 * @param[in] entity The entity to get the child node states for
 	 */
 	virtual void getRunningChildren(const AI& entity, std::vector<bool>& active) const;
+	long getLastExecMillis(const AI& ai) const;
+	TreeNodeStatus getLastStatus(const AI& ai) const;
 
 	virtual TreeNodeStatus execute(AI& entity, long deltaMillis);
 
@@ -139,10 +132,6 @@ inline const std::string& TreeNode::getName() const {
 	return _name;
 }
 
-inline long TreeNode::getLastExecMillis() const {
-	return _lastExecMillis;
-}
-
 inline const ConditionPtr& TreeNode::getCondition() const {
 	return _condition;
 }
@@ -155,7 +144,8 @@ inline const TreeNodes& TreeNode::getChildren() const {
 	return _children;
 }
 
-inline TreeNodeStatus TreeNode::getLastStatus() const {
-	return _lastStatus;
+inline void TreeNode::addChild(const TreeNodePtr& child) {
+	_children.push_back(child);
 }
+
 }

@@ -19,23 +19,23 @@ TEST_F(NodeTest, testSequence) {
 
 	TestEntity e(1, node, _pathfinder, _groupManager);
 	e.update(1);
-	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus());
-	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus());
+	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
 	e.update(1);
-	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus());
-	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus());
+	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
 	e.update(1);
-	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus());
-	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus());
+	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
 	e.update(1);
-	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus());
-	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus());
+	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
 	e.update(1);
-	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus());
-	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus());
+	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus(e));
 	e.update(1);
-	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus());
-	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus());
+	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus(e));
 }
 
 TEST_F(NodeTest, testIdle) {
@@ -63,14 +63,14 @@ TEST_F(NodeTest, testParallel) {
 
 	TestEntity e(1, node, _pathfinder, _groupManager);
 	e.update(1);
-	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus());
-	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus());
+	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
 	e.update(1);
-	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus());
-	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus());
+	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
 	e.update(1);
-	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus());
-	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus());
+	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus(e));
 }
 
 TEST_F(NodeTest, testPrioritySelector) {
@@ -89,14 +89,14 @@ TEST_F(NodeTest, testPrioritySelector) {
 
 	TestEntity e(1, node, _pathfinder, _groupManager);
 	e.update(1);
-	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus());
-	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus());
+	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
 	e.update(1);
-	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus());
-	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus());
+	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
 	e.update(1);
-	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus());
-	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus());
+	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
 }
 
 TEST_F(NodeTest, testPrioritySelectorWithCondition) {
@@ -115,12 +115,12 @@ TEST_F(NodeTest, testPrioritySelectorWithCondition) {
 
 	TestEntity e(1, node, _pathfinder, _groupManager);
 	e.update(1);
-	ASSERT_EQ(ai::CANNOTEXECUTE, idle1->getLastStatus());
-	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus());
+	ASSERT_EQ(ai::CANNOTEXECUTE, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
 	e.update(1);
-	ASSERT_EQ(ai::CANNOTEXECUTE, idle1->getLastStatus());
-	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus());
+	ASSERT_EQ(ai::CANNOTEXECUTE, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
 	e.update(1);
-	ASSERT_EQ(ai::CANNOTEXECUTE, idle1->getLastStatus());
-	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus());
+	ASSERT_EQ(ai::CANNOTEXECUTE, idle1->getLastStatus(e));
+	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus(e));
 }

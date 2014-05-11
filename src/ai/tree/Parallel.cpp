@@ -27,7 +27,7 @@ TreeNodeStatus Parallel::execute(AI& entity, long deltaMillis) {
 	if (!totalStatus) {
 		resetState(entity);
 	}
-	return state(totalStatus ? RUNNING : FINISHED);
+	return state(entity, totalStatus ? RUNNING : FINISHED);
 }
 
 NODE_FACTORY_IMPL(Parallel)

@@ -3,6 +3,7 @@
 #include <map>
 
 #include "aggro/AggroMgr.h"
+#include "tree/TreeNode.h"
 #include "tree/loaders/ITreeLoader.h"
 #include "ICharacter.h"
 #include "pathfinding/IPathfinder.h"
@@ -26,12 +27,17 @@ namespace ai {
  */
 class AI {
 	friend class TreeNode;
+	friend class Server;
 protected:
 	/**
 	 * If a node is no longer active, it gets reset. This map holds the state about the resets.
 	 */
 	typedef std::map<int, bool> ResetStates;
 	ResetStates _resetStates;
+	typedef std::map<int, TreeNodeStatus> NodeStates;
+	NodeStates _lastStatus;
+	typedef std::map<int, long> LastExecMap;
+	LastExecMap _lastExecMillis;
 
 	/**
 	 * Often @c Selector states must be stored to continue in the next step at a particular
@@ -49,6 +55,7 @@ protected:
 	GroupMgr& _groupManager;
 
 	bool _pause;
+	long _time;
 public:
 	/**
 	 * @param character The binding to your game entity
@@ -64,7 +71,7 @@ public:
 	 * @param[in] currentMillis The current milliseconds to update the aggro entries and
 	 * time based tasks or conditions.
 	 */
-	virtual void update(long currentMillis);
+	virtual void update(long deltaMillis);
 
 	/**
 	 * @brief don't update the entity as long as it is paused

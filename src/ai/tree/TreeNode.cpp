@@ -6,22 +6,20 @@ namespace ai {
 int TreeNode::_nextId = 0;
 
 TreeNode::TreeNode(const std::string& name, const std::string& parameters, const ConditionPtr& condition) :
-		_id(_nextId++), _name(name), _parameters(parameters), _condition(condition), _lastExecMillis(-1L), _time(0L),
-		_lastStatus(UNKNOWN) {
+		_id(_nextId++), _name(name), _parameters(parameters), _condition(condition) {
 }
 
 TreeNode::~TreeNode() {
 }
 
-TreeNodeStatus TreeNode::execute(AI& entity, long deltaMillis) {
-	_time += deltaMillis;
+TreeNodeStatus TreeNode::execute(AI& entity, long) {
 	setResetSinceLastExec(entity, false);
 	if (!_condition->evaluate(entity)) {
-		return state(CANNOTEXECUTE);
+		return state(entity, CANNOTEXECUTE);
 	}
 
-	_lastExecMillis = _time;
-	return state(FINISHED);
+	setLastExecMillis(entity);
+	return state(entity, FINISHED);
 }
 
 void TreeNode::resetState(AI& entity) {
@@ -46,12 +44,12 @@ bool TreeNode::getResetSinceLastExec(const AI& entity) const {
 	return i->second;
 }
 
-void TreeNode::setResetSinceLastExec(AI& entity, bool status) {
-	entity._resetStates[getId()] = status;
+inline void TreeNode::setLastExecMillis(AI& entity) {
+	entity._lastExecMillis[getId()] = entity._time;
 }
 
-void TreeNode::addChild(const TreeNodePtr& child) {
-	_children.push_back(child);
+inline void TreeNode::setResetSinceLastExec(AI& entity, bool status) {
+	entity._resetStates[getId()] = status;
 }
 
 int TreeNode::getSelectorState(const AI& entity) const {
@@ -63,6 +61,25 @@ int TreeNode::getSelectorState(const AI& entity) const {
 
 void TreeNode::setSelectorState(AI& entity, int selected) {
 	entity._selectorStates[getId()] = selected;
+}
+
+inline TreeNodeStatus TreeNode::state(AI& entity, TreeNodeStatus treeNodeState) {
+	entity._lastStatus[getId()] = treeNodeState;
+	return treeNodeState;
+}
+
+long TreeNode::getLastExecMillis(const AI& entity) const {
+	AI::LastExecMap::const_iterator i = entity._lastExecMillis.find(getId());
+	if (i == entity._lastExecMillis.end())
+		return -1;
+	return i->second;
+}
+
+TreeNodeStatus TreeNode::getLastStatus(const AI& entity) const {
+	AI::NodeStates::const_iterator i = entity._lastStatus.find(getId());
+	if (i == entity._lastStatus.end())
+		return UNKNOWN;
+	return i->second;
 }
 
 std::ostream& TreeNode::print(std::ostream& stream, int level) const {

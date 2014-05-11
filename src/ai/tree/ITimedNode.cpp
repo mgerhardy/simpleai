@@ -27,10 +27,10 @@ TreeNodeStatus ITimedNode::execute(AI& entity, long deltaMillis) {
 		_timerMillis -= deltaMillis;
 	} else {
 		_timerMillis = NOTSTARTED;
-		return state(FINISHED);
+		return state(entity, FINISHED);
 	}
 
-	return state(executeTimed(entity, deltaMillis));
+	return state(entity, executeTimed(entity, deltaMillis));
 }
 
 }

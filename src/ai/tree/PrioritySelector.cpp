@@ -24,10 +24,10 @@ TreeNodeStatus PrioritySelector::execute(AI& entity, long deltaMillis) {
 			_children[i]->resetState(entity);
 		}
 
-		return state(result);
+		return state(entity, result);
 	}
 
-	return state(FINISHED);
+	return state(entity, FINISHED);
 }
 
 NODE_FACTORY_IMPL(PrioritySelector)
