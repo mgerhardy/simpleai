@@ -34,7 +34,7 @@ TEST_F(MessageTest, testAICharacterDetailsMessage) {
 	ASSERT_EQ("condition", m.getNode().getCondition());
 	ASSERT_EQ("name", m.getNode().getName());
 	ASSERT_EQ(ai::RUNNING, m.getNode().getStatus());
-	ASSERT_TRUE(m.getNode().isActive());
+	ASSERT_TRUE(m.getNode().isRunning());
 
 	std::unique_ptr<ai::AICharacterDetailsMessage> d(serializeDeserialize(m));
 	ASSERT_EQ(m.getId(), d->getId());
@@ -47,7 +47,7 @@ TEST_F(MessageTest, testAICharacterDetailsMessage) {
 	ASSERT_EQ("condition", d->getNode().getCondition());
 	ASSERT_EQ("name", d->getNode().getName());
 	ASSERT_EQ(ai::RUNNING, d->getNode().getStatus());
-	ASSERT_TRUE(d->getNode().isActive());
+	ASSERT_TRUE(d->getNode().isRunning());
 }
 
 TEST_F(MessageTest, testAIPauseMessage) {

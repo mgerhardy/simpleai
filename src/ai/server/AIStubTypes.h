@@ -46,14 +46,14 @@ private:
 	NodeVector _children;
 	int64_t _lastRun;
 	TreeNodeStatus _status;
-	bool _active;
+	bool _currentlyRunning;
 public:
-	AIStateNode(const std::string& name, const std::string& condition, int64_t lastRun, TreeNodeStatus status, bool active) :
-			_name(name), _condition(condition), _lastRun(lastRun), _status(status), _active(active) {
+	AIStateNode(const std::string& name, const std::string& condition, int64_t lastRun, TreeNodeStatus status, bool currentlyRunning) :
+			_name(name), _condition(condition), _lastRun(lastRun), _status(status), _currentlyRunning(currentlyRunning) {
 	}
 
 	AIStateNode() :
-			_lastRun(0L), _status(UNKNOWN), _active(false) {
+			_lastRun(0L), _status(UNKNOWN), _currentlyRunning(false) {
 	}
 
 	void addChildren(const AIStateNode& child) {
@@ -87,11 +87,11 @@ public:
 	}
 
 	/**
-	 * @brief Some nodes have a state that holds which children was the last active one.
-	 * @return Whether this particular node is active
+	 * @brief Some nodes have a state that holds which children is currently running
+	 * @return Whether this particular node is currently running
 	 */
-	inline bool isActive() const {
-		return _active;
+	inline bool isRunning() const {
+		return _currentlyRunning;
 	}
 };
 

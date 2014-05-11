@@ -117,7 +117,7 @@ public:
 	 * @brief Get the state of all child nodes for the given entity
 	 * @param[in] entity The entity to get the child node states for
 	 */
-	virtual void getChildrenState(const AI& entity, std::vector<bool>& active) const;
+	virtual void getRunningChildren(const AI& entity, std::vector<bool>& active) const;
 
 	virtual TreeNodeStatus execute(AI& entity, long deltaMillis);
 

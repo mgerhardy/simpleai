@@ -12,7 +12,7 @@ namespace {
 const qreal padding = 1;
 const qreal fontSize = 10;
 const QColor backgroundColor = QColor::fromRgb(32, 32, 32, 64);
-const QColor activeBackgroundColor = QColor::fromRgb(255, 0, 0, 128);
+const QColor runningBackgroundColor = QColor::fromRgb(255, 0, 0, 128);
 const QFont font("Times", fontSize);
 const QFontMetrics fontMetrics(font);
 
@@ -104,10 +104,10 @@ void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *opt
 	Q_UNUSED(option);
 	Q_UNUSED(widget);
 	const qreal lod = option->levelOfDetailFromTransform(painter->worldTransform());
-	const bool active = _node.isActive();
+	const bool running = _node.isRunning();
 	QBrush b = painter->brush();
-	if (active)
-		painter->setBrush(activeBackgroundColor);
+	if (running)
+		painter->setBrush(runningBackgroundColor);
 	else
 		painter->setBrush(backgroundColor);
 	painter->drawRect(0.0f, 0.0f, _width, _height);

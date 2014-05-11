@@ -76,8 +76,8 @@ bool Server::removeAI(AI& ai) {
 
 void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) const {
 	const TreeNodes& children = node->getChildren();
-	std::vector<bool> active;
-	node->getChildrenState(ai, active);
+	std::vector<bool> currentlyRunning;
+	node->getRunningChildren(ai, currentlyRunning);
 	const std::size_t length = children.size();
 	for (std::size_t i = 0; i < length; ++i) {
 		const TreeNodePtr& childNode = children[i];
@@ -85,7 +85,7 @@ void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) c
 		const ConditionPtr& condition = childNode->getCondition();
 		const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
 		const long delta = _time - childNode->getLastExecMillis();
-		AIStateNode child(name, conditionStr, delta, childNode->getLastStatus(), active[i]);
+		AIStateNode child(name, conditionStr, delta, childNode->getLastStatus(), currentlyRunning[i]);
 		addChildren(childNode, child, ai);
 		parent.addChildren(child);
 	}

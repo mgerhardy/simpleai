@@ -26,9 +26,9 @@ private:
 		const std::string& condition = readString(in);
 		const int64_t lastRun = readLong(in);
 		const TreeNodeStatus status = static_cast<TreeNodeStatus>(readByte(in));
-		const bool active = readBool(in);
+		const bool running = readBool(in);
 		const int16_t childrenCount = readShort(in);
-		AIStateNode node(name, condition, lastRun, status, active);
+		AIStateNode node(name, condition, lastRun, status, running);
 		for (uint8_t i = 0; i < childrenCount; ++i) {
 			const AIStateNode& child = readNode(in);
 			node.addChildren(child);
@@ -41,7 +41,7 @@ private:
 		addString(out, node.getCondition());
 		addLong(out, node.getLastRun());
 		addByte(out, node.getStatus());
-		addBool(out, node.isActive());
+		addBool(out, node.isRunning());
 		const std::vector<AIStateNode>& children = node.getChildren();
 		addShort(out, static_cast<int16_t>(children.size()));
 		for (std::vector<AIStateNode>::const_iterator i = children.begin(); i != children.end(); ++i) {
