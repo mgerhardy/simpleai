@@ -20,7 +20,7 @@ ITimedNode::~ITimedNode() {
 TreeNodeStatus ITimedNode::execute(AI& entity, long deltaMillis) {
 	const TreeNodeStatus result = TreeNode::execute(entity, deltaMillis);
 	if (result == CANNOTEXECUTE)
-		return state(CANNOTEXECUTE);
+		return CANNOTEXECUTE;
 	if (_timerMillis == NOTSTARTED) {
 		_timerMillis = _millis;
 	} else if (_timerMillis - deltaMillis > 0) {
