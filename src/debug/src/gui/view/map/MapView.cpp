@@ -8,8 +8,9 @@ namespace debug {
 MapView::MapView(AIDebugger& debugger) :
 		QGraphicsView(), _debugger(debugger) {
 	_scene.setItemIndexMethod(QGraphicsScene::NoIndex);
-	// FIXME: use the smart update
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	setScene(&_scene);
 }
 
