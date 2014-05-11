@@ -29,6 +29,7 @@ public:
 
 	void executeAIStateMessage(const ai::AIStateMessage& msg) override {
 		_aiDebugger.setEntities(msg.getStates());
+		emit _aiDebugger.onEntitiesUpdated();
 	}
 };
 
@@ -42,6 +43,7 @@ public:
 
 	void executeAICharacterDetailsMessage(const ai::AICharacterDetailsMessage& msg) override {
 		_aiDebugger.setCharacterDetails(msg.getCharacterId(), msg.getAggro(), msg.getNode(), msg.getAttributes());
+		emit _aiDebugger.onSelected();
 	}
 };
 

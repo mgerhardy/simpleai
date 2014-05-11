@@ -30,9 +30,8 @@ AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger) :
 	connect(&_debugger, SIGNAL(onNamesReceived(const std::vector<std::string>&)), SLOT(setNames(const std::vector<std::string>&)));
 	connect(&_debugger, SIGNAL(disconnected()), SLOT(onDisconnect()));
 
-	QTimer *timer = new QTimer(this);
-	connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
-	timer->start(500);
+	connect(&_debugger, SIGNAL(onSelected()), SLOT(onSelected()));
+	connect(&_debugger, SIGNAL(onEntitiesUpdated()), SLOT(onEntitiesUpdated()));
 }
 
 AIDebuggerWidget::~AIDebuggerWidget() {
@@ -49,6 +48,23 @@ AIDebuggerWidget::~AIDebuggerWidget() {
 	delete _connectAction;
 	delete _aboutAction;
 	delete _namesComboBox;
+}
+
+void AIDebuggerWidget::onEntitiesUpdated() {
+	_entityList->updateEntityList();
+	_mapWidget->updateMapView();
+}
+
+void AIDebuggerWidget::onSelected() {
+	const ai::CharacterId& id = _debugger.getSelected();
+	if (id == -1) {
+		_selectedLabel->setText(tr("nothing selected"));
+	} else {
+		_selectedLabel->setText(tr("selected %1").arg(id));
+	}
+	_stateTable->updateStateTable();
+	_nodeTree->updateTreeWidget();
+	_aggroTable->updateAggroTable();
 }
 
 void AIDebuggerWidget::setNames(const std::vector<std::string>& names) {
@@ -199,20 +215,6 @@ void AIDebuggerWidget::connectToAIServer() {
 
 void AIDebuggerWidget::about() {
 	QMessageBox::about(this, tr("About"), tr("AI debug visualization for libsimpleai.<br />Grab the latest version at <a href=\"https://github.com/mgerhardy/simpleai\">github</a>"));
-}
-
-void AIDebuggerWidget::tick() {
-	const ai::CharacterId& id = _debugger.getSelected();
-	if (id == -1) {
-		_selectedLabel->setText(tr("nothing selected"));
-	} else {
-		_selectedLabel->setText(tr("selected %1").arg(id));
-	}
-	_stateTable->updateStateTable();
-	_entityList->updateEntityList();
-	_mapWidget->updateMapView();
-	_nodeTree->updateTreeWidget();
-	_aggroTable->updateAggroTable();
 }
 
 void AIDebuggerWidget::createActions() {

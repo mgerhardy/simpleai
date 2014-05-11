@@ -64,19 +64,17 @@ public:
 	void removeFromHelpMenu(QMenu *helpMenu);
 
 private slots:
-	/**
-	 * @brief This must be called in order to update all the widgets
-	 */
-	void tick();
 	void about();
 	void connectToAIServer();
 	void requestPause();
 	void requestStep();
 	void requestReset();
 	void setPause(bool pause);
-	void onDisconnect();
 	void change(const QString &);
 	void setNames(const std::vector<std::string>& names);
+	void onDisconnect();
+	void onEntitiesUpdated();
+	void onSelected();
 
 private:
 	void createView();

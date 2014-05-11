@@ -106,6 +106,8 @@ public:
 
 signals:
 	void onPause(bool pause);
+	void onEntitiesUpdated();
+	void onSelected();
 	void disconnected();
 	void onNamesReceived(const std::vector<std::string>& names);
 };
