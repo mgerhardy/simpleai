@@ -138,17 +138,25 @@ void NodeTreeItem::paint (QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 	painter->setFont(font);
 	painter->save();
-	QRect rect(padding, padding, _width - 2 * padding, _height - 2 * padding);
+	const int radius = 4;
+	QRect rect(padding + 2 * radius, padding, _width - 2 * padding - 2 * radius, _height - 2 * padding);
 	painter->drawText(rect, _name);
 	rect.setY(rect.y() + _lineHeight);
 	const TreeNodeStatus status = _node.getStatus();
 	const QString stateString = stateNames[status];
 	const int64_t lastRun = _node.getLastRun();
-	qDebug() << "last run: " << _node.getLastRun();
-	const QString lastRunStr = QString::number(lastRun);
-	painter->drawText(rect, stateString + " - " + lastRunStr);
+	painter->drawText(rect, stateString);
+	QPoint center(padding + radius, padding + radius);
 	rect.setY(rect.y() + _lineHeight);
 	painter->drawText(rect, _condition);
+	int seconds;
+	if (lastRun == -1)
+		seconds = 255;
+	else
+		seconds = lastRun / 1000;
+	QColor activityColor(std::max(0, 255 - seconds), 0, 0, 255);
+	painter->setBrush(activityColor);
+	painter->drawEllipse(center, radius, radius);
 	painter->restore();
 }
 
