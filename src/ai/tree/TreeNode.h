@@ -83,7 +83,6 @@ protected:
 	long _time;
 	TreeNodeStatus _lastStatus;
 
-	bool getResetSinceLastExec(const AI& entity) const;
 	void setResetSinceLastExec(AI& entity, bool status);
 
 	inline TreeNodeStatus state(TreeNodeStatus treeNodeState) {
@@ -112,6 +111,7 @@ public:
 	void setCondition(const ConditionPtr& condition);
 	const TreeNodes& getChildren() const;
 	TreeNodeStatus getLastStatus() const;
+	bool getResetSinceLastExec(const AI& entity) const;
 
 	/**
 	 * @brief Get the state of all child nodes for the given entity
