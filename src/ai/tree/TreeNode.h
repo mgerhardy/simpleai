@@ -35,7 +35,9 @@ enum TreeNodeStatus {
 	/**
 	 * Unexpected failure while executing the the node's action
 	 */
-	EXCEPTION
+	EXCEPTION,
+
+	MAX_TREENODESTATUS
 };
 
 #define NODE_FACTORY \
