@@ -25,8 +25,8 @@ private:
 			_groupId = -1;
 			_distance = -1.0f;
 		} else {
-			_groupId = Str::toInt(tokens[0]);
-			_distance = Str::toFloat(tokens[1]);
+			_groupId = std::stoi(tokens[0]);
+			_distance = std::stof(tokens[1]);
 		}
 	}
 public:

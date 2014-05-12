@@ -17,7 +17,7 @@ public:
 		if (_parameters.empty()) {
 			_rotation = 8.0f * static_cast<float>(M_PI);
 		} else {
-			_rotation = Str::toFloat(_parameters);
+			_rotation = std::stof(_parameters);
 		}
 	}
 	NODE_FACTORY

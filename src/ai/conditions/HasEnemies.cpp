@@ -8,7 +8,7 @@ HasEnemies::HasEnemies(const std::string& parameters) :
 	if (_parameters.empty())
 		_enemyCount = -1;
 	else
-		_enemyCount = Str::toInt(_parameters);
+		_enemyCount = std::stoi(_parameters);
 }
 
 bool HasEnemies::evaluate(AI& entity) {
