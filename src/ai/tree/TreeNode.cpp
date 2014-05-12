@@ -63,7 +63,7 @@ void TreeNode::setSelectorState(AI& entity, int selected) {
 	entity._selectorStates[getId()] = selected;
 }
 
-inline TreeNodeStatus TreeNode::state(AI& entity, TreeNodeStatus treeNodeState) {
+TreeNodeStatus TreeNode::state(AI& entity, TreeNodeStatus treeNodeState) {
 	entity._lastStatus[getId()] = treeNodeState;
 	return treeNodeState;
 }
