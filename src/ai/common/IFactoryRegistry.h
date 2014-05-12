@@ -48,6 +48,10 @@ public:
 		}
 
 		const IFactory<TYPE, CTX>* factory = i->second;
-		return factory->create(ctx);
+		try {
+			return factory->create(ctx);
+		} catch (...) {
+			return SharedPtr<TYPE>();
+		}
 	}
 };
