@@ -11,7 +11,7 @@ namespace ai {
 namespace debug {
 
 NodeTreeView::NodeTreeView(AIDebugger& debugger) :
-		QGraphicsView(), _debugger(debugger), _scene(this) {
+		IGraphicsView(), _debugger(debugger), _scene(this) {
 	_scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 	// because the connection lines are not included in the bounding box...
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);

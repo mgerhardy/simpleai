@@ -9,7 +9,7 @@ namespace debug {
 
 MapItem::MapItem (const AIStateWorld& state, AIDebugger& aiDebugger) :
 		QGraphicsItem(), _state(state), _aiDebugger(aiDebugger), _detailLod(0.4f) {
-	setFlags(ItemIsSelectable);
+	setFlag(QGraphicsItem::ItemIsSelectable);
 	setPos(worldToMap(state.getPosition()));
 	_orientation = state.getOrientation();
 	setZValue((qreal)state.getPosition().z);

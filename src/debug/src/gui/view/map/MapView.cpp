@@ -6,7 +6,7 @@ namespace ai {
 namespace debug {
 
 MapView::MapView(AIDebugger& debugger) :
-		QGraphicsView(), _debugger(debugger) {
+		IGraphicsView(), _debugger(debugger) {
 	_scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);

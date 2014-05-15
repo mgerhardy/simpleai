@@ -1,9 +1,9 @@
 #pragma once
 
-#include <QGraphicsView>
 #include <AI.h>
 #include <server/AIStubTypes.h>
 #include <QGraphicsScene>
+#include "gui/widget/IGraphicsView.h"
 
 namespace ai {
 namespace debug {
@@ -17,7 +17,7 @@ class MapItem;
  * @note If you want to render additional details to an entity, extend this class to override
  * MapView::createMapItem and provide your own @c MapItem there.
  */
-class MapView: public QGraphicsView {
+class MapView: public IGraphicsView {
 	Q_OBJECT
 protected:
 	QGraphicsScene _scene;

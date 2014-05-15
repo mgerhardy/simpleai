@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QGraphicsView>
+#include "gui/widget/IGraphicsView.h"
 #include <QGraphicsScene>
 
 #include "NodeTreeItem.h"
@@ -13,7 +13,7 @@ namespace debug {
 /**
  * @brief Shows the behaviour tree for the current selected entity
  */
-class NodeTreeView: public QGraphicsView {
+class NodeTreeView: public IGraphicsView {
 Q_OBJECT
 private:
 	AIDebugger& _debugger;
