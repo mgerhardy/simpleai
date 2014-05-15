@@ -11,7 +11,9 @@ IGraphicsView::IGraphicsView() :
 IGraphicsView::~IGraphicsView() {
 }
 
-void IGraphicsView::drawBackground(QPainter* /*painter*/, const QRectF& /*rect*/) {
+void IGraphicsView::drawBackground(QPainter* painter, const QRectF& rect) {
+	Q_UNUSED(painter);
+	Q_UNUSED(rect);
 #if 0
 	painter->fillRect(rect, QBrush(QColor(50, 50, 50)));
 
