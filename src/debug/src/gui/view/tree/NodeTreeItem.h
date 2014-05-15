@@ -13,6 +13,7 @@ namespace debug {
 
 class AIDebugger;
 
+// TODO use QGraphicsPathItem
 class NodeTreeItem : public QGraphicsItem {
 protected:
 	const AIStateNode& _node;
