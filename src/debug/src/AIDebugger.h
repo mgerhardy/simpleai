@@ -114,9 +114,9 @@ signals:
 
 inline void AIDebugger::setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node, const CharacterAttributes& attributes) {
 	_selectedId = id;
-	_aggro = aggro.getAggro();
-	_node = node;
-	_attributes = attributes;
+	_aggro = std::move(aggro.getAggro());
+	_node = std::move(node);
+	_attributes = std::move(attributes);
 }
 
 inline const std::vector<AIStateAggroEntry>& AIDebugger::getAggro() const {
@@ -132,7 +132,7 @@ inline const CharacterAttributes& AIDebugger::getAttributes() const {
 }
 
 inline void AIDebugger::setEntities(const Entities& entities) {
-	_entities = entities;
+	_entities = std::move(entities);
 }
 
 inline const AIDebugger::Entities& AIDebugger::getEntities() const {

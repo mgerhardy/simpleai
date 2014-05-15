@@ -37,6 +37,7 @@ Vector3f GroupMgr::getPosition(GroupId id) const {
 	if (i == _members.end())
 		return Vector3f::ZERO;
 
+	// TODO: optimize this
 	Vector3f averagePosition;
 	for (GroupMembersSetConstIter si = i->second.begin(); si != i->second.end(); ++si) {
 		const ICharacter* character = *si;
