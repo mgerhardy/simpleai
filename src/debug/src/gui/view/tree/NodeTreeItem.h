@@ -35,7 +35,7 @@ protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
 
 public:
-	NodeTreeItem (const AIStateNode& node, NodeTreeItem* parent, int height, int horizontalSpacing, int verticalSpacing);
+	NodeTreeItem (QGraphicsItem* parentItem, const AIStateNode& node, NodeTreeItem* parent, int height, int horizontalSpacing, int verticalSpacing);
 	virtual ~NodeTreeItem ();
 
 	void init();

@@ -23,7 +23,7 @@ protected:
 	// order to see the entity details rendered
 	float _detailLod;
 public:
-	MapItem(const AIStateWorld& state, AIDebugger& aiDebugger);
+	MapItem(QGraphicsItem* parent, const AIStateWorld& state, AIDebugger& aiDebugger);
 	virtual ~MapItem();
 
 	virtual QRectF boundingRect() const override;

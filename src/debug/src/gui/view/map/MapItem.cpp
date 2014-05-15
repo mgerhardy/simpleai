@@ -7,8 +7,8 @@
 namespace ai {
 namespace debug {
 
-MapItem::MapItem (const AIStateWorld& state, AIDebugger& aiDebugger) :
-		QGraphicsItem(), _state(state), _aiDebugger(aiDebugger), _detailLod(0.4f) {
+MapItem::MapItem (QGraphicsItem* parent, const AIStateWorld& state, AIDebugger& aiDebugger) :
+		QGraphicsItem(parent), _state(state), _aiDebugger(aiDebugger), _detailLod(0.4f) {
 	setFlag(QGraphicsItem::ItemIsSelectable);
 	setPos(worldToMap(state.getPosition()));
 	_orientation = state.getOrientation();

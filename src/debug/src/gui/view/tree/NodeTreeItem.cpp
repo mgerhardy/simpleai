@@ -30,8 +30,8 @@ E(EXCEPTION)
 COMPILE_TIME_ASSERT(ARRAY_LENGTH(stateNames) == MAX_TREENODESTATUS);
 }
 
-NodeTreeItem::NodeTreeItem (const AIStateNode& node, NodeTreeItem* parent, int height, int horizontalSpacing, int verticalSpacing) :
-		QGraphicsItem(), _node(node), _parent(parent), _height(height), _horizontalSpacing(
+NodeTreeItem::NodeTreeItem (QGraphicsItem* parentItem, const AIStateNode& node, NodeTreeItem* parent, int height, int horizontalSpacing, int verticalSpacing) :
+		QGraphicsItem(parentItem), _node(node), _parent(parent), _height(height), _horizontalSpacing(
 				horizontalSpacing), _verticalSpacing(verticalSpacing) {
 	_condition = QString::fromStdString(_node.getCondition());
 	_name = QString::fromStdString(_node.getName());

@@ -18,7 +18,7 @@ MapView::~MapView() {
 }
 
 MapItem* MapView::createMapItem(const AIStateWorld& state) {
-	return new MapItem(state, _debugger);
+	return new MapItem(nullptr, state, _debugger);
 }
 
 void MapView::updateMapView() {

@@ -33,7 +33,7 @@ void NodeTreeView::updateTreeWidget() {
 }
 
 NodeTreeItem* NodeTreeView::buildTreeItems(const AIStateNode& node, NodeTreeItem* parent) {
-	NodeTreeItem* thisNode = new NodeTreeItem(node, parent, nodeHeight, horizontalSpacing, verticalSpacing);
+	NodeTreeItem* thisNode = new NodeTreeItem(nullptr, node, parent, nodeHeight, horizontalSpacing, verticalSpacing);
 	_scene.addItem(thisNode);
 	const std::vector<AIStateNode>& children = node.getChildren();
 	for (std::vector<AIStateNode>::const_iterator i = children.begin(); i != children.end(); ++i) {
