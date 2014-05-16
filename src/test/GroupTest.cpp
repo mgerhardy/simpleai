@@ -64,14 +64,26 @@ TEST_F(GroupTest, testGroupSize) {
 TEST_F(GroupTest, testGroupAveragePosition) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
+	ai::Vector3f avg;
 	TestEntity entity1(1, ai::TreeNodePtr(), _pathfinder, groupMgr);
 	entity1.setPosition(ai::Vector3f(1.0f, 1.0f, 0.0f));
 	ASSERT_TRUE(groupMgr.add(id, &entity1));
+	avg = groupMgr.getPosition(id);
+	ASSERT_EQ(ai::Vector3f(1.0f, 1.0f, 0.0f), avg);
 	TestEntity entity2(2, ai::TreeNodePtr(), _pathfinder, groupMgr);
 	entity2.setPosition(ai::Vector3f(3.0f, 3.0f, 0.0f));
 	ASSERT_TRUE(groupMgr.add(id, &entity2));
-	ai::Vector3f avg = groupMgr.getPosition(id);
+	avg = groupMgr.getPosition(id);
 	ASSERT_EQ(ai::Vector3f(2.0f, 2.0f, 0.0f), avg);
+	const int max = 10000;
+	std::vector<SharedPtr<TestEntity> > ais;
+	for (int i = 1; i <= max; ++i) {
+		const ai::CharacterId id = i;
+		TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _pathfinder, _groupManager);
+		ais.push_back(SharedPtr<TestEntity>(e));
+		e->setPosition(ai::Vector3f(3.0f, 3.0f, 0.0f));
+		groupMgr.add(id, e);
+	}
 }
 
 TEST_F(GroupTest, testGroupMass1000) {
