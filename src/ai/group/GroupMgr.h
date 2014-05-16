@@ -22,8 +22,14 @@ typedef GroupMembers::const_iterator GroupMembersConstIter;
 class GroupMgr {
 private:
 	GroupMembersSet _empty;
-protected:
 	GroupMembers _members;
+
+	struct AveragePositionFunctor {
+		Vector3f operator()(const Vector3f& result, const ICharacter* chr) {
+			return result + chr->getPosition();
+		}
+	};
+
 public:
 	GroupMgr ();
 	virtual ~GroupMgr ();
