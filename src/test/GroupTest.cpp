@@ -36,6 +36,16 @@ TEST_F(GroupTest, testGroupAddRemove) {
 	ASSERT_FALSE(groupMgr.remove(id, &entity1));
 }
 
+TEST_F(GroupTest, testGroupIsInAny) {
+	const ai::GroupId id = 1;
+	ai::GroupMgr groupMgr;
+	TestEntity entity1(1, ai::TreeNodePtr(), _pathfinder, groupMgr);
+	ASSERT_TRUE(groupMgr.add(id, &entity1));
+	ASSERT_TRUE(groupMgr.isInAnyGroup(entity1));
+	ASSERT_TRUE(groupMgr.remove(id, &entity1));
+	ASSERT_FALSE(groupMgr.isInAnyGroup(entity1));
+}
+
 TEST_F(GroupTest, testGroupSize) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;

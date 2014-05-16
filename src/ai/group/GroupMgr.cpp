@@ -70,8 +70,11 @@ int GroupMgr::getGroupSize(GroupId id) const {
 }
 
 bool GroupMgr::isInAnyGroup(const ICharacter& character) const {
-	(void)character;
-	// TODO: implement me
+	for (GroupMembersConstIter i = _members.begin(); i != _members.end(); ++i) {
+		const GroupMembersSetConstIter& it = i->second.find(const_cast<ICharacter*>(&character));
+		if (it != i->second.end())
+			return true;
+	}
 	return false;
 }
 
