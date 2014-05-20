@@ -17,6 +17,9 @@ namespace attributes {
 const char* const NAME = "Name";
 const char* const GROUP = "Group";
 const char* const ID = "Id";
+const char* const POSITION = "Position";
+const char* const SPEED = "Speed";
+const char* const ORIENTATION = "Orientation";
 }
 
 /**

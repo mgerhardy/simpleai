@@ -61,9 +61,9 @@ public:
 		// TODO: switch direction when the respawn on another side of the map
 
 		ss << _position;
-		setAttribute("Position", ss.str());
-		setAttribute("Speed", std::to_string(getSpeed()));
-		setAttribute("Orientation", std::to_string(toDegrees(getOrientation())));
+		setAttribute(ai::attributes::POSITION, ss.str());
+		setAttribute(ai::attributes::SPEED, std::to_string(getSpeed()));
+		setAttribute(ai::attributes::ORIENTATION, std::to_string(toDegrees(getOrientation())));
 	}
 
 	inline std::list<ai::MoveVector>& getRoute () {
