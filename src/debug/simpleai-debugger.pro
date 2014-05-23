@@ -65,12 +65,7 @@ TRANSLATIONS += data/simpleai_de_DE.ts
 win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\lrelease.exe
 unix:QMAKE_LRELEASE = lrelease
 
-QMAKE_EXTRA_COMPILERS += lrelease
-lrelease.input = TRANSLATIONS
-lrelease.output = data/${QMAKE_FILE_BASE}.qm
-lrelease.commands = $$QMAKE_LRELEASE ${QMAKE_FILE_IN} -o data/${QMAKE_FILE_BASE}.qm
-lrelease.CONFIG = no_link target_predeps
-#PRE_TARGETDEPS += compiler_lrelease_make_all
+system($$QMAKE_LRELEASE data/simpleai_de_DE.ts data/simpleai_de_DE.qm)
 
 QMAKE_RESOURCE_FLAGS += -threshold 0 -compress 9
 
