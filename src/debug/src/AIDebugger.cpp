@@ -56,7 +56,8 @@ public:
 	}
 
 	void executeAINamesMessage(const ai::AINamesMessage& msg) override {
-		emit _aiDebugger.onNamesReceived(msg.getNames());
+		_aiDebugger.setNames(msg.getNames());
+		emit _aiDebugger.onNamesReceived();
 	}
 };
 
@@ -166,6 +167,7 @@ bool AIDebugger::connectToAIServer(const QString& hostname, short port) {
 	_socket.close();
 	_socket.connectToHost(hostname, port, QAbstractSocket::ReadWrite, QAbstractSocket::AnyIPProtocol);
 	if (_socket.waitForConnected()) {
+		qDebug() << "Connection established";
 		return true;
 	}
 	const QAbstractSocket::SocketError socketError = _socket.error();
@@ -208,7 +210,7 @@ void AIDebugger::readTcpData() {
 			if (!mf.isNewMessageAvailable(_stream))
 				break;
 			std::unique_ptr<ai::IProtocolMessage> msg(mf.create(_stream));
-			if (msg == nullptr) {
+			if (!msg) {
 				qDebug() << "unknown server message - disconnecting";
 				_socket.close();
 				break;

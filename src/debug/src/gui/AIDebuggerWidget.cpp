@@ -17,7 +17,7 @@ namespace ai {
 namespace debug {
 
 AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger) :
-		QWidget(), _debugger(debugger) {
+		QWidget(), _debugger(debugger), _proxy(this) {
 	createView();
 	createActions();
 
@@ -26,11 +26,18 @@ AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger) :
 
 	connect(_namesComboBox, SIGNAL(activated(const QString &)), SLOT(change(const QString &)));
 	connect(&_debugger, SIGNAL(onPause(bool)), SLOT(setPause(bool)));
-	connect(&_debugger, SIGNAL(onNamesReceived(const std::vector<std::string>&)), SLOT(setNames(const std::vector<std::string>&)));
 	connect(&_debugger, SIGNAL(disconnected()), SLOT(onDisconnect()));
 
-	connect(&_debugger, SIGNAL(onSelected()), SLOT(onSelected()));
-	connect(&_debugger, SIGNAL(onEntitiesUpdated()), SLOT(onEntitiesUpdated()));
+	connect(&_debugger, SIGNAL(onSelected()), &_proxy, SLOT(selected()),
+			Qt::QueuedConnection);
+	connect(&_debugger, SIGNAL(onNamesReceived()), &_proxy, SLOT(namesReceived()),
+			Qt::QueuedConnection);
+	connect(&_debugger, SIGNAL(onEntitiesUpdated()), &_proxy, SLOT(entitiesUpdated()),
+			Qt::QueuedConnection);
+
+	connect(&_proxy, SIGNAL(onSelected()), this, SLOT(onSelected()));
+	connect(&_proxy, SIGNAL(onEntitiesUpdated()), this, SLOT(onEntitiesUpdated()));
+	connect(&_proxy, SIGNAL(onNamesReceived()), this, SLOT(onNamesReceived()));
 }
 
 AIDebuggerWidget::~AIDebuggerWidget() {
@@ -66,8 +73,9 @@ void AIDebuggerWidget::onSelected() {
 	_aggroTable->updateAggroTable();
 }
 
-void AIDebuggerWidget::setNames(const std::vector<std::string>& names) {
+void AIDebuggerWidget::onNamesReceived() {
 	QStringList list;
+	const std::vector<std::string>& names = _debugger.getNames();
 	for (std::vector<std::string>::const_iterator i = names.begin(); i != names.end(); ++i) {
 		list << QString::fromStdString(*i);
 	}
@@ -196,7 +204,7 @@ void AIDebuggerWidget::connectToAIServer(const QString& hostname, short port) {
 	if (_debugger.connectToAIServer(hostname, port)) {
 		_statusBarLabel->setText(tr("connected to %1:%2").arg(hostname).arg(port));
 	} else {
-		_statusBarLabel->setText(tr("not connected"));
+		_statusBarLabel->setText(tr("connection to %1:%2 failed").arg(hostname).arg(port));
 	}
 }
 

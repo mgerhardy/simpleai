@@ -7,6 +7,8 @@
 #include <QComboBox>
 #include <QMenu>
 
+#include "AICompressorProxy.h"
+
 namespace ai {
 namespace debug {
 
@@ -71,7 +73,7 @@ private slots:
 	void requestReset();
 	void setPause(bool pause);
 	void change(const QString &);
-	void setNames(const std::vector<std::string>& names);
+	void onNamesReceived();
 	void onDisconnect();
 	void onEntitiesUpdated();
 	void onSelected();
@@ -102,6 +104,7 @@ private:
 
 	AIDebugger& _debugger;
 	QString _name;
+	CompressorProxy _proxy;
 };
 
 }

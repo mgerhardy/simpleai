@@ -55,6 +55,7 @@ protected:
 	// the socket of the ai debug server
 	QTcpSocket _socket;
 	bool _pause;
+	std::vector<std::string> _names;
 
 	bool writeMessage(const IProtocolMessage& msg);
 
@@ -71,6 +72,8 @@ public:
 	const Entities& getEntities() const;
 	void setEntities(const Entities& entities);
 	void setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node, const CharacterAttributes& attributes);
+	void setNames(const std::vector<std::string>& names);
+	const std::vector<std::string>& getNames() const;
 	/**
 	 * @return The behaviour tree node that is assigned to the selected entity
 	 */
@@ -106,10 +109,13 @@ public:
 
 signals:
 	void onPause(bool pause);
-	void onEntitiesUpdated();
-	void onSelected();
 	void disconnected();
-	void onNamesReceived(const std::vector<std::string>& names);
+	// signal that is triggered whenever the entity details for the current selected entity arrived
+	void onSelected();
+	// new names list was received
+	void onNamesReceived();
+	// entities on the map were updated
+	void onEntitiesUpdated();
 };
 
 inline void AIDebugger::setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node, const CharacterAttributes& attributes) {
@@ -117,6 +123,10 @@ inline void AIDebugger::setCharacterDetails(const CharacterId& id, const AIState
 	_aggro = std::move(aggro.getAggro());
 	_node = std::move(node);
 	_attributes = std::move(attributes);
+}
+
+inline void AIDebugger::setNames(const std::vector<std::string>& names) {
+	_names = std::move(names);
 }
 
 inline const std::vector<AIStateAggroEntry>& AIDebugger::getAggro() const {
@@ -137,6 +147,10 @@ inline void AIDebugger::setEntities(const Entities& entities) {
 
 inline const AIDebugger::Entities& AIDebugger::getEntities() const {
 	return _entities;
+}
+
+inline const std::vector<std::string>& AIDebugger::getNames() const {
+	return _names;
 }
 
 }

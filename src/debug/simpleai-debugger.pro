@@ -19,6 +19,7 @@ HEADERS += \
            src/common/Settings.h \
            src/common/Common.h \
            src/gui/AIDebuggerWidget.h \
+           src/gui/AICompressorProxy.h \
            src/gui/dialog/ConnectDialog.h \
            src/gui/dialog/IDialog.h \
            src/gui/view/list/EntityList.h \
