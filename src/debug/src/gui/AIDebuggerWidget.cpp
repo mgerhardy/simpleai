@@ -2,7 +2,6 @@
 #include <QMessageBox>
 #include <QStatusBar>
 #include <QSplitter>
-#include <QTimer>
 
 #include "AIDebugger.h"
 #include "AIDebuggerWidget.h"
