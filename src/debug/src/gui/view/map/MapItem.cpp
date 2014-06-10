@@ -29,7 +29,7 @@ QRectF MapItem::boundingRect() const {
 void MapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
 	Q_UNUSED(option);
 	Q_UNUSED(widget);
-	painter->setClipRect(option->exposedRect);
+	//painter->setClipRect(option->exposedRect);
 	const qreal lod = option->levelOfDetailFromTransform(painter->worldTransform());
 
 	QBrush b = painter->brush();
