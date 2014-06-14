@@ -40,3 +40,7 @@ Makefile
 .cproject
 .project
 .settings
+
+CMakeFiles
+*.cmake
+CMakeCache.txt
