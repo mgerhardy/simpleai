@@ -44,10 +44,10 @@ AC_MSG_CHECKING([whether to build with debug information])
 AC_ARG_ENABLE(debug,AS_HELP_STRING([--enable-debug=@<:@no/yes@:>@],[enable debug data generation]),,[enable_debug=no])
 if test "x$enable_debug" != "xno" ; then
     AC_DEFINE([DEBUG],[],[Debug Mode])
-    AM_CXXFLAGS="-g -Wall -Werror -Wno-uninitialized -O0 $AM_CXXFLAGS"
+    AM_CXXFLAGS="-g -Wall -Wextra -Werror -O0 $AM_CXXFLAGS"
 else
     AC_DEFINE([NDEBUG],[],[No-debug Mode])
-    AM_CXXFLAGS="-O3 -Wall $AM_CXXFLAGS"
+    AM_CXXFLAGS="-O3 -ftree-vectorize -msse3 -ffast-math -Wall -Wextra $AM_CXXFLAGS"
 fi
 AC_MSG_RESULT([$enable_debug])
 
