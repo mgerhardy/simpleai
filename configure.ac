@@ -2,7 +2,7 @@ AC_INIT(simpleai, 0.1, mgerhardy@github)
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_HEADER([src/ai/Config.h])
 
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([foreign])
 AC_SUBST(VERSION)
 
 # store current user given compiler flags to avoid default setup via AC_PROG_CXX
