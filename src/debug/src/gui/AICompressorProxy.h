@@ -50,7 +50,9 @@ signals:
 	void onEntitiesUpdated();
 
 public:
-	CompressorProxy(QObject * parent) :
+	// No default constructor, since the proxy must be a child of the
+	// target object.
+	explicit CompressorProxy(QObject * parent) :
 			QObject(parent), _selected(false), _entitiesUpdated(false), _namesReceived(false) {
 	}
 };

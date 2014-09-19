@@ -24,7 +24,7 @@ ZoomWidget::ZoomWidget(QGraphicsView& gview, QWidget* parent) :
 	_zoomOutButton.setIconSize(icosize);
 
 	_zoomSlider.setMinimum(0);
-	_zoomSlider.setMaximum(100);
+	_zoomSlider.setMaximum(200);
 	_zoomSlider.setValue(100);
 	_zoomSlider.setTickPosition(QSlider::TicksRight);
 
@@ -48,7 +48,7 @@ ZoomWidget::~ZoomWidget() {
 }
 
 void ZoomWidget::setupZoomMatrix() {
-	const qreal scale = qPow(2.0, (_zoomSlider.value() - 100) / 20.0);
+	const qreal scale = _zoomSlider.value() / 100.0;
 	QMatrix matrix;
 	matrix.scale(scale, scale);
 	_graphicsView.setMatrix(matrix);

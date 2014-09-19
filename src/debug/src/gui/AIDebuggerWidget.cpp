@@ -83,6 +83,7 @@ void AIDebuggerWidget::onNamesReceived() {
 	_namesComboBox->clear();
 	_namesComboBox->insertItems(0, list);
 	_namesComboBox->setEnabled(!names.empty());
+	_namesComboBox->setCurrentIndex(_namesComboBox->findText(name));
 }
 
 void AIDebuggerWidget::contributeToStatusBar(QStatusBar* statusBar) {
@@ -127,9 +128,10 @@ void AIDebuggerWidget::removeFromHelpMenu(QMenu *helpMenu) {
 
 void AIDebuggerWidget::createView() {
 	QVBoxLayout *layout = new QVBoxLayout;
-	layout->setMargin(2);
-	layout->addWidget(createTopWidget());
-	layout->addWidget(createBottomWidget());
+	QSplitter* splitter = new QSplitter(Qt::Orientation::Vertical);
+	splitter->addWidget(createTopWidget());
+	splitter->addWidget(createBottomWidget());
+	layout->addWidget(splitter);
 	setLayout(layout);
 }
 

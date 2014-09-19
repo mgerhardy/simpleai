@@ -16,7 +16,7 @@ class AIDebugger;
 // TODO use QGraphicsPathItem
 class NodeTreeItem : public QGraphicsItem {
 protected:
-	const AIStateNode& _node;
+	AIStateNode _node;
 	NodeTreeItem* _parent;
 	QList<NodeTreeItem*> _children;
 	QString _condition;

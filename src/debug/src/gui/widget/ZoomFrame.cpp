@@ -15,12 +15,11 @@ ZoomFrame::ZoomFrame(QGraphicsView* graphicsView, QWidget* parent) :
 	_graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 	_graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
 	_graphicsView->setCacheMode(QGraphicsView::CacheBackground);
-	//_graphicsView->setInteractive(true);
 	_zoomWidget = new ZoomWidget(*_graphicsView);
 
-	QGridLayout* topLayout = new QGridLayout;
-	topLayout->addWidget(_graphicsView, 1, 0);
-	topLayout->addWidget(_zoomWidget, 1, 1);
+	QHBoxLayout* topLayout = new QHBoxLayout;
+	topLayout->addWidget(_graphicsView);
+	topLayout->addWidget(_zoomWidget);
 	setLayout(topLayout);
 }
 
