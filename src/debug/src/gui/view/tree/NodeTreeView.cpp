@@ -30,6 +30,7 @@ void NodeTreeView::updateTreeWidget() {
 	const AIStateNode& node = _debugger.getNode();
 	NodeTreeItem* item = buildTreeItems(node, nullptr);
 	item->init();
+	_scene.setSceneRect(QRectF());
 }
 
 NodeTreeItem* NodeTreeView::buildTreeItems(const AIStateNode& node, NodeTreeItem* parent) {

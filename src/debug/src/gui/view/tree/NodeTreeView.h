@@ -1,6 +1,6 @@
 #pragma once
 
-#include "gui/widget/IGraphicsView.h"
+#include "IGraphicsView.h"
 #include <QGraphicsScene>
 
 #include "NodeTreeItem.h"

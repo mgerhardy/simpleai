@@ -6,11 +6,10 @@ namespace ai {
 namespace debug {
 
 MapView::MapView(AIDebugger& debugger) :
-		IGraphicsView(), _debugger(debugger) {
+		IGraphicsView(true, true), _debugger(debugger) {
 	_scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+	setInteractive(true);
 	setScene(&_scene);
 }
 
@@ -18,7 +17,10 @@ MapView::~MapView() {
 }
 
 MapItem* MapView::createMapItem(const AIStateWorld& state) {
-	return new MapItem(nullptr, state, _debugger);
+	MapItem* item = new MapItem(nullptr, state, _debugger);
+	item->setPos((qreal)state.getPosition().x, (qreal)state.getPosition().z);
+	item->setZValue((qreal)state.getPosition().z);
+	return item;
 }
 
 void MapView::updateMapView() {

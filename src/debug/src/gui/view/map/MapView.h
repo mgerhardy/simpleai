@@ -3,7 +3,7 @@
 #include <AI.h>
 #include <server/AIStubTypes.h>
 #include <QGraphicsScene>
-#include "gui/widget/IGraphicsView.h"
+#include "IGraphicsView.h"
 
 namespace ai {
 namespace debug {
