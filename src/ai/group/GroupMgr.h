@@ -3,6 +3,7 @@
 #include "ICharacter.h"
 #include <map>
 #include <set>
+#include <mutex>
 
 namespace ai {
 
@@ -18,13 +19,16 @@ typedef GroupMembers::const_iterator GroupMembersConstIter;
  * @brief Maintains the groups a @c ICharacter can be in.
  * @note Keep in mind that if you destroy an @c ICharacter somewhere in the game, to also
  * remove it from the groups
- *
- * TODO: thread safety
  */
 class GroupMgr {
 private:
 	GroupMembersSet _empty;
 	GroupMembers _members;
+
+	// TODO: use read write lock here
+	typedef std::recursive_mutex Mutex;
+	typedef std::unique_lock<Mutex> Lock;
+	mutable Mutex _mutex;
 
 	struct AveragePositionFunctor {
 		Vector3f operator()(const Vector3f& result, const ICharacter* chr) {

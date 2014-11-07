@@ -10,21 +10,25 @@ GroupMgr::~GroupMgr() {
 }
 
 bool GroupMgr::add(GroupId id, ICharacter* character) {
-	GroupMembersIter i = _members.find(id);
-	if (i == _members.end()) {
-		GroupMembersSet set;
-		i = _members.insert(std::pair<GroupId, GroupMembersSet>(id, set)).first;
+	Lock lock(_mutex);
+	const GroupMembersIter& i = _members.find(id);
+	if (i != _members.end()) {
+		const std::pair<GroupMembersSetIter, bool>& ret = i->second.insert(character);
+		return ret.second;
 	}
 
-	std::pair<GroupMembersSetIter, bool> ret = i->second.insert(character);
+	GroupMembersSet set;
+	const GroupMembersIter& iInsert = _members.insert(std::pair<GroupId, GroupMembersSet>(id, set)).first;
+	const std::pair<GroupMembersSetIter, bool>& ret = iInsert->second.insert(character);
 	return ret.second;
 }
 
 bool GroupMgr::remove(GroupId id, ICharacter* character) {
-	GroupMembersIter i = _members.find(id);
+	Lock lock(_mutex);
+	const GroupMembersIter& i = _members.find(id);
 	if (i == _members.end())
 		return false;
-	GroupMembersSetIter si = i->second.find(character);
+	const GroupMembersSetIter& si = i->second.find(character);
 	if (si == i->second.end())
 		return false;
 	i->second.erase(si);
@@ -34,7 +38,8 @@ bool GroupMgr::remove(GroupId id, ICharacter* character) {
 }
 
 Vector3f GroupMgr::getPosition(GroupId id) const {
-	GroupMembersConstIter i = _members.find(id);
+	Lock lock(_mutex);
+	const GroupMembersConstIter& i = _members.find(id);
 	if (i == _members.end())
 		return Vector3f::ZERO;
 
@@ -44,7 +49,8 @@ Vector3f GroupMgr::getPosition(GroupId id) const {
 }
 
 std::pair<GroupMembersSetIter, GroupMembersSetIter> GroupMgr::getGroupMembers(GroupId id) const {
-	GroupMembersConstIter i = _members.find(id);
+	Lock lock(_mutex);
+	const GroupMembersConstIter& i = _members.find(id);
 	if (i == _members.end()) {
 		return std::pair<GroupMembersSetIter, GroupMembersSetIter>(_empty.begin(), _empty.end());
 	}
@@ -66,6 +72,7 @@ int GroupMgr::getGroupSize(GroupId id) const {
 }
 
 bool GroupMgr::isInAnyGroup(const ICharacter& character) const {
+	Lock lock(_mutex);
 	for (GroupMembersConstIter i = _members.begin(); i != _members.end(); ++i) {
 		const GroupMembersSetConstIter& it = i->second.find(const_cast<ICharacter*>(&character));
 		if (it != i->second.end())
