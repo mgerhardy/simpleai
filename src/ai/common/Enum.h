@@ -101,3 +101,5 @@ Enum<T>::Enum (const std::string& _name) :
 {
 	getMap().insert(std::pair<uint32_t, T*>(id, static_cast<T*>(this)));
 }
+
+}
