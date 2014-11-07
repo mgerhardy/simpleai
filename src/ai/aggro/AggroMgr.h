@@ -9,10 +9,13 @@ class AI;
 
 /**
  * @brief Manages the aggro values for one @c AI instance. There are several ways to degrade the aggro values.
+ *
+ * TODO: thread safety
  */
 class AggroMgr {
 public:
 	typedef std::vector<EntryPtr> Entries;
+	typedef Entries::iterator EntriesIter;
 protected:
 	Entries _entries;
 

@@ -34,9 +34,9 @@ void AggroMgr::cleanupList() {
 }
 
 void AggroMgr::update(long deltaMillis) {
-	const std::size_t size = _entries.size();
-	for (std::size_t i = 0; i < size; ++i)
-		_dirty |= _entries[i]->reduceByTime(deltaMillis);
+	for (EntriesIter i = _entries.begin(); i != _entries.end(); ++i) {
+		_dirty |= (*i)->reduceByTime(deltaMillis);
+	}
 
 	if (_dirty) {
 		sort();
