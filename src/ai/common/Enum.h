@@ -16,7 +16,10 @@ private:
 	Enum& operator= (const Enum&);
 protected:
 	static uint32_t _cnt;
-	static TypeMap _types;
+	static inline TypeMap& getMap() {
+		static TypeMap _types;
+		return _types;
+	}
 
 	explicit Enum (const std::string& _name);
 
@@ -32,8 +35,8 @@ public:
 
 	static const T& get (uint32_t id)
 	{
-		TypeMapConstIter i = _types.find(id);
-		if (i != _types.end())
+		TypeMapConstIter i = getMap().find(id);
+		if (i != getMap().end())
 			return *i->second;
 
 		return NONE;
@@ -41,7 +44,7 @@ public:
 
 	static const T& getByName (const std::string& name)
 	{
-		for (TypeMapConstIter i = _types.begin(); i != _types.end(); ++i) {
+		for (TypeMapConstIter i = getMap().begin(); i != getMap().end(); ++i) {
 			if ((*i->second).name == name)
 				return *i->second;
 		}
@@ -71,20 +74,17 @@ public:
 
 	static inline TypeMapConstIter begin ()
 	{
-		return _types.begin();
+		return getMap().begin();
 	}
 
 	static inline TypeMapConstIter end ()
 	{
-		return _types.end();
+		return getMap().end();
 	}
 };
 
 template <typename T>
 uint32_t Enum<T>::_cnt = 0;
-
-template <typename T>
-typename Enum<T>::TypeMap Enum<T>::_types;
 
 template <typename T>
 T Enum<T>::NONE("");
@@ -99,7 +99,5 @@ template <typename T>
 Enum<T>::Enum (const std::string& _name) :
 		id(_cnt++), name(_name)
 {
-	_types.insert(std::pair<uint32_t, T*>(id, static_cast<T*>(this)));
-}
-
+	getMap().insert(std::pair<uint32_t, T*>(id, static_cast<T*>(this)));
 }
