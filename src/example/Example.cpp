@@ -91,7 +91,6 @@ int main(int argc, char **argv) {
 		const auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - timeLast).count();
 		timeLast = timeNow;
 		gameMap.update(static_cast<uint32_t>(dt));
-		groupManager.update();
 		std::this_thread::sleep_for(delay);
 	}
 }

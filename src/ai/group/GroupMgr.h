@@ -3,8 +3,6 @@
 #include "ICharacter.h"
 #include <map>
 #include <set>
-#include <list>
-#include <mutex>
 
 namespace ai {
 
@@ -20,24 +18,13 @@ typedef GroupMembers::const_iterator GroupMembersConstIter;
  * @brief Maintains the groups a @c ICharacter can be in.
  * @note Keep in mind that if you destroy an @c ICharacter somewhere in the game, to also
  * remove it from the groups
+ *
+ * TODO: thread safety
  */
 class GroupMgr {
 private:
 	GroupMembersSet _empty;
 	GroupMembers _members;
-
-	struct Queue {
-		GroupId groupId;
-		ICharacter* character;
-		bool add;
-	};
-	typedef std::list<Queue> UpdateList;
-	typedef UpdateList::const_iterator UpdateListIter;
-	UpdateList _changeQueue;
-
-	typedef std::mutex Mutex;
-	typedef std::unique_lock<Mutex> Lock;
-	mutable Mutex _mutex;
 
 	struct AveragePositionFunctor {
 		Vector3f operator()(const Vector3f& result, const ICharacter* chr) {
@@ -49,10 +36,25 @@ public:
 	GroupMgr ();
 	virtual ~GroupMgr ();
 
-	void update();
+	/**
+	 * @brief Adds a new group member to the given @c GroupId.
+	 *
+	 * @param character The @c ICharacter to add to the group. Keep
+	 * in mind that you have to remove it manually from any group
+	 * whenever you destroy the @c ICharacter instance.
+	 * @return @c true if the add to the group was successful.
+	 */
+	bool add(GroupId id, ICharacter* character);
 
-	void add(GroupId id, ICharacter* character);
-	void remove(GroupId id, ICharacter* character);
+	/**
+	 * @brief Removes a group member from the given @c GroupId.
+	 *
+	 * @param character The @c ICharacter to remove from this the group.
+	 * @return @c true if the given character was removed from the group,
+	 * @c false if the removal failed (e.g. the character was not part of
+	 * the group)
+	 */
+	bool remove(GroupId id, ICharacter* character);
 
 	/**
 	 * @brief Calculate the average position of the group
