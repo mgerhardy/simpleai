@@ -30,6 +30,7 @@ public:
 			ais.push_back(SharedPtr<TestEntity>(e));
 			mgr.add(1, e);
 		}
+		mgr.update();
 		const std::pair<ai::GroupMembersSetIter, ai::GroupMembersSetIter>& members = mgr.getGroupMembers(1);
 		const int n = std::distance(members.first, members.second);
 		ASSERT_EQ(max, n);
@@ -39,6 +40,7 @@ public:
 		for (std::vector<SharedPtr<TestEntity> >::iterator i = ais.begin(); i != ais.end(); ++i) {
 			mgr.remove(1, i->get());
 		}
+		mgr.update();
 		const std::pair<ai::GroupMembersSetIter, ai::GroupMembersSetIter>& membersEmpty = mgr.getGroupMembers(1);
 		const int nEmpty = std::distance(membersEmpty.first, membersEmpty.second);
 		ASSERT_EQ(0, nEmpty);

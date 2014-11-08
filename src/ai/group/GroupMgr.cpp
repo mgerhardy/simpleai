@@ -54,7 +54,6 @@ void GroupMgr::remove(GroupId id, ICharacter* character) {
 }
 
 Vector3f GroupMgr::getPosition(GroupId id) const {
-	Lock lock(_mutex);
 	const GroupMembersConstIter& i = _members.find(id);
 	if (i == _members.end())
 		return Vector3f::ZERO;
@@ -65,7 +64,6 @@ Vector3f GroupMgr::getPosition(GroupId id) const {
 }
 
 std::pair<GroupMembersSetIter, GroupMembersSetIter> GroupMgr::getGroupMembers(GroupId id) const {
-	Lock lock(_mutex);
 	const GroupMembersConstIter& i = _members.find(id);
 	if (i == _members.end()) {
 		return std::pair<GroupMembersSetIter, GroupMembersSetIter>(_empty.begin(), _empty.end());
@@ -88,7 +86,6 @@ int GroupMgr::getGroupSize(GroupId id) const {
 }
 
 bool GroupMgr::isInAnyGroup(const ICharacter& character) const {
-	Lock lock(_mutex);
 	for (GroupMembersConstIter i = _members.begin(); i != _members.end(); ++i) {
 		const GroupMembersSetConstIter& it = i->second.find(const_cast<ICharacter*>(&character));
 		if (it != i->second.end())
