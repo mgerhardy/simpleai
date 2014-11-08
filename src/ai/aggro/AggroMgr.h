@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <mutex>
 #include <aggro/Entry.h>
 
 namespace ai {
@@ -19,10 +18,6 @@ protected:
 	Entries _entries;
 
 	bool _dirty;
-
-	typedef std::recursive_mutex Mutex;
-	typedef std::unique_lock<Mutex> Lock;
-	Mutex _mutex;
 
 	/**
 	 * @brief Remove the entries from the list that have no aggro left.

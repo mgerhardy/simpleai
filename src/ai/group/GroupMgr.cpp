@@ -9,32 +9,48 @@ GroupMgr::GroupMgr() {
 GroupMgr::~GroupMgr() {
 }
 
-bool GroupMgr::add(GroupId id, ICharacter* character) {
-	Lock lock(_mutex);
-	const GroupMembersIter& i = _members.find(id);
-	if (i != _members.end()) {
-		const std::pair<GroupMembersSetIter, bool>& ret = i->second.insert(character);
-		return ret.second;
-	}
+void GroupMgr::update() {
+	if (_changeQueue.empty())
+		return;
 
-	GroupMembersSet set;
-	const GroupMembersIter& iInsert = _members.insert(std::pair<GroupId, GroupMembersSet>(id, set)).first;
-	const std::pair<GroupMembersSetIter, bool>& ret = iInsert->second.insert(character);
-	return ret.second;
+	_mutex.lock();
+	const UpdateList copy = _changeQueue;
+	_mutex.unlock();
+	for (UpdateListIter iter = copy.begin(); iter != copy.end(); ++iter) {
+		const Queue& q = *iter;
+		const GroupId& id = q.groupId;
+		if (q.add) {
+			const GroupMembersIter& i = _members.find(id);
+			if (i != _members.end()) {
+				i->second.insert(q.character);
+				continue;
+			}
+
+			GroupMembersSet set;
+			const GroupMembersIter& iInsert = _members.insert(std::pair<GroupId, GroupMembersSet>(id, set)).first;
+			iInsert->second.insert(q.character);
+		} else {
+			const GroupMembersIter& i = _members.find(id);
+			if (i == _members.end())
+				continue;
+			const GroupMembersSetIter& si = i->second.find(q.character);
+			if (si == i->second.end())
+				continue;
+			i->second.erase(si);
+			if (i->second.empty())
+				_members.erase(i);
+		}
+	}
 }
 
-bool GroupMgr::remove(GroupId id, ICharacter* character) {
+void GroupMgr::add(GroupId id, ICharacter* character) {
 	Lock lock(_mutex);
-	const GroupMembersIter& i = _members.find(id);
-	if (i == _members.end())
-		return false;
-	const GroupMembersSetIter& si = i->second.find(character);
-	if (si == i->second.end())
-		return false;
-	i->second.erase(si);
-	if (i->second.empty())
-		_members.erase(i);
-	return true;
+	_changeQueue.push_back(Queue{id, character, true});
+}
+
+void GroupMgr::remove(GroupId id, ICharacter* character) {
+	Lock lock(_mutex);
+	_changeQueue.push_back(Queue{id, character, false});
 }
 
 Vector3f GroupMgr::getPosition(GroupId id) const {

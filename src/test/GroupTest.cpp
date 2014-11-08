@@ -49,19 +49,29 @@ TEST_F(GroupTest, testGroupAddRemove) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
 	TestEntity entity1(1, ai::TreeNodePtr(), _pathfinder, groupMgr);
-	ASSERT_TRUE(groupMgr.add(id, &entity1));
-	ASSERT_FALSE(groupMgr.remove(0, &entity1));
-	ASSERT_TRUE(groupMgr.remove(id, &entity1));
-	ASSERT_FALSE(groupMgr.remove(id, &entity1));
+	groupMgr.add(id, &entity1);
+	groupMgr.update();
+	ASSERT_TRUE(groupMgr.isInAnyGroup(entity1));
+	groupMgr.remove(0, &entity1);
+	groupMgr.update();
+	ASSERT_TRUE(groupMgr.isInAnyGroup(entity1));
+	groupMgr.remove(id, &entity1);
+	groupMgr.update();
+	ASSERT_FALSE(groupMgr.isInAnyGroup(entity1));
+	groupMgr.remove(id, &entity1);
+	groupMgr.update();
+	ASSERT_FALSE(groupMgr.isInAnyGroup(entity1));
 }
 
 TEST_F(GroupTest, testGroupIsInAny) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
 	TestEntity entity1(1, ai::TreeNodePtr(), _pathfinder, groupMgr);
-	ASSERT_TRUE(groupMgr.add(id, &entity1));
+	groupMgr.add(id, &entity1);
+	groupMgr.update();
 	ASSERT_TRUE(groupMgr.isInAnyGroup(entity1));
-	ASSERT_TRUE(groupMgr.remove(id, &entity1));
+	groupMgr.remove(id, &entity1);
+	groupMgr.update();
 	ASSERT_FALSE(groupMgr.isInAnyGroup(entity1));
 }
 
@@ -69,9 +79,11 @@ TEST_F(GroupTest, testGroupSize) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
 	TestEntity entity1(1, ai::TreeNodePtr(), _pathfinder, groupMgr);
-	ASSERT_TRUE(groupMgr.add(id, &entity1));
+	groupMgr.add(id, &entity1);
+	groupMgr.update();
 	TestEntity entity2(2, ai::TreeNodePtr(), _pathfinder, groupMgr);
-	ASSERT_TRUE(groupMgr.add(id, &entity2));
+	groupMgr.add(id, &entity2);
+	groupMgr.update();
 	std::pair<ai::GroupMembersSetIter, ai::GroupMembersSetIter> members = groupMgr.getGroupMembers(id);
 	ASSERT_EQ(2, std::distance(members.first, members.second));
 	ASSERT_EQ(&entity1, *members.first);
@@ -86,12 +98,14 @@ TEST_F(GroupTest, testGroupAveragePosition) {
 	ai::GroupMgr groupMgr;
 	TestEntity entity1(1, ai::TreeNodePtr(), _pathfinder, groupMgr);
 	entity1.setPosition(ai::Vector3f(1.0f, 1.0f, 0.0f));
-	ASSERT_TRUE(groupMgr.add(id, &entity1));
+	groupMgr.add(id, &entity1);
+	groupMgr.update();
 	avg = groupMgr.getPosition(id);
 	ASSERT_EQ(ai::Vector3f(1.0f, 1.0f, 0.0f), avg);
 	TestEntity entity2(2, ai::TreeNodePtr(), _pathfinder, groupMgr);
 	entity2.setPosition(ai::Vector3f(3.0f, 3.0f, 0.0f));
-	ASSERT_TRUE(groupMgr.add(id, &entity2));
+	groupMgr.add(id, &entity2);
+	groupMgr.update();
 	avg = groupMgr.getPosition(id);
 	ASSERT_EQ(ai::Vector3f(2.0f, 2.0f, 0.0f), avg);
 }

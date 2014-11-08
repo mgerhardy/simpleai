@@ -14,7 +14,6 @@ AggroMgr::~AggroMgr() {
 }
 
 void AggroMgr::cleanupList() {
-	Lock lock(_mutex);
 	Entries::iterator::difference_type remove = 0;
 	for (Entries::iterator i = _entries.begin(); i != _entries.end(); ++i) {
 		const float aggroValue = (*i)->getAggro();
@@ -35,7 +34,6 @@ void AggroMgr::cleanupList() {
 }
 
 void AggroMgr::update(long deltaMillis) {
-	Lock lock(_mutex);
 	for (EntriesIter i = _entries.begin(); i != _entries.end(); ++i) {
 		_dirty |= (*i)->reduceByTime(deltaMillis);
 	}
@@ -70,7 +68,6 @@ static bool EntrySorter(const EntryPtr& a, const EntryPtr& b) {
 inline void AggroMgr::sort() {
 	if (!_dirty)
 		return;
-	Lock lock(_mutex);
 	std::sort(_entries.begin(), _entries.end(), EntrySorter);
 	_dirty = false;
 }
@@ -78,7 +75,6 @@ inline void AggroMgr::sort() {
 Entry* AggroMgr::addAggro(AI& entity, float amount) {
 	const CharacterId id = entity.getCharacter().getId();
 	const CharacterIdPredicate p(id);
-	Lock lock(_mutex);
 	Entries::const_iterator i = std::find_if(_entries.begin(), _entries.end(), p);
 	if (i == _entries.end()) {
 		Entry* e = new Entry(id, amount);

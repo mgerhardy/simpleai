@@ -3,6 +3,7 @@
 #include "ICharacter.h"
 #include <map>
 #include <set>
+#include <list>
 #include <mutex>
 
 namespace ai {
@@ -25,8 +26,16 @@ private:
 	GroupMembersSet _empty;
 	GroupMembers _members;
 
-	// TODO: use read write lock here
-	typedef std::recursive_mutex Mutex;
+	struct Queue {
+		GroupId groupId;
+		ICharacter* character;
+		bool add;
+	};
+	typedef std::list<Queue> UpdateList;
+	typedef UpdateList::const_iterator UpdateListIter;
+	UpdateList _changeQueue;
+
+	typedef std::mutex Mutex;
 	typedef std::unique_lock<Mutex> Lock;
 	mutable Mutex _mutex;
 
@@ -40,8 +49,10 @@ public:
 	GroupMgr ();
 	virtual ~GroupMgr ();
 
-	bool add(GroupId id, ICharacter* character);
-	bool remove(GroupId id, ICharacter* character);
+	void update();
+
+	void add(GroupId id, ICharacter* character);
+	void remove(GroupId id, ICharacter* character);
 
 	/**
 	 * @brief Calculate the average position of the group
