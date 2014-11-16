@@ -92,7 +92,7 @@ endif()
 
 macro(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
 foreach(HEADER ${${HEADER_LIST}})
-string(REGEX MATCH "(.*)[/\]" DIR ${HEADER})
+STRING(REGEX MATCH "(.*)[/\\]" DIR ${HEADER})
 install(FILES ${HEADER} DESTINATION include/simpleai/${DIR})
 endforeach(HEADER)
 endmacro(INSTALL_HEADERS_WITH_DIRECTORY)
