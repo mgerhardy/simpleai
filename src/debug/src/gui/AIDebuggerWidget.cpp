@@ -74,14 +74,10 @@ void AIDebuggerWidget::onSelected() {
 }
 
 void AIDebuggerWidget::onNamesReceived() {
-	QStringList list;
-	const std::vector<std::string>& names = _debugger.getNames();
-	for (std::vector<std::string>::const_iterator i = names.begin(); i != names.end(); ++i) {
-		list << QString::fromStdString(*i);
-	}
 	const QString name = _namesComboBox->currentText();
 	_namesComboBox->clear();
-	_namesComboBox->insertItems(0, list);
+	const QStringList& names = _debugger.getNames();
+	_namesComboBox->insertItems(0, names);
 	_namesComboBox->setEnabled(!names.empty());
 	_namesComboBox->setCurrentIndex(_namesComboBox->findText(name));
 }

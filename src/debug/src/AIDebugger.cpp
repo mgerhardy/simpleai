@@ -232,5 +232,12 @@ MapView* AIDebugger::createMapWidget() {
 	return new MapView(*this);
 }
 
+void AIDebugger::setNames(const std::vector<std::string>& names) {
+	_names.clear();
+	for (std::vector<std::string>::const_iterator i = names.begin(); i != names.end(); ++i) {
+		_names << QString::fromStdString(*i);
+	}
+}
+
 }
 }

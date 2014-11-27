@@ -10,6 +10,7 @@
 #include <QTcpSocket>
 #include <QSettings>
 #include <QFile>
+#include <QStringList>
 
 namespace ai {
 namespace debug {
@@ -55,7 +56,7 @@ protected:
 	// the socket of the ai debug server
 	QTcpSocket _socket;
 	bool _pause;
-	std::vector<std::string> _names;
+	QStringList _names;
 
 	bool writeMessage(const IProtocolMessage& msg);
 
@@ -73,7 +74,7 @@ public:
 	void setEntities(const Entities& entities);
 	void setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node, const CharacterAttributes& attributes);
 	void setNames(const std::vector<std::string>& names);
-	const std::vector<std::string>& getNames() const;
+	const QStringList& getNames() const;
 	/**
 	 * @return The behaviour tree node that is assigned to the selected entity
 	 */
@@ -125,10 +126,6 @@ inline void AIDebugger::setCharacterDetails(const CharacterId& id, const AIState
 	_attributes = std::move(attributes);
 }
 
-inline void AIDebugger::setNames(const std::vector<std::string>& names) {
-	_names = std::move(names);
-}
-
 inline const std::vector<AIStateAggroEntry>& AIDebugger::getAggro() const {
 	return _aggro;
 }
@@ -149,7 +146,7 @@ inline const AIDebugger::Entities& AIDebugger::getEntities() const {
 	return _entities;
 }
 
-inline const std::vector<std::string>& AIDebugger::getNames() const {
+inline const QStringList& AIDebugger::getNames() const {
 	return _names;
 }
 
