@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.6)
 project(SIMPLEAI)
 
+set(SIMPLEAI_VERSION "0.1")
+
 option(SIMPLEAI_EXAMPLE "Compile example program" OFF)
 option(SIMPLEAI_TEST "Compile tests" OFF)
 option(SIMPLEAI_LUA "Compile with lua support" ON)

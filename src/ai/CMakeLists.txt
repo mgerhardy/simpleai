@@ -97,8 +97,20 @@ install(FILES ${HEADER} DESTINATION include/simpleai/${DIR})
 endforeach(HEADER)
 endmacro(INSTALL_HEADERS_WITH_DIRECTORY)
 
+include(FindPkgConfig QUIET)
+if (PKG_CONFIG_FOUND)
+	set(prefix ${CMAKE_INSTALL_PREFIX})
+	set(exec_prefix "\${prefix}")
+	set(libdir "\${exec_prefix}/lib${LIB_SUFFIX}")
+	set(bindir "\${exec_prefix}/bin")
+	set(includedir "\${prefix}/include")
+	configure_file(${SIMPLEAI_SOURCE_DIR}/libsimpleai.pc.in ${CMAKE_CURRENT_BINARY_DIR}/libsimpleai.pc @ONLY)
+	install(CODE ${CMAKE_CURRENT_BINARY_DIR}/libsimpleai.pc)
+endif()
+
 install(TARGETS simpleai ARCHIVE DESTINATION lib)
 install(DIRECTORY ${simpleai_HEADER_DIRS} DESTINATION include/simpleai)
+#install(EXPORT simpleai DESTINATION lib FILE libsimpleai.cmake)
 INSTALL_HEADERS_WITH_DIRECTORY(simpleai_HEADERS)
 
 # TODO Write Config.h with version and Stuff
