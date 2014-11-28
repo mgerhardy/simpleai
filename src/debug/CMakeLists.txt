@@ -7,7 +7,9 @@ set(CMAKE_AUTOMOC ON)
 # to always look for includes there:
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(libsimpleai REQUIRED)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/src/ai/")
+
+find_package(SimpleAI REQUIRED)
 
 # Widgets finds its own dependencies.
 find_package(Qt5Widgets REQUIRED)
