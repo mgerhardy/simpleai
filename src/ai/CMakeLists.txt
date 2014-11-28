@@ -108,6 +108,8 @@ if (PKG_CONFIG_FOUND)
 	install(FILES ${SIMPLEAI_BINARY_DIR}/libsimpleai.pc DESTINATION "lib${LIB_SUFFIX}/pkgconfig")
 endif()
 
+#install(FILES ${SIMPLEAI_SOURCE_DIR}/FindSimpleAI.cmake DESTINATION ${CMAKE_MODULE_PATH})
+
 install(TARGETS simpleai ARCHIVE DESTINATION lib)
 install(DIRECTORY ${simpleai_HEADER_DIRS} DESTINATION include/simpleai)
 #install(EXPORT simpleai DESTINATION lib FILE libsimpleai.cmake)
