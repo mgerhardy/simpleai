@@ -22,8 +22,8 @@ const char *stateNames[] = {
 E(UNKNOWN),
 E(CANNOTEXECUTE),
 E(RUNNING),
-E(FAILED),
 E(FINISHED),
+E(FAILED),
 E(EXCEPTION)
 };
 #undef E
