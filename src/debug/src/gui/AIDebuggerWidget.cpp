@@ -137,7 +137,8 @@ QWidget *AIDebuggerWidget::createTopWidget() {
 	_mapWidget = _debugger.createMapWidget();
 	_mapFrame = new ZoomFrame(_mapWidget);
 
-	_entityList = new EntityList(_debugger);
+	_entityFilter = new QLineEdit();
+	_entityList = new EntityList(_debugger, _entityFilter);
 	_namesComboBox = new QComboBox();
 	_namesComboBox->setFixedWidth(_entityList->width());
 	_namesComboBox->addItem(tr("None"));
@@ -147,6 +148,7 @@ QWidget *AIDebuggerWidget::createTopWidget() {
 	QVBoxLayout *vbox = new QVBoxLayout();
 	vbox->setMargin(0);
 	vbox->addWidget(_namesComboBox);
+	vbox->addWidget(_entityFilter);
 	vbox->addWidget(_entityList);
 
 	QWidget *widget = new QWidget();

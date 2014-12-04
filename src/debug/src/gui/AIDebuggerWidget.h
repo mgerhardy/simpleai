@@ -6,6 +6,7 @@
 #include <QStatusBar>
 #include <QComboBox>
 #include <QMenu>
+#include <QLineEdit>
 
 #include "AICompressorProxy.h"
 
@@ -92,6 +93,7 @@ private:
 	ZoomFrame *_mapFrame;
 	MapView *_mapWidget;
 	EntityList *_entityList;
+	QLineEdit *_entityFilter;
 	AggroTable *_aggroTable;
 	QAction *_connectAction;
 	QAction *_pauseAction;

@@ -4,8 +4,8 @@
 namespace ai {
 namespace debug {
 
-EntityList::EntityList(AIDebugger& debugger) :
-		QTableView(), _model(debugger, this), _debugger(debugger) {
+EntityList::EntityList(AIDebugger& debugger, QLineEdit* entityFilter) :
+		QTableView(), _model(debugger, this), _debugger(debugger), _entityFilter(entityFilter) {
 	setFixedWidth(130);
 	_proxyModel.setSourceModel(&_model);
 	setModel(&_proxyModel);
@@ -16,6 +16,7 @@ EntityList::EntityList(AIDebugger& debugger) :
 	setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 	verticalHeader()->hide();
 
+	connect(_entityFilter, SIGNAL(textChanged(QString)), &_proxyModel, SLOT(setFilterWildcard(QString)));
 	connect(selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(selectEntity(QModelIndex,QModelIndex)));
 }
 

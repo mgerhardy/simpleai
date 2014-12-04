@@ -2,6 +2,7 @@
 
 #include <QTableView>
 #include <QSortFilterProxyModel>
+#include <QLineEdit>
 
 #include "AIDebugger.h"
 #include "EntityListModel.h"
@@ -18,10 +19,11 @@ private:
 	EntityListModel _model;
 	QSortFilterProxyModel _proxyModel;
 	AIDebugger& _debugger;
+	QLineEdit* _entityFilter;
 private slots:
 	void selectEntity(const QModelIndex &current, const QModelIndex &previous);
 public:
-	EntityList(AIDebugger& debugger);
+	EntityList(AIDebugger& debugger, QLineEdit *entityFilter);
 	virtual ~EntityList();
 
 	void updateEntityList();
