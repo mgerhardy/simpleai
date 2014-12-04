@@ -136,4 +136,3 @@ simpleai $VERSION: Automatic configuration OK.
 
 Type 'make' to build simpleai.  Type 'make install' to install it.
 ])
-

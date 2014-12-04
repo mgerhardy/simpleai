@@ -1,11 +1,11 @@
 bin_PROGRAMS = \
-	example
+	simpleai-run
 
-example_SOURCES = \
+simpleai_run_SOURCES = \
 	Example.cpp \
 	Pathfinder.cpp
 
-example_LDADD = \
+simpleai_run_LDADD = \
 	../ai/libsimpleai.la
 
 include_HEADERS = \
@@ -16,7 +16,7 @@ include_HEADERS = \
 	GameMap.h \
 	Pathfinder.h
 
-example_CXXFLAGS = $(AM_CXXFLAGS) -Wall -pedantic -Wextra -Wabi -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-declarations -Wmissing-format-attribute -Wno-long-long -Woverloaded-virtual -Wpacked -Wredundant-decls -Wshadow -Wsign-promo -Wno-sign-compare
+simpleai_run_CXXFLAGS = $(AM_CXXFLAGS) -Wall -pedantic -Wextra -Wabi -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-declarations -Wmissing-format-attribute -Wno-long-long -Woverloaded-virtual -Wpacked -Wredundant-decls -Wshadow -Wsign-promo -Wno-sign-compare
 
 EXTRA_DIST = behaviours.lua
 
