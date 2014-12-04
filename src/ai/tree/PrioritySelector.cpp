@@ -9,25 +9,25 @@ TreeNodeStatus PrioritySelector::execute(AI& entity, long deltaMillis) {
 		return CANNOTEXECUTE;
 
 	const std::size_t size = _children.size();
-	for (std::size_t i = 0; i < size; i++) {
+	TreeNodeStatus overallResult = FINISHED;
+	std::size_t i;
+	for (i = 0; i < size; i++) {
 		const TreeNodePtr& child = _children[i];
 		const TreeNodeStatus result = child->execute(entity, deltaMillis);
-		if (result == RUNNING)
+		if (result == RUNNING) {
 			setSelectorState(entity, static_cast<int>(i));
-		else
+		} else if (result == CANNOTEXECUTE || result == FAILED) {
 			child->resetState(entity);
-
-		if (result == CANNOTEXECUTE)
 			continue;
-
-		for (++i; i < size; ++i) {
-			_children[i]->resetState(entity);
 		}
-
-		return state(entity, result);
+		child->resetState(entity);
+		overallResult = result;
+		break;
 	}
-
-	return state(entity, FINISHED);
+	for (++i; i < size; ++i) {
+		_children[i]->resetState(entity);
+	}
+	return state(entity, overallResult);
 }
 
 NODE_FACTORY_IMPL(PrioritySelector)
