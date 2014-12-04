@@ -141,6 +141,7 @@ QWidget *AIDebuggerWidget::createTopWidget() {
 	_entityList = new EntityList(_debugger, _entityFilter);
 	_namesComboBox = new QComboBox();
 	_namesComboBox->setFixedWidth(_entityList->width());
+	_namesComboBox->setInsertPolicy(QComboBox::InsertAlphabetically);
 	_namesComboBox->addItem(tr("None"));
 
 	splitter->addWidget(_mapFrame);
