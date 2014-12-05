@@ -165,10 +165,10 @@ void AIDebugger::change(const QString& name) {
 }
 
 bool AIDebugger::connectToAIServer(const QString& hostname, short port) {
-	_socket.close();
+	_socket.disconnectFromHost();
 	_socket.connectToHost(hostname, port, QAbstractSocket::ReadWrite, QAbstractSocket::AnyIPProtocol);
 	if (_socket.waitForConnected()) {
-		qDebug() << "Connection established";
+		qDebug() << "Connection established " << _socket.state();
 		return true;
 	}
 	const QAbstractSocket::SocketError socketError = _socket.error();
@@ -194,6 +194,7 @@ void AIDebugger::onConnectionClosed() {
 }
 
 void AIDebugger::onDisconnect() {
+	qDebug() << "disconnect from server: " << _socket.state();
 	{
 		_pause = false;
 		emit onPause(_pause);
@@ -232,7 +233,7 @@ void AIDebugger::readTcpData() {
 			std::unique_ptr<ai::IProtocolMessage> msg(mf.create(_stream));
 			if (!msg) {
 				qDebug() << "unknown server message - disconnecting";
-				_socket.close();
+				_socket.disconnectFromHost();
 				break;
 			}
 			ai::ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
@@ -241,7 +242,7 @@ void AIDebugger::readTcpData() {
 				handler->execute(1, *msg);
 			} else {
 				qDebug() << "no handler for " << msg->getId();
-				_socket.close();
+				_socket.disconnectFromHost();
 				break;
 			}
 		}

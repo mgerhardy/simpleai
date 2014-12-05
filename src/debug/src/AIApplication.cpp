@@ -39,6 +39,7 @@ AIApplication::AIApplication(int argc, char** argv) :
 	QMenu* menuBar = _window.menuBar()->addMenu(tr("&File"));
 	_widget->contributeToFileMenu(menuBar);
 	_widget->contributeToHelpMenu(_window.menuBar()->addMenu(tr("&Help")));
+	_window.showMaximized();
 	_window.show();
 
 	const QList<QString>& args = QCoreApplication::arguments();
