@@ -12,13 +12,13 @@
 namespace ai {
 namespace debug {
 
-MapItem::MapItem (QGraphicsItem* parent, const AIStateWorld& state, AIDebugger& aiDebugger) :
+MapItem::MapItem(QGraphicsItem* parent, const AIStateWorld& state, AIDebugger& aiDebugger) :
 		QGraphicsItemGroup(parent), _state(state), _aiDebugger(aiDebugger) {
 	const bool selected = _aiDebugger.isSelected(state);
 	setFlag(QGraphicsItem::ItemIsSelectable);
 
 	const qreal size = 30.0;
-	const QColor& color = selected ? QColor::fromRgb(200, 200, 0) : QColor::fromRgb(255, 0, 0);
+	const QColor& color = selected ? QColor::fromRgb(200, 200, 0, 255) : QColor::fromRgb(255, 0, 0, 128);
 	QGraphicsEllipseItem *body = new QGraphicsEllipseItem(0.0, 0.0, size, size);
 	body->setBrush(color);
 	addToGroup(body);
@@ -31,9 +31,13 @@ MapItem::MapItem (QGraphicsItem* parent, const AIStateWorld& state, AIDebugger& 
 
 	direction->setSelected(selected);
 	body->setSelected(selected);
+
+	setAcceptHoverEvents(true);
+	setAcceptedMouseButtons(Qt::AllButtons);
+	setToolTip(QString::number(_state.getId()));
 }
 
-MapItem::~MapItem () {
+MapItem::~MapItem() {
 }
 
 void MapItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
