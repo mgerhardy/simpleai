@@ -5,15 +5,15 @@ public class AIStateAggroEntry {
     private final float aggro;
 
     public AIStateAggroEntry(int _id, float _aggro) {
-	id = _id;
-	aggro = _aggro;
+        id = _id;
+        aggro = _aggro;
     }
 
     public float getAggro() {
-	return aggro;
+        return aggro;
     }
 
     public int getId() {
-	return id;
+        return id;
     }
 }

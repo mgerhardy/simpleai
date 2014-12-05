@@ -8,21 +8,21 @@ public class AIPauseMessage extends ProtocolMessage {
     private final boolean _pause;
 
     public AIPauseMessage(boolean pause) {
-	super(PROTO_PAUSE);
-	_pause = pause;
+        super(PROTO_PAUSE);
+        _pause = pause;
     }
 
     public AIPauseMessage(DataInput in) throws IOException {
-	super(PROTO_PAUSE);
-	_pause = in.readBoolean();
+        super(PROTO_PAUSE);
+        _pause = in.readBoolean();
     }
 
     public boolean isPause() {
-	return _pause;
+        return _pause;
     }
 
     public void serialize(DataOutput out) throws IOException {
-	out.writeByte(_id);
-	out.writeBoolean(_pause);
+        out.writeByte(_id);
+        out.writeBoolean(_pause);
     }
 }
