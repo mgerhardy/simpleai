@@ -63,6 +63,7 @@ protected:
 private slots:
 	void readTcpData();
 	void onDisconnect();
+	void onConnectionClosed();
 public:
 	AIDebugger();
 	virtual ~AIDebugger();

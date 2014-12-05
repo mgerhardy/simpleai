@@ -81,6 +81,7 @@ AIDebugger::AIDebugger() :
 				_selectedId(-1), _socket(this), _pause(false) {
 	connect(&_socket, SIGNAL(readyRead()), SLOT(readTcpData()));
 	connect(&_socket, SIGNAL(disconnected()), SLOT(onDisconnect()));
+	connect(&_socket, SIGNAL(connectionClosed()), SLOT(onConnectionClosed()));
 
 	ai::ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
 	r.registerHandler(ai::PROTO_STATE, _stateHandler);
@@ -188,11 +189,30 @@ bool AIDebugger::connectToAIServer(const QString& hostname, short port) {
 	return false;
 }
 
+void AIDebugger::onConnectionClosed() {
+	onDisconnect();
+}
+
 void AIDebugger::onDisconnect() {
-	_pause = false;
-	_selectedId = -1;
-	_aggro.clear();
-	_node = AIStateNode();
+	{
+		_pause = false;
+		emit onPause(_pause);
+	}
+	{
+		_selectedId = -1;
+		_aggro.clear();
+		_attributes.clear();
+		_node = AIStateNode();
+		emit onSelected();
+	}
+	{
+		_names.clear();
+		emit onNamesReceived();
+	}
+	{
+		_entities.clear();
+		emit onEntitiesUpdated();
+	}
 	emit disconnect();
 }
 
