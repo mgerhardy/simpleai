@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common/Pointers.h"
+#include <memory>
 #include <string>
 #include <vector>
 #include <map>
@@ -9,7 +9,7 @@ namespace ai {
 
 class IAIFactory;
 class TreeNode;
-typedef SharedPtr<TreeNode> TreeNodePtr;
+typedef std::shared_ptr<TreeNode> TreeNodePtr;
 
 class ITreeLoader {
 protected:

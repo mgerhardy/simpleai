@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common/Pointers.h"
+#include <memory>
 #include "IProtocolMessage.h"
 
 namespace ai {
@@ -30,7 +30,7 @@ public: \
 	virtual void execute##MessageClass(const MessageClass& msg) = 0; \
 }
 
-typedef SharedPtr<IProtocolHandler> ProtocolHandlerPtr;
+typedef std::shared_ptr<IProtocolHandler> ProtocolHandlerPtr;
 
 /**
  * @brief Use this deleter for any handler that should not get freed by @c delete.

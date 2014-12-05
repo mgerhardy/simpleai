@@ -1,6 +1,6 @@
 #pragma once
 
-#include <common/Pointers.h>
+#include <memory>
 #include <ICharacter.h>
 
 namespace ai {
@@ -43,7 +43,7 @@ public:
 	bool operator <(Entry& other) const;
 };
 
-typedef SharedPtr<Entry> EntryPtr;
+typedef std::shared_ptr<Entry> EntryPtr;
 
 inline void Entry::addAggro(float aggro) {
 	_aggro += aggro;

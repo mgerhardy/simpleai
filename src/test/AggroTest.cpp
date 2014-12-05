@@ -3,12 +3,12 @@
 class AggroTest: public TestSuite {
 public:
 	void doMassTest(int max) {
-		std::vector<SharedPtr<TestEntity> > ais;
+		std::vector<std::shared_ptr<TestEntity> > ais;
 		ai::AggroMgr mgr(max);
 		for (int i = 1; i <= max; ++i) {
 			const ai::CharacterId id = i;
 			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _pathfinder, _groupManager);
-			ais.push_back(SharedPtr<TestEntity>(e));
+			ais.push_back(std::shared_ptr<TestEntity>(e));
 			ai::Entry* entry = mgr.addAggro(*e, i);
 			entry->setReduceByValue(i);
 		}

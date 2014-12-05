@@ -1,13 +1,13 @@
 #include <map>
 
 #include <common/NonCopyable.h>
-#include <common/Pointers.h>
+#include <memory>
 
 template<class TYPE, class CTX>
 class IFactory {
 public:
 	virtual ~IFactory() {}
-	virtual SharedPtr<TYPE> create (const CTX* ctx) const = 0;
+	virtual std::shared_ptr<TYPE> create (const CTX* ctx) const = 0;
 };
 
 template<class KEY, class TYPE, class CTX>
@@ -40,18 +40,18 @@ public:
 		return true;
 	}
 
-	SharedPtr<TYPE> create (const KEY& type, const CTX* ctx = nullptr) const
+	std::shared_ptr<TYPE> create (const KEY& type, const CTX* ctx = nullptr) const
 	{
 		FactoryMapConstIter i = _factories.find(type);
 		if (i == _factories.end()) {
-			return SharedPtr<TYPE>();
+			return std::shared_ptr<TYPE>();
 		}
 
 		const IFactory<TYPE, CTX>* factory = i->second;
 		try {
 			return factory->create(ctx);
 		} catch (...) {
-			return SharedPtr<TYPE>();
+			return std::shared_ptr<TYPE>();
 		}
 	}
 };

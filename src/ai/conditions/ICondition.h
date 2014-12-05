@@ -11,7 +11,7 @@
 #include <vector>
 #include <sstream>
 
-#include "common/Pointers.h"
+#include <memory>
 #include "common/IPrintable.h"
 
 #include "AIRegistry.h"
@@ -75,7 +75,7 @@ public: \
 	CONDITION_FACTORY_SINGLETON
 
 class ICondition;
-typedef SharedPtr<ICondition> ConditionPtr;
+typedef std::shared_ptr<ICondition> ConditionPtr;
 typedef std::vector<ConditionPtr> Conditions;
 
 /**

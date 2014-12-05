@@ -2,7 +2,7 @@
 
 class GroupMgrTest: public TestSuite {
 protected:
-	std::vector<SharedPtr<TestEntity> > _ais;
+	std::vector<std::shared_ptr<TestEntity> > _ais;
 	ai::GroupMgr _groupMgr;
 	const ai::GroupId _id = 1;
 public:
@@ -12,7 +12,7 @@ public:
 		for (int i = 1; i <= max; ++i) {
 			const ai::CharacterId id = i;
 			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _pathfinder, _groupManager);
-			_ais.push_back(SharedPtr<TestEntity>(e));
+			_ais.push_back(std::shared_ptr<TestEntity>(e));
 			e->setPosition(ai::Vector3f(3.0f, 3.0f, 0.0f));
 			_groupMgr.add(_id, e);
 		}
@@ -22,13 +22,13 @@ public:
 class GroupTest: public TestSuite {
 public:
 	void doMassTest(int max) {
-		std::vector<SharedPtr<TestEntity> > ais;
+		std::vector<std::shared_ptr<TestEntity> > ais;
 		const ai::GroupId groupId = 1;
 		ai::GroupMgr mgr;
 		for (int i = 1; i <= max; ++i) {
 			const ai::CharacterId id = i;
 			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _pathfinder, _groupManager);
-			ais.push_back(SharedPtr<TestEntity>(e));
+			ais.push_back(std::shared_ptr<TestEntity>(e));
 			mgr.add(groupId, e);
 		}
 		const std::pair<ai::GroupMembersSetIter, ai::GroupMembersSetIter>& members = mgr.getGroupMembers(groupId);
@@ -37,7 +37,7 @@ public:
 
 		ASSERT_EQ(max, mgr.getGroupSize(groupId));
 
-		for (std::vector<SharedPtr<TestEntity> >::iterator i = ais.begin(); i != ais.end(); ++i) {
+		for (std::vector<std::shared_ptr<TestEntity> >::iterator i = ais.begin(); i != ais.end(); ++i) {
 			mgr.remove(1, i->get());
 		}
 		const std::pair<ai::GroupMembersSetIter, ai::GroupMembersSetIter>& membersEmpty = mgr.getGroupMembers(groupId);

@@ -1,17 +1,17 @@
 #pragma once
 
-#include "common/Pointers.h"
+#include <memory>
 #include <string>
 #include <vector>
 
 namespace ai {
 
 class TreeNode;
-typedef SharedPtr<TreeNode> TreeNodePtr;
+typedef std::shared_ptr<TreeNode> TreeNodePtr;
 typedef std::vector<TreeNodePtr> TreeNodes;
 
 class ICondition;
-typedef SharedPtr<ICondition> ConditionPtr;
+typedef std::shared_ptr<ICondition> ConditionPtr;
 typedef std::vector<ConditionPtr> Conditions;
 
 struct TreeNodeFactoryContext;

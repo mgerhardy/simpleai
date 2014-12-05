@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <string>
-#include "common/Pointers.h"
+#include <memory>
 #include "common/IPrintable.h"
 #include "conditions/ICondition.h"
 #include "conditions/True.h"
@@ -10,7 +10,7 @@
 namespace ai {
 
 class TreeNode;
-typedef SharedPtr<TreeNode> TreeNodePtr;
+typedef std::shared_ptr<TreeNode> TreeNodePtr;
 typedef std::vector<TreeNodePtr> TreeNodes;
 
 enum TreeNodeStatus {

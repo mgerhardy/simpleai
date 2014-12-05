@@ -51,7 +51,6 @@ nobase_library_include_HEADERS = \
 	common/IPrintable.h \
 	common/Math.h \
 	common/NonCopyable.h \
-	common/Pointers.h \
 	common/Random.h \
 	common/String.h \
 	conditions/And.h \
