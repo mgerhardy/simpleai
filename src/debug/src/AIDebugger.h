@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <utility>
 #include <AI.h>
 #include <server/AIStateMessage.h>
 #include <server/AIPauseMessage.h>
