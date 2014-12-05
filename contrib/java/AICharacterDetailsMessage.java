@@ -4,38 +4,29 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class AICharacterDetailsMessage extends ProtocolMessage {
     private final int _chrId;
     private AIStateAggro _aggro;
     private AIStateNode _root;
-    private Map<String, String> _attributes;
 
     public AICharacterDetailsMessage(DataInput in) throws IOException {
         super(PROTO_CHARACTER_DETAILS);
         _chrId = in.readInt();
         readAggro(in, _aggro);
         _root = readNode(in);
-        readAttributes(in, _attributes);
     }
 
     public AICharacterDetailsMessage(final int id, final AIStateAggro aggro,
-            final AIStateNode root, final Map<String, String> attributes) {
+            final AIStateNode root) {
         super(PROTO_CHARACTER_DETAILS);
         _chrId = id;
         _aggro = aggro;
         _root = root;
-        _attributes = attributes;
     }
 
     public AIStateAggro getAggro() {
         return _aggro;
-    }
-
-    public Map<String, String> getAttributes() {
-        return _attributes;
     }
 
     public int getCharacterId() {
@@ -52,16 +43,6 @@ public class AICharacterDetailsMessage extends ProtocolMessage {
             final int chrId = in.readInt();
             final float aggroVal = in.readFloat();
             aggro.addAggro(new AIStateAggroEntry(chrId, aggroVal));
-        }
-    }
-
-    private void readAttributes(DataInput in, Map<String, String> attributes)
-            throws IOException {
-        final int size = in.readShort();
-        for (int i = 0; i < size; ++i) {
-            final String key = readString(in);
-            final String value = readString(in);
-            attributes.put(key, value);
         }
     }
 
@@ -86,7 +67,6 @@ public class AICharacterDetailsMessage extends ProtocolMessage {
         out.writeInt(_chrId);
         writeAggro(out, _aggro);
         writeNode(out, _root);
-        writeAttributes(out, _attributes);
     }
 
     private void writeAggro(DataOutput out, final AIStateAggro aggro)
@@ -96,15 +76,6 @@ public class AICharacterDetailsMessage extends ProtocolMessage {
         for (final AIStateAggroEntry i : a) {
             out.writeInt(i.getId());
             out.writeFloat(i.getAggro());
-        }
-    }
-
-    private void writeAttributes(DataOutput out, final Map<String, String> a)
-            throws IOException {
-        out.writeShort((short) a.size());
-        for (final Entry<String, String> i : a.entrySet()) {
-            writeString(out, i.getKey());
-            writeString(out, i.getValue());
         }
     }
 

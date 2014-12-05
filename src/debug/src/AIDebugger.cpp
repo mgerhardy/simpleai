@@ -42,7 +42,7 @@ public:
 	}
 
 	void executeAICharacterDetailsMessage(const ai::AICharacterDetailsMessage& msg) override {
-		_aiDebugger.setCharacterDetails(msg.getCharacterId(), msg.getAggro(), msg.getNode(), msg.getAttributes());
+		_aiDebugger.setCharacterDetails(msg.getCharacterId(), msg.getAggro(), msg.getNode());
 		emit _aiDebugger.onSelected();
 	}
 };
@@ -101,6 +101,13 @@ AIDebugger::~AIDebugger() {
 
 bool AIDebugger::isSelected(const ai::AIStateWorld& ai) const {
 	return _selectedId == ai.getId();
+}
+
+void AIDebugger::setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node) {
+	_selectedId = id;
+	_aggro = std::move(aggro.getAggro());
+	_node = std::move(node);
+	_attributes = QSet ai.getAttributes();
 }
 
 const CharacterId& AIDebugger::getSelected() const {

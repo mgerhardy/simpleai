@@ -29,7 +29,7 @@ class AIDebugger: public QObject {
 	Q_OBJECT
 friend class PauseHandler;
 public:
-	typedef std::vector<AIStateWorld> Entities;
+	typedef QHash<CharacterId, AIStateWorld> Entities;
 	typedef Entities::const_iterator EntitiesIter;
 protected:
 	typedef Entities::iterator Iter;
@@ -73,8 +73,8 @@ public:
 	 * @return The list of ai controlled entities
 	 */
 	const Entities& getEntities() const;
-	void setEntities(const Entities& entities);
-	void setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node, const CharacterAttributes& attributes);
+	void setEntities(const std::vector<AIStateWorld>& entities);
+	void setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node);
 	void setNames(const std::vector<std::string>& names);
 	const QStringList& getNames() const;
 	/**
@@ -121,13 +121,6 @@ signals:
 	void onEntitiesUpdated();
 };
 
-inline void AIDebugger::setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node, const CharacterAttributes& attributes) {
-	_selectedId = id;
-	_aggro = std::move(aggro.getAggro());
-	_node = std::move(node);
-	_attributes = std::move(attributes);
-}
-
 inline const std::vector<AIStateAggroEntry>& AIDebugger::getAggro() const {
 	return _aggro;
 }
@@ -140,7 +133,7 @@ inline const CharacterAttributes& AIDebugger::getAttributes() const {
 	return _attributes;
 }
 
-inline void AIDebugger::setEntities(const Entities& entities) {
+inline void AIDebugger::setEntities(const std::vector<AIStateWorld>& entities) {
 	_entities = std::move(entities);
 }
 

@@ -1,5 +1,6 @@
 #include "MapItem.h"
 #include "AIDebugger.h"
+#include <ICharacter.h>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QFont>
@@ -34,7 +35,13 @@ MapItem::MapItem(QGraphicsItem* parent, const AIStateWorld& state, AIDebugger& a
 
 	setAcceptHoverEvents(true);
 	setAcceptedMouseButtons(Qt::AllButtons);
-	setToolTip(QString::number(_state.getId()));
+	const CharacterAttributes& attributes = _state.getAttributes();
+	CharacterAttributes::const_iterator name = attributes.find(attributes::NAME);
+	if (name != attributes.end()) {
+		setToolTip(QString::fromStdString(name->second));
+	} else {
+		setToolTip(QString::number(_state.getId()));
+	}
 }
 
 MapItem::~MapItem() {

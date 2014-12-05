@@ -129,7 +129,7 @@ void Server::broadcastCharacterDetails() {
 		aggro.addAggro(AIStateAggroEntry(e->getCharacterId(), e->getAggro()));
 	}
 
-	const AICharacterDetailsMessage msg(_selectedCharacterId, aggro, root, ai.getCharacter().getAttributes());
+	const AICharacterDetailsMessage msg(_selectedCharacterId, aggro, root);
 	_network.broadcast(msg);
 }
 

@@ -6,7 +6,7 @@ namespace debug {
 
 EntityList::EntityList(AIDebugger& debugger, QLineEdit* entityFilter) :
 		QTableView(), _model(debugger, this), _debugger(debugger), _entityFilter(entityFilter) {
-	setFixedWidth(130);
+	setFixedWidth(200);
 	_proxyModel.setSourceModel(&_model);
 	setModel(&_proxyModel);
 	setAlternatingRowColors(true);
@@ -15,6 +15,7 @@ EntityList::EntityList(AIDebugger& debugger, QLineEdit* entityFilter) :
 	setSelectionBehavior(QAbstractItemView::SelectRows);
 	setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 	verticalHeader()->hide();
+	horizontalHeader()->setStretchLastSection(true);
 
 	connect(_entityFilter, SIGNAL(textChanged(QString)), &_proxyModel, SLOT(setFilterWildcard(QString)));
 	connect(selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(selectEntity(QModelIndex,QModelIndex)));
