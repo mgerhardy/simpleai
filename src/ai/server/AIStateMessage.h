@@ -23,7 +23,10 @@ private:
 		const float z = readFloat(in);
 		const float orientation = readFloat(in);
 		const ai::Vector3f position(x, y, z);
-		const AIStateWorld tree(id, position, orientation);
+
+		AIStateWorld tree(id, position, orientation);
+		CharacterAttributes& attributes = tree.getAttributes();
+		readAttributes(in, attributes);
 		_states.push_back(tree);
 	}
 
@@ -34,6 +37,24 @@ private:
 		addFloat(out, position.y);
 		addFloat(out, position.z);
 		addFloat(out, state.getOrientation());
+		writeAttributes(out, state.getAttributes());
+	}
+
+	void writeAttributes(streamContainer& out, const CharacterAttributes& attributes) const {
+		addShort(out, static_cast<int16_t>(attributes.size()));
+		for (CharacterAttributes::const_iterator i = attributes.begin(); i != attributes.end(); ++i) {
+			addString(out, i->first);
+			addString(out, i->second);
+		}
+	}
+
+	void readAttributes(streamContainer& in, CharacterAttributes& attributes) const {
+		const int size = readShort(in);
+		for (int i = 0; i < size; ++i) {
+			const std::string& key = readString(in);
+			const std::string& value = readString(in);
+			attributes.insert(std::make_pair(key, value));
+		}
 	}
 
 public:

@@ -103,8 +103,13 @@ private:
 	ai::CharacterId _id;
 	ai::Vector3f _position;
 	float _orientation;
+	CharacterAttributes _attributes;
 public:
-	AIStateWorld(const ai::CharacterId& id, const ai::Vector3f& position, float orientation = -1.0f) :
+	AIStateWorld(const ai::CharacterId& id, const ai::Vector3f& position, float orientation, const CharacterAttributes& attributes) :
+			_id(id), _position(position), _orientation(orientation), _attributes(attributes) {
+	}
+
+	AIStateWorld(const ai::CharacterId& id, const ai::Vector3f& position, float orientation) :
 			_id(id), _position(position), _orientation(orientation) {
 	}
 
@@ -129,6 +134,20 @@ public:
 	 */
 	inline const ai::Vector3f& getPosition() const {
 		return _position;
+	}
+
+	/**
+	 * @return Attributes for the entity
+	 */
+	inline const CharacterAttributes& getAttributes() const {
+		return _attributes;
+	}
+
+	/**
+	 * @return Attributes for the entity to fill
+	 */
+	inline CharacterAttributes& getAttributes() {
+		return _attributes;
 	}
 };
 

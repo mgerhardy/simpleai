@@ -9,6 +9,8 @@ MapView::MapView(AIDebugger& debugger) :
 		IGraphicsView(true, true), _debugger(debugger) {
 	_scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+	setCacheMode(QGraphicsView::CacheBackground);
+	setRenderHint(QPainter::Antialiasing, false);
 	setInteractive(true);
 	setScene(&_scene);
 }

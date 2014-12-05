@@ -15,6 +15,8 @@ NodeTreeView::NodeTreeView(AIDebugger& debugger) :
 	_scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 	// because the connection lines are not included in the bounding box...
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+	setCacheMode(QGraphicsView::CacheBackground);
+	setRenderHint(QPainter::Antialiasing, false);
 	setScene(&_scene);
 }
 
