@@ -105,6 +105,8 @@ private:
 	float _orientation;
 	CharacterAttributes _attributes;
 public:
+	AIStateWorld() : _id(-1), _position(0.0f, 0.0f, 0.0f), _orientation(0.0f) {}
+
 	AIStateWorld(const ai::CharacterId& id, const ai::Vector3f& position, float orientation, const CharacterAttributes& attributes) :
 			_id(id), _position(position), _orientation(orientation), _attributes(attributes) {
 	}
