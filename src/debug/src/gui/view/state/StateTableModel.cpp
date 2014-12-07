@@ -16,7 +16,7 @@ void StateTableModel::update() {
 	const AIDebugger::CharacterAttributesMap& a = _debugger.getAttributes();
 	_list.clear();
 	for (AIDebugger::CharacterAttributesMap::const_iterator i = a.begin(); i != a.end(); ++i) {
-		_list.push_back(i->first);
+		_list << i.value();
 	}
 	endResetModel();
 }
@@ -56,7 +56,7 @@ QVariant StateTableModel::data(const QModelIndex &index, int role) const {
 			return key;
 		case 1: {
 			const AIDebugger::CharacterAttributesMap& a = _debugger.getAttributes();
-			return a.find(key)->second;
+			return a.value(key);
 		}
 		default:
 			break;
