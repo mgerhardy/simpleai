@@ -13,9 +13,9 @@ StateTableModel::~StateTableModel() {
 
 void StateTableModel::update() {
 	beginResetModel();
-	const CharacterAttributes& a = _debugger.getAttributes();
+	const AIDebugger::CharacterAttributesMap& a = _debugger.getAttributes();
 	_list.clear();
-	for (CharacterAttributes::const_iterator i = a.begin(); i != a.end(); ++i) {
+	for (AIDebugger::CharacterAttributesMap::const_iterator i = a.begin(); i != a.end(); ++i) {
 		_list.push_back(i->first);
 	}
 	endResetModel();
@@ -49,14 +49,14 @@ QVariant StateTableModel::headerData(int section, Qt::Orientation orientation,
 
 QVariant StateTableModel::data(const QModelIndex &index, int role) const {
 	// TODO:
+	const QString& key = _list[index.row()];
 	if (role == Qt::DisplayRole) {
 		switch (index.column()) {
 		case 0:
-			return QString::fromStdString(_list[index.row()]);
+			return key;
 		case 1: {
-			const CharacterAttributes& a = _debugger.getAttributes();
-			const std::string& key = _list[index.row()];
-			return QString::fromStdString(a.find(key)->second);
+			const AIDebugger::CharacterAttributesMap& a = _debugger.getAttributes();
+			return a.find(key)->second;
 		}
 		default:
 			break;

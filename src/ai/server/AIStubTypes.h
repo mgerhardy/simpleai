@@ -113,6 +113,10 @@ public:
 			_id(id), _position(position), _orientation(orientation) {
 	}
 
+	inline bool operator==(const AIStateWorld &other) const {
+		return _id == other._id;
+	}
+
 	/**
 	 * @return The unique id that can be used to identify the character in the world
 	 */

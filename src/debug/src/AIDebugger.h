@@ -31,6 +31,7 @@ friend class PauseHandler;
 public:
 	typedef QHash<CharacterId, AIStateWorld> Entities;
 	typedef Entities::const_iterator EntitiesIter;
+	typedef QHash<QString, QString> CharacterAttributesMap;
 protected:
 	typedef Entities::iterator Iter;
 	// all the entities that are send by the ai debug server
@@ -52,7 +53,7 @@ protected:
 	// the behaviour tree states of the current selected entity
 	AIStateNode _node;
 	// the attributes of the current selected entity
-	CharacterAttributes _attributes;
+	CharacterAttributesMap _attributes;
 	AIDebuggerWidget *_window;
 	// the socket of the ai debug server
 	QTcpSocket _socket;
@@ -84,7 +85,7 @@ public:
 	/**
 	 * @return The key/value pairs of attributes that are assigned on the server side to the selected ai entity
 	 */
-	const CharacterAttributes& getAttributes() const;
+	const CharacterAttributesMap& getAttributes() const;
 	const std::vector<AIStateAggroEntry>& getAggro() const;
 
 	/**
@@ -129,12 +130,8 @@ inline const AIStateNode& AIDebugger::getNode() const {
 	return _node;
 }
 
-inline const CharacterAttributes& AIDebugger::getAttributes() const {
+inline const AIDebugger::CharacterAttributesMap& AIDebugger::getAttributes() const {
 	return _attributes;
-}
-
-inline void AIDebugger::setEntities(const std::vector<AIStateWorld>& entities) {
-	_entities = std::move(entities);
 }
 
 inline const AIDebugger::Entities& AIDebugger::getEntities() const {

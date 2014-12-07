@@ -107,7 +107,12 @@ void AIDebugger::setCharacterDetails(const CharacterId& id, const AIStateAggro& 
 	_selectedId = id;
 	_aggro = std::move(aggro.getAggro());
 	_node = std::move(node);
-	_attributes = QSet ai.getAttributes();
+	_attributes.clear();
+	const AIStateWorld& state = _entities.value(id);
+	const CharacterAttributes& attributes = state.getAttributes();
+	for (CharacterAttributes::const_iterator i = attributes.begin(); i != attributes.end(); ++i) {
+		_attributes[QString::fromStdString(i->first)] = QString::fromStdString(i->second);
+	}
 }
 
 const CharacterId& AIDebugger::getSelected() const {
@@ -264,6 +269,13 @@ void AIDebugger::setNames(const std::vector<std::string>& names) {
 	_names.clear();
 	for (std::vector<std::string>::const_iterator i = names.begin(); i != names.end(); ++i) {
 		_names << QString::fromStdString(*i);
+	}
+}
+
+void AIDebugger::setEntities(const std::vector<AIStateWorld>& entities) {
+	_entities.clear();
+	for (std::vector<AIStateWorld>::const_iterator i = entities.begin(); i != entities.end(); ++i) {
+		_entities.insert(i->getId(), *i);
 	}
 }
 

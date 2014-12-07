@@ -24,7 +24,7 @@ public:
 	inline const AIStateWorld* getEntity(const QModelIndex &index) const {
 		const int size = getEntities().size();
 		if (size > index.row() && index.row() >= 0)
-			return &getEntities().at(index.row());
+			return &getEntities().values().at(index.row());
 		return nullptr;
 	}
 
