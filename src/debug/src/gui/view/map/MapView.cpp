@@ -16,6 +16,7 @@ MapView::MapView(AIDebugger& debugger) :
 }
 
 MapView::~MapView() {
+	_scene.clear();
 }
 
 MapItem* MapView::createMapItem(const AIStateWorld& state) {

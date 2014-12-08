@@ -17,8 +17,7 @@ void EntityListModel::update() {
 }
 
 int EntityListModel::rowCount(const QModelIndex & /*parent*/) const {
-	const AIDebugger::Entities& entities = getEntities();
-	return entities.size();
+	return getEntities().size();
 }
 
 int EntityListModel::columnCount(const QModelIndex & /*parent*/) const {
