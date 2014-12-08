@@ -13,11 +13,12 @@ EntityListModel::~EntityListModel() {
 
 void EntityListModel::update() {
 	beginResetModel();
+	_list = _debugger.getEntities().values();
 	endResetModel();
 }
 
 int EntityListModel::rowCount(const QModelIndex & /*parent*/) const {
-	return getEntities().size();
+	return _list.size();
 }
 
 int EntityListModel::columnCount(const QModelIndex & /*parent*/) const {
@@ -40,13 +41,13 @@ QVariant EntityListModel::headerData(int section, Qt::Orientation orientation,
 }
 
 QVariant EntityListModel::data(const QModelIndex &index, int role) const {
-	const AIStateWorld* id = getEntity(index);
+	const AIStateWorld& state = _list.at(index.row());
 	if (role == Qt::DisplayRole) {
 		if (index.column() == 0) {
-			return id->getId();
+			return state.getId();
 		}
 	} else if (role == Qt::BackgroundColorRole) {
-		if (_debugger.isSelected(*id)) {
+		if (_debugger.isSelected(state)) {
 			return QColor(Qt::gray);
 		}
 	}

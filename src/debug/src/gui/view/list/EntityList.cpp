@@ -26,18 +26,14 @@ EntityList::~EntityList() {
 
 void EntityList::updateEntityList() {
 	_model.update();
+	_model.sort(0);
 }
 
 void EntityList::selectEntity(const QModelIndex &current, const QModelIndex &previous) {
 	Q_UNUSED(previous);
-	const AIStateWorld* state = _model.getEntity(_proxyModel.mapToSource(current));
-	if (state == nullptr) {
-		qDebug() << "Error selecting entity from list for index " << current;
-		return;
-	}
-	_debugger.select(*state);
+	const AIStateWorld& state = _model.getEntities().at(_proxyModel.mapToSource(current).row());
+	_debugger.select(state);
 }
-
 
 }
 }

@@ -119,6 +119,10 @@ public:
 		return _id == other._id;
 	}
 
+	inline bool operator<(const AIStateWorld &other) const {
+		return _id < other._id;
+	}
+
 	/**
 	 * @return The unique id that can be used to identify the character in the world
 	 */

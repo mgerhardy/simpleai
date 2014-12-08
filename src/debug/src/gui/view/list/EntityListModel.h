@@ -13,19 +13,13 @@ Q_OBJECT
 private:
 	AIDebugger& _debugger;
 	QTableView* _parent;
+	QList<AIStateWorld> _list;
 public:
 	EntityListModel(AIDebugger& debugger, QTableView *parent);
 	~EntityListModel();
 
-	inline const AIDebugger::Entities& getEntities() const {
-		return _debugger.getEntities();
-	}
-
-	inline const AIStateWorld* getEntity(const QModelIndex &index) const {
-		const int size = getEntities().size();
-		if (size > index.row() && index.row() >= 0)
-			return &getEntities().values().at(index.row());
-		return nullptr;
+	inline const QList<AIStateWorld>& getEntities() const {
+		return _list;
 	}
 
 	void update();
