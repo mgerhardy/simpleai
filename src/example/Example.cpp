@@ -14,11 +14,12 @@
 #include <thread>
 
 static ai::example::GameMap *createMap(ai::GroupMgr& groupManager, ai::Network& network, int amount, const ai::TreeNodePtr& root, const std::string& name) {
+	static int id = 1;
 	ai::example::GameMap* map = new ai::example::GameMap(network, 300, name);
 	ai::example::Pathfinder* pathFinder = new ai::example::Pathfinder(*map);
 
 	for (int i = 0; i < amount; ++i) {
-		ai::example::GameEntity* e = map->addEntity(new ai::example::GameEntity(i, root, *pathFinder, groupManager));
+		ai::example::GameEntity* e = map->addEntity(new ai::example::GameEntity(id++, root, *pathFinder, groupManager));
 		e->setPosition(map->getStartPosition());
 	}
 
