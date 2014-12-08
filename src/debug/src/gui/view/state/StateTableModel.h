@@ -12,10 +12,10 @@ namespace debug {
 class StateTableModel: public QAbstractTableModel {
 Q_OBJECT
 private:
-	AIDebugger& _debugger;
+	const AIDebugger& _debugger;
 	QList<QString> _list;
 public:
-	StateTableModel(AIDebugger& debugger);
+	StateTableModel(const AIDebugger& debugger);
 	~StateTableModel();
 
 	inline const AIDebugger::Entities& getEntities() const {

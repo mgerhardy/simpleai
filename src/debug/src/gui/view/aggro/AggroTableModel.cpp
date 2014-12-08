@@ -4,7 +4,7 @@
 namespace ai {
 namespace debug {
 
-AggroTableModel::AggroTableModel(AIDebugger& debugger, QTableView *parent) :
+AggroTableModel::AggroTableModel(const AIDebugger& debugger, QTableView *parent) :
 		QAbstractTableModel(nullptr), _debugger(debugger), _parent(parent) {
 }
 

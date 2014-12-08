@@ -4,7 +4,7 @@
 namespace ai {
 namespace debug {
 
-StateTableModel::StateTableModel(AIDebugger& debugger) :
+StateTableModel::StateTableModel(const AIDebugger& debugger) :
 		QAbstractTableModel(nullptr), _debugger(debugger) {
 }
 

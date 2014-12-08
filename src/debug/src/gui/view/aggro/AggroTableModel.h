@@ -11,10 +11,10 @@ namespace debug {
 class AggroTableModel: public QAbstractTableModel {
 Q_OBJECT
 private:
-	AIDebugger& _debugger;
+	const AIDebugger& _debugger;
 	QTableView* _parent;
 public:
-	AggroTableModel(AIDebugger& debugger, QTableView *parent);
+	AggroTableModel(const AIDebugger& debugger, QTableView *parent);
 	~AggroTableModel();
 
 	inline const AIDebugger::Entities& getEntities() const {
