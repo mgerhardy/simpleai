@@ -26,7 +26,7 @@ public:
 	MapView(AIDebugger& debugger);
 	virtual ~MapView();
 
-	void updateMapView();
+	virtual void updateMapView();
 
 	/**
 	 * @brief Creates a @c MapItem and allows you to create your own instances to render extra details

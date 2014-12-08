@@ -28,7 +28,7 @@ bool ProtocolMessageFactory::isNewMessageAvailable(const streamContainer& in) co
 
 IProtocolMessage *ProtocolMessageFactory::create(streamContainer& in) {
 	// remove the size from the stream
-	in.erase(in.begin(), in.begin() + sizeof(int32_t));
+	in.erase(in.begin(), std::next(in.begin(), sizeof(int32_t)));
 	// get the message type
 	const uint8_t type = in.front();
 	in.pop_front();
