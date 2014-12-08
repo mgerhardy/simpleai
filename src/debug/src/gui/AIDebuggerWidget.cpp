@@ -77,8 +77,13 @@ void AIDebuggerWidget::onNamesReceived() {
 	const QString name = _namesComboBox->currentText();
 	_namesComboBox->clear();
 	const QStringList& names = _debugger.getNames();
-	_namesComboBox->insertItems(0, names);
-	_namesComboBox->setEnabled(!names.empty());
+	if (names.empty()) {
+		_namesComboBox->insertItem(0, tr("None"));
+		_namesComboBox->setEnabled(false);
+	} else {
+		_namesComboBox->insertItems(0, names);
+		_namesComboBox->setEnabled(true);
+	}
 	_namesComboBox->setCurrentIndex(_namesComboBox->findText(name));
 }
 
