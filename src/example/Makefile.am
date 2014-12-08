@@ -17,6 +17,7 @@ include_HEADERS = \
 	Pathfinder.h
 
 simpleai_run_CXXFLAGS = $(AM_CXXFLAGS) -Wall -pedantic -Wextra -Wabi -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-declarations -Wmissing-format-attribute -Wno-long-long -Woverloaded-virtual -Wpacked -Wredundant-decls -Wshadow -Wsign-promo -Wno-sign-compare
+simpleai_run_CXXFLAGS += -I$(top_srcdir)/src/ai -I$(top_builddir)/src/ai
 
 EXTRA_DIST = behaviours.lua
 

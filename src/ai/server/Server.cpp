@@ -6,13 +6,15 @@
 
 namespace ai {
 
-Server::Server(uint16_t port, const std::string& hostname) :
-		_network(port, hostname), _selectedCharacterId(-1), _time(0L), _selectHandler(*this), _pauseHandler(*this), _resetHandler(*this), _stepHandler(*this), _pause(false) {
+Server::Server(Network& network, const std::string& name) :
+		_network(network), _selectedCharacterId(-1), _time(0L), _selectHandler(*this), _pauseHandler(*this),
+		_resetHandler(*this), _stepHandler(*this), _changeHandler(*this), _pause(false), _debug(false), _name(name) {
 	ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
 	r.registerHandler(ai::PROTO_SELECT, &_selectHandler);
 	r.registerHandler(ai::PROTO_PAUSE, &_pauseHandler);
 	r.registerHandler(ai::PROTO_RESET, &_resetHandler);
 	r.registerHandler(ai::PROTO_STEP, &_stepHandler);
+	r.registerHandler(ai::PROTO_CHANGE, &_changeHandler);
 }
 
 Server::~Server() {
@@ -45,7 +47,7 @@ void Server::onConnect(Client* client) {
 }
 
 bool Server::start() {
-	return _network.start();
+	return true;
 }
 
 void Server::pause(const ClientId& /*clientId*/, bool state) {
@@ -136,7 +138,7 @@ void Server::broadcastCharacterDetails() {
 void Server::update(long deltaTime) {
 	_time += deltaTime;
 	const int clients = _network.getConnectedClients();
-	if (clients > 0) {
+	if (clients > 0 && _debug) {
 		broadcastState();
 		broadcastCharacterDetails();
 	} else if (_pause) {

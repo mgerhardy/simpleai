@@ -50,6 +50,7 @@ list(APPEND simpleai_HEADERS
 	server/AISelectMessage.h
 	server/AIStateMessage.h
 	server/AIStubTypes.h
+	server/ChangeHandler.h
 	server/IProtocolHandler.h
 	server/IProtocolMessage.h
 	server/Network.h

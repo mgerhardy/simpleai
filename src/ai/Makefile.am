@@ -17,6 +17,7 @@ libsimpleai_la_SOURCES = \
 	conditions/Or.cpp \
 	conditions/True.cpp \
 	group/GroupMgr.cpp \
+	server/ChangeHandler.cpp \
 	server/Network.cpp \
 	server/PauseHandler.cpp \
 	server/ProtocolMessageFactory.cpp \
@@ -77,6 +78,7 @@ nobase_library_include_HEADERS = \
 	server/AISelectMessage.h \
 	server/AIStateMessage.h \
 	server/AIStubTypes.h \
+	server/ChangeHandler.h \
 	server/IProtocolHandler.h \
 	server/IProtocolMessage.h \
 	server/Network.h \

@@ -7,8 +7,6 @@
 namespace ai {
 namespace example {
 
-#define PORT 12345
-
 class GameMap: public ai::IMap {
 private:
 	int _size;
@@ -16,18 +14,20 @@ private:
 	ai::Server _server;
 
 public:
-	GameMap (int size) :
-			IMap(), _size(size), _server(PORT) {
+	GameMap (Network& network, int size, const std::string& name) :
+			IMap(), _size(size), _server(network, name) {
 		if (!_server.start())
-			std::cerr << "Could not start the server" << std::endl;
-		else
-			std::cout << "Started the server and accept connections on port " << PORT << std::endl;
+			std::cerr << "Could not start the server " << name << std::endl;
 	}
 
 	~GameMap () {
 		for (std::vector<ai::example::GameEntity*>::iterator i = _entities.begin(); i != _entities.end(); ++i) {
 			delete *i;
 		}
+	}
+
+	inline const std::string& getName () const {
+		return _server.getName();
 	}
 
 	inline std::vector<ai::example::GameEntity*>& getEntities () {

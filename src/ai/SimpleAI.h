@@ -65,6 +65,7 @@
 #include "pathfinding/IMap.h"
 #include "pathfinding/IPathfinder.h"
 
+#include "server/Network.h"
 #include "server/Server.h"
 #include "server/IProtocolHandler.h"
 #include "server/ProtocolHandlerRegistry.h"
