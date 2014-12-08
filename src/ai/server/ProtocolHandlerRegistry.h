@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Network.h"
 #include <map>
 #include "IProtocolHandler.h"
 

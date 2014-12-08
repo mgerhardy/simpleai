@@ -17,6 +17,8 @@ ZoomFrame::ZoomFrame(QGraphicsView* graphicsView, QWidget* parent) :
 	_graphicsView->setCacheMode(QGraphicsView::CacheBackground);
 	_zoomWidget = new ZoomWidget(*_graphicsView);
 
+	setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
+
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->addWidget(_graphicsView);
 	topLayout->addWidget(_zoomWidget);

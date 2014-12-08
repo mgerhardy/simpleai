@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Network.h"
+#include "IProtocolMessage.h"
 
 namespace ai {
 

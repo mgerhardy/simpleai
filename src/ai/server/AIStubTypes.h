@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <AI.h>
-#include <tree/TreeNode.h>
 
 namespace ai {
 

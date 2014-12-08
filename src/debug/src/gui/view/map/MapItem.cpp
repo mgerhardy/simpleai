@@ -1,6 +1,5 @@
 #include "MapItem.h"
 #include "AIDebugger.h"
-#include <ICharacter.h>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QFont>

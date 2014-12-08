@@ -166,9 +166,13 @@ QWidget *AIDebuggerWidget::createBottomWidget() {
 	_nodeTreeFrame = new ZoomFrame(_nodeTree);
 	_aggroTable = new AggroTable(_debugger);
 	_stateTable = new StateTable(_debugger);
+
 	splitter->addWidget(_nodeTreeFrame);
+	splitter->setStretchFactor(splitter->indexOf(_nodeTreeFrame), 5);
 	splitter->addWidget(_aggroTable);
+	splitter->setStretchFactor(splitter->indexOf(_aggroTable), 1);
 	splitter->addWidget(_stateTable);
+	splitter->setStretchFactor(splitter->indexOf(_stateTable), 1);
 	return splitter;
 }
 
