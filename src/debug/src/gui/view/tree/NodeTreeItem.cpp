@@ -67,7 +67,7 @@ void NodeTreeItem::setOffset (const QPointF& offset) {
 }
 
 QRectF NodeTreeItem::boundingRect () const {
-	return QRectF(0.0f, 0.0f, _width, _height);
+	return _size;
 }
 
 QRectF NodeTreeItem::fullSize() {
