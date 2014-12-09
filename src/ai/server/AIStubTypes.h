@@ -52,7 +52,7 @@ public:
 	}
 
 	AIStateNode() :
-			_lastRun(0L), _status(UNKNOWN), _currentlyRunning(false) {
+			_lastRun(-1L), _status(UNKNOWN), _currentlyRunning(false) {
 	}
 
 	void addChildren(const AIStateNode& child) {
@@ -72,7 +72,7 @@ public:
 	}
 
 	/**
-	 * @return The milliseconds of the last execution of this particular node
+	 * @return The milliseconds since the last execution of this particular node. or @c -1 if it wasn't executed yet
 	 */
 	inline int64_t getLastRun() const {
 		return _lastRun;
