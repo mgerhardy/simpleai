@@ -6,7 +6,7 @@ namespace ai {
 
 void ChangeHandler::execute(const ClientId& /*clientId*/, const IProtocolMessage& message) {
 	const AIChangeMessage& msg = static_cast<const AIChangeMessage&>(message);
-	_server.setDebug(_server.getName() == msg.getName());
+	_server.setDebug(msg.getName());
 }
 
 }

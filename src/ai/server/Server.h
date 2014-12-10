@@ -2,7 +2,9 @@
 
 #include <AI.h>
 #include <tree/TreeNode.h>
+#include <set>
 #include "Network.h"
+#include "Zone.h"
 #include "SelectHandler.h"
 #include "PauseHandler.h"
 #include "ResetHandler.h"
@@ -26,11 +28,11 @@ class AIStateNode;
  */
 class Server: public INetworkListener {
 protected:
-	typedef std::list<Zone*> ZoneList;
-	typedef ZoneList::const_iterator ZoneConstIter;
-	typedef ZoneList::iterator ZoneIter;
-	ZoneList _zones;
-	Network& _network;
+	typedef std::set<Zone*> Zones;
+	typedef Zones::const_iterator ZoneConstIter;
+	typedef Zones::iterator ZoneIter;
+	Zones _zones;
+	Network _network;
 	CharacterId _selectedCharacterId;
 	long _time;
 	SelectHandler _selectHandler;
@@ -39,10 +41,13 @@ protected:
 	StepHandler _stepHandler;
 	ChangeHandler _changeHandler;
 	bool _pause;
+	// the current active debugging zone
+	Zone* _zone;
 
 	void addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) const;
 	void broadcastState();
 	void broadcastCharacterDetails();
+	void broadcastZoneNames();
 	void onConnect(Client* client) override;
 public:
 	Server(short port = 10001, const std::string& hostname = "0.0.0.0");
@@ -67,6 +72,25 @@ public:
 	 * @brief Performs one step of the ai in pause mode
 	 */
 	void step();
+
+	/**
+	 * @brief Adds a new zone to this server instance that can be debugged. The server does not own this pointer
+	 * so it also doesn't free it. Every @c Zone that is added here, will be part of the @c AINamesMessage.
+	 *
+	 * @param zone The @c Zone that should be made available for debugging.
+	 */
+	void addZone(Zone* zone);
+
+	/**
+	 * @brief Removes a @c Zone from the server. After this call the given zone is no longer available for debugging
+	 * purposes.
+	 */
+	void removeZone(Zone* zone);
+
+	/**
+	 * @brief Activate the debugging for this particular zone. And disables the debugging for every other zone
+	 */
+	void setDebug(const std::string& zoneName);
 
 	/**
 	 * @brief Resets the ai states

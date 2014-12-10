@@ -61,6 +61,7 @@ public:
 	void update(long deltaTime);
 
 	void addListener(INetworkListener* listener);
+	void removeListener(INetworkListener* listener);
 
 	int getConnectedClients() const;
 
@@ -74,6 +75,10 @@ inline int Network::getConnectedClients() const {
 
 inline void Network::addListener(INetworkListener* listener) {
 	_listeners.push_back(listener);
+}
+
+inline void Network::removeListener(INetworkListener* listener) {
+	_listeners.remove(listener);
 }
 
 }

@@ -2,16 +2,20 @@
 
 namespace ai {
 
-bool Zone::addAI(AI& ai) {
-	const CharacterId& id = ai.getCharacter().getId();
+bool Zone::addAI(AI* ai) {
+	if (ai == nullptr)
+		return false;
+	const CharacterId& id = ai->getCharacter().getId();
 	if (_ais.find(id) != _ais.end())
 		return false;
-	_ais.insert(std::make_pair(id, &ai));
+	_ais.insert(std::make_pair(id, ai));
 	return true;
 }
 
-bool Zone::removeAI(AI& ai) {
-	const CharacterId& id = ai.getCharacter().getId();
+bool Zone::removeAI(AI* ai) {
+	if (ai == nullptr)
+		return false;
+	const CharacterId& id = ai->getCharacter().getId();
 	AIMapIter i = _ais.find(id);
 	if (i == _ais.end())
 		return false;
