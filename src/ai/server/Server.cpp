@@ -6,9 +6,9 @@
 
 namespace ai {
 
-Server::Server(Network& network, const std::string& name) :
-		_network(network), _selectedCharacterId(-1), _time(0L), _selectHandler(*this), _pauseHandler(*this),
-		_resetHandler(*this), _stepHandler(*this), _changeHandler(*this), _pause(false), _debug(false), _name(name) {
+Server::Server(short port = 10001, const std::string& hostname = "0.0.0.0") :
+		_network(hostname, port), _selectedCharacterId(-1), _time(0L), _selectHandler(*this), _pauseHandler(*this),
+		_resetHandler(*this), _stepHandler(*this), _changeHandler(*this), _pause(false) {
 	ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
 	r.registerHandler(ai::PROTO_SELECT, &_selectHandler);
 	r.registerHandler(ai::PROTO_PAUSE, &_pauseHandler);
@@ -21,20 +21,28 @@ Server::~Server() {
 }
 
 void Server::step() {
-	for (AIMapIter i = _ais.begin(); i != _ais.end(); ++i) {
-		AI& ai = *i->second;
-		if (!ai.isPause())
-			continue;
-		ai.setPause(false);
-		ai.update(1L);
-		ai.setPause(true);
+	for (ZoneIter z = _zones.begin(); z != _zones.end(); ++z) {
+		Zone& zone = *z;
+		const Zone::AIMap& ais = zone.getAIMap();
+		for (Zone::AIMapIter i = ais.begin(); z != ais.end(); ++z) {
+			AI& ai = *z->second;
+			if (!ai.isPause())
+				continue;
+			ai.setPause(false);
+			ai.update(1L);
+			ai.setPause(true);
+		}
 	}
 }
 
 void Server::reset() {
-	for (AIMapIter i = _ais.begin(); i != _ais.end(); ++i) {
-		AI& ai = *i->second;
-		ai.getBehaviour()->resetState(ai);
+	for (ZoneIter z = _zones.begin(); z != _zones.end(); ++z) {
+		Zone& zone = *z;
+		const Zone::AIMap& ais = zone.getAIMap();
+		for (Zone::AIMapIter i = ais.begin(); z != ais.end(); ++z) {
+			AI& ai = *z->second;
+			ai.getBehaviour()->resetState(ai);
+		}
 	}
 }
 
@@ -52,28 +60,15 @@ bool Server::start() {
 
 void Server::pause(const ClientId& /*clientId*/, bool state) {
 	_pause = state;
-	for (AIMapIter i = _ais.begin(); i != _ais.end(); ++i) {
-		AI& ai = *i->second;
-		ai.setPause(_pause);
+	for (ZoneIter z = _zones.begin(); z != _zones.end(); ++z) {
+		Zone& zone = *z;
+		const Zone::AIMap& ais = zone.getAIMap();
+		for (Zone::AIMapIter i = ais.begin(); z != ais.end(); ++z) {
+			AI& ai = *z->second;
+			ai.setPause(_pause);
+		}
 	}
 	_network.broadcast(AIPauseMessage(_pause));
-}
-
-bool Server::addAI(AI& ai) {
-	const CharacterId& id = ai.getCharacter().getId();
-	if (_ais.find(id) != _ais.end())
-		return false;
-	_ais.insert(std::make_pair(id, &ai));
-	return true;
-}
-
-bool Server::removeAI(AI& ai) {
-	const CharacterId& id = ai.getCharacter().getId();
-	AIMapIter i = _ais.find(id);
-	if (i == _ais.end())
-		return false;
-	_ais.erase(i);
-	return true;
 }
 
 void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) const {

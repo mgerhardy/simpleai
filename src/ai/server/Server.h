@@ -26,10 +26,10 @@ class AIStateNode;
  */
 class Server: public INetworkListener {
 protected:
-	typedef std::map<CharacterId, AI*> AIMap;
-	typedef AIMap::const_iterator AIMapConstIter;
-	typedef AIMap::iterator AIMapIter;
-	AIMap _ais;
+	typedef std::list<Zone*> ZoneList;
+	typedef ZoneList::const_iterator ZoneConstIter;
+	typedef ZoneList::iterator ZoneIter;
+	ZoneList _zones;
 	Network& _network;
 	CharacterId _selectedCharacterId;
 	long _time;
@@ -39,29 +39,19 @@ protected:
 	StepHandler _stepHandler;
 	ChangeHandler _changeHandler;
 	bool _pause;
-	bool _debug;
-	const std::string _name;
 
 	void addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) const;
 	void broadcastState();
 	void broadcastCharacterDetails();
 	void onConnect(Client* client) override;
 public:
-	Server(Network& network, const std::string& name);
+	Server(short port = 10001, const std::string& hostname = "0.0.0.0");
 	virtual ~Server();
 
 	/**
 	 * @brief Start to listen on the specified port
 	 */
 	bool start();
-
-	/**
-	 * @brief Activate the debugging for this particular server instance
-	 * @param[in] debug @c true if you want to activate the debugging and send
-	 * the npc states of this server to all connected clients, or @c false if
-	 * none of the managed entities is broadcasted.
-	 */
-	void setDebug(bool debug);
 
 	/**
 	 * @brief Select a particular character (resp. @c AI instance) and send detail
@@ -82,31 +72,10 @@ public:
 	 * @brief Resets the ai states
 	 */
 	void reset();
-
-	/**
-	 * @brief call then when you spawn a new @code AI that should be traceable via the debug viewer.
-	 *
-	 * @note Make sure to also call @c removeAI whenever you despawn the given @c AI instance
-	 */
-	bool addAI(AI& ai);
-	bool removeAI(AI& ai);
 	/**
 	 * @brief call this to update the server - should get called somewhere from your game tick
 	 */
 	void update(long deltaTime);
-
-	/**
-	 * @brief Every server has its own name that identifies it
-	 */
-	const std::string& getName() const;
 };
-
-inline void Server::setDebug (bool debug) {
-	_debug = debug;
-}
-
-inline const std::string& Server::getName() const {
-	return _name;
-}
 
 }
