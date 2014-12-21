@@ -161,12 +161,6 @@ void Network::update(long deltaTime) {
 			continue;
 		}
 
-		const int retval = getsockopt(clientSocket, SOL_SOCKET, SO_ERROR, nullptr, 0);
-		if (retval != 0) {
-			i = closeClient(i);
-			continue;
-		}
-
 		if (FD_ISSET(clientSocket, &writeFDsOut)) {
 			if (!client.out.empty()) {
 				uint8_t buf[4096];

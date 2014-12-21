@@ -43,6 +43,7 @@ protected:
 	ai::IProtocolHandler *_characterHandler;
 	ai::IProtocolHandler *_pauseHandler;
 	ai::IProtocolHandler *_namesHandler;
+	ai::IProtocolHandler *_nopHandler;
 
 	// The buffer where we store our network data until we can read one complete protocol message.
 	ai::streamContainer _stream;

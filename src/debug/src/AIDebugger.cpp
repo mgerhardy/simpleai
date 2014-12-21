@@ -77,7 +77,7 @@ public:
 
 AIDebugger::AIDebugger() :
 		QObject(), _stateHandler(new StateHandler(*this)), _characterHandler(new CharacterHandler(*this)),
-				_pauseHandler(new PauseHandler(*this)), _namesHandler(new NamesHandler(*this)),
+				_pauseHandler(new PauseHandler(*this)), _namesHandler(new NamesHandler(*this)), _nopHandler(new NopHandler()),
 				_selectedId(-1), _socket(this), _pause(false) {
 	connect(&_socket, SIGNAL(readyRead()), SLOT(readTcpData()));
 	connect(&_socket, SIGNAL(disconnected()), SLOT(onDisconnect()));
@@ -88,6 +88,7 @@ AIDebugger::AIDebugger() :
 	r.registerHandler(ai::PROTO_CHARACTER_DETAILS, _characterHandler);
 	r.registerHandler(ai::PROTO_PAUSE, _pauseHandler);
 	r.registerHandler(ai::PROTO_NAMES, _namesHandler);
+	r.registerHandler(ai::PROTO_PING, _nopHandler);
 
 	_window = new AIDebuggerWidget(*this);
 }
