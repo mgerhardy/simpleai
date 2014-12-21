@@ -90,7 +90,7 @@ public:
 	 */
 	TreeNodePtr getBehaviour() const;
 	/**
-	 * @brief Set a new behaviour and returns the old one
+	 * @brief Set a new behaviour and return the old one
 	 */
 	TreeNodePtr setBehaviour(const TreeNodePtr& newBehaviour);
 	/**
