@@ -9,13 +9,12 @@ namespace example {
 class GameEntity : public ai::ICharacter {
 private:
 	ai::AI _ai;
-	std::list<ai::MoveVector> _route;
 	GroupId _groupId;
 
 public:
 	GameEntity(const ai::CharacterId& id, const ai::TreeNodePtr& root,
-			ai::example::Pathfinder& pathfinder, ai::GroupMgr& groupManager) :
-			ai::ICharacter(id), _ai(*this, root, pathfinder, groupManager) {
+			ai::GroupMgr& groupManager) :
+			ai::ICharacter(id), _ai(*this, root, groupManager) {
 		setAttribute(ai::attributes::NAME, "Example " + std::to_string(id));
 		setSpeed(50.0f);
 		if (id == 0)
@@ -64,14 +63,6 @@ public:
 		setAttribute(ai::attributes::POSITION, ss.str());
 		setAttribute(ai::attributes::SPEED, std::to_string(getSpeed()));
 		setAttribute(ai::attributes::ORIENTATION, std::to_string(toDegrees(getOrientation())));
-	}
-
-	inline std::list<ai::MoveVector>& getRoute () {
-		return _route;
-	}
-
-	inline const std::list<ai::MoveVector>& getRoute () const {
-		return _route;
 	}
 };
 

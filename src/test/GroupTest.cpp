@@ -11,7 +11,7 @@ public:
 		const int max = 10000;
 		for (int i = 1; i <= max; ++i) {
 			const ai::CharacterId id = i;
-			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _pathfinder, _groupManager);
+			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _groupManager);
 			_ais.push_back(std::shared_ptr<TestEntity>(e));
 			e->setPosition(ai::Vector3f(3.0f, 3.0f, 0.0f));
 			_groupMgr.add(_id, e);
@@ -27,7 +27,7 @@ public:
 		ai::GroupMgr mgr;
 		for (int i = 1; i <= max; ++i) {
 			const ai::CharacterId id = i;
-			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _pathfinder, _groupManager);
+			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _groupManager);
 			ais.push_back(std::shared_ptr<TestEntity>(e));
 			mgr.add(groupId, e);
 		}
@@ -49,7 +49,7 @@ public:
 TEST_F(GroupTest, testGroupAddRemove) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr(), _pathfinder, groupMgr);
+	TestEntity entity1(1, ai::TreeNodePtr(), groupMgr);
 	ASSERT_TRUE(groupMgr.add(id, &entity1));
 	ASSERT_FALSE(groupMgr.remove(0, &entity1));
 	ASSERT_TRUE(groupMgr.remove(id, &entity1));
@@ -59,7 +59,7 @@ TEST_F(GroupTest, testGroupAddRemove) {
 TEST_F(GroupTest, testGroupIsInAny) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr(), _pathfinder, groupMgr);
+	TestEntity entity1(1, ai::TreeNodePtr(), groupMgr);
 	ASSERT_TRUE(groupMgr.add(id, &entity1));
 	ASSERT_TRUE(groupMgr.isInAnyGroup(entity1));
 	ASSERT_TRUE(groupMgr.remove(id, &entity1));
@@ -69,9 +69,9 @@ TEST_F(GroupTest, testGroupIsInAny) {
 TEST_F(GroupTest, testGroupSize) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr(), _pathfinder, groupMgr);
+	TestEntity entity1(1, ai::TreeNodePtr(), groupMgr);
 	ASSERT_TRUE(groupMgr.add(id, &entity1));
-	TestEntity entity2(2, ai::TreeNodePtr(), _pathfinder, groupMgr);
+	TestEntity entity2(2, ai::TreeNodePtr(), groupMgr);
 	ASSERT_TRUE(groupMgr.add(id, &entity2));
 	std::pair<ai::GroupMembersSetIter, ai::GroupMembersSetIter> members = groupMgr.getGroupMembers(id);
 	ASSERT_EQ(2, std::distance(members.first, members.second));
@@ -85,12 +85,12 @@ TEST_F(GroupTest, testGroupAveragePosition) {
 	const ai::GroupId id = 1;
 	ai::Vector3f avg;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr(), _pathfinder, groupMgr);
+	TestEntity entity1(1, ai::TreeNodePtr(), groupMgr);
 	entity1.setPosition(ai::Vector3f(1.0f, 1.0f, 0.0f));
 	ASSERT_TRUE(groupMgr.add(id, &entity1));
 	avg = groupMgr.getPosition(id);
 	ASSERT_EQ(ai::Vector3f(1.0f, 1.0f, 0.0f), avg);
-	TestEntity entity2(2, ai::TreeNodePtr(), _pathfinder, groupMgr);
+	TestEntity entity2(2, ai::TreeNodePtr(), groupMgr);
 	entity2.setPosition(ai::Vector3f(3.0f, 3.0f, 0.0f));
 	ASSERT_TRUE(groupMgr.add(id, &entity2));
 	avg = groupMgr.getPosition(id);

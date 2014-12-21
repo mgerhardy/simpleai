@@ -4,10 +4,7 @@
 #include <streambuf>
 #include <cstdlib>
 #include <SimpleAI.h>
-#include "Pathfinder.h"
 #include "actions/ExampleTask.h"
-#include "actions/Move.h"
-#include "conditions/IsMoving.h"
 #include "GameEntity.h"
 #include "GameMap.h"
 #include <chrono>
@@ -16,10 +13,9 @@
 static ai::example::GameMap *createMap(ai::GroupMgr& groupManager, int amount, ai::Server& server, const ai::TreeNodePtr& root, const std::string& name) {
 	static int id = 1;
 	ai::example::GameMap* map = new ai::example::GameMap(300, name, server);
-	ai::example::Pathfinder* pathFinder = new ai::example::Pathfinder(*map);
 
 	for (int i = 0; i < amount; ++i) {
-		ai::example::GameEntity* e = map->addEntity(new ai::example::GameEntity(id++, root, *pathFinder, groupManager));
+		ai::example::GameEntity* e = map->addEntity(new ai::example::GameEntity(id++, root, groupManager));
 		e->setPosition(map->getStartPosition());
 	}
 
@@ -38,9 +34,7 @@ int main(int argc, char **argv) {
 
 	// define your own tasks and conditions
 	ai::AIRegistry registry;
-	registry.registerNodeFactory("Move", ai::example::Move::FACTORY);
 	registry.registerNodeFactory("ExampleTask", ai::example::ExampleTask::FACTORY);
-	registry.registerConditionFactory("IsMoving", ai::example::IsMoving::FACTORY);
 
 	ai::LUATreeLoader loader(registry);
 	const std::string name = "example";

@@ -8,7 +8,7 @@
 namespace ai {
 namespace example {
 
-class GameMap: public ai::IMap {
+class GameMap {
 private:
 	int _size;
 	ai::Zone _zone;
@@ -17,7 +17,7 @@ private:
 
 public:
 	GameMap(int size, const std::string& name, ai::Server& server) :
-			IMap(), _size(size), _zone(name), _server(server) {
+			_size(size), _zone(name), _server(server) {
 		_server.addZone(&_zone);
 	}
 
@@ -45,7 +45,7 @@ public:
 		}
 	}
 
-	inline bool isBlocked(const ai::Vector3f& pos) const override {
+	inline bool isBlocked(const ai::Vector3f& pos) const {
 		if (pos.x < -_size || pos.x >= _size)
 			return true;
 		if (pos.z < -_size || pos.z >= _size)

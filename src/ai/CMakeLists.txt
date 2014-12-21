@@ -23,6 +23,7 @@ list(APPEND simpleai_HEADERS
 	common/IParser.h
 	common/IPrintable.h
 	common/Math.h
+	common/MoveVector.h
 	common/NonCopyable.h
 	common/Random.h
 	common/String.h
@@ -41,8 +42,6 @@ list(APPEND simpleai_HEADERS
 	ICharacter.h
 	group/GroupMgr.h
 	movement/Steering.h
-	pathfinding/IMap.h
-	pathfinding/IPathfinder.h
 	server/AIChangeMessage.h
 	server/AICharacterDetailsMessage.h
 	server/AINamesMessage.h

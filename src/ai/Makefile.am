@@ -52,6 +52,7 @@ nobase_library_include_HEADERS = \
 	common/IParser.h \
 	common/IPrintable.h \
 	common/Math.h \
+	common/MoveVector.h \
 	common/NonCopyable.h \
 	common/Random.h \
 	common/String.h \
@@ -70,8 +71,6 @@ nobase_library_include_HEADERS = \
 	ICharacter.h \
 	group/GroupMgr.h \
 	movement/Steering.h \
-	pathfinding/IMap.h \
-	pathfinding/IPathfinder.h \
 	server/AIChangeMessage.h \
 	server/AICharacterDetailsMessage.h \
 	server/AINamesMessage.h \

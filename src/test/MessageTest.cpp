@@ -20,16 +20,11 @@ TEST_F(MessageTest, testAICharacterDetailsMessage) {
 	const ai::AIStateAggroEntry aggroEntry(2, 1.0f);
 	aggro.addAggro(aggroEntry);
 	const ai::AIStateNode root("name", "condition", 1L, ai::RUNNING, true);
-	ai::CharacterAttributes attributes;
-	attributes.insert(std::make_pair<std::string, std::string>("Name", "Test"));
-	attributes.insert(std::make_pair<std::string, std::string>("SomethingElse", "SomeValue"));
-	const ai::AICharacterDetailsMessage m(id, aggro, root, attributes);
+	const ai::AICharacterDetailsMessage m(id, aggro, root);
 	ASSERT_EQ(id, m.getCharacterId());
 	ASSERT_EQ(1u, m.getAggro().getAggro().size());
 	ASSERT_EQ(2, m.getAggro().getAggro()[0].id);
 	ASSERT_FLOAT_EQ(1.0f, m.getAggro().getAggro()[0].aggro);
-	ASSERT_EQ("Test", m.getAttributes().find("Name")->second);
-	ASSERT_EQ("SomeValue", m.getAttributes().find("SomethingElse")->second);
 	ASSERT_EQ(1L, m.getNode().getLastRun());
 	ASSERT_EQ("condition", m.getNode().getCondition());
 	ASSERT_EQ("name", m.getNode().getName());
@@ -41,8 +36,6 @@ TEST_F(MessageTest, testAICharacterDetailsMessage) {
 	ASSERT_EQ(id, d->getCharacterId());
 	ASSERT_EQ(2, d->getAggro().getAggro()[0].id);
 	ASSERT_FLOAT_EQ(1.0f, d->getAggro().getAggro()[0].aggro);
-	ASSERT_EQ("Test", d->getAttributes().find("Name")->second);
-	ASSERT_EQ("SomeValue", d->getAttributes().find("SomethingElse")->second);
 	ASSERT_EQ(1L, d->getNode().getLastRun());
 	ASSERT_EQ("condition", d->getNode().getCondition());
 	ASSERT_EQ("name", d->getNode().getName());
@@ -89,12 +82,21 @@ TEST_F(MessageTest, testAISelectMessage) {
 }
 
 TEST_F(MessageTest, testAIStateMessage) {
+	ai::CharacterAttributes attributes;
+	attributes.insert(std::make_pair<std::string, std::string>("Name", "Test"));
+	attributes.insert(std::make_pair<std::string, std::string>("SomethingElse", "SomeValue"));
+
 	ai::AIStateMessage m;
-	ai::AIStateWorld state(1, ai::Vector3f::ZERO, 1.0f);
+	ai::AIStateWorld state(1, ai::Vector3f::ZERO, 1.0f, attributes);
+	ASSERT_EQ("Test", state.getAttributes().find("Name")->second);
+	ASSERT_EQ("SomeValue", state.getAttributes().find("SomethingElse")->second);
 	m.addState(state);
+
 	std::unique_ptr<ai::AIStateMessage> d(serializeDeserialize(m));
 	ASSERT_EQ(m.getId(), d->getId());
 	ASSERT_EQ(1u, d->getStates().size());
+	ASSERT_EQ("Test", d->getStates()[0].getAttributes().find("Name")->second);
+	ASSERT_EQ("SomeValue", d->getStates()[0].getAttributes().find("SomethingElse")->second);
 	ASSERT_EQ(1, d->getStates()[0].getId());
 	ASSERT_FLOAT_EQ(1.0f, d->getStates()[0].getOrientation());
 }

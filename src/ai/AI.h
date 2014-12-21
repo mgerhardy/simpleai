@@ -6,7 +6,6 @@
 #include "tree/TreeNode.h"
 #include "tree/loaders/ITreeLoader.h"
 #include "ICharacter.h"
-#include "pathfinding/IPathfinder.h"
 #include "group/GroupMgr.h"
 
 namespace ai {
@@ -50,7 +49,6 @@ protected:
 	AggroMgr _aggroList;
 
 	ICharacter& _character;
-	IPathfinder& _pathfinder;
 
 	GroupMgr& _groupManager;
 
@@ -60,10 +58,9 @@ public:
 	/**
 	 * @param character The binding to your game entity
 	 * @param behaviour The behaviour tree node that is applied to this ai entity
-	 * @param pathfinder Some pathfinder implementation
 	 * @param groupManager Some group manager implementation
 	 */
-	AI(ICharacter& character, const TreeNodePtr& behaviour, IPathfinder& pathfinder, GroupMgr& groupManager);
+	AI(ICharacter& character, const TreeNodePtr& behaviour, GroupMgr& groupManager);
 	virtual ~AI();
 
 	/**
@@ -98,7 +95,6 @@ public:
 	 */
 	ICharacter& getCharacter() const;
 	AggroMgr& getAggroMgr();
-	IPathfinder& getPathfinder();
 	GroupMgr& getGroupMgr();
 };
 
@@ -126,10 +122,6 @@ inline ICharacter& AI::getCharacter() const {
 
 inline AggroMgr& AI::getAggroMgr() {
 	return _aggroList;
-}
-
-inline IPathfinder& AI::getPathfinder() {
-	return _pathfinder;
 }
 
 inline GroupMgr& AI::getGroupMgr() {

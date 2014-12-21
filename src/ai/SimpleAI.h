@@ -38,6 +38,9 @@
 #include "common/String.h"
 #include "common/Math.h"
 #include "common/Random.h"
+#include "common/Vector3f.h"
+#include "common/MoveVector.h"
+#include "common/Random.h"
 
 #include "AI.h"
 #include "AIRegistry.h"
@@ -61,9 +64,6 @@
 #include "group/GroupMgr.h"
 
 #include "movement/Steering.h"
-
-#include "pathfinding/IMap.h"
-#include "pathfinding/IPathfinder.h"
 
 #include "server/Network.h"
 #include "server/Server.h"

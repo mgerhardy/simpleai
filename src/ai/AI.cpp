@@ -4,8 +4,8 @@
 
 namespace ai {
 
-AI::AI(ICharacter& character, const TreeNodePtr& behaviour, IPathfinder& pathfinder, GroupMgr& groupManager) :
-		_behaviour(behaviour), _character(character), _pathfinder(pathfinder), _groupManager(groupManager), _pause(false), _time(0L) {
+AI::AI(ICharacter& character, const TreeNodePtr& behaviour, GroupMgr& groupManager) :
+		_behaviour(behaviour), _character(character), _groupManager(groupManager), _pause(false), _time(0L) {
 }
 
 AI::~AI() {

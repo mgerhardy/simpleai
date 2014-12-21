@@ -4,7 +4,7 @@ class MovementTest: public TestSuite {
 };
 
 TEST_F(MovementTest, testWander) {
-	TestEntity entity(1, ai::TreeNodePtr(), _pathfinder, _groupManager);
+	TestEntity entity(1, ai::TreeNodePtr(), _groupManager);
 	entity.setOrientation(1.0f);
 
 	ai::movement::Wander w(entity, 10.0f, 8.0f * M_PI);
