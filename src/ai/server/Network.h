@@ -49,7 +49,6 @@ protected:
 	typedef ClientSockets::iterator ClientSocketsIter;
 	ClientSockets _clientSockets;
 	ClientSocketsIter closeClient (ClientSocketsIter& i);
-	void closeClient(Client& client);
 
 	typedef std::list<INetworkListener*> Listeners;
 	Listeners _listeners;
@@ -65,7 +64,10 @@ public:
 
 	int getConnectedClients() const;
 
-	void broadcast(const IProtocolMessage& msg);
+	/**
+	 * @return @c false if there are no clients
+	 */
+	bool broadcast(const IProtocolMessage& msg);
 	bool sendToClient(Client* client, const IProtocolMessage& msg);
 };
 
