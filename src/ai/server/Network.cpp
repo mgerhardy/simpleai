@@ -144,10 +144,10 @@ void Network::update(long deltaTime) {
 		const SOCKET clientSocket = accept(_socketFD, nullptr, 0);
 		if (clientSocket != INVALID_SOCKET) {
 			FD_SET(clientSocket, &_readFDSet);
-			Client c(clientSocket);
+			const Client c(clientSocket);
 			_clientSockets.push_back(c);
 			for (Listeners::iterator i = _listeners.begin(); i != _listeners.end(); ++i) {
-				(*i)->onConnect(&c);
+				(*i)->onConnect(&_clientSockets.back());
 			}
 		}
 	}
