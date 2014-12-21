@@ -162,6 +162,9 @@ void Server::update(long deltaTime) {
 }
 
 void Server::setDebug(const std::string& zoneName) {
+	if (_pause) {
+		pause(1, false);
+	}
 	_zone = nullptr;
 	for (ZoneIter i = _zones.begin(); i != _zones.end(); ++i) {
 		Zone* zone = *i;
