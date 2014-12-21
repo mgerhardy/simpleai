@@ -30,7 +30,7 @@
 namespace ai {
 
 Network::Network(uint16_t port, const std::string& hostname) :
-		_port(port), _hostname(hostname), _socketFD(INVALID_SOCKET), _maxFD(0) {
+		_port(port), _hostname(hostname), _socketFD(INVALID_SOCKET), _maxFD(0), _time(0L) {
 	FD_ZERO(&_readFDSet);
 	FD_ZERO(&_writeFDSet);
 }
@@ -123,7 +123,11 @@ void Network::closeClient(Client& client) {
 	}
 }
 
-void Network::update(long /*deltaTime*/) {
+void Network::update(long deltaTime) {
+	_time += deltaTime;
+	if (_time > 5000L) {
+		broadcast(AIPingMessage());
+	}
 	fd_set readFDsOut;
 	fd_set writeFDsOut;
 
@@ -156,6 +160,12 @@ void Network::update(long /*deltaTime*/) {
 		Client& client = *i;
 		const SOCKET clientSocket = client.socket;
 		if (clientSocket == INVALID_SOCKET) {
+			i = closeClient(i);
+			continue;
+		}
+
+		const int retval = getsockopt(clientSocket, SOL_SOCKET, SO_ERROR, nullptr, 0);
+		if (retval != 0) {
 			i = closeClient(i);
 			continue;
 		}
@@ -211,6 +221,7 @@ void Network::update(long /*deltaTime*/) {
 void Network::broadcast(const IProtocolMessage& msg) {
 	if (_clientSockets.empty())
 		return;
+	_time = 0L;
 	streamContainer out;
 	msg.serialize(out);
 	for (ClientSocketsIter i = _clientSockets.begin(); i != _clientSockets.end(); ++i) {

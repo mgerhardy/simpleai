@@ -20,6 +20,12 @@ public:
 	virtual void execute(const ClientId& clientId, const IProtocolMessage& message) = 0;
 };
 
+class NopHandler: public ai::IProtocolHandler {
+public:
+	void execute(const ClientId& /*clientId*/, const IProtocolMessage& /*message*/) override {
+	}
+};
+
 #define PROTOCOL_HANDLER(MessageClass) \
 class MessageClass##Handler: public IProtocolHandler { \
 public: \

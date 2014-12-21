@@ -35,6 +35,7 @@ namespace ai {
 typedef uint8_t ProtocolId;
 typedef std::deque<uint8_t> streamContainer;
 
+const ProtocolId PROTO_PING = 0;
 const ProtocolId PROTO_STATE = 1;
 const ProtocolId PROTO_CHARACTER_DETAILS = 2;
 const ProtocolId PROTO_SELECT = 3;
@@ -297,5 +298,8 @@ PROTO_MSG(AIStepMessage, PROTO_STEP);
  * @brief Reset the behaviour tree states for all ai controlled entities
  */
 PROTO_MSG(AIResetMessage, PROTO_RESET);
-
+/**
+ * @brief Protocol keep alive message
+ */
+PROTO_MSG(AIPingMessage, PROTO_PING);
 }

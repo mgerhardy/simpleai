@@ -44,6 +44,7 @@ protected:
 	SOCKET _maxFD;
 	fd_set _readFDSet;
 	fd_set _writeFDSet;
+	long _time;
 
 	typedef std::list<Client> ClientSockets;
 	typedef ClientSockets::iterator ClientSocketsIter;

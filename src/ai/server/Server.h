@@ -40,6 +40,7 @@ protected:
 	ResetHandler _resetHandler;
 	StepHandler _stepHandler;
 	ChangeHandler _changeHandler;
+	NopHandler _nopHandler;
 	bool _pause;
 	// the current active debugging zone
 	Zone* _zone;
@@ -49,6 +50,7 @@ protected:
 	void broadcastCharacterDetails();
 	void broadcastZoneNames();
 	void onConnect(Client* client) override;
+	void onDisconnect(Client* client) override;
 public:
 	Server(short port = 10001, const std::string& hostname = "0.0.0.0");
 	virtual ~Server();

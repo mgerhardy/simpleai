@@ -16,6 +16,7 @@ Server::Server(short port, const std::string& hostname) :
 	r.registerHandler(ai::PROTO_PAUSE, &_pauseHandler);
 	r.registerHandler(ai::PROTO_RESET, &_resetHandler);
 	r.registerHandler(ai::PROTO_STEP, &_stepHandler);
+	r.registerHandler(ai::PROTO_PING, &_nopHandler);
 	r.registerHandler(ai::PROTO_CHANGE, &_changeHandler);
 }
 
@@ -58,6 +59,19 @@ void Server::onConnect(Client* client) {
 	}
 	const AINamesMessage msg(names);
 	_network.sendToClient(client, msg);
+}
+
+void Server::onDisconnect(Client* /*client*/) {
+	if (_network.getConnectedClients() > 0)
+		return;
+	if (_zone != nullptr) {
+		// restore the zone state if no player is left for debugging
+		if (_pause)
+			pause(0, false);
+		_zone->setDebug(false);
+		_zone = nullptr;
+		_selectedCharacterId = -1;
+	}
 }
 
 bool Server::start() {

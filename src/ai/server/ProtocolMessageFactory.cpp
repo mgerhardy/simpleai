@@ -46,6 +46,8 @@ IProtocolMessage *ProtocolMessageFactory::create(streamContainer& in) {
 		return new AIResetMessage();
 	} else if (type == PROTO_STEP) {
 		return new AIStepMessage();
+	} else if (type == PROTO_PING) {
+		return new AIPingMessage();
 	} else if (type == PROTO_CHARACTER_DETAILS) {
 		return new AICharacterDetailsMessage(in);
 	}
