@@ -41,7 +41,6 @@ protected:
 	std::string _hostname;
 	// the socket file descriptor
 	SOCKET _socketFD;
-	SOCKET _maxFD;
 	fd_set _readFDSet;
 	fd_set _writeFDSet;
 	long _time;

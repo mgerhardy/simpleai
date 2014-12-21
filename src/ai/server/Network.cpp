@@ -26,11 +26,12 @@
 #include <deque>
 #include <algorithm>
 #include <cassert>
+#include <memory>
 
 namespace ai {
 
 Network::Network(uint16_t port, const std::string& hostname) :
-		_port(port), _hostname(hostname), _socketFD(INVALID_SOCKET), _maxFD(0), _time(0L) {
+		_port(port), _hostname(hostname), _socketFD(INVALID_SOCKET), _time(0L) {
 	FD_ZERO(&_readFDSet);
 	FD_ZERO(&_writeFDSet);
 }
@@ -101,7 +102,6 @@ bool Network::start() {
 	ioctlsocket(_socketFD, FIONBIO, &mode);
 #endif
 
-	_maxFD = std::max(_socketFD + 1, _maxFD);
 	FD_SET(_socketFD, &_readFDSet);
 
 	return true;
@@ -138,14 +138,13 @@ void Network::update(long deltaTime) {
 	const int timeout = 10;
 	tv.tv_sec = timeout / 1000;
 	tv.tv_usec = 1000 * (timeout % 1000);
-	const int ready = select(_maxFD, &readFDsOut, &writeFDsOut, nullptr, &tv);
+	const int ready = select(FD_SETSIZE, &readFDsOut, &writeFDsOut, nullptr, &tv);
 	if (ready < 0) {
 		return;
 	}
 	if (_socketFD != INVALID_SOCKET && FD_ISSET(_socketFD, &readFDsOut)) {
 		const SOCKET clientSocket = accept(_socketFD, nullptr, 0);
 		if (clientSocket != INVALID_SOCKET) {
-			_maxFD = std::max(clientSocket + 1, _maxFD);
 			FD_SET(clientSocket, &_readFDSet);
 			Client c(clientSocket);
 			_clientSockets.push_back(c);
