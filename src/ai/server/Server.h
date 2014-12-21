@@ -75,7 +75,7 @@ public:
 	/**
 	 * @brief Performs one step of the ai in pause mode
 	 */
-	void step();
+	void step(long stepMillis = 1L);
 
 	/**
 	 * @brief Adds a new zone to this server instance that can be debugged. The server does not own this pointer

@@ -5,6 +5,7 @@
 #include <server/AISelectMessage.h>
 #include <server/AIChangeMessage.h>
 #include <server/AINamesMessage.h>
+#include <server/AIStepMessage.h>
 #include <server/ProtocolMessageFactory.h>
 #include <server/ProtocolHandlerRegistry.h>
 #include <QtCore>
@@ -165,7 +166,7 @@ void AIDebugger::unselect() {
 }
 
 void AIDebugger::step() {
-	writeMessage(AIStepMessage());
+	writeMessage(AIStepMessage(1L));
 }
 
 void AIDebugger::reset() {

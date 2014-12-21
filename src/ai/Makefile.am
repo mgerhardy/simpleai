@@ -77,6 +77,7 @@ nobase_library_include_HEADERS = \
 	server/AIPauseMessage.h \
 	server/AISelectMessage.h \
 	server/AIStateMessage.h \
+	server/AIStepMessage.h \
 	server/AIStubTypes.h \
 	server/ChangeHandler.h \
 	server/IProtocolHandler.h \

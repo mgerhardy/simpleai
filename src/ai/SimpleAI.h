@@ -72,6 +72,7 @@
 #include "server/ProtocolMessageFactory.h"
 #include "server/AICharacterDetailsMessage.h"
 #include "server/AIPauseMessage.h"
+#include "server/AIStepMessage.h"
 #include "server/AISelectMessage.h"
 #include "server/AIStateMessage.h"
 #include "server/AINamesMessage.h"

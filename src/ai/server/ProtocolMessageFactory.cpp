@@ -6,6 +6,7 @@
 #include "AISelectMessage.h"
 #include "AINamesMessage.h"
 #include "AIChangeMessage.h"
+#include "AIStepMessage.h"
 
 namespace ai {
 
@@ -45,7 +46,7 @@ IProtocolMessage *ProtocolMessageFactory::create(streamContainer& in) {
 	} else if (type == PROTO_RESET) {
 		return new AIResetMessage();
 	} else if (type == PROTO_STEP) {
-		return new AIStepMessage();
+		return new AIStepMessage(in);
 	} else if (type == PROTO_PING) {
 		return new AIPingMessage();
 	} else if (type == PROTO_CHARACTER_DETAILS) {

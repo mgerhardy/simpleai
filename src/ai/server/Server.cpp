@@ -24,17 +24,23 @@ Server::~Server() {
 	_network.removeListener(this);
 }
 
-void Server::step() {
+void Server::step(long stepMillis) {
 	if (_zone == nullptr)
 		return;
+
+	if (!_pause)
+		return;
+
 	for (Zone::AIMapIter i = _zone->begin(); i != _zone->end(); ++i) {
 		AI& ai = *i->second;
 		if (!ai.isPause())
 			continue;
 		ai.setPause(false);
-		ai.update(1L);
+		ai.update(stepMillis);
 		ai.setPause(true);
 	}
+	broadcastState();
+	broadcastCharacterDetails();
 }
 
 void Server::reset() {
@@ -48,6 +54,10 @@ void Server::reset() {
 
 void Server::select(const ClientId& /*clientId*/, const CharacterId& id) {
 	_selectedCharacterId = id;
+	if (_pause) {
+		broadcastState();
+		broadcastCharacterDetails();
+	}
 }
 
 void Server::onConnect(Client* client) {
@@ -87,6 +97,10 @@ void Server::pause(const ClientId& /*clientId*/, bool state) {
 		ai.setPause(_pause);
 	}
 	_network.broadcast(AIPauseMessage(_pause));
+	if (_pause) {
+		broadcastState();
+		broadcastCharacterDetails();
+	}
 }
 
 void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) const {
@@ -152,8 +166,10 @@ void Server::update(long deltaTime) {
 	_time += deltaTime;
 	const int clients = _network.getConnectedClients();
 	if (clients > 0 && _zone != nullptr) {
-		broadcastState();
-		broadcastCharacterDetails();
+		if (!_pause) {
+			broadcastState();
+			broadcastCharacterDetails();
+		}
 	} else if (_pause) {
 		pause(1, false);
 		_selectedCharacterId = -1;
