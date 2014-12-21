@@ -183,8 +183,9 @@ void Server::broadcastZoneNames() {
 }
 
 void Server::addZone(Zone* zone) {
-	_zones.insert(zone);
-	broadcastZoneNames();
+	if (_zones.insert(zone).second) {
+		broadcastZoneNames();
+	}
 }
 
 void Server::removeZone(Zone* zone) {
