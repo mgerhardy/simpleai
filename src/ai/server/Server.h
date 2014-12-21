@@ -18,13 +18,15 @@ class AIStateNode;
 /**
  * @brief The server can serialize the state of the AI and broadcast it to all connected clients.
  *
- * If you start a server, you can add the @c AI instances to it by calling @c addAI. If you do so, make
- * sure to remove it when you remove that particular @c AI instance from your world. You should not do that
+ * If you start a server, you can add the @c AI instances to it by calling @c addZone. If you do so, make
+ * sure to remove it when you remove that particular @c Zone instance from your world. You should not do that
  * from different threads. The server should only be managed from one thread.
  *
  * The server will broadcast the world state - that is: It will send out an @c AIStateMessage to all connected
  * clients. If someone selected a particular @c AI instance by sending @c AISelectMessage to the server, it
  * will also broadcast an @c AICharacterDetailsMessage to all connected clients.
+ *
+ * You can only debug one Zone at the same time.
  */
 class Server: public INetworkListener {
 protected:
