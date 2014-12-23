@@ -9,8 +9,12 @@
 #include "GameMap.h"
 #include <chrono>
 
+namespace {
+int id = 1;
+ai::GroupMgr groupManager;
+}
+
 static ai::example::GameMap *createMap(ai::GroupMgr& groupManager, int amount, ai::Server& server, const ai::TreeNodePtr& root, const std::string& name) {
-	static int id = 1;
 	ai::example::GameMap* map = new ai::example::GameMap(300, name, server);
 
 	for (int i = 0; i < amount; ++i) {
@@ -47,6 +51,21 @@ static void runServer(ai::Server* server) {
 		std::this_thread::sleep_for(delay);
 	}
 }
+
+static void runRespawn(ai::example::GameMap* map, const ai::TreeNodePtr* root) {
+	const std::chrono::milliseconds delay(10000);
+	std::this_thread::sleep_for(delay);
+	ai::example::GameEntity* e = map->addEntity(new ai::example::GameEntity(id++, *root, groupManager));
+	e->setPosition(map->getStartPosition());
+}
+
+static void runDespawn(ai::example::GameMap* map, const ai::TreeNodePtr* root) {
+	const std::chrono::milliseconds delay(10000);
+	std::this_thread::sleep_for(delay);
+	ai::example::GameEntity* e = map->addEntity(new ai::example::GameEntity(id++, *root, groupManager));
+	e->setPosition(map->getStartPosition());
+}
+
 #endif
 
 int main(int argc, char **argv) {
@@ -111,10 +130,11 @@ int main(int argc, char **argv) {
 		std::cout << "Started server on port " << port << std::endl;
 	}
 
-	ai::GroupMgr groupManager;
+	int mapAmount = 4;
 	std::vector<ai::example::GameMap*> maps;
-	maps.push_back(createMap(groupManager, amount, server, root, "Map1"));
-	maps.push_back(createMap(groupManager, amount, server, root, "Map2"));
+	for (int i = 0; i < mapAmount; ++i) {
+		maps.push_back(createMap(groupManager, amount, server, root, "Map" + std::to_string(i)));
+	}
 
 #ifdef AI_NO_THREADING
 	const std::chrono::milliseconds delay(10);
@@ -134,6 +154,10 @@ int main(int argc, char **argv) {
 	Threads threads;
 	for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
 		threads.push_back(std::thread(runMap, *i));
+	}
+
+	for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
+		threads.push_back(std::thread(runRespawn, *i, &root));
 	}
 
 	threads.push_back(std::thread(runServer, &server));

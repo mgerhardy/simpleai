@@ -2,7 +2,7 @@
 
 #include "GameEntity.h"
 #include <server/Zone.h>
-#include <vector>
+#include <set>
 #include <iostream>
 
 namespace ai {
@@ -13,7 +13,8 @@ private:
 	int _size;
 	ai::Zone _zone;
 	ai::Server& _server;
-	std::vector<ai::example::GameEntity*> _entities;
+	typedef std::set<ai::example::GameEntity*> Entities;
+	Entities _entities;
 
 public:
 	GameMap(int size, const std::string& name, ai::Server& server) :
@@ -22,7 +23,7 @@ public:
 	}
 
 	~GameMap() {
-		for (std::vector<ai::example::GameEntity*>::iterator i = _entities.begin(); i != _entities.end(); ++i) {
+		for (Entities::iterator i = _entities.begin(); i != _entities.end(); ++i) {
 			delete *i;
 		}
 		_server.removeZone(&_zone);
@@ -33,14 +34,35 @@ public:
 	}
 
 	inline GameEntity* addEntity(GameEntity* entity) {
-		_entities.push_back(entity);
+		_entities.insert(entity);
 		ai::AI& ai = *entity;
 		_zone.addAI(&ai);
 		return entity;
 	}
 
+	inline bool remove(const ai::CharacterId& id) {
+		// TODO: improve
+		for (Entities::iterator i = _entities.begin(); i != _entities.end(); ++i) {
+			GameEntity* entity = *i;
+			if (entity->getId() == id) {
+				return remove(entity);
+			}
+		}
+		return false;
+	}
+
+	inline bool remove(GameEntity* entity) {
+		if (entity == nullptr)
+			return false;
+		if (_entities.erase(entity) != 1)
+			return false;
+		ai::AI& ai = *entity;
+		_zone.removeAI(&ai);
+		return true;
+	}
+
 	inline void update(long dt) {
-		for (std::vector<ai::example::GameEntity*>::iterator i = _entities.begin(); i != _entities.end(); ++i) {
+		for (Entities::iterator i = _entities.begin(); i != _entities.end(); ++i) {
 			(*i)->update(dt, _size);
 		}
 	}
@@ -55,8 +77,12 @@ public:
 
 	void initializeAggro() {
 		// TODO: remove me once we have an attack
-		for (std::vector<ai::example::GameEntity*>::iterator i = _entities.begin() + 1; i != _entities.end(); ++i) {
-			ai::Entry* e = _entities[0]->addAggro(**i, 1000.0f + static_cast<float>(rand() % 1000));
+		Entities::iterator i = _entities.begin();
+		if (i == _entities.end())
+			return;
+		GameEntity *firstEntity = *i++;
+		for (; i != _entities.end(); ++i) {
+			ai::Entry* e = firstEntity->addAggro(**i, 1000.0f + static_cast<float>(rand() % 1000));
 			e->setReduceByValue(1.0f + static_cast<float>(rand() % 3));
 		}
 	}
