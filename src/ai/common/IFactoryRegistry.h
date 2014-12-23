@@ -3,6 +3,8 @@
 #include <common/NonCopyable.h>
 #include <memory>
 
+namespace ai {
+
 template<class TYPE, class CTX>
 class IFactory {
 public:
@@ -55,3 +57,5 @@ public:
 		}
 	}
 };
+
+}
