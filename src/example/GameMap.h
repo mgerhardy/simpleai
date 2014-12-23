@@ -3,6 +3,7 @@
 #include "GameEntity.h"
 #include <server/Zone.h>
 #include <set>
+#include <iterator>
 #include <iostream>
 
 namespace ai {
@@ -27,6 +28,16 @@ public:
 			delete *i;
 		}
 		_server.removeZone(&_zone);
+	}
+
+	inline GameEntity* getRandomEntity() const {
+		if (_entities.empty())
+			return nullptr;
+		const int size = static_cast<int>(_entities.size());
+		const int randomIndex = ai::random(0, size - 1);
+		Entities::iterator i = _entities.begin();
+		std::advance(i, randomIndex);
+		return *i;
 	}
 
 	inline const std::string& getName() const {

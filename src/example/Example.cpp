@@ -29,7 +29,7 @@ static ai::example::GameMap *createMap(ai::GroupMgr& groupManager, int amount, a
 
 #ifndef AI_NO_THREADING
 static void runMap(ai::example::GameMap* map) {
-	const std::chrono::milliseconds delay(10);
+	const std::chrono::milliseconds delay(100);
 	auto timeLast = std::chrono::steady_clock::now();
 	for (;;) {
 		const auto timeNow = std::chrono::steady_clock::now();
@@ -41,7 +41,7 @@ static void runMap(ai::example::GameMap* map) {
 }
 
 static void runServer(ai::Server* server) {
-	const std::chrono::milliseconds delay(100);
+	const std::chrono::milliseconds delay(500);
 	auto timeLast = std::chrono::steady_clock::now();
 	for (;;) {
 		const auto timeNow = std::chrono::steady_clock::now();
@@ -52,18 +52,19 @@ static void runServer(ai::Server* server) {
 	}
 }
 
-static void runRespawn(ai::example::GameMap* map, const ai::TreeNodePtr* root) {
-	const std::chrono::milliseconds delay(10000);
-	std::this_thread::sleep_for(delay);
-	ai::example::GameEntity* e = map->addEntity(new ai::example::GameEntity(id++, *root, groupManager));
-	e->setPosition(map->getStartPosition());
-}
+static void runDespawnSpawn(ai::example::GameMap* map, const ai::TreeNodePtr* root) {
+	const std::chrono::milliseconds delay(5000);
+	for (;;) {
+		ai::example::GameEntity *rnd = map->getRandomEntity();
+		if (rnd != nullptr) {
+			map->remove(rnd);
+		}
 
-static void runDespawn(ai::example::GameMap* map, const ai::TreeNodePtr* root) {
-	const std::chrono::milliseconds delay(10000);
-	std::this_thread::sleep_for(delay);
-	ai::example::GameEntity* e = map->addEntity(new ai::example::GameEntity(id++, *root, groupManager));
-	e->setPosition(map->getStartPosition());
+		ai::example::GameEntity* e = map->addEntity(new ai::example::GameEntity(id++, *root, groupManager));
+		e->setPosition(map->getStartPosition());
+
+		std::this_thread::sleep_for(delay);
+	}
 }
 
 #endif
@@ -157,7 +158,7 @@ int main(int argc, char **argv) {
 	}
 
 	for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
-		threads.push_back(std::thread(runRespawn, *i, &root));
+		threads.push_back(std::thread(runDespawnSpawn, *i, &root));
 	}
 
 	threads.push_back(std::thread(runServer, &server));
