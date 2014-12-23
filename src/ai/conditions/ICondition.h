@@ -12,6 +12,7 @@
 #include <sstream>
 
 #include <memory>
+#include "common/MemoryAllocator.h"
 #include "common/IPrintable.h"
 
 #include "AIRegistry.h"
@@ -82,7 +83,7 @@ typedef std::vector<ConditionPtr> Conditions;
  * @brief A condition can be placed on a @c TreeNode to decide which node is going to get executed. In general they are stateless.
  * If they are not, it should explicitly get noted.
  */
-class ICondition : public IPrintable {
+class ICondition : public IPrintable, public MemObject {
 protected:
 	static int _nextId;
 	int _id;

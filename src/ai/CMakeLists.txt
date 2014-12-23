@@ -23,6 +23,7 @@ list(APPEND simpleai_HEADERS
 	common/IParser.h
 	common/IPrintable.h
 	common/Math.h
+	common/MemoryAllocator.h
 	common/MoveVector.h
 	common/NonCopyable.h
 	common/Random.h

@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include "common/MemoryAllocator.h"
 #include "common/IPrintable.h"
 #include "conditions/ICondition.h"
 #include "conditions/True.h"
@@ -71,7 +72,7 @@ enum TreeNodeStatus {
  * be reused for multiple @c AI instances. Always use the @c AI or @c ICharacter
  * to store your state!
  */
-class TreeNode : public IPrintable {
+class TreeNode : public IPrintable, public MemObject {
 protected:
 	static int _nextId;
 	int _id;
