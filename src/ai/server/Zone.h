@@ -1,6 +1,7 @@
 #pragma once
 
 #include <AI.h>
+#include <common/Thread.h>
 #include <map>
 
 namespace ai {
@@ -20,6 +21,7 @@ private:
 	const std::string _name;
 	AIMap _ais;
 	bool _debug;
+	MUTEX(_mutex);
 
 public:
 	Zone(const std::string& name) :
@@ -35,6 +37,10 @@ public:
 	 */
 	bool addAI(AI* ai);
 	bool removeAI(AI* ai);
+
+#ifndef AI_NO_THREADING
+	inline operator MUTEXTYPE&() { return _mutex; }
+#endif
 
 	/**
 	 * @brief Every zone has its own name that identifies it

@@ -11,7 +11,7 @@ class And: public ICondition {
 protected:
 	Conditions _conditions;
 
-	void getConditionNameWithValue(std::stringstream& s, AI& entity);
+	void getConditionNameWithValue(std::stringstream& s, const AI& entity) override;
 
 public:
 	And(const Conditions& conditions) :
@@ -22,7 +22,7 @@ public:
 
 	CONDITION_FACTORY
 
-	bool evaluate(AI& entity) override;
+	bool evaluate(const AI& entity) override;
 
 	std::ostream& print(std::ostream& stream, int level) const override;
 };

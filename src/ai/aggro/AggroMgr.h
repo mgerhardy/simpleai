@@ -15,9 +15,9 @@ public:
 	typedef std::vector<EntryPtr> Entries;
 	typedef Entries::iterator EntriesIter;
 protected:
-	Entries _entries;
+	mutable Entries _entries;
 
-	bool _dirty;
+	mutable bool _dirty;
 
 	/**
 	 * @brief Remove the entries from the list that have no aggro left.
@@ -25,7 +25,7 @@ protected:
 	 */
 	void cleanupList();
 
-	inline void sort();
+	inline void sort() const;
 public:
 	AggroMgr(std::size_t expectedEntrySize = 0u);
 	virtual ~AggroMgr();
@@ -56,7 +56,7 @@ public:
 	 *
 	 * @note Might execute a sort on the list if its dirty
 	 */
-	EntryPtr getHighestEntry();
+	EntryPtr getHighestEntry() const;
 };
 
 }

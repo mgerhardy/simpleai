@@ -70,6 +70,8 @@ fi
 AM_CONDITIONAL(AI_ENABLE_LUA,test "x$enable_lua" = "xyes")
 AC_MSG_RESULT([$enable_lua])
 
+AX_PTHREAD
+
 if test "x$enable_lua" != "xno" ; then
 	AC_MSG_CHECKING([whether to build the example])
 	AC_ARG_ENABLE(example,AS_HELP_STRING([--enable-example=@<:@no/yes@:>@],[build the example project]),,[enable_example=no])
@@ -103,6 +105,8 @@ AC_SUBST([MODULES])
 AC_SUBST([MATH_LIBS])
 AC_SUBST([AM_LDFLAGS])
 AC_SUBST([AM_CXXFLAGS])
+AC_SUBST([PTHREAD_LIBS])
+AC_SUBST([PTHREAD_CFLAGS])
 
 LT_INIT
 
@@ -125,9 +129,9 @@ simpleai $VERSION: Automatic configuration OK.
   Configuration summary:
     Platform: .......... $host
     Compiler: .......... $CXX
-    C++ Flags: ......... $AM_CXXFLAGS
+    C++ Flags: ......... $AM_CXXFLAGS $PTHREAD_CFLAGS
     Libraries: ......... $LIBS
-    Linking: ........... $AM_LDFLAGS
+    Linking: ........... $AM_LDFLAGS $PTHREAD_LIBS $MATH_LIBS
     Example: ........... $enable_example
     Tests: ............. $enable_tests
     LUA: ............... $enable_lua

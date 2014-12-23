@@ -25,63 +25,85 @@ Server::~Server() {
 }
 
 void Server::step(long stepMillis) {
-	if (_zone == nullptr)
+	Zone* zone = _zone;
+	if (zone == nullptr)
 		return;
 
 	if (!_pause)
 		return;
 
-	for (Zone::AIMapIter i = _zone->begin(); i != _zone->end(); ++i) {
-		AI& ai = *i->second;
-		if (!ai.isPause())
-			continue;
-		ai.setPause(false);
-		ai.update(stepMillis);
-		ai.setPause(true);
+	{
+		SCOPEDLOCK(*zone);
+		for (Zone::AIMapIter i = zone->begin(); i != zone->end(); ++i) {
+			AI& ai = *i->second;
+			if (!ai.isPause())
+				continue;
+			ai.setPause(false);
+			ai.update(stepMillis);
+			ai.setPause(true);
+		}
 	}
-	broadcastState();
-	broadcastCharacterDetails();
+	broadcastState(zone);
+	broadcastCharacterDetails(zone);
 }
 
 void Server::reset() {
-	if (_zone == nullptr)
+	Zone* zone = _zone;
+	if (zone == nullptr)
 		return;
-	for (Zone::AIMapIter i = _zone->begin(); i != _zone->end(); ++i) {
+	SCOPEDLOCK(*zone);
+	for (Zone::AIMapIter i = zone->begin(); i != zone->end(); ++i) {
 		AI& ai = *i->second;
 		ai.getBehaviour()->resetState(ai);
 	}
 }
 
 void Server::select(const ClientId& /*clientId*/, const CharacterId& id) {
+	Zone* zone = _zone;
+	if (zone == nullptr) {
+		_selectedCharacterId = -1;
+		return;
+	}
+
 	_selectedCharacterId = id;
 	if (_pause) {
-		broadcastState();
-		broadcastCharacterDetails();
+		broadcastState(zone);
+		broadcastCharacterDetails(zone);
 	}
 }
 
 void Server::onConnect(Client* client) {
 	_network.sendToClient(client, AIPauseMessage(_pause));
 	std::vector<std::string> names;
-	for (ZoneConstIter i = _zones.begin(); i != _zones.end(); ++i) {
-		const Zone* zone = *i;
-		names.push_back(zone->getName());
+	{
+		SCOPEDLOCK(_mutex);
+		for (ZoneConstIter i = _zones.begin(); i != _zones.end(); ++i) {
+			const Zone* zone = *i;
+			names.push_back(zone->getName());
+		}
 	}
 	const AINamesMessage msg(names);
 	_network.sendToClient(client, msg);
 }
 
 void Server::onDisconnect(Client* /*client*/) {
+	Zone* zone = _zone;
+	if (zone == nullptr)
+		return;
+
+	// if there are still connected clients left, don't disable the debug mode for the zone
 	if (_network.getConnectedClients() > 0)
 		return;
-	if (_zone != nullptr) {
-		// restore the zone state if no player is left for debugging
-		if (_pause)
-			pause(0, false);
-		_zone->setDebug(false);
-		_zone = nullptr;
-		_selectedCharacterId = -1;
+
+	// restore the zone state if no player is left for debugging
+	const bool pauseState = _pause;
+	if (pauseState) {
+		pause(0, false);
 	}
+
+	zone->setDebug(false);
+	_zone = nullptr;
+	_selectedCharacterId = -1;
 }
 
 bool Server::start() {
@@ -89,21 +111,22 @@ bool Server::start() {
 }
 
 void Server::pause(const ClientId& /*clientId*/, bool state) {
-	if (_zone == nullptr)
+	Zone* zone = _zone;
+	if (zone == nullptr)
 		return;
 	_pause = state;
-	for (Zone::AIMapIter i = _zone->begin(); i != _zone->end(); ++i) {
+	for (Zone::AIMapIter i = zone->begin(); i != zone->end(); ++i) {
 		AI& ai = *i->second;
-		ai.setPause(_pause);
+		ai.setPause(state);
 	}
-	_network.broadcast(AIPauseMessage(_pause));
-	if (_pause) {
-		broadcastState();
-		broadcastCharacterDetails();
+	_network.broadcast(AIPauseMessage(state));
+	if (state) {
+		broadcastState(zone);
+		broadcastCharacterDetails(zone);
 	}
 }
 
-void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) const {
+void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, const AI& ai) const {
 	const TreeNodes& children = node->getChildren();
 	std::vector<bool> currentlyRunning;
 	node->getRunningChildren(ai, currentlyRunning);
@@ -122,28 +145,36 @@ void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) c
 	}
 }
 
-void Server::broadcastState() {
+void Server::broadcastState(Zone* zone) {
 	AIStateMessage msg;
-	for (Zone::AIMapConstIter i = _zone->begin(); i != _zone->end(); ++i) {
-		const AI& ai = *i->second;
-		const ICharacter& chr = ai.getCharacter();
-		const AIStateWorld b(chr.getId(), chr.getPosition(), chr.getOrientation(), chr.getAttributes());
-		msg.addState(b);
+	{
+		SCOPEDLOCK(*zone);
+		for (Zone::AIMapConstIter i = zone->begin(); i != zone->end(); ++i) {
+			const AI& ai = *i->second;
+			const ICharacter& chr = ai.getCharacter();
+			const AIStateWorld b(chr.getId(), chr.getPosition(), chr.getOrientation(), chr.getAttributes());
+			msg.addState(b);
+		}
 	}
 	_network.broadcast(msg);
 }
 
-void Server::broadcastCharacterDetails() {
+void Server::broadcastCharacterDetails(Zone* zone) {
 	if (_selectedCharacterId == -1)
 		return;
 
-	Zone::AIMapConstIter i = _zone->find(_selectedCharacterId);
-	if (i == _zone->end()) {
-		_selectedCharacterId = -1;
-		return;
+	ai::AI* aiPtr = nullptr;
+	{
+		SCOPEDLOCK(*zone);
+		Zone::AIMapConstIter i = zone->find(_selectedCharacterId);
+		if (i == zone->end()) {
+			_selectedCharacterId = -1;
+			return;
+		}
+		aiPtr = i->second;
 	}
 
-	ai::AI& ai = *i->second;
+	const ai::AI& ai = *aiPtr;
 	const TreeNodePtr& node = ai.getBehaviour();
 	const std::string& name = node->getName();
 	const ConditionPtr& condition = node->getCondition();
@@ -165,10 +196,11 @@ void Server::broadcastCharacterDetails() {
 void Server::update(long deltaTime) {
 	_time += deltaTime;
 	const int clients = _network.getConnectedClients();
-	if (clients > 0 && _zone != nullptr) {
+	Zone* zone = _zone;
+	if (clients > 0 && zone != nullptr) {
 		if (!_pause) {
-			broadcastState();
-			broadcastCharacterDetails();
+			broadcastState(zone);
+			broadcastCharacterDetails(zone);
 		}
 	} else if (_pause) {
 		pause(1, false);
@@ -182,37 +214,50 @@ void Server::setDebug(const std::string& zoneName) {
 		pause(1, false);
 	}
 	_zone = nullptr;
-	for (ZoneIter i = _zones.begin(); i != _zones.end(); ++i) {
-		Zone* zone = *i;
-		const bool debug = zone->getName() == zoneName;
-		zone->setDebug(debug);
-		if (debug)
-			_zone = zone;
+	{
+		SCOPEDLOCK(_mutex);
+		for (ZoneIter i = _zones.begin(); i != _zones.end(); ++i) {
+			Zone* zone = *i;
+			const bool debug = zone->getName() == zoneName;
+			zone->setDebug(debug);
+			if (debug)
+				_zone = zone;
+		}
 	}
 }
 
 void Server::broadcastZoneNames() {
 	std::vector<std::string> names;
-	for (ZoneConstIter i = _zones.begin(); i != _zones.end(); ++i) {
-		const Zone* zone = *i;
-		names.push_back(zone->getName());
+	{
+		SCOPEDLOCK(_mutex);
+		for (ZoneConstIter i = _zones.begin(); i != _zones.end(); ++i) {
+			const Zone* zone = *i;
+			names.push_back(zone->getName());
+		}
 	}
 	const AINamesMessage msg(names);
 	_network.broadcast(msg);
 }
 
 void Server::addZone(Zone* zone) {
-	if (_zones.insert(zone).second) {
-		broadcastZoneNames();
+	{
+		SCOPEDLOCK(_mutex);
+		if (!_zones.insert(zone).second)
+			return;
 	}
+	broadcastZoneNames();
 }
 
 void Server::removeZone(Zone* zone) {
 	if (_zone == zone)
 		_zone = nullptr;
-	if (_zones.erase(zone) == 1) {
-		broadcastZoneNames();
+	{
+		SCOPEDLOCK(_mutex);
+		if (_zones.erase(zone) != 1) {
+			return;
+		}
 	}
+	broadcastZoneNames();
 }
 
 }

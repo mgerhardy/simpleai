@@ -65,7 +65,7 @@ static bool EntrySorter(const EntryPtr& a, const EntryPtr& b) {
 	return true;
 }
 
-inline void AggroMgr::sort() {
+inline void AggroMgr::sort() const {
 	if (!_dirty)
 		return;
 	std::sort(_entries.begin(), _entries.end(), EntrySorter);
@@ -89,7 +89,7 @@ Entry* AggroMgr::addAggro(AI& entity, float amount) {
 	return i->get();
 }
 
-EntryPtr AggroMgr::getHighestEntry() {
+EntryPtr AggroMgr::getHighestEntry() const {
 	if (_entries.empty())
 		return EntryPtr();
 

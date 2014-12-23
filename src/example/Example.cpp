@@ -8,7 +8,6 @@
 #include "GameEntity.h"
 #include "GameMap.h"
 #include <chrono>
-#include <thread>
 
 static ai::example::GameMap *createMap(ai::GroupMgr& groupManager, int amount, ai::Server& server, const ai::TreeNodePtr& root, const std::string& name) {
 	static int id = 1;
@@ -23,6 +22,32 @@ static ai::example::GameMap *createMap(ai::GroupMgr& groupManager, int amount, a
 
 	return map;
 }
+
+#ifndef AI_NO_THREADING
+static void runMap(ai::example::GameMap* map) {
+	const std::chrono::milliseconds delay(10);
+	auto timeLast = std::chrono::steady_clock::now();
+	for (;;) {
+		const auto timeNow = std::chrono::steady_clock::now();
+		const auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - timeLast).count();
+		timeLast = timeNow;
+		map->update(static_cast<uint32_t>(dt));
+		std::this_thread::sleep_for(delay);
+	}
+}
+
+static void runServer(ai::Server* server) {
+	const std::chrono::milliseconds delay(100);
+	auto timeLast = std::chrono::steady_clock::now();
+	for (;;) {
+		const auto timeNow = std::chrono::steady_clock::now();
+		const auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - timeLast).count();
+		timeLast = timeNow;
+		server->update(dt);
+		std::this_thread::sleep_for(delay);
+	}
+}
+#endif
 
 int main(int argc, char **argv) {
 	if (argc <= 1) {
@@ -91,6 +116,7 @@ int main(int argc, char **argv) {
 	maps.push_back(createMap(groupManager, amount, server, root, "Map1"));
 	maps.push_back(createMap(groupManager, amount, server, root, "Map2"));
 
+#ifdef AI_NO_THREADING
 	const std::chrono::milliseconds delay(10);
 	auto timeLast = std::chrono::steady_clock::now();
 	for (;;) {
@@ -98,9 +124,29 @@ int main(int argc, char **argv) {
 		const auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - timeLast).count();
 		timeLast = timeNow;
 		for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
-			(*i)->update(static_cast<uint32_t>(dt));
+		   (*i)->update(static_cast<uint32_t>(dt));
 		}
 		server.update(dt);
 		std::this_thread::sleep_for(delay);
 	}
+#else
+	typedef std::vector<std::thread> Threads;
+	Threads threads;
+	for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
+		threads.push_back(std::thread(runMap, *i));
+	}
+
+	threads.push_back(std::thread(runServer, &server));
+#endif
+	std::cout << "hit enter to quit" << std::flush;
+	std::cin.get();
+	std::cout << "quitting" << std::endl;
+
+#ifndef AI_NO_THREADING
+	for (Threads::iterator i = threads.begin(); i != threads.end(); ++i) {
+		i->detach();
+	}
+#endif
+
+	return EXIT_SUCCESS;
 }

@@ -8,10 +8,10 @@ ConditionPtr Or::Factory::create(const ConditionFactoryContext *ctx) const {
 	return ConditionPtr(new Or(ctx->conditions));
 }
 
-void Or::getConditionNameWithValue(std::stringstream& s, AI& entity) {
+void Or::getConditionNameWithValue(std::stringstream& s, const AI& entity) {
 	bool first = true;
 	s << "(";
-	for (Conditions::iterator i = _conditions.begin(); i != _conditions.end(); ++i) {
+	for (ConditionsConstIter i = _conditions.begin(); i != _conditions.end(); ++i) {
 		if (!first)
 			s << ",";
 		s << (*i)->getNameWithConditions(entity);
@@ -20,8 +20,8 @@ void Or::getConditionNameWithValue(std::stringstream& s, AI& entity) {
 	s << ")";
 }
 
-bool Or::evaluate(AI& entity) {
-	for (Conditions::iterator i = _conditions.begin(); i != _conditions.end(); ++i) {
+bool Or::evaluate(const AI& entity) {
+	for (ConditionsIter i = _conditions.begin(); i != _conditions.end(); ++i) {
 		if ((*i)->evaluate(entity))
 			return true;
 	}
@@ -32,7 +32,7 @@ bool Or::evaluate(AI& entity) {
 std::ostream& Or::print(std::ostream& stream, int level) const {
 	ICondition::print(stream, level);
 	stream << "(";
-	for (Conditions::const_iterator i = _conditions.begin(); i != _conditions.end(); ++i) {
+	for (ConditionsConstIter i = _conditions.begin(); i != _conditions.end(); ++i) {
 		(*i)->print(stream, level);
 	}
 	stream << ")";

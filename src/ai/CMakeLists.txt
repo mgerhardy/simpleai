@@ -28,6 +28,7 @@ list(APPEND simpleai_HEADERS
 	common/NonCopyable.h
 	common/Random.h
 	common/String.h
+	common/Thread.h
 	conditions/And.h
 	conditions/ConditionParser.h
 	conditions/False.h

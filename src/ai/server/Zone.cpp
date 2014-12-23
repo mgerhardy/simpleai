@@ -5,6 +5,7 @@ namespace ai {
 bool Zone::addAI(AI* ai) {
 	if (ai == nullptr)
 		return false;
+	SCOPEDLOCK(_mutex);
 	const CharacterId& id = ai->getCharacter().getId();
 	if (_ais.find(id) != _ais.end())
 		return false;
@@ -16,6 +17,7 @@ bool Zone::removeAI(AI* ai) {
 	if (ai == nullptr)
 		return false;
 	const CharacterId& id = ai->getCharacter().getId();
+	SCOPEDLOCK(_mutex);
 	AIMapIter i = _ais.find(id);
 	if (i == _ais.end())
 		return false;

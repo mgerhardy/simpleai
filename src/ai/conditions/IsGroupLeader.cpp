@@ -3,7 +3,7 @@
 
 namespace ai {
 
-bool IsGroupLeader::evaluate(AI& entity) {
+bool IsGroupLeader::evaluate(const AI& entity) {
 	return entity.getGroupMgr().isGroupLeader(_groupId, entity.getCharacter());
 }
 

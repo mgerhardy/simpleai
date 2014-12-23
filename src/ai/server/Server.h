@@ -1,6 +1,7 @@
 #pragma once
 
 #include <AI.h>
+#include <common/Thread.h>
 #include <tree/TreeNode.h>
 #include <set>
 #include "Network.h"
@@ -46,10 +47,11 @@ protected:
 	bool _pause;
 	// the current active debugging zone
 	Zone* _zone;
+	MUTEX(_mutex);
 
-	void addChildren(const TreeNodePtr& node, AIStateNode& parent, AI& ai) const;
-	void broadcastState();
-	void broadcastCharacterDetails();
+	void addChildren(const TreeNodePtr& node, AIStateNode& parent, const AI& ai) const;
+	void broadcastState(Zone* zone);
+	void broadcastCharacterDetails(Zone* zone);
 	void broadcastZoneNames();
 	void onConnect(Client* client) override;
 	void onDisconnect(Client* client) override;

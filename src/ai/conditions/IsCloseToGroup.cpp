@@ -3,7 +3,7 @@
 
 namespace ai {
 
-bool IsCloseToGroup::evaluate(AI& entity) {
+bool IsCloseToGroup::evaluate(const AI& entity) {
 	if (_groupId == -1)
 		return false;
 

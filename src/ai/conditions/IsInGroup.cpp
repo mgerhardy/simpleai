@@ -3,7 +3,7 @@
 
 namespace ai {
 
-bool IsInGroup::evaluate(AI& entity) {
+bool IsInGroup::evaluate(const AI& entity) {
 	if (_groupId == -1)
 		return entity.getGroupMgr().isInAnyGroup(entity.getCharacter());
 	return entity.getGroupMgr().isInGroup(_groupId, entity.getCharacter());

@@ -11,7 +11,7 @@ class Not: public ICondition {
 protected:
 	ConditionPtr _condition;
 
-	void getConditionNameWithValue(std::stringstream& s, AI& entity) {
+	void getConditionNameWithValue(std::stringstream& s, const AI& entity) override {
 		s << "(" << _condition->getNameWithConditions(entity) << ")";
 	}
 
@@ -24,12 +24,12 @@ public:
 
 	CONDITION_FACTORY
 
-	bool evaluate(AI& entity) override;
+	bool evaluate(const AI& entity) override;
 
 	std::ostream& print(std::ostream& stream, int level) const override;
 };
 
-inline bool Not::evaluate(AI& entity) {
+inline bool Not::evaluate(const AI& entity) {
 	return !_condition->evaluate(entity);
 }
 

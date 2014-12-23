@@ -3,6 +3,6 @@ if (SIMPLEAI_EXAMPLE)
 	link_directories(${SIMPLEAI_BINARY_DIR}/src/ai)
 	file(GLOB_RECURSE SRC ${SIMPLEAI_SOURCE_DIR}/src/example/*.cpp ${SIMPLEAI_SOURCE_DIR}/src/example/*.h)
 	add_executable(simpleai-run ${SRC})
-	target_link_libraries(simpleai-run simpleai)
+	target_link_libraries(simpleai-run simpleai pthread)
 endif()
 

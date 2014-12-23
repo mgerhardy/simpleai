@@ -57,6 +57,7 @@ nobase_library_include_HEADERS = \
 	common/NonCopyable.h \
 	common/Random.h \
 	common/String.h \
+	common/Thread.h \
 	conditions/And.h \
 	conditions/ConditionParser.h \
 	conditions/False.h \
@@ -133,11 +134,11 @@ if AI_ENABLE_LUA
 AM_CPPFLAGS += -I$(top_builddir)/src/libs/lua
 endif
 
-libsimpleai_la_CXXFLAGS = $(AM_CXXFLAGS) -DLUA_USE_LONGJMP -Wall -pedantic -Wextra -Wabi -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-declarations -Wmissing-format-attribute -Wno-long-long -Woverloaded-virtual -Wpacked -Wredundant-decls -Wshadow -Wsign-promo -Wno-sign-compare
+libsimpleai_la_CXXFLAGS = @PTHREAD_CFLAGS@ $(AM_CXXFLAGS) -DLUA_USE_LONGJMP -Wall -pedantic -Wextra -Wabi -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-declarations -Wmissing-format-attribute -Wno-long-long -Woverloaded-virtual -Wpacked -Wredundant-decls -Wshadow -Wsign-promo -Wno-sign-compare
 
 libsimpleai_la_LDFLAGS = -no-undefined -release @VERSION@
 
-libsimpleai_la_LIBADD = @MATH_LIBS@
+libsimpleai_la_LIBADD = @MATH_LIBS@ @PTHREAD_LIBS@
 
 if AI_ENABLE_LUA
 libsimpleai_la_LIBADD += ../libs/lua/liblua.la

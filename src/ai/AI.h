@@ -96,6 +96,9 @@ public:
 	ICharacter& getCharacter() const;
 	AggroMgr& getAggroMgr();
 	GroupMgr& getGroupMgr();
+
+	const AggroMgr& getAggroMgr() const;
+	const GroupMgr& getGroupMgr() const;
 };
 
 inline TreeNodePtr AI::getBehaviour() const {
@@ -125,6 +128,14 @@ inline AggroMgr& AI::getAggroMgr() {
 }
 
 inline GroupMgr& AI::getGroupMgr() {
+	return _groupManager;
+}
+
+inline const AggroMgr& AI::getAggroMgr() const {
+	return _aggroList;
+}
+
+inline const GroupMgr& AI::getGroupMgr() const {
 	return _groupManager;
 }
 

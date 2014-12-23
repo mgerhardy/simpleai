@@ -78,6 +78,8 @@ public: \
 class ICondition;
 typedef std::shared_ptr<ICondition> ConditionPtr;
 typedef std::vector<ConditionPtr> Conditions;
+typedef Conditions::iterator ConditionsIter;
+typedef Conditions::const_iterator ConditionsConstIter;
 
 /**
  * @brief A condition can be placed on a @c TreeNode to decide which node is going to get executed. In general they are stateless.
@@ -97,7 +99,7 @@ protected:
 	 * @param[in,out] entity The entity that is used to evaluate a condition
 	 * @sa getNameWithConditions
 	 */
-	virtual void getConditionNameWithValue(std::stringstream& s, AI& entity) {
+	virtual void getConditionNameWithValue(std::stringstream& s, const AI& entity) {
 		(void)entity;
 		(void)s;
 	}
@@ -114,7 +116,7 @@ public:
 	 * @param[in,out] entity The entity that is used to evaluate the condition
 	 * @return @c true if the condition is fulfilled, @c false otherwise.
 	 */
-	virtual bool evaluate(AI& entity) = 0;
+	virtual bool evaluate(const AI& entity) = 0;
 
 	/**
 	 * @brief Returns the short name of the condition - without any related conditions or results.
@@ -126,12 +128,12 @@ public:
 	 * @param[in,out] entity The entity that is used to evaluate the condition
 	 * @sa getConditionNameWithValue
 	 */
-	inline std::string getNameWithConditions(AI& entity) {
+	inline std::string getNameWithConditions(const AI& entity) {
 		std::stringstream s;
 		s << getName();
 		getConditionNameWithValue(s, entity);
 		s << "[";
-		s << (evaluate(entity) ? "1" : "0");
+		s << (evaluate(const_cast<AI&>(entity)) ? "1" : "0");
 		s << "]";
 		return s.str();
 	}
