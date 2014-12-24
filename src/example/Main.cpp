@@ -91,9 +91,13 @@ int main(int argc, char **argv) {
 		std::cerr << "-amount 10    - how many entities are spawned on each map" << std::endl;
 		std::cerr << "-maps 4       - how many maps should get spawned" << std::endl;
 		std::cerr << "-name example - the name of the behaviour tree in the given script" << std::endl;
-		std::cerr << "-port 12345   - the port of the server to listen on" << std::endl;
 		std::cerr << "-seed 1       - use a fixed seed for all the random actions" << std::endl;
 		std::cerr << "-help -h      - show this help screen" << std::endl;
+		std::cerr << std::endl;
+		std::cerr << "Network related options" << std::endl;
+		std::cerr << "-interface 0.0.0.0 - the interface the server will listen on" << std::endl;
+		std::cerr << "-port 12345        - the port of the server to listen on" << std::endl;
+		std::cerr << std::endl;
 		return EXIT_FAILURE;
 	}
 
@@ -103,6 +107,7 @@ int main(int argc, char **argv) {
 	const short port = static_cast<short>(std::stoi(getOptParam(b, e, "-port", "12345")));
 	const std::string name = getOptParam(b, e, "-name", "example");
 	const std::string filename = getOptParam(b, e, "-file");
+	const std::string interface = getOptParam(b, e, "-interface", "0.0.0.0");
 
 	srand(seed);
 
@@ -145,13 +150,13 @@ int main(int argc, char **argv) {
 	std::cout << "compiled with threading support" << std::endl;
 #endif
 
-	ai::Server server(port, "0.0.0.0");
+	ai::Server server(port, interface);
 	if (!server.start()) {
 		std::cerr << "Could not start the server on port " << port << std::endl;
 		return EXIT_FAILURE;
 	}
 
-	std::cout << "Started server on port " << port << std::endl;
+	std::cout << "Started server on " << interface << ":" << port << std::endl;
 
 	std::vector<ai::example::GameMap*> maps;
 	for (int i = 0; i < mapAmount; ++i) {
