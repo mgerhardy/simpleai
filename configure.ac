@@ -73,18 +73,18 @@ AC_MSG_RESULT([$enable_lua])
 AX_PTHREAD
 
 if test "x$enable_lua" != "xno" ; then
-	AC_MSG_CHECKING([whether to build the example])
-	AC_ARG_ENABLE(example,AS_HELP_STRING([--enable-example=@<:@no/yes@:>@],[build the example project]),,[enable_example=no])
-	AC_MSG_RESULT([$enable_example])
-	if test "x$enable_example" = "xno" ; then
-		AC_SUBST([AI_NO_EXAMPLE],1)
+	AC_MSG_CHECKING([whether to build the run tool])
+	AC_ARG_ENABLE(run,AS_HELP_STRING([--enable-run=@<:@no/yes@:>@],[build the run project]),,[enable_run=no])
+	AC_MSG_RESULT([$enable_run])
+	if test "x$enable_run" = "xno" ; then
+		AC_SUBST([AI_NO_RUN],1)
 	else
-		 MODULES="example $MODULES"
+		 MODULES="run $MODULES"
 	fi
 else
-	enable_example=no
-	AC_MSG_NOTICE([skipping example because it needs lua])
-	AC_SUBST([AI_NO_EXAMPLE],1)
+	enable_run=no
+	AC_MSG_NOTICE([skipping run because it needs lua])
+	AC_SUBST([AI_NO_RUN],1)
 fi
 
 AC_MSG_CHECKING([whether to build the tests])
@@ -115,7 +115,7 @@ AC_OUTPUT(
 	src/Makefile
 	src/ai/Makefile
 	src/debug/src/Version.h
-	src/example/Makefile
+	src/run/Makefile
 	src/test/Makefile
 	src/libs/Makefile
 	src/libs/lua/Makefile
@@ -132,11 +132,12 @@ simpleai $VERSION: Automatic configuration OK.
     C++ Flags: ......... $AM_CXXFLAGS $PTHREAD_CFLAGS
     Libraries: ......... $LIBS
     Linking: ........... $AM_LDFLAGS $PTHREAD_LIBS $MATH_LIBS
-    Example: ........... $enable_example
+    Run: ............... $enable_run
     Tests: ............. $enable_tests
     LUA: ............... $enable_lua
     External: .......... $EXTERNAL_DEPENDENCIES
     Modules: ........... $MODULES
 
 Type 'make' to build simpleai.  Type 'make install' to install it.
+If you built the run tool, you can start it by executing 'simpleai-run'.
 ])

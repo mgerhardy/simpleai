@@ -3,7 +3,7 @@ project(SIMPLEAI)
 
 set(SIMPLEAI_VERSION "0.1")
 
-option(SIMPLEAI_EXAMPLE "Compile example program" OFF)
+option(SIMPLEAI_RUN "Compile run program" ON)
 option(SIMPLEAI_TEST "Compile tests" OFF)
 option(SIMPLEAI_LUA "Compile with lua support" ON)
 
@@ -18,7 +18,7 @@ elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
 endif()
 
 add_subdirectory(src/ai)
-add_subdirectory(src/example)
+add_subdirectory(src/run)
 add_subdirectory(src/test)
 
 find_program(DOXYGEN "doxygen")

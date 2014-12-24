@@ -4,7 +4,6 @@
 #include <streambuf>
 #include <cstdlib>
 #include <SimpleAI.h>
-#include "actions/ExampleTask.h"
 #include "GameEntity.h"
 #include "GameMap.h"
 #include <chrono>

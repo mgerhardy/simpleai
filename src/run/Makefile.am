@@ -8,7 +8,6 @@ simpleai_run_LDADD = \
 	../ai/libsimpleai.la
 
 include_HEADERS = \
-	actions/ExampleTask.h \
 	GameEntity.h \
 	GameMap.h
 
