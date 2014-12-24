@@ -139,14 +139,19 @@ int main(int argc, char **argv) {
 	std::cout << "successfully loaded the behaviour tree " << name << std::endl;
 	std::cout << "now run this behaviour tree with " << amount << " entities on each map" << std::endl;
 	std::cout << "spawn " << mapAmount << " maps with seed " << seed << std::endl;
+#ifdef AI_NO_THREADING
+	std::cout << "compiled without threading support" << std::endl;
+#else
+	std::cout << "compiled with threading support" << std::endl;
+#endif
 
 	ai::Server server(port, "0.0.0.0");
 	if (!server.start()) {
 		std::cerr << "Could not start the server on port " << port << std::endl;
 		return EXIT_FAILURE;
-	} else {
-		std::cout << "Started server on port " << port << std::endl;
 	}
+
+	std::cout << "Started server on port " << port << std::endl;
 
 	std::vector<ai::example::GameMap*> maps;
 	for (int i = 0; i < mapAmount; ++i) {
@@ -178,12 +183,11 @@ int main(int argc, char **argv) {
 	}
 
 	threads.push_back(std::thread(runServer, &server));
-#endif
+
 	std::cout << "hit enter to quit" << std::flush;
 	std::cin.get();
 	std::cout << "quitting" << std::endl;
 
-#ifndef AI_NO_THREADING
 	for (Threads::iterator i = threads.begin(); i != threads.end(); ++i) {
 		i->detach();
 	}
