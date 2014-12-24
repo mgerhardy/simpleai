@@ -8,10 +8,23 @@
 #include "GameEntity.h"
 #include "GameMap.h"
 #include <chrono>
+#include <algorithm>
 
 namespace {
 int id = 1;
 ai::GroupMgr groupManager;
+}
+
+static std::string getOptParam(char** begin, char** end, const std::string& option, const std::string& defaultVal = "") {
+	char** itr = std::find(begin, end, option);
+	if (itr != end && ++itr != end) {
+		return *itr;
+	}
+	return defaultVal;
+}
+
+static bool optExists(char** begin, char** end, const std::string& option) {
+	return std::find(begin, end, option) != end;
 }
 
 static ai::example::GameMap *createMap(ai::GroupMgr& groupManager, int amount, ai::Server& server, const ai::TreeNodePtr& root, const std::string& name) {
@@ -33,7 +46,7 @@ static void runMap(ai::example::GameMap* map) {
 	auto timeLast = std::chrono::steady_clock::now();
 	for (;;) {
 		const auto timeNow = std::chrono::steady_clock::now();
-		const auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - timeLast).count();
+		const auto dt = std::chrono::duration_cast < std::chrono::milliseconds > (timeNow - timeLast).count();
 		timeLast = timeNow;
 		map->update(static_cast<uint32_t>(dt));
 		std::this_thread::sleep_for(delay);
@@ -45,7 +58,7 @@ static void runServer(ai::Server* server) {
 	auto timeLast = std::chrono::steady_clock::now();
 	for (;;) {
 		const auto timeNow = std::chrono::steady_clock::now();
-		const auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - timeLast).count();
+		const auto dt = std::chrono::duration_cast < std::chrono::milliseconds > (timeNow - timeLast).count();
 		timeLast = timeNow;
 		server->update(dt);
 		std::this_thread::sleep_for(delay);
@@ -70,34 +83,37 @@ static void runDespawnSpawn(ai::example::GameMap* map, const ai::TreeNodePtr* ro
 #endif
 
 int main(int argc, char **argv) {
-	if (argc <= 1) {
-		std::cerr << "usage: example behaviourtree.lua [amount]" << std::endl;
+	char **b = argv;
+	char **e = argv + argc;
+	if (argc <= 1 || optExists(b, e, "-h") || optExists(b, e, "-help") || !optExists(b, e, "-file")) {
+		std::cerr << "usage: simpleai-run -file behaviourtree.lua [options]" << std::endl;
+		std::cerr << "Valid options are (default values are given here):" << std::endl;
+		std::cerr << "-amount 10    - how many entities are spawned on each map" << std::endl;
+		std::cerr << "-maps 4       - how many maps should get spawned" << std::endl;
+		std::cerr << "-name example - the name of the behaviour tree in the given script" << std::endl;
+		std::cerr << "-port 12345   - the port of the server to listen on" << std::endl;
+		std::cerr << "-seed 1       - use a fixed seed for all the random actions" << std::endl;
+		std::cerr << "-help -h      - show this help screen" << std::endl;
 		return EXIT_FAILURE;
 	}
 
-	srand(1);
+	const int seed = std::stoi(getOptParam(b, e, "-seed", "1"));
+	const int mapAmount = std::stoi(getOptParam(b, e, "-maps", "4"));
+	const int amount = std::stoi(getOptParam(b, e, "-amount", "10"));
+	const short port = static_cast<short>(std::stoi(getOptParam(b, e, "-port", "12345")));
+	const std::string name = getOptParam(b, e, "-name", "example");
+	const std::string filename = getOptParam(b, e, "-file");
 
-	// define your own tasks and conditions
+	srand(seed);
+
 	ai::AIRegistry registry;
-	registry.registerNodeFactory("ExampleTask", ai::example::ExampleTask::FACTORY);
-
+	// add your own tasks and conditions here
 	ai::LUATreeLoader loader(registry);
-	const std::string name = "example";
 
-	const std::string filename = argv[1];
-	std::ifstream t(filename.c_str());
+	std::ifstream t(filename);
 	if (!t) {
 		std::cerr << "could not load " << filename << std::endl;
 		return EXIT_FAILURE;
-	}
-
-	int amount = 1;
-	if (argc >= 3) {
-		amount = atoi(argv[2]);
-		if (amount <= 0) {
-			std::cerr << "invalid amount given" << std::endl;
-			return EXIT_FAILURE;
-		}
 	}
 
 	std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
@@ -119,10 +135,11 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
+	std::cout << *root.get() << std::endl;
 	std::cout << "successfully loaded the behaviour tree " << name << std::endl;
-	std::cout << "now run this behaviour tree with " << amount << " entities for some time: " << std::endl << *root.get() << std::endl;
+	std::cout << "now run this behaviour tree with " << amount << " entities on each map" << std::endl;
+	std::cout << "spawn " << mapAmount << " maps with seed " << seed << std::endl;
 
-	const short port = 12345;
 	ai::Server server(port, "0.0.0.0");
 	if (!server.start()) {
 		std::cerr << "Could not start the server on port " << port << std::endl;
@@ -131,7 +148,6 @@ int main(int argc, char **argv) {
 		std::cout << "Started server on port " << port << std::endl;
 	}
 
-	int mapAmount = 4;
 	std::vector<ai::example::GameMap*> maps;
 	for (int i = 0; i < mapAmount; ++i) {
 		maps.push_back(createMap(groupManager, amount, server, root, "Map" + std::to_string(i)));
@@ -145,7 +161,7 @@ int main(int argc, char **argv) {
 		const auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - timeLast).count();
 		timeLast = timeNow;
 		for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
-		   (*i)->update(static_cast<uint32_t>(dt));
+			(*i)->update(static_cast<uint32_t>(dt));
 		}
 		server.update(dt);
 		std::this_thread::sleep_for(delay);

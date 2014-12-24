@@ -2,7 +2,7 @@ bin_PROGRAMS = \
 	simpleai-run
 
 simpleai_run_SOURCES = \
-	Example.cpp
+	Main.cpp
 
 simpleai_run_LDADD = \
 	../ai/libsimpleai.la
