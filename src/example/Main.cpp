@@ -189,9 +189,47 @@ int main(int argc, char **argv) {
 
 	threads.push_back(std::thread(runServer, &server));
 
-	std::cout << "hit enter to quit" << std::flush;
-	std::cin.get();
-	std::cout << "quitting" << std::endl;
+	std::cout << "hit q to quit or h for help" << std::endl;
+	for (;;) {
+		char c;
+		std::cin >> c;
+		if (c == 'q') {
+			std::cout << "quitting" << std::endl;
+			break;
+		} else if (c == 'd') {
+			for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
+				ai::example::GameMap *map = *i;
+				std::cout << map->getName() << std::endl;
+				const ai::Zone& zone = map->getZone();
+				int count = 0;
+				for (ai::Zone::AIMapConstIter zi = zone.begin(); zi != zone.end(); ++zi) {
+					std::cout << zi->first << std::endl;
+					++count;
+				}
+				std::cout << " - sum: " << count << " entities" << std::endl;
+			}
+		} else if (c == 's') {
+			for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
+				ai::example::GameMap *map = *i;
+				ai::example::GameEntity *rnd = map->getRandomEntity();
+				if (rnd != nullptr) {
+					if (!map->remove(rnd)) {
+						std::cout << "failed to remove " << rnd->getId() << " from map " << map->getName() << std::endl;
+					} else {
+						std::cout << "removed " << rnd->getId() << " from map " << map->getName() << std::endl;
+					}
+				}
+
+				ai::example::GameEntity* ent = map->addEntity(new ai::example::GameEntity(id++, root, groupManager));
+				std::cout << "spawned " << ent->getId() << " on map " << map->getName() << std::endl;
+				ent->setPosition(map->getStartPosition());
+			}
+		} else {
+			std::cout << "q - quit" << std::endl;
+			std::cout << "s - respawn" << std::endl;
+			std::cout << "d - detail" << std::endl;
+		}
+	}
 
 	for (Threads::iterator i = threads.begin(); i != threads.end(); ++i) {
 		i->detach();

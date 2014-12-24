@@ -30,6 +30,10 @@ public:
 		_server.removeZone(&_zone);
 	}
 
+	inline const ai::Zone& getZone() const {
+		return _zone;
+	}
+
 	inline GameEntity* getRandomEntity() const {
 		if (_entities.empty())
 			return nullptr;
