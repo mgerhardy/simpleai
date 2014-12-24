@@ -1,11 +1,16 @@
 cmake_minimum_required(VERSION 2.6)
-project(SIMPLEAI)
+project(SIMPLEAI C CXX)
 
 set(SIMPLEAI_VERSION "0.1")
 
 option(SIMPLEAI_RUN "Compile run program" ON)
 option(SIMPLEAI_TEST "Compile tests" OFF)
 option(SIMPLEAI_LUA "Compile with lua support" ON)
+
+if (NOT SIMPLEAI_LUA)
+	set(SIMPLEAI_RUN FALSE)
+	message(STATUS "Lua is needed for the run tool")
+endif()
 
 if (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
 	set(CMAKE_CXX_STANDARD_LIBRARIES "kernel32.lib user32.lib wsock32.lib ws2_32.lib wininet.lib")
@@ -21,11 +26,29 @@ add_subdirectory(src/ai)
 add_subdirectory(src/run)
 add_subdirectory(src/test)
 
+if (SIMPLEAI_RUN)
+	message(STATUS "Build the run tool")
+else()
+	message(STATUS "Don't build the run tool - use -DSIMPLEAI_RUN=TRUE to build it")
+endif()
+
+if (SIMPLEAI_LUA)
+	message(STATUS "Build with lua support")
+else()
+	message(STATUS "Don't build with lua support - use -DSIMPLEAI_LUA=TRUE to enable it")
+endif()
+
+if (SIMPLEAI_TEST)
+	message(STATUS "Build the tests")
+else()
+	message(STATUS "Don't build the tests - use -DSIMPLEAI_TEST=TRUE to build it")
+endif()
+
 find_program(DOXYGEN "doxygen")
 if (DOXYGEN)
-	message("doxygen found")
+	message(STATUS "doxygen found")
 else()
-	message("doxygen not found")
+	message(STATUS "doxygen not found")
 endif()
 
 # TODO execute doxygen

@@ -79,7 +79,7 @@ if test "x$enable_lua" != "xno" ; then
 	if test "x$enable_run" = "xno" ; then
 		AC_SUBST([AI_NO_RUN],1)
 	else
-		 MODULES="run $MODULES"
+		MODULES="run $MODULES"
 	fi
 else
 	enable_run=no

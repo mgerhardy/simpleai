@@ -1,15 +1,31 @@
 file(GLOB_RECURSE SRC *.cpp *.h)
 
 if (SIMPLEAI_LUA)
+	message(STATUS "Build with lua support")
 	include_directories(${SIMPLEAI_SOURCE_DIR}/src/libs/lua/)
 	file(GLOB_RECURSE SRC_LUA ${SIMPLEAI_SOURCE_DIR}/src/libs/lua/*.cpp ${SIMPLEAI_SOURCE_DIR}/src/libs/lua/*.h)
 	list(APPEND SRC ${SRC_LUA})
 else()
-	list(REMOVE_ITEM SRC tree/loaders/lua/LUA.cpp tree/loaders/lua/LUANode.cpp tree/loaders/lua/LUATree.cpp tree/loaders/lua/LUATreeLoader.cpp)
+	message(STATUS "Build without lua support")
+	# TODO doesn't work - still compile LUA.cpp and friends if run with -DSIMPLEAI_LUA=FALSE
+	list(REMOVE_ITEM SRC
+		tree/loaders/lua/LUA.cpp
+		tree/loaders/lua/LUA.h
+		tree/loaders/lua/LUANode.cpp
+		tree/loaders/lua/LUANode.h
+		tree/loaders/lua/LUATree.cpp
+		tree/loaders/lua/LUATree.h
+		tree/loaders/lua/LUACondition.h
+		tree/loaders/lua/LUAFunctions.h
+		tree/loaders/lua/LUATreeLoader.cpp
+		tree/loaders/lua/LUATreeLoader.h)
 endif()
+
+find_package(Threads)
 
 include_directories(.)
 add_library(simpleai ${SRC})
+target_link_libraries(simpleai ${CMAKE_THREAD_LIBS_INIT})
 
 list(APPEND simpleai_HEADERS
 	aggro/AggroMgr.h
