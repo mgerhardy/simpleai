@@ -114,7 +114,6 @@ AC_OUTPUT(
 	Makefile
 	src/Makefile
 	src/ai/Makefile
-	src/debug/src/Version.h
 	src/run/Makefile
 	src/test/Makefile
 	src/libs/Makefile

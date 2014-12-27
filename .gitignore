@@ -45,3 +45,4 @@ Makefile
 CMakeFiles
 *.cmake
 CMakeCache.txt
+/install_manifest.txt
