@@ -5,8 +5,8 @@ namespace ai {
 bool Zone::addAI(AI* ai) {
 	if (ai == nullptr)
 		return false;
-	SCOPEDLOCK(_mutex);
 	const CharacterId& id = ai->getCharacter().getId();
+	SCOPEDLOCK(_mutex);
 	if (_ais.find(id) != _ais.end())
 		return false;
 	_ais.insert(std::make_pair(id, ai));
