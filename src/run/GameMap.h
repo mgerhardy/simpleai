@@ -2,6 +2,7 @@
 
 #include "GameEntity.h"
 #include <server/Zone.h>
+#include <common/Thread.h>
 #include <set>
 #include <iterator>
 #include <iostream>
@@ -16,6 +17,7 @@ private:
 	ai::Server& _server;
 	typedef std::set<ai::example::GameEntity*> Entities;
 	Entities _entities;
+	MUTEX(_mutex);
 
 public:
 	GameMap(int size, const std::string& name, ai::Server& server) :
@@ -35,6 +37,7 @@ public:
 	}
 
 	inline GameEntity* getRandomEntity() const {
+		SCOPEDLOCK(_mutex);
 		if (_entities.empty())
 			return nullptr;
 		const int size = static_cast<int>(_entities.size());
@@ -49,6 +52,7 @@ public:
 	}
 
 	inline GameEntity* addEntity(GameEntity* entity) {
+		SCOPEDLOCK(_mutex);
 		_entities.insert(entity);
 		ai::AI& ai = *entity;
 		_zone.addAI(&ai);
@@ -56,6 +60,7 @@ public:
 	}
 
 	inline bool remove(const ai::CharacterId& id) {
+		SCOPEDLOCK(_mutex);
 		// TODO: improve
 		for (Entities::iterator i = _entities.begin(); i != _entities.end(); ++i) {
 			GameEntity* entity = *i;
@@ -67,6 +72,7 @@ public:
 	}
 
 	inline bool remove(GameEntity* entity) {
+		SCOPEDLOCK(_mutex);
 		if (entity == nullptr)
 			return false;
 		if (_entities.erase(entity) != 1)
@@ -77,6 +83,7 @@ public:
 	}
 
 	inline void update(long dt) {
+		SCOPEDLOCK(_mutex);
 		for (Entities::iterator i = _entities.begin(); i != _entities.end(); ++i) {
 			(*i)->update(dt, _size);
 		}
@@ -91,6 +98,7 @@ public:
 	}
 
 	void initializeAggro() {
+		SCOPEDLOCK(_mutex);
 		// TODO: remove me once we have an attack
 		Entities::iterator i = _entities.begin();
 		if (i == _entities.end())
