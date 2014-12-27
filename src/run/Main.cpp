@@ -163,7 +163,7 @@ int main(int argc, char **argv) {
 	}
 
 #ifdef AI_NO_THREADING
-	const std::chrono::milliseconds delay(10);
+	const std::chrono::milliseconds delay(100);
 	auto timeLast = std::chrono::steady_clock::now();
 	for (;;) {
 		const auto timeNow = std::chrono::steady_clock::now();
