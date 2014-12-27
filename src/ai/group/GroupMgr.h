@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ICharacter.h"
+#include "common/Thread.h"
 #include <map>
 #include <set>
 
@@ -18,13 +19,12 @@ typedef GroupMembers::const_iterator GroupMembersConstIter;
  * @brief Maintains the groups a @c ICharacter can be in.
  * @note Keep in mind that if you destroy an @c ICharacter somewhere in the game, to also
  * remove it from the groups
- *
- * TODO: thread safety
  */
 class GroupMgr {
 private:
 	GroupMembersSet _empty;
 	GroupMembers _members;
+	MUTEX(_mutex);
 
 	struct AveragePositionFunctor {
 		Vector3f operator()(const Vector3f& result, const ICharacter* chr) {
@@ -60,10 +60,6 @@ public:
 	 * @brief Calculate the average position of the group
 	 */
 	Vector3f getPosition(GroupId id) const;
-
-	// TODO:
-	// wait
-	// signal
 
 	/**
 	 * @brief Returns a pair of the begin and end iterator of the group members
