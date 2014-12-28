@@ -56,6 +56,8 @@ public:
 		_entities.insert(entity);
 		ai::AI& ai = *entity;
 		_zone.addAI(&ai);
+		// pick some random start position
+		entity->setPosition(getStartPosition());
 		return entity;
 	}
 

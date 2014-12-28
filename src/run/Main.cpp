@@ -74,9 +74,7 @@ static void runDespawnSpawn(ai::example::GameMap* map, const ai::TreeNodePtr* ro
 			map->remove(rnd);
 		}
 
-		ai::example::GameEntity* e = map->addEntity(new ai::example::GameEntity(id++, *root, groupManager));
-		e->setPosition(map->getStartPosition());
-
+		map->addEntity(new ai::example::GameEntity(id++, *root, groupManager));
 		std::this_thread::sleep_for(delay);
 	}
 }
