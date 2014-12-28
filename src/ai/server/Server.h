@@ -84,17 +84,23 @@ public:
 	 * so it also doesn't free it. Every @c Zone that is added here, will be part of the @c AINamesMessage.
 	 *
 	 * @param zone The @c Zone that should be made available for debugging.
+	 *
+	 * @note This locks the server instance
 	 */
 	void addZone(Zone* zone);
 
 	/**
 	 * @brief Removes a @c Zone from the server. After this call the given zone is no longer available for debugging
 	 * purposes.
+	 *
+	 * @note This locks the server instance
 	 */
 	void removeZone(Zone* zone);
 
 	/**
 	 * @brief Activate the debugging for this particular zone. And disables the debugging for every other zone
+	 *
+	 * @note This locks the server instance
 	 */
 	void setDebug(const std::string& zoneName);
 

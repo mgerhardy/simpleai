@@ -34,8 +34,12 @@ public:
 	 * @brief call then when you spawn a new @code AI that should be traceable via the debug viewer.
 	 *
 	 * @note Make sure to also call @c removeAI whenever you despawn the given @c AI instance
+	 * @note This locks the zone
 	 */
 	bool addAI(AI* ai);
+	/**
+	 * @note This locks the zone
+	 */
 	bool removeAI(AI* ai);
 
 	/**
@@ -51,8 +55,18 @@ public:
 	 */
 	void setDebug(bool debug);
 
+	/**
+	 * @return @c nullptr if the given character id wasn't found in this zone
+	 *
+	 * @note This locks the zone
+	 */
 	const AI* find(CharacterId id) const;
 
+	/**
+	 * @return @c nullptr if the given character id wasn't found in this zone
+	 *
+	 * @note This locks the zone
+	 */
 	AI* find(CharacterId id);
 
 	template<typename Func>
@@ -83,6 +97,7 @@ inline const std::string& Zone::getName() const {
 }
 
 inline const AI* Zone::find(CharacterId id) const {
+	SCOPEDLOCK(_mutex);
 	auto i = _ais.find(id);
 	if (i == _ais.end())
 		return nullptr;
@@ -90,6 +105,7 @@ inline const AI* Zone::find(CharacterId id) const {
 }
 
 inline AI* Zone::find(CharacterId id) {
+	SCOPEDLOCK(_mutex);
 	auto i = _ais.find(id);
 	if (i == _ais.end())
 		return nullptr;

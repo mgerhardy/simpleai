@@ -42,9 +42,9 @@ class ICharacter {
 protected:
 	CharacterId _id;
 	ATOMIC(Vector3f) _position;
-	float _orientation;
+	ATOMIC(float) _orientation;
 	// m/s
-	float _speed;
+	ATOMIC(float) _speed;
 	CharacterAttributes _attributes;
 
 public:
