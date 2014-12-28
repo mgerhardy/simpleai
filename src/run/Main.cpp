@@ -11,7 +11,7 @@
 #include <atomic>
 
 namespace {
-int id = 1;
+std::atomic<int> id(1);
 ai::GroupMgr groupManager;
 std::atomic<bool> shutdown(false);
 }
