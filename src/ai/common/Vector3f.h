@@ -11,15 +11,15 @@ struct Vector3f {
 	float y;
 	float z;
 
-	Vector3f() :
+	Vector3f() noexcept:
 			x(0.0f), y(0.0f), z(0.0f) {
 	}
 
-	Vector3f(const float _x, const float _y) :
+	Vector3f(const float _x, const float _y) noexcept:
 			x(_x), y(_y), z(0.0f) {
 	}
 
-	Vector3f(const Vector3f& pos) :
+	Vector3f(const Vector3f& pos) noexcept:
 			x(pos.x), y(pos.y), z(pos.z) {
 	}
 

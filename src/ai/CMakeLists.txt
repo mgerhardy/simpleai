@@ -25,7 +25,7 @@ find_package(Threads)
 
 include_directories(.)
 add_library(simpleai ${SRC})
-target_link_libraries(simpleai ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(simpleai ${CMAKE_THREAD_LIBS_INIT} -latomic)
 
 list(APPEND simpleai_HEADERS
 	aggro/AggroMgr.h

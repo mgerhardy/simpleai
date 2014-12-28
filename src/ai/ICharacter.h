@@ -3,6 +3,7 @@
 #include "common/Vector3f.h"
 #include <string>
 #include <map>
+#include <atomic>
 
 namespace ai {
 
@@ -40,7 +41,7 @@ typedef std::map<std::string, std::string> CharacterAttributes;
 class ICharacter {
 protected:
 	CharacterId _id;
-	Vector3f _position;
+	std::atomic<Vector3f> _position;
 	float _orientation;
 	// m/s
 	float _speed;
@@ -59,7 +60,7 @@ public:
 
 	CharacterId getId() const;
 	void setPosition(const Vector3f& position);
-	const Vector3f& getPosition() const;
+	Vector3f getPosition() const;
 	void setOrientation(float orientation);
 	/**
 	 * @return the radians around the y (up) axis
@@ -72,7 +73,7 @@ public:
 };
 
 inline void ICharacter::setPosition(const Vector3f& position) {
-	_position = position;
+	_position.store(position);
 }
 
 inline void ICharacter::setOrientation (float orientation) {
@@ -103,8 +104,8 @@ inline CharacterId ICharacter::getId() const {
 	return _id;
 }
 
-inline const Vector3f& ICharacter::getPosition() const {
-	return _position;
+inline Vector3f ICharacter::getPosition() const {
+	return _position.load();
 }
 
 inline void ICharacter::setSpeed(float speed) {

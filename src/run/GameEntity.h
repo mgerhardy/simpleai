@@ -46,17 +46,19 @@ public:
 		_ai.update(deltaTime);
 		std::stringstream ss;
 		const float sizeF = static_cast<float>(size);
-		if (_position.x < -sizeF) {
-			_position.x = sizeF;
-		} else if (_position.x > sizeF) {
-			_position.x = -sizeF;
+		Vector3f newPos(0.0f, 0.0f, 0.0f);
+		Vector3f currentPos = _position;
+		if (currentPos.x < -sizeF) {
+			newPos.x = sizeF;
+		} else if (currentPos.x > sizeF) {
+			newPos.x = -sizeF;
 		}
-		if (_position.z < -sizeF) {
-			_position.z = sizeF;
-		} else if (_position.z > sizeF) {
-			_position.z = -sizeF;
+		if (currentPos.z < -sizeF) {
+			newPos.z = sizeF;
+		} else if (currentPos.z > sizeF) {
+			newPos.z = -sizeF;
 		}
-		_position.y = 0.0f;
+		setPosition(newPos);
 		// TODO: switch direction when the respawn on another side of the map
 
 		ss << _position;
