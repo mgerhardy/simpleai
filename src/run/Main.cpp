@@ -11,9 +11,9 @@
 #include <atomic>
 
 namespace {
-std::atomic<int> id(1);
+std::atomic_int id(1);
+std::atomic_bool shutdown(false);
 ai::GroupMgr groupManager;
-std::atomic<bool> shutdown(false);
 }
 
 static std::string getOptParam(char** begin, char** end, const std::string& option, const std::string& defaultVal = "") {
