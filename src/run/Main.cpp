@@ -201,10 +201,11 @@ int main(int argc, char **argv) {
 				std::cout << map->getName() << std::endl;
 				const ai::Zone& zone = map->getZone();
 				int count = 0;
-				for (ai::Zone::AIMapConstIter zi = zone.begin(); zi != zone.end(); ++zi) {
-					std::cout << zi->first << std::endl;
+				auto func = [&] (const ai::AI& ai) {
+					std::cout << ai.getCharacter().getId() << std::endl;
 					++count;
-				}
+				};
+				zone.visit(func);
 				std::cout << " - sum: " << count << " entities" << std::endl;
 			}
 		} else if (c == 's') {

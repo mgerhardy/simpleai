@@ -32,17 +32,14 @@ void Server::step(long stepMillis) {
 	if (!_pause)
 		return;
 
-	{
-		SCOPEDLOCK(*zone);
-		for (Zone::AIMapIter i = zone->begin(); i != zone->end(); ++i) {
-			AI& ai = *i->second;
-			if (!ai.isPause())
-				continue;
-			ai.setPause(false);
-			ai.update(stepMillis);
-			ai.setPause(true);
-		}
-	}
+	auto func = [&] (AI& ai) {
+		if (!ai.isPause())
+			return;
+		ai.setPause(false);
+		ai.update(stepMillis);
+		ai.setPause(true);
+	};
+	zone->visit(func);
 	broadcastState(zone);
 	broadcastCharacterDetails(zone);
 }
@@ -51,11 +48,10 @@ void Server::reset() {
 	Zone* zone = _zone;
 	if (zone == nullptr)
 		return;
-	SCOPEDLOCK(*zone);
-	for (Zone::AIMapIter i = zone->begin(); i != zone->end(); ++i) {
-		AI& ai = *i->second;
+	static auto func = [] (AI& ai) {
 		ai.getBehaviour()->resetState(ai);
-	}
+	};
+	zone->visit(func);
 }
 
 void Server::select(const ClientId& /*clientId*/, const CharacterId& id) {
@@ -115,10 +111,10 @@ void Server::pause(const ClientId& /*clientId*/, bool state) {
 	if (zone == nullptr)
 		return;
 	_pause = state;
-	for (Zone::AIMapIter i = zone->begin(); i != zone->end(); ++i) {
-		AI& ai = *i->second;
+	auto func = [&] (AI& ai) {
 		ai.setPause(state);
-	}
+	};
+	zone->visit(func);
 	_network.broadcast(AIPauseMessage(state));
 	if (state) {
 		broadcastState(zone);
@@ -147,15 +143,12 @@ void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, const AI&
 
 void Server::broadcastState(Zone* zone) {
 	AIStateMessage msg;
-	{
-		SCOPEDLOCK(*zone);
-		for (Zone::AIMapConstIter i = zone->begin(); i != zone->end(); ++i) {
-			const AI& ai = *i->second;
-			const ICharacter& chr = ai.getCharacter();
-			const AIStateWorld b(chr.getId(), chr.getPosition(), chr.getOrientation(), chr.getAttributes());
-			msg.addState(b);
-		}
-	}
+	auto func = [&] (AI& ai) {
+		const ICharacter& chr = ai.getCharacter();
+		const AIStateWorld b(chr.getId(), chr.getPosition(), chr.getOrientation(), chr.getAttributes());
+		msg.addState(b);
+	};
+	zone->visit(func);
 	_network.broadcast(msg);
 }
 
@@ -163,15 +156,10 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 	if (_selectedCharacterId == -1)
 		return;
 
-	ai::AI* aiPtr = nullptr;
-	{
-		SCOPEDLOCK(*zone);
-		Zone::AIMapConstIter i = zone->find(_selectedCharacterId);
-		if (i == zone->end()) {
-			_selectedCharacterId = -1;
-			return;
-		}
-		aiPtr = i->second;
+	AI* aiPtr = zone->find(_selectedCharacterId);
+	if (aiPtr == nullptr) {
+		_selectedCharacterId = -1;
+		return;
 	}
 
 	const ai::AI& ai = *aiPtr;

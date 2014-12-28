@@ -38,10 +38,6 @@ public:
 	bool addAI(AI* ai);
 	bool removeAI(AI* ai);
 
-#ifndef AI_NO_THREADING
-	inline operator MUTEXTYPE&() { return _mutex; }
-#endif
-
 	/**
 	 * @brief Every zone has its own name that identifies it
 	 */
@@ -55,14 +51,27 @@ public:
 	 */
 	void setDebug(bool debug);
 
-	AIMapIter find(CharacterId id);
-	AIMapConstIter find(CharacterId id) const;
+	const AI* find(CharacterId id) const;
 
-	AIMapIter begin();
-	AIMapConstIter begin() const;
+	AI* find(CharacterId id);
 
-	AIMapIter end();
-	AIMapConstIter end() const;
+	template<typename Func>
+	void visit(Func& func) {
+		SCOPEDLOCK(_mutex);
+		for (auto i = _ais.begin(), end = _ais.end(); i != end; ++i) {
+			AI *ai = i->second;
+			func(*ai);
+		}
+	}
+
+	template<typename Func>
+	void visit(const Func& func) const {
+		SCOPEDLOCK(_mutex);
+		for (auto i = _ais.begin(), end = _ais.end(); i != end; ++i) {
+			const AI *ai = i->second;
+			func(*ai);
+		}
+	}
 };
 
 inline void Zone::setDebug (bool debug) {
@@ -73,28 +82,18 @@ inline const std::string& Zone::getName() const {
 	return _name;
 }
 
-inline Zone::AIMapIter Zone::begin() {
-	return _ais.begin();
+inline const AI* Zone::find(CharacterId id) const {
+	auto i = _ais.find(id);
+	if (i == _ais.end())
+		return nullptr;
+	return i->second;
 }
 
-inline Zone::AIMapConstIter Zone::begin() const {
-	return _ais.begin();
-}
-
-inline Zone::AIMapIter Zone::end() {
-	return _ais.end();
-}
-
-inline Zone::AIMapConstIter Zone::end() const {
-	return _ais.end();
-}
-
-inline Zone::AIMapIter Zone::find(CharacterId id) {
-	return _ais.find(id);
-}
-
-inline Zone::AIMapConstIter Zone::find(CharacterId id) const {
-	return _ais.find(id);
+inline AI* Zone::find(CharacterId id) {
+	auto i = _ais.find(id);
+	if (i == _ais.end())
+		return nullptr;
+	return i->second;
 }
 
 }
