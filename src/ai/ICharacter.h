@@ -1,9 +1,9 @@
 #pragma once
 
 #include "common/Vector3f.h"
+#include "common/Thread.h"
 #include <string>
 #include <map>
-#include <atomic>
 
 namespace ai {
 
@@ -41,7 +41,7 @@ typedef std::map<std::string, std::string> CharacterAttributes;
 class ICharacter {
 protected:
 	CharacterId _id;
-	std::atomic<Vector3f> _position;
+	ATOMIC(Vector3f) _position;
 	float _orientation;
 	// m/s
 	float _speed;
@@ -73,7 +73,7 @@ public:
 };
 
 inline void ICharacter::setPosition(const Vector3f& position) {
-	_position.store(position);
+	_position = position;
 }
 
 inline void ICharacter::setOrientation (float orientation) {
@@ -105,7 +105,7 @@ inline CharacterId ICharacter::getId() const {
 }
 
 inline Vector3f ICharacter::getPosition() const {
-	return _position.load();
+	return _position;
 }
 
 inline void ICharacter::setSpeed(float speed) {
