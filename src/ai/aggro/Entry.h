@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include <ICharacter.h>
+#include "common/Types.h"
 
 namespace ai {
 

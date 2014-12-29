@@ -45,6 +45,7 @@ list(APPEND simpleai_HEADERS
 	common/Random.h
 	common/String.h
 	common/Thread.h
+	common/Types.h
 	conditions/And.h
 	conditions/ConditionParser.h
 	conditions/False.h
