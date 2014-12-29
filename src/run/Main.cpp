@@ -114,13 +114,13 @@ int main(int argc, char **argv) {
 	// add your own tasks and conditions here
 	ai::LUATreeLoader loader(registry);
 
-	std::ifstream t(filename);
-	if (!t) {
+	std::ifstream btStream(filename);
+	if (!btStream) {
 		std::cerr << "could not load " << filename << std::endl;
 		return EXIT_FAILURE;
 	}
 
-	std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+	std::string str((std::istreambuf_iterator<char>(btStream)), std::istreambuf_iterator<char>());
 	if (!loader.init(str)) {
 		std::cerr << "could not load the tree" << std::endl;
 		std::cerr << loader.getError() << std::endl;
