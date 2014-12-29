@@ -178,11 +178,11 @@ int main(int argc, char **argv) {
 #else
 	typedef std::vector<std::thread> Threads;
 	Threads threads;
-	for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
+	for (auto i = maps.begin(); i != maps.end(); ++i) {
 		threads.push_back(std::thread(runMap, *i));
 	}
 
-	for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
+	for (auto i = maps.begin(); i != maps.end(); ++i) {
 		threads.push_back(std::thread(runDespawnSpawn, *i, &root));
 	}
 
