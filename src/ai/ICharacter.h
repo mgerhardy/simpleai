@@ -70,6 +70,10 @@ public:
 	float getSpeed() const;
 	void setAttribute(const std::string& key, const std::string& value);
 	const CharacterAttributes& getAttributes() const;
+	/**
+	 * @brief override this method to let your own @c ICharacter implementation
+	 * tick with the @c Zone::update
+	 */
 	virtual void update(long dt) { (void)dt; }
 };
 

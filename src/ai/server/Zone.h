@@ -30,6 +30,11 @@ public:
 
 	virtual ~Zone() {}
 
+	/**
+	 * @brief Update all the @c ICharacter and @c AI instances in this zone.
+	 *
+	 * @note You have to call this on your own.
+	 */
 	inline void update(long dt) {
 		auto func = [&] (AI& ai) {
 			ai.update(dt);
