@@ -32,7 +32,7 @@ public:
 
 	/**
 	 * @brief Update all the @c ICharacter and @c AI instances in this zone.
-	 *
+	 * @param dt Delta time in millis since the last update call happened
 	 * @note You have to call this on your own.
 	 */
 	inline void update(long dt) {
