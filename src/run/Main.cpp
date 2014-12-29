@@ -32,7 +32,7 @@ static ai::example::GameMap *createMap(ai::GroupMgr& groupManager, int amount, a
 	ai::example::GameMap* map = new ai::example::GameMap(300, name, server);
 
 	for (int i = 0; i < amount; ++i) {
-		ai::example::GameEntity* e = map->addEntity(new ai::example::GameEntity(id++, root, groupManager));
+		ai::example::GameEntity* e = map->addEntity(new ai::example::GameEntity(id++, map, root, groupManager));
 		e->setPosition(map->getStartPosition());
 	}
 
@@ -74,7 +74,7 @@ static void runDespawnSpawn(ai::example::GameMap* map, const ai::TreeNodePtr* ro
 			map->remove(rnd);
 		}
 
-		map->addEntity(new ai::example::GameEntity(id++, *root, groupManager));
+		map->addEntity(new ai::example::GameEntity(id++, map, *root, groupManager));
 		std::this_thread::sleep_for(delay);
 	}
 }
@@ -225,7 +225,7 @@ int main(int argc, char **argv) {
 					}
 				}
 
-				ai::example::GameEntity* ent = map->addEntity(new ai::example::GameEntity(id++, root, groupManager));
+				ai::example::GameEntity* ent = map->addEntity(new ai::example::GameEntity(id++, map, root, groupManager));
 				std::cout << "spawned " << ent->getId() << " on map " << map->getName() << std::endl;
 				ent->setPosition(map->getStartPosition());
 			}

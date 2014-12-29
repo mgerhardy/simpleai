@@ -86,9 +86,7 @@ public:
 
 	inline void update(long dt) {
 		SCOPEDLOCK(_mutex);
-		for (Entities::iterator i = _entities.begin(); i != _entities.end(); ++i) {
-			(*i)->update(dt, _size);
-		}
+		_zone.update(dt);
 	}
 
 	inline bool isBlocked(const ai::Vector3f& pos) const {
@@ -97,6 +95,10 @@ public:
 		if (pos.z < -_size || pos.z >= _size)
 			return true;
 		return false;
+	}
+
+	inline int getSize() const {
+		return _size;
 	}
 
 	void initializeAggro() {

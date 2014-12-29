@@ -6,15 +6,20 @@
 namespace ai {
 namespace example {
 
+class GameMap;
+
 class GameEntity : public ai::ICharacter {
 private:
 	ai::AI _ai;
+	const ai::example::GameMap* _map;
 	GroupId _groupId;
 
 public:
-	GameEntity(const ai::CharacterId& id, const ai::TreeNodePtr& root,
+	GameEntity(const ai::CharacterId& id,
+			const ai::example::GameMap* map,
+			const ai::TreeNodePtr& root,
 			ai::GroupMgr& groupManager) :
-			ai::ICharacter(id), _ai(*this, root, groupManager) {
+			ai::ICharacter(id), _ai(*this, root, groupManager), _map(map) {
 		setAttribute(ai::attributes::NAME, "Example " + std::to_string(id));
 		setSpeed(50.0f);
 		if (id == 0)
@@ -42,30 +47,7 @@ public:
 		return _ai.getAggroMgr().addAggro(entity, aggro);
 	}
 
-	void update (long deltaTime, int size) {
-		_ai.update(deltaTime);
-		std::stringstream ss;
-		const float sizeF = static_cast<float>(size);
-		Vector3f newPos(0.0f, 0.0f, 0.0f);
-		Vector3f currentPos = _position;
-		if (currentPos.x < -sizeF) {
-			newPos.x = sizeF;
-		} else if (currentPos.x > sizeF) {
-			newPos.x = -sizeF;
-		}
-		if (currentPos.z < -sizeF) {
-			newPos.z = sizeF;
-		} else if (currentPos.z > sizeF) {
-			newPos.z = -sizeF;
-		}
-		setPosition(newPos);
-		// TODO: switch direction when the respawn on another side of the map
-
-		ss << _position;
-		setAttribute(ai::attributes::POSITION, ss.str());
-		setAttribute(ai::attributes::SPEED, std::to_string(getSpeed()));
-		setAttribute(ai::attributes::ORIENTATION, std::to_string(toDegrees(getOrientation())));
-	}
+	void update (long deltaTime) override;
 };
 
 }

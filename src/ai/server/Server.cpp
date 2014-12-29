@@ -156,29 +156,27 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 	if (_selectedCharacterId == -1)
 		return;
 
-	AI* aiPtr = zone->find(_selectedCharacterId);
-	if (aiPtr == nullptr) {
+	auto func = [&] (AI& ai) {
+		const TreeNodePtr& node = ai.getBehaviour();
+		const std::string& name = node->getName();
+		const ConditionPtr& condition = node->getCondition();
+		const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
+		AIStateNode root(name, conditionStr, _time - node->getLastExecMillis(ai), node->getLastStatus(ai), true);
+		addChildren(node, root, ai);
+
+		AIStateAggro aggro;
+		const ai::AggroMgr::Entries& entries = ai.getAggroMgr().getEntries();
+		for (ai::AggroMgr::Entries::const_iterator it = entries.begin(); it != entries.end(); ++it) {
+			const EntryPtr& e = *it;
+			aggro.addAggro(AIStateAggroEntry(e->getCharacterId(), e->getAggro()));
+		}
+
+		const AICharacterDetailsMessage msg(_selectedCharacterId, aggro, root);
+		_network.broadcast(msg);
+	};
+	if (!zone->execute(_selectedCharacterId, func)) {
 		_selectedCharacterId = -1;
-		return;
 	}
-
-	const ai::AI& ai = *aiPtr;
-	const TreeNodePtr& node = ai.getBehaviour();
-	const std::string& name = node->getName();
-	const ConditionPtr& condition = node->getCondition();
-	const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
-	AIStateNode root(name, conditionStr, _time - node->getLastExecMillis(ai), node->getLastStatus(ai), true);
-	addChildren(node, root, ai);
-
-	AIStateAggro aggro;
-	const ai::AggroMgr::Entries& entries = ai.getAggroMgr().getEntries();
-	for (ai::AggroMgr::Entries::const_iterator it = entries.begin(); it != entries.end(); ++it) {
-		const EntryPtr& e = *it;
-		aggro.addAggro(AIStateAggroEntry(e->getCharacterId(), e->getAggro()));
-	}
-
-	const AICharacterDetailsMessage msg(_selectedCharacterId, aggro, root);
-	_network.broadcast(msg);
 }
 
 void Server::update(long deltaTime) {

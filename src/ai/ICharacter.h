@@ -70,6 +70,7 @@ public:
 	float getSpeed() const;
 	void setAttribute(const std::string& key, const std::string& value);
 	const CharacterAttributes& getAttributes() const;
+	virtual void update(long dt) { (void)dt; }
 };
 
 inline void ICharacter::setPosition(const Vector3f& position) {

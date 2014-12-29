@@ -30,6 +30,14 @@ public:
 
 	virtual ~Zone() {}
 
+	inline void update(long dt) {
+		auto func = [&] (AI& ai) {
+			ai.update(dt);
+			ai.getCharacter().update(dt);
+		};
+		visit(func);
+	}
+
 	/**
 	 * @brief call then when you spawn a new @code AI that should be traceable via the debug viewer.
 	 *
@@ -56,18 +64,23 @@ public:
 	void setDebug(bool debug);
 
 	/**
-	 * @return @c nullptr if the given character id wasn't found in this zone
+	 * @brief Executes a lambda or functor for the given character
+	 *
+	 * @return @c true if the func was called for the character, @c false if not
+	 * e.g. in the case the given @c CharacterId wasn't found in this zone.
 	 *
 	 * @note This locks the zone
 	 */
-	const AI* find(CharacterId id) const;
-
-	/**
-	 * @return @c nullptr if the given character id wasn't found in this zone
-	 *
-	 * @note This locks the zone
-	 */
-	AI* find(CharacterId id);
+	template<typename Func>
+	bool execute(CharacterId id, const Func& func) const {
+		SCOPEDLOCK(_mutex);
+		auto i = _ais.find(id);
+		if (i == _ais.end())
+			return false;
+		AI *ai = i->second;
+		func(*ai);
+		return true;
+	}
 
 	template<typename Func>
 	void visit(Func& func) {
@@ -94,22 +107,6 @@ inline void Zone::setDebug (bool debug) {
 
 inline const std::string& Zone::getName() const {
 	return _name;
-}
-
-inline const AI* Zone::find(CharacterId id) const {
-	SCOPEDLOCK(_mutex);
-	auto i = _ais.find(id);
-	if (i == _ais.end())
-		return nullptr;
-	return i->second;
-}
-
-inline AI* Zone::find(CharacterId id) {
-	SCOPEDLOCK(_mutex);
-	auto i = _ais.find(id);
-	if (i == _ais.end())
-		return nullptr;
-	return i->second;
 }
 
 }

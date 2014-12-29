@@ -2,7 +2,8 @@ bin_PROGRAMS = \
 	simpleai-run
 
 simpleai_run_SOURCES = \
-	Main.cpp
+	Main.cpp \
+	GameEntity.cpp
 
 simpleai_run_LDADD = \
 	../ai/libsimpleai.la
