@@ -28,7 +28,6 @@ bool Zone::removeAI(AI* ai) {
 
 void Zone::update(long dt) {
 	auto func = [&] (AI& ai) {
-		ai.update(dt);
 		ai.getCharacter().update(dt);
 	};
 	visit(func);

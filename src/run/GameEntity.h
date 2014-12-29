@@ -10,7 +10,6 @@ class GameMap;
 
 class GameEntity : public ai::ICharacter {
 private:
-	ai::AI _ai;
 	const ai::example::GameMap* _map;
 	GroupId _groupId;
 
@@ -19,7 +18,7 @@ public:
 			const ai::example::GameMap* map,
 			const ai::TreeNodePtr& root,
 			ai::GroupMgr& groupManager) :
-			ai::ICharacter(id), _ai(*this, root, groupManager), _map(map) {
+			ai::ICharacter(id, root, groupManager), _map(map) {
 		setAttribute(ai::attributes::NAME, "Example " + std::to_string(id));
 		setSpeed(50.0f);
 		if (id == 0)

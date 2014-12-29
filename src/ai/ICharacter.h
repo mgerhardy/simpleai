@@ -3,6 +3,7 @@
 #include "common/Vector3f.h"
 #include "common/Thread.h"
 #include "common/Types.h"
+#include "AI.h"
 
 namespace ai {
 
@@ -36,10 +37,11 @@ protected:
 	// m/s
 	ATOMIC(float) _speed;
 	CharacterAttributes _attributes;
+	AI _ai;
 
 public:
-	ICharacter(CharacterId id) :
-			_id(id), _orientation(0.0f), _speed(0.0f) {
+	ICharacter(CharacterId id, const ai::TreeNodePtr& root, ai::GroupMgr& groupManager) :
+			_id(id), _orientation(0.0f), _speed(0.0f), _ai(*this, root, groupManager) {
 	}
 
 	virtual ~ICharacter() {
@@ -64,7 +66,9 @@ public:
 	 * @brief override this method to let your own @c ICharacter implementation
 	 * tick with the @c Zone::update
 	 */
-	virtual void update(long dt) { (void)dt; }
+	virtual void update(long dt) {
+		_ai.update(dt);
+	}
 };
 
 inline void ICharacter::setPosition(const Vector3f& position) {
