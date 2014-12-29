@@ -96,9 +96,13 @@ else
 	MODULES="test $MODULES"
 fi
 
-# libm
-AC_CHECK_LIB(m, sqrt,, [AC_MSG_ERROR([requires math library])])
-MATH_LIBS=-lm
+OLD_LIBS=$LIBS
+LIBS=
+AC_CHECK_LIB(m, sqrt)
+MATH_LIBS=$LIBS
+LIBS=$OLD_LIBS
+
+AC_CHECK_LIB(atomic, __atomic_store)
 
 AC_SUBST([EXTERNAL_DEPENDENCIES])
 AC_SUBST([MODULES])
