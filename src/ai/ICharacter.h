@@ -28,6 +28,10 @@ const char* const ORIENTATION = "Orientation";
  *
  * It uses a @c CharacterId to identify the character in the game. The @c AI class
  * has a reference to its controlled @c ICharacter instance.
+ *
+ * @note Update the values of the @c ICharacter class only in in the @c ICharacter::update
+ * method or from within the @c Zone callbacks. Otherwise you will run into race conditions
+ * if you run with multiple threads.
  */
 class ICharacter {
 protected:
