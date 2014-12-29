@@ -52,8 +52,10 @@ public:
 	}
 
 	inline GameEntity* addEntity(GameEntity* entity) {
-		SCOPEDLOCK(_mutex);
-		_entities.insert(entity);
+		{
+			SCOPEDLOCK(_mutex);
+			_entities.insert(entity);
+		}
 		ai::AI& ai = *entity;
 		_zone.addAI(&ai);
 		// pick some random start position
@@ -67,25 +69,29 @@ public:
 		for (Entities::iterator i = _entities.begin(); i != _entities.end(); ++i) {
 			GameEntity* entity = *i;
 			if (entity->getId() == id) {
-				return remove(entity);
+				if (!remove(entity))
+					return false;
+				delete entity;
+				return true;
 			}
 		}
 		return false;
 	}
 
 	inline bool remove(GameEntity* entity) {
-		SCOPEDLOCK(_mutex);
 		if (entity == nullptr)
 			return false;
-		if (_entities.erase(entity) != 1)
-			return false;
+		{
+			SCOPEDLOCK(_mutex);
+			if (_entities.erase(entity) != 1)
+				return false;
+		}
 		ai::AI& ai = *entity;
 		_zone.removeAI(&ai);
 		return true;
 	}
 
 	inline void update(long dt) {
-		SCOPEDLOCK(_mutex);
 		_zone.update(dt);
 	}
 
