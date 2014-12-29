@@ -5,10 +5,11 @@
 #include "aggro/AggroMgr.h"
 #include "tree/TreeNode.h"
 #include "tree/loaders/ITreeLoader.h"
-#include "ICharacter.h"
 #include "group/GroupMgr.h"
 
 namespace ai {
+
+class ICharacter;
 
 #define NOTHING_SELECTED (-1)
 
