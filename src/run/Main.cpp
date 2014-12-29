@@ -180,13 +180,18 @@ int main(int argc, char **argv) {
 	Threads threads;
 	for (auto i = maps.begin(); i != maps.end(); ++i) {
 		threads.push_back(std::thread(runMap, *i));
+		const std::string threadName = "tick-" + (*i)->getName();
+		pthread_setname_np(threads.back().native_handle(), threadName.c_str());
 	}
 
 	for (auto i = maps.begin(); i != maps.end(); ++i) {
 		threads.push_back(std::thread(runDespawnSpawn, *i, &root));
+		const std::string threadName = "spawn-" + (*i)->getName();
+		pthread_setname_np(threads.back().native_handle(), threadName.c_str());
 	}
 
 	threads.push_back(std::thread(runServer, &server));
+	pthread_setname_np(threads.back().native_handle(), "tick-server");
 
 	std::cout << "hit q to quit or h for help" << std::endl;
 	for (;;) {
