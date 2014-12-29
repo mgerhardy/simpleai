@@ -6,6 +6,8 @@ namespace example {
 
 void GameEntity::update(long deltaTime) {
 	ICharacter::update(deltaTime);
+
+	// cap position to the map
 	const float sizeF = static_cast<float>(_map->getSize());
 	Vector3f newPos(0.0f, 0.0f, 0.0f);
 	Vector3f currentPos = _position;
@@ -22,6 +24,7 @@ void GameEntity::update(long deltaTime) {
 	setPosition(newPos);
 	// TODO: switch direction when the respawn on another side of the map
 
+	// update attributes for debugging
 	std::stringstream ss;
 	ss << _position;
 	setAttribute(ai::attributes::POSITION, ss.str());
