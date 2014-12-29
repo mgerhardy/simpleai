@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+#include <map>
+
 namespace ai {
 
 /**
@@ -8,5 +11,7 @@ namespace ai {
  * @note @c -1 is reserved. You should use ids >= 0
  */
 typedef int CharacterId;
+
+typedef std::map<std::string, std::string> CharacterAttributes;
 
 }

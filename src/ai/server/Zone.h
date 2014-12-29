@@ -1,7 +1,8 @@
 #pragma once
 
 #include <AI.h>
-#include <common/Thread.h>
+#include "common/Thread.h"
+#include "common/Types.h"
 #include <map>
 
 namespace ai {
@@ -35,13 +36,7 @@ public:
 	 * @param dt Delta time in millis since the last update call happened
 	 * @note You have to call this on your own.
 	 */
-	inline void update(long dt) {
-		auto func = [&] (AI& ai) {
-			ai.update(dt);
-			ai.getCharacter().update(dt);
-		};
-		visit(func);
-	}
+	void update(long dt);
 
 	/**
 	 * @brief call then when you spawn a new @code AI that should be traceable via the debug viewer.

@@ -8,6 +8,7 @@
 #include "common/Math.h"
 #include "common/Random.h"
 #include "common/MoveVector.h"
+#include "ICharacter.h"
 #include <cassert>
 
 namespace ai {

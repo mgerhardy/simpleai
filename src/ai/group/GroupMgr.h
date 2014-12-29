@@ -1,11 +1,14 @@
 #pragma once
 
-#include "ICharacter.h"
 #include "common/Thread.h"
+#include "common/Types.h"
+#include "common/Vector3f.h"
 #include <map>
 #include <set>
 
 namespace ai {
+
+class ICharacter;
 
 typedef int GroupId;
 typedef std::set<ICharacter*> GroupMembersSet;
@@ -25,12 +28,6 @@ private:
 	GroupMembersSet _empty;
 	GroupMembers _members;
 	MUTEX(_mutex);
-
-	struct AveragePositionFunctor {
-		Vector3f operator()(const Vector3f& result, const ICharacter* chr) {
-			return chr->getPosition() + result;
-		}
-	};
 
 public:
 	GroupMgr ();

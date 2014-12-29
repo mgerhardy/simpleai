@@ -3,8 +3,6 @@
 #include "common/Vector3f.h"
 #include "common/Thread.h"
 #include "common/Types.h"
-#include <string>
-#include <map>
 
 namespace ai {
 
@@ -23,8 +21,6 @@ const char* const POSITION = "Position";
 const char* const SPEED = "Speed";
 const char* const ORIENTATION = "Orientation";
 }
-
-typedef std::map<std::string, std::string> CharacterAttributes;
 
 /**
  * @brief Class that should be extended by the ai controlled entity class.

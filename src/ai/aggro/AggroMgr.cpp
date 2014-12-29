@@ -1,5 +1,6 @@
 #include <AI.h>
 #include <aggro/AggroMgr.h>
+#include "ICharacter.h"
 #include <algorithm>
 
 namespace ai {

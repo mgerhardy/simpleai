@@ -1,7 +1,14 @@
 #include "GroupMgr.h"
+#include "ICharacter.h"
 #include <numeric>
 
 namespace ai {
+
+struct AveragePositionFunctor {
+	Vector3f operator()(const Vector3f& result, const ICharacter* chr) {
+		return chr->getPosition() + result;
+	}
+};
 
 GroupMgr::GroupMgr() {
 }

@@ -1,4 +1,5 @@
 #include "Zone.h"
+#include "ICharacter.h"
 
 namespace ai {
 
@@ -23,6 +24,14 @@ bool Zone::removeAI(AI* ai) {
 		return false;
 	_ais.erase(i);
 	return true;
+}
+
+void Zone::update(long dt) {
+	auto func = [&] (AI& ai) {
+		ai.update(dt);
+		ai.getCharacter().update(dt);
+	};
+	visit(func);
 }
 
 }

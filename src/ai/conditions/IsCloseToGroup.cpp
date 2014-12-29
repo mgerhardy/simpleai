@@ -1,4 +1,5 @@
 #include "IsCloseToGroup.h"
+#include "ICharacter.h"
 #include "AI.h"
 
 namespace ai {
