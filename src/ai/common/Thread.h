@@ -11,6 +11,7 @@
 #define LOCK std::lock_guard<MUTEXTYPE>
 #define SCOPEDLOCK(mutex) std::lock_guard<MUTEXTYPE> __lock__(mutex)
 #define ATOMIC(type) std::atomic<type>
+#define ATOMICINT std::atomic_int
 
 #else
 
@@ -19,5 +20,6 @@
 #define LOCK
 #define SCOPEDLOCK(mutex)
 #define ATOMIC(type) type
+#define ATOMICINT int
 
 #endif
