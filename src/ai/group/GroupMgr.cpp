@@ -48,6 +48,7 @@ Vector3f GroupMgr::getPosition(GroupId id) const {
 	if (i == _members.end())
 		return Vector3f::ZERO;
 
+	// TODO: only those that are in the same zone - otherwise the avg pos doesn't make much sense
 	Vector3f averagePosition = std::accumulate(i->second.begin(), i->second.end(), Vector3f(), AveragePositionFunctor());
 	averagePosition *= 1.0f / (float) i->second.size();
 	return averagePosition;
