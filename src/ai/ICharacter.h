@@ -51,6 +51,10 @@ public:
 	virtual ~ICharacter() {
 	}
 
+	inline operator ai::AI& () {
+		return _ai;
+	}
+
 	bool operator ==(const ICharacter& character) const;
 	bool operator !=(const ICharacter& character) const;
 

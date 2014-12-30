@@ -18,22 +18,22 @@ TEST_F(NodeTest, testSequence) {
 	node->addChild(idle2);
 
 	TestEntity e(1, node, _groupManager);
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus(e));
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus(e));
 }
@@ -62,13 +62,13 @@ TEST_F(NodeTest, testParallel) {
 	node->addChild(idle2);
 
 	TestEntity e(1, node, _groupManager);
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus(e));
 }
@@ -88,13 +88,13 @@ TEST_F(NodeTest, testPrioritySelector) {
 	node->addChild(idle2);
 
 	TestEntity e(1, node, _groupManager);
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
 }
@@ -114,13 +114,13 @@ TEST_F(NodeTest, testPrioritySelectorWithCondition) {
 	node->addChild(idle2);
 
 	TestEntity e(1, node, _groupManager);
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::CANNOTEXECUTE, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::CANNOTEXECUTE, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
-	e.update(1);
+	e.update(1, true);
 	ASSERT_EQ(ai::CANNOTEXECUTE, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus(e));
 }
