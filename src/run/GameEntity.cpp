@@ -25,9 +25,7 @@ void GameEntity::update(long deltaTime) {
 	// TODO: switch direction when the respawn on another side of the map
 
 	// update attributes for debugging
-	std::stringstream ss;
-	ss << _position;
-	setAttribute(ai::attributes::POSITION, ss.str());
+	setAttribute(ai::attributes::POSITION, std::to_string(getPosition()));
 	setAttribute(ai::attributes::SPEED, std::to_string(getSpeed()));
 	setAttribute(ai::attributes::ORIENTATION, std::to_string(toDegrees(getOrientation())));
 }
