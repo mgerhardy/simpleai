@@ -50,7 +50,7 @@ void TreeNode::setSelectorState(AI& entity, int selected) {
 
 TreeNodeStatus TreeNode::state(AI& entity, TreeNodeStatus treeNodeState) {
 	if (!entity._debuggingActive)
-		return -1L;
+		return treeNodeState;
 	entity._lastStatus[getId()] = treeNodeState;
 	return treeNodeState;
 }
