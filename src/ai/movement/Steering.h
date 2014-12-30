@@ -19,10 +19,10 @@ namespace movement {
  */
 class ISteering {
 protected:
-	ICharacter& _character;
+	const ICharacter& _character;
 	float _acceleration;
 public:
-	ISteering(ICharacter& character, float acceleration) :
+	ISteering(const ICharacter& character, float acceleration) :
 			_character(character), _acceleration(acceleration) {
 	}
 	virtual ~ISteering() {}
@@ -34,9 +34,9 @@ public:
  */
 class TargetSeek: public ISteering {
 protected:
-	Vector3f _target;
+	const Vector3f _target;
 public:
-	TargetSeek(ICharacter& character, float speed, const Vector3f& target) :
+	TargetSeek(const ICharacter& character, float speed, const Vector3f& target) :
 			ISteering(character, speed), _target(target) {
 	}
 
@@ -56,9 +56,9 @@ public:
  */
 class TargetFlee: public ISteering {
 protected:
-	Vector3f _target;
+	const Vector3f _target;
 public:
-	TargetFlee(ICharacter& character, float speed, const Vector3f& target) :
+	TargetFlee(const ICharacter& character, float speed, const Vector3f& target) :
 			ISteering(character, speed), _target(target) {
 	}
 
@@ -79,7 +79,7 @@ public:
  */
 class GroupSeek: public TargetSeek {
 public:
-	GroupSeek(AI& ai, float speed, GroupId groupId) :
+	GroupSeek(const AI& ai, float speed, GroupId groupId) :
 		TargetSeek(ai.getCharacter(), speed, ai.getGroupMgr().getPosition(groupId)) {
 	}
 };
@@ -89,7 +89,7 @@ public:
  */
 class GroupFlee: public TargetFlee {
 public:
-	GroupFlee(AI& ai, float speed, GroupId groupId) :
+	GroupFlee(const AI& ai, float speed, GroupId groupId) :
 		TargetFlee(ai.getCharacter(), speed, ai.getGroupMgr().getPosition(groupId)) {
 	}
 };
@@ -104,7 +104,7 @@ class Wander: public ISteering {
 protected:
 	float _rotation;
 public:
-	Wander(ICharacter& character, float speed, float rotation) :
+	Wander(const ICharacter& character, float speed, float rotation) :
 			ISteering(character, speed), _rotation(rotation) {
 	}
 
