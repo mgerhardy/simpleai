@@ -22,6 +22,9 @@ class Selector: public TreeNode {
 public:
 	NODE_CLASS(Selector)
 
+	/**
+	 * Will only deliver valid results if the debugging for the given entity is active
+	 */
 	virtual void getRunningChildren(const AI& entity, std::vector<bool>& active) const override {
 		int n = 0;
 		int selectorState = getSelectorState(entity);

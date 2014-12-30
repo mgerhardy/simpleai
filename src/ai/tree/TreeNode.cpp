@@ -49,6 +49,8 @@ void TreeNode::setSelectorState(AI& entity, int selected) {
 }
 
 TreeNodeStatus TreeNode::state(AI& entity, TreeNodeStatus treeNodeState) {
+	if (!entity._debuggingActive)
+		return -1L;
 	entity._lastStatus[getId()] = treeNodeState;
 	return treeNodeState;
 }
@@ -63,6 +65,8 @@ long TreeNode::getLastExecMillis(const AI& entity) const {
 }
 
 TreeNodeStatus TreeNode::getLastStatus(const AI& entity) const {
+	if (!entity._debuggingActive)
+		return UNKNOWN;
 	AI::NodeStates::const_iterator i = entity._lastStatus.find(getId());
 	if (i == entity._lastStatus.end())
 		return UNKNOWN;

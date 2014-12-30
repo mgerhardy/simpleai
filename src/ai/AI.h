@@ -29,8 +29,14 @@ class AI {
 	friend class TreeNode;
 	friend class Server;
 protected:
+	/**
+	 * This map is only filled if we are in debugging mode for this entity
+	 */
 	typedef std::unordered_map<int, TreeNodeStatus> NodeStates;
 	NodeStates _lastStatus;
+	/**
+	 * This map is only filled if we are in debugging mode for this entity
+	 */
 	typedef std::unordered_map<int, long> LastExecMap;
 	LastExecMap _lastExecMillis;
 
