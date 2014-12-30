@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>
+#include <unordered_set>
 
 #include "aggro/AggroMgr.h"
 #include "tree/TreeNode.h"
@@ -32,7 +33,7 @@ protected:
 	/**
 	 * If a node is no longer active, it gets reset. This map holds the state about the resets.
 	 */
-	typedef std::unordered_map<int, bool> ResetStates;
+	typedef std::unordered_set<int> ResetStates;
 	ResetStates _resetStates;
 	typedef std::unordered_map<int, TreeNodeStatus> NodeStates;
 	NodeStates _lastStatus;

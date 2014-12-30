@@ -39,9 +39,7 @@ void TreeNode::getRunningChildren(const AI& /*entity*/, std::vector<bool>& activ
 
 bool TreeNode::getResetSinceLastExec(const AI& entity) const {
 	AI::ResetStates::const_iterator i = entity._resetStates.find(getId());
-	if (i == entity._resetStates.end())
-		return false;
-	return i->second;
+	return i != entity._resetStates.end();
 }
 
 inline void TreeNode::setLastExecMillis(AI& entity) {
@@ -49,7 +47,10 @@ inline void TreeNode::setLastExecMillis(AI& entity) {
 }
 
 inline void TreeNode::setResetSinceLastExec(AI& entity, bool status) {
-	entity._resetStates[getId()] = status;
+	if (!status)
+		entity._resetStates.erase(getId());
+	else
+		entity._resetStates.insert(getId());
 }
 
 int TreeNode::getSelectorState(const AI& entity) const {
