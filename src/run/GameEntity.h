@@ -67,7 +67,7 @@ public:
 	 * @return @c false if the dealt damage did not lead to death, @c true otherwise.
 	 */
 	inline bool applyDamage (int damage) {
-		return _hitpoints.fetch_sub(damage) <= 0;
+		return (_hitpoints -= damage) <= 0;
 	}
 
 	void update (long deltaTime) override;
