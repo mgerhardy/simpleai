@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <utility>
-#include <AI.h>
+#include <SimpleAI.h>
 #include <server/AIStateMessage.h>
 #include <server/AIPauseMessage.h>
 #include <server/AICharacterDetailsMessage.h>

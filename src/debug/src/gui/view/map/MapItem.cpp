@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QGraphicsEllipseItem>
 #include <QGraphicsLineItem>
-#include <math.h>
+#include <cmath>
 #include <QVector2D>
 
 namespace ai {

@@ -43,6 +43,7 @@
 #include "common/MoveVector.h"
 #include "common/Random.h"
 #include "common/Thread.h"
+#include "common/Types.h"
 
 #include "AI.h"
 #include "AIRegistry.h"
