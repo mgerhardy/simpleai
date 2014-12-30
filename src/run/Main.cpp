@@ -10,6 +10,10 @@
 #include <algorithm>
 #include <atomic>
 
+#ifdef AI_PROFILER
+#include <google/profiler.h>
+#endif
+
 namespace {
 std::atomic_int id(1);
 std::atomic_bool shutdown(false);
@@ -96,7 +100,9 @@ int main(int argc, char **argv) {
 		std::cerr << "Network related options" << std::endl;
 		std::cerr << "-interface 0.0.0.0 - the interface the server will listen on" << std::endl;
 		std::cerr << "-port 12345        - the port of the server to listen on" << std::endl;
-		std::cerr << std::endl;
+#ifdef AI_PROFILER
+		std::cerr << "-profilerOutput    - google profiler output file" << std::endl;
+#endif
 		return EXIT_FAILURE;
 	}
 
@@ -107,6 +113,11 @@ int main(int argc, char **argv) {
 	const std::string name = getOptParam(b, e, "-name", "example");
 	const std::string filename = getOptParam(b, e, "-file");
 	const std::string interface = getOptParam(b, e, "-interface", "0.0.0.0");
+
+#ifdef AI_PROFILER
+	const std::string profilerOutput = getOptParam(b, e, "-profilerOutput", "simpleai-run.prof");
+	ProfilerStart(profilerOutput.c_str());
+#endif
 
 	srand(seed);
 
@@ -241,5 +252,8 @@ int main(int argc, char **argv) {
 	}
 #endif
 
+#ifdef AI_PROFILER
+	ProfilerStop();
+#endif
 	return EXIT_SUCCESS;
 }
