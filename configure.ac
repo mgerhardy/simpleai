@@ -52,7 +52,7 @@ fi
 AC_MSG_RESULT([$enable_debug])
 
 AC_MSG_CHECKING([whether to build with gprof support])
-AC_ARG_ENABLE(google_profiler,AS_HELP_STRING([--enable-gprof=@<:@no/yes@:>@],[build with support for gprof]),,[enable_gprof=no])
+AC_ARG_ENABLE(gprof,AS_HELP_STRING([--enable-gprof=@<:@no/yes@:>@],[build with support for gprof]),,[enable_gprof=no])
 if test "x$enable_gprof" != "xno" ; then
 	AM_CXXFLAGS="-pg $AM_CXXFLAGS"
 	AM_LDFLAGS="-pg $AM_LDFLAGS"
@@ -60,13 +60,12 @@ fi
 AC_MSG_RESULT([$enable_gprof])
 
 AC_MSG_CHECKING([whether to build with google profiler support])
-AC_ARG_ENABLE(gprof,AS_HELP_STRING([--enable-google-profiler=@<:@no/yes@:>@],[build with support for google profiler]),,[enable_google_profiler=no])
+AC_ARG_ENABLE(google_profiler,AS_HELP_STRING([--enable-google-profiler=@<:@no/yes@:>@],[build with support for google profiler]),,[enable_google_profiler=no])
 if test "x$enable_google_profiler" != "xno" ; then
-	AM_CXXFLAGS="-profiler $AM_CXXFLAGS"
-	AM_LDFLAGS="-tcmalloc $AM_LDFLAGS"
+	AM_CXXFLAGS="-DAI_PROFILER $AM_CXXFLAGS"
+	AM_LDFLAGS="-profiler -tcmalloc $AM_LDFLAGS"
 fi
-AC_MSG_RESULT([$enable_gprof])
-
+AC_MSG_RESULT([$enable_google_profiler])
 
 AC_MSG_CHECKING([whether to build with lua support])
 AC_ARG_ENABLE(lua,AS_HELP_STRING([--enable-lua=@<:@no/yes@:>@],[build with support for lua]),,[enable_lua=yes])
