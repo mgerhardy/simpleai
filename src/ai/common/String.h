@@ -29,6 +29,14 @@ inline void splitString(const std::string& string, std::vector<std::string>& tok
 		pos = string.find_first_of(delimiters, lastPos);
 	}
 }
+}
+}
 
+namespace std {
+template<class T>
+std::string to_string(const T& t) {
+	std::ostringstream os;
+	os << t;
+	return os.str();
 }
 }
