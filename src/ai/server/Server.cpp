@@ -124,7 +124,7 @@ void Server::pause(const ClientId& /*clientId*/, bool state) {
 
 void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, const AI& ai) const {
 	const TreeNodes& children = node->getChildren();
-	std::vector<bool> currentlyRunning;
+	std::vector<bool> currentlyRunning(children.size());
 	node->getRunningChildren(ai, currentlyRunning);
 	const long aiTime = ai._time;
 	const std::size_t length = children.size();
