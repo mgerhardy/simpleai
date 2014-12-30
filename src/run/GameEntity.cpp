@@ -9,8 +9,8 @@ void GameEntity::update(long deltaTime) {
 
 	// cap position to the map
 	const float sizeF = static_cast<float>(_map->getSize());
-	Vector3f newPos;
 	const Vector3f& currentPos = _position;
+	Vector3f newPos(currentPos);
 	if (currentPos.x < -sizeF) {
 		newPos.x = sizeF;
 	} else if (currentPos.x > sizeF) {
