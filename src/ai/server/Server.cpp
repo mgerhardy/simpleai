@@ -36,7 +36,7 @@ void Server::step(long stepMillis) {
 		if (!ai.isPause())
 			return;
 		ai.setPause(false);
-		ai.update(stepMillis);
+		ai.update(stepMillis, true);
 		ai.setPause(true);
 	};
 	zone->visit(func);

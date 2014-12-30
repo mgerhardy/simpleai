@@ -75,7 +75,7 @@ public:
 	 */
 	virtual void update(long dt, bool debuggingActive) {
 		(void)debuggingActive;
-		_ai.update(dt);
+		_ai.update(dt, debuggingActive);
 	}
 };
 

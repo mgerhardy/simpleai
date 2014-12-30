@@ -13,7 +13,6 @@ TreeNode::~TreeNode() {
 }
 
 TreeNodeStatus TreeNode::execute(AI& entity, long) {
-	setResetSinceLastExec(entity, false);
 	if (!_condition->evaluate(entity)) {
 		return state(entity, CANNOTEXECUTE);
 	}
@@ -23,13 +22,8 @@ TreeNodeStatus TreeNode::execute(AI& entity, long) {
 }
 
 void TreeNode::resetState(AI& entity) {
-	if (getResetSinceLastExec(entity))
-		return;
-
 	for (TreeNodes::iterator i = _children.begin(); i != _children.end(); ++i)
 		(*i)->resetState(entity);
-
-	setResetSinceLastExec(entity, true);
 }
 
 void TreeNode::getRunningChildren(const AI& /*entity*/, std::vector<bool>& active) const {
@@ -37,20 +31,10 @@ void TreeNode::getRunningChildren(const AI& /*entity*/, std::vector<bool>& activ
 		active.push_back(false);
 }
 
-bool TreeNode::getResetSinceLastExec(const AI& entity) const {
-	AI::ResetStates::const_iterator i = entity._resetStates.find(getId());
-	return i != entity._resetStates.end();
-}
-
 inline void TreeNode::setLastExecMillis(AI& entity) {
+	if (!entity._debuggingActive)
+		return;
 	entity._lastExecMillis[getId()] = entity._time;
-}
-
-inline void TreeNode::setResetSinceLastExec(AI& entity, bool status) {
-	if (!status)
-		entity._resetStates.erase(getId());
-	else
-		entity._resetStates.insert(getId());
 }
 
 int TreeNode::getSelectorState(const AI& entity) const {
@@ -70,9 +54,11 @@ TreeNodeStatus TreeNode::state(AI& entity, TreeNodeStatus treeNodeState) {
 }
 
 long TreeNode::getLastExecMillis(const AI& entity) const {
+	if (!entity._debuggingActive)
+		return -1L;
 	AI::LastExecMap::const_iterator i = entity._lastExecMillis.find(getId());
 	if (i == entity._lastExecMillis.end())
-		return -1;
+		return -1L;
 	return i->second;
 }
 
