@@ -4,6 +4,7 @@
 #include "common/Types.h"
 #include "common/Vector3f.h"
 #include <map>
+#include <unordered_map>
 #include <set>
 
 namespace ai {
@@ -14,7 +15,7 @@ typedef int GroupId;
 typedef std::set<ICharacter*> GroupMembersSet;
 typedef GroupMembersSet::iterator GroupMembersSetIter;
 typedef GroupMembersSet::const_iterator GroupMembersSetConstIter;
-typedef std::map<GroupId, GroupMembersSet> GroupMembers;
+typedef std::unordered_map<GroupId, GroupMembersSet> GroupMembers;
 typedef GroupMembers::iterator GroupMembersIter;
 typedef GroupMembers::const_iterator GroupMembersConstIter;
 

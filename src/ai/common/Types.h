@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <map>
+#include <unordered_map>
 
 namespace ai {
 
@@ -12,6 +12,6 @@ namespace ai {
  */
 typedef int CharacterId;
 
-typedef std::map<std::string, std::string> CharacterAttributes;
+typedef std::unordered_map<std::string, std::string> CharacterAttributes;
 
 }

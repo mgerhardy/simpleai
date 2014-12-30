@@ -4,8 +4,11 @@
 namespace ai {
 namespace example {
 
-void GameEntity::update(long deltaTime) {
-	ICharacter::update(deltaTime);
+void GameEntity::update(long deltaTime, bool debuggingActive) {
+	ICharacter::update(deltaTime, debuggingActive);
+	if (_ai.isPause()) {
+		return;
+	}
 
 	// cap position to the map
 	const float sizeF = static_cast<float>(_map->getSize());
@@ -25,12 +28,14 @@ void GameEntity::update(long deltaTime) {
 	// TODO: switch direction when the respawn on another side of the map
 
 	// update attributes for debugging
-	setAttribute(ai::attributes::POSITION, std::to_string(getPosition()));
-	setAttribute("Hitpoints", std::to_string(getHitpoints()));
-	setAttribute("Reloadtime", std::to_string(getAttackDelay()));
-	setAttribute("Damage", std::to_string(getDamage()));
-	setAttribute(ai::attributes::SPEED, std::to_string(getSpeed()));
-	setAttribute(ai::attributes::ORIENTATION, std::to_string(toDegrees(getOrientation())));
+	if (debuggingActive) {
+		setAttribute(ai::attributes::POSITION, std::to_string(getPosition()));
+		setAttribute("Hitpoints", std::to_string(getHitpoints()));
+		setAttribute("Reloadtime", std::to_string(getAttackDelay()));
+		setAttribute("Damage", std::to_string(getDamage()));
+		setAttribute(ai::attributes::SPEED, std::to_string(getSpeed()));
+		setAttribute(ai::attributes::ORIENTATION, std::to_string(toDegrees(getOrientation())));
+	}
 }
 
 }

@@ -69,8 +69,12 @@ public:
 	/**
 	 * @brief override this method to let your own @c ICharacter implementation
 	 * tick with the @c Zone::update
+	 *
+	 * @param dt the time delta in millis since the last update was executed
+	 * @param debuggingActive @c true if the debugging for this entity is activated
 	 */
-	virtual void update(long dt) {
+	virtual void update(long dt, bool debuggingActive) {
+		(void)debuggingActive;
 		_ai.update(dt);
 	}
 };

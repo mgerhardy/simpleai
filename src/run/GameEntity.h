@@ -70,7 +70,7 @@ public:
 		return (_hitpoints -= damage) <= 0;
 	}
 
-	void update (long deltaTime) override;
+	void update (long deltaTime, bool debuggingActive) override;
 };
 
 }

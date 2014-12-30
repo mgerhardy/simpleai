@@ -1,6 +1,6 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 
 #include "aggro/AggroMgr.h"
 #include "tree/TreeNode.h"
@@ -32,18 +32,18 @@ protected:
 	/**
 	 * If a node is no longer active, it gets reset. This map holds the state about the resets.
 	 */
-	typedef std::map<int, bool> ResetStates;
+	typedef std::unordered_map<int, bool> ResetStates;
 	ResetStates _resetStates;
-	typedef std::map<int, TreeNodeStatus> NodeStates;
+	typedef std::unordered_map<int, TreeNodeStatus> NodeStates;
 	NodeStates _lastStatus;
-	typedef std::map<int, long> LastExecMap;
+	typedef std::unordered_map<int, long> LastExecMap;
 	LastExecMap _lastExecMillis;
 
 	/**
 	 * Often @c Selector states must be stored to continue in the next step at a particular
 	 * position in the behaviour tree. This map is doing exactly this.
 	 */
-	typedef std::map<int, int> SelectorStates;
+	typedef std::unordered_map<int, int> SelectorStates;
 	SelectorStates _selectorStates;
 
 	TreeNodePtr _behaviour;
