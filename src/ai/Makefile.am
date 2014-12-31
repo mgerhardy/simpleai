@@ -8,6 +8,7 @@ libsimpleai_la_SOURCES = \
 	conditions/And.cpp \
 	conditions/ConditionParser.cpp \
 	conditions/False.cpp \
+	conditions/Filter.cpp \
 	conditions/HasEnemies.cpp \
 	conditions/ICondition.cpp \
 	conditions/IsCloseToGroup.cpp \
@@ -16,6 +17,8 @@ libsimpleai_la_SOURCES = \
 	conditions/Not.cpp \
 	conditions/Or.cpp \
 	conditions/True.cpp \
+	filter/SelectEmpty.cpp \
+	filter/SelectHighestAggro.cpp \
 	group/GroupMgr.cpp \
 	server/ChangeHandler.cpp \
 	server/Network.cpp \
@@ -62,6 +65,7 @@ nobase_library_include_HEADERS = \
 	conditions/And.h \
 	conditions/ConditionParser.h \
 	conditions/False.h \
+	conditions/Filter.h \
 	conditions/HasEnemies.h \
 	conditions/ICondition.h \
 	conditions/IsCloseToGroup.h \
@@ -70,6 +74,9 @@ nobase_library_include_HEADERS = \
 	conditions/Not.h \
 	conditions/Or.h \
 	conditions/True.h \
+	filter/IFilter.h \
+	filter/SelectEmpty.h \
+	filter/SelectHighestAggro.h \
 	IAIFactory.h \
 	ICharacter.h \
 	group/GroupMgr.h \

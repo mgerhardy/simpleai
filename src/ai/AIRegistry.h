@@ -14,13 +14,24 @@ struct TreeNodeFactoryContext {
 	}
 };
 
+struct FilterFactoryContext {
+	// Parameters for the filter - can get hand over to the ctor in your factory implementation.
+	std::string parameters;
+	FilterFactoryContext(const std::string& _parameters) :
+		parameters(_parameters) {
+	}
+};
+
 struct ConditionFactoryContext {
 	// Parameters for the condition - can get hand over to the ctor in your factory implementation.
 	std::string parameters;
 	// Some conditions have child conditions
 	Conditions conditions;
+	// The filter condition also has filters
+	Filters filters;
+	bool filter;
 	ConditionFactoryContext(const std::string& _parameters) :
-		parameters(_parameters) {
+		parameters(_parameters), filter(false) {
 	}
 };
 
@@ -29,6 +40,13 @@ public:
 	virtual ~ITreeNodeFactory() {
 	}
 	virtual TreeNodePtr create(const TreeNodeFactoryContext *ctx) const = 0;
+};
+
+class IFilterFactory: public IFactory<IFilter, FilterFactoryContext> {
+public:
+	virtual ~IFilterFactory() {
+	}
+	virtual FilterPtr create(const FilterFactoryContext *ctx) const = 0;
 };
 
 class IConditionFactory: public IFactory<ICondition, ConditionFactoryContext> {
@@ -50,6 +68,13 @@ protected:
 
 	TreeNodeFactory _treeNodeFactory;
 
+	class FilterFactory: public IFactoryRegistry<std::string, IFilter, FilterFactoryContext> {
+	public:
+		FilterFactory();
+	};
+
+	FilterFactory _filterFactory;
+
 	class ConditionFactory: public IFactoryRegistry<std::string, ICondition, ConditionFactoryContext> {
 	public:
 		ConditionFactory();
@@ -63,10 +88,14 @@ public:
 	bool registerNodeFactory(const std::string& nodeType, const ITreeNodeFactory& factory);
 	bool unregisterNodeFactory(const std::string& nodeType);
 
+	bool registerFilterFactory(const std::string& nodeType, const IFilterFactory& factory);
+	bool unregisterFilterFactory(const std::string& nodeType);
+
 	bool registerConditionFactory(const std::string& nodeType, const IConditionFactory& factory);
 	bool unregisterConditionFactory(const std::string& nodeType);
 
 	TreeNodePtr createNode(const std::string& nodeType, const TreeNodeFactoryContext& ctx) const override;
+	FilterPtr createFilter(const std::string& nodeType, const FilterFactoryContext& ctx) const override;
 	ConditionPtr createCondition(const std::string& nodeType, const ConditionFactoryContext& ctx) const override;
 };
 

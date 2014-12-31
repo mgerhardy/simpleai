@@ -1,7 +1,7 @@
 #pragma once
 
-#include "conditions/ICondition.h"
-#include "common/String.h"
+#include <conditions/ICondition.h>
+#include <common/String.h>
 
 namespace ai {
 

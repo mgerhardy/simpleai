@@ -11,6 +11,8 @@ namespace ai {
 
 class ICharacter;
 
+typedef std::vector<CharacterId> FilteredEntities;
+
 #define NOTHING_SELECTED (-1)
 
 /**
@@ -27,6 +29,8 @@ class ICharacter;
  */
 class AI {
 	friend class TreeNode;
+	friend class IFilter;
+	friend class Filter;
 	friend class Server;
 protected:
 	/**
@@ -39,6 +43,8 @@ protected:
 	 */
 	typedef std::unordered_map<int, long> LastExecMap;
 	LastExecMap _lastExecMillis;
+
+	mutable FilteredEntities _filteredEntities;
 
 	/**
 	 * Often @c Selector states must be stored to continue in the next step at a particular
@@ -103,6 +109,8 @@ public:
 
 	const AggroMgr& getAggroMgr() const;
 	const GroupMgr& getGroupMgr() const;
+
+	const FilteredEntities& getFilteredEntities() const;
 };
 
 inline TreeNodePtr AI::getBehaviour() const {
@@ -141,6 +149,10 @@ inline const AggroMgr& AI::getAggroMgr() const {
 
 inline const GroupMgr& AI::getGroupMgr() const {
 	return _groupManager;
+}
+
+inline const FilteredEntities& AI::getFilteredEntities() const {
+	return _filteredEntities;
 }
 
 }

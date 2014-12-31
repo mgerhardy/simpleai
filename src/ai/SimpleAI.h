@@ -92,3 +92,7 @@
 #include "conditions/Not.h"
 #include "conditions/Or.h"
 #include "conditions/True.h"
+
+#include "filter/IFilter.h"
+#include "filter/SelectEmpty.h"
+#include "filter/SelectHighestAggro.h"

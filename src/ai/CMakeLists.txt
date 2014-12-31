@@ -49,6 +49,7 @@ list(APPEND simpleai_HEADERS
 	conditions/And.h
 	conditions/ConditionParser.h
 	conditions/False.h
+	conditions/Filter.h
 	conditions/HasEnemies.h
 	conditions/ICondition.h
 	conditions/IsCloseToGroup.h
@@ -57,6 +58,9 @@ list(APPEND simpleai_HEADERS
 	conditions/Not.h
 	conditions/Or.h
 	conditions/True.h
+	filter/IFilter.h
+	filter/SelectEmpty.h
+	filter/SelectHighestAggro.h
 	IAIFactory.h
 	ICharacter.h
 	group/GroupMgr.h

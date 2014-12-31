@@ -86,3 +86,22 @@ TEST_F(ParserTest, testParseUnknown) {
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_EQ(nullptr, c.get()) << parser.getError();
 }
+
+TEST_F(ParserTest, testFilterMissingFilterType) {
+	ai::ConditionParser parser(_registry, "Filter");
+	const ai::ConditionPtr& c = parser.getCondition();
+	ASSERT_EQ("missing details for Filter condition", parser.getError());
+	ASSERT_EQ(nullptr, c.get()) << parser.getError();
+}
+
+TEST_F(ParserTest, testFilter) {
+	ai::ConditionParser parser(_registry, "Filter(SelectEmpty)");
+	const ai::ConditionPtr& c = parser.getCondition();
+	ASSERT_NE(nullptr, c.get()) << parser.getError();
+}
+
+TEST_F(ParserTest, testMultipleFilter) {
+	ai::ConditionParser parser(_registry, "Filter(SelectEmpty,SelectHighestAggro)");
+	const ai::ConditionPtr& c = parser.getCondition();
+	ASSERT_NE(nullptr, c.get()) << parser.getError();
+}

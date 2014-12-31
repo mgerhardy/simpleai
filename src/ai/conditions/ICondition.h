@@ -56,15 +56,12 @@ public: \
 	} \
 	ConditionName::Factory ConditionName::FACTORY;
 
+// TODO: singleton construction is not thread safe
 /**
  * @brief Macro to create a singleton conditions for very easy conditions without a state.
  */
 #define CONDITION_CLASS_SINGLETON(ConditionName) \
 private: \
-	struct Deleter { \
-		void operator()(ConditionName* /* ptr */) { \
-		} \
-	}; \
 	CONDITION_CLASS(ConditionName) \
 public: \
 	static ConditionPtr& get() { \

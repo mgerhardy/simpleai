@@ -60,24 +60,35 @@ bool ConditionParser::fillInnerConditions(ConditionFactoryContext& ctx, const st
 		} else {
 			name = conditionStr;
 		}
-		ConditionFactoryContext ctxInner(parameters);
-		n = conditionStr.find("(");
-		if (n != std::string::npos) {
-			const std::size_t r = conditionStr.rfind(")");
-			if (r == std::string::npos) {
-				setError("syntax error, missing closing brace");
+		// filter condition is a little bit special and deserves some extra attention
+		if (ctx.filter) {
+			FilterFactoryContext ctxInner(parameters);
+			const FilterPtr& c = _aiFactory.createFilter(name, ctxInner);
+			if (!c) {
+				setError("could not create filter for " + name);
 				return false;
 			}
-			const std::string& inner = conditionStr.substr(n + 1, r - n - 1);
-			if (!fillInnerConditions(ctxInner, inner))
+			ctx.filters.push_back(c);
+		} else {
+			ConditionFactoryContext ctxInner(parameters);
+			n = conditionStr.find("(");
+			if (n != std::string::npos) {
+				const std::size_t r = conditionStr.rfind(")");
+				if (r == std::string::npos) {
+					setError("syntax error, missing closing brace");
+					return false;
+				}
+				const std::string& inner = conditionStr.substr(n + 1, r - n - 1);
+				if (!fillInnerConditions(ctxInner, inner))
+					return false;
+			}
+			const ConditionPtr& c = _aiFactory.createCondition(name, ctxInner);
+			if (!c) {
+				setError("could not create inner condition for " + name);
 				return false;
+			}
+			ctx.conditions.push_back(c);
 		}
-		const ConditionPtr& c = _aiFactory.createCondition(name, ctxInner);
-		if (!c) {
-			setError("could not create inner condition for " + name);
-			return false;
-		}
-		ctx.conditions.push_back(c);
 	}
 	return true;
 }
@@ -96,6 +107,7 @@ ConditionPtr ConditionParser::getCondition() {
 		name = _conditionString;
 	}
 	ConditionFactoryContext ctx(parameters);
+	ctx.filter = name == "Filter";
 	n = _conditionString.find("(");
 	if (n != std::string::npos) {
 		const std::size_t r = _conditionString.rfind(")");
@@ -107,6 +119,9 @@ ConditionPtr ConditionParser::getCondition() {
 		if (!fillInnerConditions(ctx, inner)) {
 			return ConditionPtr();
 		}
+	} else if (ctx.filter) {
+		setError("missing details for Filter condition");
+		return ConditionPtr();
 	}
 	const ConditionPtr& c = _aiFactory.createCondition(name, ctx);
 	if (!c) {

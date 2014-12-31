@@ -14,11 +14,15 @@
 #include "conditions/False.h"
 #include "conditions/HasEnemies.h"
 #include "conditions/Not.h"
+#include "conditions/Filter.h"
 #include "conditions/Or.h"
 #include "conditions/True.h"
 #include "conditions/IsInGroup.h"
 #include "conditions/IsGroupLeader.h"
 #include "conditions/IsCloseToGroup.h"
+#include "filter/IFilter.h"
+#include "filter/SelectEmpty.h"
+#include "filter/SelectHighestAggro.h"
 
 namespace ai {
 
@@ -31,9 +35,15 @@ AIRegistry::ConditionFactory::ConditionFactory() {
 	R(Not);
 	R(Or);
 	R(True);
+	R(Filter);
 	R(IsGroupLeader);
 	R(IsInGroup);
 	R(IsCloseToGroup);
+}
+
+AIRegistry::FilterFactory::FilterFactory() {
+	R(SelectEmpty);
+	R(SelectHighestAggro);
 }
 
 AIRegistry::TreeNodeFactory::TreeNodeFactory() {
@@ -61,8 +71,16 @@ TreeNodePtr AIRegistry::createNode(const std::string& nodeType, const TreeNodeFa
 	return _treeNodeFactory.create(nodeType, &ctx);
 }
 
+FilterPtr AIRegistry::createFilter(const std::string& nodeType, const FilterFactoryContext& ctx) const {
+	return _filterFactory.create(nodeType, &ctx);
+}
+
 bool AIRegistry::registerNodeFactory(const std::string& nodeType, const ITreeNodeFactory& factory) {
 	return _treeNodeFactory.registerFactory(nodeType, factory);
+}
+
+bool AIRegistry::registerFilterFactory(const std::string& nodeType, const IFilterFactory& factory) {
+	return _filterFactory.registerFactory(nodeType, factory);
 }
 
 bool AIRegistry::registerConditionFactory(const std::string& nodeType, const IConditionFactory& factory) {
@@ -71,6 +89,10 @@ bool AIRegistry::registerConditionFactory(const std::string& nodeType, const ICo
 
 bool AIRegistry::unregisterNodeFactory(const std::string& nodeType) {
 	return _treeNodeFactory.unregisterFactory(nodeType);
+}
+
+bool AIRegistry::unregisterFilterFactory(const std::string& nodeType) {
+	return _filterFactory.unregisterFactory(nodeType);
 }
 
 bool AIRegistry::unregisterConditionFactory(const std::string& nodeType) {
