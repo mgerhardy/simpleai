@@ -32,6 +32,11 @@ const char* const ORIENTATION = "Orientation";
  * @note Update the values of the @c ICharacter class only in in the @c ICharacter::update
  * method or from within the @c Zone callbacks. Otherwise you will run into race conditions
  * if you run with multiple threads.
+ *
+ * You often need access to your world your character is living in. You need access to this
+ * data to resolve the @c CharacterId's in the @c IFilter implementations, to interact with
+ * other entities that are not SimpleAI controlled and so on. You can use the provided
+ * @c character_cast function in your @c TreeNode, @c IFilter or @¢ ICondition implementations.
  */
 class ICharacter {
 protected:
