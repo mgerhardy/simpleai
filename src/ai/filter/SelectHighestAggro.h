@@ -15,7 +15,7 @@ public:
 };
 
 inline void SelectHighestAggro::filter (const AI& entity) {
-	const EntryPtr& entry = entity.getAggroMgr().getHighestEntry();
+	const EntryPtr entry = entity.getAggroMgr().getHighestEntry();
 	if (!entry)
 		return;
 
