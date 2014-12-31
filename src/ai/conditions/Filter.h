@@ -22,6 +22,11 @@ public:
 
 	Filter (const Filters& filters);
 
+	/**
+	 * @brief Executes the attached filters and wiped the last filter results for the given @c AI entity
+	 *
+	 * @return @c true if the attached filters lead to a non-empty set, @c false otherwise
+	 */
 	bool evaluate(const AI& entity) override;
 };
 

@@ -58,6 +58,12 @@ public: \
 	} \
 	FILTER_FACTORY_SINGLETON
 
+/**
+ * @brief This class is used by the @c Filter condition in order to select entities for a @c TreeNode.
+ *
+ * To modify the selection, the implementing classes should call @c getFilteredEntities to access
+ * the storage to persist the filtering for the @c TreeNode.
+ */
 class IFilter : public MemObject {
 protected:
 	const std::string _name;
