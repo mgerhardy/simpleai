@@ -184,7 +184,9 @@ bool LUA::execute (const std::string &function, int returnValues)
 
 std::string LUA::stackDump (lua_State *L)
 {
-	checkStack();
+#ifdef DEBUG
+	StackChecker check(L);
+#endif
 	std::stringstream ss;
 	const int top = lua_gettop(L);
 	for (int i = 1; i <= top; i++) { /* repeat for each level */
