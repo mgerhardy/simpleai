@@ -1,4 +1,5 @@
 Center on selected entity
 implement GroupMgr::isInAnyGroup
-Thread safety improvements. character getAttributes and friends
+Thread safety improvements. singletons for tree nodes, conditions and filters
 Try to reduce lock in the Zone class (maybe implement or use a lock free map)
+Filter for group members/leader
