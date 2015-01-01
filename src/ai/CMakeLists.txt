@@ -60,6 +60,7 @@ list(APPEND simpleai_HEADERS
 	conditions/True.h
 	filter/IFilter.h
 	filter/SelectEmpty.h
+	filter/SelectGroupMembers.h
 	filter/SelectHighestAggro.h
 	IAIFactory.h
 	ICharacter.h

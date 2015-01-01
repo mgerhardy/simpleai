@@ -96,3 +96,4 @@
 #include "filter/IFilter.h"
 #include "filter/SelectEmpty.h"
 #include "filter/SelectHighestAggro.h"
+#include "filter/SelectGroupMembers.h"

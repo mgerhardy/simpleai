@@ -18,6 +18,7 @@ libsimpleai_la_SOURCES = \
 	conditions/Or.cpp \
 	conditions/True.cpp \
 	filter/SelectEmpty.cpp \
+	filter/SelectGroupMembers.cpp \
 	filter/SelectHighestAggro.cpp \
 	group/GroupMgr.cpp \
 	server/ChangeHandler.cpp \
@@ -76,6 +77,7 @@ nobase_library_include_HEADERS = \
 	conditions/True.h \
 	filter/IFilter.h \
 	filter/SelectEmpty.h \
+	filter/SelectGroupMembers.h \
 	filter/SelectHighestAggro.h \
 	IAIFactory.h \
 	ICharacter.h \
