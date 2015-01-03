@@ -60,9 +60,21 @@ public:
 	Vector3f getPosition(GroupId id) const;
 
 	/**
-	 * @brief Returns a pair of the begin and end iterator of the group members
+	 * @brief Visit all the group members of the given group until the functor returns @c false
 	 */
-	std::pair<GroupMembersSetIter, GroupMembersSetIter> getGroupMembers(GroupId id) const;
+	template<typename Func>
+	void visit(GroupId id, Func& func) const {
+		SCOPEDLOCK(_mutex);
+		const GroupMembersConstIter& i = _members.find(id);
+		if (i == _members.end()) {
+			return;
+		}
+		for (GroupMembersSetConstIter it = i->second.begin(); it != i->second.end(); ++it) {
+			const ICharacter* chr = *it;
+			if (!func(*chr))
+				break;
+		}
+	}
 
 	int getGroupSize(GroupId id) const;
 

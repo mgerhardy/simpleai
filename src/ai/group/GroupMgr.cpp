@@ -54,29 +54,23 @@ Vector3f GroupMgr::getPosition(GroupId id) const {
 	return averagePosition;
 }
 
-std::pair<GroupMembersSetIter, GroupMembersSetIter> GroupMgr::getGroupMembers(GroupId id) const {
-	SCOPEDLOCK(_mutex);
-	const GroupMembersConstIter& i = _members.find(id);
-	if (i == _members.end()) {
-		return std::pair<GroupMembersSetIter, GroupMembersSetIter>(_empty.begin(), _empty.end());
-	}
-	return std::pair<GroupMembersSetIter, GroupMembersSetIter>(i->second.begin(), i->second.end());
-}
-
 bool GroupMgr::isGroupLeader(GroupId id, const ICharacter& character) const {
-	SCOPEDLOCK(_mutex);
-	const std::pair<GroupMembersSetIter, GroupMembersSetIter>& members = getGroupMembers(id);
-	if (members.first == members.second)
+	bool leader = false;
+	auto func = [&] (const ICharacter& chr) {
+		leader = chr.getId() == character.getId();
 		return false;
-	if ((*members.first)->getId() == character.getId())
-		return true;
-	return false;
+	};
+	visit(id, func);
+	return leader;
 }
 
 int GroupMgr::getGroupSize(GroupId id) const {
 	SCOPEDLOCK(_mutex);
-	const std::pair<GroupMembersSetIter, GroupMembersSetIter>& members = getGroupMembers(id);
-	return static_cast<int>(std::distance(members.first, members.second));
+	const GroupMembersConstIter& i = _members.find(id);
+	if (i == _members.end()) {
+		return 0;
+	}
+	return static_cast<int>(std::distance(i->second.begin(), i->second.end()));
 }
 
 bool GroupMgr::isInAnyGroup(const ICharacter& character) const {
@@ -90,13 +84,14 @@ bool GroupMgr::isInAnyGroup(const ICharacter& character) const {
 }
 
 bool GroupMgr::isInGroup(GroupId id, const ICharacter& character) const {
-	SCOPEDLOCK(_mutex);
-	const std::pair<GroupMembersSetIter, GroupMembersSetIter>& members = getGroupMembers(id);
-	for (GroupMembersSetIter i = members.first; i != members.second; ++i) {
-		if ((*i)->getId() == character.getId())
-			return true;
-	}
-	return false;
+	bool inGroup = false;
+	auto func = [&] (const ICharacter& chr) {
+		if (chr.getId() == character.getId())
+			inGroup = true;
+		return !inGroup;
+	};
+	visit(id, func);
+	return inGroup;
 }
 
 }

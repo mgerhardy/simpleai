@@ -31,17 +31,12 @@ public:
 			ais.push_back(std::shared_ptr<TestEntity>(e));
 			mgr.add(groupId, e);
 		}
-		const std::pair<ai::GroupMembersSetIter, ai::GroupMembersSetIter>& members = mgr.getGroupMembers(groupId);
-		const int n = std::distance(members.first, members.second);
-		ASSERT_EQ(max, n);
-
 		ASSERT_EQ(max, mgr.getGroupSize(groupId));
 
 		for (std::vector<std::shared_ptr<TestEntity> >::iterator i = ais.begin(); i != ais.end(); ++i) {
 			mgr.remove(1, i->get());
 		}
-		const std::pair<ai::GroupMembersSetIter, ai::GroupMembersSetIter>& membersEmpty = mgr.getGroupMembers(groupId);
-		const int nEmpty = std::distance(membersEmpty.first, membersEmpty.second);
+		const int nEmpty = mgr.getGroupSize(groupId);
 		ASSERT_EQ(0, nEmpty);
 	}
 };
@@ -73,12 +68,33 @@ TEST_F(GroupTest, testGroupSize) {
 	ASSERT_TRUE(groupMgr.add(id, &entity1));
 	TestEntity entity2(2, ai::TreeNodePtr(), groupMgr);
 	ASSERT_TRUE(groupMgr.add(id, &entity2));
-	std::pair<ai::GroupMembersSetIter, ai::GroupMembersSetIter> members = groupMgr.getGroupMembers(id);
-	ASSERT_EQ(2, std::distance(members.first, members.second));
-	ASSERT_EQ(&entity1, *members.first);
-	++members.first;
-	ASSERT_NE(members.first, members.second);
-	ASSERT_EQ(&entity2, *members.first);
+	ASSERT_EQ(2, groupMgr.getGroupSize(id));
+	std::vector<const ai::ICharacter*> entities;
+	auto func = [&](const ai::ICharacter& chr) {
+		entities.push_back(&chr);
+		return true;
+	};
+	groupMgr.visit(id, func);
+	ASSERT_EQ(&entity1, entities[0]);
+	ASSERT_EQ(&entity2, entities[1]);
+}
+
+TEST_F(GroupTest, testGroupLeader) {
+	const ai::GroupId id = 1;
+	ai::GroupMgr groupMgr;
+	TestEntity entity1(1, ai::TreeNodePtr(), groupMgr);
+	ASSERT_TRUE(groupMgr.add(id, &entity1));
+	TestEntity entity2(2, ai::TreeNodePtr(), groupMgr);
+	ASSERT_TRUE(groupMgr.add(id, &entity2));
+	TestEntity entity3(3, ai::TreeNodePtr(), groupMgr);
+	ASSERT_TRUE(groupMgr.add(id, &entity3));
+	ASSERT_EQ(3, groupMgr.getGroupSize(id));
+	ASSERT_TRUE(groupMgr.isGroupLeader(id, entity1));
+	ASSERT_FALSE(groupMgr.isGroupLeader(id, entity2));
+	ASSERT_FALSE(groupMgr.isGroupLeader(id, entity3));
+	ASSERT_TRUE(groupMgr.remove(id, &entity1));
+	ASSERT_FALSE(groupMgr.isInGroup(id, entity1));
+	ASSERT_TRUE(groupMgr.isGroupLeader(id, entity2));
 }
 
 TEST_F(GroupTest, testGroupAveragePosition) {
