@@ -87,7 +87,6 @@ public:
 	 * @param debuggingActive @c true if the debugging for this entity is activated
 	 */
 	virtual void update(long dt, bool debuggingActive) {
-		(void)debuggingActive;
 		_ai.update(dt, debuggingActive);
 	}
 };
