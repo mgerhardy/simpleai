@@ -9,6 +9,7 @@ public:
 	virtual void SetUp() override {
 		TestSuite::SetUp();
 		const int max = 10000;
+		_ais.reserve(max);
 		for (int i = 1; i <= max; ++i) {
 			const ai::CharacterId id = i;
 			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _groupManager);
@@ -22,7 +23,7 @@ public:
 class GroupTest: public TestSuite {
 public:
 	void doMassTest(int max) {
-		std::vector<std::shared_ptr<TestEntity> > ais;
+		std::vector<std::shared_ptr<TestEntity> > ais(max);
 		const ai::GroupId groupId = 1;
 		ai::GroupMgr mgr;
 		for (int i = 1; i <= max; ++i) {
@@ -33,7 +34,7 @@ public:
 		}
 		ASSERT_EQ(max, mgr.getGroupSize(groupId));
 
-		for (std::vector<std::shared_ptr<TestEntity> >::iterator i = ais.begin(); i != ais.end(); ++i) {
+		for (auto i = ais.begin(); i != ais.end(); ++i) {
 			mgr.remove(1, i->get());
 		}
 		const int nEmpty = mgr.getGroupSize(groupId);
@@ -114,7 +115,7 @@ TEST_F(GroupTest, testGroupAveragePosition) {
 }
 
 TEST_F(GroupMgrTest, testMassGroupAveragePosition) {
-	ai::Vector3f avg = _groupMgr.getPosition(_id);
+	const ai::Vector3f& avg = _groupMgr.getPosition(_id);
 	ASSERT_EQ(ai::Vector3f(3.0f, 3.0f, 0.0f), avg);
 }
 
