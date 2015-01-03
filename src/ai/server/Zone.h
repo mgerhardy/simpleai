@@ -48,7 +48,7 @@ public:
 	/**
 	 * @note This locks the zone
 	 */
-	bool removeAI(AI* ai);
+	bool removeAI(const AI* ai);
 
 	/**
 	 * @brief Every zone has its own name that identifies it

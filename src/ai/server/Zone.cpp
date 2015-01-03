@@ -14,7 +14,7 @@ bool Zone::addAI(AI* ai) {
 	return true;
 }
 
-bool Zone::removeAI(AI* ai) {
+bool Zone::removeAI(const AI* ai) {
 	if (ai == nullptr)
 		return false;
 	const CharacterId& id = ai->getCharacter().getId();
