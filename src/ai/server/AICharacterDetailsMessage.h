@@ -16,7 +16,6 @@ private:
 	CharacterId _chrId;
 	const AIStateAggro* _aggroPtr;
 	const AIStateNode* _rootPtr;
-	const CharacterAttributes* _attributesPtr;
 	AIStateAggro _aggro;
 	AIStateNode _root;
 
