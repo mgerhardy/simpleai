@@ -38,7 +38,7 @@ void ConditionParser::splitConditions(const std::string& string, std::vector<std
 	tokens.push_back(token);
 }
 
-bool ConditionParser::fillInnerConditions(ConditionFactoryContext& ctx, const std::string conditionStr) {
+bool ConditionParser::fillInnerConditions(ConditionFactoryContext& ctx, const std::string& conditionStr) {
 	std::vector<std::string> conditions;
 	splitConditions(conditionStr, conditions);
 	if (conditions.size() > 1) {
