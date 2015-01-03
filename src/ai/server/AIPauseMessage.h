@@ -20,8 +20,7 @@ private:
 
 public:
 	AIPauseMessage(bool pause) :
-			IProtocolMessage(PROTO_PAUSE) {
-		_pause = pause;
+			IProtocolMessage(PROTO_PAUSE),_pause(pause) {
 	}
 
 	AIPauseMessage(streamContainer& in) :

@@ -16,13 +16,11 @@ private:
 
 public:
 	AIChangeMessage(const std::string& name) :
-			IProtocolMessage(PROTO_CHANGE) {
-		_name = name;
+			IProtocolMessage(PROTO_CHANGE), _name(name) {
 	}
 
 	AIChangeMessage(streamContainer& in) :
-			IProtocolMessage(PROTO_CHANGE) {
-		_name = readString(in);
+			IProtocolMessage(PROTO_CHANGE), _name(readString(in)) {
 	}
 
 	void serialize(streamContainer& out) const override {

@@ -50,6 +50,7 @@ private:
 
 	void readAttributes(streamContainer& in, CharacterAttributes& attributes) const {
 		const int size = readShort(in);
+		attributes.reserve(size);
 		for (int i = 0; i < size; ++i) {
 			const std::string& key = readString(in);
 			const std::string& value = readString(in);
@@ -72,6 +73,10 @@ public:
 
 	void addState(const AIStateWorld& tree) {
 		_states.push_back(tree);
+	}
+
+	void addState(AIStateWorld&& tree) {
+		_states.push_back(std::move(tree));
 	}
 
 	void serialize(streamContainer& out) const override {

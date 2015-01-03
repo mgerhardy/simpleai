@@ -59,6 +59,10 @@ public:
 		_children.push_back(child);
 	}
 
+	void addChildren(AIStateNode&& child) {
+		_children.push_back(std::move(child));
+	}
+
 	inline const std::vector<AIStateNode>& getChildren() const {
 		return _children;
 	}
@@ -108,6 +112,10 @@ public:
 
 	AIStateWorld(const ai::CharacterId& id, const ai::Vector3f& position, float orientation, const CharacterAttributes& attributes) :
 			_id(id), _position(position), _orientation(orientation), _attributes(attributes) {
+	}
+
+	AIStateWorld(const ai::CharacterId& id, const ai::Vector3f& position, float orientation, CharacterAttributes&& attributes) :
+			_id(id), _position(position), _orientation(orientation), _attributes(std::move(attributes)) {
 	}
 
 	AIStateWorld(const ai::CharacterId& id, const ai::Vector3f& position, float orientation) :
