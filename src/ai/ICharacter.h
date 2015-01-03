@@ -67,6 +67,8 @@ public:
 
 	CharacterId getId() const;
 	void setPosition(const Vector3f& position);
+	void setPosition(Vector3f&& position);
+
 	Vector3f getPosition() const;
 	void setOrientation(float orientation);
 	/**
@@ -92,6 +94,10 @@ public:
 
 inline void ICharacter::setPosition(const Vector3f& position) {
 	_position = position;
+}
+
+inline void ICharacter::setPosition(Vector3f&& position) {
+	_position = std::move(position);
 }
 
 inline void ICharacter::setOrientation (float orientation) {
