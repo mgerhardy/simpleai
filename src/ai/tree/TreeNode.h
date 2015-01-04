@@ -88,6 +88,12 @@ protected:
 	void setLastExecMillis(AI& entity);
 
 public:
+	/**
+	 * @param name The internal name of the node
+	 * @param parameters Each node can be configured with several parameters that are hand in as a string. It's
+	 * the responsibility of the node to parse the values in its constructor
+	 * @param condition The connected ICondition for this node
+	 */
 	TreeNode(const std::string& name, const std::string& parameters, const ConditionPtr& condition);
 	virtual ~TreeNode();
 	/**

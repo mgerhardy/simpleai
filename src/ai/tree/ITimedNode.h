@@ -13,6 +13,9 @@ namespace ai {
 	\
 	NODE_FACTORY
 
+/**
+ * @brief A timed node is a @c TreeNode that is executed until a given time (millis) is elapsed.
+ */
 class ITimedNode : public TreeNode {
 protected:
 	long _timerMillis;
