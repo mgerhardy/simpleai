@@ -141,6 +141,11 @@ inline TreeNodePtr AI::getBehaviour() const {
 inline TreeNodePtr AI::setBehaviour(const TreeNodePtr& newBehaviour) {
 	TreeNodePtr current = _behaviour;
 	_behaviour = newBehaviour;
+	// TODO: race conditions - this can be called from anywhere.
+	_lastStatus.clear();
+	_lastExecMillis.clear();
+	_filteredEntities.clear();
+	_selectorStates.clear();
 	return current;
 }
 
