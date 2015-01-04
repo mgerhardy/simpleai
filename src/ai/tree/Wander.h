@@ -7,7 +7,9 @@
 namespace ai {
 
 /**
- * Wander forward in the current direction
+ * @brief Wander forward in the current direction
+ *
+ * @sa ai::movement::Wander
  */
 class Wander: public ITask {
 protected:
