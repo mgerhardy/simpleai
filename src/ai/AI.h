@@ -104,12 +104,33 @@ public:
 	 * @return The real world entity reference
 	 */
 	ICharacter& getCharacter() const;
+	/**
+	 * @return the @c AggroMgr for this @c AI instance. Each @c AI instance has its own @c AggroMgr instance.
+	 */
 	AggroMgr& getAggroMgr();
+	/**
+	 * @return the global @c GroupMgr instance to modify
+	 */
 	GroupMgr& getGroupMgr();
 
+	/**
+	 * @return the @c AggroMgr for this @c AI instance. Each @c AI instance has its own @c AggroMgr instance.
+	 */
 	const AggroMgr& getAggroMgr() const;
+	/**
+	 * @return the global @c GroupMgr instance to modify
+	 */
 	const GroupMgr& getGroupMgr() const;
 
+	/**
+	 * @brief @c FilteredEntities is holding a list of @c CharacterIds that were selected by the @c Select condition.
+	 * @sa @c IFilter interface.
+	 * @sa @c Filter condition that executes assigned @c IFilter implementations.
+	 * @return A reference to the internal data structure. This should only be used from within @c TreeNode implementations
+	 * to access those entities that were filtered by the @c Filter condition.
+	 *
+	 * @note If you call this from outside of the behaviour tree tick, you will run into race conditions.
+	 */
 	const FilteredEntities& getFilteredEntities() const;
 };
 
