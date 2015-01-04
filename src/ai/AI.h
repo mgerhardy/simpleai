@@ -6,6 +6,7 @@
 #include "tree/TreeNode.h"
 #include "tree/loaders/ITreeLoader.h"
 #include "group/GroupMgr.h"
+#include "common/Thread.h"
 
 namespace ai {
 
@@ -64,6 +65,8 @@ protected:
 	bool _debuggingActive;
 
 	long _time;
+
+	ATOMIC(bool) _reset;
 public:
 	/**
 	 * @param character The binding to your game entity
@@ -141,11 +144,7 @@ inline TreeNodePtr AI::getBehaviour() const {
 inline TreeNodePtr AI::setBehaviour(const TreeNodePtr& newBehaviour) {
 	TreeNodePtr current = _behaviour;
 	_behaviour = newBehaviour;
-	// TODO: race conditions - this can be called from anywhere.
-	_lastStatus.clear();
-	_lastExecMillis.clear();
-	_filteredEntities.clear();
-	_selectorStates.clear();
+	_reset = true;
 	return current;
 }
 
