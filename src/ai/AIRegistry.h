@@ -57,7 +57,7 @@ public:
 };
 
 /**
- * @brief The place to register your @c TreeNode and @c ICondition at
+ * @brief The place to register your @c TreeNode and @c ICondition factories at
  */
 class AIRegistry: public IAIFactory {
 protected:
@@ -85,18 +85,36 @@ public:
 	AIRegistry();
 	virtual ~AIRegistry();
 
-	bool registerNodeFactory(const std::string& nodeType, const ITreeNodeFactory& factory);
-	bool unregisterNodeFactory(const std::string& nodeType);
+	bool registerNodeFactory(const std::string& type, const ITreeNodeFactory& factory);
+	/**
+	 * @brief Unregisters a tree node factory of the given @c type. This can also be used to replace a built-in
+	 * type with a user provided type.
+	 *
+	 * @return @c true if the unregister action was successful, @c false if not (e.g. it wasn't registered at all)
+	 */
+	bool unregisterNodeFactory(const std::string& type);
 
-	bool registerFilterFactory(const std::string& nodeType, const IFilterFactory& factory);
-	bool unregisterFilterFactory(const std::string& nodeType);
+	bool registerFilterFactory(const std::string& type, const IFilterFactory& factory);
+	/**
+	 * @brief Unregisters a filter factory of the given @c type. This can also be used to replace a built-in
+	 * type with a user provided type.
+	 *
+	 * @return @c true if the unregister action was successful, @c false if not (e.g. it wasn't registered at all)
+	 */
+	bool unregisterFilterFactory(const std::string& type);
 
-	bool registerConditionFactory(const std::string& nodeType, const IConditionFactory& factory);
-	bool unregisterConditionFactory(const std::string& nodeType);
+	bool registerConditionFactory(const std::string& type, const IConditionFactory& factory);
+	/**
+	 * @brief Unregisters a condition factory of the given @c type. This can also be used to replace a built-in
+	 * type with a user provided type.
+	 *
+	 * @return @c true if the unregister action was successful, @c false if not (e.g. it wasn't registered at all)
+	 */
+	bool unregisterConditionFactory(const std::string& type);
 
-	TreeNodePtr createNode(const std::string& nodeType, const TreeNodeFactoryContext& ctx) const override;
-	FilterPtr createFilter(const std::string& nodeType, const FilterFactoryContext& ctx) const override;
-	ConditionPtr createCondition(const std::string& nodeType, const ConditionFactoryContext& ctx) const override;
+	TreeNodePtr createNode(const std::string& type, const TreeNodeFactoryContext& ctx) const override;
+	FilterPtr createFilter(const std::string& type, const FilterFactoryContext& ctx) const override;
+	ConditionPtr createCondition(const std::string& type, const ConditionFactoryContext& ctx) const override;
 };
 
 }

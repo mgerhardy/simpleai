@@ -28,9 +28,18 @@ public:
 	virtual ~IAIFactory() {
 	}
 
-	virtual TreeNodePtr createNode(const std::string& nodeType, const TreeNodeFactoryContext& ctx) const = 0;
-	virtual FilterPtr createFilter(const std::string& nodeType, const FilterFactoryContext& ctx) const = 0;
-	virtual ConditionPtr createCondition(const std::string& nodeType, const ConditionFactoryContext& ctx) const = 0;
+	/**
+	 * @brief Allocates a new @c TreeNode for the given @c type. The @c type must be registered in the @c AIRegistry for this to work.
+	 */
+	virtual TreeNodePtr createNode(const std::string& type, const TreeNodeFactoryContext& ctx) const = 0;
+	/**
+	 * @brief Allocates a new @c IFilter for the given @c type. The @c type must be registered in the @c AIRegistry for this to work.
+	 */
+	virtual FilterPtr createFilter(const std::string& type, const FilterFactoryContext& ctx) const = 0;
+	/**
+	 * @brief Allocates a new @c ICondition for the given @c type. The @c type must be registered in the @c AIRegistry for this to work.
+	 */
+	virtual ConditionPtr createCondition(const std::string& type, const ConditionFactoryContext& ctx) const = 0;
 };
 
 }
