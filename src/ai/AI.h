@@ -95,6 +95,8 @@ public:
 	 */
 	bool isPause() const;
 
+	bool isDebuggingActive() const;
+
 	/**
 	 * @brief Get the current behaviour for this ai
 	 */
@@ -178,6 +180,10 @@ inline const GroupMgr& AI::getGroupMgr() const {
 
 inline const FilteredEntities& AI::getFilteredEntities() const {
 	return _filteredEntities;
+}
+
+inline bool AI::isDebuggingActive() const {
+	return _debuggingActive;
 }
 
 }

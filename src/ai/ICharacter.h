@@ -62,6 +62,10 @@ public:
 		return _ai;
 	}
 
+	inline ai::AI& getAI() {
+		return _ai;
+	}
+
 	bool operator ==(const ICharacter& character) const;
 	bool operator !=(const ICharacter& character) const;
 
