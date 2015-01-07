@@ -10,7 +10,11 @@ namespace ai {
 /**
  * @brief A zone represents one logical zone that groups AI instances.
  *
- * You have to update the AI instances in this zone in your tick.
+ * You have to update the AI instances in this zone in your tick by calling
+ * @c Zone::update.
+ *
+ * Zones should have unique names - otherwise the @c Server won't be able to
+ * select a particular @c Zone to debug it.
  */
 class Zone {
 public:
