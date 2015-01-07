@@ -119,7 +119,7 @@ int main(int argc, char **argv) {
 	ProfilerStart(profilerOutput.c_str());
 #endif
 
-	srand(seed);
+	ai::randomSeed(seed);
 
 	ai::AIRegistry registry;
 	// add your own tasks and conditions here
