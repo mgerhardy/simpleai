@@ -3,7 +3,7 @@
 #include <AI.h>
 #include "common/Thread.h"
 #include "common/Types.h"
-#include <map>
+#include <unordered_map>
 
 namespace ai {
 
@@ -14,7 +14,7 @@ namespace ai {
  */
 class Zone {
 public:
-	typedef std::map<CharacterId, AI*> AIMap;
+	typedef std::unordered_map<CharacterId, AI*> AIMap;
 	typedef AIMap::const_iterator AIMapConstIter;
 	typedef AIMap::iterator AIMapIter;
 
