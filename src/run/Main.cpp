@@ -16,7 +16,7 @@
 
 namespace {
 std::atomic_int id(1);
-std::atomic_bool shutdown(false);
+std::atomic_bool shutdownThreads(false);
 ai::GroupMgr groupManager;
 }
 
@@ -48,7 +48,7 @@ static ai::example::GameMap *createMap(ai::GroupMgr& groupManager, int amount, a
 static void runMap(ai::example::GameMap* map) {
 	const std::chrono::milliseconds delay(100);
 	auto timeLast = std::chrono::steady_clock::now();
-	while (!shutdown) {
+	while (!shutdownThreads) {
 		const auto timeNow = std::chrono::steady_clock::now();
 		const auto dt = std::chrono::duration_cast < std::chrono::milliseconds > (timeNow - timeLast).count();
 		timeLast = timeNow;
@@ -60,7 +60,7 @@ static void runMap(ai::example::GameMap* map) {
 static void runServer(ai::Server* server) {
 	const std::chrono::milliseconds delay(500);
 	auto timeLast = std::chrono::steady_clock::now();
-	while (!shutdown) {
+	while (!shutdownThreads) {
 		const auto timeNow = std::chrono::steady_clock::now();
 		const auto dt = std::chrono::duration_cast < std::chrono::milliseconds > (timeNow - timeLast).count();
 		timeLast = timeNow;
@@ -71,7 +71,7 @@ static void runServer(ai::Server* server) {
 
 static void runDespawnSpawn(ai::example::GameMap* map, const ai::TreeNodePtr* root) {
 	const std::chrono::milliseconds delay(5000);
-	while (!shutdown) {
+	while (!shutdownThreads) {
 		ai::example::GameEntity *rnd = map->getRandomEntity();
 		if (rnd != nullptr) {
 			map->remove(rnd);
@@ -246,7 +246,7 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	shutdown = true;
+	shutdownThreads = true;
 	for (std::thread& t : threads) {
 		t.join();
 	}
