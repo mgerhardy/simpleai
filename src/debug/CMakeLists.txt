@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.8)
 project(simpleai-debugger)
 
+# TODO resources are not yet compiled in
+
 # Tell CMake to run moc when necessary:
 set(CMAKE_AUTOMOC ON)
 # As moc files are generated in the binary dir, tell CMake
@@ -15,6 +17,23 @@ find_package(SimpleAI REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Gui REQUIRED)
+
+if (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
+elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Darwin")
+elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
+	if (CMAKE_COMPILER_IS_GNUCXX)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra")
+		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -ftree-vectorize -msse3 -Wall -Wextra -DNDEBUG")
+		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -DDEBUG -Wall -Wextra -Werror")
+	else()
+		message(ERROR "unsupported compiler")
+	endif()
+endif()
+
+
+list(APPEND simpleai_debugger_HEADERS
+           src/gui/AICompressorProxy.h
+)
 
 list(APPEND simpleai_debugger_SOURCES
            src/Main.cpp
@@ -38,6 +57,21 @@ list(APPEND simpleai_debugger_SOURCES
            src/gui/widget/IComboBox.cpp
            src/gui/widget/IGraphicsView.cpp)
 
-add_executable(simpleai-debugger ${simpleai_debugger_SOURCES})
+add_executable(simpleai-debugger ${simpleai_debugger_SOURCES} ${simpleai_debugger_HEADERS})
+include_directories(
+           ${CMAKE_CURRENT_SOURCE_DIR}
+           ${CMAKE_CURRENT_SOURCE_DIR}/src
+           ${CMAKE_CURRENT_SOURCE_DIR}/src/gui
+           ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/dialog
+           ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/widget
+           ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/view/map
+           ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/view/tree
+           ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/view/aggro
+           ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/view/state
+           ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/view/list
+           ${CMAKE_CURRENT_SOURCE_DIR}/src/common
+           ${SIMPLEAI_INCLUDE_DIRS})
 
+qt5_add_resources(resources data/resources.qrc)
 qt5_use_modules(simpleai-debugger Widgets Gui Network)
+target_link_libraries(simpleai-debugger ${SIMPLEAI_LIBRARIES})

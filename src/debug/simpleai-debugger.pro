@@ -10,7 +10,7 @@ INCLUDEPATH += . src src/gui src/gui/dialog src/gui/widget src/gui/view/map src/
 
 CONFIG += qt debug_and_release
 
-QMAKE_CXXFLAGS += -std=c++0x
+QMAKE_CXXFLAGS += -std=c++11
 
 # Input
 HEADERS += \
