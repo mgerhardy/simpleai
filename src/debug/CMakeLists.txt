@@ -5,11 +5,12 @@ project(simpleai-debugger)
 
 # Tell CMake to run moc when necessary:
 set(CMAKE_AUTOMOC ON)
-# As moc files are generated in the binary dir, tell CMake
-# to always look for includes there:
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
+# Tell CMake to run rcc when necessary:
+set(CMAKE_AUTORCC ON)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/../ai/")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/../ai/")
+set(AUTOGEN_TARGETS_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/.moc")
+set(AUTOMOC_TARGETS_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/.moc")
 
 find_package(SimpleAI REQUIRED)
 
@@ -30,12 +31,12 @@ elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
 	endif()
 endif()
 
-
 list(APPEND simpleai_debugger_HEADERS
            src/gui/AICompressorProxy.h
 )
 
 list(APPEND simpleai_debugger_SOURCES
+           data/resources.qrc
            src/Main.cpp
            src/AIApplication.cpp
            src/AIDebugger.cpp
@@ -60,6 +61,8 @@ list(APPEND simpleai_debugger_SOURCES
 add_executable(simpleai-debugger ${simpleai_debugger_SOURCES} ${simpleai_debugger_HEADERS})
 include_directories(
            ${CMAKE_CURRENT_SOURCE_DIR}
+           ${AUTOGEN_TARGETS_FOLDER}
+           ${AUTOMOC_TARGETS_FOLDER}
            ${CMAKE_CURRENT_SOURCE_DIR}/src
            ${CMAKE_CURRENT_SOURCE_DIR}/src/gui
            ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/dialog
@@ -72,6 +75,5 @@ include_directories(
            ${CMAKE_CURRENT_SOURCE_DIR}/src/common
            ${SIMPLEAI_INCLUDE_DIRS})
 
-qt5_add_resources(resources data/resources.qrc)
 qt5_use_modules(simpleai-debugger Widgets Gui Network)
 target_link_libraries(simpleai-debugger ${SIMPLEAI_LIBRARIES})
