@@ -1,7 +1,5 @@
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 2.8.12)
 project(simpleai-debugger)
-
-# TODO resources are not yet compiled in
 
 # Tell CMake to run moc when necessary:
 set(CMAKE_AUTOMOC ON)
@@ -18,6 +16,7 @@ find_package(SimpleAI REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Gui REQUIRED)
+find_package(Qt5LinguistTools REQUIRED)
 
 if (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
 elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Darwin")
@@ -31,12 +30,13 @@ elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
 	endif()
 endif()
 
+file(GLOB simpleai_debugger_TRANSLATIONS data/*.ts)
+
 list(APPEND simpleai_debugger_HEADERS
            src/gui/AICompressorProxy.h
 )
 
 list(APPEND simpleai_debugger_SOURCES
-           data/resources.qrc
            src/Main.cpp
            src/AIApplication.cpp
            src/AIDebugger.cpp
@@ -58,7 +58,6 @@ list(APPEND simpleai_debugger_SOURCES
            src/gui/widget/IComboBox.cpp
            src/gui/widget/IGraphicsView.cpp)
 
-add_executable(simpleai-debugger ${simpleai_debugger_SOURCES} ${simpleai_debugger_HEADERS})
 include_directories(
            ${CMAKE_CURRENT_SOURCE_DIR}
            ${AUTOGEN_TARGETS_FOLDER}
@@ -75,5 +74,8 @@ include_directories(
            ${CMAKE_CURRENT_SOURCE_DIR}/src/common
            ${SIMPLEAI_INCLUDE_DIRS})
 
+qt5_add_translation(simpleai_debugger_QM ${simpleai_debugger_TRANSLATIONS})
+qt5_add_resources(simpleai_debugger_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/data/resources.qrc)
+add_executable(simpleai-debugger ${simpleai_debugger_SOURCES} ${simpleai_debugger_QM} ${simpleai_debugger_RESOURCES} ${simpleai_debugger_HEADERS})
 qt5_use_modules(simpleai-debugger Widgets Gui Network)
 target_link_libraries(simpleai-debugger ${SIMPLEAI_LIBRARIES})
