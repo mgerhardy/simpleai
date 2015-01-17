@@ -17,7 +17,7 @@ GroupMgr::~GroupMgr() {
 }
 
 bool GroupMgr::add(GroupId id, ICharacter* character) {
-	SCOPEDLOCK(_mutex);
+	ScopedWriteLock scopedLock(_lock);
 	GroupMembersIter i = _members.find(id);
 	if (i == _members.end()) {
 		GroupMembersSet set;
@@ -29,7 +29,7 @@ bool GroupMgr::add(GroupId id, ICharacter* character) {
 }
 
 bool GroupMgr::remove(GroupId id, ICharacter* character) {
-	SCOPEDLOCK(_mutex);
+	ScopedWriteLock scopedLock(_lock);
 	const GroupMembersIter& i = _members.find(id);
 	if (i == _members.end())
 		return false;
@@ -43,7 +43,7 @@ bool GroupMgr::remove(GroupId id, ICharacter* character) {
 }
 
 Vector3f GroupMgr::getPosition(GroupId id) const {
-	SCOPEDLOCK(_mutex);
+	ScopedReadLock scopedLock(_lock);
 	const GroupMembersConstIter& i = _members.find(id);
 	if (i == _members.end())
 		return Vector3f::ZERO;
@@ -65,7 +65,7 @@ bool GroupMgr::isGroupLeader(GroupId id, const ICharacter& character) const {
 }
 
 int GroupMgr::getGroupSize(GroupId id) const {
-	SCOPEDLOCK(_mutex);
+	ScopedReadLock scopedLock(_lock);
 	const GroupMembersConstIter& i = _members.find(id);
 	if (i == _members.end()) {
 		return 0;
@@ -74,7 +74,7 @@ int GroupMgr::getGroupSize(GroupId id) const {
 }
 
 bool GroupMgr::isInAnyGroup(const ICharacter& character) const {
-	SCOPEDLOCK(_mutex);
+	ScopedReadLock scopedLock(_lock);
 	for (GroupMembersConstIter i = _members.begin(); i != _members.end(); ++i) {
 		const GroupMembersSetConstIter& it = i->second.find(const_cast<ICharacter*>(&character));
 		if (it != i->second.end())

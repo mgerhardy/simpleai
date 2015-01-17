@@ -28,7 +28,7 @@ class GroupMgr {
 private:
 	GroupMembersSet _empty;
 	GroupMembers _members;
-	MUTEX(_mutex);
+	ReadWriteLock _lock;
 
 public:
 	GroupMgr ();
@@ -64,7 +64,7 @@ public:
 	 */
 	template<typename Func>
 	void visit(GroupId id, Func& func) const {
-		SCOPEDLOCK(_mutex);
+		ScopedReadLock scopedLock(_lock);
 		const GroupMembersConstIter& i = _members.find(id);
 		if (i == _members.end()) {
 			return;
