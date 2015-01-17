@@ -26,7 +26,7 @@ private:
 	const std::string _name;
 	AIMap _ais;
 	bool _debug;
-	MUTEX(_mutex);
+	ReadWriteLock _lock;
 
 public:
 	Zone(const std::string& name) :
@@ -46,11 +46,11 @@ public:
 	 * @brief call then when you spawn a new @code AI that should be traceable via the debug viewer.
 	 *
 	 * @note Make sure to also call @c removeAI whenever you despawn the given @c AI instance
-	 * @note This locks the zone
+	 * @note This locks the zone for writing
 	 */
 	bool addAI(AI* ai);
 	/**
-	 * @note This locks the zone
+	 * @note This locks the zone for writing
 	 */
 	bool removeAI(const AI* ai);
 
@@ -73,11 +73,11 @@ public:
 	 * @return @c true if the func was called for the character, @c false if not
 	 * e.g. in the case the given @c CharacterId wasn't found in this zone.
 	 *
-	 * @note This locks the zone
+	 * @note This locks the zone for reading
 	 */
 	template<typename Func>
 	bool execute(CharacterId id, const Func& func) const {
-		SCOPEDLOCK(_mutex);
+		ScopedReadLock scopedLock(_lock);
 		auto i = _ais.find(id);
 		if (i == _ais.end())
 			return false;
@@ -86,18 +86,28 @@ public:
 		return true;
 	}
 
+	/**
+	 * @brief Executes a lambda or functor for all the @c AI instances in this zone
+	 *
+	 * @note This locks the zone for reading
+	 */
 	template<typename Func>
 	void visit(Func& func) {
-		SCOPEDLOCK(_mutex);
+		ScopedReadLock scopedLock(_lock);
 		for (auto i = _ais.begin(), end = _ais.end(); i != end; ++i) {
 			AI *ai = i->second;
 			func(*ai);
 		}
 	}
 
+	/**
+	 * @brief Executes a lambda or functor for all the @c AI instances in this zone
+	 *
+	 * @note This locks the zone for reading
+	 */
 	template<typename Func>
 	void visit(const Func& func) const {
-		SCOPEDLOCK(_mutex);
+		ScopedReadLock scopedLock(_lock);
 		for (auto i = _ais.begin(), end = _ais.end(); i != end; ++i) {
 			const AI *ai = i->second;
 			func(*ai);

@@ -35,6 +35,7 @@
  */
 #pragma once
 
+#include "common/Types.h"
 #include "common/MemoryAllocator.h"
 #include "common/String.h"
 #include "common/Math.h"
@@ -43,7 +44,6 @@
 #include "common/MoveVector.h"
 #include "common/Random.h"
 #include "common/Thread.h"
-#include "common/Types.h"
 
 #include "AI.h"
 #include "AIRegistry.h"

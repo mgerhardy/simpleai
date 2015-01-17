@@ -7,7 +7,7 @@ bool Zone::addAI(AI* ai) {
 	if (ai == nullptr)
 		return false;
 	const CharacterId& id = ai->getCharacter().getId();
-	SCOPEDLOCK(_mutex);
+	ScopedWriteLock scopedLock(_lock);
 	if (_ais.find(id) != _ais.end())
 		return false;
 	_ais.insert(std::make_pair(id, ai));
@@ -18,7 +18,7 @@ bool Zone::removeAI(const AI* ai) {
 	if (ai == nullptr)
 		return false;
 	const CharacterId& id = ai->getCharacter().getId();
-	SCOPEDLOCK(_mutex);
+	ScopedWriteLock scopedLock(_lock);
 	AIMapIter i = _ais.find(id);
 	if (i == _ais.end())
 		return false;
