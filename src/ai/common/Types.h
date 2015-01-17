@@ -2,6 +2,11 @@
 
 #include <string>
 #include <unordered_map>
+#include <cassert>
+
+#ifndef ai_assert
+#define ai_assert(cond) assert(cond)
+#endif
 
 namespace ai {
 
