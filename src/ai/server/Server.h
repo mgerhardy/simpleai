@@ -47,7 +47,7 @@ protected:
 	bool _pause;
 	// the current active debugging zone
 	Zone* _zone;
-	MUTEX(_mutex);
+	ReadWriteLock _lock;
 
 	void addChildren(const TreeNodePtr& node, AIStateNode& parent, const AI& ai) const;
 	void broadcastState(Zone* zone);

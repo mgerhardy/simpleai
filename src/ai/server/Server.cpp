@@ -72,7 +72,7 @@ void Server::onConnect(Client* client) {
 	_network.sendToClient(client, AIPauseMessage(_pause));
 	std::vector<std::string> names;
 	{
-		SCOPEDLOCK(_mutex);
+		ScopedReadLock scopedLock(_lock);
 		for (ZoneConstIter i = _zones.begin(); i != _zones.end(); ++i) {
 			const Zone* zone = *i;
 			names.push_back(zone->getName());
@@ -201,7 +201,7 @@ void Server::setDebug(const std::string& zoneName) {
 	}
 	_zone = nullptr;
 	{
-		SCOPEDLOCK(_mutex);
+		ScopedReadLock scopedLock(_lock);
 		for (ZoneIter i = _zones.begin(); i != _zones.end(); ++i) {
 			Zone* zone = *i;
 			const bool debug = zone->getName() == zoneName;
@@ -215,7 +215,7 @@ void Server::setDebug(const std::string& zoneName) {
 void Server::broadcastZoneNames() {
 	std::vector<std::string> names;
 	{
-		SCOPEDLOCK(_mutex);
+		ScopedReadLock scopedLock(_lock);
 		for (ZoneConstIter i = _zones.begin(); i != _zones.end(); ++i) {
 			const Zone* zone = *i;
 			names.push_back(zone->getName());
@@ -227,7 +227,7 @@ void Server::broadcastZoneNames() {
 
 void Server::addZone(Zone* zone) {
 	{
-		SCOPEDLOCK(_mutex);
+		ScopedWriteLock scopedLock(_lock);
 		if (!_zones.insert(zone).second)
 			return;
 	}
@@ -238,7 +238,7 @@ void Server::removeZone(Zone* zone) {
 	if (_zone == zone)
 		_zone = nullptr;
 	{
-		SCOPEDLOCK(_mutex);
+		ScopedWriteLock scopedLock(_lock);
 		if (_zones.erase(zone) != 1) {
 			return;
 		}
