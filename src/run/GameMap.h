@@ -1,8 +1,6 @@
 #pragma once
 
 #include "GameEntity.h"
-#include <server/Zone.h>
-#include <common/Thread.h>
 #include <set>
 #include <iterator>
 #include <iostream>
