@@ -8,6 +8,10 @@
 #define ai_assert(cond, msg) assert(cond)
 #endif
 
+#ifndef AI_EXCEPTIONS
+#define AI_EXCEPTIONS 0
+#endif
+
 namespace ai {
 
 /**

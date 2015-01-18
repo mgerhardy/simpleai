@@ -14,11 +14,15 @@ TreeNodeStatus ITask::execute(AI& entity, long deltaMillis) {
 	if (TreeNode::execute(entity, deltaMillis) == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
 
+#if AI_EXCEPTIONS
 	try {
+#endif
 		return state(entity, doAction(entity, deltaMillis));
+#if AI_EXCEPTIONS
 	} catch (...) {
 		return state(entity, EXCEPTION);
 	}
+#endif
 }
 
 void ITask::addChild(const TreeNodePtr& /*child*/) {
