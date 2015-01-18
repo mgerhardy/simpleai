@@ -7,7 +7,7 @@ namespace ai {
 
 TreeNodeStatus FleeGroup::doAction(AI& entity, long deltaMillis) {
 	if (_groupId == -1)
-		return state(entity, FAILED);
+		return FAILED;
 	ICharacter& chr = entity.getCharacter();
 
 	const movement::GroupFlee w(entity, chr.getSpeed(), _groupId);
@@ -16,7 +16,7 @@ TreeNodeStatus FleeGroup::doAction(AI& entity, long deltaMillis) {
 	const float deltaSeconds = static_cast<float>(deltaMillis) / 1000.0f;
 	chr.setPosition(chr.getPosition() + (mv.getVector() * deltaSeconds));
 	chr.setOrientation(static_cast<float>(mv.getVector().orientation()));
-	return state(entity, FINISHED);
+	return FINISHED;
 }
 
 NODE_FACTORY_IMPL(FleeGroup)
