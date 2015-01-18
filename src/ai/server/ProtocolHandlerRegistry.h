@@ -1,13 +1,13 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include "IProtocolHandler.h"
 
 namespace ai {
 
 class ProtocolHandlerRegistry {
 private:
-	typedef std::map<ProtocolId, IProtocolHandler*> ProtocolHandlers;
+	typedef std::unordered_map<ProtocolId, IProtocolHandler*> ProtocolHandlers;
 	ProtocolHandlers _registry;
 
 	ProtocolHandlerRegistry() {
