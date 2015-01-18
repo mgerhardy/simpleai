@@ -6,8 +6,8 @@
 namespace ai {
 class MoveVector {
 protected:
-	Vector3f _vec3;
-	float _rotation;
+	const Vector3f _vec3;
+	const float _rotation;
 public:
 	MoveVector(const Vector3f& vec3, float rotation) :
 			_vec3(vec3), _rotation(rotation) {
