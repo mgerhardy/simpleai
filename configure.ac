@@ -51,6 +51,18 @@ else
 fi
 AC_MSG_RESULT([$enable_debug])
 
+AC_MSG_CHECKING([whether to build with exception support])
+AC_ARG_ENABLE(exceptions,AS_HELP_STRING([--enable-exceptions=@<:@no/yes@:>@],[enable exception support]),,[enable_exceptions=no])
+if test "x$enable_exceptions" != "xyes" ; then
+    AC_SUBST([AI_EXCEPTIONS],0)
+    AC_SUBST([LUA_USE_LONGJMP],1)
+    AM_CXXFLAGS="-fno-exceptions $AM_CXXFLAGS"
+else
+    AC_SUBST([AI_EXCEPTIONS],1)
+    AM_CXXFLAGS="-fexceptions $AM_CXXFLAGS"
+fi
+AC_MSG_RESULT([$enable_exceptions])
+
 AC_MSG_CHECKING([whether to build with gprof support])
 AC_ARG_ENABLE(gprof,AS_HELP_STRING([--enable-gprof=@<:@no/yes@:>@],[build with support for gprof]),,[enable_gprof=no])
 if test "x$enable_gprof" != "xno" ; then
@@ -143,6 +155,7 @@ simpleai $VERSION: Automatic configuration OK.
     C++ Flags: ......... $AM_CXXFLAGS $PTHREAD_CFLAGS
     Libraries: ......... $LIBS
     Linking: ........... $AM_LDFLAGS $PTHREAD_LIBS $MATH_LIBS
+    Exceptions: ........ $enable_exceptions
     Run: ............... $enable_run
     Tests: ............. $enable_tests
     LUA: ............... $enable_lua
