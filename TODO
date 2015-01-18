@@ -4,3 +4,4 @@ Thread safety improvements. singletons for tree nodes, conditions and filters
 Try to reduce lock in the Zone class (maybe implement or use a lock free map)
 Filter for group members/leader
 Zone for ICharacter shared_ptr instead of AI?
+add AI_EXCEPTIONS to configure and CMakeLists.txt
