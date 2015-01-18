@@ -12,7 +12,7 @@ namespace ai {
  */
 class AIChangeMessage: public IProtocolMessage {
 private:
-	std::string _name;
+	const std::string _name;
 
 public:
 	AIChangeMessage(const std::string& name) :
