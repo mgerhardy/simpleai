@@ -23,7 +23,7 @@ public:
 		}
 
 		if (TreeNode::execute(entity, deltaMillis) == CANNOTEXECUTE)
-			return state(entity, CANNOTEXECUTE);
+			return CANNOTEXECUTE;
 
 		const TreeNodePtr& treeNode = *_children.begin();
 		const TreeNodeStatus status = treeNode->execute(entity, deltaMillis);
