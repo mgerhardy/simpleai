@@ -7,9 +7,12 @@ bool Zone::addAI(AI* ai) {
 	if (ai == nullptr)
 		return false;
 	const CharacterId& id = ai->getCharacter().getId();
+	{
+		ScopedReadLock scopedLock(_lock);
+		if (_ais.find(id) != _ais.end())
+			return false;
+	}
 	ScopedWriteLock scopedLock(_lock);
-	if (_ais.find(id) != _ais.end())
-		return false;
 	_ais.insert(std::make_pair(id, ai));
 	return true;
 }
