@@ -1,5 +1,5 @@
 #include "tree/ITask.h"
-#include "common/AIException.h"
+#include "common/Types.h"
 
 namespace ai {
 
@@ -22,7 +22,7 @@ TreeNodeStatus ITask::execute(AI& entity, long deltaMillis) {
 }
 
 void ITask::addChild(const TreeNodePtr& /*child*/) {
-	throw AIException("An action node may not have a child");
+	ai_assert(false, "An action node may not have a child");
 }
 
 }

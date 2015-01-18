@@ -32,7 +32,6 @@ list(APPEND simpleai_HEADERS
 	aggro/Entry.h
 	AI.h
 	AIRegistry.h
-	common/AIException.h
 	common/Vector3f.h
 	common/Enum.h
 	common/IFactoryRegistry.h

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "tree/TreeNode.h"
-#include "common/AIException.h"
+#include "common/Types.h"
 #include "AIRegistry.h"
 
 namespace ai {
@@ -19,7 +19,7 @@ public:
 
 	TreeNodeStatus execute(AI& entity, long deltaMillis) override {
 		if (_children.size() != 1) {
-			throw AIException("Invert can not have more than one child");
+			ai_assert(false, "Invert can not have more than one child");
 		}
 
 		if (TreeNode::execute(entity, deltaMillis) == CANNOTEXECUTE)

@@ -5,7 +5,7 @@
 #include <cassert>
 
 #ifndef ai_assert
-#define ai_assert(cond) assert(cond)
+#define ai_assert(cond, msg) assert(cond)
 #endif
 
 namespace ai {
