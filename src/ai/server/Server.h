@@ -3,7 +3,7 @@
 #include <AI.h>
 #include <common/Thread.h>
 #include <tree/TreeNode.h>
-#include <set>
+#include <unordered_set>
 #include "Network.h"
 #include "Zone.h"
 #include "SelectHandler.h"
@@ -31,7 +31,7 @@ class AIStateNode;
  */
 class Server: public INetworkListener {
 protected:
-	typedef std::set<Zone*> Zones;
+	typedef std::unordered_set<Zone*> Zones;
 	typedef Zones::const_iterator ZoneConstIter;
 	typedef Zones::iterator ZoneIter;
 	Zones _zones;
