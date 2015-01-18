@@ -19,7 +19,7 @@ protected:
 	float _reduceRatioSecond;
 	float _reduceValueSecond;
 	ReductionType _reduceType;
-	CharacterId _id;
+	const CharacterId _id;
 
 	void reduceByRatio(float ratio);
 	void reduceByValue(float value);
