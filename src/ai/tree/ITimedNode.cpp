@@ -21,16 +21,25 @@ TreeNodeStatus ITimedNode::execute(AI& entity, long deltaMillis) {
 	const TreeNodeStatus result = TreeNode::execute(entity, deltaMillis);
 	if (result == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
+
 	if (_timerMillis == NOTSTARTED) {
 		_timerMillis = _millis;
-	} else if (_timerMillis - deltaMillis > 0) {
-		_timerMillis -= deltaMillis;
-	} else {
-		_timerMillis = NOTSTARTED;
-		return state(entity, FINISHED);
+		const TreeNodeStatus status = executeStart(entity, deltaMillis);
+		if (status == FINISHED)
+			_timerMillis = NOTSTARTED;
+		return state(entity, status);
 	}
 
-	return state(entity, executeTimed(entity, deltaMillis));
+	if (_timerMillis - deltaMillis > 0) {
+		_timerMillis -= deltaMillis;
+		const TreeNodeStatus status = executeRunning(entity, deltaMillis);
+		if (status == FINISHED)
+			_timerMillis = NOTSTARTED;
+		return state(entity, status);
+	}
+
+	_timerMillis = NOTSTARTED;
+	return state(entity, executeExpired(entity, deltaMillis));
 }
 
 }
