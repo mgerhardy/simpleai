@@ -5,39 +5,40 @@
 namespace ai {
 
 LUATreeLoader::LUATreeLoader(const IAIFactory& aiFactory) :
-		ITreeLoader(aiFactory), _lua(new LUA()) {
+		ITreeLoader(aiFactory) {
+}
+
+LUATreeLoader::~LUATreeLoader() {
+}
+
+bool LUATreeLoader::init(const std::string& luaString) {
+	LUA lua;
 	luaL_Reg createTree = { "createTree", luaMain_CreateTree };
 	luaL_Reg eof = { nullptr, nullptr };
 	luaL_Reg funcs[] = { createTree, eof };
 
-	LUAType tree = _lua->registerType("Tree");
+	LUAType tree = lua.registerType("Tree");
 	tree.addFunction("createRoot", luaTree_CreateRoot);
 	tree.addFunction("__gc", luaTree_GC);
 	tree.addFunction("__tostring", luaTree_ToString);
 
-	LUAType node = _lua->registerType("Node");
+	LUAType node = lua.registerType("Node");
 	node.addFunction("addNode", luaNode_AddNode);
 	node.addFunction("setCondition", luaNode_SetCondition);
 	node.addFunction("__gc", luaNode_GC);
 	node.addFunction("__tostring", luaNode_ToString);
 
-	_lua->reg("AI", funcs);
-}
+	lua.reg("AI", funcs);
 
-LUATreeLoader::~LUATreeLoader() {
-	delete _lua;
-}
-
-bool LUATreeLoader::init(const std::string& luaString) {
-	if (!_lua->load(luaString)) {
-		_error = _lua->getError();
+	if (!lua.load(luaString)) {
+		_error = lua.getError();
 		return false;
 	}
 
 	// loads all the trees
-	_lua->newGlobalData<LUATreeLoader>("Loader", this);
-	if (!_lua->execute("init")) {
-		_error = _lua->getError();
+	lua.newGlobalData<LUATreeLoader>("Loader", this);
+	if (!lua.execute("init")) {
+		_error = lua.getError();
 		return false;
 	}
 
