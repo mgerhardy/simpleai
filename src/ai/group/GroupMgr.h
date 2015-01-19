@@ -56,6 +56,8 @@ public:
 
 	/**
 	 * @brief Calculate the average position of the group
+	 *
+	 * @note If the given group doesn't exist or some other error occurred, this method returns @c Vector3f::INFINITE
 	 */
 	Vector3f getPosition(GroupId id) const;
 

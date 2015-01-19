@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <cmath>
 #include <iostream>
+#include <limits>
 
 namespace ai {
 
@@ -133,6 +134,10 @@ struct Vector3f {
 		return l;
 	}
 
+	inline bool isInfinite() const {
+		return x == std::numeric_limits<float>::infinity() || y == std::numeric_limits<float>::infinity() || z == std::numeric_limits<float>::infinity();
+	}
+
 	inline bool operator ==(const Vector3f& other) const {
 		const float epsilon = 0.00001f;
 		return ::fabs(x - other.x) < epsilon && ::fabs(y - other.y) < epsilon && ::fabs(z - other.z) < epsilon;
@@ -156,7 +161,7 @@ struct Vector3f {
 	}
 
 	static Vector3f ZERO;
-	static Vector3f INVALID;
+	static Vector3f INFINITE;
 };
 
 inline std::ostream& operator<<(std::ostream& output, const Vector3f& p) {

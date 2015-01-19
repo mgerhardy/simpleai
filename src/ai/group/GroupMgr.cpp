@@ -46,7 +46,7 @@ Vector3f GroupMgr::getPosition(GroupId id) const {
 	ScopedReadLock scopedLock(_lock);
 	const GroupMembersConstIter& i = _members.find(id);
 	if (i == _members.end())
-		return Vector3f::INVALID;
+		return Vector3f::INFINITE;
 
 	// TODO: only those that are in the same zone - otherwise the avg pos doesn't make much sense
 	Vector3f averagePosition = std::accumulate(i->second.begin(), i->second.end(), Vector3f(), AveragePositionFunctor());
