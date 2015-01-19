@@ -50,7 +50,6 @@ nobase_library_include_HEADERS = \
 	AI.h \
 	AIRegistry.h \
 	common/Vector3f.h \
-	common/Enum.h \
 	common/IFactoryRegistry.h \
 	common/IParser.h \
 	common/IPrintable.h \
