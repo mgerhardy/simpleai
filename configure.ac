@@ -90,6 +90,17 @@ fi
 AM_CONDITIONAL(AI_ENABLE_LUA,test "x$enable_lua" = "xyes")
 AC_MSG_RESULT([$enable_lua])
 
+AC_MSG_CHECKING([whether to build with XML support])
+AC_ARG_ENABLE(xml,AS_HELP_STRING([--enable-xml=@<:@no/yes@:>@],[build with support for XML]),,[enable_xml=yes])
+if test "x$enable_xml" = "xyes" ; then
+	AC_SUBST([AI_ENABLE_XML],1)
+	EXTERNAL_DEPENDENCIES="tinyxml2 $EXTERNAL_DEPENDENCIES"
+else
+	AC_SUBST([AI_ENABLE_XML],0)
+fi
+AM_CONDITIONAL(AI_ENABLE_XML,test "x$enable_xml" = "xyes")
+AC_MSG_RESULT([$enable_xml])
+
 AX_PTHREAD
 
 if test "x$enable_lua" != "xno" ; then

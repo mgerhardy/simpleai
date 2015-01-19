@@ -63,6 +63,7 @@
 #include "tree/group/FollowGroup.h"
 #include "tree/Wander.h"
 #include "tree/loaders/lua/LUATreeLoader.h"
+#include "tree/loaders/xml/XMLTreeLoader.h"
 
 #include "group/GroupMgr.h"
 

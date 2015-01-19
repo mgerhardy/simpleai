@@ -62,7 +62,7 @@ liblua_la_SOURCES = \
 	lvm.cpp \
 	lzio.cpp
 
-liblua_la_CFLAGS = -DLUA_USE_LONGJMP
+liblua_la_CFLAGS =
 
 liblua_la_LDFLAGS =
 

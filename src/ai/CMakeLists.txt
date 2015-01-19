@@ -7,18 +7,19 @@ if (SIMPLEAI_LUA)
 	list(APPEND SRC ${SRC_LUA})
 else()
 	message(STATUS "Build without lua support")
-	# TODO doesn't work - still compile LUA.cpp and friends if run with -DSIMPLEAI_LUA=FALSE
-	list(REMOVE_ITEM SRC
-		tree/loaders/lua/LUA.cpp
-		tree/loaders/lua/LUA.h
-		tree/loaders/lua/LUANode.cpp
-		tree/loaders/lua/LUANode.h
-		tree/loaders/lua/LUATree.cpp
-		tree/loaders/lua/LUATree.h
-		tree/loaders/lua/LUACondition.h
-		tree/loaders/lua/LUAFunctions.h
-		tree/loaders/lua/LUATreeLoader.cpp
-		tree/loaders/lua/LUATreeLoader.h)
+	file(GLOB LUA_REMOVE tree/loaders/lua/*)
+	list(REMOVE_ITEM SRC ${LUA_REMOVE})
+endif()
+
+if (SIMPLEAI_XML)
+	message(STATUS "Build with XML support")
+	include_directories(${SIMPLEAI_SOURCE_DIR}/src/libs/tinyxml2/)
+	file(GLOB_RECURSE SRC_XML ${SIMPLEAI_SOURCE_DIR}/src/libs/tinyxml2/*.cpp ${SIMPLEAI_SOURCE_DIR}/src/libs/tinyxml2/*.h)
+	list(APPEND SRC ${SRC_XML})
+else()
+	message(STATUS "Build without XML support")
+	file(GLOB XML_REMOVE tree/loaders/xml/*)
+	list(REMOVE_ITEM SRC ${XML_REMOVE})
 endif()
 
 find_package(Threads)
@@ -110,6 +111,12 @@ if (SIMPLEAI_LUA)
 		tree/loaders/lua/LUANode.h
 		tree/loaders/lua/LUATree.h
 		tree/loaders/lua/LUATreeLoader.h
+	)
+endif()
+
+if (SIMPLEAI_XML)
+	list(APPEND simpleai_HEADERS
+		tree/loaders/xml/XMLTreeLoader.h
 	)
 endif()
 
