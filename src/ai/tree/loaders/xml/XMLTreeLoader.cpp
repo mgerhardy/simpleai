@@ -5,6 +5,60 @@
 
 namespace ai {
 
+namespace {
+
+TreeNodePtr loadSubTreeFromXML (const IAIFactory& aiFactory, tinyxml2::XMLElement* e) {
+	if (e == nullptr) {
+		return TreeNodePtr();
+	}
+
+	const char *name = e->Attribute("name", nullptr);
+	if (name == nullptr) {
+		return TreeNodePtr();
+	}
+
+	const char *type = e->Attribute("type", nullptr);
+	if (type == nullptr) {
+		return TreeNodePtr();
+	}
+
+	const char *param = e->Attribute("param", nullptr);
+	if (param == nullptr) {
+		param = "";
+	}
+
+	const char *condition = e->Attribute("condition", nullptr);
+	if (condition == nullptr) {
+		condition = "True";
+	}
+
+	const char *conditionParameter = e->Attribute("conditionparam", nullptr);
+	if (conditionParameter == nullptr) {
+		conditionParameter = "";
+	}
+
+	// TODO: parsers/filters
+	ConditionFactoryContext condCtx(conditionParameter);
+	TreeNodeFactoryContext ctx(name, param, aiFactory.createCondition(condition, condCtx));
+	return aiFactory.createNode(type, ctx);
+}
+
+TreeNodePtr loadTreeFromXML (const IAIFactory& aiFactory, tinyxml2::XMLElement* rootNode) {
+	TreeNodePtr root = loadSubTreeFromXML(aiFactory, rootNode);
+	if (!root.get())
+		return root;
+	for (tinyxml2::XMLNode* node = rootNode->FirstChild(); node; node = node->NextSibling()) {
+		tinyxml2::XMLElement* e = node->ToElement();
+		const TreeNodePtr& child = loadSubTreeFromXML(aiFactory, e);
+		if (child.get() == nullptr)
+			continue;
+		root->addChild(child);
+	}
+	return root;
+}
+
+}
+
 XMLTreeLoader::XMLTreeLoader(const IAIFactory& aiFactory) :
 		ITreeLoader(aiFactory) {
 }
@@ -19,31 +73,35 @@ bool XMLTreeLoader::init(const std::string& xmlData) {
 		tinyxml2::XMLElement* e = node->ToElement();
 		if (e == nullptr) {
 			_error = "unexpected node type";
-			return false;
+			continue;
 		}
-		if (::strcmp("node", e->Name())) {
-			_error = "unexpected node name";
-			return false;
+		if (e->Name() == nullptr) {
+			_error = "expected node name but didn't find one";
+			continue;
 		}
-		const char *type = e->Attribute("type");
-		if (type == nullptr) {
-			_error = "node has no type attribute";
-			return false;
+		const std::string treeNodeName(e->Name());
+		if ("behaviour" != treeNodeName) {
+			_error = "unexpected node name - expected 'behaviour' - got " + treeNodeName;
+			continue;
 		}
 		const char *name = e->Attribute("name");
-		if (type == nullptr) {
-			_error = "node has no name attribute";
-			return false;
+		if (name == nullptr) {
+			_error = "node 'behaviour' does not have a 'name' attribute";
+			continue;
 		}
-		TreeNodeParser parser(_aiFactory, type);
-		const TreeNodePtr& treeNode = parser.getTreeNode(name);
-		if (!treeNode) {
-			_error = "Could not create a node for " + std::string(type);
-			return false;
+		tinyxml2::XMLNode* rootXMLNode = e->FirstChild();
+		if (rootXMLNode == nullptr)
+			continue;
+		const TreeNodePtr& root = loadTreeFromXML(_aiFactory, rootXMLNode->ToElement());
+		if (root.get() == nullptr) {
+			_error = "could not create the root node";
+			continue;
 		}
+		addTree(name, root);
 	}
-	/** @todo implement parsing */
-	return status == tinyxml2::XML_NO_ERROR;
+	if (status != tinyxml2::XML_NO_ERROR)
+		return false;
+	return !_treeMap.empty();
 }
 
 }
