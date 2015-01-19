@@ -4,7 +4,7 @@
 namespace ai {
 
 Filter::Filter (const Filters& filters) :
-		ICondition("Filter", ""), _filters(filters) {
+		ICondition(FILTER_NAME, ""), _filters(filters) {
 }
 
 bool Filter::evaluate(const AI& entity) {

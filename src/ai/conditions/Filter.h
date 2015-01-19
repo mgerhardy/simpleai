@@ -3,6 +3,8 @@
 #include <conditions/ICondition.h>
 #include <filter/IFilter.h>
 
+#define FILTER_NAME "Filter"
+
 namespace ai {
 
 /**

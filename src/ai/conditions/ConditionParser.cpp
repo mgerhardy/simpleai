@@ -1,4 +1,5 @@
-#include <conditions/ConditionParser.h>
+#include "ConditionParser.h"
+#include <conditions/Filter.h>
 #include <AIRegistry.h>
 #include <iostream>
 
@@ -107,7 +108,7 @@ ConditionPtr ConditionParser::getCondition() {
 		name = _conditionString;
 	}
 	ConditionFactoryContext ctx(parameters);
-	ctx.filter = name == "Filter";
+	ctx.filter = name == FILTER_NAME;
 	n = _conditionString.find("(");
 	if (n != std::string::npos) {
 		const std::size_t r = _conditionString.rfind(")");
