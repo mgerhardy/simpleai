@@ -63,7 +63,7 @@ bool ConditionParser::fillInnerConditions(ConditionFactoryContext& ctx, const st
 		}
 		// filter condition is a little bit special and deserves some extra attention
 		if (ctx.filter) {
-			FilterFactoryContext ctxInner(parameters);
+			const FilterFactoryContext ctxInner(parameters);
 			const FilterPtr& c = _aiFactory.createFilter(name, ctxInner);
 			if (!c) {
 				setError("could not create filter for " + name);
@@ -116,7 +116,7 @@ ConditionPtr ConditionParser::getCondition() {
 			setError("syntax error, missing closing brace");
 			return ConditionPtr();
 		}
-		const std::string inner = _conditionString.substr(n + 1, r - n - 1);
+		const std::string& inner = _conditionString.substr(n + 1, r - n - 1);
 		if (!fillInnerConditions(ctx, inner)) {
 			return ConditionPtr();
 		}
