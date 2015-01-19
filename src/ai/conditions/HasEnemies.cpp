@@ -15,7 +15,7 @@ bool HasEnemies::evaluate(const AI& entity) {
 	const AggroMgr& mgr = entity.getAggroMgr();
 	if (_enemyCount == -1) {
 		// TODO: check why boolean operator isn't working here
-		const bool hasEnemy = mgr.getHighestEntry().get() != nullptr;
+		const bool hasEnemy = mgr.getHighestEntry() != nullptr;
 		return hasEnemy;
 	}
 	const int size = static_cast<int>(mgr.getEntries().size());

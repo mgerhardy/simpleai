@@ -167,8 +167,8 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 		AIStateAggro aggro;
 		const ai::AggroMgr::Entries& entries = ai.getAggroMgr().getEntries();
 		for (ai::AggroMgr::Entries::const_iterator it = entries.begin(); it != entries.end(); ++it) {
-			const EntryPtr& e = *it;
-			aggro.addAggro(AIStateAggroEntry(e->getCharacterId(), e->getAggro()));
+			const Entry& e = *it;
+			aggro.addAggro(AIStateAggroEntry(e.getCharacterId(), e.getAggro()));
 		}
 
 		const AICharacterDetailsMessage msg(_selectedCharacterId, aggro, root);

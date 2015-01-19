@@ -16,8 +16,8 @@ protected:
 
 		std::stringstream s;
 		for (ai::AggroMgr::Entries::const_iterator i = e.begin(); i != e.end(); ++i) {
-			const ai::EntryPtr& ep = *i;
-			s << ep->getCharacterId() << "=" << ep->getAggro() << ", ";
+			const ai::Entry& ep = *i;
+			s << ep.getCharacterId() << "=" << ep.getAggro() << ", ";
 		}
 		const ai::EntryPtr& highest = aggroMgr.getHighestEntry();
 		s << "highest: " << highest->getCharacterId() << "=" << highest->getAggro();

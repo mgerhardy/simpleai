@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include "common/Types.h"
 
 namespace ai {
@@ -19,7 +18,7 @@ protected:
 	float _reduceRatioSecond;
 	float _reduceValueSecond;
 	ReductionType _reduceType;
-	const CharacterId _id;
+	CharacterId _id;
 
 	void reduceByRatio(float ratio);
 	void reduceByValue(float value);
@@ -27,6 +26,16 @@ protected:
 public:
 	Entry(const CharacterId& id, float aggro = 0.0f) :
 			_aggro(aggro), _minAggro(0.0f), _reduceRatioSecond(0.0f), _reduceValueSecond(0.0f), _reduceType(DISABLED), _id(id) {
+	}
+
+	Entry(const Entry &other) :
+			_aggro(other._aggro), _minAggro(other._minAggro), _reduceRatioSecond(other._reduceRatioSecond), _reduceValueSecond(other._reduceValueSecond), _reduceType(
+					other._reduceType), _id(other._id) {
+	}
+
+	Entry(Entry &&other) :
+			_aggro(other._aggro), _minAggro(other._minAggro), _reduceRatioSecond(other._reduceRatioSecond), _reduceValueSecond(other._reduceValueSecond), _reduceType(
+					other._reduceType), _id(other._id) {
 	}
 
 	float getAggro() const;
@@ -41,9 +50,10 @@ public:
 
 	const CharacterId& getCharacterId() const;
 	bool operator <(Entry& other) const;
+	Entry& operator=(const Entry& other);
 };
 
-typedef std::shared_ptr<Entry> EntryPtr;
+typedef Entry* EntryPtr;
 
 inline void Entry::addAggro(float aggro) {
 	_aggro += aggro;
@@ -103,6 +113,16 @@ inline void Entry::resetAggro() {
 
 inline bool Entry::operator <(Entry& other) const {
 	return _aggro < other._aggro;
+}
+
+inline Entry& Entry::operator=(const Entry& other) {
+	_aggro = other._aggro;
+	_minAggro = other._minAggro;
+	_reduceRatioSecond = other._reduceRatioSecond;
+	_reduceValueSecond = other._reduceValueSecond;
+	_reduceType = other._reduceType;
+	_id = other._id;
+	return *this;
 }
 
 inline const CharacterId& Entry::getCharacterId() const {

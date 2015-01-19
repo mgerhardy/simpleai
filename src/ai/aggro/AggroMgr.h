@@ -12,7 +12,7 @@ class AI;
  */
 class AggroMgr {
 public:
-	typedef std::vector<EntryPtr> Entries;
+	typedef std::vector<Entry> Entries;
 	typedef Entries::iterator EntriesIter;
 protected:
 	mutable Entries _entries;
@@ -42,7 +42,7 @@ public:
 	 * @param[in] amount The amount to increase the aggro for
 	 * @return The aggro @c Entry that was added or updated. Useful for changing the reduce type or amount.
 	 */
-	Entry* addAggro(AI& entity, float amount);
+	EntryPtr addAggro(AI& entity, float amount);
 
 	/**
 	 * @return All the aggro entries

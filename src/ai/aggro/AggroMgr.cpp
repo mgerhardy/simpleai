@@ -15,9 +15,9 @@ AggroMgr::~AggroMgr() {
 }
 
 void AggroMgr::cleanupList() {
-	Entries::iterator::difference_type remove = 0;
-	for (Entries::iterator i = _entries.begin(); i != _entries.end(); ++i) {
-		const float aggroValue = (*i)->getAggro();
+	EntriesIter::difference_type remove = 0;
+	for (EntriesIter i = _entries.begin(); i != _entries.end(); ++i) {
+		const float aggroValue = i->getAggro();
 		if (aggroValue > 0.0f)
 			break;
 
@@ -36,7 +36,7 @@ void AggroMgr::cleanupList() {
 
 void AggroMgr::update(long deltaMillis) {
 	for (EntriesIter i = _entries.begin(); i != _entries.end(); ++i) {
-		_dirty |= (*i)->reduceByTime(deltaMillis);
+		_dirty |= i->reduceByTime(deltaMillis);
 	}
 
 	if (_dirty) {
@@ -53,16 +53,16 @@ public:
 			_id(id) {
 	}
 
-	bool operator()(const EntryPtr &n1) {
-		return n1->getCharacterId() == _id;
+	bool operator()(const Entry &n1) {
+		return n1.getCharacterId() == _id;
 	}
 };
 
-static bool EntrySorter(const EntryPtr& a, const EntryPtr& b) {
-	if (a->getAggro() > b->getAggro())
+static bool EntrySorter(const Entry& a, const Entry& b) {
+	if (a.getAggro() > b.getAggro())
 		return false;
-	if (::fabs(a->getAggro() - b->getAggro()) < 0.0000001f)
-		return a->getCharacterId() < b->getCharacterId();
+	if (::fabs(a.getAggro() - b.getAggro()) < 0.0000001f)
+		return a.getCharacterId() < b.getCharacterId();
 	return true;
 }
 
@@ -76,27 +76,26 @@ inline void AggroMgr::sort() const {
 Entry* AggroMgr::addAggro(AI& entity, float amount) {
 	const CharacterId id = entity.getCharacter().getId();
 	const CharacterIdPredicate p(id);
-	Entries::const_iterator i = std::find_if(_entries.begin(), _entries.end(), p);
+	EntriesIter i = std::find_if(_entries.begin(), _entries.end(), p);
 	if (i == _entries.end()) {
-		Entry* e = new Entry(id, amount);
-		const EntryPtr newEntry(e);
+		const Entry newEntry(id, amount);
 		_entries.push_back(newEntry);
 		_dirty = true;
-		return e;
+		return &_entries[_entries.size() - 1];
 	}
 
-	(*i)->addAggro(amount);
+	i->addAggro(amount);
 	_dirty = true;
-	return i->get();
+	return &*i;
 }
 
 EntryPtr AggroMgr::getHighestEntry() const {
 	if (_entries.empty())
-		return EntryPtr();
+		return nullptr;
 
 	sort();
 
-	return _entries.back();
+	return &_entries.back();
 }
 
 }
