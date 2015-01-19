@@ -11,7 +11,10 @@ bool IsCloseToGroup::evaluate(const AI& entity) {
 	if (_distance < 0.0f)
 		return false;
 
-	return entity.getGroupMgr().getPosition(_groupId).distance(entity.getCharacter().getPosition()) <= _distance;
+	const Vector3f& pos = entity.getGroupMgr().getPosition(_groupId);
+	if (pos.isInfinite())
+		return false;
+	return pos.distance(entity.getCharacter().getPosition()) <= _distance;
 }
 
 CONDITION_FACTORY_IMPL(IsCloseToGroup)

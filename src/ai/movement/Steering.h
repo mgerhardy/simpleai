@@ -41,6 +41,8 @@ public:
 	}
 
 	MoveVector execute () const override {
+		if (_target.isInfinite())
+			return MoveVector(_target, 0.0f);
 		Vector3f v = _target - _character.getPosition();
 		if (v.squareLength() > 0) {
 			v.normalize();
@@ -63,6 +65,8 @@ public:
 	}
 
 	MoveVector execute () const override {
+		if (_target.isInfinite())
+			return MoveVector(_target, 0.0f);
 		Vector3f v = _character.getPosition();
 		v -= _target;
 		if (v.squareLength() > 0) {
@@ -149,6 +153,9 @@ public:
 			const WeightedData& wd = *i;
 			const float weight = wd.weight;
 			const MoveVector& mv = wd.steering->execute();
+			if (mv.getVector().isInfinite())
+				continue;
+
 			vecBlended += mv.getVector() * weight;
 			angularBlended += mv.getRotation() * weight;
 			totalWeight += weight;
