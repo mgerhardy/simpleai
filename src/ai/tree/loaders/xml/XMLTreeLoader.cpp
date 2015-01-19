@@ -21,7 +21,7 @@ bool XMLTreeLoader::init(const std::string& xmlData) {
 			_error = "unexpected node type";
 			return false;
 		}
-		if (!::strcmp("node", e->Name())) {
+		if (::strcmp("node", e->Name())) {
 			_error = "unexpected node name";
 			return false;
 		}

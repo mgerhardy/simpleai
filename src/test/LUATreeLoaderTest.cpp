@@ -14,5 +14,5 @@ class LUATreeLoaderTest: public TestSuite {
 TEST_F(LUATreeLoaderTest, testLoad) {
 	ai::AIRegistry registry;
 	ai::LUATreeLoader loader(registry);
-	ASSERT_TRUE(loader.init(TREE));
+	ASSERT_TRUE(loader.init(TREE)) << loader.getError();
 }
