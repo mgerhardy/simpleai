@@ -156,6 +156,7 @@ struct Vector3f {
 	}
 
 	static Vector3f ZERO;
+	static Vector3f INVALID;
 };
 
 inline std::ostream& operator<<(std::ostream& output, const Vector3f& p) {
