@@ -20,8 +20,20 @@ tests_SOURCES = \
 	gtest/src/gtest-test-part.cc \
 	gtest/src/gtest-typed-test.cc
 
+if AI_ENABLE_LUA
+AM_CPPFLAGS += -I$(top_builddir)/src/libs/lua
+tests_SOURCES += \
+	LUATreeLoaderTest.cpp
+endif
+
+if AI_ENABLE_XML
+AM_CPPFLAGS += -I$(top_builddir)/src/libs/xml
+tests_SOURCES += \
+	XMLTreeLoaderTest.cpp
+endif
+
 tests_LDADD = \
 	../ai/libsimpleai.la
 
-tests_CPPFLAGS = -I$(top_srcdir)/src/ai -I$(top_builddir)/src/ai -I$(top_builddir)/src/test/gtest/include -I$(top_builddir)/src/test/gtest
-tests_LDFLAGS = -pthread
+tests_CPPFLAGS = @PTHREAD_CFLAGS@ -I$(top_srcdir)/src/ai -I$(top_builddir)/src/ai -I$(top_builddir)/src/test/gtest/include -I$(top_builddir)/src/test/gtest
+tests_LDFLAGS = @PTHREAD_LIBS@
