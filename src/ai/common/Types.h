@@ -12,6 +12,18 @@
 #define AI_EXCEPTIONS 0
 #endif
 
+#ifdef _WIN32
+#	ifdef SIMPLEAI_EXPORT
+#		define SIMPLEAI_LIB __declspec(dllexport)
+#	elif defined(SIMPLEAI_IMPORT)
+#		define SIMPLEAI_LIB __declspec(dllimport)
+#	else
+#		define SIMPLEAI_LIB
+#	endif
+#else
+#	define SIMPLEAI_LIB
+#endif
+
 namespace ai {
 
 /**
