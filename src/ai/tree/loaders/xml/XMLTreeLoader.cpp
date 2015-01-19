@@ -9,9 +9,6 @@ XMLTreeLoader::XMLTreeLoader(const IAIFactory& aiFactory) :
 		ITreeLoader(aiFactory) {
 }
 
-XMLTreeLoader::~XMLTreeLoader() {
-}
-
 bool XMLTreeLoader::init(const std::string& xmlData) {
 	tinyxml2::XMLDocument doc(false);
 	const int status = doc.Parse(xmlData.c_str());

@@ -14,7 +14,6 @@ public:
 	 * @brief this will initialize the loader once with all the defined behaviours from the given xml data.
 	 */
 	bool init(const std::string& xmlData);
-	virtual ~XMLTreeLoader();
 };
 
 }

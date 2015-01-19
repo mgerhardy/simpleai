@@ -8,9 +8,6 @@ LUATreeLoader::LUATreeLoader(const IAIFactory& aiFactory) :
 		ITreeLoader(aiFactory) {
 }
 
-LUATreeLoader::~LUATreeLoader() {
-}
-
 bool LUATreeLoader::init(const std::string& luaString) {
 	LUA lua;
 	luaL_Reg createTree = { "createTree", luaMain_CreateTree };
