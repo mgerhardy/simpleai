@@ -4,11 +4,11 @@
 namespace {
 const char *TREE = "<?xml version=\"1.0\" standalone=\"no\" ?>"
 		"<behaviours>"
-		"<node type=\"PrioritySelector\" id=\"example1\">"
-		"<node type=\"Idle\" id=\"example1-idle\" />"
+		"<node type=\"PrioritySelector\" name=\"example1\">"
+		"<node type=\"Idle\" name=\"example1-idle\" />"
 		"</node>"
-		"<node type=\"PrioritySelector\" id=\"example2\">"
-		"<node type=\"Idle\" id=\"example2-idle\" />" // TODO: condition
+		"<node type=\"PrioritySelector\" name=\"example2\">"
+		"<node type=\"Idle\" name=\"example2-idle\" />" // TODO: condition
 		"</node>"
 		"</behaviours>";
 }

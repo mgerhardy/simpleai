@@ -30,6 +30,17 @@ bool XMLTreeLoader::init(const std::string& xmlData) {
 			_error = "node has no type attribute";
 			return false;
 		}
+		const char *name = e->Attribute("name");
+		if (type == nullptr) {
+			_error = "node has no name attribute";
+			return false;
+		}
+		TreeNodeParser parser(_aiFactory, type);
+		const TreeNodePtr& treeNode = parser.getTreeNode(name);
+		if (!treeNode) {
+			_error = "Could not create a node for " + std::string(type);
+			return false;
+		}
 	}
 	/** @todo implement parsing */
 	return status == tinyxml2::XML_NO_ERROR;
