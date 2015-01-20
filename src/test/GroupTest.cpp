@@ -1,26 +1,21 @@
 #include "GroupTest.h"
 
 class GroupMgrTest: public TestSuite {
-protected:
-	std::vector<std::shared_ptr<TestEntity> > _ais;
-	ai::GroupMgr _groupMgr;
-	const ai::GroupId _id = 1;
-public:
-	virtual void SetUp() override {
-		TestSuite::SetUp();
-		const int max = 10000;
-		_ais.reserve(max);
-		for (int i = 1; i <= max; ++i) {
-			const ai::CharacterId id = i;
-			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _groupManager);
-			_ais.push_back(std::shared_ptr<TestEntity>(e));
-			e->setPosition(ai::Vector3f(3.0f, 3.0f, 0.0f));
-			_groupMgr.add(_id, e);
-		}
-	}
 };
 
 TEST_F(GroupMgrTest, testMassGroupAveragePosition) {
+	std::vector<std::shared_ptr<TestEntity> > _ais;
+	ai::GroupMgr _groupMgr;
+	const ai::GroupId _id = 1;
+	const int max = 10000;
+	_ais.reserve(max);
+	for (int i = 1; i <= max; ++i) {
+		const ai::CharacterId id = i;
+		TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _groupManager);
+		_ais.push_back(std::shared_ptr<TestEntity>(e));
+		e->setPosition(ai::Vector3f(3.0f, 3.0f, 0.0f));
+		_groupMgr.add(_id, e);
+	}
 	const ai::Vector3f& avg = _groupMgr.getPosition(_id);
 	ASSERT_EQ(ai::Vector3f(3.0f, 3.0f, 0.0f), avg);
 }
