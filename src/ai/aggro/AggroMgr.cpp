@@ -28,10 +28,14 @@ void AggroMgr::cleanupList() {
 		return;
 
 	const int size = static_cast<int>(_entries.size());
-	if (size == remove)
+	if (size == remove) {
 		_entries.clear();
-	else
-		_entries.erase(_entries.begin(), _entries.begin() + remove);
+		return;
+	}
+
+	EntriesIter i = _entries.begin();
+	std::advance(i, remove);
+	_entries.erase(_entries.begin(), i);
 }
 
 void AggroMgr::update(long deltaMillis) {
@@ -81,7 +85,7 @@ Entry* AggroMgr::addAggro(AI& entity, float amount) {
 		const Entry newEntry(id, amount);
 		_entries.push_back(newEntry);
 		_dirty = true;
-		return &_entries[_entries.size() - 1];
+		return &_entries.back();
 	}
 
 	i->addAggro(amount);
