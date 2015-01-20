@@ -135,7 +135,7 @@ struct Vector3f {
 	}
 
 	inline bool isInfinite() const {
-		return x == std::numeric_limits<float>::infinity() || y == std::numeric_limits<float>::infinity() || z == std::numeric_limits<float>::infinity();
+		return ::isinf(x) || ::isinf(y) || ::isinf(z);
 	}
 
 	inline bool operator ==(const Vector3f& other) const {
