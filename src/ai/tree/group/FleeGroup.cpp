@@ -12,6 +12,8 @@ TreeNodeStatus FleeGroup::doAction(AI& entity, long deltaMillis) {
 
 	const movement::GroupFlee w(entity, chr.getSpeed(), _groupId);
 	const MoveVector& mv = w.execute();
+	if (mv.getVector().isInfinite())
+		return FAILED;
 
 	const float deltaSeconds = static_cast<float>(deltaMillis) / 1000.0f;
 	chr.setPosition(chr.getPosition() + (mv.getVector() * deltaSeconds));

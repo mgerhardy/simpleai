@@ -96,10 +96,12 @@ public:
 };
 
 inline void ICharacter::setPosition(const Vector3f& position) {
+	ai_assert(!position.isInfinite(), "invalid position");
 	_position = position;
 }
 
 inline void ICharacter::setPosition(Vector3f&& position) {
+	ai_assert(!position.isInfinite(), "invalid position");
 	_position = std::move(position);
 }
 
