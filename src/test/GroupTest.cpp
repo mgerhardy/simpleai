@@ -20,6 +20,11 @@ public:
 	}
 };
 
+TEST_F(GroupMgrTest, testMassGroupAveragePosition) {
+	const ai::Vector3f& avg = _groupMgr.getPosition(_id);
+	ASSERT_EQ(ai::Vector3f(3.0f, 3.0f, 0.0f), avg);
+}
+
 class GroupTest: public TestSuite {
 public:
 	void doMassTest(int max) {
@@ -112,11 +117,6 @@ TEST_F(GroupTest, testGroupAveragePosition) {
 	ASSERT_TRUE(groupMgr.add(id, &entity2));
 	avg = groupMgr.getPosition(id);
 	ASSERT_EQ(ai::Vector3f(2.0f, 2.0f, 0.0f), avg);
-}
-
-TEST_F(GroupMgrTest, testMassGroupAveragePosition) {
-	const ai::Vector3f& avg = _groupMgr.getPosition(_id);
-	ASSERT_EQ(ai::Vector3f(3.0f, 3.0f, 0.0f), avg);
 }
 
 TEST_F(GroupTest, testGroupMass1000) {
