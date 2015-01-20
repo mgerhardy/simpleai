@@ -153,6 +153,7 @@ AC_OUTPUT(
 	src/test/Makefile
 	src/libs/Makefile
 	src/libs/lua/Makefile
+	src/libs/tinyxml2/Makefile
 	docs/Makefile
 	libsimpleai.pc
 )

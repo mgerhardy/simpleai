@@ -1,6 +1,8 @@
 bin_PROGRAMS = \
 	tests
 
+AM_CPPFLAGS =
+
 tests_SOURCES = \
 	TestAll.cpp \
 	TestShared.cpp \
