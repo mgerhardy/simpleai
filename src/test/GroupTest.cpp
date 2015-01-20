@@ -4,26 +4,25 @@ class GroupMgrTest: public TestSuite {
 };
 
 TEST_F(GroupMgrTest, testMassGroupAveragePosition) {
-	std::vector<std::shared_ptr<TestEntity> > _ais;
-	ai::GroupMgr _groupMgr;
-	const ai::GroupId _id = 1;
+	std::vector<std::shared_ptr<TestEntity> > ais;
+	const ai::GroupId groupId = 1;
 	const ai::Vector3f pos1(3.0f, 3.0f, 0.0f);
 	const ai::Vector3f pos2(300.0f, 300.0f, 0.0f);
 	for (int i = 1; i <= 2; ++i) {
 		const ai::CharacterId id = i;
 		TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _groupManager);
-		_ais.push_back(std::shared_ptr<TestEntity>(e));
+		ais.push_back(std::shared_ptr<TestEntity>(e));
 		e->setPosition(pos1);
-		_groupMgr.add(_id, e);
+		_groupManager.add(groupId, e);
 	}
 	for (int i = 3; i <= 4; ++i) {
 		const ai::CharacterId id = i;
 		TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _groupManager);
-		_ais.push_back(std::shared_ptr<TestEntity>(e));
+		ais.push_back(std::shared_ptr<TestEntity>(e));
 		e->setPosition(pos2);
-		_groupMgr.add(_id, e);
+		_groupManager.add(groupId, e);
 	}
-	const ai::Vector3f& avg = _groupMgr.getPosition(_id);
+	const ai::Vector3f& avg = _groupManager.getPosition(groupId);
 	const ai::Vector3f pos = pos1 + pos2;
 
 	ASSERT_EQ(0.5f * pos, avg);
