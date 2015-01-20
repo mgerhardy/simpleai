@@ -33,9 +33,9 @@ TEST_F(MovementTest, testWeightedSteering) {
 
 	ai::movement::WeightedSteering w(s);
 	const ai::MoveVector& mv = w.execute();
-	EXPECT_NEAR(2.25f, mv.getRotation(), 0.01f);
-	EXPECT_NEAR(fmodf(2.25f, (float)ai::M_2PI), mv.getOrientation(1.0f), 0.01f);
+	EXPECT_NEAR(11.21f, mv.getRotation(), 0.01f);
+	EXPECT_NEAR(fmodf(11.21f, (float)ai::M_2PI), mv.getOrientation(1.0f), 0.01f);
 	const ai::Vector3f& v = mv.getVector();
-	const ai::Vector3f expected(1.68294f, 0.0f, 1.0806f);
+	const ai::Vector3f expected(8.41471f, 0.0f, 5.40302f);
 	ASSERT_EQ(expected, v);
 }
