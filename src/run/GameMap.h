@@ -17,14 +17,6 @@ private:
 	Entities _entities;
 	MUTEX(_mutex);
 
-	// returns a random start position within the boundaries
-	inline ai::Vector3f getStartPosition() const {
-		const int x = (rand() % (2 * _size)) - _size;
-		const float y = 0.0f;
-		const int z = (rand() % (2 * _size)) - _size;
-		return ai::Vector3f(static_cast<float>(x), y, static_cast<float>(z));
-	}
-
 public:
 	GameMap(int size, const std::string& name, ai::Server& server) :
 			_size(size), _zone(name), _server(server) {
@@ -64,8 +56,6 @@ public:
 		}
 		ai::AI& ai = *entity;
 		_zone.addAI(&ai);
-		// pick some random start position
-		entity->setPosition(getStartPosition());
 		return entity;
 	}
 
