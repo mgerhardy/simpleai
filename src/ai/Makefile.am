@@ -151,7 +151,7 @@ AM_CPPFLAGS += -I$(top_builddir)/src/libs/lua
 endif
 
 if AI_ENABLE_XML
-AM_CPPFLAGS += -I$(top_builddir)/src/xml/tinyxml2
+AM_CPPFLAGS += -I$(top_builddir)/src/libs/tinyxml2
 endif
 
 libsimpleai_la_CXXFLAGS = @PTHREAD_CFLAGS@ $(AM_CXXFLAGS) -Wall -pedantic -Wextra -Wabi -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-declarations -Wmissing-format-attribute -Wno-long-long -Woverloaded-virtual -Wpacked -Wredundant-decls -Wshadow -Wsign-promo -Wno-sign-compare
@@ -165,5 +165,5 @@ libsimpleai_la_LIBADD += ../libs/lua/liblua.la
 endif
 
 if AI_ENABLE_XML
-libsimpleai_la_LIBADD += ../libs/lua/libtinyxml2.la
+libsimpleai_la_LIBADD += ../libs/tinyxml2/libtinyxml2.la
 endif
