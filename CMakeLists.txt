@@ -9,6 +9,11 @@ option(SIMPLEAI_LUA "Compile with lua support" ON)
 option(SIMPLEAI_XML "Compile with xml support" OFF)
 option(SIMPLEAI_EXCEPTIONS "Compile with exception support" OFF)
 
+if (${CMAKE_EXTRA_GENERATOR} MATCHES "Eclipse CDT4")
+	add_definitions(-DCMAKE_CXX_COMPILER_ARG1=-std=c++11)
+	add_definitions(-DCMAKE_ECLIPSE_GENERATE_SOURCE_PROJECT=TRUE)
+endif()
+
 if (SIMPLEAI_EXCEPTIONS)
 	add_definitions(-DAI_EXCEPTIONS=1)
 	message(STATUS "Build with exception support")
