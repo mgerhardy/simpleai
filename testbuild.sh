@@ -25,6 +25,11 @@ run_configure() {
 
 run_configure --enable-exceptions --enable-lua --enable-xml --enable-tests --enable-run
 run_configure --disable-exceptions --enable-lua --enable-xml --enable-tests --enable-run
+run_configure --disable-lua --enable-xml --enable-tests --enable-run
+run_configure --enable-lua --disable-xml --enable-tests --enable-run
+run_configure --disable-lua --disable-xml --enable-tests --enable-run
+run_configure --disable-tests
+run_configure --disable-run
 
 run_cmake() {
 	echo "===========================START========================"
