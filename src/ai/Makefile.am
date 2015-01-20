@@ -162,6 +162,9 @@ libsimpleai_la_LIBADD = @MATH_LIBS@ @PTHREAD_LIBS@
 
 if AI_ENABLE_LUA
 libsimpleai_la_LIBADD += ../libs/lua/liblua.la
+if !AI_EXCEPTIONS
+libsimpleai_la_CXXFLAGS += -DLUA_USE_LONGJMP
+endif
 endif
 
 if AI_ENABLE_XML

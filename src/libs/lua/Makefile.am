@@ -64,6 +64,10 @@ liblua_la_SOURCES = \
 
 liblua_la_CFLAGS =
 
+if !AI_EXCEPTIONS
+liblua_la_CFLAGS += -DLUA_USE_LONGJMP
+endif
+
 liblua_la_LDFLAGS =
 
 liblua_la_LIBADD =

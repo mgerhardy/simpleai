@@ -2,7 +2,7 @@ AC_INIT(simpleai, 0.1, mgerhardy@github)
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_HEADER([src/ai/Config.h])
 
-AM_INIT_AUTOMAKE([foreign])
+AM_INIT_AUTOMAKE([foreign subdir-objects])
 AC_SUBST(VERSION)
 
 # store current user given compiler flags to avoid default setup via AC_PROG_CXX
@@ -61,6 +61,7 @@ else
     AC_SUBST([AI_EXCEPTIONS],1)
     AM_CXXFLAGS="-fexceptions $AM_CXXFLAGS"
 fi
+AM_CONDITIONAL(AI_EXCEPTIONS,test "x$enable_exceptions" = "xyes")
 AC_MSG_RESULT([$enable_exceptions])
 
 AC_MSG_CHECKING([whether to build with gprof support])
