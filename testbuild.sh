@@ -11,15 +11,15 @@ run_configure() {
 	echo "===========================START========================"
 	echo "configure $*"
 	echo "clean"
-	git clean -fdx 2>1 >> testbuild.log
+	git clean -fdx >> testbuild.log 2>&1
 	set +e
 	echo "autogen"
-	./autogen.sh 2>1 >> testbuild.log
+	./autogen.sh >> testbuild.log 2>&1
 	set -e
 	echo "configure"
-	./configure $* 2>&1 >> testbuild.log
+	./configure $* >> testbuild.log 2>&1
 	echo "make"
-	make -j ${JOBS} 2>&1 >> testbuild.log
+	make -j ${JOBS} >> testbuild.log 2>&1
 	echo "============================DONE========================"
 }
 
@@ -29,9 +29,9 @@ run_configure --disable-exceptions --enable-lua --enable-xml --enable-tests --en
 run_cmake() {
 	echo "===========================START========================"
 	echo "cmake $*"
-	git clean -fdx 2>&1 >> testbuild.log
-	cmake CMakeLists.txt $* 2>&1 >> testbuild.log
-	make -j ${JOBS} 2>&1 >> testbuild.log
+	git clean -fdx >> testbuild.log 2>&1
+	cmake CMakeLists.txt $* >> testbuild.log 2>&1
+	make -j ${JOBS} >> testbuild.log 2>&1
 	echo "============================DONE========================"
 }
 
