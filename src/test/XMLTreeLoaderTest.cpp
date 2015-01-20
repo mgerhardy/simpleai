@@ -6,12 +6,13 @@ const char *TREE = "<?xml version=\"1.0\" standalone=\"no\" ?>"
 	"<behaviours>"
 		"<behaviour name=\"example1\">"
 			"<node type=\"PrioritySelector\" name=\"root\">"
-				"<node type=\"Idle\" param=\"3000\" name=\"idle\" condition=\"True\" conditionparam=\"\" />"
+				"<node type=\"Idle{3000}\" name=\"idle\" condition=\"HasEnemies{3}\" />"
 			"</node>"
 		"</behaviour>"
 		"<behaviour name=\"example2\">"
 			"<node type=\"PrioritySelector\" name=\"root\">"
-				"<node type=\"Idle\" name=\"idle\" />"
+				"<node type=\"Idle{3000}\" name=\"idle\" />"
+				"<node type=\"Wander\" name=\"wander\" />"
 			"</node>"
 		"</behaviour>"
 	"</behaviours>";
@@ -32,6 +33,11 @@ TEST_F(XMLTreeLoaderTest, testLoad) {
 	ASSERT_EQ(1, childrenAmount) << "expected amount of children";
 	ASSERT_EQ("idle", children[0]->getName()) << "unexpected child node name";
 	ASSERT_NE(nullptr, children[0]->getCondition()) << "condition not parsed";
-	ASSERT_EQ("True", children[0]->getCondition()->getName()) << "unexpected condition name";
-	ASSERT_NE(nullptr, loader.load("example2")) << "Could not find the espected behaviour";
+	ASSERT_EQ("HasEnemies", children[0]->getCondition()->getName()) << "unexpected condition name";
+	const ai::TreeNodePtr& example2 = loader.load("example2");
+	ASSERT_NE(nullptr, example2.get()) << "Could not find the espected behaviour";
+	ASSERT_EQ("root", example2->getName()) << "unexpected root node name";
+	const ai::TreeNodes& children2 = example2->getChildren();
+	const int childrenAmount2 = children2.size();
+	ASSERT_EQ(2, childrenAmount2) << "expected amount of children";
 }

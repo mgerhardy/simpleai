@@ -22,9 +22,10 @@ TreeNodePtr loadSubTreeFromXML (const IAIFactory& aiFactory, tinyxml2::XMLElemen
 		return TreeNodePtr();
 	}
 
-	const char *param = e->Attribute("param", nullptr);
-	if (param == nullptr) {
-		param = "";
+	TreeNodeParser nodeParser(aiFactory, type);
+	const TreeNodePtr& node = nodeParser.getTreeNode(name);
+	if (!node) {
+		return TreeNodePtr();
 	}
 
 	const char *condition = e->Attribute("condition", nullptr);
@@ -32,15 +33,14 @@ TreeNodePtr loadSubTreeFromXML (const IAIFactory& aiFactory, tinyxml2::XMLElemen
 		condition = "True";
 	}
 
-	const char *conditionParameter = e->Attribute("conditionparam", nullptr);
-	if (conditionParameter == nullptr) {
-		conditionParameter = "";
+	ConditionParser conditionParser(aiFactory, condition);
+	const ConditionPtr& conditionPtr = conditionParser.getCondition();
+	if (!conditionPtr.get()) {
+		return TreeNodePtr();
 	}
 
-	// TODO: parsers/filters
-	ConditionFactoryContext condCtx(conditionParameter);
-	TreeNodeFactoryContext ctx(name, param, aiFactory.createCondition(condition, condCtx));
-	return aiFactory.createNode(type, ctx);
+	node->setCondition(conditionPtr);
+	return node;
 }
 
 TreeNodePtr loadTreeFromXML (const IAIFactory& aiFactory, tinyxml2::XMLElement* rootNode) {
