@@ -17,7 +17,10 @@ private:
 
 	IsGroupLeader(const std::string& parameters) :
 		ICondition("IsGroupLeader", parameters) {
-		_groupId = std::stoi(_parameters);
+		if (_parameters.empty())
+			_groupId = -1;
+		else
+			_groupId = std::stoi(_parameters);
 	}
 public:
 	virtual ~IsGroupLeader() {
