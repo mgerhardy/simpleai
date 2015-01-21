@@ -7,12 +7,14 @@ function init ()
 			group1Node:addNode("Wander", "wander")
 		local group2Node = rootNodeExample:addNode("PrioritySelector", "group2")
 			group2Node:setCondition("IsInGroup{2}")
-			group2Node:addNode("FollowGroup{2}", "followowngroup"):setCondition("And(Not(IsCloseToGroup{2,20}),Not(IsCloseToGroup{1,30}))")
-			group2Node:addNode("FleeGroup{1}", "fleefromgroup1")
+			group2Node:addNode("FleeGroup{1}", "fleefromgroup1"):setCondition("IsCloseToGroup{1,30}")
+			group2Node:addNode("Wander", "wander"):setCondition("IsGroupLeader{2}")
+			group2Node:addNode("FollowGroup{2}", "followowngroup"):setCondition("Not(IsCloseToGroup{2,20})")
 		local group3Node = rootNodeExample:addNode("Parallel", "group3")
 			group3Node:setCondition("IsInGroup{3}")
+			group3Node:addNode("FleeGroup{2}", "fleefromgroup2"):setCondition("IsCloseToGroup{2,30}");
+			group3Node:addNode("Wander", "wander"):setCondition("IsGroupLeader{3}")
 			group3Node:addNode("FollowGroup{1}", "followgroup1"):setCondition("Not(IsCloseToGroup{2,20})")
-			group3Node:addNode("FleeGroup{2}", "fleefromgroup2")
 
 --	rootNode:addNode("Idle{3000}", "idle3000")
 --	local prioSelector = rootNode:addNode("PrioritySelector", "prio2");
