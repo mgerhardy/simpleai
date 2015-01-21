@@ -22,12 +22,7 @@ GameEntity::GameEntity(const ai::CharacterId& id,
 	setPosition(getStartPosition());
 	setAttribute(ai::attributes::NAME, "Example " + std::to_string(id));
 	setSpeed(50.0f);
-	if (id == 0)
-		_groupId = 1;
-	else if (id < 10)
-		_groupId = 2;
-	else
-		_groupId = 3;
+	_groupId = (id % 3) + 1;
 
 	setAttribute(ai::attributes::GROUP, std::to_string(_groupId));
 	setAttribute(ai::attributes::ID, std::to_string(getId()));
