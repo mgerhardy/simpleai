@@ -17,7 +17,7 @@ TreeNodeStatus FollowGroup::doAction(AI& entity, long deltaMillis) {
 
 	const float deltaSeconds = static_cast<float>(deltaMillis) / 1000.0f;
 	chr.setPosition(chr.getPosition() + (mv.getVector() * deltaSeconds));
-	chr.setOrientation(static_cast<float>(mv.getVector().orientation()));
+	chr.setOrientation(static_cast<float>(mv.getOrientation(deltaSeconds)));
 	return FINISHED;
 }
 
