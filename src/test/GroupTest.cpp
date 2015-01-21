@@ -29,24 +29,34 @@ TEST_F(GroupMgrTest, testMassGroupAveragePosition) {
 }
 
 class GroupTest: public TestSuite {
+private:
 public:
-	void doMassTest(int max) {
-		std::vector<std::shared_ptr<TestEntity> > ais(max);
-		const ai::GroupId groupId = 1;
-		ai::GroupMgr mgr;
+	typedef std::vector<std::shared_ptr<TestEntity> > TestEntities;
+	inline void addMass(int max, ai::GroupId groupId, TestEntities& ais, ai::GroupMgr& mgr) const {
 		for (int i = 1; i <= max; ++i) {
 			const ai::CharacterId id = i;
-			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _groupManager);
+			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), mgr);
 			ais.push_back(std::shared_ptr<TestEntity>(e));
 			mgr.add(groupId, e);
 		}
 		ASSERT_EQ(max, mgr.getGroupSize(groupId));
+	}
 
+	inline void remove(ai::GroupId groupId, TestEntities& ais, ai::GroupMgr& mgr) const {
 		for (auto i = ais.begin(); i != ais.end(); ++i) {
-			mgr.remove(1, i->get());
+			mgr.remove(groupId, i->get());
 		}
 		const int nEmpty = mgr.getGroupSize(groupId);
-		ASSERT_EQ(0, nEmpty);
+		ASSERT_EQ(0, nEmpty) << "Unexpected group size for " << groupId;
+	}
+
+	void doMassTest(int max) {
+		TestEntities ais(max);
+		const ai::GroupId groupId = 1;
+		ai::GroupMgr mgr;
+
+		addMass(max, groupId, ais, mgr);
+		remove(groupId, ais, mgr);
 	}
 };
 
@@ -128,4 +138,34 @@ TEST_F(GroupTest, testGroupMass1000) {
 
 TEST_F(GroupTest, testGroupMass10000) {
 	doMassTest(10000);
+}
+
+class GroupMassTest: public GroupTest {
+protected:
+	GroupTest::TestEntities _ais;
+	const int _maxUsers = 100;
+	const int _maxGroups = 100;
+public:
+	virtual void SetUp() override {
+		GroupTest::SetUp();
+		_ais.clear();
+		_ais.reserve(_maxUsers * _maxGroups);
+		for (int i = 0; i < _maxGroups;++i) {
+			const ai::GroupId groupId = i;
+			addMass(_maxUsers, groupId, _ais, _groupManager);
+		}
+	}
+
+	virtual void TearDown() override {
+		GroupTest::TearDown();
+		for (int i = 0; i < _maxGroups;++i) {
+			const ai::GroupId groupId = i;
+			remove(groupId, _ais, _groupManager);
+		}
+	}
+};
+
+TEST_F(GroupMassTest, testIsInAnyGroupMass100x100) {
+	std::shared_ptr<TestEntity> e = _ais.back();
+	ASSERT_TRUE(_groupManager.isInAnyGroup(*e));
 }

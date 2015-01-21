@@ -84,14 +84,13 @@ bool GroupMgr::isInAnyGroup(const ICharacter& character) const {
 }
 
 bool GroupMgr::isInGroup(GroupId id, const ICharacter& character) const {
-	bool inGroup = false;
-	auto func = [&] (const ICharacter& chr) {
-		if (chr.getId() == character.getId())
-			inGroup = true;
-		return !inGroup;
-	};
-	visit(id, func);
-	return inGroup;
+	ScopedReadLock scopedLock(_lock);
+	const GroupMembersConstIter& i = _members.find(id);
+	if (i == _members.end()) {
+		return false;
+	}
+	const GroupMembersSetConstIter& it = i->second.find(const_cast<ICharacter*>(&character));
+	return it != i->second.end();
 }
 
 }
