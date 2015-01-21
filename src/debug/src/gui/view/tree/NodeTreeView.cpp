@@ -21,6 +21,7 @@ NodeTreeView::NodeTreeView(AIDebugger& debugger) :
 }
 
 NodeTreeView::~NodeTreeView() {
+	setScene(nullptr);
 }
 
 void NodeTreeView::updateTreeWidget() {
