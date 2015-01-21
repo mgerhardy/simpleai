@@ -33,7 +33,7 @@ static bool optExists(char** begin, char** end, const std::string& option) {
 }
 
 static ai::example::GameMap *createMap(ai::GroupMgr& groupManager, int amount, ai::Server& server, const ai::TreeNodePtr& root, const std::string& name) {
-	ai::example::GameMap* map = new ai::example::GameMap(300, name, server);
+	ai::example::GameMap* map = new ai::example::GameMap(600, name, server);
 
 	for (int i = 0; i < amount; ++i) {
 		map->addEntity(new ai::example::GameEntity(id++, map, root, groupManager));
