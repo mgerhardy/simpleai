@@ -12,12 +12,6 @@ namespace ai {
 class ICharacter;
 
 typedef int GroupId;
-typedef std::set<ICharacter*> GroupMembersSet;
-typedef GroupMembersSet::iterator GroupMembersSetIter;
-typedef GroupMembersSet::const_iterator GroupMembersSetConstIter;
-typedef std::unordered_map<GroupId, GroupMembersSet> GroupMembers;
-typedef GroupMembers::iterator GroupMembersIter;
-typedef GroupMembers::const_iterator GroupMembersConstIter;
 
 /**
  * @brief Maintains the groups a @c ICharacter can be in.
@@ -26,6 +20,13 @@ typedef GroupMembers::const_iterator GroupMembersConstIter;
  */
 class GroupMgr {
 private:
+	typedef std::set<ICharacter*> GroupMembersSet;
+	typedef GroupMembersSet::iterator GroupMembersSetIter;
+	typedef GroupMembersSet::const_iterator GroupMembersSetConstIter;
+	typedef std::unordered_map<GroupId, GroupMembersSet> GroupMembers;
+	typedef GroupMembers::iterator GroupMembersIter;
+	typedef GroupMembers::const_iterator GroupMembersConstIter;
+
 	GroupMembersSet _empty;
 	GroupMembers _members;
 	ReadWriteLock _lock;
