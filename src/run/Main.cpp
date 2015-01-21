@@ -70,7 +70,7 @@ static void runServer(ai::Server* server) {
 }
 
 static void runDespawnSpawn(ai::example::GameMap* map, const ai::TreeNodePtr* root) {
-	const std::chrono::milliseconds delay(5000);
+	const std::chrono::milliseconds delay(15000);
 	while (!shutdownThreads) {
 		ai::example::GameEntity *rnd = map->getRandomEntity();
 		if (rnd != nullptr) {
