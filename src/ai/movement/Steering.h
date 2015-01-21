@@ -40,6 +40,10 @@ public:
 			ISteering(character, speed), _target(target) {
 	}
 
+	inline bool isValid () const {
+		return !_target.isInfinite();
+	}
+
 	MoveVector execute () const override {
 		if (_target.isInfinite())
 			return MoveVector(_target, 0.0f);
@@ -62,6 +66,10 @@ protected:
 public:
 	TargetFlee(const ICharacter& character, float speed, const Vector3f& target) :
 			ISteering(character, speed), _target(target) {
+	}
+
+	inline bool isValid () const {
+		return !_target.isInfinite();
 	}
 
 	MoveVector execute () const override {
