@@ -15,6 +15,21 @@ if (${CMAKE_EXTRA_GENERATOR} MATCHES "Eclipse CDT4")
 	add_definitions(-DCMAKE_ECLIPSE_VERSION=4.2)
 endif()
 
+find_package(Threads)
+
+option(SIMPLEAI_PROFILER "Use Google cpu profiler" OFF)
+
+if (SIMPLEAI_PROFILER)
+	FIND_LIBRARY(GOOGLE_PROFILER_LIB profiler)
+	FIND_LIBRARY(GOOGLE_TCMALLOC_LIB tcmalloc)
+	if (GOOGLE_PROFILER_LIB AND GOOGLE_TCMALLOC_LIB)
+		message(STATUS "Found Google profiler: ${GOOGLE_PROFILER_LIB} ${GOOGLE_TCMALLOC_LIB}")
+		add_definitions(-DAI_PROFILER)
+	else()
+		message(STATUS "Can't find Google profiler")
+	endif()
+endif()
+
 if (SIMPLEAI_EXCEPTIONS)
 	add_definitions(-DAI_EXCEPTIONS=1)
 	message(STATUS "Build with exception support")

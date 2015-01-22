@@ -26,7 +26,7 @@ find_package(Threads)
 
 include_directories(.)
 add_library(simpleai ${SRC})
-target_link_libraries(simpleai ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(simpleai ${CMAKE_THREAD_LIBS_INIT} ${GOOGLE_PROFILER_LIB} ${GOOGLE_TCMALLOC_LIB})
 if (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
 elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Darwin")
 elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")

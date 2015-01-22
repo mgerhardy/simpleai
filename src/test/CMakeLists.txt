@@ -22,7 +22,7 @@ if (SIMPLEAI_TEST)
 	endif()
 
 	add_executable(tests ${SRC})
-	target_link_libraries(tests simpleai ${CMAKE_THREAD_LIBS_INIT})
+	target_link_libraries(tests simpleai ${CMAKE_THREAD_LIBS_INIT} ${GOOGLE_PROFILER_LIB} ${GOOGLE_TCMALLOC_LIB})
 
 	if (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
 	elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Darwin")

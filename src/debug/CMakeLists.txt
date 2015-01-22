@@ -10,7 +10,26 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/../ai/")
 set(AUTOGEN_TARGETS_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/.moc")
 set(AUTOMOC_TARGETS_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/.moc")
 
+if (${CMAKE_EXTRA_GENERATOR} MATCHES "Eclipse CDT4")
+	add_definitions(-DCMAKE_CXX_COMPILER_ARG1=-std=c++11)
+	add_definitions(-DCMAKE_ECLIPSE_GENERATE_SOURCE_PROJECT=TRUE)
+	add_definitions(-DCMAKE_ECLIPSE_VERSION=4.2)
+endif()
+
 find_package(SimpleAI REQUIRED)
+
+option(SIMPLEAI_PROFILER "Use Google cpu profiler" OFF)
+
+if (SIMPLEAI_PROFILER)
+	FIND_LIBRARY(GOOGLE_PROFILER_LIB profiler)
+	FIND_LIBRARY(GOOGLE_TCMALLOC_LIB tcmalloc)
+	if (GOOGLE_PROFILER_LIB AND GOOGLE_TCMALLOC_LIB)
+		message(STATUS "Found Google profiler: ${GOOGLE_PROFILER_LIB} ${GOOGLE_TCMALLOC_LIB}")
+		add_definitions(-DAI_PROFILER)
+	else()
+		message(STATUS "Can't find Google profiler")
+	endif()
+endif()
 
 # Widgets finds its own dependencies.
 find_package(Qt5Widgets REQUIRED)
@@ -78,4 +97,4 @@ qt5_add_translation(simpleai_debugger_QM ${simpleai_debugger_TRANSLATIONS})
 qt5_add_resources(simpleai_debugger_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/data/resources.qrc)
 add_executable(simpleai-debugger ${simpleai_debugger_SOURCES} ${simpleai_debugger_QM} ${simpleai_debugger_RESOURCES} ${simpleai_debugger_HEADERS})
 qt5_use_modules(simpleai-debugger Widgets Gui Network)
-target_link_libraries(simpleai-debugger ${SIMPLEAI_LIBRARIES})
+target_link_libraries(simpleai-debugger ${SIMPLEAI_LIBRARIES} ${GOOGLE_PROFILER_LIB} ${GOOGLE_TCMALLOC_LIB})
