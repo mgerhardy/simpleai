@@ -21,8 +21,10 @@ TEST_F(MovementTest, testWander) {
 TEST_F(MovementTest, testWeightedSteering) {
 	ai::randomSeed(0);
 
+	ai::Zone zone("movementTest");
 	TestEntity entity(1, ai::TreeNodePtr());
 	entity.setOrientation(1.0f);
+	zone.addAI(&entity.getAI());
 
 	ai::movement::GroupFlee flee(entity, 10.0f, 1);
 	ai::movement::Wander wander(entity, 10.0f, 8.0f * M_PI);
