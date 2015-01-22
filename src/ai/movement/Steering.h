@@ -92,7 +92,7 @@ public:
 class GroupSeek: public TargetSeek {
 public:
 	GroupSeek(const AI& ai, float speed, GroupId groupId) :
-		TargetSeek(ai.getCharacter(), speed, ai.getGroupMgr().getPosition(groupId)) {
+		TargetSeek(ai.getCharacter(), speed, ai.getGroupPosition(groupId)) {
 	}
 };
 
@@ -102,7 +102,7 @@ public:
 class GroupFlee: public TargetFlee {
 public:
 	GroupFlee(const AI& ai, float speed, GroupId groupId) :
-		TargetFlee(ai.getCharacter(), speed, ai.getGroupMgr().getPosition(groupId)) {
+		TargetFlee(ai.getCharacter(), speed, ai.getGroupPosition(groupId)) {
 	}
 };
 

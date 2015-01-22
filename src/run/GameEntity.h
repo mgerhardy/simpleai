@@ -24,8 +24,9 @@ public:
 			const ai::TreeNodePtr& root);
 
 	~GameEntity () {
-		_ai.getGroupMgr().remove(_groupId, this);
 	}
+
+	void onAdd();
 
 	operator ai::AI& () {
 		return _ai;

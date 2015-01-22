@@ -9,14 +9,18 @@ AI::AI(ICharacter& character, const TreeNodePtr& behaviour) :
 }
 
 AI::~AI() {
+	Zone* local = _zone;
+	if (local != nullptr) {
+		local->getGroupMgr().removeFromAllGroups(&_character);
+	}
 }
 
-const GroupMgr& AI::getGroupMgr() const {
-	return getZone().getGroupMgr();
-}
+Vector3f AI::getGroupPosition(GroupId id) const {
+	Zone* local = _zone;
+	if (local == nullptr)
+		return Vector3f::INFINITE;
 
-GroupMgr& AI::getGroupMgr() {
-	return getZone().getGroupMgr();
+	return local->getGroupMgr().getPosition(id);
 }
 
 void AI::update(long dt, bool debuggingActive) {

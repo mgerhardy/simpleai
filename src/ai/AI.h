@@ -85,6 +85,7 @@ public:
 
 	void setZone(Zone* zone);
 	Zone& getZone() const;
+	bool hasZone() const;
 
 	/**
 	 * @brief don't update the entity as long as it is paused
@@ -99,6 +100,8 @@ public:
 	bool isPause() const;
 
 	bool isDebuggingActive() const;
+
+	Vector3f getGroupPosition(GroupId id) const;
 
 	/**
 	 * @brief Get the current behaviour for this ai
@@ -119,16 +122,7 @@ public:
 	/**
 	 * @return the @c Zone's @c GroupMgr instance to modify
 	 */
-	GroupMgr& getGroupMgr();
-
-	/**
-	 * @return the @c AggroMgr for this @c AI instance. Each @c AI instance has its own @c AggroMgr instance.
-	 */
 	const AggroMgr& getAggroMgr() const;
-	/**
-	 * @return the global @c GroupMgr instance to modify
-	 */
-	const GroupMgr& getGroupMgr() const;
 
 	/**
 	 * @brief @c FilteredEntities is holding a list of @c CharacterIds that were selected by the @c Select condition.
@@ -187,6 +181,10 @@ inline void AI::setZone(Zone* zone) {
 
 inline Zone& AI::getZone() const {
 	return *_zone;
+}
+
+inline bool AI::hasZone() const {
+	return _zone != nullptr;
 }
 
 }

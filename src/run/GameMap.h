@@ -56,6 +56,7 @@ public:
 		}
 		ai::AI& ai = *entity;
 		_zone.addAI(&ai);
+		entity->onAdd();
 		return entity;
 	}
 

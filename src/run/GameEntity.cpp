@@ -27,7 +27,9 @@ GameEntity::GameEntity(const ai::CharacterId& id,
 	setAttribute(ai::attributes::ID, std::to_string(getId()));
 	setAttribute("Damage", std::to_string(_damage));
 	setAttribute("Reloadtime", std::to_string(_attackDelay));
+}
 
+void GameEntity::onAdd() {
 	_ai.getZone().getGroupMgr().add(_groupId, this);
 }
 

@@ -45,7 +45,7 @@ static ai::example::GameMap *createMap(int amount, ai::Server& server, const ai:
 
 #ifndef AI_NO_THREADING
 static void runMap(ai::example::GameMap* map) {
-	const std::chrono::milliseconds delay(100);
+	const std::chrono::milliseconds delay(250);
 	auto timeLast = std::chrono::steady_clock::now();
 	while (!shutdownThreads) {
 		const auto timeNow = std::chrono::steady_clock::now();
