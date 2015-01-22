@@ -51,8 +51,8 @@ protected:
 	AI _ai;
 
 public:
-	ICharacter(CharacterId id, const ai::TreeNodePtr& root, ai::GroupMgr& groupManager) :
-			_id(id), _orientation(0.0f), _speed(0.0f), _ai(*this, root, groupManager) {
+	ICharacter(CharacterId id, const ai::TreeNodePtr& root) :
+			_id(id), _orientation(0.0f), _speed(0.0f), _ai(*this, root) {
 	}
 
 	virtual ~ICharacter() {

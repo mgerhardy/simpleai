@@ -16,6 +16,16 @@ GroupMgr::GroupMgr() {
 GroupMgr::~GroupMgr() {
 }
 
+void GroupMgr::update(uint32_t) {
+	ScopedReadLock scopedLock(_lock);
+	for (auto i = _groups.begin(); i != _groups.end(); ++i) {
+		Group& group = i->second;
+		Vector3f averagePosition = std::accumulate(group.members.begin(), group.members.end(), Vector3f(), AveragePositionFunctor());
+		averagePosition *= 1.0f / (float) group.members.size();
+		group.position = averagePosition;
+	}
+}
+
 bool GroupMgr::add(GroupId id, ICharacter* character) {
 	ScopedWriteLock scopedLock(_lock);
 	GroupsIter i = _groups.find(id);
@@ -57,16 +67,28 @@ bool GroupMgr::remove(GroupId id, ICharacter* character) {
 	return true;
 }
 
+bool GroupMgr::removeFromAllGroups(ICharacter* character) {
+	std::list<GroupId> groups;
+	{
+		ScopedReadLock scopedLock(_lock);
+		auto range = _groupMembers.equal_range(character);
+		for (auto it = range.first; it != range.second; ++it) {
+			groups.push_back(it->second);
+		}
+	}
+	for (GroupId groupId : groups) {
+		remove(groupId, character);
+	}
+	return true;
+}
+
 Vector3f GroupMgr::getPosition(GroupId id) const {
 	ScopedReadLock scopedLock(_lock);
 	const GroupsConstIter& i = _groups.find(id);
 	if (i == _groups.end())
 		return Vector3f::INFINITE;
 
-	// TODO: only those that are in the same zone - otherwise the avg pos doesn't make much sense
-	Vector3f averagePosition = std::accumulate(i->second.members.begin(), i->second.members.end(), Vector3f(), AveragePositionFunctor());
-	averagePosition *= 1.0f / (float) i->second.members.size();
-	return averagePosition;
+	return i->second.position;
 }
 
 bool GroupMgr::isGroupLeader(GroupId id, const ICharacter& character) const {

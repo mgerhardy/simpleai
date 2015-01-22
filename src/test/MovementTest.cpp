@@ -6,7 +6,7 @@ class MovementTest: public TestSuite {
 TEST_F(MovementTest, testWander) {
 	ai::randomSeed(0);
 
-	TestEntity entity(1, ai::TreeNodePtr(), _groupManager);
+	TestEntity entity(1, ai::TreeNodePtr());
 	entity.setOrientation(1.0f);
 
 	ai::movement::Wander w(entity, 10.0f, 8.0f * M_PI);
@@ -21,7 +21,7 @@ TEST_F(MovementTest, testWander) {
 TEST_F(MovementTest, testWeightedSteering) {
 	ai::randomSeed(0);
 
-	TestEntity entity(1, ai::TreeNodePtr(), _groupManager);
+	TestEntity entity(1, ai::TreeNodePtr());
 	entity.setOrientation(1.0f);
 
 	ai::movement::GroupFlee flee(entity, 10.0f, 1);

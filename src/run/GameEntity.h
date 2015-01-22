@@ -21,8 +21,7 @@ private:
 public:
 	GameEntity(const ai::CharacterId& id,
 			const ai::example::GameMap* map,
-			const ai::TreeNodePtr& root,
-			ai::GroupMgr& groupManager);
+			const ai::TreeNodePtr& root);
 
 	~GameEntity () {
 		_ai.getGroupMgr().remove(_groupId, this);

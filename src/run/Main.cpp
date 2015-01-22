@@ -17,7 +17,6 @@
 namespace {
 std::atomic_int id(1);
 std::atomic_bool shutdownThreads(false);
-ai::GroupMgr groupManager;
 }
 
 static std::string getOptParam(char** begin, char** end, const std::string& option, const std::string& defaultVal = "") {
@@ -32,11 +31,11 @@ static bool optExists(char** begin, char** end, const std::string& option) {
 	return std::find(begin, end, option) != end;
 }
 
-static ai::example::GameMap *createMap(ai::GroupMgr& groupManager, int amount, ai::Server& server, const ai::TreeNodePtr& root, const std::string& name) {
+static ai::example::GameMap *createMap(int amount, ai::Server& server, const ai::TreeNodePtr& root, const std::string& name) {
 	ai::example::GameMap* map = new ai::example::GameMap(600, name, server);
 
 	for (int i = 0; i < amount; ++i) {
-		map->addEntity(new ai::example::GameEntity(id++, map, root, groupManager));
+		map->addEntity(new ai::example::GameEntity(id++, map, root));
 	}
 
 	map->initializeAggro();
@@ -78,7 +77,7 @@ static void runDespawnSpawn(ai::example::GameMap* map, const ai::TreeNodePtr* ro
 			delete rnd;
 		}
 
-		map->addEntity(new ai::example::GameEntity(id++, map, *root, groupManager));
+		map->addEntity(new ai::example::GameEntity(id++, map, *root));
 		std::this_thread::sleep_for(delay);
 	}
 }
@@ -170,7 +169,7 @@ int main(int argc, char **argv) {
 
 	std::vector<ai::example::GameMap*> maps;
 	for (int i = 0; i < mapAmount; ++i) {
-		maps.push_back(createMap(groupManager, amount, server, root, "Map" + std::to_string(i)));
+		maps.push_back(createMap(amount, server, root, "Map" + std::to_string(i)));
 	}
 
 #ifdef AI_NO_THREADING
@@ -236,7 +235,7 @@ int main(int argc, char **argv) {
 					}
 				}
 
-				ai::example::GameEntity* ent = map->addEntity(new ai::example::GameEntity(id++, map, root, groupManager));
+				ai::example::GameEntity* ent = map->addEntity(new ai::example::GameEntity(id++, map, root));
 				std::cout << "spawned " << ent->getId() << " on map " << map->getName() << std::endl;
 			}
 		} else {

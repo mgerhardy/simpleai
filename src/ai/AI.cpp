@@ -1,13 +1,22 @@
 #include "AI.h"
 #include "tree/TreeNode.h"
+#include "server/Zone.h"
 
 namespace ai {
 
-AI::AI(ICharacter& character, const TreeNodePtr& behaviour, GroupMgr& groupManager) :
-		_behaviour(behaviour), _character(character), _groupManager(groupManager), _pause(false), _debuggingActive(false), _time(0L), _reset(false) {
+AI::AI(ICharacter& character, const TreeNodePtr& behaviour) :
+		_behaviour(behaviour), _character(character), _pause(false), _debuggingActive(false), _time(0L), _zone(nullptr), _reset(false) {
 }
 
 AI::~AI() {
+}
+
+const GroupMgr& AI::getGroupMgr() const {
+	return getZone().getGroupMgr();
+}
+
+GroupMgr& AI::getGroupMgr() {
+	return getZone().getGroupMgr();
 }
 
 void AI::update(long dt, bool debuggingActive) {

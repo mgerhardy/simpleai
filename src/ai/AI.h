@@ -11,6 +11,7 @@
 namespace ai {
 
 class ICharacter;
+class Zone;
 
 typedef std::vector<CharacterId> FilteredEntities;
 
@@ -59,21 +60,20 @@ protected:
 
 	ICharacter& _character;
 
-	GroupMgr& _groupManager;
-
 	bool _pause;
 	bool _debuggingActive;
 
 	long _time;
+
+	Zone* _zone;
 
 	ATOMIC(bool) _reset;
 public:
 	/**
 	 * @param character The binding to your game entity
 	 * @param behaviour The behaviour tree node that is applied to this ai entity
-	 * @param groupManager Some group manager implementation
 	 */
-	AI(ICharacter& character, const TreeNodePtr& behaviour, GroupMgr& groupManager);
+	AI(ICharacter& character, const TreeNodePtr& behaviour);
 	virtual ~AI();
 
 	/**
@@ -82,6 +82,9 @@ public:
 	 * time based tasks or conditions.
 	 */
 	virtual void update(long dt, bool debuggingActive);
+
+	void setZone(Zone* zone);
+	Zone& getZone() const;
 
 	/**
 	 * @brief don't update the entity as long as it is paused
@@ -114,7 +117,7 @@ public:
 	 */
 	AggroMgr& getAggroMgr();
 	/**
-	 * @return the global @c GroupMgr instance to modify
+	 * @return the @c Zone's @c GroupMgr instance to modify
 	 */
 	GroupMgr& getGroupMgr();
 
@@ -166,16 +169,8 @@ inline AggroMgr& AI::getAggroMgr() {
 	return _aggroList;
 }
 
-inline GroupMgr& AI::getGroupMgr() {
-	return _groupManager;
-}
-
 inline const AggroMgr& AI::getAggroMgr() const {
 	return _aggroList;
-}
-
-inline const GroupMgr& AI::getGroupMgr() const {
-	return _groupManager;
 }
 
 inline const FilteredEntities& AI::getFilteredEntities() const {
@@ -184,6 +179,14 @@ inline const FilteredEntities& AI::getFilteredEntities() const {
 
 inline bool AI::isDebuggingActive() const {
 	return _debuggingActive;
+}
+
+inline void AI::setZone(Zone* zone) {
+	_zone = zone;
+}
+
+inline Zone& AI::getZone() const {
+	return *_zone;
 }
 
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <AI.h>
+#include <group/GroupMgr.h>
 #include "common/Thread.h"
 #include "common/Types.h"
 #include <unordered_map>
@@ -22,11 +23,12 @@ public:
 	typedef AIMap::const_iterator AIMapConstIter;
 	typedef AIMap::iterator AIMapIter;
 
-private:
+protected:
 	const std::string _name;
 	AIMap _ais;
 	bool _debug;
 	ReadWriteLock _lock;
+	ai::GroupMgr _groupManager;
 
 public:
 	Zone(const std::string& name) :
@@ -66,6 +68,8 @@ public:
 	 * none of the managed entities is broadcasted.
 	 */
 	void setDebug(bool debug);
+
+	GroupMgr& getGroupMgr();
 
 	/**
 	 * @brief Executes a lambda or functor for the given character
@@ -122,5 +126,10 @@ inline void Zone::setDebug (bool debug) {
 inline const std::string& Zone::getName() const {
 	return _name;
 }
+
+inline GroupMgr& Zone::getGroupMgr() {
+	return _groupManager;
+}
+
 
 }

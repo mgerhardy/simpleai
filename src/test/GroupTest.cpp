@@ -10,18 +10,19 @@ TEST_F(GroupMgrTest, testMassGroupAveragePosition) {
 	const ai::Vector3f pos2(300.0f, 300.0f, 0.0f);
 	for (int i = 1; i <= 2; ++i) {
 		const ai::CharacterId id = i;
-		TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _groupManager);
+		TestEntity *e = new TestEntity(id, ai::TreeNodePtr());
 		ais.push_back(std::shared_ptr<TestEntity>(e));
 		e->setPosition(pos1);
 		_groupManager.add(groupId, e);
 	}
 	for (int i = 3; i <= 4; ++i) {
 		const ai::CharacterId id = i;
-		TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), _groupManager);
+		TestEntity *e = new TestEntity(id, ai::TreeNodePtr());
 		ais.push_back(std::shared_ptr<TestEntity>(e));
 		e->setPosition(pos2);
 		_groupManager.add(groupId, e);
 	}
+	_groupManager.update(0);
 	const ai::Vector3f& avg = _groupManager.getPosition(groupId);
 	const ai::Vector3f pos = pos1 + pos2;
 
@@ -35,7 +36,7 @@ public:
 	inline void addMass(int max, ai::GroupId groupId, TestEntities& ais, ai::GroupMgr& mgr) const {
 		for (int i = 1; i <= max; ++i) {
 			const ai::CharacterId id = i;
-			TestEntity *e = new TestEntity(id, ai::TreeNodePtr(), mgr);
+			TestEntity *e = new TestEntity(id, ai::TreeNodePtr());
 			ais.push_back(std::shared_ptr<TestEntity>(e));
 			mgr.add(groupId, e);
 		}
@@ -63,7 +64,7 @@ public:
 TEST_F(GroupTest, testGroupAddRemove) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr(), groupMgr);
+	TestEntity entity1(1, ai::TreeNodePtr());
 	ASSERT_TRUE(groupMgr.add(id, &entity1));
 	ASSERT_FALSE(groupMgr.remove(0, &entity1));
 	ASSERT_TRUE(groupMgr.remove(id, &entity1));
@@ -73,7 +74,7 @@ TEST_F(GroupTest, testGroupAddRemove) {
 TEST_F(GroupTest, testGroupIsInAny) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr(), groupMgr);
+	TestEntity entity1(1, ai::TreeNodePtr());
 	ASSERT_TRUE(groupMgr.add(id, &entity1));
 	ASSERT_TRUE(groupMgr.isInAnyGroup(entity1));
 	ASSERT_TRUE(groupMgr.remove(id, &entity1));
@@ -83,9 +84,9 @@ TEST_F(GroupTest, testGroupIsInAny) {
 TEST_F(GroupTest, testGroupSize) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr(), groupMgr);
+	TestEntity entity1(1, ai::TreeNodePtr());
 	ASSERT_TRUE(groupMgr.add(id, &entity1));
-	TestEntity entity2(2, ai::TreeNodePtr(), groupMgr);
+	TestEntity entity2(2, ai::TreeNodePtr());
 	ASSERT_TRUE(groupMgr.add(id, &entity2));
 	ASSERT_EQ(2, groupMgr.getGroupSize(id));
 }
@@ -93,11 +94,11 @@ TEST_F(GroupTest, testGroupSize) {
 TEST_F(GroupTest, testGroupLeader) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr(), groupMgr);
+	TestEntity entity1(1, ai::TreeNodePtr());
 	ASSERT_TRUE(groupMgr.add(id, &entity1));
-	TestEntity entity2(2, ai::TreeNodePtr(), groupMgr);
+	TestEntity entity2(2, ai::TreeNodePtr());
 	ASSERT_TRUE(groupMgr.add(id, &entity2));
-	TestEntity entity3(3, ai::TreeNodePtr(), groupMgr);
+	TestEntity entity3(3, ai::TreeNodePtr());
 	ASSERT_TRUE(groupMgr.add(id, &entity3));
 	ASSERT_EQ(3, groupMgr.getGroupSize(id));
 	ASSERT_TRUE(groupMgr.isGroupLeader(id, entity1));
@@ -111,14 +112,16 @@ TEST_F(GroupTest, testGroupAveragePosition) {
 	const ai::GroupId id = 1;
 	ai::Vector3f avg;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr(), groupMgr);
+	TestEntity entity1(1, ai::TreeNodePtr());
 	entity1.setPosition(ai::Vector3f(1.0f, 1.0f, 0.0f));
 	ASSERT_TRUE(groupMgr.add(id, &entity1));
+	groupMgr.update(0);
 	avg = groupMgr.getPosition(id);
 	ASSERT_EQ(ai::Vector3f(1.0f, 1.0f, 0.0f), avg);
-	TestEntity entity2(2, ai::TreeNodePtr(), groupMgr);
+	TestEntity entity2(2, ai::TreeNodePtr());
 	entity2.setPosition(ai::Vector3f(3.0f, 3.0f, 0.0f));
 	ASSERT_TRUE(groupMgr.add(id, &entity2));
+	groupMgr.update(0);
 	avg = groupMgr.getPosition(id);
 	ASSERT_EQ(ai::Vector3f(2.0f, 2.0f, 0.0f), avg);
 }

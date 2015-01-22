@@ -15,9 +15,8 @@ inline ai::Vector3f GameEntity::getStartPosition() const {
 
 GameEntity::GameEntity(const ai::CharacterId& id,
 		const ai::example::GameMap* map,
-		const ai::TreeNodePtr& root,
-		ai::GroupMgr& groupManager) :
-		ai::ICharacter(id, root, groupManager), _map(map), _hitpoints(100), _damage(5), _attackDelay(500) {
+		const ai::TreeNodePtr& root) :
+		ai::ICharacter(id, root), _map(map), _hitpoints(100), _damage(5), _attackDelay(500) {
 	// pick some random start position
 	setPosition(getStartPosition());
 	setAttribute(ai::attributes::NAME, "Example " + std::to_string(id));
@@ -29,7 +28,7 @@ GameEntity::GameEntity(const ai::CharacterId& id,
 	setAttribute("Damage", std::to_string(_damage));
 	setAttribute("Reloadtime", std::to_string(_attackDelay));
 
-	_ai.getGroupMgr().add(_groupId, this);
+	_ai.getZone().getGroupMgr().add(_groupId, this);
 }
 
 void GameEntity::update(long deltaTime, bool debuggingActive) {

@@ -1,6 +1,7 @@
 #include "IsCloseToGroup.h"
 #include "ICharacter.h"
 #include "AI.h"
+#include "server/Zone.h"
 
 namespace ai {
 
@@ -11,7 +12,8 @@ bool IsCloseToGroup::evaluate(const AI& entity) {
 	if (_distance < 0.0f)
 		return false;
 
-	const Vector3f& pos = entity.getGroupMgr().getPosition(_groupId);
+	GroupMgr& mgr = entity.getZone().getGroupMgr();
+	const Vector3f& pos = mgr.getPosition(_groupId);
 	if (pos.isInfinite())
 		return false;
 	return pos.distance(entity.getCharacter().getPosition()) <= _distance;

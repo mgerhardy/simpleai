@@ -27,6 +27,7 @@ private:
 	struct Group {
 		ICharacter* leader;
 		GroupMembersSet members;
+		Vector3f position;
 	};
 
 	typedef std::unordered_multimap<const ICharacter*, GroupId> GroupMembers;
@@ -53,6 +54,8 @@ public:
 	 */
 	bool add(GroupId id, ICharacter* character);
 
+	void update(uint32_t deltaTime);
+
 	/**
 	 * @brief Removes a group member from the given @c GroupId.
 	 *
@@ -62,6 +65,8 @@ public:
 	 * the group)
 	 */
 	bool remove(GroupId id, ICharacter* character);
+
+	bool removeFromAllGroups(ICharacter* character);
 
 	/**
 	 * @brief Calculate the average position of the group

@@ -14,6 +14,7 @@ bool Zone::addAI(AI* ai) {
 	}
 	ScopedWriteLock scopedLock(_lock);
 	_ais.insert(std::make_pair(id, ai));
+	ai->setZone(this);
 	return true;
 }
 
@@ -25,6 +26,8 @@ bool Zone::removeAI(const AI* ai) {
 	AIMapIter i = _ais.find(id);
 	if (i == _ais.end())
 		return false;
+	i->second->setZone(nullptr);
+	_groupManager.removeFromAllGroups(&i->second->getCharacter());
 	_ais.erase(i);
 	return true;
 }
@@ -34,6 +37,7 @@ void Zone::update(long dt) {
 		ai.getCharacter().update(dt, _debug);
 	};
 	visit(func);
+	_groupManager.update(dt);
 }
 
 }
