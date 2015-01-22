@@ -83,8 +83,18 @@ public:
 	 */
 	virtual void update(long dt, bool debuggingActive);
 
+	/**
+	 * @brief Set the new @c Zone this entity is in
+	 */
 	void setZone(Zone* zone);
+	/**
+	 * Returns the zone this entity is in. Make sure to call @c hasZone before.
+	 */
 	Zone& getZone() const;
+	/**
+	 * @brief Returns @c true if the entity is already in a zone. This must not be managed manually,
+	 * the @c Zone is doing that already.
+	 */
 	bool hasZone() const;
 
 	/**
