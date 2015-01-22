@@ -140,21 +140,12 @@ protected:
 	const int _maxUsers = 100;
 	const int _maxGroups = 100;
 public:
-	virtual void SetUp() override {
-		GroupTest::SetUp();
+	GroupMassTest() : GroupTest() {
 		_ais.clear();
 		_ais.reserve(_maxUsers * _maxGroups);
 		for (int i = 0; i < _maxGroups;++i) {
 			const ai::GroupId groupId = i;
 			addMass(_maxUsers, groupId, _ais, _groupManager);
-		}
-	}
-
-	virtual void TearDown() override {
-		GroupTest::TearDown();
-		for (int i = 0; i < _maxGroups;++i) {
-			const ai::GroupId groupId = i;
-			remove(groupId, _ais, _groupManager);
 		}
 	}
 };
