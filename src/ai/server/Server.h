@@ -46,7 +46,7 @@ protected:
 	NopHandler _nopHandler;
 	bool _pause;
 	// the current active debugging zone
-	Zone* _zone;
+	ATOMIC(Zone*) _zone;
 	ReadWriteLock _lock;
 
 	void addChildren(const TreeNodePtr& node, AIStateNode& parent, const AI& ai) const;
