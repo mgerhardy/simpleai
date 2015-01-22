@@ -5,7 +5,7 @@
 #include <tree/TreeNode.h>
 #include <unordered_set>
 #include "Network.h"
-#include "Zone.h"
+#include "zone/Zone.h"
 #include "SelectHandler.h"
 #include "PauseHandler.h"
 #include "ResetHandler.h"

@@ -1,6 +1,6 @@
 #include "AI.h"
 #include "tree/TreeNode.h"
-#include "server/Zone.h"
+#include "zone/Zone.h"
 
 namespace ai {
 

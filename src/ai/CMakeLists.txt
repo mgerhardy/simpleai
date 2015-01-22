@@ -89,7 +89,7 @@ list(APPEND simpleai_HEADERS
 	server/SelectHandler.h
 	server/Server.h
 	server/StepHandler.h
-	server/Zone.h
+	zone/Zone.h
 	SimpleAI.h
 	tree/group/FleeGroup.h
 	tree/group/FollowGroup.h

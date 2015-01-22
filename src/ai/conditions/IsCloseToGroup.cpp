@@ -1,7 +1,7 @@
 #include "IsCloseToGroup.h"
 #include "ICharacter.h"
 #include "AI.h"
-#include "server/Zone.h"
+#include "zone/Zone.h"
 
 namespace ai {
 

@@ -81,7 +81,8 @@
 #include "server/AIStateMessage.h"
 #include "server/AINamesMessage.h"
 #include "server/AIChangeMessage.h"
-#include "server/Zone.h"
+
+#include "zone/Zone.h"
 
 #include "conditions/And.h"
 #include "conditions/ICondition.h"
