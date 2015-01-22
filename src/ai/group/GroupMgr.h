@@ -5,7 +5,7 @@
 #include "common/Vector3f.h"
 #include <map>
 #include <unordered_map>
-#include <set>
+#include <unordered_set>
 
 namespace ai {
 
@@ -20,16 +20,24 @@ typedef int GroupId;
  */
 class GroupMgr {
 private:
-	typedef std::set<ICharacter*> GroupMembersSet;
+	typedef std::unordered_set<ICharacter*> GroupMembersSet;
 	typedef GroupMembersSet::iterator GroupMembersSetIter;
 	typedef GroupMembersSet::const_iterator GroupMembersSetConstIter;
-	typedef std::unordered_map<GroupId, GroupMembersSet> GroupMembers;
-	typedef GroupMembers::iterator GroupMembersIter;
-	typedef GroupMembers::const_iterator GroupMembersConstIter;
+
+	struct Group {
+		ICharacter* leader;
+		GroupMembersSet members;
+	};
+
+	typedef std::unordered_multimap<const ICharacter*, GroupId> GroupMembers;
+	typedef std::unordered_map<GroupId, Group> Groups;
+	typedef Groups::const_iterator GroupsConstIter;
+	typedef Groups::iterator GroupsIter;
 
 	GroupMembersSet _empty;
-	GroupMembers _members;
 	ReadWriteLock _lock;
+	Groups _groups;
+	GroupMembers _groupMembers;
 
 public:
 	GroupMgr ();
@@ -68,11 +76,11 @@ public:
 	template<typename Func>
 	void visit(GroupId id, Func& func) const {
 		ScopedReadLock scopedLock(_lock);
-		const GroupMembersConstIter& i = _members.find(id);
-		if (i == _members.end()) {
+		const GroupsConstIter& i = _groups.find(id);
+		if (i == _groups.end()) {
 			return;
 		}
-		for (GroupMembersSetConstIter it = i->second.begin(); it != i->second.end(); ++it) {
+		for (GroupMembersSetConstIter it = i->second.members.begin(); it != i->second.members.end(); ++it) {
 			const ICharacter* chr = *it;
 			if (!func(*chr))
 				break;

@@ -18,79 +18,88 @@ GroupMgr::~GroupMgr() {
 
 bool GroupMgr::add(GroupId id, ICharacter* character) {
 	ScopedWriteLock scopedLock(_lock);
-	GroupMembersIter i = _members.find(id);
-	if (i == _members.end()) {
-		GroupMembersSet set;
-		i = _members.insert(std::pair<GroupId, GroupMembersSet>(id, set)).first;
+	GroupsIter i = _groups.find(id);
+	if (i == _groups.end()) {
+		Group group;
+		group.leader = character;
+		i = _groups.insert(std::pair<GroupId, Group>(id, group)).first;
 	}
 
-	std::pair<GroupMembersSetIter, bool> ret = i->second.insert(character);
-	return ret.second;
+	std::pair<GroupMembersSetIter, bool> ret = i->second.members.insert(character);
+	if (ret.second) {
+		_groupMembers.insert(GroupMembers::value_type(character, id));
+		return true;
+	}
+	return false;
 }
 
 bool GroupMgr::remove(GroupId id, ICharacter* character) {
 	ScopedWriteLock scopedLock(_lock);
-	const GroupMembersIter& i = _members.find(id);
-	if (i == _members.end())
+	const GroupsIter& i = _groups.find(id);
+	if (i == _groups.end())
 		return false;
-	const GroupMembersSetIter& si = i->second.find(character);
-	if (si == i->second.end())
+	const GroupMembersSetIter& si = i->second.members.find(character);
+	if (si == i->second.members.end())
 		return false;
-	i->second.erase(si);
-	if (i->second.empty())
-		_members.erase(i);
+	i->second.members.erase(si);
+
+	if (i->second.members.empty())
+		_groups.erase(i);
+	else if (i->second.leader == character)
+		i->second.leader = *i->second.members.begin();
+	auto range = _groupMembers.equal_range(character);
+	for (auto it = range.first; it != range.second; ++it) {
+		if (it->second == id) {
+			_groupMembers.erase(it);
+			break;
+		}
+	}
 	return true;
 }
 
 Vector3f GroupMgr::getPosition(GroupId id) const {
 	ScopedReadLock scopedLock(_lock);
-	const GroupMembersConstIter& i = _members.find(id);
-	if (i == _members.end())
+	const GroupsConstIter& i = _groups.find(id);
+	if (i == _groups.end())
 		return Vector3f::INFINITE;
 
 	// TODO: only those that are in the same zone - otherwise the avg pos doesn't make much sense
-	Vector3f averagePosition = std::accumulate(i->second.begin(), i->second.end(), Vector3f(), AveragePositionFunctor());
-	averagePosition *= 1.0f / (float) i->second.size();
+	Vector3f averagePosition = std::accumulate(i->second.members.begin(), i->second.members.end(), Vector3f(), AveragePositionFunctor());
+	averagePosition *= 1.0f / (float) i->second.members.size();
 	return averagePosition;
 }
 
 bool GroupMgr::isGroupLeader(GroupId id, const ICharacter& character) const {
-	bool leader = false;
-	auto func = [&] (const ICharacter& chr) {
-		leader = chr.getId() == character.getId();
-		return false;
-	};
-	visit(id, func);
-	return leader;
+	ScopedReadLock scopedLock(_lock);
+	const GroupsConstIter& i = _groups.find(id);
+	if (i == _groups.end()) {
+		return 0;
+	}
+	return i->second.leader == &character;
 }
 
 int GroupMgr::getGroupSize(GroupId id) const {
 	ScopedReadLock scopedLock(_lock);
-	const GroupMembersConstIter& i = _members.find(id);
-	if (i == _members.end()) {
+	const GroupsConstIter& i = _groups.find(id);
+	if (i == _groups.end()) {
 		return 0;
 	}
-	return static_cast<int>(std::distance(i->second.begin(), i->second.end()));
+	return static_cast<int>(std::distance(i->second.members.begin(), i->second.members.end()));
 }
 
 bool GroupMgr::isInAnyGroup(const ICharacter& character) const {
 	ScopedReadLock scopedLock(_lock);
-	for (GroupMembersConstIter i = _members.begin(); i != _members.end(); ++i) {
-		const GroupMembersSetConstIter& it = i->second.find(const_cast<ICharacter*>(&character));
-		if (it != i->second.end())
-			return true;
-	}
-	return false;
+	return _groupMembers.find(&character) != _groupMembers.end();
 }
 
 bool GroupMgr::isInGroup(GroupId id, const ICharacter& character) const {
 	ScopedReadLock scopedLock(_lock);
-	const GroupMembersConstIter& i = _members.find(id);
-	if (i == _members.end()) {
-		return false;
+	auto range = _groupMembers.equal_range(&character);
+	for (auto it = range.first; it != range.second; ++it) {
+		if (it->second == id)
+			return true;
 	}
-	const GroupMembersSetConstIter& it = i->second.find(const_cast<ICharacter*>(&character));
-	return it != i->second.end();
+	return false;
 }
 
 }

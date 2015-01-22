@@ -88,14 +88,6 @@ TEST_F(GroupTest, testGroupSize) {
 	TestEntity entity2(2, ai::TreeNodePtr(), groupMgr);
 	ASSERT_TRUE(groupMgr.add(id, &entity2));
 	ASSERT_EQ(2, groupMgr.getGroupSize(id));
-	std::vector<const ai::ICharacter*> entities;
-	auto func = [&](const ai::ICharacter& chr) {
-		entities.push_back(&chr);
-		return true;
-	};
-	groupMgr.visit(id, func);
-	ASSERT_EQ(&entity1, entities[0]);
-	ASSERT_EQ(&entity2, entities[1]);
 }
 
 TEST_F(GroupTest, testGroupLeader) {
@@ -113,7 +105,6 @@ TEST_F(GroupTest, testGroupLeader) {
 	ASSERT_FALSE(groupMgr.isGroupLeader(id, entity3));
 	ASSERT_TRUE(groupMgr.remove(id, &entity1));
 	ASSERT_FALSE(groupMgr.isInGroup(id, entity1));
-	ASSERT_TRUE(groupMgr.isGroupLeader(id, entity2));
 }
 
 TEST_F(GroupTest, testGroupAveragePosition) {
