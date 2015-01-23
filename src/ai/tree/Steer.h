@@ -25,7 +25,7 @@ public:
 			ai_assert(tokens.size() == _steerings.size(), "weights doesn't match steerings methods count");
 			const int tokenAmount = tokens.size();
 			for (int i = 0; i < tokenAmount; ++i) {
-				_weightedSteerings.push_back(movement::WeightedData(_steerings[i], ::atoi(tokens[i].c_str())));
+				_weightedSteerings.push_back(movement::WeightedData(_steerings[i], ::atof(tokens[i].c_str())));
 			}
 		}
 	}

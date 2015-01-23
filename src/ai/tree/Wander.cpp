@@ -8,8 +8,8 @@ namespace ai {
 TreeNodeStatus Wander::doAction(AI& entity, long deltaMillis) {
 	ICharacter& chr = entity.getCharacter();
 
-	const movement::Wander w(chr, chr.getSpeed(), _rotation);
-	const MoveVector& mv = w.execute();
+	const movement::Wander w(_rotation);
+	const MoveVector& mv = w.execute(chr, chr.getSpeed());
 
 	const float deltaSeconds = static_cast<float>(deltaMillis) / 1000.0f;
 	chr.setPosition(chr.getPosition() + (mv.getVector() * deltaSeconds));

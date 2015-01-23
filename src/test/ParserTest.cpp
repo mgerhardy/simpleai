@@ -105,3 +105,9 @@ TEST_F(ParserTest, testMultipleFilter) {
 	const ai::ConditionPtr& c = parser.getCondition();
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
+
+TEST_F(ParserTest, testSteer) {
+	ai::TreeNodeParser parser(_registry, "Steer{0.6,0.4}(GroupFlee{2},Wander{1})");
+	const ai::TreeNodePtr& c = parser.getTreeNode();
+	ASSERT_NE(nullptr, c.get()) << parser.getError();
+}

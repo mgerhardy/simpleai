@@ -8,7 +8,7 @@ namespace ai {
 TreeNodeStatus Steer::doAction(AI& entity, long deltaMillis) {
 	ICharacter& chr = entity.getCharacter();
 	const movement::WeightedSteering w(_weightedSteerings);
-	const MoveVector& mv = w.execute();
+	const MoveVector& mv = w.execute(chr, chr.getSpeed());
 	if (mv.getVector().isInfinite())
 		return FAILED;
 

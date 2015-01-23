@@ -9,10 +9,12 @@ TEST_F(MovementTest, testWander) {
 	TestEntity entity(1, ai::TreeNodePtr());
 	entity.setOrientation(1.0f);
 
-	ai::movement::Wander w(entity, 10.0f, ai::toRadians(10.0f));
-	const ai::MoveVector& mv = w.execute();
-	EXPECT_NEAR(11.2f, mv.getRotation(), 0.01f);
-	EXPECT_NEAR(fmodf(11.2f, (float)ai::M_2PI), mv.getOrientation(1.0f), 0.01f);
+	const float degrees = 10.0f;
+	const float radians = ai::toRadians(degrees);
+	ai::movement::Wander w(radians);
+	const ai::MoveVector& mv = w.execute(entity, 10.0f);
+	EXPECT_NEAR(0.0f, mv.getRotation(), radians);
+	EXPECT_NEAR(0.0f, mv.getOrientation(1.0f), radians);
 	const ai::Vector3f& v = mv.getVector();
 	const ai::Vector3f expected(8.41471f, 0.0f, 5.40302f);
 	ASSERT_EQ(expected, v);
@@ -26,17 +28,20 @@ TEST_F(MovementTest, testWeightedSteering) {
 	entity.setOrientation(1.0f);
 	zone.addAI(&entity.getAI());
 
-	ai::movement::GroupFlee flee(entity, 10.0f, 1);
-	ai::movement::Wander wander(entity, 10.0f, 8.0f * M_PI);
+	const float degrees = 10.0f;
+	const float radians = ai::toRadians(degrees);
+
+	ai::movement::GroupFlee flee(1, false);
+	ai::movement::Wander wander(radians);
 
 	ai::movement::WeightedSteerings s;
 	s.push_back(ai::movement::WeightedData(&flee, 0.8f));
 	s.push_back(ai::movement::WeightedData(&wander, 0.2f));
 
 	ai::movement::WeightedSteering w(s);
-	const ai::MoveVector& mv = w.execute();
-	EXPECT_NEAR(11.21f, mv.getRotation(), 0.01f);
-	EXPECT_NEAR(fmodf(11.21f, (float)ai::M_2PI), mv.getOrientation(1.0f), 0.01f);
+	const ai::MoveVector& mv = w.execute(entity, 10.0f);
+	EXPECT_NEAR(0.0f, mv.getRotation(), radians);
+	EXPECT_NEAR(0.0f, mv.getOrientation(1.0f), radians);
 	const ai::Vector3f& v = mv.getVector();
 	const ai::Vector3f expected(8.41471f, 0.0f, 5.40302f);
 	ASSERT_EQ(expected, v);

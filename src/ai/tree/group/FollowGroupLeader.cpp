@@ -6,14 +6,14 @@
 namespace ai {
 
 TreeNodeStatus FollowGroupLeader::doAction(AI& entity, long deltaMillis) {
-	if (_groupId == -1)
-		return FAILED;
-	ICharacter& chr = entity.getCharacter();
-
-	const movement::TargetSeek w(entity.getCharacter(), chr.getSpeed(), entity.getGroupLeaderPosition(_groupId));
+	const movement::GroupSeek w(_groupId, true);
 	if (!w.isValid())
 		return FAILED;
-	const MoveVector& mv = w.execute();
+
+	ICharacter& chr = entity.getCharacter();
+	const MoveVector& mv = w.execute(chr, chr.getSpeed());
+	if (mv.getVector().isInfinite())
+		return FAILED;
 
 	const float deltaSeconds = static_cast<float>(deltaMillis) / 1000.0f;
 	chr.setPosition(chr.getPosition() + (mv.getVector() * deltaSeconds));

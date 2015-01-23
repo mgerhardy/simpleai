@@ -18,15 +18,9 @@ namespace movement {
  * @brief Steering interface
  */
 class ISteering {
-protected:
-	const ICharacter& _character;
-	float _acceleration;
 public:
-	ISteering(const ICharacter& character, float acceleration) :
-			_character(character), _acceleration(acceleration) {
-	}
 	virtual ~ISteering() {}
-	virtual MoveVector execute () const = 0;
+	virtual MoveVector execute (const ICharacter& character, float speed) const = 0;
 };
 
 /**
@@ -36,21 +30,21 @@ class TargetSeek: public ISteering {
 protected:
 	const Vector3f _target;
 public:
-	TargetSeek(const ICharacter& character, float speed, const Vector3f& target) :
-			ISteering(character, speed), _target(target) {
+	TargetSeek(const Vector3f& target) :
+			ISteering(), _target(target) {
 	}
 
 	inline bool isValid () const {
 		return !_target.isInfinite();
 	}
 
-	MoveVector execute () const override {
+	virtual MoveVector execute (const ICharacter& character, float speed) const override {
 		if (_target.isInfinite())
 			return MoveVector(_target, 0.0f);
-		Vector3f v = _target - _character.getPosition();
+		Vector3f v = _target - character.getPosition();
 		if (v.squareLength() > 0) {
 			v.normalize();
-			v *= _acceleration;
+			v *= speed;
 		}
 		const MoveVector d(v, 0.0f);
 		return d;
@@ -64,22 +58,22 @@ class TargetFlee: public ISteering {
 protected:
 	const Vector3f _target;
 public:
-	TargetFlee(const ICharacter& character, float speed, const Vector3f& target) :
-			ISteering(character, speed), _target(target) {
+	TargetFlee(const Vector3f& target) :
+			ISteering(), _target(target) {
 	}
 
 	inline bool isValid () const {
 		return !_target.isInfinite();
 	}
 
-	MoveVector execute () const override {
+	virtual MoveVector execute (const ICharacter& character, float speed) const override {
 		if (_target.isInfinite())
 			return MoveVector(_target, 0.0f);
-		Vector3f v = _character.getPosition();
+		Vector3f v = character.getPosition();
 		v -= _target;
 		if (v.squareLength() > 0) {
 			v.normalize();
-			v *= _acceleration;
+			v *= speed;
 		}
 		const MoveVector d(v, 0.0f);
 		return d;
@@ -89,20 +83,62 @@ public:
 /**
  * @brief Seeks a particular group
  */
-class GroupSeek: public TargetSeek {
+class GroupSeek: public ISteering {
+protected:
+	const GroupId _groupId;
+	bool _leader;
 public:
-	GroupSeek(const AI& ai, float speed, GroupId groupId) :
-		TargetSeek(ai.getCharacter(), speed, ai.getGroupPosition(groupId)) {
+	GroupSeek(GroupId groupId, bool leader) :
+		ISteering(), _groupId(groupId), _leader(leader) {
+	}
+
+	inline bool isValid () const {
+		return _groupId != -1;
+	}
+
+	virtual MoveVector execute (const ICharacter& character, float speed) const override {
+		const AI& ai = character.getAI();
+		const Vector3f& target = _leader ? ai.getGroupLeaderPosition(_groupId) : ai.getGroupPosition(_groupId);
+		if (target.isInfinite())
+			return MoveVector(target, 0.0f);
+		Vector3f v = target - character.getPosition();
+		if (v.squareLength() > 0) {
+			v.normalize();
+			v *= speed;
+		}
+		const MoveVector d(v, 0.0f);
+		return d;
 	}
 };
 
 /**
  * @brief Flees from a particular group
  */
-class GroupFlee: public TargetFlee {
+class GroupFlee: public ISteering {
+protected:
+	const GroupId _groupId;
+	bool _leader;
 public:
-	GroupFlee(const AI& ai, float speed, GroupId groupId) :
-		TargetFlee(ai.getCharacter(), speed, ai.getGroupPosition(groupId)) {
+	GroupFlee(GroupId groupId, bool leader) :
+			ISteering(), _groupId(groupId), _leader(leader) {
+	}
+
+	inline bool isValid () const {
+		return _groupId != -1;
+	}
+
+	virtual MoveVector execute (const ICharacter& character, float speed) const override {
+		const AI& ai = character.getAI();
+		const Vector3f& target = _leader ? ai.getGroupLeaderPosition(_groupId) : ai.getGroupPosition(_groupId);
+		if (target.isInfinite())
+			return MoveVector(target, 0.0f);
+		Vector3f v = character.getPosition() - target;
+		if (v.squareLength() > 0) {
+			v.normalize();
+			v *= speed;
+		}
+		const MoveVector d(v, 0.0f);
+		return d;
 	}
 };
 
@@ -116,12 +152,12 @@ class Wander: public ISteering {
 protected:
 	float _rotation;
 public:
-	Wander(const ICharacter& character, float speed, float rotation) :
-			ISteering(character, speed), _rotation(rotation) {
+	Wander(float rotation) :
+			ISteering(), _rotation(rotation) {
 	}
 
-	MoveVector execute () const override {
-		const Vector3f& v = Vector3f::fromRadians(_character.getOrientation()) * _acceleration;
+	MoveVector execute (const ICharacter& character, float speed) const override {
+		const Vector3f& v = Vector3f::fromRadians(character.getOrientation()) * speed;
 		const MoveVector d(v, ai::randomBinomial() * _rotation);
 		return d;
 	}
@@ -153,14 +189,14 @@ public:
 			_steerings(steerings) {
 	}
 
-	MoveVector execute () const {
+	MoveVector execute (const ICharacter& character, float speed) const {
 		float totalWeight = 0.0f;
 		Vector3f vecBlended;
 		float angularBlended = 0.0f;
 		for (WeightedSteeringsIter i = _steerings.begin(); i != _steerings.end(); ++i) {
 			const WeightedData& wd = *i;
 			const float weight = wd.weight;
-			const MoveVector& mv = wd.steering->execute();
+			const MoveVector& mv = wd.steering->execute(character, speed);
 			if (mv.getVector().isInfinite())
 				continue;
 
