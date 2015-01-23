@@ -30,8 +30,6 @@ libsimpleai_la_SOURCES = \
 	server/Server.cpp \
 	server/StepHandler.cpp \
 	zone/Zone.cpp \
-	tree/group/FleeGroup.cpp \
-	tree/group/FollowGroup.cpp \
 	tree/Idle.cpp \
 	tree/Invert.cpp \
 	tree/ITask.cpp \
@@ -102,9 +100,6 @@ nobase_library_include_HEADERS = \
 	server/StepHandler.h \
 	zone/Zone.h \
 	SimpleAI.h \
-	tree/group/FleeGroup.h \
-	tree/group/FollowGroup.h \
-	tree/group/FollowGroupLeader.h \
 	tree/Idle.h \
 	tree/Invert.h \
 	tree/ITask.h \

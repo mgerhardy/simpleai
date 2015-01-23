@@ -111,3 +111,15 @@ TEST_F(ParserTest, testSteer) {
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
+
+TEST_F(ParserTest, testSteerGroupLeader) {
+	ai::TreeNodeParser parser(_registry, "Steer{0.6,0.4}(GroupFlee{2},FollowGroupLeader{1})");
+	const ai::TreeNodePtr& c = parser.getTreeNode();
+	ASSERT_NE(nullptr, c.get()) << parser.getError();
+}
+
+TEST_F(ParserTest, testSteerWithoutParam) {
+	ai::TreeNodeParser parser(_registry, "Steer(GroupFlee{2})");
+	const ai::TreeNodePtr& c = parser.getTreeNode();
+	ASSERT_NE(nullptr, c.get()) << parser.getError();
+}

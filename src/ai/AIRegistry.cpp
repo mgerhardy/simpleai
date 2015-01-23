@@ -9,9 +9,6 @@
 #include "tree/PrioritySelector.h"
 #include "tree/Sequence.h"
 #include "tree/Steer.h"
-#include "tree/group/FollowGroup.h"
-#include "tree/group/FleeGroup.h"
-#include "tree/group/FollowGroupLeader.h"
 #include "conditions/And.h"
 #include "conditions/False.h"
 #include "conditions/HasEnemies.h"
@@ -57,9 +54,6 @@ AIRegistry::TreeNodeFactory::TreeNodeFactory() {
 	R(Sequence);
 	R(Print);
 	R(Wander);
-	R(FollowGroup);
-	R(FleeGroup);
-	R(FollowGroupLeader);
 	R(Idle);
 }
 

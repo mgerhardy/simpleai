@@ -91,9 +91,6 @@ list(APPEND simpleai_HEADERS
 	server/StepHandler.h
 	zone/Zone.h
 	SimpleAI.h
-	tree/group/FleeGroup.h
-	tree/group/FollowGroup.h
-	tree/group/FollowGroupLeader.h
 	tree/Idle.h
 	tree/Invert.h
 	tree/ITask.h

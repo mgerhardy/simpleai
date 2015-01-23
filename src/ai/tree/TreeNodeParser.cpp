@@ -74,10 +74,12 @@ movement::ISteering* TreeNodeParser::getSteering (const std::string& nodeName) {
 
 TreeNodePtr TreeNodeParser::getTreeNode(const std::string& name) {
 	std::string nodeType;
-	const std::string& parameters = getBetween(_taskString, "{", "}");
-	std::size_t n = _taskString.find("{");
-	if (n == std::string::npos)
-		n = _taskString.find("(");
+	std::string parameters;
+	std::size_t n = _taskString.find("(");
+	if (n == std::string::npos || _taskString.find("{") < n) {
+		parameters = getBetween(_taskString, "{", "}");
+		n = _taskString.find("{");
+	}
 	if (n != std::string::npos) {
 		nodeType = _taskString.substr(0, n);
 	} else {
