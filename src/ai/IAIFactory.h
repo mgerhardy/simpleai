@@ -22,6 +22,7 @@ typedef std::vector<ConditionPtr> Conditions;
 struct TreeNodeFactoryContext;
 struct ConditionFactoryContext;
 struct FilterFactoryContext;
+struct SteerNodeFactoryContext;
 
 class IAIFactory {
 public:
@@ -32,6 +33,10 @@ public:
 	 * @brief Allocates a new @c TreeNode for the given @c type. The @c type must be registered in the @c AIRegistry for this to work.
 	 */
 	virtual TreeNodePtr createNode(const std::string& type, const TreeNodeFactoryContext& ctx) const = 0;
+	/**
+	 * @brief Allocates a new @c TreeNode for the given @c type. The @c type must be registered in the @c AIRegistry for this to work.
+	 */
+	virtual TreeNodePtr createSteerNode(const std::string& type, const SteerNodeFactoryContext& ctx) const = 0;
 	/**
 	 * @brief Allocates a new @c IFilter for the given @c type. The @c type must be registered in the @c AIRegistry for this to work.
 	 */

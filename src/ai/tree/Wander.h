@@ -17,7 +17,7 @@ protected:
 public:
 	TASK_CLASS_CTOR(Wander) {
 		if (_parameters.empty()) {
-			_rotation = 8.0f * static_cast<float>(M_PI);
+			_rotation = ai::toRadians(10.0f);
 		} else {
 			_rotation = std::stof(_parameters);
 		}

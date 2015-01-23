@@ -115,6 +115,7 @@ nobase_library_include_HEADERS = \
 	tree/PrioritySelector.h \
 	tree/Selector.h \
 	tree/Sequence.h \
+	tree/Steer.h \
 	tree/TreeNode.h \
 	tree/TreeNodeParser.h \
 	tree/Wander.h

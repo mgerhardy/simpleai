@@ -8,6 +8,7 @@
 #include "tree/Parallel.h"
 #include "tree/PrioritySelector.h"
 #include "tree/Sequence.h"
+#include "tree/Steer.h"
 #include "tree/group/FollowGroup.h"
 #include "tree/group/FleeGroup.h"
 #include "tree/group/FollowGroupLeader.h"
@@ -62,6 +63,10 @@ AIRegistry::TreeNodeFactory::TreeNodeFactory() {
 	R(Idle);
 }
 
+AIRegistry::SteerNodeFactory::SteerNodeFactory() {
+	R(Steer);
+}
+
 #undef R
 
 AIRegistry::AIRegistry() :
@@ -73,6 +78,10 @@ AIRegistry::~AIRegistry() {
 
 TreeNodePtr AIRegistry::createNode(const std::string& nodeType, const TreeNodeFactoryContext& ctx) const {
 	return _treeNodeFactory.create(nodeType, &ctx);
+}
+
+TreeNodePtr AIRegistry::createSteerNode(const std::string& nodeType, const SteerNodeFactoryContext& ctx) const {
+	return _steerNodeFactory.create(nodeType, &ctx);
 }
 
 FilterPtr AIRegistry::createFilter(const std::string& nodeType, const FilterFactoryContext& ctx) const {
@@ -93,6 +102,14 @@ bool AIRegistry::registerConditionFactory(const std::string& nodeType, const ICo
 
 bool AIRegistry::unregisterNodeFactory(const std::string& nodeType) {
 	return _treeNodeFactory.unregisterFactory(nodeType);
+}
+
+bool AIRegistry::registerSteerNodeFactory(const std::string& type, const ISteerNodeFactory& factory) {
+	return _steerNodeFactory.registerFactory(type, factory);
+}
+
+bool AIRegistry::unregisterSteerNodeFactory(const std::string& type) {
+	return _steerNodeFactory.unregisterFactory(type);
 }
 
 bool AIRegistry::unregisterFilterFactory(const std::string& nodeType) {

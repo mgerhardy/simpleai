@@ -2,15 +2,31 @@
 
 #include "IAIFactory.h"
 #include "common/IFactoryRegistry.h"
+#include <vector>
 
 namespace ai {
 
+namespace movement {
+class ISteering;
+typedef std::vector<ISteering*> Steerings;
+
+}
 struct TreeNodeFactoryContext {
 	std::string name;
 	std::string parameters;
 	ConditionPtr condition;
 	TreeNodeFactoryContext(const std::string& _name, const std::string& _parameters, const ConditionPtr& _condition) :
 			name(_name), parameters(_parameters), condition(_condition) {
+	}
+};
+
+struct SteerNodeFactoryContext {
+	std::string name;
+	std::string parameters;
+	ConditionPtr condition;
+	movement::Steerings steerings;
+	SteerNodeFactoryContext(const std::string& _name, const std::string& _parameters, const ConditionPtr& _condition, const movement::Steerings& _steerings) :
+			name(_name), parameters(_parameters), condition(_condition), steerings(_steerings) {
 	}
 };
 
@@ -42,6 +58,13 @@ public:
 	virtual TreeNodePtr create(const TreeNodeFactoryContext *ctx) const = 0;
 };
 
+class ISteerNodeFactory: public IFactory<TreeNode, SteerNodeFactoryContext> {
+public:
+	virtual ~ISteerNodeFactory() {
+	}
+	virtual TreeNodePtr create(const SteerNodeFactoryContext *ctx) const = 0;
+};
+
 class IFilterFactory: public IFactory<IFilter, FilterFactoryContext> {
 public:
 	virtual ~IFilterFactory() {
@@ -67,6 +90,13 @@ protected:
 	};
 
 	TreeNodeFactory _treeNodeFactory;
+
+	class SteerNodeFactory: public IFactoryRegistry<std::string, TreeNode, SteerNodeFactoryContext> {
+	public:
+		SteerNodeFactory();
+	};
+
+	SteerNodeFactory _steerNodeFactory;
 
 	class FilterFactory: public IFactoryRegistry<std::string, IFilter, FilterFactoryContext> {
 	public:
@@ -94,6 +124,15 @@ public:
 	 */
 	bool unregisterNodeFactory(const std::string& type);
 
+	bool registerSteerNodeFactory(const std::string& type, const ISteerNodeFactory& factory);
+	/**
+	 * @brief Unregisters a tree node factory of the given @c type. This can also be used to replace a built-in
+	 * type with a user provided type.
+	 *
+	 * @return @c true if the unregister action was successful, @c false if not (e.g. it wasn't registered at all)
+	 */
+	bool unregisterSteerNodeFactory(const std::string& type);
+
 	bool registerFilterFactory(const std::string& type, const IFilterFactory& factory);
 	/**
 	 * @brief Unregisters a filter factory of the given @c type. This can also be used to replace a built-in
@@ -113,6 +152,7 @@ public:
 	bool unregisterConditionFactory(const std::string& type);
 
 	TreeNodePtr createNode(const std::string& type, const TreeNodeFactoryContext& ctx) const override;
+	TreeNodePtr createSteerNode(const std::string& type, const SteerNodeFactoryContext& ctx) const override;
 	FilterPtr createFilter(const std::string& type, const FilterFactoryContext& ctx) const override;
 	ConditionPtr createCondition(const std::string& type, const ConditionFactoryContext& ctx) const override;
 };
