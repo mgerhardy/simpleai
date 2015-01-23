@@ -104,6 +104,7 @@ nobase_library_include_HEADERS = \
 	SimpleAI.h \
 	tree/group/FleeGroup.h \
 	tree/group/FollowGroup.h \
+	tree/group/FollowGroupLeader.h \
 	tree/Idle.h \
 	tree/Invert.h \
 	tree/ITask.h \

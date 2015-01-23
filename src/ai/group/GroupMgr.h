@@ -76,6 +76,11 @@ public:
 	Vector3f getPosition(GroupId id) const;
 
 	/**
+	 * @return The @c ICharacter object of the leader, or @c nullptr if no such group exists.
+	 */
+	const ICharacter* getLeader(GroupId id) const;
+
+	/**
 	 * @brief Visit all the group members of the given group until the functor returns @c false
 	 */
 	template<typename Func>

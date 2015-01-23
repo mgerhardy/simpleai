@@ -61,6 +61,7 @@
 #include "tree/TreeNodeParser.h"
 #include "tree/group/FleeGroup.h"
 #include "tree/group/FollowGroup.h"
+#include "tree/group/FollowGroupLeader.h"
 #include "tree/Wander.h"
 #include "tree/loaders/lua/LUATreeLoader.h"
 #include "tree/loaders/xml/XMLTreeLoader.h"

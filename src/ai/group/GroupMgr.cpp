@@ -82,6 +82,15 @@ bool GroupMgr::removeFromAllGroups(ICharacter* character) {
 	return true;
 }
 
+const ICharacter* GroupMgr::getLeader(GroupId id) const {
+	ScopedReadLock scopedLock(_lock);
+	const GroupsConstIter& i = _groups.find(id);
+	if (i == _groups.end())
+		return nullptr;
+
+	return i->second.leader;
+}
+
 Vector3f GroupMgr::getPosition(GroupId id) const {
 	ScopedReadLock scopedLock(_lock);
 	const GroupsConstIter& i = _groups.find(id);

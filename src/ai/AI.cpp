@@ -1,4 +1,5 @@
 #include "AI.h"
+#include "ICharacter.h"
 #include "tree/TreeNode.h"
 #include "zone/Zone.h"
 
@@ -21,6 +22,17 @@ Vector3f AI::getGroupPosition(GroupId id) const {
 		return Vector3f::INFINITE;
 
 	return local->getGroupMgr().getPosition(id);
+}
+
+Vector3f AI::getGroupLeaderPosition(GroupId id) const {
+	Zone* local = _zone;
+	if (local == nullptr)
+		return Vector3f::INFINITE;
+
+	const ICharacter* groupLeader = local->getGroupMgr().getLeader(id);
+	if (groupLeader != nullptr)
+		return groupLeader->getPosition();
+	return Vector3f::INFINITE;
 }
 
 void AI::update(long dt, bool debuggingActive) {
