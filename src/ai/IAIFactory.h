@@ -15,6 +15,11 @@ class IFilter;
 typedef std::shared_ptr<IFilter> FilterPtr;
 typedef std::list<FilterPtr> Filters;
 
+namespace movement {
+class ISteering;
+}
+typedef std::shared_ptr<movement::ISteering> SteeringPtr;
+
 class ICondition;
 typedef std::shared_ptr<ICondition> ConditionPtr;
 typedef std::vector<ConditionPtr> Conditions;
@@ -23,6 +28,7 @@ struct TreeNodeFactoryContext;
 struct ConditionFactoryContext;
 struct FilterFactoryContext;
 struct SteerNodeFactoryContext;
+struct SteeringFactoryContext;
 
 class IAIFactory {
 public:
@@ -45,6 +51,10 @@ public:
 	 * @brief Allocates a new @c ICondition for the given @c type. The @c type must be registered in the @c AIRegistry for this to work.
 	 */
 	virtual ConditionPtr createCondition(const std::string& type, const ConditionFactoryContext& ctx) const = 0;
+	/**
+	 * @brief Creates a new @c ISteering for the given @c type. The @c type must be registered in the @c AIRegistry for this to work.
+	 */
+	virtual SteeringPtr createSteering(const std::string& type, const SteeringFactoryContext& ctx) const = 0;
 };
 
 }

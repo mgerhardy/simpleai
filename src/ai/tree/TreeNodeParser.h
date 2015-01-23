@@ -21,7 +21,7 @@ private:
 	std::string _taskString;
 
 	void splitTasks(const std::string& string, std::vector<std::string>& tokens) const;
-	movement::ISteering* getSteering(const std::string& nodeName);
+	SteeringPtr getSteering(const std::string& nodeName);
 public:
 	TreeNodeParser(const IAIFactory& aiFactory, const std::string& taskString);
 	virtual ~TreeNodeParser();

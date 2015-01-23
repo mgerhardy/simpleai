@@ -11,7 +11,7 @@ TEST_F(MovementTest, testWander) {
 
 	const float degrees = 10.0f;
 	const float radians = ai::toRadians(degrees);
-	ai::movement::Wander w(radians);
+	ai::movement::Wander w(std::to_string(radians));
 	const ai::MoveVector& mv = w.execute(entity, 10.0f);
 	EXPECT_NEAR(0.0f, mv.getRotation(), radians);
 	EXPECT_NEAR(0.0f, mv.getOrientation(1.0f), radians);
@@ -31,12 +31,12 @@ TEST_F(MovementTest, testWeightedSteering) {
 	const float degrees = 10.0f;
 	const float radians = ai::toRadians(degrees);
 
-	ai::movement::GroupFlee flee(1, false);
-	ai::movement::Wander wander(radians);
+	ai::SteeringPtr flee(new ai::movement::GroupFlee("1"));
+	ai::SteeringPtr wander(new ai::movement::Wander(std::to_string(radians)));
 
 	ai::movement::WeightedSteerings s;
-	s.push_back(ai::movement::WeightedData(&flee, 0.8f));
-	s.push_back(ai::movement::WeightedData(&wander, 0.2f));
+	s.push_back(ai::movement::WeightedData(flee, 0.8f));
+	s.push_back(ai::movement::WeightedData(wander, 0.2f));
 
 	ai::movement::WeightedSteering w(s);
 	const ai::MoveVector& mv = w.execute(entity, 10.0f);

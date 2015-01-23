@@ -16,7 +16,7 @@ public:
 	Steer(const std::string& name, const std::string& parameters, const ConditionPtr& condition, const movement::Steerings& steerings) :
 			ITask(name, parameters, condition), _steerings(steerings) {
 		if (_parameters.empty()) {
-			for (movement::ISteering* s : _steerings) {
+			for (const SteeringPtr& s : _steerings) {
 				_weightedSteerings.push_back(movement::WeightedData(s, 1.0f));
 			}
 		} else {

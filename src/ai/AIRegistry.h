@@ -7,9 +7,7 @@
 namespace ai {
 
 namespace movement {
-class ISteering;
-typedef std::vector<ISteering*> Steerings;
-
+typedef std::vector<SteeringPtr> Steerings;
 }
 struct TreeNodeFactoryContext {
 	std::string name;
@@ -38,6 +36,14 @@ struct FilterFactoryContext {
 	}
 };
 
+struct SteeringFactoryContext {
+	// Parameters for the steering class - can get hand over to the ctor in your factory implementation.
+	std::string parameters;
+	SteeringFactoryContext(const std::string& _parameters) :
+		parameters(_parameters) {
+	}
+};
+
 struct ConditionFactoryContext {
 	// Parameters for the condition - can get hand over to the ctor in your factory implementation.
 	std::string parameters;
@@ -56,6 +62,13 @@ public:
 	virtual ~ITreeNodeFactory() {
 	}
 	virtual TreeNodePtr create(const TreeNodeFactoryContext *ctx) const = 0;
+};
+
+class ISteeringFactory: public IFactory<movement::ISteering, SteeringFactoryContext> {
+public:
+	virtual ~ISteeringFactory() {
+	}
+	virtual SteeringPtr create(const SteeringFactoryContext* ctx) const = 0;
 };
 
 class ISteerNodeFactory: public IFactory<TreeNode, SteerNodeFactoryContext> {
@@ -98,6 +111,13 @@ protected:
 
 	SteerNodeFactory _steerNodeFactory;
 
+	class SteeringFactory: public IFactoryRegistry<std::string, movement::ISteering, SteeringFactoryContext> {
+	public:
+		SteeringFactory();
+	};
+
+	SteeringFactory _steeringFactory;
+
 	class FilterFactory: public IFactoryRegistry<std::string, IFilter, FilterFactoryContext> {
 	public:
 		FilterFactory();
@@ -133,7 +153,11 @@ public:
 	 */
 	bool unregisterSteerNodeFactory(const std::string& type);
 
+	bool registerSteeringFactory(const std::string& type, const ISteeringFactory& factory);
+	bool unregisterSteeringFactory(const std::string& type);
+
 	bool registerFilterFactory(const std::string& type, const IFilterFactory& factory);
+
 	/**
 	 * @brief Unregisters a filter factory of the given @c type. This can also be used to replace a built-in
 	 * type with a user provided type.
@@ -155,6 +179,7 @@ public:
 	TreeNodePtr createSteerNode(const std::string& type, const SteerNodeFactoryContext& ctx) const override;
 	FilterPtr createFilter(const std::string& type, const FilterFactoryContext& ctx) const override;
 	ConditionPtr createCondition(const std::string& type, const ConditionFactoryContext& ctx) const override;
+	SteeringPtr createSteering(const std::string& type, const SteeringFactoryContext& ctx) const override;
 };
 
 }

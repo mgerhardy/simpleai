@@ -20,6 +20,7 @@ libsimpleai_la_SOURCES = \
 	filter/SelectEmpty.cpp \
 	filter/SelectGroupMembers.cpp \
 	filter/SelectHighestAggro.cpp \
+	movement/Steering.cpp \
 	group/GroupMgr.cpp \
 	server/ChangeHandler.cpp \
 	server/Network.cpp \

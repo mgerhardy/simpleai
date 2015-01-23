@@ -1,15 +1,13 @@
 #include "Wander.h"
-#include "common/Random.h"
-#include "movement/Steering.h"
 #include <iostream>
 
 namespace ai {
 
 TreeNodeStatus Wander::doAction(AI& entity, long deltaMillis) {
 	ICharacter& chr = entity.getCharacter();
-
-	const movement::Wander w(_rotation);
-	const MoveVector& mv = w.execute(chr, chr.getSpeed());
+	const MoveVector& mv = _w.execute(chr, chr.getSpeed());
+	if (mv.getVector().isInfinite())
+		return FAILED;
 
 	const float deltaSeconds = static_cast<float>(deltaMillis) / 1000.0f;
 	chr.setPosition(chr.getPosition() + (mv.getVector() * deltaSeconds));

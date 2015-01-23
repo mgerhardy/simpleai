@@ -160,6 +160,8 @@ struct Vector3f {
 		return Vector3f(y * pos.z - z * pos.y, z * pos.x - x * pos.z, x * pos.y - y * pos.x);
 	}
 
+	static Vector3f parse(const std::string& in);
+
 	static Vector3f ZERO;
 	static Vector3f INFINITE;
 };

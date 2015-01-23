@@ -8,16 +8,42 @@
 #include "common/Math.h"
 #include "common/Random.h"
 #include "common/MoveVector.h"
+#include "common/MemoryAllocator.h"
 #include "ICharacter.h"
 #include <cassert>
 
 namespace ai {
 namespace movement {
 
+#define STEERING_FACTORY \
+public: \
+	class Factory: public ISteeringFactory { \
+	public: \
+		SteeringPtr create (const SteeringFactoryContext *ctx) const; \
+	}; \
+	static Factory FACTORY;
+
+#define STEERING_FACTORY_SINGLETON \
+public: \
+	class Factory: public ISteeringFactory { \
+		SteeringPtr create (const SteeringFactoryContext */*ctx*/) const { \
+			return get(); \
+		} \
+	}; \
+	static Factory FACTORY;
+
+#define STEERING_FACTORY_IMPL(SteeringName) \
+	SteeringPtr SteeringName::Factory::create(const SteeringFactoryContext *ctx) const { \
+		SteeringName* c = new SteeringName(ctx->parameters); \
+		return SteeringPtr(c); \
+	} \
+	SteeringName::Factory SteeringName::FACTORY;
+
+
 /**
  * @brief Steering interface
  */
-class ISteering {
+class ISteering : public MemObject {
 public:
 	virtual ~ISteering() {}
 	virtual MoveVector execute (const ICharacter& character, float speed) const = 0;
@@ -28,10 +54,13 @@ public:
  */
 class TargetSeek: public ISteering {
 protected:
-	const Vector3f _target;
+	Vector3f _target;
 public:
-	TargetSeek(const Vector3f& target) :
-			ISteering(), _target(target) {
+	STEERING_FACTORY
+
+	TargetSeek(const std::string& parameters) :
+			ISteering() {
+		_target = Vector3f::parse(parameters);
 	}
 
 	inline bool isValid () const {
@@ -56,10 +85,13 @@ public:
  */
 class TargetFlee: public ISteering {
 protected:
-	const Vector3f _target;
+	Vector3f _target;
 public:
-	TargetFlee(const Vector3f& target) :
-			ISteering(), _target(target) {
+	STEERING_FACTORY
+
+	TargetFlee(const std::string& parameters) :
+			ISteering() {
+		_target = Vector3f::parse(parameters);
 	}
 
 	inline bool isValid () const {
@@ -85,11 +117,13 @@ public:
  */
 class GroupSeek: public ISteering {
 protected:
-	const GroupId _groupId;
-	bool _leader;
+	GroupId _groupId;
 public:
-	GroupSeek(GroupId groupId, bool leader) :
-		ISteering(), _groupId(groupId), _leader(leader) {
+	STEERING_FACTORY
+
+	GroupSeek(const std::string& parameters) :
+			ISteering() {
+		_groupId = ::atoi(parameters.c_str());
 	}
 
 	inline bool isValid () const {
@@ -98,7 +132,7 @@ public:
 
 	virtual MoveVector execute (const ICharacter& character, float speed) const override {
 		const AI& ai = character.getAI();
-		const Vector3f& target = _leader ? ai.getGroupLeaderPosition(_groupId) : ai.getGroupPosition(_groupId);
+		const Vector3f& target = ai.getGroupPosition(_groupId);
 		if (target.isInfinite())
 			return MoveVector(target, 0.0f);
 		Vector3f v = target - character.getPosition();
@@ -116,11 +150,13 @@ public:
  */
 class GroupFlee: public ISteering {
 protected:
-	const GroupId _groupId;
-	bool _leader;
+	GroupId _groupId;
 public:
-	GroupFlee(GroupId groupId, bool leader) :
-			ISteering(), _groupId(groupId), _leader(leader) {
+	STEERING_FACTORY
+
+	GroupFlee(const std::string& parameters) :
+			ISteering() {
+		_groupId = ::atoi(parameters.c_str());
 	}
 
 	inline bool isValid () const {
@@ -129,7 +165,40 @@ public:
 
 	virtual MoveVector execute (const ICharacter& character, float speed) const override {
 		const AI& ai = character.getAI();
-		const Vector3f& target = _leader ? ai.getGroupLeaderPosition(_groupId) : ai.getGroupPosition(_groupId);
+		const Vector3f& target = ai.getGroupPosition(_groupId);
+		if (target.isInfinite())
+			return MoveVector(target, 0.0f);
+		Vector3f v = character.getPosition() - target;
+		if (v.squareLength() > 0) {
+			v.normalize();
+			v *= speed;
+		}
+		const MoveVector d(v, 0.0f);
+		return d;
+	}
+};
+
+/**
+ * @brief Flees from a particular group
+ */
+class FollowGroupLeader: public ISteering {
+protected:
+	GroupId _groupId;
+public:
+	STEERING_FACTORY
+
+	FollowGroupLeader(const std::string& parameters) :
+			ISteering() {
+		_groupId = ::atoi(parameters.c_str());
+	}
+
+	inline bool isValid () const {
+		return _groupId != -1;
+	}
+
+	virtual MoveVector execute (const ICharacter& character, float speed) const override {
+		const AI& ai = character.getAI();
+		const Vector3f& target = ai.getGroupLeaderPosition(_groupId);
 		if (target.isInfinite())
 			return MoveVector(target, 0.0f);
 		Vector3f v = character.getPosition() - target;
@@ -152,8 +221,10 @@ class Wander: public ISteering {
 protected:
 	float _rotation;
 public:
-	Wander(float rotation) :
-			ISteering(), _rotation(rotation) {
+	STEERING_FACTORY
+
+	Wander(const std::string& parameter) :
+			ISteering(), _rotation(parameter.empty() ? ai::toRadians(10.0f) : ::atof(parameter.c_str())) {
 	}
 
 	MoveVector execute (const ICharacter& character, float speed) const override {
@@ -167,10 +238,10 @@ public:
  * @brief Steering and weight as input for @c WeightedSteering
  */
 struct WeightedData {
-	const ISteering *steering;
+	SteeringPtr steering;
 	const float weight;
 
-	WeightedData(const ISteering *_steering, float _weight = 1.0f) :
+	WeightedData(const SteeringPtr& _steering, float _weight = 1.0f) :
 			steering(_steering), weight(_weight) {
 		assert(weight > 0.0001f);
 	}

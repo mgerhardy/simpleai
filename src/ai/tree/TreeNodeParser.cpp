@@ -37,7 +37,7 @@ void TreeNodeParser::splitTasks(const std::string& string, std::vector<std::stri
 	tokens.push_back(token);
 }
 
-movement::ISteering* TreeNodeParser::getSteering (const std::string& nodeName) {
+SteeringPtr TreeNodeParser::getSteering (const std::string& nodeName) {
 	std::string steerType;
 	const std::string& parameters = getBetween(nodeName, "{", "}");
 	std::size_t n = nodeName.find("{");
@@ -49,27 +49,7 @@ movement::ISteering* TreeNodeParser::getSteering (const std::string& nodeName) {
 		steerType = nodeName;
 	}
 
-	// TODO: Factories
-	if (steerType == "Wander") {
-		float rotation = ai::toRadians(10.0f);
-		if (!parameters.empty())
-			rotation = ai::toRadians(::atof(parameters.c_str()));
-		return new movement::Wander(rotation);
-	} else if (steerType == "GroupFlee") {
-		if (parameters.empty())
-			return nullptr;
-		return new movement::GroupFlee(::atoi(parameters.c_str()), false);
-	} else if (steerType == "GroupSeek") {
-		if (parameters.empty())
-			return nullptr;
-		return new movement::GroupSeek(::atoi(parameters.c_str()), false);
-	} else if (steerType == "FollowGroupLeader") {
-		if (parameters.empty())
-			return nullptr;
-		return new movement::GroupSeek(::atoi(parameters.c_str()), true);
-	}
-
-	return nullptr;
+	return _aiFactory.createSteering(steerType, parameters);
 }
 
 TreeNodePtr TreeNodeParser::getTreeNode(const std::string& name) {
@@ -93,7 +73,7 @@ TreeNodePtr TreeNodeParser::getTreeNode(const std::string& name) {
 		splitTasks(subTrees, tokens);
 		movement::Steerings steerings;
 		for (const std::string& nodeName : tokens) {
-			movement::ISteering* steering = getSteering(nodeName);
+			const SteeringPtr& steering = getSteering(nodeName);
 			if (!steering)
 				return TreeNodePtr();
 			steerings.push_back(steering);

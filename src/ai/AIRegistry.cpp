@@ -23,10 +23,12 @@
 #include "filter/SelectEmpty.h"
 #include "filter/SelectHighestAggro.h"
 #include "filter/SelectGroupMembers.h"
+#include "movement/Steering.h"
 
 namespace ai {
 
 #define R(Name) registerFactory(#Name, Name::FACTORY);
+#define R_MOVE(Name) registerFactory(#Name, movement::Name::FACTORY);
 
 AIRegistry::ConditionFactory::ConditionFactory() {
 	R(And);
@@ -59,6 +61,15 @@ AIRegistry::TreeNodeFactory::TreeNodeFactory() {
 
 AIRegistry::SteerNodeFactory::SteerNodeFactory() {
 	R(Steer);
+}
+
+AIRegistry::SteeringFactory::SteeringFactory() {
+	R_MOVE(Wander);
+	R_MOVE(GroupSeek);
+	R_MOVE(GroupFlee);
+	R_MOVE(TargetSeek);
+	R_MOVE(TargetFlee);
+	R_MOVE(FollowGroupLeader);
 }
 
 #undef R
@@ -106,6 +117,14 @@ bool AIRegistry::unregisterSteerNodeFactory(const std::string& type) {
 	return _steerNodeFactory.unregisterFactory(type);
 }
 
+bool AIRegistry::registerSteeringFactory(const std::string& type, const ISteeringFactory& factory) {
+	return _steeringFactory.registerFactory(type, factory);
+}
+
+bool AIRegistry::unregisterSteeringFactory(const std::string& type) {
+	return _steeringFactory.unregisterFactory(type);
+}
+
 bool AIRegistry::unregisterFilterFactory(const std::string& nodeType) {
 	return _filterFactory.unregisterFactory(nodeType);
 }
@@ -116,6 +135,10 @@ bool AIRegistry::unregisterConditionFactory(const std::string& nodeType) {
 
 ConditionPtr AIRegistry::createCondition(const std::string& nodeType, const ConditionFactoryContext& ctx) const {
 	return _conditionFactory.create(nodeType, &ctx);
+}
+
+SteeringPtr AIRegistry::createSteering(const std::string& type, const SteeringFactoryContext& ctx) const {
+	return _steeringFactory.create(type, &ctx);
 }
 
 }

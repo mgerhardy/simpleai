@@ -3,6 +3,7 @@
 #include "tree/ITask.h"
 #include "common/String.h"
 #include "common/Math.h"
+#include "movement/Steering.h"
 
 namespace ai {
 
@@ -13,14 +14,9 @@ namespace ai {
  */
 class Wander: public ITask {
 protected:
-	float _rotation;
+	movement::Wander _w;
 public:
-	TASK_CLASS_CTOR(Wander) {
-		if (_parameters.empty()) {
-			_rotation = ai::toRadians(10.0f);
-		} else {
-			_rotation = std::stof(_parameters);
-		}
+	TASK_CLASS_CTOR(Wander), _w(_parameters) {
 	}
 	NODE_FACTORY
 
