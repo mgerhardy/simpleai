@@ -6,6 +6,8 @@
 #include "tree/Print.h"
 #include "tree/Parallel.h"
 #include "tree/PrioritySelector.h"
+#include "tree/ProbabilitySelector.h"
+#include "tree/RandomSelector.h"
 #include "tree/Sequence.h"
 #include "tree/Steer.h"
 #include "tree/Succeed.h"
@@ -54,6 +56,8 @@ AIRegistry::TreeNodeFactory::TreeNodeFactory() {
 	R(Succeed);
 	R(Parallel);
 	R(PrioritySelector);
+	R(ProbabilitySelector);
+	R(RandomSelector);
 	R(Sequence);
 	R(Print);
 	R(Idle);

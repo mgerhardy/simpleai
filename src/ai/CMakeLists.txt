@@ -99,6 +99,8 @@ list(APPEND simpleai_HEADERS
 	tree/Parallel.h
 	tree/Print.h
 	tree/PrioritySelector.h
+	tree/ProbabilitySelector.h
+	tree/RandomSelector.h
 	tree/Selector.h
 	tree/Sequence.h
 	tree/Steer.h

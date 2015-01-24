@@ -37,6 +37,8 @@ libsimpleai_la_SOURCES = \
 	tree/ITimedNode.cpp \
 	tree/Parallel.cpp \
 	tree/PrioritySelector.cpp \
+	tree/ProbabilitySelector.cpp \
+	tree/RandomSelector.cpp \
 	tree/Sequence.cpp \
 	tree/Steer.cpp \
 	tree/Succeed.cpp \
@@ -110,6 +112,8 @@ nobase_library_include_HEADERS = \
 	tree/Parallel.h \
 	tree/Print.h \
 	tree/PrioritySelector.h \
+	tree/ProbabilitySelector.h \
+	tree/RandomSelector.h \
 	tree/Selector.h \
 	tree/Sequence.h \
 	tree/Steer.h \
