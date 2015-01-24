@@ -7,8 +7,7 @@ namespace ai {
 
 TreeNodeStatus Steer::doAction(AI& entity, long deltaMillis) {
 	ICharacter& chr = entity.getCharacter();
-	const movement::WeightedSteering w(_weightedSteerings);
-	const MoveVector& mv = w.execute(chr, chr.getSpeed());
+	const MoveVector& mv = _w.execute(chr, chr.getSpeed());
 	if (mv.getVector().isInfinite())
 		return FAILED;
 
@@ -19,7 +18,23 @@ TreeNodeStatus Steer::doAction(AI& entity, long deltaMillis) {
 }
 
 TreeNodePtr Steer::Factory::create(const SteerNodeFactoryContext *ctx) const {
-	return TreeNodePtr(new Steer(ctx->name, ctx->parameters, ctx->condition, ctx->steerings));
+	movement::WeightedSteerings weightedSteerings;
+
+	if (ctx->parameters.empty()) {
+		for (const SteeringPtr& s : ctx->steerings) {
+			weightedSteerings.push_back(movement::WeightedData(s, 1.0f));
+		}
+	} else {
+		std::vector<std::string> tokens;
+		Str::splitString(ctx->parameters, tokens, ",");
+		ai_assert(tokens.size() == ctx->steerings.size(), "weights doesn't match steerings methods count");
+		const int tokenAmount = tokens.size();
+		for (int i = 0; i < tokenAmount; ++i) {
+			weightedSteerings.push_back(movement::WeightedData(ctx->steerings[i], ::atof(tokens[i].c_str())));
+		}
+	}
+	const movement::WeightedSteering w(weightedSteerings);
+	return TreeNodePtr(new Steer(ctx->name, ctx->parameters, ctx->condition, w));
 }
 
 Steer::Factory Steer::FACTORY;

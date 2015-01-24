@@ -10,24 +10,10 @@ namespace ai {
 
 class Steer: public ITask {
 protected:
-	movement::WeightedSteerings _weightedSteerings;
-	const movement::Steerings _steerings;
+	const movement::WeightedSteering _w;
 public:
-	Steer(const std::string& name, const std::string& parameters, const ConditionPtr& condition, const movement::Steerings& steerings) :
-			ITask(name, parameters, condition), _steerings(steerings) {
-		if (_parameters.empty()) {
-			for (const SteeringPtr& s : _steerings) {
-				_weightedSteerings.push_back(movement::WeightedData(s, 1.0f));
-			}
-		} else {
-			std::vector<std::string> tokens;
-			Str::splitString(_parameters, tokens, ",");
-			ai_assert(tokens.size() == _steerings.size(), "weights doesn't match steerings methods count");
-			const int tokenAmount = tokens.size();
-			for (int i = 0; i < tokenAmount; ++i) {
-				_weightedSteerings.push_back(movement::WeightedData(_steerings[i], ::atof(tokens[i].c_str())));
-			}
-		}
+	Steer(const std::string& name, const std::string& parameters, const ConditionPtr& condition, const movement::WeightedSteering &w) :
+			ITask(name, parameters, condition), _w(w) {
 	}
 	class Factory: public ISteerNodeFactory {
 	public:
