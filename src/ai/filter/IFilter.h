@@ -42,7 +42,6 @@ public: \
 	} \
 	FilterName::Factory FilterName::FACTORY;
 
-// TODO: singleton construction is not thread safe
 /**
  * @brief Macro to create a singleton conditions for very easy conditions without a state.
  */
@@ -51,9 +50,9 @@ private: \
 FILTER_CLASS(FilterName) \
 public: \
 	static FilterPtr& get() { \
-		static FilterName* c = nullptr; \
+		thread_local FilterName* c = nullptr; \
 		if (c == nullptr) { c = new FilterName; } \
-		static FilterPtr _instance(c); \
+		thread_local FilterPtr _instance(c); \
 		return _instance; \
 	} \
 	FILTER_FACTORY_SINGLETON

@@ -56,7 +56,6 @@ public: \
 	} \
 	ConditionName::Factory ConditionName::FACTORY;
 
-// TODO: singleton construction is not thread safe
 /**
  * @brief Macro to create a singleton conditions for very easy conditions without a state.
  */
@@ -65,9 +64,9 @@ private: \
 	CONDITION_CLASS(ConditionName) \
 public: \
 	static ConditionPtr& get() { \
-		static ConditionName* c = nullptr; \
+		thread_local ConditionName* c = nullptr; \
 		if (c == nullptr) { c = new ConditionName; } \
-		static ConditionPtr _instance(c); \
+		thread_local ConditionPtr _instance(c); \
 		return _instance; \
 	} \
 	CONDITION_FACTORY_SINGLETON
