@@ -104,7 +104,6 @@ list(APPEND simpleai_HEADERS
 	tree/Steer.h
 	tree/TreeNode.h
 	tree/TreeNodeParser.h
-	tree/Wander.h
 )
 
 if (SIMPLEAI_LUA)

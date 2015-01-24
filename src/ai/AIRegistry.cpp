@@ -4,7 +4,6 @@
 #include "tree/Invert.h"
 #include "tree/Idle.h"
 #include "tree/Print.h"
-#include "tree/Wander.h"
 #include "tree/Parallel.h"
 #include "tree/PrioritySelector.h"
 #include "tree/Sequence.h"
@@ -55,7 +54,6 @@ AIRegistry::TreeNodeFactory::TreeNodeFactory() {
 	R(PrioritySelector);
 	R(Sequence);
 	R(Print);
-	R(Wander);
 	R(Idle);
 }
 

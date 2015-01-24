@@ -39,8 +39,7 @@ libsimpleai_la_SOURCES = \
 	tree/PrioritySelector.cpp \
 	tree/Sequence.cpp \
 	tree/TreeNode.cpp \
-	tree/TreeNodeParser.cpp \
-	tree/Wander.cpp
+	tree/TreeNodeParser.cpp
 
 library_includedir = $(includedir)/simpleai
 nobase_library_include_HEADERS = \
@@ -113,8 +112,7 @@ nobase_library_include_HEADERS = \
 	tree/Sequence.h \
 	tree/Steer.h \
 	tree/TreeNode.h \
-	tree/TreeNodeParser.h \
-	tree/Wander.h
+	tree/TreeNodeParser.h
 
 if AI_ENABLE_LUA
 libsimpleai_la_SOURCES += \
