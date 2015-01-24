@@ -102,6 +102,7 @@ list(APPEND simpleai_HEADERS
 	tree/Selector.h
 	tree/Sequence.h
 	tree/Steer.h
+	tree/Succeed.h
 	tree/TreeNode.h
 	tree/TreeNodeParser.h
 )

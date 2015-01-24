@@ -8,6 +8,7 @@
 #include "tree/PrioritySelector.h"
 #include "tree/Sequence.h"
 #include "tree/Steer.h"
+#include "tree/Succeed.h"
 #include "conditions/And.h"
 #include "conditions/False.h"
 #include "conditions/HasEnemies.h"
@@ -50,6 +51,7 @@ AIRegistry::FilterFactory::FilterFactory() {
 
 AIRegistry::TreeNodeFactory::TreeNodeFactory() {
 	R(Invert);
+	R(Succeed);
 	R(Parallel);
 	R(PrioritySelector);
 	R(Sequence);

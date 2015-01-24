@@ -38,6 +38,8 @@ libsimpleai_la_SOURCES = \
 	tree/Parallel.cpp \
 	tree/PrioritySelector.cpp \
 	tree/Sequence.cpp \
+	tree/Steer.cpp \
+	tree/Succeed.cpp \
 	tree/TreeNode.cpp \
 	tree/TreeNodeParser.cpp
 
@@ -111,6 +113,7 @@ nobase_library_include_HEADERS = \
 	tree/Selector.h \
 	tree/Sequence.h \
 	tree/Steer.h \
+	tree/Succeed.h \
 	tree/TreeNode.h \
 	tree/TreeNodeParser.h
 
