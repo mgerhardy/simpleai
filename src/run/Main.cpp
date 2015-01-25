@@ -268,14 +268,18 @@ int main(int argc, char **argv) {
 				std::cout << "spawned " << ent->getId() << " on map " << map->getName() << std::endl;
 			}
 		} else if (c == "reload") {
-			root = load(filename, name);
+			ai::TreeNodePtr newRoot = load(filename, name);
+			if (!newRoot)
+				continue;
+			root = newRoot;
 			auto func = [&] (ai::AI& ai) {
 				ai.setBehaviour(root);
 			};
 			for (ai::example::GameMap* map : maps) {
 				map->getZone().visit(func);
 			}
-			std::cout << "reloaded the behaviour trees" << std::endl;
+			std::cout << "reloaded the behaviour tree: " << name << std::endl;
+			std::cout << *root.get() << std::endl;
 		} else {
 			std::cout << "q      - quit" << std::endl;
 			std::cout << "r      - respawn" << std::endl;
