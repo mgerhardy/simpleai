@@ -40,3 +40,4 @@ tests_LDADD = \
 
 tests_CPPFLAGS = @PTHREAD_CFLAGS@ -I$(top_srcdir)/src/ai -I$(top_builddir)/src/ai -I$(top_builddir)/src/test/gtest/include -I$(top_builddir)/src/test/gtest
 tests_LDFLAGS = @PTHREAD_LIBS@
+tests_LDADD = @MATH_LIBS@
