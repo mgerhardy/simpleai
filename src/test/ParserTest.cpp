@@ -123,3 +123,9 @@ TEST_F(ParserTest, testSteerWithoutParam) {
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
+
+TEST_F(ParserTest, testSteerWanderWithoutAnyParam) {
+	ai::TreeNodeParser parser(_registry, "Steer(Wander)");
+	const ai::TreeNodePtr& c = parser.getTreeNode();
+	ASSERT_NE(nullptr, c.get()) << parser.getError();
+}
