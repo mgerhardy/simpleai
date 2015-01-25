@@ -8,6 +8,10 @@
 namespace ai {
 namespace Str {
 
+inline float strToFloat(const std::string& str) {
+	return static_cast<float>(::atof(str.c_str()));
+}
+
 inline std::string eraseAllSpaces(const std::string& str) {
 	std::string tmp = str;
 	tmp.erase(std::remove(tmp.begin(), tmp.end(), ' '), tmp.end());

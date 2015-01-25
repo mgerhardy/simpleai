@@ -54,7 +54,7 @@ public:
 	 */
 	bool add(GroupId id, ICharacter* character);
 
-	void update(uint32_t deltaTime);
+	void update(long deltaTime);
 
 	/**
 	 * @brief Removes a group member from the given @c GroupId.

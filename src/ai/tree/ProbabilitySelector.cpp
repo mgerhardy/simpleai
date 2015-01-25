@@ -11,36 +11,37 @@ ProbabilitySelector::ProbabilitySelector(const std::string& name, const std::str
 	Str::splitString(parameters, tokens, ",");
 	const int weightAmount = tokens.size();
 	for (int i = 0; i < weightAmount; i++) {
-		const float weight = ::atof(tokens[i].c_str());
+		const float weight = Str::strToFloat(tokens[i]);
 		_weightSum += weight;
 		_weights[i] = weight;
 	}
 }
 
 TreeNodeStatus ProbabilitySelector::execute(AI& entity, long deltaMillis) {
+	// TODO: don't reset - but continue until the running node finished
 	setSelectorState(entity, NOTHING_SELECTED);
 	if (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
 
-	int rndIndex = ai::random(0.0f, _weightSum);
-	const int weightAmount = _weights.size();
-	int i = 0;
-	for (; i < weightAmount; i++) {
-		if (rndIndex < _weights[i])
+	float rndIndex = ai::randomf(_weightSum);
+	const int weightAmount = static_cast<int>(_weights.size());
+	int index = 0;
+	for (; index < weightAmount; index++) {
+		if (rndIndex < _weights[index])
 			break;
-		rndIndex -= _weights[i];
+		rndIndex -= _weights[index];
 	}
 
-	const TreeNodePtr& child = _children[rndIndex];
+	const TreeNodePtr& child = _children[index];
 	const TreeNodeStatus result = child->execute(entity, deltaMillis);
 	if (result == RUNNING) {
-		setSelectorState(entity, static_cast<int>(i));
+		setSelectorState(entity, index);
 	}
 	child->resetState(entity);
 
-	const int size = _children.size();
+	const int size = static_cast<int>(_children.size());
 	for (int i = 0; i < size; ++i) {
-		if (i == rndIndex)
+		if (i == index)
 			continue;
 		_children[i]->resetState(entity);
 	}

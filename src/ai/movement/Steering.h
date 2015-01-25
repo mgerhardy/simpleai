@@ -8,6 +8,7 @@
 #include "common/Math.h"
 #include "common/Random.h"
 #include "common/MoveVector.h"
+#include "common/String.h"
 #include "common/MemoryAllocator.h"
 #include "ICharacter.h"
 #include <cassert>
@@ -219,12 +220,12 @@ public:
  */
 class Wander: public ISteering {
 protected:
-	float _rotation;
+	const float _rotation;
 public:
 	STEERING_FACTORY
 
 	Wander(const std::string& parameter) :
-			ISteering(), _rotation(parameter.empty() ? ai::toRadians(10.0f) : ::atof(parameter.c_str())) {
+			ISteering(), _rotation(parameter.empty() ? ai::toRadians(10.0f) : Str::strToFloat(parameter)) {
 	}
 
 	MoveVector execute (const ICharacter& character, float speed) const override {

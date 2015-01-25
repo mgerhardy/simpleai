@@ -241,8 +241,8 @@ int main(int argc, char **argv) {
 					std::cout << " \\- orientation: " << ai.getCharacter().getOrientation() << std::endl;
 					std::cout << " \\- attributes:" << std::endl;
 					const ai::CharacterAttributes& attributes = ai.getCharacter().getAttributes();
-					for (ai::CharacterAttributes::const_iterator i = attributes.begin(); i != attributes.end(); ++i) {
-						std::cout << "  \\- " << i->first << ": \"" << i->second << "\"" << std::endl;
+					for (ai::CharacterAttributes::const_iterator attribIter = attributes.begin(); attribIter != attributes.end(); ++attribIter) {
+						std::cout << "  \\- " << attribIter->first << ": \"" << attribIter->second << "\"" << std::endl;
 					}
 					++count;
 				};
