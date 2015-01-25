@@ -34,6 +34,10 @@ public:
 		return _zone;
 	}
 
+	inline ai::Zone& getZone() {
+		return _zone;
+	}
+
 	inline GameEntity* getRandomEntity() const {
 		SCOPEDLOCK(_mutex);
 		if (_entities.empty())

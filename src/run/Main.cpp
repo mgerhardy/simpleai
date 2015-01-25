@@ -182,7 +182,8 @@ int main(int argc, char **argv) {
 
 	std::cout << "Started server on " << interface << ":" << port << std::endl;
 
-	std::vector<ai::example::GameMap*> maps;
+	typedef std::vector<ai::example::GameMap*> Maps;
+	Maps maps;
 	for (int i = 0; i < mapAmount; ++i) {
 		maps.push_back(createMap(amount, server, root, "Map" + std::to_string(i)));
 	}
@@ -268,6 +269,12 @@ int main(int argc, char **argv) {
 			}
 		} else if (c == "reload") {
 			root = load(filename, name);
+			auto func = [&] (ai::AI& ai) {
+				ai.setBehaviour(root);
+			};
+			for (ai::example::GameMap* map : maps) {
+				map->getZone().visit(func);
+			}
 			std::cout << "reloaded the behaviour trees" << std::endl;
 		} else {
 			std::cout << "q      - quit" << std::endl;
