@@ -1,5 +1,5 @@
 function init ()
-	AI.createTree("wander"):createRoot("Steer(Wander{15})", "wander")
+	AI.createTree("wander"):createRoot("Steer(Wander)", "wander")
 
 	local example = AI.createTree("example")
 	local rootNodeExample = example:createRoot("PrioritySelector", "root")

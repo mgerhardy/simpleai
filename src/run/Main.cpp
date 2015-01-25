@@ -87,6 +87,39 @@ static void runDespawnSpawn(ai::example::GameMap* map, const ai::TreeNodePtr* ro
 
 #endif
 
+static ai::TreeNodePtr load(const std::string filename, const std::string& name) {
+	ai::AIRegistry registry;
+	// add your own tasks and conditions here
+	ai::LUATreeLoader loader(registry);
+
+	std::ifstream btStream(filename);
+	if (!btStream) {
+		std::cerr << "could not load " << filename << std::endl;
+		return ai::TreeNodePtr();
+	}
+
+	std::string str((std::istreambuf_iterator<char>(btStream)), std::istreambuf_iterator<char>());
+	if (!loader.init(str)) {
+		std::cerr << "could not load the tree" << std::endl;
+		std::cerr << loader.getError() << std::endl;
+		return ai::TreeNodePtr();
+	}
+	std::cerr << "loaded the tree: " << filename << std::endl;
+	const ai::TreeNodePtr& root = loader.load(name);
+	if (!root) {
+		std::cerr << "could not find behaviour with the name " << name << std::endl;
+		std::vector<std::string> trees;
+		loader.getTrees(trees);
+		std::cerr << "found " << trees.size() << " trees" << std::endl;
+		for (std::vector<std::string>::const_iterator i = trees.begin(); i != trees.end(); ++i) {
+			std::cerr << "found " << *i << std::endl;
+		}
+		return ai::TreeNodePtr();
+	}
+
+	return root;
+}
+
 int main(int argc, char **argv) {
 	char **b = argv;
 	char **e = argv + argc;
@@ -125,32 +158,8 @@ int main(int argc, char **argv) {
 
 	ai::randomSeed(seed);
 
-	ai::AIRegistry registry;
-	// add your own tasks and conditions here
-	ai::LUATreeLoader loader(registry);
-
-	std::ifstream btStream(filename);
-	if (!btStream) {
-		std::cerr << "could not load " << filename << std::endl;
-		return EXIT_FAILURE;
-	}
-
-	std::string str((std::istreambuf_iterator<char>(btStream)), std::istreambuf_iterator<char>());
-	if (!loader.init(str)) {
-		std::cerr << "could not load the tree" << std::endl;
-		std::cerr << loader.getError() << std::endl;
-		return EXIT_FAILURE;
-	}
-	std::cerr << "loaded the tree: " << filename << std::endl;
-	const ai::TreeNodePtr& root = loader.load(name);
+	ai::TreeNodePtr root = load(filename, name);
 	if (!root) {
-		std::cerr << "could not find behaviour with the name " << name << std::endl;
-		std::vector<std::string> trees;
-		loader.getTrees(trees);
-		std::cerr << "found " << trees.size() << " trees" << std::endl;
-		for (std::vector<std::string>::const_iterator i = trees.begin(); i != trees.end(); ++i) {
-			std::cerr << "found " << *i << std::endl;
-		}
 		return EXIT_FAILURE;
 	}
 
@@ -211,12 +220,13 @@ int main(int argc, char **argv) {
 
 	std::cout << "hit q to quit or h for help" << std::endl;
 	for (;;) {
-		char c;
-		std::cin >> c;
-		if (c == 'q') {
-			std::cout << "quitting" << std::endl;
+		std::string c;
+		std::getline(std::cin, c);
+
+		if (c == "q") {
+			std::cout << "quitting - waiting for threads" << std::endl;
 			break;
-		} else if (c == 'd') {
+		} else if (c == "d") {
 			for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
 				ai::example::GameMap *map = *i;
 				std::cout << map->getName() << std::endl;
@@ -238,10 +248,10 @@ int main(int argc, char **argv) {
 				zone.visit(func);
 				std::cout << " - sum: " << count << " entities" << std::endl;
 			}
-		} else if (c == 't') {
+		} else if (c == "t") {
 			autospawn = !autospawn;
 			std::cout << "automatic respawn: " << (autospawn ? "true" : "false") << std::endl;
-		} else if (c == 'r') {
+		} else if (c == "r") {
 			for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
 				ai::example::GameMap *map = *i;
 				ai::example::GameEntity *rnd = map->getRandomEntity();
@@ -256,11 +266,15 @@ int main(int argc, char **argv) {
 				ai::example::GameEntity* ent = map->addEntity(new ai::example::GameEntity(id++, map, root));
 				std::cout << "spawned " << ent->getId() << " on map " << map->getName() << std::endl;
 			}
+		} else if (c == "reload") {
+			root = load(filename, name);
+			std::cout << "reloaded the behaviour trees" << std::endl;
 		} else {
-			std::cout << "q - quit" << std::endl;
-			std::cout << "r - respawn" << std::endl;
-			std::cout << "t - trigger automatic respawn" << std::endl;
-			std::cout << "d - detail" << std::endl;
+			std::cout << "q      - quit" << std::endl;
+			std::cout << "r      - respawn" << std::endl;
+			std::cout << "t      - trigger automatic respawn" << std::endl;
+			std::cout << "d      - detail" << std::endl;
+			std::cout << "reload - reload the behaviour tree from file" << std::endl;
 		}
 	}
 
