@@ -4,15 +4,16 @@ bin_PROGRAMS = \
 AM_CPPFLAGS =
 
 tests_SOURCES = \
-	TestAll.cpp \
-	TestShared.cpp \
-	ParserTest.cpp \
-	NodeTest.cpp \
+	AggroTest.cpp \
+	GeneralTest.cpp \
+	GroupTest.cpp \
 	MessageTest.cpp \
 	MovementTest.cpp \
-	GeneralTest.cpp \
-	AggroTest.cpp \
-	GroupTest.cpp \
+	NodeTest.cpp \
+	ParserTest.cpp \
+	TestAll.cpp \
+	TestShared.cpp \
+	ZoneTest.cpp \
 	\
 	gtest/src/gtest.cc \
 	gtest/src/gtest-death-test.cc \
@@ -29,7 +30,7 @@ tests_SOURCES += \
 endif
 
 if AI_ENABLE_XML
-AM_CPPFLAGS += -I$(top_builddir)/src/libs/xml
+AM_CPPFLAGS += -I$(top_builddir)/src/libs/tinyxml2
 tests_SOURCES += \
 	XMLTreeLoaderTest.cpp
 endif
