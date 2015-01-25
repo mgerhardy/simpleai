@@ -28,7 +28,7 @@ TreeNodePtr Steer::Factory::create(const SteerNodeFactoryContext *ctx) const {
 		std::vector<std::string> tokens;
 		Str::splitString(ctx->parameters, tokens, ",");
 		ai_assert(tokens.size() == ctx->steerings.size(), "weights doesn't match steerings methods count");
-		const int tokenAmount = tokens.size();
+		const int tokenAmount = static_cast<int>(tokens.size());
 		for (int i = 0; i < tokenAmount; ++i) {
 			weightedSteerings.push_back(movement::WeightedData(ctx->steerings[i], Str::strToFloat(tokens[i])));
 		}
