@@ -43,18 +43,20 @@ MapItem::MapItem(QGraphicsItem* parent, const AIStateWorld& state, AIDebugger& a
 	CharacterAttributes::const_iterator group = attributes.find(attributes::GROUP);
 	if (group != attributes.end()) {
 		const int groupId = atoi(group->second.c_str());
-		const int b = groupId * 113 % 255;
-		const int component = groupId % 3;
-		switch (component) {
-		case 0:
-			color.setRed(b);
-			break;
-		case 1:
-			color.setGreen(b);
-			break;
-		default:
-			color.setBlue(b);
-			break;
+		if (groupId > 0) {
+			const int b = groupId * 113 % 255;
+			const int component = groupId % 3;
+			switch (component) {
+			case 0:
+				color.setRed(b);
+				break;
+			case 1:
+				color.setGreen(b);
+				break;
+			default:
+				color.setBlue(b);
+				break;
+			}
 		}
 	}
 

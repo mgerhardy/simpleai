@@ -16,6 +16,7 @@
 
 namespace {
 std::atomic_int id(1);
+std::atomic_bool autospawn(true);
 std::atomic_bool shutdownThreads(false);
 }
 
@@ -71,13 +72,15 @@ static void runServer(ai::Server* server) {
 static void runDespawnSpawn(ai::example::GameMap* map, const ai::TreeNodePtr* root) {
 	const std::chrono::milliseconds delay(15000);
 	while (!shutdownThreads) {
-		ai::example::GameEntity *rnd = map->getRandomEntity();
-		if (rnd != nullptr) {
-			map->remove(rnd);
-			delete rnd;
-		}
+		if (autospawn) {
+			ai::example::GameEntity *rnd = map->getRandomEntity();
+			if (rnd != nullptr) {
+				map->remove(rnd);
+				delete rnd;
+			}
 
-		map->addEntity(new ai::example::GameEntity(id++, map, *root));
+			map->addEntity(new ai::example::GameEntity(id++, map, *root));
+		}
 		std::this_thread::sleep_for(delay);
 	}
 }
@@ -90,21 +93,23 @@ int main(int argc, char **argv) {
 	if (argc <= 1 || optExists(b, e, "-h") || optExists(b, e, "-help") || !optExists(b, e, "-file")) {
 		std::cerr << "usage: simpleai-run -file behaviourtree.lua [options]" << std::endl;
 		std::cerr << "Valid options are (default values are given here):" << std::endl;
-		std::cerr << "-amount 10    - how many entities are spawned on each map" << std::endl;
-		std::cerr << "-maps 4       - how many maps should get spawned" << std::endl;
-		std::cerr << "-name example - the name of the behaviour tree in the given script" << std::endl;
-		std::cerr << "-seed 1       - use a fixed seed for all the random actions" << std::endl;
-		std::cerr << "-help -h      - show this help screen" << std::endl;
+		std::cerr << "-amount 10            - how many entities are spawned on each map" << std::endl;
+		std::cerr << "-maps 4               - how many maps should get spawned" << std::endl;
+		std::cerr << "-autospawn true|false - automatic respawn (despawn random and respawn) of entities" << std::endl;
+		std::cerr << "-name example         - the name of the behaviour tree in the given script" << std::endl;
+		std::cerr << "-seed 1               - use a fixed seed for all the random actions" << std::endl;
+		std::cerr << "-help -h              - show this help screen" << std::endl;
 		std::cerr << std::endl;
 		std::cerr << "Network related options" << std::endl;
-		std::cerr << "-interface 0.0.0.0 - the interface the server will listen on" << std::endl;
-		std::cerr << "-port 12345        - the port of the server to listen on" << std::endl;
+		std::cerr << "-interface 0.0.0.0    - the interface the server will listen on" << std::endl;
+		std::cerr << "-port 12345           - the port of the server to listen on" << std::endl;
 #ifdef AI_PROFILER
-		std::cerr << "-profilerOutput    - google profiler output file" << std::endl;
+		std::cerr << "-profilerOutput       - google profiler output file" << std::endl;
 #endif
 		return EXIT_FAILURE;
 	}
 
+	autospawn = getOptParam(b, e, "-autospawn", "true") == "true";
 	const int seed = std::stoi(getOptParam(b, e, "-seed", "1"));
 	const int mapAmount = std::stoi(getOptParam(b, e, "-maps", "4"));
 	const int amount = std::stoi(getOptParam(b, e, "-amount", "10"));
@@ -153,6 +158,7 @@ int main(int argc, char **argv) {
 	std::cout << "successfully loaded the behaviour tree " << name << std::endl;
 	std::cout << "now run this behaviour tree with " << amount << " entities on each map" << std::endl;
 	std::cout << "spawn " << mapAmount << " maps with seed " << seed << std::endl;
+	std::cout << "automatic respawn: " << (autospawn ? "true" : "false") << std::endl;
 #ifdef AI_NO_THREADING
 	std::cout << "compiled without threading support" << std::endl;
 #else
@@ -217,13 +223,25 @@ int main(int argc, char **argv) {
 				const ai::Zone& zone = map->getZone();
 				int count = 0;
 				auto func = [&] (const ai::AI& ai) {
-					std::cout << ai.getCharacter().getId() << std::endl;
+					std::cout << "id: " << ai.getCharacter().getId() << std::endl;
+					// std::cout << *root.get() << std::endl;
+					std::cout << " \\- pos: " << ai.getCharacter().getPosition() << std::endl;
+					std::cout << " \\- speed: " << ai.getCharacter().getSpeed() << std::endl;
+					std::cout << " \\- orientation: " << ai.getCharacter().getOrientation() << std::endl;
+					std::cout << " \\- attributes:" << std::endl;
+					const ai::CharacterAttributes& attributes = ai.getCharacter().getAttributes();
+					for (ai::CharacterAttributes::const_iterator i = attributes.begin(); i != attributes.end(); ++i) {
+						std::cout << "  \\- " << i->first << ": \"" << i->second << "\"" << std::endl;
+					}
 					++count;
 				};
 				zone.visit(func);
 				std::cout << " - sum: " << count << " entities" << std::endl;
 			}
-		} else if (c == 's') {
+		} else if (c == 't') {
+			autospawn = !autospawn;
+			std::cout << "automatic respawn: " << (autospawn ? "true" : "false") << std::endl;
+		} else if (c == 'r') {
 			for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
 				ai::example::GameMap *map = *i;
 				ai::example::GameEntity *rnd = map->getRandomEntity();
@@ -240,7 +258,8 @@ int main(int argc, char **argv) {
 			}
 		} else {
 			std::cout << "q - quit" << std::endl;
-			std::cout << "s - respawn" << std::endl;
+			std::cout << "r - respawn" << std::endl;
+			std::cout << "t - trigger automatic respawn" << std::endl;
 			std::cout << "d - detail" << std::endl;
 		}
 	}

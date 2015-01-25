@@ -20,8 +20,8 @@ GameEntity::GameEntity(const ai::CharacterId& id,
 	// pick some random start position
 	setPosition(getStartPosition());
 	setAttribute(ai::attributes::NAME, "Example " + std::to_string(id));
-	setSpeed(50.0f);
-	_groupId = (id % 3) + 1;
+	setSpeed(50.0f + ai::randomf(10.0f));
+	_groupId = -1;
 
 	setAttribute(ai::attributes::GROUP, std::to_string(_groupId));
 	setAttribute(ai::attributes::ID, std::to_string(getId()));
