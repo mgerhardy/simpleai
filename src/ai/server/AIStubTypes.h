@@ -25,6 +25,11 @@ class AIStateAggro {
 private:
 	std::vector<AIStateAggroEntry> _aggro;
 public:
+	inline void reserve(std::size_t size) {
+		if (size > 0)
+			_aggro.reserve(size);
+	}
+
 	inline void addAggro(const AIStateAggroEntry& entry) {
 		_aggro.push_back(entry);
 	}

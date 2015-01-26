@@ -166,6 +166,7 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 
 		AIStateAggro aggro;
 		const ai::AggroMgr::Entries& entries = ai.getAggroMgr().getEntries();
+		aggro.reserve(entries.size());
 		for (const Entry& e : entries) {
 			aggro.addAggro(AIStateAggroEntry(e.getCharacterId(), e.getAggro()));
 		}
