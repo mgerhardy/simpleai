@@ -84,7 +84,14 @@ void AIDebuggerWidget::onNamesReceived() {
 		_namesComboBox->insertItems(0, names);
 		_namesComboBox->setEnabled(true);
 	}
-	_namesComboBox->setCurrentIndex(_namesComboBox->findText(name));
+	const int index = _namesComboBox->findText(name);
+	if (index == -1) {
+		if (!names.empty())
+			_namesComboBox->setCurrentIndex(0);
+		return;
+	}
+
+	_namesComboBox->setCurrentIndex(index);
 }
 
 void AIDebuggerWidget::contributeToStatusBar(QStatusBar* statusBar) {
