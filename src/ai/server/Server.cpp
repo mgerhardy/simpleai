@@ -153,7 +153,8 @@ void Server::broadcastState(Zone* zone) {
 }
 
 void Server::broadcastCharacterDetails(Zone* zone) {
-	if (_selectedCharacterId == -1)
+	const CharacterId id = _selectedCharacterId;
+	if (id == -1)
 		return;
 
 	auto func = [&] (AI& ai) {
@@ -171,10 +172,10 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 			aggro.addAggro(AIStateAggroEntry(e.getCharacterId(), e.getAggro()));
 		}
 
-		const AICharacterDetailsMessage msg(_selectedCharacterId, aggro, root);
+		const AICharacterDetailsMessage msg(id, aggro, root);
 		_network.broadcast(msg);
 	};
-	if (!zone->execute(_selectedCharacterId, func)) {
+	if (!zone->execute(id, func)) {
 		_selectedCharacterId = -1;
 	}
 }
