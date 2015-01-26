@@ -11,3 +11,7 @@
 /debug
 /.settings
 *.qm
+/moc_*.cpp
+/qrc_resources.cpp
+/simpleai-debugger_automoc.cpp
+/data/resources.qrc.depends
