@@ -25,7 +25,7 @@ TreeNodeStatus ProbabilitySelector::execute(AI& entity, long deltaMillis) {
 	if (index == NOTHING_SELECTED) {
 		float rndIndex = ai::randomf(_weightSum);
 		const int weightAmount = static_cast<int>(_weights.size());
-		for (; index < weightAmount; index++) {
+		for (; index < weightAmount; ++index) {
 			if (rndIndex < _weights[index])
 				break;
 			rndIndex -= _weights[index];

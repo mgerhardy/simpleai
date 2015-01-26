@@ -6,7 +6,8 @@
 namespace ai {
 
 /**
- * @brief This node executes one of the attached children randomly based on the given weights.
+ * @brief This node executes one of the attached children randomly based on the given weights. The node is
+ * executed until it is no longer in the running state
  *
  * http://aigamedev.com/open/article/selector/
  */
