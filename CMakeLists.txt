@@ -63,6 +63,7 @@ endif()
 add_subdirectory(src/ai)
 add_subdirectory(src/run)
 add_subdirectory(src/test)
+add_subdirectory(src/libs)
 
 if (SIMPLEAI_RUN)
 	message(STATUS "Build the run tool")

@@ -1,4 +1,12 @@
 if (SIMPLEAI_RUN)
+	if (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
+	elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Darwin")
+	elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
+		if (CMAKE_COMPILER_IS_GNUCXX)
+			set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -pedantic -Wabi -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-declarations -Wmissing-format-attribute -Wno-long-long -Woverloaded-virtual -Wpacked -Wredundant-decls -Wshadow -Wsign-promo -Wno-sign-compare")
+		endif()
+	endif()
+
 	include_directories(${SIMPLEAI_SOURCE_DIR}/src/ai)
 	link_directories(${SIMPLEAI_BINARY_DIR}/src/ai)
 	file(GLOB_RECURSE SRC ${SIMPLEAI_SOURCE_DIR}/src/run/*.cpp ${SIMPLEAI_SOURCE_DIR}/src/run/*.h)
