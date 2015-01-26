@@ -73,8 +73,7 @@ void Server::onConnect(Client* client) {
 	std::vector<std::string> names;
 	{
 		ScopedReadLock scopedLock(_lock);
-		for (ZoneConstIter i = _zones.begin(); i != _zones.end(); ++i) {
-			const Zone* zone = *i;
+		for (const Zone* zone : _zones) {
 			names.push_back(zone->getName());
 		}
 	}
@@ -167,8 +166,7 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 
 		AIStateAggro aggro;
 		const ai::AggroMgr::Entries& entries = ai.getAggroMgr().getEntries();
-		for (ai::AggroMgr::Entries::const_iterator it = entries.begin(); it != entries.end(); ++it) {
-			const Entry& e = *it;
+		for (const Entry& e : entries) {
 			aggro.addAggro(AIStateAggroEntry(e.getCharacterId(), e.getAggro()));
 		}
 
@@ -201,15 +199,13 @@ void Server::setDebug(const std::string& zoneName) {
 		pause(1, false);
 	}
 	_zone = nullptr;
-	{
-		ScopedReadLock scopedLock(_lock);
-		for (ZoneIter i = _zones.begin(); i != _zones.end(); ++i) {
-			Zone* zone = *i;
-			const bool debug = zone->getName() == zoneName;
-			zone->setDebug(debug);
-			if (debug)
-				_zone = zone;
-		}
+
+	ScopedReadLock scopedLock(_lock);
+	for (Zone* zone : _zones) {
+		const bool debug = zone->getName() == zoneName;
+		zone->setDebug(debug);
+		if (debug)
+			_zone = zone;
 	}
 }
 
@@ -217,8 +213,7 @@ void Server::broadcastZoneNames() {
 	std::vector<std::string> names;
 	{
 		ScopedReadLock scopedLock(_lock);
-		for (ZoneConstIter i = _zones.begin(); i != _zones.end(); ++i) {
-			const Zone* zone = *i;
+		for (const Zone* zone : _zones) {
 			names.push_back(zone->getName());
 		}
 	}
