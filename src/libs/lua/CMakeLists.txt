@@ -1,2 +1,2 @@
-file(GLOB_RECURSE SRC *.cpp *.h)
+file(GLOB_RECURSE SRC *.c *.h)
 add_library(lua ${SRC})

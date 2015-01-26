@@ -1,5 +1,8 @@
 if (SIMPLEAI_LUA)
-	add_subdirectory(lua)
+	find_package(Lua)
+	if (NOT LUA_FOUND)
+		add_subdirectory(lua)
+	endif()
 endif()
 
 if (SIMPLEAI_XML)
