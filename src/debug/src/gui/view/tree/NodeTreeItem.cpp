@@ -1,6 +1,6 @@
 #include "NodeTreeItem.h"
 #include "AIDebugger.h"
-#include "Common.h"
+#include "TreeViewCommon.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QFont>
@@ -16,18 +16,6 @@ const QColor backgroundColor = QColor::fromRgb(32, 32, 32, 64);
 const QColor runningBackgroundColor = QColor::fromRgb(255, 0, 0, 128);
 const QFont font("Times", fontSize);
 const QFontMetrics fontMetrics(font);
-
-#define E(x) #x
-const char *stateNames[] = {
-E(UNKNOWN),
-E(CANNOTEXECUTE),
-E(RUNNING),
-E(FINISHED),
-E(FAILED),
-E(EXCEPTION)
-};
-#undef E
-COMPILE_TIME_ASSERT(ARRAY_LENGTH(stateNames) == MAX_TREENODESTATUS);
 }
 
 NodeTreeItem::NodeTreeItem (QGraphicsItem* parentItem, const AIStateNode& node, NodeTreeItem* parent, int height, int horizontalSpacing, int verticalSpacing) :

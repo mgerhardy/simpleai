@@ -72,6 +72,10 @@ public:
 		return _children;
 	}
 
+	inline std::vector<AIStateNode>& getChildren() {
+		return _children;
+	}
+
 	inline const std::string& getName() const {
 		return _name;
 	}

@@ -66,8 +66,11 @@ list(APPEND simpleai_debugger_SOURCES
            src/gui/view/list/EntityListModel.cpp
            src/gui/view/map/MapView.cpp
            src/gui/view/map/MapItem.cpp
+           src/gui/view/tree/BehaviourTreeModel.cpp
+           src/gui/view/tree/BehaviourTreeModelItem.cpp
            src/gui/view/tree/NodeTreeItem.cpp
            src/gui/view/tree/NodeTreeView.cpp
+           src/gui/view/tree/TreeViewCommon.cpp
            src/gui/view/state/StateTable.cpp
            src/gui/view/state/StateTableModel.cpp
            src/gui/view/aggro/AggroTable.cpp

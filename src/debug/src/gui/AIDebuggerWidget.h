@@ -7,7 +7,9 @@
 #include <QComboBox>
 #include <QMenu>
 #include <QLineEdit>
+#include <QTreeView>
 
+#include "BehaviourTreeModel.h"
 #include "AICompressorProxy.h"
 
 namespace ai {
@@ -103,6 +105,8 @@ private:
 	QLabel *_statusBarLabel;
 	QLabel *_selectedLabel;
 	QComboBox *_namesComboBox;
+	QTreeView *_tree;
+	BehaviourTreeModel _model;
 
 	AIDebugger& _debugger;
 	QString _name;

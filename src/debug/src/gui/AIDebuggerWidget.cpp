@@ -2,6 +2,7 @@
 #include <QMessageBox>
 #include <QStatusBar>
 #include <QSplitter>
+#include <QTreeView>
 
 #include "AIDebugger.h"
 #include "AIDebuggerWidget.h"
@@ -70,6 +71,9 @@ void AIDebuggerWidget::onSelected() {
 	}
 	_stateTable->updateStateTable();
 	_nodeTree->updateTreeWidget();
+	_model.setRootNode(const_cast<AIStateNode*>(&_debugger.getNode()));
+	_tree->setModel(&_model);
+	_tree->expandAll();
 	_aggroTable->updateAggroTable();
 }
 
@@ -179,7 +183,11 @@ QWidget *AIDebuggerWidget::createBottomWidget() {
 	_aggroTable = new AggroTable(_debugger);
 	_stateTable = new StateTable(_debugger);
 
-	splitter->addWidget(_nodeTreeFrame);
+	_tree = new QTreeView();
+	_tree->setUniformRowHeights(true);
+	_tree->setAlternatingRowColors(true);
+
+	splitter->addWidget(_tree);
 	splitter->setStretchFactor(splitter->indexOf(_nodeTreeFrame), 5);
 	splitter->addWidget(_aggroTable);
 	splitter->setStretchFactor(splitter->indexOf(_aggroTable), 1);
