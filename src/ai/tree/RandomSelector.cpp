@@ -5,7 +5,6 @@
 namespace ai {
 
 TreeNodeStatus RandomSelector::execute(AI& entity, long deltaMillis) {
-	setSelectorState(entity, NOTHING_SELECTED);
 	if (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
 
@@ -18,7 +17,6 @@ TreeNodeStatus RandomSelector::execute(AI& entity, long deltaMillis) {
 		const TreeNodePtr& child = childrenShuffled[i];
 		const TreeNodeStatus result = child->execute(entity, deltaMillis);
 		if (result == RUNNING) {
-			setSelectorState(entity, static_cast<int>(i));
 			continue;
 		} else if (result == CANNOTEXECUTE || result == FAILED) {
 			overallResult = result;

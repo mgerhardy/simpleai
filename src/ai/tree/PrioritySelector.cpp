@@ -4,15 +4,17 @@
 namespace ai {
 
 TreeNodeStatus PrioritySelector::execute(AI& entity, long deltaMillis) {
-	// TODO: don't reset - but continue until the running node finished
-	setSelectorState(entity, NOTHING_SELECTED);
 	if (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
 
+	int index = getSelectorState(entity);
+	if (index == NOTHING_SELECTED) {
+		index = 0;
+	}
 	const std::size_t size = _children.size();
 	TreeNodeStatus overallResult = FINISHED;
-	std::size_t i;
-	for (i = 0; i < size; ++i) {
+	std::size_t i = index;
+	for (; i < size; ++i) {
 		const TreeNodePtr& child = _children[i];
 		const TreeNodeStatus result = child->execute(entity, deltaMillis);
 		if (result == RUNNING) {
