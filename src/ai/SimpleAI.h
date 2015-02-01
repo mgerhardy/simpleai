@@ -60,8 +60,7 @@
 #include "tree/ITask.h"
 #include "tree/ITimedNode.h"
 #include "tree/TreeNodeParser.h"
-#include "tree/loaders/lua/LUATreeLoader.h"
-#include "tree/loaders/xml/XMLTreeLoader.h"
+#include "tree/loaders/ITreeLoader.h"
 
 #include "group/GroupMgr.h"
 

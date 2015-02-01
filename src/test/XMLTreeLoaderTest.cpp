@@ -1,5 +1,6 @@
 #include "XMLTreeLoaderTest.h"
 #include <SimpleAI.h>
+#include <tree/loaders/xml/XMLTreeLoader.h>
 
 namespace {
 const char *TREE = "<?xml version=\"1.0\" standalone=\"no\" ?>"

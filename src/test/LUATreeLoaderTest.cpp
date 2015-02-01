@@ -1,5 +1,6 @@
 #include "LUATreeLoaderTest.h"
 #include <SimpleAI.h>
+#include <tree/loaders/lua/LUATreeLoader.h>
 
 namespace {
 const char *TREE = "function init ()"

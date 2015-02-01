@@ -4,6 +4,7 @@
 #include <streambuf>
 #include <cstdlib>
 #include <SimpleAI.h>
+#include <tree/loaders/lua/LUATreeLoader.h>
 #include "GameEntity.h"
 #include "GameMap.h"
 #include <chrono>
