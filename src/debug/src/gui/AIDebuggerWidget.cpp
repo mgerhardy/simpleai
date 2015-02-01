@@ -29,12 +29,9 @@ AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger) :
 	connect(&_debugger, SIGNAL(onPause(bool)), SLOT(setPause(bool)));
 	connect(&_debugger, SIGNAL(disconnected()), SLOT(onDisconnect()));
 
-	connect(&_debugger, SIGNAL(onSelected()), &_proxy, SLOT(selected()),
-			Qt::QueuedConnection);
-	connect(&_debugger, SIGNAL(onNamesReceived()), &_proxy, SLOT(namesReceived()),
-			Qt::QueuedConnection);
-	connect(&_debugger, SIGNAL(onEntitiesUpdated()), &_proxy, SLOT(entitiesUpdated()),
-			Qt::QueuedConnection);
+	connect(&_debugger, SIGNAL(onSelected()), &_proxy, SLOT(selected()), Qt::QueuedConnection);
+	connect(&_debugger, SIGNAL(onNamesReceived()), &_proxy, SLOT(namesReceived()), Qt::QueuedConnection);
+	connect(&_debugger, SIGNAL(onEntitiesUpdated()), &_proxy, SLOT(entitiesUpdated()), Qt::QueuedConnection);
 
 	connect(&_proxy, SIGNAL(onSelected()), this, SLOT(onSelected()));
 	connect(&_proxy, SIGNAL(onEntitiesUpdated()), this, SLOT(onEntitiesUpdated()));

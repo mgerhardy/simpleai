@@ -102,9 +102,12 @@ QVariant BehaviourTreeModel::headerData(int section, Qt::Orientation orientation
 }
 
 void BehaviourTreeModel::setRootNode(AIStateNode* node) {
-	if (_rootItem)
+	beginResetModel();
+	if (_rootItem) {
 		delete _rootItem;
+	}
 	_rootItem = new BehaviourTreeModelItem(node);
+	endResetModel();
 }
 
 }
