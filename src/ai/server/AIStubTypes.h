@@ -39,6 +39,33 @@ public:
 	}
 };
 
+class AIStateNodeStatic {
+private:
+	int _id;
+	std::string _name;
+	std::string _type;
+public:
+	AIStateNodeStatic(const int id, const std::string& name, const std::string& type) :
+			_id(id), _name(name), _type(type) {
+	}
+
+	AIStateNodeStatic() :
+			_id(-1) {
+	}
+
+	inline int getId() const {
+		return _id;
+	}
+
+	inline const std::string& getName() const {
+		return _name;
+	}
+
+	inline const std::string& getType() const {
+		return _type;
+	}
+};
+
 /**
  * @brief This is a representation of a behaviour tree node for the serialization
  */
