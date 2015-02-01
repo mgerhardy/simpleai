@@ -13,6 +13,7 @@ private:
 	int _rowCount;
 	QList<BehaviourTreeModelItem*> _rows;
 	BehaviourTreeModelItem* _parent;
+	QIcon _icon;
 public:
 	BehaviourTreeModelItem(AIStateNode* node, BehaviourTreeModelItem* parent = nullptr);
 	virtual ~BehaviourTreeModelItem();

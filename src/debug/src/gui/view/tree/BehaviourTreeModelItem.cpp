@@ -9,6 +9,7 @@ BehaviourTreeModelItem::BehaviourTreeModelItem(AIStateNode* node, BehaviourTreeM
 	for (const AIStateNode& node : _node->getChildren()) {
 		_rows.push_back(new BehaviourTreeModelItem(const_cast<AIStateNode*>(&node), this));
 	}
+	// TODO: fill icon
 }
 
 BehaviourTreeModelItem::~BehaviourTreeModelItem() {
@@ -26,7 +27,7 @@ int BehaviourTreeModelItem::row() {
 }
 
 QIcon BehaviourTreeModelItem::icon() {
-	return QIcon();
+	return _icon;
 }
 
 QVariant BehaviourTreeModelItem::data(int column) {
