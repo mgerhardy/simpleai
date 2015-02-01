@@ -66,11 +66,32 @@ QVariant BehaviourTreeModel::data(const QModelIndex &index, int role) const {
 	if (!index.isValid())
 		return QVariant();
 
-	if (role != Qt::DisplayRole)
-		return QVariant();
-
 	BehaviourTreeModelItem *nodeItem = item(index);
-	return nodeItem->data(index.column());
+
+	if (role == Qt::DecorationRole) {
+		if (index.column() == 0)
+			return QIcon();
+	} else if (role == Qt::TextColorRole) {
+		const TreeNodeStatus status = nodeItem->node()->getStatus();
+		switch (status) {
+		case UNKNOWN:
+		case CANNOTEXECUTE:
+			return QColor(Qt::gray);
+		case RUNNING:
+		case FINISHED:
+			return QColor(Qt::darkGreen);
+		case FAILED:
+		case EXCEPTION:
+			return QColor(Qt::red);
+		case MAX_TREENODESTATUS:
+			break;
+		}
+		return QVariant();
+	}
+
+	if (role == Qt::DisplayRole)
+		return nodeItem->data(index.column());
+	return QVariant();
 }
 
 QVariant BehaviourTreeModel::headerData(int section, Qt::Orientation orientation, int role) const {

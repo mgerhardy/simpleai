@@ -8,8 +8,7 @@ namespace debug {
 
 class BehaviourTreeModelItem {
 private:
-	AIStateNode* _node;
-	bool _populated;
+	AIStateNode* _node;bool _populated;
 	int _rowCount;
 	QList<BehaviourTreeModelItem*> _rows;
 	BehaviourTreeModelItem* _parent;
@@ -33,6 +32,10 @@ public:
 
 	inline BehaviourTreeModelItem* parent() {
 		return _parent;
+	}
+
+	inline AIStateNode* node() {
+		return _node;
 	}
 };
 
