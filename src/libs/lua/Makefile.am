@@ -28,39 +28,39 @@ noinst_LTLIBRARIES = \
 	liblua.la
 
 liblua_la_SOURCES = \
-	lapi.cpp \
-	lauxlib.cpp \
-	lbaselib.cpp \
-	lbitlib.cpp \
-	lcode.cpp \
-	lcorolib.cpp \
-	lctype.cpp \
-	ldblib.cpp \
-	ldebug.cpp \
-	ldo.cpp \
-	ldump.cpp \
-	lfunc.cpp \
-	lgc.cpp \
-	linit.cpp \
-	liolib.cpp \
-	llex.cpp \
-	lmathlib.cpp \
-	lmem.cpp \
-	loadlib.cpp \
-	lobject.cpp \
-	lopcodes.cpp \
-	loslib.cpp \
-	lparser.cpp \
-	lstate.cpp \
-	lstring.cpp \
-	lstrlib.cpp \
-	ltable.cpp \
-	ltablib.cpp \
-	ltm.cpp \
-	lua.cpp \
-	lundump.cpp \
-	lvm.cpp \
-	lzio.cpp
+	lapi.c \
+	lauxlib.c \
+	lbaselib.c \
+	lbitlib.c \
+	lcode.c \
+	lcorolib.c \
+	lctype.c \
+	ldblib.c \
+	ldebug.c \
+	ldo.c \
+	ldump.c \
+	lfunc.c \
+	lgc.c \
+	linit.c \
+	liolib.c \
+	llex.c \
+	lmathlib.c \
+	lmem.c \
+	loadlib.c \
+	lobject.c \
+	lopcodes.c \
+	loslib.c \
+	lparser.c \
+	lstate.c \
+	lstring.c \
+	lstrlib.c \
+	ltable.c \
+	ltablib.c \
+	ltm.c \
+	lua.c \
+	lundump.c \
+	lvm.c \
+	lzio.c
 
 liblua_la_CXXFLAGS =
 
