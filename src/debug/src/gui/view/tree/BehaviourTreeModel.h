@@ -12,6 +12,10 @@ class BehaviourTreeModel: public QAbstractItemModel {
 Q_OBJECT
 private:
 	BehaviourTreeModelItem *_rootItem;
+
+	inline BehaviourTreeModelItem* item(const QModelIndex& index) const {
+		return static_cast<BehaviourTreeModelItem*>(index.internalPointer());
+	}
 public:
 	explicit BehaviourTreeModel(QObject *parent = nullptr);
 	~BehaviourTreeModel();

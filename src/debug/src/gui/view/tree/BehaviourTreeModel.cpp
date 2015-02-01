@@ -23,7 +23,7 @@ QModelIndex BehaviourTreeModel::index(int row, int column, const QModelIndex &pa
 	if (!parent.isValid())
 		parentItem = _rootItem;
 	else
-		parentItem = static_cast<BehaviourTreeModelItem*>(parent.internalPointer());
+		parentItem = item(parent);
 
 	BehaviourTreeModelItem *childItem = parentItem->child(row);
 	if (childItem)
@@ -35,7 +35,7 @@ QModelIndex BehaviourTreeModel::parent(const QModelIndex &index) const {
 	if (!index.isValid())
 		return QModelIndex();
 
-	BehaviourTreeModelItem *childItem = static_cast<BehaviourTreeModelItem*>(index.internalPointer());
+	BehaviourTreeModelItem *childItem = item(index);
 	BehaviourTreeModelItem *parentItem = childItem->parent();
 	if (parentItem == nullptr || parentItem == _rootItem)
 		return QModelIndex();
@@ -51,14 +51,14 @@ int BehaviourTreeModel::rowCount(const QModelIndex &parent) const {
 	if (!parent.isValid())
 		parentItem = _rootItem;
 	else
-		parentItem = static_cast<BehaviourTreeModelItem*>(parent.internalPointer());
+		parentItem = item(parent);
 
 	return parentItem->childCount();
 }
 
 int BehaviourTreeModel::columnCount(const QModelIndex &parent) const {
 	if (parent.isValid())
-		return static_cast<BehaviourTreeModelItem*>(parent.internalPointer())->columnCount();
+		return item(parent)->columnCount();
 	return _rootItem->columnCount();
 }
 
@@ -69,8 +69,8 @@ QVariant BehaviourTreeModel::data(const QModelIndex &index, int role) const {
 	if (role != Qt::DisplayRole)
 		return QVariant();
 
-	BehaviourTreeModelItem *item = static_cast<BehaviourTreeModelItem*>(index.internalPointer());
-	return item->data(index.column());
+	BehaviourTreeModelItem *nodeItem = item(index);
+	return nodeItem->data(index.column());
 }
 
 QVariant BehaviourTreeModel::headerData(int section, Qt::Orientation orientation, int role) const {
