@@ -211,14 +211,7 @@ void Server::setDebug(const std::string& zoneName) {
 }
 
 void Server::broadcastZoneNames() {
-	std::vector<std::string> names;
-	{
-		ScopedReadLock scopedLock(_lock);
-		for (const Zone* zone : _zones) {
-			names.push_back(zone->getName());
-		}
-	}
-	const AINamesMessage msg(names);
+	const AINamesMessage msg(_names);
 	_network.broadcast(msg);
 }
 
@@ -227,6 +220,13 @@ void Server::addZone(Zone* zone) {
 		ScopedWriteLock scopedLock(_lock);
 		if (!_zones.insert(zone).second)
 			return;
+	}
+	{
+		ScopedReadLock scopedLock(_lock);
+		_names.clear();
+		for (const Zone* zone : _zones) {
+			_names.push_back(zone->getName());
+		}
 	}
 	broadcastZoneNames();
 }
@@ -238,6 +238,13 @@ void Server::removeZone(Zone* zone) {
 		ScopedWriteLock scopedLock(_lock);
 		if (_zones.erase(zone) != 1) {
 			return;
+		}
+	}
+	{
+		ScopedReadLock scopedLock(_lock);
+		_names.clear();
+		for (const Zone* zone : _zones) {
+			_names.push_back(zone->getName());
 		}
 	}
 	broadcastZoneNames();

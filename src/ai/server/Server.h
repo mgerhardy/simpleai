@@ -48,6 +48,7 @@ protected:
 	// the current active debugging zone
 	ATOMIC(Zone*) _zone;
 	ReadWriteLock _lock;
+	std::vector<std::string> _names;
 
 	void addChildren(const TreeNodePtr& node, AIStateNode& parent, const AI& ai) const;
 	void broadcastState(Zone* zone);
