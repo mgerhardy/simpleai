@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QVariant>
+#include <QIcon>
 #include <SimpleAI.h>
 
 namespace ai {
@@ -17,6 +18,7 @@ public:
 	virtual ~BehaviourTreeModelItem();
 
 	QVariant data(int column);
+	QIcon icon();
 
 	inline int columnCount() const {
 		return 4;

@@ -25,6 +25,10 @@ int BehaviourTreeModelItem::row() {
 	return 0;
 }
 
+QIcon BehaviourTreeModelItem::icon() {
+	return QIcon();
+}
+
 QVariant BehaviourTreeModelItem::data(int column) {
 	if (column == 0)
 		return QString::fromStdString(_node->getName());

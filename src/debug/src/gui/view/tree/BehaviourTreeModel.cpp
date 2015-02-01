@@ -70,7 +70,7 @@ QVariant BehaviourTreeModel::data(const QModelIndex &index, int role) const {
 
 	if (role == Qt::DecorationRole) {
 		if (index.column() == 0)
-			return QIcon();
+			return nodeItem->icon();
 	} else if (role == Qt::TextColorRole) {
 		const TreeNodeStatus status = nodeItem->node()->getStatus();
 		switch (status) {
