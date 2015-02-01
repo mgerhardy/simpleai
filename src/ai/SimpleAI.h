@@ -32,8 +32,16 @@
  * @file
  *
  * Main header file that you should include when you use SimpleAI.
+ *
+ * If you also want to use the default loaders for your behaviour trees, you can
+ * include the following loader header files in your code:
+ * @code{.cpp}
+ * #include <tree/loaders/lua/LUATreeLoader.h>
+ * #include <tree/loaders/xml/XMLTreeLoader.h>
+ * @endcode
  */
 #pragma once
+
 
 #include "common/Types.h"
 #include "common/MemoryAllocator.h"
