@@ -16,7 +16,7 @@ function init ()
 			group3Node:addNode("Steer(Wander)", "wander"):setCondition("IsGroupLeader{3}")
 			group3Node:addNode("Steer(FollowGroupLeader{3})", "followgroupleader3")
 		local everythingElseNode = rootNodeExample:addNode("PrioritySelector", "otherornogroup")
-			group1Node:addNode("Steer(Wander)", "wander")
+			everythingElseNode:addNode("Steer(Wander)", "wander")
 
 --	rootNode:addNode("Idle{3000}", "idle3000")
 --	local prioSelector = rootNode:addNode("PrioritySelector", "prio2");
