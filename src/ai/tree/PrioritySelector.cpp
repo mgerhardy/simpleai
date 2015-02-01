@@ -21,7 +21,10 @@ TreeNodeStatus PrioritySelector::execute(AI& entity, long deltaMillis) {
 			setSelectorState(entity, static_cast<int>(i));
 		} else if (result == CANNOTEXECUTE || result == FAILED) {
 			child->resetState(entity);
+			setSelectorState(entity, NOTHING_SELECTED);
 			continue;
+		} else {
+			setSelectorState(entity, NOTHING_SELECTED);
 		}
 		child->resetState(entity);
 		overallResult = result;
