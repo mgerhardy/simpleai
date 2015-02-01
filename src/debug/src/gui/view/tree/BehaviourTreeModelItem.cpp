@@ -35,8 +35,17 @@ QVariant BehaviourTreeModelItem::data(int column) {
 		return QString::fromStdString(_node->getName());
 
 	// the root item doesn't have a condition or anything like that...
-	if (_parent == nullptr)
+	if (_parent == nullptr) {
+		switch (column) {
+		case 1:
+			return QObject::tr("Condition");
+		case 2:
+			return QObject::tr("State");
+		case 3:
+			return QObject::tr("Last run");
+		}
 		return QVariant();
+	}
 
 	switch (column) {
 	case 1:

@@ -186,6 +186,7 @@ QWidget *AIDebuggerWidget::createBottomWidget() {
 	_tree = new QTreeView();
 	_tree->setUniformRowHeights(true);
 	_tree->setAlternatingRowColors(true);
+	_tree->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
 
 	splitter->addWidget(_tree);
 	splitter->setStretchFactor(splitter->indexOf(_nodeTreeFrame), 5);
