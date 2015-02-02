@@ -11,6 +11,7 @@
 
 #include "BehaviourTreeModel.h"
 #include "AICompressorProxy.h"
+#include "AINodeStaticResolver.h"
 
 namespace ai {
 namespace debug {
@@ -29,7 +30,7 @@ class AIDebugger;
 class AIDebuggerWidget: public QWidget {
 Q_OBJECT
 public:
-	AIDebuggerWidget(AIDebugger& debugger);
+	AIDebuggerWidget(AIDebugger& debugger, AINodeStaticResolver& resolver);
 	virtual ~AIDebuggerWidget();
 
 	void connectToAIServer(const QString& hostname, short port);
@@ -106,6 +107,7 @@ private:
 	QLabel *_selectedLabel;
 	QComboBox *_namesComboBox;
 	QTreeView *_tree;
+	AINodeStaticResolver& _resolver;
 	BehaviourTreeModel _model;
 
 	AIDebugger& _debugger;

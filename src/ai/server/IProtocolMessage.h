@@ -37,13 +37,14 @@ typedef std::deque<uint8_t> streamContainer;
 
 const ProtocolId PROTO_PING = 0;
 const ProtocolId PROTO_STATE = 1;
-const ProtocolId PROTO_CHARACTER_DETAILS = 2;
-const ProtocolId PROTO_SELECT = 3;
-const ProtocolId PROTO_PAUSE = 4;
-const ProtocolId PROTO_CHANGE = 5;
-const ProtocolId PROTO_NAMES = 6;
-const ProtocolId PROTO_RESET = 7;
-const ProtocolId PROTO_STEP = 8;
+const ProtocolId PROTO_CHARACTER_STATIC = 2;
+const ProtocolId PROTO_CHARACTER_DETAILS = 3;
+const ProtocolId PROTO_SELECT = 4;
+const ProtocolId PROTO_PAUSE = 5;
+const ProtocolId PROTO_CHANGE = 6;
+const ProtocolId PROTO_NAMES = 7;
+const ProtocolId PROTO_RESET = 8;
+const ProtocolId PROTO_STEP = 9;
 
 /**
  * @brief A protocol message is used for the serialization of the ai states for remote debugging

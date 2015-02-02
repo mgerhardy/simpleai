@@ -20,13 +20,13 @@ private:
 	AIStateNode _root;
 
 	AIStateNode readNode (streamContainer& in) {
-		const std::string& name = readString(in);
+		const int32_t nodeId = readInt(in);
 		const std::string& condition = readString(in);
 		const int64_t lastRun = readLong(in);
 		const TreeNodeStatus status = static_cast<TreeNodeStatus>(readByte(in));
 		const bool running = readBool(in);
 		const int16_t childrenCount = readShort(in);
-		AIStateNode node(name, condition, lastRun, status, running);
+		AIStateNode node(nodeId, condition, lastRun, status, running);
 		for (uint8_t i = 0; i < childrenCount; ++i) {
 			const AIStateNode& child = readNode(in);
 			node.addChildren(child);
@@ -35,7 +35,7 @@ private:
 	}
 
 	void writeNode (streamContainer& out, const AIStateNode& node) const {
-		addString(out, node.getName());
+		addInt(out, node.getNodeId());
 		addString(out, node.getCondition());
 		addLong(out, node.getLastRun());
 		addByte(out, node.getStatus());

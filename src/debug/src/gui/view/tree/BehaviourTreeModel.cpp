@@ -7,8 +7,8 @@
 namespace ai {
 namespace debug {
 
-BehaviourTreeModel::BehaviourTreeModel(QObject *parent) :
-		QAbstractItemModel(parent), _rootItem(nullptr) {
+BehaviourTreeModel::BehaviourTreeModel(AINodeStaticResolver& resolver, QObject *parent) :
+		QAbstractItemModel(parent), _rootItem(nullptr), _resolver(resolver) {
 }
 
 BehaviourTreeModel::~BehaviourTreeModel() {
@@ -106,7 +106,7 @@ void BehaviourTreeModel::setRootNode(AIStateNode* node) {
 	if (_rootItem) {
 		delete _rootItem;
 	}
-	_rootItem = new BehaviourTreeModelItem(node);
+	_rootItem = new BehaviourTreeModelItem(node, _resolver);
 	endResetModel();
 }
 

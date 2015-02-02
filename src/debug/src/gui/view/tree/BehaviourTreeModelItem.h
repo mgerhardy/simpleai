@@ -7,15 +7,19 @@
 namespace ai {
 namespace debug {
 
+class AINodeStaticResolver;
+
 class BehaviourTreeModelItem {
 private:
-	AIStateNode* _node;bool _populated;
+	AIStateNode* _node;
+	const AIStateNodeStatic& _staticNodeData;
+	bool _populated;
 	int _rowCount;
 	QList<BehaviourTreeModelItem*> _rows;
 	BehaviourTreeModelItem* _parent;
 	QIcon _icon;
 public:
-	BehaviourTreeModelItem(AIStateNode* node, BehaviourTreeModelItem* parent = nullptr);
+	BehaviourTreeModelItem(AIStateNode* node, AINodeStaticResolver& resolver, BehaviourTreeModelItem* parent = nullptr);
 	virtual ~BehaviourTreeModelItem();
 
 	QVariant data(int column);

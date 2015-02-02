@@ -10,6 +10,8 @@
 namespace ai {
 namespace debug {
 
+class AINodeStaticResolver;
+
 /**
  * @brief Shows the behaviour tree for the current selected entity
  */
@@ -18,10 +20,11 @@ Q_OBJECT
 private:
 	AIDebugger& _debugger;
 	QGraphicsScene _scene;
+	AINodeStaticResolver& _resolver;
 
 	NodeTreeItem* buildTreeItems(const AIStateNode& node, NodeTreeItem* parent);
 public:
-	NodeTreeView(AIDebugger& debugger);
+	NodeTreeView(AIDebugger& debugger, AINodeStaticResolver& resolver);
 	virtual ~NodeTreeView();
 
 	void updateTreeWidget();

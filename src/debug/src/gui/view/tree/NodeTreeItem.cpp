@@ -18,11 +18,12 @@ const QFont font("Times", fontSize);
 const QFontMetrics fontMetrics(font);
 }
 
-NodeTreeItem::NodeTreeItem (QGraphicsItem* parentItem, const AIStateNode& node, NodeTreeItem* parent, int height, int horizontalSpacing, int verticalSpacing) :
+NodeTreeItem::NodeTreeItem (QGraphicsItem* parentItem, const AIStateNode& node, const AIStateNodeStatic& staticNodeData, NodeTreeItem* parent, int height, int horizontalSpacing, int verticalSpacing) :
 		QGraphicsItem(parentItem), _node(node), _parent(parent), _height(height), _horizontalSpacing(
 				horizontalSpacing), _verticalSpacing(verticalSpacing) {
 	_condition = QString::fromStdString(_node.getCondition());
-	_name = QString::fromStdString(_node.getName());
+	_name = QString::fromStdString(staticNodeData.getName());
+	_type = QString::fromStdString(staticNodeData.getType());
 	_width = std::max(130, std::max(fontMetrics.width(_name), fontMetrics.width(_condition)));
 	_lineHeight = fontMetrics.lineSpacing();
 }

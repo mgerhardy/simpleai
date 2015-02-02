@@ -71,7 +71,7 @@ public:
  */
 class AIStateNode {
 private:
-	std::string _name;
+	int32_t _nodeId;
 	std::string _condition;
 	typedef std::vector<AIStateNode> NodeVector;
 	NodeVector _children;
@@ -79,12 +79,12 @@ private:
 	TreeNodeStatus _status;
 	bool _currentlyRunning;
 public:
-	AIStateNode(const std::string& name, const std::string& condition, int64_t lastRun, TreeNodeStatus status, bool currentlyRunning) :
-			_name(name), _condition(condition), _lastRun(lastRun), _status(status), _currentlyRunning(currentlyRunning) {
+	AIStateNode(int32_t id, const std::string& condition, int64_t lastRun, TreeNodeStatus status, bool currentlyRunning) :
+			_nodeId(id), _condition(condition), _lastRun(lastRun), _status(status), _currentlyRunning(currentlyRunning) {
 	}
 
 	AIStateNode() :
-			_lastRun(-1L), _status(UNKNOWN), _currentlyRunning(false) {
+			_nodeId(-1), _lastRun(-1L), _status(UNKNOWN), _currentlyRunning(false) {
 	}
 
 	void addChildren(const AIStateNode& child) {
@@ -103,8 +103,8 @@ public:
 		return _children;
 	}
 
-	inline const std::string& getName() const {
-		return _name;
+	inline int32_t getNodeId() const {
+		return _nodeId;
 	}
 
 	inline const std::string& getCondition() const {

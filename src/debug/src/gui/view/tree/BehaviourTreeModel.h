@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AINodeStaticResolver.h"
 #include <QAbstractItemModel>
 #include <SimpleAI.h>
 
@@ -12,12 +13,13 @@ class BehaviourTreeModel: public QAbstractItemModel {
 Q_OBJECT
 private:
 	BehaviourTreeModelItem *_rootItem;
+	AINodeStaticResolver& _resolver;
 
 	inline BehaviourTreeModelItem* item(const QModelIndex& index) const {
 		return static_cast<BehaviourTreeModelItem*>(index.internalPointer());
 	}
 public:
-	explicit BehaviourTreeModel(QObject *parent = nullptr);
+	explicit BehaviourTreeModel(AINodeStaticResolver& resolver, QObject *parent = nullptr);
 	~BehaviourTreeModel();
 
 	QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;

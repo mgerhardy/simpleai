@@ -2,6 +2,7 @@
 #include "IProtocolMessage.h"
 #include "AIStateMessage.h"
 #include "AICharacterDetailsMessage.h"
+#include "AICharacterStaticMessage.h"
 #include "AIPauseMessage.h"
 #include "AISelectMessage.h"
 #include "AINamesMessage.h"
@@ -51,6 +52,8 @@ IProtocolMessage *ProtocolMessageFactory::create(streamContainer& in) {
 		return new AIPingMessage();
 	} else if (type == PROTO_CHARACTER_DETAILS) {
 		return new AICharacterDetailsMessage(in);
+	} else if (type == PROTO_CHARACTER_STATIC) {
+		return new AICharacterStaticMessage(in);
 	}
 
 	return nullptr;

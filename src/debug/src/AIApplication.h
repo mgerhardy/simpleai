@@ -8,6 +8,7 @@ namespace debug {
 
 class AIDebugger;
 class AIDebuggerWidget;
+class AINodeStaticResolver;
 
 /**
  * @brief Use this class to run the debugger as a stand-alone application.
@@ -18,6 +19,7 @@ class AIDebuggerWidget;
 class AIApplication: public QApplication {
 protected:
 	AIDebugger* _debugger;
+	AINodeStaticResolver* _resolver;
 	AIDebuggerWidget* _widget;
 	QMainWindow _window;
 public:

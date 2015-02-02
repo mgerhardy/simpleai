@@ -41,6 +41,7 @@ protected:
 	// the network protocol message handlers
 	ai::IProtocolHandler *_stateHandler;
 	ai::IProtocolHandler *_characterHandler;
+	ai::IProtocolHandler *_characterStaticHandler;
 	ai::IProtocolHandler *_pauseHandler;
 	ai::IProtocolHandler *_namesHandler;
 	ai::IProtocolHandler *_nopHandler;
@@ -56,7 +57,6 @@ protected:
 	AIStateNode _node;
 	// the attributes of the current selected entity
 	CharacterAttributesMap _attributes;
-	AIDebuggerWidget *_window;
 	// the socket of the ai debug server
 	QTcpSocket _socket;
 	bool _pause;
@@ -77,6 +77,7 @@ public:
 	const Entities& getEntities() const;
 	void setEntities(const std::vector<AIStateWorld>& entities);
 	void setCharacterDetails(const CharacterId& id, const AIStateAggro& aggro, const AIStateNode& node);
+	void addCharacterStaticData(const AICharacterStaticMessage& msg);
 	void setNames(const std::vector<std::string>& names);
 	const QStringList& getNames() const;
 	/**
@@ -103,8 +104,6 @@ public:
 	void step();
 	void reset();
 	void change(const QString& name);
-
-	inline AIDebuggerWidget* getWindow() { return _window; }
 
 	/**
 	 * @brief override this if you would like to create your own @c MapView implementation that renders

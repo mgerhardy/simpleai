@@ -80,6 +80,7 @@
 #include "server/ProtocolHandlerRegistry.h"
 #include "server/ProtocolMessageFactory.h"
 #include "server/AICharacterDetailsMessage.h"
+#include "server/AICharacterStaticMessage.h"
 #include "server/AIPauseMessage.h"
 #include "server/AIStepMessage.h"
 #include "server/AISelectMessage.h"

@@ -20,6 +20,7 @@ HEADERS += \
            src/common/Common.h \
            src/gui/AIDebuggerWidget.h \
            src/gui/AICompressorProxy.h \
+           src/gui/AINodeStaticResolver.h \
            src/gui/dialog/ConnectDialog.h \
            src/gui/dialog/IDialog.h \
            src/gui/view/list/EntityList.h \
@@ -45,6 +46,7 @@ SOURCES += \
            src/AIApplication.cpp \
            src/AIDebugger.cpp \
            src/gui/AIDebuggerWidget.cpp \
+           src/gui/AINodeStaticResolver.cpp \
            src/gui/dialog/ConnectDialog.cpp \
            src/gui/dialog/IDialog.cpp \
            src/gui/view/list/EntityList.cpp \

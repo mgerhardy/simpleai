@@ -1,5 +1,6 @@
 #include "AIApplication.h"
 #include "AIDebugger.h"
+#include "AINodeStaticResolver.h"
 #include "AIDebuggerWidget.h"
 #include "Version.h"
 
@@ -25,7 +26,8 @@ AIApplication::AIApplication(int argc, char** argv) :
 #endif
 
 	_debugger = new AIDebugger();
-	_widget = new AIDebuggerWidget(*_debugger);
+	_resolver = new AINodeStaticResolver();
+	_widget = new AIDebuggerWidget(*_debugger, *_resolver);
 
 	_window.setCentralWidget(_widget);
 
@@ -62,6 +64,7 @@ AIApplication::AIApplication(int argc, char** argv) :
 
 AIApplication::~AIApplication() {
 	delete _debugger;
+	delete _resolver;
 	delete _widget;
 }
 

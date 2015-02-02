@@ -3,6 +3,8 @@
 #include "MapView.h"
 #include <server/IProtocolMessage.h>
 #include <server/AISelectMessage.h>
+#include <server/AICharacterDetailsMessage.h>
+#include <server/AICharacterStaticMessage.h>
 #include <server/AIChangeMessage.h>
 #include <server/AINamesMessage.h>
 #include <server/AIStepMessage.h>
@@ -17,6 +19,7 @@ namespace debug {
 
 PROTOCOL_HANDLER(AIStateMessage);
 PROTOCOL_HANDLER(AICharacterDetailsMessage);
+PROTOCOL_HANDLER(AICharacterStaticMessage);
 PROTOCOL_HANDLER(AIPauseMessage);
 PROTOCOL_HANDLER(AINamesMessage);
 
@@ -44,6 +47,20 @@ public:
 
 	void executeAICharacterDetailsMessage(const ai::AICharacterDetailsMessage& msg) override {
 		_aiDebugger.setCharacterDetails(msg.getCharacterId(), msg.getAggro(), msg.getNode());
+		emit _aiDebugger.onSelected();
+	}
+};
+
+class StaticCharacterHandler: public AICharacterStaticMessageHandler {
+private:
+	AIDebugger& _aiDebugger;
+public:
+	StaticCharacterHandler (AIDebugger& aiDebugger) :
+			_aiDebugger(aiDebugger) {
+	}
+
+	void executeAICharacterStaticMessage(const ai::AICharacterStaticMessage& msg) override {
+		_aiDebugger.addCharacterStaticData(msg);
 		emit _aiDebugger.onSelected();
 	}
 };
@@ -89,8 +106,6 @@ AIDebugger::AIDebugger() :
 	r.registerHandler(ai::PROTO_PAUSE, _pauseHandler);
 	r.registerHandler(ai::PROTO_NAMES, _namesHandler);
 	r.registerHandler(ai::PROTO_PING, _nopHandler);
-
-	_window = new AIDebuggerWidget(*this);
 }
 
 AIDebugger::~AIDebugger() {
@@ -114,6 +129,10 @@ void AIDebugger::setCharacterDetails(const CharacterId& id, const AIStateAggro& 
 	for (CharacterAttributes::const_iterator i = attributes.begin(); i != attributes.end(); ++i) {
 		_attributes[QString::fromStdString(i->first)] = QString::fromStdString(i->second);
 	}
+}
+
+void AIDebugger::addCharacterStaticData(const AICharacterStaticMessage& msg) {
+
 }
 
 const CharacterId& AIDebugger::getSelected() const {

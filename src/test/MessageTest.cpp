@@ -19,7 +19,7 @@ TEST_F(MessageTest, testAICharacterDetailsMessage) {
 	ai::AIStateAggro aggro;
 	const ai::AIStateAggroEntry aggroEntry(2, 1.0f);
 	aggro.addAggro(aggroEntry);
-	const ai::AIStateNode root("name", "condition", 1L, ai::RUNNING, true);
+	const ai::AIStateNode root(1, "condition", 1L, ai::RUNNING, true);
 	const ai::AICharacterDetailsMessage m(id, aggro, root);
 	ASSERT_EQ(id, m.getCharacterId());
 	ASSERT_EQ(1u, m.getAggro().getAggro().size());
@@ -27,7 +27,7 @@ TEST_F(MessageTest, testAICharacterDetailsMessage) {
 	ASSERT_FLOAT_EQ(1.0f, m.getAggro().getAggro()[0].aggro);
 	ASSERT_EQ(1L, m.getNode().getLastRun());
 	ASSERT_EQ("condition", m.getNode().getCondition());
-	ASSERT_EQ("name", m.getNode().getName());
+	ASSERT_EQ(1, m.getNode().getNodeId());
 	ASSERT_EQ(ai::RUNNING, m.getNode().getStatus());
 	ASSERT_TRUE(m.getNode().isRunning());
 
@@ -38,7 +38,7 @@ TEST_F(MessageTest, testAICharacterDetailsMessage) {
 	ASSERT_FLOAT_EQ(1.0f, d->getAggro().getAggro()[0].aggro);
 	ASSERT_EQ(1L, d->getNode().getLastRun());
 	ASSERT_EQ("condition", d->getNode().getCondition());
-	ASSERT_EQ("name", d->getNode().getName());
+	ASSERT_EQ(1, d->getNode().getNodeId());
 	ASSERT_EQ(ai::RUNNING, d->getNode().getStatus());
 	ASSERT_TRUE(d->getNode().isRunning());
 }

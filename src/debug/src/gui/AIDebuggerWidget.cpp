@@ -17,8 +17,8 @@
 namespace ai {
 namespace debug {
 
-AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger) :
-		QWidget(), _debugger(debugger), _proxy(this) {
+AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger, AINodeStaticResolver& resolver) :
+		QWidget(), _resolver(resolver), _model(resolver), _debugger(debugger), _proxy(this) {
 	createView();
 	createActions();
 
@@ -175,7 +175,7 @@ QWidget *AIDebuggerWidget::createTopWidget() {
 
 QWidget *AIDebuggerWidget::createBottomWidget() {
 	QSplitter *splitter = new QSplitter;
-	_nodeTree = new NodeTreeView(_debugger);
+	_nodeTree = new NodeTreeView(_debugger, _resolver);
 	_nodeTreeFrame = new ZoomFrame(_nodeTree);
 	_aggroTable = new AggroTable(_debugger);
 	_stateTable = new StateTable(_debugger);

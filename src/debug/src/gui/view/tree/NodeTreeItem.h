@@ -21,6 +21,7 @@ protected:
 	QList<NodeTreeItem*> _children;
 	QString _condition;
 	QString _name;
+	QString _type;
 	int _width;
 	int _height;
 	int _lineHeight;
@@ -36,7 +37,7 @@ protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
 
 public:
-	NodeTreeItem (QGraphicsItem* parentItem, const AIStateNode& node, NodeTreeItem* parent, int height, int horizontalSpacing, int verticalSpacing);
+	NodeTreeItem (QGraphicsItem* parentItem, const AIStateNode& node, const AIStateNodeStatic& staticNodeData, NodeTreeItem* parent, int height, int horizontalSpacing, int verticalSpacing);
 	virtual ~NodeTreeItem ();
 
 	void init();
