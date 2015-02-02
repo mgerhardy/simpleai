@@ -1,6 +1,7 @@
 #include "BehaviourTreeModelItem.h"
 #include "TreeViewCommon.h"
 #include "AINodeStaticResolver.h"
+#include <QFile>
 
 namespace ai {
 namespace debug {
@@ -10,13 +11,11 @@ BehaviourTreeModelItem::BehaviourTreeModelItem(AIStateNode* node, AINodeStaticRe
 	for (const AIStateNode& node : _node->getChildren()) {
 		_rows.push_back(new BehaviourTreeModelItem(const_cast<AIStateNode*>(&node), resolver, this));
 	}
-	const std::string path = ":/images/" + _staticNodeData.getType() + ".png";
-	_icon = QIcon(QString::fromStdString(path));
-#if 0
-	if (!_icon.isValid()) {
+	const QString path = ":/images/" + QString::fromStdString(_staticNodeData.getType()) + ".png";
+	if (QFile::exists(path))
+		_icon = QIcon(path);
+	else
 		_icon = QIcon(":/images/node.png");
-	}
-#endif
 }
 
 BehaviourTreeModelItem::~BehaviourTreeModelItem() {
