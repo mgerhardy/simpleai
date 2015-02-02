@@ -25,8 +25,8 @@ AIApplication::AIApplication(int argc, char** argv) :
 	a.setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
 
-	_debugger = new AIDebugger();
 	_resolver = new AINodeStaticResolver();
+	_debugger = new AIDebugger(*_resolver);
 	_widget = new AIDebuggerWidget(*_debugger, *_resolver);
 
 	_window.setCentralWidget(_widget);

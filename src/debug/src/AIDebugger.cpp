@@ -1,5 +1,6 @@
 #include "AIDebugger.h"
 #include "AIDebuggerWidget.h"
+#include "AINodeStaticResolver.h"
 #include "MapView.h"
 #include <server/IProtocolMessage.h>
 #include <server/AISelectMessage.h>
@@ -51,11 +52,11 @@ public:
 	}
 };
 
-class StaticCharacterHandler: public AICharacterStaticMessageHandler {
+class CharacterStaticHandler: public AICharacterStaticMessageHandler {
 private:
 	AIDebugger& _aiDebugger;
 public:
-	StaticCharacterHandler (AIDebugger& aiDebugger) :
+	CharacterStaticHandler (AIDebugger& aiDebugger) :
 			_aiDebugger(aiDebugger) {
 	}
 
@@ -93,16 +94,17 @@ public:
 	}
 };
 
-AIDebugger::AIDebugger() :
-		QObject(), _stateHandler(new StateHandler(*this)), _characterHandler(new CharacterHandler(*this)),
-				_pauseHandler(new PauseHandler(*this)), _namesHandler(new NamesHandler(*this)), _nopHandler(new NopHandler()),
-				_selectedId(-1), _socket(this), _pause(false) {
+AIDebugger::AIDebugger(AINodeStaticResolver& resolver) :
+		QObject(), _stateHandler(new StateHandler(*this)), _characterHandler(new CharacterHandler(*this)), _characterStaticHandler(
+				new CharacterStaticHandler(*this)), _pauseHandler(new PauseHandler(*this)), _namesHandler(new NamesHandler(*this)), _nopHandler(
+				new NopHandler()), _selectedId(-1), _socket(this), _pause(false), _resolver(resolver) {
 	connect(&_socket, SIGNAL(readyRead()), SLOT(readTcpData()));
 	connect(&_socket, SIGNAL(disconnected()), SLOT(onDisconnect()));
 
 	ai::ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
 	r.registerHandler(ai::PROTO_STATE, _stateHandler);
 	r.registerHandler(ai::PROTO_CHARACTER_DETAILS, _characterHandler);
+	r.registerHandler(ai::PROTO_CHARACTER_STATIC, _characterStaticHandler);
 	r.registerHandler(ai::PROTO_PAUSE, _pauseHandler);
 	r.registerHandler(ai::PROTO_NAMES, _namesHandler);
 	r.registerHandler(ai::PROTO_PING, _nopHandler);
@@ -111,6 +113,7 @@ AIDebugger::AIDebugger() :
 AIDebugger::~AIDebugger() {
 	delete _stateHandler;
 	delete _characterHandler;
+	delete _characterStaticHandler;
 	delete _pauseHandler;
 	delete _namesHandler;
 }
@@ -132,7 +135,8 @@ void AIDebugger::setCharacterDetails(const CharacterId& id, const AIStateAggro& 
 }
 
 void AIDebugger::addCharacterStaticData(const AICharacterStaticMessage& msg) {
-
+	const std::vector<AIStateNodeStatic>& data = msg.getStaticNodeData();
+	_resolver.set(data);
 }
 
 const CharacterId& AIDebugger::getSelected() const {

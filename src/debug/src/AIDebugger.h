@@ -19,6 +19,7 @@ namespace debug {
 
 class MapView;
 class AIDebuggerWidget;
+class AINodeStaticResolver;
 
 /**
  * @brief This is the remote debugger for the ai entities.
@@ -61,6 +62,7 @@ protected:
 	QTcpSocket _socket;
 	bool _pause;
 	QStringList _names;
+	AINodeStaticResolver& _resolver;
 
 	bool writeMessage(const IProtocolMessage& msg);
 
@@ -68,7 +70,7 @@ private slots:
 	void readTcpData();
 	void onDisconnect();
 public:
-	AIDebugger();
+	AIDebugger(AINodeStaticResolver& resolver);
 	virtual ~AIDebugger();
 
 	/**

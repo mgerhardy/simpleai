@@ -39,7 +39,7 @@ QIcon BehaviourTreeModelItem::icon() {
 
 QVariant BehaviourTreeModelItem::data(int column) {
 	if (column == 0)
-		return "";//QString::fromStdString(_node->getName());
+		return QString::fromStdString(_staticNodeData.getName());
 
 	// the root item doesn't have a condition or anything like that...
 	if (_parent == nullptr) {

@@ -10,9 +10,12 @@ namespace debug {
 
 class AINodeStaticResolver {
 private:
-	QHash<int32_t, AIStateNodeStatic*> _data;
+	std::vector<AIStateNodeStatic> _data;
+	QHash<int32_t, const AIStateNodeStatic*> _hash;
 public:
 	AINodeStaticResolver();
+
+	void set(const std::vector<AIStateNodeStatic>& data);
 	const AIStateNodeStatic& get(int32_t id) const;
 };
 
