@@ -14,6 +14,7 @@ protected:
 public:
 	Steer(const std::string& name, const std::string& parameters, const ConditionPtr& condition, const movement::WeightedSteering &w) :
 			ITask(name, parameters, condition), _w(w) {
+		_type = "Steer";
 	}
 	class Factory: public ISteerNodeFactory {
 	public:

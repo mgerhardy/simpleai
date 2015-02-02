@@ -7,6 +7,7 @@ namespace ai {
 #define TIMERNODE_CLASS(NodeName) \
 	NodeName(const std::string& name, const std::string& parameters, const ConditionPtr& condition) : \
 		ITimedNode(name, parameters, condition) { \
+		_type = AI_STRINGIFY(NodeName); \
 	} \
 	virtual ~NodeName() { \
 	} \

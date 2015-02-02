@@ -5,6 +5,7 @@
 #include <memory>
 #include "common/MemoryAllocator.h"
 #include "common/IPrintable.h"
+#include "common/Types.h"
 #include "conditions/ICondition.h"
 #include "conditions/True.h"
 
@@ -57,6 +58,7 @@ enum TreeNodeStatus {
 #define NODE_CLASS(NodeName) \
 	NodeName(const std::string& name, const std::string& parameters, const ConditionPtr& condition) : \
 		TreeNode(name, parameters, condition) { \
+		_type = AI_STRINGIFY(NodeName); \
 	} \
 	virtual ~NodeName() { \
 	} \
@@ -78,6 +80,7 @@ protected:
 	int _id;
 	TreeNodes _children;
 	std::string _name;
+	std::string _type;
 	std::string _parameters;
 	ConditionPtr _condition;
 
@@ -103,12 +106,19 @@ public:
 	int getId() const;
 
 	/**
-	 * @brief Returns the time in milliseconds when this node was last run. This is only updated if @c #execute() was called
+	 * @brief Each node can have a user defines name that can be retrieved with this method.
 	 */
 	const std::string& getName() const;
+	/**
+	 * @brief The node type - this usually matches the class name of the @c TreeNode
+	 */
+	const std::string& getType() const;
 	const ConditionPtr& getCondition() const;
 	void setCondition(const ConditionPtr& condition);
 	const TreeNodes& getChildren() const;
+	/**
+	 * @brief Returns the time in milliseconds when this node was last run. This is only updated if @c #execute() was called
+	 */
 	bool getResetSinceLastExec(const AI& entity) const;
 
 	/**
@@ -133,6 +143,10 @@ public:
 
 inline int TreeNode::getId() const {
 	return _id;
+}
+
+inline const std::string& TreeNode::getType() const {
+	return _type;
 }
 
 inline const std::string& TreeNode::getName() const {

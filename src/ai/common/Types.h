@@ -8,6 +8,9 @@
 #define ai_assert(cond, msg) assert(cond)
 #endif
 
+#define AI_STRINGIFY_INTERNAL(x) #x
+#define AI_STRINGIFY(x) AI_STRINGIFY_INTERNAL(x)
+
 #ifndef AI_EXCEPTIONS
 #define AI_EXCEPTIONS 0
 #endif

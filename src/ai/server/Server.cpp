@@ -132,7 +132,7 @@ void Server::pause(const ClientId& /*clientId*/, bool state) {
 void Server::addChildren(const TreeNodePtr& node, std::vector<AIStateNodeStatic>& out) const {
 	for (const TreeNodePtr& childNode : node->getChildren()) {
 		const int32_t nodeId = childNode->getId();
-		out.push_back(AIStateNodeStatic(nodeId, childNode->getName(), ""));
+		out.push_back(AIStateNodeStatic(nodeId, childNode->getName(), childNode->getType()));
 		addChildren(childNode, out);
 	}
 }
@@ -176,7 +176,7 @@ void Server::broadcastStaticCharacterDetails(Zone* zone) {
 		std::vector<AIStateNodeStatic> nodeStaticData;
 		const TreeNodePtr& node = ai.getBehaviour();
 		const int32_t nodeId = node->getId();
-		nodeStaticData.push_back(AIStateNodeStatic(nodeId, node->getName(), ""));
+		nodeStaticData.push_back(AIStateNodeStatic(nodeId, node->getName(), node->getType()));
 		addChildren(node, nodeStaticData);
 
 		const AICharacterStaticMessage msgStatic(id, nodeStaticData);
