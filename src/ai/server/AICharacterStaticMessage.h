@@ -22,9 +22,9 @@ public:
 	AICharacterStaticMessage(streamContainer& in) :
 			IProtocolMessage(PROTO_CHARACTER_STATIC), _nodeStaticDataPtr(nullptr) {
 		_chrId = readInt(in);
-		const int size = readShort(in);
+		const std::size_t size = readInt(in);
 		_nodeStaticData.reserve(size);
-		for (int i = 0; i < size; ++i) {
+		for (std::size_t i = 0; i < size; ++i) {
 			const int32_t id = readInt(in);
 			const std::string& name = readString(in);
 			const std::string& type = readString(in);
@@ -36,15 +36,20 @@ public:
 	void serialize(streamContainer& out) const override {
 		addByte(out, _id);
 		addInt(out, _chrId);
-		const int size = _nodeStaticDataPtr->size();
-		addShort(out, size);
-		for (int i = 0; i < size; ++i) {
+		const std::size_t size = _nodeStaticDataPtr->size();
+		addInt(out, static_cast<int>(size));
+		for (std::size_t i = 0; i < size; ++i) {
 			addInt(out, (*_nodeStaticDataPtr)[i].getId());
 			addString(out, (*_nodeStaticDataPtr)[i].getName());
 			addString(out, (*_nodeStaticDataPtr)[i].getType());
 		}
 	}
 
+	inline const std::vector<AIStateNodeStatic>& getStaticNodeData() const {
+		if (_nodeStaticDataPtr)
+			return *_nodeStaticDataPtr;
+		return _nodeStaticData;
+	}
 };
 
 }
