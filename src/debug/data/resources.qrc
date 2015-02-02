@@ -11,6 +11,7 @@
 		<file>images/zoomin.png</file>
 		<file>images/zoomout.png</file>
 		<file>images/node.png</file>
+		<file>images/priorityselector.png</file>
 		<file>simpleai_de_DE.qm</file>
 	</qresource>
 </RCC>

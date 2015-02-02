@@ -11,7 +11,7 @@ BehaviourTreeModelItem::BehaviourTreeModelItem(AIStateNode* node, AINodeStaticRe
 	for (const AIStateNode& node : _node->getChildren()) {
 		_rows.push_back(new BehaviourTreeModelItem(const_cast<AIStateNode*>(&node), resolver, this));
 	}
-	const QString path = ":/images/" + QString::fromStdString(_staticNodeData.getType()) + ".png";
+	const QString path = ":/images/" + QString::fromStdString(_staticNodeData.getType()).toLower() + ".png";
 	if (QFile::exists(path))
 		_icon = QIcon(path);
 	else
