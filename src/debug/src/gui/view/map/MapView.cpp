@@ -22,7 +22,11 @@ MapView::~MapView() {
 MapItem* MapView::createMapItem(const AIStateWorld& state) {
 	MapItem* item = new MapItem(nullptr, state, _debugger);
 	item->setPos((qreal)state.getPosition().x, (qreal)state.getPosition().z);
-	item->setZValue((qreal)state.getPosition().z);
+	if (_debugger.isSelected(state)) {
+		item->setZValue(std::numeric_limits<qreal>::max());
+	} else {
+		item->setZValue((qreal)state.getPosition().z);
+	}
 	return item;
 }
 
