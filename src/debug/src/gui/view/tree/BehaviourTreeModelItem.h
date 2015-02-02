@@ -23,6 +23,7 @@ public:
 	virtual ~BehaviourTreeModelItem();
 
 	QVariant data(int column);
+	QString tooltip(int column);
 	QIcon icon();
 
 	inline int columnCount() const {

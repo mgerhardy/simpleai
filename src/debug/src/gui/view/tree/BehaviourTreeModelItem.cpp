@@ -11,9 +11,12 @@ BehaviourTreeModelItem::BehaviourTreeModelItem(AIStateNode* node, AINodeStaticRe
 	for (const AIStateNode& node : _node->getChildren()) {
 		_rows.push_back(new BehaviourTreeModelItem(const_cast<AIStateNode*>(&node), resolver, this));
 	}
-	const QString path = ":/images/" + QString::fromStdString(_staticNodeData.getType()).toLower() + ".png";
+	const QString type = QString::fromStdString(_staticNodeData.getType()).toLower();
+	const QString path = ":/images/" + type + ".png";
 	if (QFile::exists(path))
 		_icon = QIcon(path);
+	else if (type.contains("selector"))
+		_icon = QIcon(":/images/selector.png");
 	else
 		_icon = QIcon(":/images/node.png");
 }
@@ -34,6 +37,12 @@ int BehaviourTreeModelItem::row() {
 
 QIcon BehaviourTreeModelItem::icon() {
 	return _icon;
+}
+
+QString BehaviourTreeModelItem::tooltip(int column) {
+	if (column == 0)
+		return QString::fromStdString(_staticNodeData.getType());
+	return QString();
 }
 
 QVariant BehaviourTreeModelItem::data(int column) {

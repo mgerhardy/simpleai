@@ -91,6 +91,8 @@ QVariant BehaviourTreeModel::data(const QModelIndex &index, int role) const {
 
 	if (role == Qt::DisplayRole)
 		return nodeItem->data(index.column());
+	else if (role == Qt::ToolTipRole)
+		return nodeItem->tooltip(index.column());
 	return QVariant();
 }
 
