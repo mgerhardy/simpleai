@@ -185,6 +185,7 @@ QWidget *AIDebuggerWidget::createBottomWidget() {
 	_tree->setAlternatingRowColors(true);
 	_tree->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
 
+	// TODO: switch between _tree and _nodeTree
 	splitter->addWidget(_tree);
 	splitter->setStretchFactor(splitter->indexOf(_nodeTreeFrame), 5);
 	splitter->addWidget(_aggroTable);
