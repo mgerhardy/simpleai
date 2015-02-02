@@ -48,3 +48,4 @@ CMakeCache.txt
 /install_manifest.txt
 /testbuild.log
 *.prof
+.dirstamp
