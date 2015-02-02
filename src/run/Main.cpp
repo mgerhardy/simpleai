@@ -106,6 +106,12 @@ static ai::TreeNodePtr load(const std::string filename, const std::string& name)
 		return ai::TreeNodePtr();
 	}
 	std::cerr << "loaded the tree: " << filename << std::endl;
+	if (name.empty()) {
+		std::vector<std::string> trees;
+		loader.getTrees(trees);
+		auto randomIter = ai::randomElement(trees.begin(), trees.end());
+		return loader.load(*randomIter);
+	}
 	const ai::TreeNodePtr& root = loader.load(name);
 	if (!root) {
 		std::cerr << "could not find behaviour with the name " << name << std::endl;
@@ -148,7 +154,7 @@ int main(int argc, char **argv) {
 	const int mapAmount = std::stoi(getOptParam(b, e, "-maps", "4"));
 	const int amount = std::stoi(getOptParam(b, e, "-amount", "10"));
 	const short port = static_cast<short>(std::stoi(getOptParam(b, e, "-port", "12345")));
-	const std::string name = getOptParam(b, e, "-name", "example");
+	std::string name = getOptParam(b, e, "-name", "example");
 	const std::string filename = getOptParam(b, e, "-file");
 	const std::string interface = getOptParam(b, e, "-interface", "0.0.0.0");
 
@@ -253,6 +259,13 @@ int main(int argc, char **argv) {
 		} else if (c == "t") {
 			autospawn = !autospawn;
 			std::cout << "automatic respawn: " << (autospawn ? "true" : "false") << std::endl;
+		} else if (c.substr(0, 4) == "name") {
+			name = c.substr(5, c.length() - 5);
+			std::cout << "changed bt name to: '" << name << "'" << std::endl;
+			ai::TreeNodePtr newRoot = load(filename, name);
+			if (!newRoot)
+				continue;
+			root = newRoot;
 		} else if (c == "r") {
 			for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
 				ai::example::GameMap *map = *i;
@@ -283,6 +296,7 @@ int main(int argc, char **argv) {
 			std::cout << *root.get() << std::endl;
 		} else {
 			std::cout << "q      - quit" << std::endl;
+			std::cout << "name   - change name of the bt to use" << std::endl;
 			std::cout << "r      - respawn" << std::endl;
 			std::cout << "t      - trigger automatic respawn" << std::endl;
 			std::cout << "d      - detail" << std::endl;
