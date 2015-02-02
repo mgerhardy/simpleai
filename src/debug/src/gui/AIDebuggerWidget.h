@@ -71,6 +71,8 @@ public:
 
 private slots:
 	void about();
+	void documentation();
+	void bug();
 	void connectToAIServer();
 	void requestPause();
 	void requestStep();
@@ -103,6 +105,8 @@ private:
 	QAction *_stepAction;
 	QAction *_resetAction;
 	QAction *_aboutAction;
+	QAction *_documentationAction;
+	QAction *_bugAction;
 	QLabel *_statusBarLabel;
 	QLabel *_selectedLabel;
 	QComboBox *_namesComboBox;

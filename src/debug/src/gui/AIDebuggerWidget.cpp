@@ -3,6 +3,8 @@
 #include <QStatusBar>
 #include <QSplitter>
 #include <QTreeView>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include "AIDebugger.h"
 #include "AIDebuggerWidget.h"
@@ -51,6 +53,8 @@ AIDebuggerWidget::~AIDebuggerWidget() {
 	delete _stepAction;
 	delete _connectAction;
 	delete _aboutAction;
+	delete _documentationAction;
+	delete _bugAction;
 	delete _namesComboBox;
 }
 
@@ -112,6 +116,8 @@ void AIDebuggerWidget::contributeToFileMenu(QMenu *fileMenu) {
 }
 
 void AIDebuggerWidget::contributeToHelpMenu(QMenu *helpMenu) {
+	helpMenu->addAction(_documentationAction);
+	helpMenu->addAction(_bugAction);;
 	helpMenu->addAction(_aboutAction);
 }
 
@@ -132,6 +138,8 @@ void AIDebuggerWidget::removeFromFileMenu(QMenu *fileMenu) {
 }
 
 void AIDebuggerWidget::removeFromHelpMenu(QMenu *helpMenu) {
+	helpMenu->removeAction(_bugAction);
+	helpMenu->removeAction(_documentationAction);
 	helpMenu->removeAction(_aboutAction);
 }
 
@@ -248,6 +256,14 @@ void AIDebuggerWidget::about() {
 	QMessageBox::about(this, tr("About"), tr("AI debug visualization for libsimpleai.<br />Grab the latest version at <a href=\"https://github.com/mgerhardy/simpleai\">github</a>"));
 }
 
+void AIDebuggerWidget::documentation() {
+	QDesktopServices::openUrl(QUrl("https://github.com/mgerhardy/simpleai/wiki"));
+}
+
+void AIDebuggerWidget::bug() {
+	QDesktopServices::openUrl(QUrl("https://github.com/mgerhardy/simpleai/issues"));
+}
+
 void AIDebuggerWidget::createActions() {
 	_connectAction = new QAction(tr("C&onnect"), this);
 	_connectAction->setShortcuts(QKeySequence::Open);
@@ -274,6 +290,16 @@ void AIDebuggerWidget::createActions() {
 	_aboutAction->setStatusTip(tr("Show the application's About box"));
 	_aboutAction->setIcon(QIcon(":/images/about.png"));
 	connect(_aboutAction, SIGNAL(triggered()), this, SLOT(about()));
+
+	_documentationAction = new QAction(tr("&Documentation"), this);
+	_documentationAction->setStatusTip(tr("Open the libsimpleai documentation"));
+	_documentationAction->setIcon(QIcon(":/images/docs.png"));
+	connect(_documentationAction, SIGNAL(triggered()), this, SLOT(documentation()));
+
+	_bugAction = new QAction(tr("&Report a bug"), this);
+	_bugAction->setStatusTip(tr("Report a bug"));
+	_bugAction->setIcon(QIcon(":/images/bug.png"));
+	connect(_bugAction, SIGNAL(triggered()), this, SLOT(bug()));
 }
 
 QLabel *AIDebuggerWidget::createLabel(const QString &text) const {
