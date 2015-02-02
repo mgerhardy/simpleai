@@ -1,5 +1,7 @@
 #pragma once
 
+#include <chrono>
+#include <random>
 #include <stdlib.h>
 
 namespace ai {
@@ -18,6 +20,16 @@ inline int random (int min, int max) {
 
 inline float randomBinomial (float max = 1.0f) {
 	return randomf(max) - randomf(max);
+}
+
+template<typename I>
+inline I randomElement(I begin, I end) {
+	const int n = static_cast<int>(std::distance(begin, end));
+	auto seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::uniform_int_distribution<> dis(0, n);
+	std::default_random_engine generator(seed);
+	std::advance(begin, dis(generator));
+	return begin;
 }
 
 }
