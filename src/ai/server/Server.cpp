@@ -3,6 +3,7 @@
 #include "AINamesMessage.h"
 #include "AIStubTypes.h"
 #include "AICharacterDetailsMessage.h"
+#include "AICharacterStaticMessage.h"
 #include "ProtocolHandlerRegistry.h"
 
 namespace ai {
@@ -57,11 +58,13 @@ void Server::reset() {
 void Server::select(const ClientId& /*clientId*/, const CharacterId& id) {
 	Zone* zone = _zone;
 	if (zone == nullptr) {
-		_selectedCharacterId = -1;
+		resetSelection();
 		return;
 	}
 
+	resetSelection();
 	_selectedCharacterId = id;
+	broadcastStaticCharacterDetails(zone);
 	if (_pause) {
 		broadcastState(zone);
 		broadcastCharacterDetails(zone);
@@ -79,6 +82,11 @@ void Server::onConnect(Client* client) {
 	}
 	const AINamesMessage msg(names);
 	_network.sendToClient(client, msg);
+
+	Zone* zone = _zone;
+	if (zone == nullptr)
+		return;
+	broadcastStaticCharacterDetails(zone);
 }
 
 void Server::onDisconnect(Client* /*client*/) {
@@ -98,7 +106,7 @@ void Server::onDisconnect(Client* /*client*/) {
 
 	zone->setDebug(false);
 	_zone = nullptr;
-	_selectedCharacterId = -1;
+	resetSelection();
 }
 
 bool Server::start() {
@@ -118,6 +126,14 @@ void Server::pause(const ClientId& /*clientId*/, bool state) {
 	if (state) {
 		broadcastState(zone);
 		broadcastCharacterDetails(zone);
+	}
+}
+
+void Server::addChildren(const TreeNodePtr& node, std::vector<AIStateNodeStatic>& out) const {
+	for (const TreeNodePtr& childNode : node->getChildren()) {
+		const int32_t nodeId = childNode->getId();
+		out.push_back(AIStateNodeStatic(nodeId, childNode->getName(), ""));
+		addChildren(childNode, out);
 	}
 }
 
@@ -151,6 +167,26 @@ void Server::broadcastState(Zone* zone) {
 	_network.broadcast(msg);
 }
 
+void Server::broadcastStaticCharacterDetails(Zone* zone) {
+	const CharacterId id = _selectedCharacterId;
+	if (id == -1)
+		return;
+
+	auto func = [&] (AI& ai) {
+		std::vector<AIStateNodeStatic> nodeStaticData;
+		const TreeNodePtr& node = ai.getBehaviour();
+		const int32_t nodeId = node->getId();
+		nodeStaticData.push_back(AIStateNodeStatic(nodeId, node->getName(), ""));
+		addChildren(node, nodeStaticData);
+
+		const AICharacterStaticMessage msgStatic(id, nodeStaticData);
+		_network.broadcast(msgStatic);
+	};
+	if (!zone->execute(id, func)) {
+		resetSelection();
+	}
+}
+
 void Server::broadcastCharacterDetails(Zone* zone) {
 	const CharacterId id = _selectedCharacterId;
 	if (id == -1)
@@ -158,10 +194,10 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 
 	auto func = [&] (AI& ai) {
 		const TreeNodePtr& node = ai.getBehaviour();
-		const int32_t id = node->getId();
+		const int32_t nodeId = node->getId();
 		const ConditionPtr& condition = node->getCondition();
 		const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
-		AIStateNode root(id, conditionStr, _time - node->getLastExecMillis(ai), node->getLastStatus(ai), true);
+		AIStateNode root(nodeId, conditionStr, _time - node->getLastExecMillis(ai), node->getLastStatus(ai), true);
 		addChildren(node, root, ai);
 
 		AIStateAggro aggro;
@@ -175,7 +211,7 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 		_network.broadcast(msg);
 	};
 	if (!zone->execute(id, func)) {
-		_selectedCharacterId = -1;
+		resetSelection();
 	}
 }
 
@@ -190,16 +226,22 @@ void Server::update(long deltaTime) {
 		}
 	} else if (_pause) {
 		pause(1, false);
-		_selectedCharacterId = -1;
+		resetSelection();
 	}
 	_network.update(deltaTime);
+}
+
+void Server::resetSelection() {
+	_selectedCharacterId = -1;
 }
 
 void Server::setDebug(const std::string& zoneName) {
 	if (_pause) {
 		pause(1, false);
 	}
+
 	_zone = nullptr;
+	resetSelection();
 
 	ScopedReadLock scopedLock(_lock);
 	for (Zone* zone : _zones) {
@@ -224,8 +266,8 @@ void Server::addZone(Zone* zone) {
 	{
 		ScopedReadLock scopedLock(_lock);
 		_names.clear();
-		for (const Zone* zone : _zones) {
-			_names.push_back(zone->getName());
+		for (const Zone* z : _zones) {
+			_names.push_back(z->getName());
 		}
 	}
 	broadcastZoneNames();
@@ -243,8 +285,8 @@ void Server::removeZone(Zone* zone) {
 	{
 		ScopedReadLock scopedLock(_lock);
 		_names.clear();
-		for (const Zone* zone : _zones) {
-			_names.push_back(zone->getName());
+		for (const Zone* z : _zones) {
+			_names.push_back(z->getName());
 		}
 	}
 	broadcastZoneNames();

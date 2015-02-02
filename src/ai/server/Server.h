@@ -15,6 +15,7 @@
 namespace ai {
 
 class AIStateNode;
+class AIStateNodeStatic;
 
 /**
  * @brief The server can serialize the state of the AI and broadcast it to all connected clients.
@@ -50,9 +51,13 @@ protected:
 	ReadWriteLock _lock;
 	std::vector<std::string> _names;
 
+	void resetSelection();
+
+	void addChildren(const TreeNodePtr& node, std::vector<AIStateNodeStatic>& out) const;
 	void addChildren(const TreeNodePtr& node, AIStateNode& parent, const AI& ai) const;
 	void broadcastState(Zone* zone);
 	void broadcastCharacterDetails(Zone* zone);
+	void broadcastStaticCharacterDetails(Zone* zone);
 	void broadcastZoneNames();
 	void onConnect(Client* client) override;
 	void onDisconnect(Client* client) override;
