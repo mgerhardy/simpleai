@@ -41,6 +41,7 @@ AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger, AINodeStaticResolver& r
 }
 
 AIDebuggerWidget::~AIDebuggerWidget() {
+	delete _nodeTree;
 	delete _nodeTreeFrame;
 	delete _mapFrame;
 	delete _entityList;
@@ -56,6 +57,7 @@ AIDebuggerWidget::~AIDebuggerWidget() {
 	delete _documentationAction;
 	delete _bugAction;
 	delete _namesComboBox;
+	delete _tree;
 }
 
 void AIDebuggerWidget::onEntitiesUpdated() {
