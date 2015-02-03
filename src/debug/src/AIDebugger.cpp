@@ -111,6 +111,7 @@ AIDebugger::AIDebugger(AINodeStaticResolver& resolver) :
 }
 
 AIDebugger::~AIDebugger() {
+	_socket.close();
 	delete _stateHandler;
 	delete _characterHandler;
 	delete _characterStaticHandler;
@@ -238,11 +239,11 @@ void AIDebugger::onDisconnect() {
 		_node = AIStateNode();
 		emit onSelected();
 	}
-	{
+	if (!_names.empty()) {
 		_names.clear();
 		emit onNamesReceived();
 	}
-	{
+	if (!_entities.empty()) {
 		_entities.clear();
 		emit onEntitiesUpdated();
 	}

@@ -26,7 +26,6 @@ ZoomFrame::ZoomFrame(QGraphicsView* graphicsView, QWidget* parent) :
 }
 
 ZoomFrame::~ZoomFrame() {
-	delete _graphicsView;
 	delete _zoomWidget;
 }
 

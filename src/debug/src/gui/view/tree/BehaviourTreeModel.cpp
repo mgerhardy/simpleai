@@ -53,6 +53,9 @@ int BehaviourTreeModel::rowCount(const QModelIndex &parent) const {
 	else
 		parentItem = item(parent);
 
+	if (parentItem == nullptr)
+		return 0;
+
 	return parentItem->childCount();
 }
 
@@ -67,6 +70,8 @@ QVariant BehaviourTreeModel::data(const QModelIndex &index, int role) const {
 		return QVariant();
 
 	BehaviourTreeModelItem *nodeItem = item(index);
+	if (nodeItem == nullptr)
+		return QVariant();
 
 	if (role == Qt::DecorationRole) {
 		if (index.column() == 0)
@@ -97,7 +102,7 @@ QVariant BehaviourTreeModel::data(const QModelIndex &index, int role) const {
 }
 
 QVariant BehaviourTreeModel::headerData(int section, Qt::Orientation orientation, int role) const {
-	if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
+	if (orientation == Qt::Horizontal && role == Qt::DisplayRole && _rootItem != nullptr)
 		return _rootItem->data(section);
 
 	return QVariant();
