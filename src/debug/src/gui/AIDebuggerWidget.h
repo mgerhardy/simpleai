@@ -73,6 +73,7 @@ private slots:
 	void about();
 	void documentation();
 	void bug();
+	void toggleTreeView();
 	void connectToAIServer();
 	void requestPause();
 	void requestStep();
@@ -90,6 +91,7 @@ private:
 
 	QWidget *createTopWidget();
 	QWidget *createBottomWidget();
+	QWidget *createTreePanelWidget();
 	QLabel *createLabel(const QString &text) const;
 
 	NodeTreeView *_nodeTree;

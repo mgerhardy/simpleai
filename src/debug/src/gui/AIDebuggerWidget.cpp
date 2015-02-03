@@ -4,7 +4,9 @@
 #include <QSplitter>
 #include <QTreeView>
 #include <QDesktopServices>
+#include <QPushButton>
 #include <QUrl>
+#include <QHeaderView>
 
 #include "AIDebugger.h"
 #include "AIDebuggerWidget.h"
@@ -75,7 +77,6 @@ void AIDebuggerWidget::onSelected() {
 	_stateTable->updateStateTable();
 	_nodeTree->updateTreeWidget();
 	_model.setRootNode(const_cast<AIStateNode*>(&_debugger.getNode()));
-	_tree->setModel(&_model);
 	_tree->expandAll();
 	_aggroTable->updateAggroTable();
 }
@@ -183,21 +184,54 @@ QWidget *AIDebuggerWidget::createTopWidget() {
 	return splitter;
 }
 
-QWidget *AIDebuggerWidget::createBottomWidget() {
-	QSplitter *splitter = new QSplitter;
+QWidget *AIDebuggerWidget::createTreePanelWidget() {
+	QWidget* treePanel = new QWidget();
+	treePanel->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
+
 	_nodeTree = new NodeTreeView(_debugger, _resolver);
-	_nodeTreeFrame = new ZoomFrame(_nodeTree);
+	_nodeTreeFrame = new ZoomFrame(_nodeTree, treePanel);
+	_nodeTreeFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	_nodeTreeFrame->setVisible(false);
 	_aggroTable = new AggroTable(_debugger);
 	_stateTable = new StateTable(_debugger);
 
-	_tree = new QTreeView();
+	_tree = new QTreeView(treePanel);
 	_tree->setUniformRowHeights(true);
 	_tree->setAlternatingRowColors(true);
-	_tree->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
+	_tree->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	_tree->setModel(&_model);
+	QHeaderView *header = _tree->header();
+	header->setSectionResizeMode(0, QHeaderView::Stretch);
+	header->setSectionResizeMode(1, QHeaderView::Stretch);
+	header->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+	header->setSectionResizeMode(3, QHeaderView::ResizeToContents);
 
-	// TODO: switch between _tree and _nodeTreeFrame
-	splitter->addWidget(_tree);
-	splitter->setStretchFactor(splitter->indexOf(_tree), 5);
+	QPushButton *toggle = new QPushButton(QIcon(":/images/switch.png"), "", treePanel);
+	toggle->setFlat(true);
+	toggle->setCheckable(true);
+	toggle->setFixedSize(16, 16);
+	toggle->setToolTip(tr("Switch between tree views"));
+	connect(toggle, SIGNAL(released()), this, SLOT(toggleTreeView()));
+	toggle->raise();
+
+	QGridLayout *treeLayout = new QGridLayout();
+	treeLayout->setColumnStretch(0, 10);
+	treeLayout->setRowStretch(0, 10);
+	treeLayout->addWidget(_nodeTreeFrame, 0, 0);
+	treeLayout->addWidget(_tree, 0, 0);
+	treeLayout->addWidget(toggle, 0, 0, Qt::AlignRight | Qt::AlignTop);
+
+	treePanel->setLayout(treeLayout);
+	treePanel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	return treePanel;
+}
+
+QWidget *AIDebuggerWidget::createBottomWidget() {
+	QSplitter *splitter = new QSplitter;
+
+	QWidget* treePanel = createTreePanelWidget();
+	splitter->addWidget(treePanel);
+	splitter->setStretchFactor(splitter->indexOf(treePanel), 5);
 	splitter->addWidget(_aggroTable);
 	splitter->setStretchFactor(splitter->indexOf(_aggroTable), 1);
 	splitter->addWidget(_stateTable);
@@ -264,6 +298,16 @@ void AIDebuggerWidget::documentation() {
 
 void AIDebuggerWidget::bug() {
 	QDesktopServices::openUrl(QUrl("https://github.com/mgerhardy/simpleai/issues"));
+}
+
+void AIDebuggerWidget::toggleTreeView() {
+	if (_nodeTreeFrame->isVisible()) {
+		_nodeTreeFrame->setVisible(false);
+		_tree->setVisible(true);
+	} else {
+		_nodeTreeFrame->setVisible(true);
+		_tree->setVisible(false);
+	}
 }
 
 void AIDebuggerWidget::createActions() {
