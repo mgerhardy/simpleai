@@ -14,6 +14,9 @@ TreeNodeStatus PrioritySelector::execute(AI& entity, long deltaMillis) {
 	const std::size_t size = _children.size();
 	TreeNodeStatus overallResult = FINISHED;
 	std::size_t i = index;
+	for (std::size_t j = 0; j < i; ++j) {
+		_children[j]->resetState(entity);
+	}
 	for (; i < size; ++i) {
 		const TreeNodePtr& child = _children[i];
 		const TreeNodeStatus result = child->execute(entity, deltaMillis);
