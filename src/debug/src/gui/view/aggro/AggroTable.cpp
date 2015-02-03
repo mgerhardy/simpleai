@@ -14,7 +14,9 @@ AggroTable::AggroTable(AIDebugger& debugger) :
 	setSelectionMode(QAbstractItemView::NoSelection);
 	verticalHeader()->hide();
 	setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
-	horizontalHeader()->setStretchLastSection(true);
+	for (int c = 0; c < horizontalHeader()->count(); ++c) {
+		horizontalHeader()->setSectionResizeMode(c, QHeaderView::Stretch);
+	}
 }
 
 AggroTable::~AggroTable() {
