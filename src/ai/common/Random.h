@@ -6,16 +6,23 @@
 
 namespace ai {
 
+inline std::default_random_engine& randomEngine() {
+	thread_local static std::default_random_engine engine;
+	return engine;
+}
+
 inline void randomSeed (unsigned int seed) {
-	srand(seed);
+	randomEngine().seed(seed);
 }
 
 inline float randomf (float max = 1.0f) {
-	return max * (static_cast<float>(rand()) / static_cast<float>(RAND_MAX));
+	std::uniform_real_distribution<float> distribution(0.0, max);
+	return distribution(randomEngine());
 }
 
 inline int random (int min, int max) {
-	return static_cast<int>(randomf() * static_cast<float>((max - min + 1) + min));
+	std::uniform_int_distribution<int> distribution(min, max);
+	return distribution(randomEngine());
 }
 
 inline float randomBinomial (float max = 1.0f) {
@@ -25,10 +32,8 @@ inline float randomBinomial (float max = 1.0f) {
 template<typename I>
 inline I randomElement(I begin, I end) {
 	const int n = static_cast<int>(std::distance(begin, end));
-	auto seed = std::chrono::system_clock::now().time_since_epoch().count();
 	std::uniform_int_distribution<> dis(0, n);
-	std::default_random_engine generator(seed);
-	std::advance(begin, dis(generator));
+	std::advance(begin, dis(randomEngine()));
 	return begin;
 }
 
