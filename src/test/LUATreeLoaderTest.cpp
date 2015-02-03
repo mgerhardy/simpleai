@@ -18,7 +18,7 @@ TEST_F(LUATreeLoaderTest, testLoad) {
 	ai::LUATreeLoader loader(registry);
 	ASSERT_TRUE(loader.init(TREE)) << loader.getError();
 	const ai::TreeNodePtr& tree = loader.load("example");
-	ASSERT_NE(nullptr, tree.get()) << "Could not find the espected behaviour";
+	ASSERT_NE(nullptr, tree.get()) << "Could not find the expected behaviour";
 	ASSERT_EQ("root", tree->getName()) << "unexpected root node name";
 	const ai::TreeNodes& children = tree->getChildren();
 	const int childrenAmount = children.size();
