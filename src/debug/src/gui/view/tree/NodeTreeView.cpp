@@ -11,8 +11,8 @@ const int nodeHeight = 60;
 namespace ai {
 namespace debug {
 
-NodeTreeView::NodeTreeView(AIDebugger& debugger, AINodeStaticResolver& resolver) :
-		IGraphicsView(), _debugger(debugger), _scene(this), _resolver(resolver) {
+NodeTreeView::NodeTreeView(AIDebugger& debugger, AINodeStaticResolver& resolver, QWidget* parent) :
+		IGraphicsView(false, false, parent), _debugger(debugger), _scene(this), _resolver(resolver) {
 	_scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 	// because the connection lines are not included in the bounding box...
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);

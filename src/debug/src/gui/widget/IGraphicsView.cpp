@@ -3,8 +3,8 @@
 namespace ai {
 namespace debug {
 
-IGraphicsView::IGraphicsView(bool renderGrid, bool renderBackground) :
-		QGraphicsView(), _renderGrid(renderGrid), _renderBackground(renderBackground) {
+IGraphicsView::IGraphicsView(bool renderGrid, bool renderBackground, QWidget* parent) :
+		QGraphicsView(parent), _renderGrid(renderGrid), _renderBackground(renderBackground) {
 	setRenderHint(QPainter::Antialiasing, true);
 }
 

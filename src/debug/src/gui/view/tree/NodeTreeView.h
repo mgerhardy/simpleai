@@ -24,7 +24,7 @@ private:
 
 	NodeTreeItem* buildTreeItems(const AIStateNode& node, NodeTreeItem* parent);
 public:
-	NodeTreeView(AIDebugger& debugger, AINodeStaticResolver& resolver);
+	NodeTreeView(AIDebugger& debugger, AINodeStaticResolver& resolver, QWidget* parent = nullptr);
 	virtual ~NodeTreeView();
 
 	void updateTreeWidget();
