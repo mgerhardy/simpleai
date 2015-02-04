@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.github.simpleai.util.WorldVector;
-
 public class AIStateMessage extends ProtocolMessage {
 	private List<AIStateWorld> _states = new ArrayList<AIStateWorld>();
 
@@ -61,7 +59,7 @@ public class AIStateMessage extends ProtocolMessage {
 		final float orientation = in.readFloat();
 		final Map<String, String> attributes = new HashMap<String, String>();
 		readAttributes( in, attributes );
-		final WorldVector position = new WorldVector( x, y, z );
+		final Vector3f position = new Vector3f( x, y, z );
 		final AIStateWorld tree = new AIStateWorld( id, position, orientation, attributes );
 		_states.add( tree );
 	}
@@ -77,7 +75,7 @@ public class AIStateMessage extends ProtocolMessage {
 	private void writeState( DataOutput out, AIStateWorld state )
 			throws IOException {
 		out.writeInt( state.getId() );
-		final WorldVector position = state.getPosition();
+		final Vector3f position = state.getPosition();
 		out.writeFloat( position.x );
 		out.writeFloat( position.y );
 		out.writeFloat( position.z );
