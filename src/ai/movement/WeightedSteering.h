@@ -47,6 +47,9 @@ public:
 			totalWeight += weight;
 		}
 
+		if (totalWeight <= 0.0000001f)
+			return MoveVector(Vector3f::INFINITE, 0.0f);
+
 		const float scale = 1.0f / totalWeight;
 		return MoveVector(vecBlended * scale, angularBlended * scale);
 	}
