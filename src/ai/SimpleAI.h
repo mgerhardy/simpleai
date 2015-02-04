@@ -72,7 +72,14 @@
 
 #include "group/GroupMgr.h"
 
+#include "movement/FollowGroupLeader.h"
+#include "movement/GroupFlee.h"
+#include "movement/GroupSeek.h"
 #include "movement/Steering.h"
+#include "movement/TargetFlee.h"
+#include "movement/TargetSeek.h"
+#include "movement/Wander.h"
+#include "movement/WeightedSteering.h"
 
 #include "server/Network.h"
 #include "server/Server.h"

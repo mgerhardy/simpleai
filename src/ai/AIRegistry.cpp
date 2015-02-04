@@ -25,7 +25,14 @@
 #include "filter/SelectEmpty.h"
 #include "filter/SelectHighestAggro.h"
 #include "filter/SelectGroupMembers.h"
+#include "movement/FollowGroupLeader.h"
+#include "movement/GroupFlee.h"
+#include "movement/GroupSeek.h"
 #include "movement/Steering.h"
+#include "movement/TargetFlee.h"
+#include "movement/TargetSeek.h"
+#include "movement/Wander.h"
+#include "movement/WeightedSteering.h"
 
 namespace ai {
 

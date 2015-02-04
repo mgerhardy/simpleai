@@ -5,6 +5,7 @@
 #include "common/Types.h"
 #include "common/Math.h"
 #include "movement/Steering.h"
+#include "movement/WeightedSteering.h"
 
 namespace ai {
 

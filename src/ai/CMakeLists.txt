@@ -81,7 +81,14 @@ list(APPEND simpleai_HEADERS
 	IAIFactory.h
 	ICharacter.h
 	group/GroupMgr.h
+	movement/FollowGroupLeader.h
+	movement/GroupFlee.h
+	movement/GroupSeek.h
 	movement/Steering.h
+	movement/TargetFlee.h
+	movement/TargetSeek.h
+	movement/Wander.h
+	movement/WeightedSteering.h
 	server/AIChangeMessage.h
 	server/AICharacterDetailsMessage.h
 	server/AICharacterStaticMessage.h
