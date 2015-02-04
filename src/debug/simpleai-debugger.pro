@@ -1,5 +1,7 @@
 LIBS += -lsimpleai
 INCLUDEPATH += /usr/include/simpleai
+INCLUDEPATH += /usr/local/include/simpleai
+INCLUDEPATH += ../ai/simpleai
 
 TEMPLATE = app
 TARGET = simpleai-debugger
