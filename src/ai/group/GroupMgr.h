@@ -76,6 +76,10 @@ public:
 	 */
 	bool remove(GroupId id, ICharacter* character);
 
+	/**
+	 * @brief Use this method to remove a @c ICharacter instance from all the group it is
+	 * part of. Useful if you e.g. destroy a @c ICharacter instance.
+	 */
 	bool removeFromAllGroups(ICharacter* character);
 
 	/**
