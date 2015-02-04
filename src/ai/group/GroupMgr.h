@@ -16,7 +16,10 @@ typedef int GroupId;
 /**
  * @brief Maintains the groups a @c ICharacter can be in.
  * @note Keep in mind that if you destroy an @c ICharacter somewhere in the game, to also
- * remove it from the groups
+ * remove it from the groups.
+ *
+ * Every @c Zone has its own GroupMgr instance. It is automatically updated with the zone.
+ * The average group position is only updated once per @c update() call.
  */
 class GroupMgr {
 private:
