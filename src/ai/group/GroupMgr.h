@@ -58,6 +58,8 @@ public:
 	 * in mind that you have to remove it manually from any group
 	 * whenever you destroy the @c ICharacter instance.
 	 * @return @c true if the add to the group was successful.
+	 *
+	 * @note This method performs a write lock on the group manager
 	 */
 	bool add(GroupId id, ICharacter* character);
 
@@ -73,29 +75,40 @@ public:
 	 * @return @c true if the given character was removed from the group,
 	 * @c false if the removal failed (e.g. the character was not part of
 	 * the group)
+	 *
+	 * @note This method performs a write lock on the group manager
 	 */
 	bool remove(GroupId id, ICharacter* character);
 
 	/**
 	 * @brief Use this method to remove a @c ICharacter instance from all the group it is
 	 * part of. Useful if you e.g. destroy a @c ICharacter instance.
+	 *
+	 * @note This method performs a write lock on the group manager
 	 */
 	bool removeFromAllGroups(ICharacter* character);
 
 	/**
-	 * @brief Calculate the average position of the group
+	 * @brief Returns the average position of the group
 	 *
 	 * @note If the given group doesn't exist or some other error occurred, this method returns @c Vector3f::INFINITE
+	 * @note The position of a group is calculated once per @c update() call.
+	 *
+	 * @note This method performs a read lock on the group manager
 	 */
 	Vector3f getPosition(GroupId id) const;
 
 	/**
 	 * @return The @c ICharacter object of the leader, or @c nullptr if no such group exists.
+	 *
+	 * @note This method performs a read lock on the group manager
 	 */
 	const ICharacter* getLeader(GroupId id) const;
 
 	/**
 	 * @brief Visit all the group members of the given group until the functor returns @c false
+	 *
+	 * @note This methods performs a read lock on the group manager
 	 */
 	template<typename Func>
 	void visit(GroupId id, Func& func) const {
@@ -114,13 +127,24 @@ public:
 	/**
 	 * @return If the group doesn't exist, this method returns @c 0 - otherwise the amount of members
 	 * that must be bigger than @c 1
+	 *
+	 * @note This method performs a read lock on the group manager
 	 */
 	int getGroupSize(GroupId id) const;
 
+	/**
+	 * @note This method performs a read lock on the group manager
+	 */
 	bool isInAnyGroup(const ICharacter& character) const;
 
+	/**
+	 * @note This method performs a read lock on the group manager
+	 */
 	bool isInGroup(GroupId id, const ICharacter& character) const;
 
+	/**
+	 * @note This method performs a read lock on the group manager
+	 */
 	bool isGroupLeader(GroupId id, const ICharacter& character) const;
 };
 
