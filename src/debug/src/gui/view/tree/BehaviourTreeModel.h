@@ -2,7 +2,7 @@
 
 #include "AINodeStaticResolver.h"
 #include <QAbstractItemModel>
-#include <SimpleAI.h>
+#include <server/AIStubTypes.h>
 
 namespace ai {
 namespace debug {

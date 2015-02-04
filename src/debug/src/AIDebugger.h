@@ -6,6 +6,7 @@
 #include <server/AIStateMessage.h>
 #include <server/AIPauseMessage.h>
 #include <server/AICharacterDetailsMessage.h>
+#include <server/AICharacterStaticMessage.h>
 #include <server/AIStubTypes.h>
 #include <server/IProtocolHandler.h>
 #include <QTcpSocket>

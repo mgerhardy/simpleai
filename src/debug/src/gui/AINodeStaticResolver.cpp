@@ -1,5 +1,5 @@
 #include "AINodeStaticResolver.h"
-#include <SimpleAI.h>
+#include <server/AIStubTypes.h>
 #include <QObject>
 #include <QDebug>
 

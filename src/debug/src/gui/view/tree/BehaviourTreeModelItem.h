@@ -2,7 +2,7 @@
 
 #include <QVariant>
 #include <QIcon>
-#include <SimpleAI.h>
+#include <server/AIStubTypes.h>
 
 namespace ai {
 namespace debug {
