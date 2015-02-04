@@ -48,7 +48,11 @@ public:
 	virtual ~GroupMgr ();
 
 	/**
-	 * @brief Adds a new group member to the given @c GroupId.
+	 * @brief Adds a new group member to the given @c GroupId. If the group does not yet
+	 * exists, it it created and the given @c ICharacter instance will be the leader of th
+	 * group.
+	 *
+	 * @sa remove()
 	 *
 	 * @param character The @c ICharacter to add to the group. Keep
 	 * in mind that you have to remove it manually from any group
