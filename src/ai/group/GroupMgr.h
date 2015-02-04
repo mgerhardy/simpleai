@@ -57,7 +57,10 @@ public:
 	void update(long deltaTime);
 
 	/**
-	 * @brief Removes a group member from the given @c GroupId.
+	 * @brief Removes a group member from the given @c GroupId. If the member
+	 * is the group leader, a new leader will be picked randomly. If after the
+	 * removal of the member only one other member is left in the group, the
+	 * group is destroyed.
 	 *
 	 * @param character The @c ICharacter to remove from this the group.
 	 * @return @c true if the given character was removed from the group,
@@ -97,6 +100,10 @@ public:
 		}
 	}
 
+	/**
+	 * @return If the group doesn't exist, this method returns @c 0 - otherwise the amount of members
+	 * that must be bigger than @c 1
+	 */
 	int getGroupSize(GroupId id) const;
 
 	bool isInAnyGroup(const ICharacter& character) const;
