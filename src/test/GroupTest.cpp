@@ -106,6 +106,8 @@ TEST_F(GroupTest, testGroupLeader) {
 	ASSERT_FALSE(groupMgr.isGroupLeader(id, entity3));
 	ASSERT_TRUE(groupMgr.remove(id, &entity1));
 	ASSERT_FALSE(groupMgr.isInGroup(id, entity1));
+	ASSERT_FALSE(groupMgr.isGroupLeader(id, entity1));
+	ASSERT_TRUE(groupMgr.isGroupLeader(id, entity2) || groupMgr.isGroupLeader(id, entity3));
 }
 
 TEST_F(GroupTest, testGroupAveragePosition) {
@@ -153,4 +155,20 @@ public:
 TEST_F(GroupMassTest, testIsInAnyGroupMass100x100) {
 	std::shared_ptr<TestEntity> e = _ais.back();
 	ASSERT_TRUE(_groupManager.isInAnyGroup(*e));
+}
+
+TEST_F(GroupTest, testGroupRemove) {
+	const ai::GroupId id = 1;
+	ai::GroupMgr groupMgr;
+	TestEntity entity1(1, ai::TreeNodePtr());
+	ASSERT_TRUE(groupMgr.add(id, &entity1));
+	TestEntity entity2(2, ai::TreeNodePtr());
+	ASSERT_TRUE(groupMgr.add(id, &entity2));
+	TestEntity entity3(3, ai::TreeNodePtr());
+	ASSERT_TRUE(groupMgr.add(id, &entity3));
+	ASSERT_EQ(3, groupMgr.getGroupSize(id));
+	ASSERT_TRUE(groupMgr.remove(id, &entity1));
+	ASSERT_TRUE(groupMgr.remove(id, &entity2));
+	ASSERT_TRUE(groupMgr.remove(id, &entity3));
+	ASSERT_EQ(0, groupMgr.getGroupSize(id));
 }
