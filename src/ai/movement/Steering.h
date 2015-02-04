@@ -47,6 +47,12 @@ public: \
 class ISteering : public MemObject {
 public:
 	virtual ~ISteering() {}
+	/**
+	 * @brief Calculates the @c MoveVector
+	 *
+	 * @return If the @c MoveVector contains @c Vector3f::INFINITE as vector, the result should not be used
+	 * because there was an error.
+	 */
 	virtual MoveVector execute (const ICharacter& character, float speed) const = 0;
 };
 
