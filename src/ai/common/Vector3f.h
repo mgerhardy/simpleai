@@ -167,7 +167,7 @@ struct Vector3f {
 };
 
 inline std::ostream& operator<<(std::ostream& output, const Vector3f& p) {
-	return output << "(" << p.x << "," << p.y << "," << p.z << ")";
+	return output << p.x << ":" << p.y << ":" << p.z;
 }
 
 inline Vector3f operator-(const Vector3f& lhs, const Vector3f& rhs) {
