@@ -49,3 +49,5 @@ CMakeCache.txt
 /testbuild.log
 *.prof
 .dirstamp
+
+/.idea
