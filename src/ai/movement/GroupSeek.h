@@ -29,11 +29,13 @@ public:
 		if (target.isInfinite())
 			return MoveVector(target, 0.0f);
 		Vector3f v = target - character.getPosition();
+		float orientation = 0.0f;
 		if (v.squareLength() > 0) {
 			v.normalize();
 			v *= speed;
+			orientation = v.orientation();
 		}
-		const MoveVector d(v, 0.0f);
+		const MoveVector d(v, orientation);
 		return d;
 	}
 };
