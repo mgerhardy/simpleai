@@ -4,6 +4,7 @@
 #include <cmath>
 
 namespace ai {
+
 class MoveVector {
 protected:
 	const Vector3f _vec3;
@@ -41,5 +42,9 @@ public:
 		return _rotation;
 	}
 };
+
+inline std::ostream& operator<<(std::ostream& output, const MoveVector& p) {
+	return output << "(" << p.getVector() << ", " << p.getRotation() << ", " << p.getOrientation(1.0f) << ")";
+}
 
 }
