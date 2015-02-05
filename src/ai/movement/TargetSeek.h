@@ -36,6 +36,14 @@ public:
 		const MoveVector d(v, orientation);
 		return d;
 	}
+
+	std::ostream& print(std::ostream& stream, int level) const {
+		for (int i = 0; i < level; ++i) {
+			stream << '\t';
+		}
+		stream << "TargetSeek(" << _target << ")";
+		return stream;
+	}
 };
 
 }

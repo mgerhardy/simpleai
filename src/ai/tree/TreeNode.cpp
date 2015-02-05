@@ -92,13 +92,13 @@ std::ostream& TreeNode::print(std::ostream& stream, int level) const {
 		stream << " {" << std::endl;
 		for (TreeNodes::const_iterator i = _children.begin(); i != _children.end(); ++i) {
 			(*i)->print(stream, level + 1);
+			stream << std::endl;
 		}
 		for (int i = 0; i < level; ++i) {
 			stream << '\t';
 		}
 		stream << "}";
 	}
-	stream << std::endl;
 	return stream;
 }
 

@@ -37,6 +37,17 @@ TreeNodePtr Steer::Factory::create(const SteerNodeFactoryContext *ctx) const {
 	return TreeNodePtr(new Steer(ctx->name, ctx->parameters, ctx->condition, w));
 }
 
+std::ostream& Steer::print(std::ostream& stream, int level) const {
+	ITask::print(stream, level);
+	stream << " => {" << std::endl;
+	_w.print(stream, level);
+	for (int i = 0; i < level; ++i) {
+		stream << '\t';
+	}
+	stream << "}";
+	return stream;
+}
+
 Steer::Factory Steer::FACTORY;
 
 }

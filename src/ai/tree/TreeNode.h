@@ -138,7 +138,7 @@ public:
 
 	virtual void addChild(const TreeNodePtr& child);
 
-	std::ostream& print(std::ostream& stream, int level) const override;
+	virtual std::ostream& print(std::ostream& stream, int level) const override;
 };
 
 inline int TreeNode::getId() const {
