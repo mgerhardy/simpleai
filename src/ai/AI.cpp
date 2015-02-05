@@ -18,7 +18,7 @@ AI::~AI() {
 
 Vector3f AI::getGroupPosition(GroupId id) const {
 	Zone* local = _zone;
-	if (local == nullptr)
+	if (local == nullptr || id < 0)
 		return Vector3f::INFINITE;
 
 	return local->getGroupMgr().getPosition(id);
