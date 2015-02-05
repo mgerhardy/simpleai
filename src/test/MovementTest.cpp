@@ -3,6 +3,34 @@
 class MovementTest: public TestSuite {
 };
 
+TEST_F(MovementTest, testWanderWithoutOrientationChange) {
+	ai::movement::Wander wander("0.0");
+	TestEntity entity(1, ai::TreeNodePtr());
+	// moving to the right
+	entity.setOrientation(0.0f);
+	const ai::MoveVector& mvRight = wander.execute(entity, 100);
+	ASSERT_EQ(ai::Vector3f(0.0f, 0.0f, 100.0f), mvRight.getVector());
+	ASSERT_EQ(0.0f, mvRight.getOrientation(1.0f));
+
+	// moving to the left
+	entity.setOrientation(M_PI);
+	const ai::MoveVector& mvLeft = wander.execute(entity, 100);
+	ASSERT_EQ(ai::Vector3f(0.0f, 0.0f, -100.0f), mvLeft.getVector());
+	ASSERT_EQ(0.0f, mvLeft.getOrientation(1.0f));
+
+	// moving upwards
+	entity.setOrientation(M_PI_2);
+	const ai::MoveVector& mvUp = wander.execute(entity, 100);
+	ASSERT_EQ(ai::Vector3f(100.0f, 0.0f, 0.0f), mvUp.getVector());
+	ASSERT_EQ(0.0f, mvUp.getOrientation(1.0f));
+
+	// moving downwards
+	entity.setOrientation(M_PI_2 + M_PI);
+	const ai::MoveVector& mvDown = wander.execute(entity, 100);
+	ASSERT_EQ(ai::Vector3f(-100.0f, 0.0f, 0.0f), mvDown.getVector());
+	ASSERT_EQ(0.0f, mvDown.getOrientation(1.0f));
+}
+
 TEST_F(MovementTest, testWeightedSteering) {
 	ai::randomSeed(0);
 
