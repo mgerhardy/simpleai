@@ -3,6 +3,23 @@
 class MovementTest: public TestSuite {
 };
 
+TEST_F(MovementTest, testFlee) {
+	ai::movement::TargetFlee flee("0:0:100");
+	TestEntity entity(1, ai::TreeNodePtr());
+
+	// flee to the left
+	entity.setPosition(ai::Vector3f(0, 0, 0));
+	const ai::MoveVector& mvLeft = flee.execute(entity, 100);
+	ASSERT_EQ(ai::Vector3f(0.0f, 0.0f, -100.0f), mvLeft.getVector());
+	ASSERT_FLOAT_EQ(M_PI, mvLeft.getOrientation(1.0f));
+
+	// flee to the right
+	entity.setPosition(ai::Vector3f(0, 0, 200));
+	const ai::MoveVector& mvRight = flee.execute(entity, 100);
+	ASSERT_EQ(ai::Vector3f(0.0f, 0.0f, 100.0f), mvRight.getVector());
+	ASSERT_FLOAT_EQ(0.0f, mvRight.getOrientation(1.0f));
+}
+
 TEST_F(MovementTest, testWanderWithoutOrientationChange) {
 	ai::movement::Wander wander("0.0");
 	TestEntity entity(1, ai::TreeNodePtr());
