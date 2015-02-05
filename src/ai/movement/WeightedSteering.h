@@ -51,7 +51,7 @@ public:
 			return MoveVector(Vector3f::INFINITE, 0.0f);
 
 		const float scale = 1.0f / totalWeight;
-		return MoveVector(vecBlended * scale, angularBlended * scale);
+		return MoveVector(vecBlended * scale, fmodf(angularBlended * scale, M_2PI));
 	}
 };
 
