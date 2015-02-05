@@ -27,8 +27,8 @@ public:
 		if (_target.isInfinite())
 			return MoveVector(_target, 0.0f);
 		Vector3f v = _target - character.getPosition();
-		float orientation = 0.0f;
-		if (v.squareLength() > 0) {
+		double orientation = 0.0;
+		if (v.squareLength() > 0.0f) {
 			v.normalize();
 			v *= speed;
 			orientation = v.orientation();

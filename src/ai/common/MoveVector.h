@@ -14,6 +14,10 @@ public:
 			_vec3(vec3), _rotation(rotation) {
 	}
 
+	MoveVector(const Vector3f& vec3, double rotation) :
+			_vec3(vec3), _rotation(static_cast<float>(rotation)) {
+	}
+
 	inline float getOrientation(float duration) const {
 		return fmodf(_rotation * duration, M_2PI);
 	}

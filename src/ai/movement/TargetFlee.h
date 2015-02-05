@@ -28,14 +28,14 @@ public:
 			return MoveVector(_target, 0.0f);
 		Vector3f v = character.getPosition();
 		v -= _target;
-		float orientation = 0.0f;
-		if (v.squareLength() > 0) {
+		double orientation = 0.0;
+		if (v.squareLength() > 0.0f) {
 			v.normalize();
 			v *= speed;
 			orientation = v.orientation();
 		}
 
-		const MoveVector d(v, 0.0f);
+		const MoveVector d(v, orientation);
 		return d;
 	}
 };
