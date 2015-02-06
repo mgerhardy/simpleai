@@ -79,6 +79,7 @@ TEST_F(MovementTest, testWeightedSteering) {
 
 	ai::movement::WeightedSteering w(s);
 	const ai::MoveVector& mv = w.execute(entity, 100.0f);
-	ASSERT_EQ(M_PI, mv.getOrientation(1.0f));
-	ASSERT_EQ(ai::Vector3f(-80.0f, 0.0f, 0.0f), mv.getVector());
+	ASSERT_NEAR((M_PI * 0.8f) + (0.0f * 0.2f), mv.getOrientation(1.0f), 0.00001f);
+	const ai::Vector3f result = ai::Vector3f(-100.0f, 0.0f, 0.0f) * 0.8f + ai::Vector3f(100.0f, 0.0f, 0.0f) * 0.2f;
+	ASSERT_EQ(result, mv.getVector());
 }
