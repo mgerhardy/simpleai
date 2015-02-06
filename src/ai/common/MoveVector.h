@@ -19,7 +19,8 @@ public:
 	}
 
 	inline float getOrientation(float duration) const {
-		return fmodf(_rotation * duration, M_2PI);
+		const float rotation = _rotation + M_2PI;
+		return fmodf(rotation * duration, M_2PI);
 	}
 
 	inline const Vector3f& getVector() const {

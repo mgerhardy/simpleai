@@ -33,7 +33,7 @@ public:
 		if (v.squareLength() > 0) {
 			v.normalize();
 			v *= speed;
-			orientation = v.orientation();
+			orientation = v.angle();
 		}
 		const MoveVector d(v, orientation);
 		return d;

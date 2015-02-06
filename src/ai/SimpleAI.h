@@ -39,6 +39,8 @@
  * #include <tree/loaders/lua/LUATreeLoader.h>
  * #include <tree/loaders/xml/XMLTreeLoader.h>
  * @endcode
+ *
+ * SimpleAI uses a right handed coordinate system.
  */
 #pragma once
 

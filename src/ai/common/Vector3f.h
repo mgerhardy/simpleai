@@ -75,18 +75,13 @@ struct Vector3f {
 		return _angle;
 	}
 
-	inline double orientation() const {
-		const double _orientation = ::atan2(x, z);
-		return _orientation;
-	}
-
 	inline double radians() const {
 		const double _radians = M_PI / 180.0 * angle();
 		return _radians;
 	}
 
 	static inline Vector3f fromRadians(float radians) {
-		return Vector3f(sinf(radians), 0.0f, cosf(radians));
+		return Vector3f(cosf(radians), 0.0f, sinf(radians));
 	}
 
 	inline Vector3f mix(const Vector3f& end, const float _mix) {
