@@ -42,19 +42,24 @@ void GameEntity::update(long deltaTime, bool debuggingActive) {
 	// cap position to the map
 	const float sizeF = static_cast<float>(_map->getSize());
 	const Vector3f& currentPos = _position;
+	float newOrientation = _orientation;
 	Vector3f newPos(currentPos);
 	if (currentPos.x < -sizeF) {
 		newPos.x = sizeF;
+		newOrientation += static_cast<float>(M_PI);
 	} else if (currentPos.x > sizeF) {
 		newPos.x = -sizeF;
+		newOrientation += static_cast<float>(M_PI);
 	}
 	if (currentPos.z < -sizeF) {
 		newPos.z = sizeF;
+		newOrientation += static_cast<float>(M_PI);
 	} else if (currentPos.z > sizeF) {
 		newPos.z = -sizeF;
+		newOrientation += static_cast<float>(M_PI);
 	}
 	setPosition(newPos);
-	// TODO: switch direction when the respawn on another side of the map
+	setOrientation(fmodf(newOrientation, ai::M_2PI));
 
 	// update attributes for debugging
 	if (debuggingActive) {
