@@ -241,13 +241,20 @@ int main(int argc, char **argv) {
 				const ai::Zone& zone = map->getZone();
 				int count = 0;
 				auto func = [&] (const ai::AI& ai) {
-					std::cout << "id: " << ai.getCharacter().getId() << std::endl;
+					const ai::ICharacter& chr = ai.getCharacter();
+					std::cout << "id: " << chr.getId() << std::endl;
 					// std::cout << *root.get() << std::endl;
-					std::cout << " \\- pos: " << ai.getCharacter().getPosition() << std::endl;
-					std::cout << " \\- speed: " << ai.getCharacter().getSpeed() << std::endl;
-					std::cout << " \\- orientation: " << ai.getCharacter().getOrientation() << std::endl;
+					std::cout << " \\- pos: " << chr.getPosition() << std::endl;
+					std::cout << " \\- speed: " << chr.getSpeed() << std::endl;
+					std::cout << " \\- group leader 1: " << (zone.getGroupMgr().isGroupLeader(1, chr) ? "true" : "false") << std::endl;
+					std::cout << " \\- group leader 2: " << (zone.getGroupMgr().isGroupLeader(2, chr) ? "true" : "false") << std::endl;
+					std::cout << " \\- group leader 3: " << (zone.getGroupMgr().isGroupLeader(3, chr) ? "true" : "false") << std::endl;
+					std::cout << " \\- group 1: " << (zone.getGroupMgr().isInGroup(1, chr) ? "true" : "false") << std::endl;
+					std::cout << " \\- group 2: " << (zone.getGroupMgr().isInGroup(2, chr) ? "true" : "false") << std::endl;
+					std::cout << " \\- group 3: " << (zone.getGroupMgr().isInGroup(3, chr) ? "true" : "false") << std::endl;
+					std::cout << " \\- orientation: " << chr.getOrientation() << std::endl;
 					std::cout << " \\- attributes:" << std::endl;
-					const ai::CharacterAttributes& attributes = ai.getCharacter().getAttributes();
+					const ai::CharacterAttributes& attributes = chr.getAttributes();
 					for (ai::CharacterAttributes::const_iterator attribIter = attributes.begin(); attribIter != attributes.end(); ++attribIter) {
 						std::cout << "  \\- " << attribIter->first << ": \"" << attribIter->second << "\"" << std::endl;
 					}
