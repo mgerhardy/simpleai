@@ -234,6 +234,20 @@ int main(int argc, char **argv) {
 		if (c == "q") {
 			std::cout << "quitting - waiting for threads" << std::endl;
 			break;
+		} else if (c == "g") {
+			for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
+				ai::example::GameMap *map = *i;
+				std::cout << map->getName() << std::endl;
+				const ai::Zone& zone = map->getZone();
+				std::cout << "groups: " << std::endl;
+				const ai::GroupMgr& groupMgr = zone.getGroupMgr();
+				for (int groupId = 1; groupId <= 3; ++groupId) {
+					const ai::ICharacter* leader = groupMgr.getLeader(groupId);
+					if (leader == nullptr)
+						continue;
+					std::cout << " \\- group " << groupId << ":" << groupMgr.getPosition(groupId) << " - " << leader->getPosition() << std::endl;
+				}
+			}
 		} else if (c == "d") {
 			for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
 				ai::example::GameMap *map = *i;
@@ -305,6 +319,7 @@ int main(int argc, char **argv) {
 			std::cout << "q      - quit" << std::endl;
 			std::cout << "name   - change name of the bt to use" << std::endl;
 			std::cout << "r      - respawn" << std::endl;
+			std::cout << "g      - group info" << std::endl;
 			std::cout << "t      - trigger automatic respawn" << std::endl;
 			std::cout << "d      - detail" << std::endl;
 			std::cout << "reload - reload the behaviour tree from file" << std::endl;
