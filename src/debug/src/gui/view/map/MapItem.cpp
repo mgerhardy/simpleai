@@ -22,7 +22,7 @@ MapItem::MapItem(QGraphicsItem* parent, const AIStateWorld& state, AIDebugger& a
 	QGraphicsEllipseItem *body = new QGraphicsEllipseItem(0.0, 0.0, size, size);
 	addToGroup(body);
 
-	QVector2D end(::sinf(state.getOrientation()), ::cosf(state.getOrientation()));
+	QVector2D end(::cosf(state.getOrientation()), ::sinf(state.getOrientation()));
 	end.normalize();
 	const qreal center = size / 2.0;
 	QGraphicsLineItem *direction = new QGraphicsLineItem(center, center, center + center * end.x(), center + center * end.y());
