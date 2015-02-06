@@ -96,14 +96,6 @@ public:
 		_zone.update(dt);
 	}
 
-	inline bool isBlocked(const ai::Vector3f& pos) const {
-		if (pos.x < -_size || pos.x >= _size)
-			return true;
-		if (pos.z < -_size || pos.z >= _size)
-			return true;
-		return false;
-	}
-
 	inline int getSize() const {
 		return _size;
 	}
