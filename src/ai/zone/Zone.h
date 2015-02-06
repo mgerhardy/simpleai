@@ -71,6 +71,8 @@ public:
 
 	GroupMgr& getGroupMgr();
 
+	const GroupMgr& getGroupMgr() const;
+
 	/**
 	 * @brief Executes a lambda or functor for the given character
 	 *
@@ -128,6 +130,10 @@ inline const std::string& Zone::getName() const {
 }
 
 inline GroupMgr& Zone::getGroupMgr() {
+	return _groupManager;
+}
+
+inline const GroupMgr& Zone::getGroupMgr() const {
 	return _groupManager;
 }
 
