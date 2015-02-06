@@ -14,4 +14,9 @@ inline float toDegrees (float radians) {
 	return radians * 180.0f / static_cast<float>(M_PI);
 }
 
+template<typename T>
+inline T clamp(T a, T low, T high) {
+	return std::max(low, std::min(a, high));
+}
+
 }
