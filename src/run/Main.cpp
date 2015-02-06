@@ -37,7 +37,7 @@ static ai::example::GameMap *createMap(int amount, ai::Server& server, const ai:
 	ai::example::GameMap* map = new ai::example::GameMap(600, name, server);
 
 	for (int i = 0; i < amount; ++i) {
-		map->addEntity(new ai::example::GameEntity(id++, map, root));
+		map->addEntity(new ai::example::GameEntity(++id, map, root));
 	}
 
 	map->initializeAggro();
