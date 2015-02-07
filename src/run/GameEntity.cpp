@@ -31,7 +31,9 @@ GameEntity::GameEntity(const ai::CharacterId& id,
 }
 
 void GameEntity::onAdd() {
-	_ai.getZone().getGroupMgr().add(_groupId, this);
+	ai::Zone& zone = _ai.getZone();
+	ai::GroupMgr& groupMgr = zone.getGroupMgr();
+	groupMgr.add(_groupId, this);
 }
 
 void GameEntity::update(long deltaTime, bool debuggingActive) {
