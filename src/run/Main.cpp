@@ -15,10 +15,38 @@
 #include <google/profiler.h>
 #endif
 
+class Loader {
+private:
+	ai::AIRegistry _registry;
+	// add your own tasks and conditions here
+	ai::LUATreeLoader _loader;
+public:
+	Loader() :
+			_loader(_registry) {
+	}
+
+	ai::TreeNodePtr load(const std::string &name) {
+		return _loader.load(name);
+	}
+
+	void getTrees(std::vector<std::string>& trees) const {
+		_loader.getTrees(trees);
+	}
+
+	bool init(const std::string& lua) {
+		return _loader.init(lua);
+	}
+
+	inline const std::string& getError() const {
+		return _loader.getError();
+	}
+};
+
 namespace {
 std::atomic_int id(0);
 std::atomic_bool autospawn(true);
 std::atomic_bool shutdownThreads(false);
+Loader loader;
 }
 
 static std::string getOptParam(char** begin, char** end, const std::string& option, const std::string& defaultVal = "") {
@@ -33,10 +61,15 @@ static bool optExists(char** begin, char** end, const std::string& option) {
 	return std::find(begin, end, option) != end;
 }
 
-static ai::example::GameMap *createMap(int amount, ai::Server& server, const ai::TreeNodePtr& root, const std::string& name) {
+static ai::example::GameMap *createMap(int amount, ai::Server& server, const std::string& name) {
 	ai::example::GameMap* map = new ai::example::GameMap(600, name, server);
 
+	std::vector<std::string> trees;
+	loader.getTrees(trees);
+
 	for (int i = 0; i < amount; ++i) {
+		auto randomIter = ai::randomElement(trees.begin(), trees.end());
+		ai::TreeNodePtr root = loader.load(*randomIter);
 		ai::example::GameEntity* e = new ai::example::GameEntity(id++, map, root);
 		map->addEntity(e);
 	}
@@ -71,7 +104,7 @@ static void runServer(ai::Server* server) {
 	}
 }
 
-static void runDespawnSpawn(ai::example::GameMap* map, const ai::TreeNodePtr* root) {
+static void runDespawnSpawn(ai::example::GameMap* map) {
 	const std::chrono::milliseconds delay(15000);
 	while (!shutdownThreads) {
 		if (autospawn) {
@@ -81,7 +114,12 @@ static void runDespawnSpawn(ai::example::GameMap* map, const ai::TreeNodePtr* ro
 				delete rnd;
 			}
 
-			map->addEntity(new ai::example::GameEntity(id++, map, *root));
+			std::vector<std::string> trees;
+			loader.getTrees(trees);
+			auto randomIter = ai::randomElement(trees.begin(), trees.end());
+			ai::TreeNodePtr root = loader.load(*randomIter);
+
+			map->addEntity(new ai::example::GameEntity(id++, map, root));
 		}
 		std::this_thread::sleep_for(delay);
 	}
@@ -89,43 +127,20 @@ static void runDespawnSpawn(ai::example::GameMap* map, const ai::TreeNodePtr* ro
 
 #endif
 
-static ai::TreeNodePtr load(const std::string filename, const std::string& name) {
-	ai::AIRegistry registry;
-	// add your own tasks and conditions here
-	ai::LUATreeLoader loader(registry);
-
+static bool load(const std::string filename) {
 	std::ifstream btStream(filename);
 	if (!btStream) {
 		std::cerr << "could not load " << filename << std::endl;
-		return ai::TreeNodePtr();
+		return false;
 	}
 
 	std::string str((std::istreambuf_iterator<char>(btStream)), std::istreambuf_iterator<char>());
 	if (!loader.init(str)) {
 		std::cerr << "could not load the tree" << std::endl;
 		std::cerr << loader.getError() << std::endl;
-		return ai::TreeNodePtr();
+		return false;
 	}
-	std::cerr << "loaded the tree: " << filename << std::endl;
-	if (name.empty()) {
-		std::vector<std::string> trees;
-		loader.getTrees(trees);
-		auto randomIter = ai::randomElement(trees.begin(), trees.end());
-		return loader.load(*randomIter);
-	}
-	const ai::TreeNodePtr& root = loader.load(name);
-	if (!root) {
-		std::cerr << "could not find behaviour with the name " << name << std::endl;
-		std::vector<std::string> trees;
-		loader.getTrees(trees);
-		std::cerr << "found " << trees.size() << " trees" << std::endl;
-		for (std::vector<std::string>::const_iterator i = trees.begin(); i != trees.end(); ++i) {
-			std::cerr << "found " << *i << std::endl;
-		}
-		return ai::TreeNodePtr();
-	}
-
-	return root;
+	return true;
 }
 
 int main(int argc, char **argv) {
@@ -137,7 +152,6 @@ int main(int argc, char **argv) {
 		std::cerr << "-amount 10            - how many entities are spawned on each map" << std::endl;
 		std::cerr << "-maps 4               - how many maps should get spawned" << std::endl;
 		std::cerr << "-autospawn true|false - automatic respawn (despawn random and respawn) of entities" << std::endl;
-		std::cerr << "-name example         - the name of the behaviour tree in the given script" << std::endl;
 		std::cerr << "-seed 1               - use a fixed seed for all the random actions" << std::endl;
 		std::cerr << "-help -h              - show this help screen" << std::endl;
 		std::cerr << std::endl;
@@ -151,11 +165,10 @@ int main(int argc, char **argv) {
 	}
 
 	autospawn = getOptParam(b, e, "-autospawn", "true") == "true";
-	const int seed = std::stoi(getOptParam(b, e, "-seed", "1"));
+	int seed = std::stoi(getOptParam(b, e, "-seed", "-1"));
 	const int mapAmount = std::stoi(getOptParam(b, e, "-maps", "4"));
 	const int amount = std::stoi(getOptParam(b, e, "-amount", "10"));
 	const short port = static_cast<short>(std::stoi(getOptParam(b, e, "-port", "12345")));
-	std::string name = getOptParam(b, e, "-name", "example");
 	const std::string filename = getOptParam(b, e, "-file");
 	const std::string interface = getOptParam(b, e, "-interface", "0.0.0.0");
 
@@ -164,15 +177,16 @@ int main(int argc, char **argv) {
 	ProfilerStart(profilerOutput.c_str());
 #endif
 
+	if (seed == -1) {
+		seed = 1;
+	}
 	ai::randomSeed(seed);
 
-	ai::TreeNodePtr root = load(filename, name);
-	if (!root) {
+	if (!load(filename)) {
 		return EXIT_FAILURE;
 	}
 
-	std::cout << *root.get() << std::endl;
-	std::cout << "successfully loaded the behaviour tree " << name << std::endl;
+	std::cout << "successfully loaded the behaviour trees" << std::endl;
 	std::cout << "now run this behaviour tree with " << amount << " entities on each map" << std::endl;
 	std::cout << "spawn " << mapAmount << " maps with seed " << seed << std::endl;
 	std::cout << "automatic respawn: " << (autospawn ? "true" : "false") << std::endl;
@@ -193,7 +207,7 @@ int main(int argc, char **argv) {
 	typedef std::vector<ai::example::GameMap*> Maps;
 	Maps maps;
 	for (int i = 0; i < mapAmount; ++i) {
-		maps.push_back(createMap(amount, server, root, "Map" + std::to_string(i)));
+		maps.push_back(createMap(amount, server, "Map" + std::to_string(i)));
 	}
 
 #ifdef AI_NO_THREADING
@@ -219,7 +233,7 @@ int main(int argc, char **argv) {
 	}
 
 	for (auto i = maps.begin(); i != maps.end(); ++i) {
-		threads.push_back(std::thread(runDespawnSpawn, *i, &root));
+		threads.push_back(std::thread(runDespawnSpawn, *i));
 		const std::string threadName = "spawn-" + (*i)->getName();
 		pthread_setname_np(threads.back().native_handle(), threadName.c_str());
 	}
@@ -258,7 +272,6 @@ int main(int argc, char **argv) {
 				auto func = [&] (const ai::AI& ai) {
 					const ai::ICharacter& chr = ai.getCharacter();
 					std::cout << "id: " << chr.getId() << std::endl;
-					// std::cout << *root.get() << std::endl;
 					std::cout << " \\- pos: " << chr.getPosition() << std::endl;
 					std::cout << " \\- speed: " << chr.getSpeed() << std::endl;
 					std::cout << " \\- group leader 1: " << (zone.getGroupMgr().isGroupLeader(1, chr) ? "true" : "false") << std::endl;
@@ -281,14 +294,10 @@ int main(int argc, char **argv) {
 		} else if (c == "t") {
 			autospawn = !autospawn;
 			std::cout << "automatic respawn: " << (autospawn ? "true" : "false") << std::endl;
-		} else if (c.substr(0, 4) == "name") {
-			name = c.substr(5, c.length() - 5);
-			std::cout << "changed bt name to: '" << name << "'" << std::endl;
-			ai::TreeNodePtr newRoot = load(filename, name);
-			if (!newRoot)
-				continue;
-			root = newRoot;
 		} else if (c == "r") {
+			std::vector<std::string> trees;
+			loader.getTrees(trees);
+
 			for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
 				ai::example::GameMap *map = *i;
 				ai::example::GameEntity *rnd = map->getRandomEntity();
@@ -300,22 +309,26 @@ int main(int argc, char **argv) {
 					}
 				}
 
+				auto randomIter = ai::randomElement(trees.begin(), trees.end());
+				ai::TreeNodePtr root = loader.load(*randomIter);
+
 				ai::example::GameEntity* ent = map->addEntity(new ai::example::GameEntity(id++, map, root));
 				std::cout << "spawned " << ent->getId() << " on map " << map->getName() << std::endl;
 			}
 		} else if (c == "reload") {
-			ai::TreeNodePtr newRoot = load(filename, name);
-			if (!newRoot)
+			if (!load(filename))
 				continue;
-			root = newRoot;
 			auto func = [&] (ai::AI& ai) {
-				ai.setBehaviour(root);
+				const std::string& name = ai.getBehaviour()->getName();
+				ai::TreeNodePtr newRoot = loader.load(name);
+				if (!newRoot)
+					return;
+				ai.setBehaviour(newRoot);
 			};
 			for (ai::example::GameMap* map : maps) {
 				map->getZone().visit(func);
 			}
-			std::cout << "reloaded the behaviour tree: " << name << std::endl;
-			std::cout << *root.get() << std::endl;
+			std::cout << "reloaded the behaviour trees" << std::endl;
 		} else {
 			std::cout << "q      - quit" << std::endl;
 			std::cout << "name   - change name of the bt to use" << std::endl;
