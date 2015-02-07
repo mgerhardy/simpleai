@@ -7,9 +7,9 @@ namespace example {
 // returns a random start position within the boundaries
 inline ai::Vector3f GameEntity::getStartPosition() const {
 	const int size = _map->getSize();
-	const int x = (rand() % (2 * size)) - size;
+	const int x = ai::random(-size, size);
 	const float y = 0.0f;
-	const int z = (rand() % (2 * size)) - size;
+	const int z = ai::random(-size, size);
 	return ai::Vector3f(static_cast<float>(x), y, static_cast<float>(z));
 }
 
@@ -22,7 +22,7 @@ GameEntity::GameEntity(const ai::CharacterId& id,
 	setOrientation(ai::randomf(M_2PI));
 	setAttribute(ai::attributes::NAME, "Example " + std::to_string(id));
 	setSpeed(50.0f + ai::randomf(10.0f));
-	_groupId = 1 + (rand() % 3);
+	_groupId = ai::random(1, 3);
 
 	setAttribute(ai::attributes::GROUP, std::to_string(_groupId));
 	setAttribute(ai::attributes::ID, std::to_string(getId()));
