@@ -19,6 +19,7 @@ GameEntity::GameEntity(const ai::CharacterId& id,
 		ai::ICharacter(id, root), _map(map), _hitpoints(100), _damage(5), _attackDelay(500) {
 	// pick some random start position
 	setPosition(getStartPosition());
+	setOrientation(ai::randomf(M_2PI));
 	setAttribute(ai::attributes::NAME, "Example " + std::to_string(id));
 	setSpeed(50.0f + ai::randomf(10.0f));
 	_groupId = 1 + (rand() % 3);
