@@ -16,7 +16,7 @@
 #endif
 
 namespace {
-std::atomic_int id(1);
+std::atomic_int id(0);
 std::atomic_bool autospawn(true);
 std::atomic_bool shutdownThreads(false);
 }
@@ -37,7 +37,7 @@ static ai::example::GameMap *createMap(int amount, ai::Server& server, const ai:
 	ai::example::GameMap* map = new ai::example::GameMap(600, name, server);
 
 	for (int i = 0; i < amount; ++i) {
-		ai::example::GameEntity* e = new ai::example::GameEntity(++id, map, root);
+		ai::example::GameEntity* e = new ai::example::GameEntity(id++, map, root);
 		map->addEntity(e);
 	}
 

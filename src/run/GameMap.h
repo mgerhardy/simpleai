@@ -58,7 +58,7 @@ public:
 			SCOPEDLOCK(_mutex);
 			_entities.insert(entity);
 		}
-		ai_assert(_zone.addAI(&entity->getAI()), "Could not add entity to zone");
+		ai_assert(_zone.addAI(&entity->getAI()), "Could not add entity to zone with id " + std::to_string(entity->getId()));
 		entity->onAdd();
 		return entity;
 	}
