@@ -58,7 +58,7 @@ public:
 			SCOPEDLOCK(_mutex);
 			_entities.insert(entity);
 		}
-		_zone.addAI(&entity->getAI());
+		ai_assert(_zone.addAI(&entity->getAI()), "Could not add entity to zone");
 		entity->onAdd();
 		return entity;
 	}
