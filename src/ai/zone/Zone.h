@@ -100,7 +100,7 @@ public:
 	template<typename Func>
 	void visit(Func& func) {
 		ScopedReadLock scopedLock(_lock);
-		for (auto i = _ais.begin(), end = _ais.end(); i != end; ++i) {
+		for (auto i = _ais.begin(); i != _ais.end(); ++i) {
 			AI *ai = i->second;
 			func(*ai);
 		}
