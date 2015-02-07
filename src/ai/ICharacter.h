@@ -40,7 +40,7 @@ const char* const ORIENTATION = "Orientation";
  * other entities that are not SimpleAI controlled and so on. You can use the provided
  * @c character_cast function in your @c TreeNode, @c IFilter or @¢ ICondition implementations.
  */
-class ICharacter {
+class ICharacter : public NonCopyable {
 protected:
 	CharacterId _id;
 	ATOMIC(Vector3f) _position;

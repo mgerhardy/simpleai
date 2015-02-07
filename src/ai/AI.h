@@ -8,6 +8,7 @@
 #include "group/GroupMgr.h"
 #include "common/Thread.h"
 #include "common/Types.h"
+#include "common/NonCopyable.h"
 
 namespace ai {
 
@@ -30,7 +31,7 @@ typedef std::vector<CharacterId> FilteredEntities;
  *
  * You can set single @c AI instances to no longer update their state by calling @c AI::setPause
  */
-class AI {
+class AI : public NonCopyable {
 	friend class TreeNode;
 	friend class IFilter;
 	friend class Filter;

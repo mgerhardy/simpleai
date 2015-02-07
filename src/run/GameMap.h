@@ -58,8 +58,7 @@ public:
 			SCOPEDLOCK(_mutex);
 			_entities.insert(entity);
 		}
-		ai::AI& ai = *entity;
-		_zone.addAI(&ai);
+		_zone.addAI(&entity->getAI());
 		entity->onAdd();
 		return entity;
 	}
