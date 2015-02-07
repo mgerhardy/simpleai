@@ -5,7 +5,11 @@
 #include <cassert>
 
 #ifndef ai_assert
-#define ai_assert(cond, msg) assert(cond)
+#define ai_assert(condition, msg) \
+	if ( !(condition) ) { \
+		std::cerr << msg << std::endl; \
+		assert(condition); \
+	}
 #endif
 
 #define AI_STRINGIFY_INTERNAL(x) #x
