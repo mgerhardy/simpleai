@@ -7,6 +7,7 @@
 #include "tree/loaders/ITreeLoader.h"
 #include "group/GroupMgr.h"
 #include "common/Thread.h"
+#include "common/Types.h"
 
 namespace ai {
 
@@ -200,6 +201,7 @@ inline void AI::setZone(Zone* zone) {
 }
 
 inline Zone& AI::getZone() const {
+	ai_assert(_zone != nullptr, "No zone set yet for the AI instance");
 	return *_zone;
 }
 
