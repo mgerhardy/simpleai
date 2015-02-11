@@ -27,6 +27,7 @@
 #include "filter/SelectGroupLeader.h"
 #include "filter/SelectGroupMembers.h"
 #include "movement/SelectionSeek.h"
+#include "movement/SelectionFlee.h"
 #include "movement/GroupFlee.h"
 #include "movement/GroupSeek.h"
 #include "movement/Steering.h"
@@ -83,6 +84,7 @@ AIRegistry::SteeringFactory::SteeringFactory() {
 	R_MOVE(TargetSeek);
 	R_MOVE(TargetFlee);
 	R_MOVE(SelectionSeek);
+	R_MOVE(SelectionFlee);
 }
 
 #undef R
