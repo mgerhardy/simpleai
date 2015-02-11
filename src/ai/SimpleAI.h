@@ -74,7 +74,7 @@
 
 #include "group/GroupMgr.h"
 
-#include "movement/FollowGroupLeader.h"
+#include "movement/SelectionSeek.h"
 #include "movement/GroupFlee.h"
 #include "movement/GroupSeek.h"
 #include "movement/Steering.h"

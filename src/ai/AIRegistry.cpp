@@ -24,8 +24,9 @@
 #include "filter/IFilter.h"
 #include "filter/SelectEmpty.h"
 #include "filter/SelectHighestAggro.h"
+#include "filter/SelectGroupLeader.h"
 #include "filter/SelectGroupMembers.h"
-#include "movement/FollowGroupLeader.h"
+#include "movement/SelectionSeek.h"
 #include "movement/GroupFlee.h"
 #include "movement/GroupSeek.h"
 #include "movement/Steering.h"
@@ -54,6 +55,7 @@ AIRegistry::ConditionFactory::ConditionFactory() {
 
 AIRegistry::FilterFactory::FilterFactory() {
 	R(SelectEmpty);
+	R(SelectGroupLeader);
 	R(SelectGroupMembers);
 	R(SelectHighestAggro);
 }
@@ -80,7 +82,7 @@ AIRegistry::SteeringFactory::SteeringFactory() {
 	R_MOVE(GroupFlee);
 	R_MOVE(TargetSeek);
 	R_MOVE(TargetFlee);
-	R_MOVE(FollowGroupLeader);
+	R_MOVE(SelectionSeek);
 }
 
 #undef R

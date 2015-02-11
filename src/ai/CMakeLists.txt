@@ -76,12 +76,13 @@ list(APPEND simpleai_HEADERS
 	conditions/True.h
 	filter/IFilter.h
 	filter/SelectEmpty.h
+	filter/SelectGroupLeader.h
 	filter/SelectGroupMembers.h
 	filter/SelectHighestAggro.h
 	IAIFactory.h
 	ICharacter.h
 	group/GroupMgr.h
-	movement/FollowGroupLeader.h
+	movement/SelectionSeek.h
 	movement/GroupFlee.h
 	movement/GroupSeek.h
 	movement/Steering.h

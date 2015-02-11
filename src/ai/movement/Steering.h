@@ -5,6 +5,7 @@
 #pragma once
 
 #include "AI.h"
+#include "zone/Zone.h"
 #include "IAIFactory.h"
 #include "common/Math.h"
 #include "common/MoveVector.h"
@@ -56,6 +57,31 @@ public:
 	virtual MoveVector execute (const ICharacter& character, float speed) const = 0;
 
 	virtual std::ostream& print(std::ostream& output, int level) const = 0;
+};
+
+/**
+ * @brief @c IFilter steering interface
+ */
+class SelectionSteering : public ISteering {
+protected:
+	Vector3f getSelectionTarget(const ICharacter& character, std::size_t index) const {
+		const FilteredEntities& selection = character.getAI().getFilteredEntities();
+		if (selection.empty() || selection.size() <= index)
+			return Vector3f::INFINITE;
+		const CharacterId characterId = selection[index];
+		Vector3f target = Vector3f::INFINITE;
+		const Zone& zone = character.getAI().getZone();
+		auto func = [&] (const AI& ai) {
+			target = ai.getCharacter().getPosition();
+		};
+		if (!zone.execute(characterId, func)) {
+			return Vector3f::INFINITE;
+		}
+		return target;
+	}
+
+public:
+	virtual ~SelectionSteering() {}
 };
 
 }

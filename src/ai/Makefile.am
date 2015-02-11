@@ -18,6 +18,7 @@ libsimpleai_la_SOURCES = \
 	conditions/Or.cpp \
 	conditions/True.cpp \
 	filter/SelectEmpty.cpp \
+	filter/SelectGroupLeader.cpp \
 	filter/SelectGroupMembers.cpp \
 	filter/SelectHighestAggro.cpp \
 	movement/Steering.cpp \
@@ -77,12 +78,13 @@ nobase_library_include_HEADERS = \
 	conditions/True.h \
 	filter/IFilter.h \
 	filter/SelectEmpty.h \
+	filter/SelectGroupLeader.h \
 	filter/SelectGroupMembers.h \
 	filter/SelectHighestAggro.h \
 	IAIFactory.h \
 	ICharacter.h \
 	group/GroupMgr.h \
-	movement/FollowGroupLeader.h \
+	movement/SelectionSeek.h \
 	movement/GroupFlee.h \
 	movement/GroupSeek.h \
 	movement/Steering.h \

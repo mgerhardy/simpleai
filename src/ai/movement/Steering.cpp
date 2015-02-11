@@ -1,5 +1,5 @@
 #include "Steering.h"
-#include "FollowGroupLeader.h"
+#include "SelectionSeek.h"
 #include "GroupFlee.h"
 #include "GroupSeek.h"
 #include "TargetFlee.h"
@@ -15,7 +15,7 @@ STEERING_FACTORY_IMPL(TargetFlee)
 STEERING_FACTORY_IMPL(GroupSeek)
 STEERING_FACTORY_IMPL(GroupFlee)
 STEERING_FACTORY_IMPL(Wander)
-STEERING_FACTORY_IMPL(FollowGroupLeader)
+STEERING_FACTORY_IMPL(SelectionSeek)
 
 }
 }

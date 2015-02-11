@@ -6,28 +6,20 @@ namespace ai {
 namespace movement {
 
 /**
- * @brief Flees from a particular group
+ * @brief Seeks the current @c IFilter selection from the given @c ICharacter
  */
-class FollowGroupLeader: public ISteering {
-protected:
-	GroupId _groupId;
+class SelectionSeek: public SelectionSteering {
 public:
 	STEERING_FACTORY
 
-	FollowGroupLeader(const std::string& parameters) :
-			ISteering() {
-		_groupId = ::atoi(parameters.c_str());
-	}
-
-	inline bool isValid () const {
-		return _groupId != -1;
+	SelectionSeek(const std::string&) :
+			SelectionSteering() {
 	}
 
 	virtual MoveVector execute (const ICharacter& character, float speed) const override {
-		const AI& ai = character.getAI();
-		const Vector3f& target = ai.getGroupLeaderPosition(_groupId);
-		if (target.isInfinite())
-			return MoveVector(target, 0.0f);
+		const Vector3f& target = getSelectionTarget(character, 0);
+		if (target == Vector3f::INFINITE)
+			const MoveVector d(target, 0.0);
 		Vector3f v = character.getPosition() - target;
 		double orientation = 0.0;
 		if (v.squareLength() > 0) {
@@ -43,7 +35,7 @@ public:
 		for (int i = 0; i < level; ++i) {
 			stream << '\t';
 		}
-		stream << "FollowGroupLeader(" << _groupId << ")";
+		stream << "SelectionSeek()";
 		return stream;
 	}
 };
