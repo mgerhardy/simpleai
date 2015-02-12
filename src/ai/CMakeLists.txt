@@ -1,3 +1,6 @@
+include(CheckFunctionExists)
+include(CheckLibraryExists)
+
 file(GLOB_RECURSE SRC *.cpp *.h)
 
 set(DEPS ${CMAKE_THREAD_LIBS_INIT} ${GOOGLE_PROFILER_LIB} ${GOOGLE_TCMALLOC_LIB})
@@ -45,7 +48,7 @@ elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
 	if (NOT HAVE___ATOMIC_FETCH_ADD_4)
 		check_library_exists(atomic __atomic_fetch_add_4 "" HAVE_LIBATOMIC)
 		if (HAVE_LIBATOMIC)
-			list(APPEND CMAKE_REQUIRED_LIBRARIES "atomic")
+			list(APPEND DEPS "-latomic")
 		endif()
 	endif()
 endif()
