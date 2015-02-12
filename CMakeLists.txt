@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 project(SIMPLEAI C CXX)
+include(CheckFunctionExists)
 
 set(SIMPLEAI_VERSION "0.1")
 
