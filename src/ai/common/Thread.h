@@ -25,6 +25,8 @@
 
 #endif
 
+namespace ai {
+
 class ReadWriteLock {
 private:
 	mutable ATOMICINT _readers;
@@ -74,3 +76,5 @@ public:
 		_lock.unlockWrite();
 	}
 };
+
+}
