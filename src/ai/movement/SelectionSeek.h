@@ -20,7 +20,7 @@ public:
 		const Vector3f& target = getSelectionTarget(character, 0);
 		if (target == Vector3f::INFINITE)
 			const MoveVector d(target, 0.0);
-		Vector3f v = character.getPosition() - target;
+		Vector3f v = target - character.getPosition();
 		double orientation = 0.0;
 		if (v.squareLength() > 0) {
 			v.normalize();
