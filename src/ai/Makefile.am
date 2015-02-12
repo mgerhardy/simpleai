@@ -21,6 +21,7 @@ libsimpleai_la_SOURCES = \
 	filter/SelectGroupLeader.cpp \
 	filter/SelectGroupMembers.cpp \
 	filter/SelectHighestAggro.cpp \
+	filter/SelectZone.cpp \
 	movement/Steering.cpp \
 	group/GroupMgr.cpp \
 	server/ChangeHandler.cpp \
@@ -81,6 +82,7 @@ nobase_library_include_HEADERS = \
 	filter/SelectGroupLeader.h \
 	filter/SelectGroupMembers.h \
 	filter/SelectHighestAggro.h \
+	filter/SelectZone.h \
 	IAIFactory.h \
 	ICharacter.h \
 	group/GroupMgr.h \

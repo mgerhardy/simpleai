@@ -5,7 +5,7 @@
 namespace ai {
 
 /**
- * @brief This filter will pick the entities from the groups the given @c AI instance is in
+ * @brief This filter will pick the group leader of the specified group
  */
 class SelectGroupLeader: public IFilter {
 protected:

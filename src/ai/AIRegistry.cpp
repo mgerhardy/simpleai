@@ -26,6 +26,7 @@
 #include "filter/SelectHighestAggro.h"
 #include "filter/SelectGroupLeader.h"
 #include "filter/SelectGroupMembers.h"
+#include "filter/SelectZone.h"
 #include "movement/SelectionSeek.h"
 #include "movement/SelectionFlee.h"
 #include "movement/GroupFlee.h"
@@ -59,6 +60,7 @@ AIRegistry::FilterFactory::FilterFactory() {
 	R(SelectGroupLeader);
 	R(SelectGroupMembers);
 	R(SelectHighestAggro);
+	R(SelectZone);
 }
 
 AIRegistry::TreeNodeFactory::TreeNodeFactory() {
