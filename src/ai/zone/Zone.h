@@ -119,6 +119,11 @@ public:
 			func(*ai);
 		}
 	}
+
+	inline std::size_t size() const {
+		ScopedReadLock scopedLock(_lock);
+		return _ais.size();
+	}
 };
 
 inline void Zone::setDebug (bool debug) {
