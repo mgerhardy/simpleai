@@ -1,2 +1,7 @@
 file(GLOB_RECURSE SRC *.c *.h)
 add_library(lua ${SRC})
+if (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
+elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Darwin")
+elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
+	add_definitions("-DLUA_USE_LINUX")
+endif()
