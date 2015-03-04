@@ -1,6 +1,6 @@
 file(GLOB_RECURSE SRC *.c *.h)
-target_link_libraries(lua ${CMAKE_DL_LIBS})
 add_library(lua ${SRC})
+target_link_libraries(lua ${CMAKE_DL_LIBS})
 if (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
 elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Darwin")
 elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
