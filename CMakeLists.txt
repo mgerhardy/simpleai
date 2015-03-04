@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.6)
 project(SIMPLEAI C CXX)
 include(CheckFunctionExists)
 
+SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+
 set(SIMPLEAI_VERSION "0.1")
 
 option(SIMPLEAI_RUN "Compile run program" ON)
