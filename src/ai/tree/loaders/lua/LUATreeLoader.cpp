@@ -11,8 +11,9 @@ LUATreeLoader::LUATreeLoader(const IAIFactory& aiFactory) :
 bool LUATreeLoader::init(const std::string& luaString) {
 	LUA lua;
 	luaL_Reg createTree = { "createTree", luaMain_CreateTree };
+	luaL_Reg createSubTree = { "createSubTree", luaMain_CreateSubTree };
 	luaL_Reg eof = { nullptr, nullptr };
-	luaL_Reg funcs[] = { createTree, eof };
+	luaL_Reg funcs[] = { createTree, createSubTree, eof };
 
 	LUAType tree = lua.registerType("Tree");
 	tree.addFunction("createRoot", luaTree_CreateRoot);

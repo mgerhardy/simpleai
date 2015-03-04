@@ -5,7 +5,7 @@
 
 namespace ai {
 
-class IAIFactory;
+class ITreeLoader;
 
 /**
  * @brief Transforms the string representation of a @c TreeNode with all its
@@ -17,13 +17,13 @@ class IAIFactory;
  */
 class TreeNodeParser: public IParser {
 private:
-	const IAIFactory& _aiFactory;
+	ITreeLoader& _treeLoader;
 	std::string _taskString;
 
 	void splitTasks(const std::string& string, std::vector<std::string>& tokens) const;
 	SteeringPtr getSteering(const std::string& nodeName);
 public:
-	TreeNodeParser(const IAIFactory& aiFactory, const std::string& taskString);
+	TreeNodeParser(ITreeLoader& treeLoader, const std::string& taskString);
 	virtual ~TreeNodeParser();
 
 	TreeNodePtr getTreeNode(const std::string& name = "");

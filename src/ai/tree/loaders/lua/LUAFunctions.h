@@ -32,7 +32,15 @@ static int luaMain_CreateTree(lua_State * l) {
 	LUATreeLoader *ctx = luaGetContext(l);
 	const std::string name = luaL_checkstring(l, 1);
 	LUATree** udata = LUA::newUserdata<LUATree>(l, "Tree");
-	*udata = new LUATree(name, ctx);
+	*udata = new LUATree(name, ctx, false);
+	return 1;
+}
+
+static int luaMain_CreateSubTree(lua_State * l) {
+	LUATreeLoader *ctx = luaGetContext(l);
+	const std::string name = luaL_checkstring(l, 1);
+	LUATree** udata = LUA::newUserdata<LUATree>(l, "Tree");
+	*udata = new LUATree(name, ctx, true);
 	return 1;
 }
 
@@ -67,7 +75,7 @@ static int luaTree_CreateRoot(lua_State * l) {
 	const std::string id = luaL_checkstring(l, 2);
 	const std::string name = luaL_checkstring(l, 3);
 
-	TreeNodeParser parser(ctx->getAIFactory(), id);
+	TreeNodeParser parser(ctx->getTreeLoader(), id);
 	const TreeNodePtr& node = parser.getTreeNode(name);
 	if (!node) {
 		LUA::returnError(l, "Could not create a node for " + id);

@@ -4,19 +4,27 @@
 
 namespace {
 const char *TREE = "<?xml version=\"1.0\" standalone=\"no\" ?>"
-	"<behaviours>"
-		"<behaviour name=\"example1\">"
+	"<trees>"
+		"<tree name=\"example1\">"
 			"<node type=\"PrioritySelector\" name=\"root\">"
 				"<node type=\"Idle{3000}\" name=\"idle\" condition=\"HasEnemies{3}\" />"
 			"</node>"
-		"</behaviour>"
-		"<behaviour name=\"example2\">"
+		"</tree>"
+		"<tree name=\"example2\">"
 			"<node type=\"PrioritySelector\" name=\"root\">"
 				"<node type=\"Idle{3000}\" name=\"idle\" />"
 				"<node type=\"Wander\" name=\"wander\" />"
 			"</node>"
-		"</behaviour>"
-	"</behaviours>";
+		"</tree>"
+		"<subtree name=\"subexample1\">"
+			"<node type=\"PrioritySelector\" name=\"root\">"
+				"<node type=\"Idle{$1}\" name=\"idle\" condition=\"HasEnemies{$2}\" />"
+			"</node>"
+		"</subtree>"
+		"<tree name=\"subexample\">"
+			"<node type=\"Slot{3000,3}(subexample1)\" name=\"slotsubexample1\" />"
+		"</tree>"
+	"</trees>";
 }
 
 class XMLTreeLoaderTest: public TestSuite {
@@ -26,8 +34,9 @@ TEST_F(XMLTreeLoaderTest, testLoad) {
 	ai::AIRegistry registry;
 	ai::XMLTreeLoader loader(registry);
 	ASSERT_TRUE(loader.init(TREE)) << loader.getError();
+
 	const ai::TreeNodePtr& tree = loader.load("example1");
-	ASSERT_NE(nullptr, tree.get()) << "Could not find the espected behaviour";
+	ASSERT_NE(nullptr, tree.get()) << "Could not find the expected behaviour";
 	ASSERT_EQ("root", tree->getName()) << "unexpected root node name";
 	const ai::TreeNodes& children = tree->getChildren();
 	const int childrenAmount = children.size();
@@ -35,10 +44,15 @@ TEST_F(XMLTreeLoaderTest, testLoad) {
 	ASSERT_EQ("idle", children[0]->getName()) << "unexpected child node name";
 	ASSERT_NE(nullptr, children[0]->getCondition()) << "condition not parsed";
 	ASSERT_EQ("HasEnemies", children[0]->getCondition()->getName()) << "unexpected condition name";
+
 	const ai::TreeNodePtr& example2 = loader.load("example2");
-	ASSERT_NE(nullptr, example2.get()) << "Could not find the espected behaviour";
+	ASSERT_NE(nullptr, example2.get()) << "Could not find the expected behaviour";
 	ASSERT_EQ("root", example2->getName()) << "unexpected root node name";
 	const ai::TreeNodes& children2 = example2->getChildren();
 	const int childrenAmount2 = children2.size();
-	ASSERT_EQ(2, childrenAmount2) << "expected amount of children";
+	ASSERT_EQ(2, childrenAmount2) << "unexpected amount of children";
+
+	const ai::TreeNodePtr& subexample = loader.load("subexample");
+	ASSERT_NE(nullptr, subexample.get()) << "Could not find the expected behaviour";
+	ASSERT_EQ("slotsubexample1", subexample->getName()) << "unexpected root node name";
 }
