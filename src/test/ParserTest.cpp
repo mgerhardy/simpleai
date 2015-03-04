@@ -127,7 +127,7 @@ TEST_F(ParserTest, testSteer) {
 
 TEST_F(ParserTest, testSteerGroupLeader) {
 	TestLoader loader(_registry);
-	ai::TreeNodeParser parser(loader, "Steer{0.6,0.4}(GroupFlee{2},FollowGroupLeader{1})");
+	ai::TreeNodeParser parser(loader, "Steer{0.6,0.4}(GroupFlee{2},SelectionSeek)");
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
