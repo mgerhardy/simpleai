@@ -5,7 +5,7 @@
 namespace ai {
 
 LUANode* LUANode::addChild(const std::string& nodeType, const TreeNodeFactoryContext& ctx) {
-	TreeNodeParser parser(_tree->getTreeLoader(), nodeType);
+	TreeNodeParser parser(_tree->getAIFactory(), nodeType);
 	const TreeNodePtr& child = parser.getTreeNode(ctx.name);
 	if (!child) {
 		return nullptr;

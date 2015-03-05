@@ -3,8 +3,8 @@
 
 namespace ai {
 
-TreeNodeParser::TreeNodeParser(ITreeLoader& treeLoader, const std::string& taskString) :
-		IParser(), _treeLoader(treeLoader) {
+TreeNodeParser::TreeNodeParser(const IAIFactory& aiFactory, const std::string& taskString) :
+		IParser(), _aiFactory(aiFactory) {
 	_taskString = ai::Str::eraseAllSpaces(taskString);
 }
 
@@ -49,7 +49,7 @@ SteeringPtr TreeNodeParser::getSteering (const std::string& nodeName) {
 		steerType = nodeName;
 	}
 
-	return _treeLoader.getAIFactory().createSteering(steerType, parameters);
+	return _aiFactory.createSteering(steerType, parameters);
 }
 
 TreeNodePtr TreeNodeParser::getTreeNode(const std::string& name) {
@@ -67,27 +67,22 @@ TreeNodePtr TreeNodeParser::getTreeNode(const std::string& name) {
 	}
 	const std::string& subTrees = getBetween(_taskString, "(", ")");
 	if (!subTrees.empty()) {
-		if (nodeType == "Steer") {
-			std::vector<std::string> tokens;
-			splitTasks(subTrees, tokens);
-			movement::Steerings steerings;
-			for (const std::string& nodeName : tokens) {
-				const SteeringPtr& steering = getSteering(nodeName);
-				if (!steering)
-					return TreeNodePtr();
-				steerings.push_back(steering);
-			}
-			const SteerNodeFactoryContext steerFactoryCtx(name.empty() ? nodeType : name, parameters, True::get(), steerings);
-			return _treeLoader.getAIFactory().createSteerNode(nodeType, steerFactoryCtx);
-		} else if (nodeType == "Slot") {
-			// TODO: copy the subtree and replace the parameters with $1, $2, ... $x with the given parameters
-			return _treeLoader.load(subTrees);
-		} else {
+		if (nodeType != "Steer")
 			return TreeNodePtr();
+		std::vector<std::string> tokens;
+		splitTasks(subTrees, tokens);
+		movement::Steerings steerings;
+		for (const std::string& nodeName : tokens) {
+			const SteeringPtr& steering = getSteering(nodeName);
+			if (!steering)
+				return TreeNodePtr();
+			steerings.push_back(steering);
 		}
+		const SteerNodeFactoryContext steerFactoryCtx(name.empty() ? nodeType : name, parameters, True::get(), steerings);
+		return _aiFactory.createSteerNode(nodeType, steerFactoryCtx);
 	}
 
 	const TreeNodeFactoryContext factoryCtx(name.empty() ? nodeType : name, parameters, True::get());
-	return _treeLoader.getAIFactory().createNode(nodeType, factoryCtx);
+	return _aiFactory.createNode(nodeType, factoryCtx);
 }
 }

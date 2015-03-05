@@ -3,13 +3,6 @@
 class ParserTest: public TestSuite {
 };
 
-class TestLoader : public ai::ITreeLoader {
-public:
-	TestLoader(ai::AIRegistry& registry) :
-		ai::ITreeLoader(registry) {
-	}
-};
-
 TEST_F(ParserTest, testParseConditionSimple) {
 	ai::ConditionParser parser(_registry, "HasEnemies");
 	const ai::ConditionPtr& c = parser.getCondition();
@@ -65,36 +58,31 @@ TEST_F(ParserTest, testParseConditionNodeMultipleParamsAsChild) {
 }
 
 TEST_F(ParserTest, testParseTreeNode) {
-	TestLoader loader(_registry);
-	ai::TreeNodeParser parser(loader, "Invert{1}");
+	ai::TreeNodeParser parser(_registry, "Invert{1}");
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
 
 TEST_F(ParserTest, testParseTreeNodeMultipleParams) {
-	TestLoader loader(_registry);
-	ai::TreeNodeParser parser(loader, "Invert{1,1000}");
+	ai::TreeNodeParser parser(_registry, "Invert{1,1000}");
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
 
 TEST_F(ParserTest, testParseIdleNode) {
-	TestLoader loader(_registry);
-	ai::TreeNodeParser parser(loader, "Idle{1000}");
+	ai::TreeNodeParser parser(_registry, "Idle{1000}");
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
 
 TEST_F(ParserTest, testParseIdleNodeNoParam) {
-	TestLoader loader(_registry);
-	ai::TreeNodeParser parser(loader, "Idle");
+	ai::TreeNodeParser parser(_registry, "Idle");
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
 
 TEST_F(ParserTest, testParseUnknown) {
-	TestLoader loader(_registry);
-	ai::TreeNodeParser parser(loader, "Unknown");
+	ai::TreeNodeParser parser(_registry, "Unknown");
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_EQ(nullptr, c.get()) << parser.getError();
 }
@@ -119,29 +107,25 @@ TEST_F(ParserTest, testMultipleFilter) {
 }
 
 TEST_F(ParserTest, testSteer) {
-	TestLoader loader(_registry);
-	ai::TreeNodeParser parser(loader, "Steer{0.6,0.4}(GroupFlee{2},Wander{1})");
+	ai::TreeNodeParser parser(_registry, "Steer{0.6,0.4}(GroupFlee{2},Wander{1})");
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
 
 TEST_F(ParserTest, testSteerGroupLeader) {
-	TestLoader loader(_registry);
-	ai::TreeNodeParser parser(loader, "Steer{0.6,0.4}(GroupFlee{2},SelectionSeek)");
+	ai::TreeNodeParser parser(_registry, "Steer{0.6,0.4}(GroupFlee{2},SelectionSeek)");
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
 
 TEST_F(ParserTest, testSteerWithoutParam) {
-	TestLoader loader(_registry);
-	ai::TreeNodeParser parser(loader, "Steer(GroupFlee{2})");
+	ai::TreeNodeParser parser(_registry, "Steer(GroupFlee{2})");
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
 
 TEST_F(ParserTest, testSteerWanderWithoutAnyParam) {
-	TestLoader loader(_registry);
-	ai::TreeNodeParser parser(loader, "Steer(Wander)");
+	ai::TreeNodeParser parser(_registry, "Steer(Wander)");
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
