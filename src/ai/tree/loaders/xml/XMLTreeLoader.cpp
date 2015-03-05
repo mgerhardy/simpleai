@@ -66,7 +66,7 @@ XMLTreeLoader::XMLTreeLoader(const IAIFactory& aiFactory) :
 bool XMLTreeLoader::init(const std::string& xmlData) {
 	tinyxml2::XMLDocument doc(false);
 	const int status = doc.Parse(xmlData.c_str());
-	tinyxml2::XMLElement* rootNode = doc.FirstChildElement("behaviours");
+	tinyxml2::XMLElement* rootNode = doc.FirstChildElement("trees");
 	if (rootNode == nullptr)
 		return false;
 	for (tinyxml2::XMLNode* node = rootNode->FirstChild(); node; node = node->NextSibling()) {
@@ -80,13 +80,13 @@ bool XMLTreeLoader::init(const std::string& xmlData) {
 			continue;
 		}
 		const std::string treeNodeName(e->Name());
-		if ("behaviour" != treeNodeName) {
-			_error = "unexpected node name - expected 'behaviour' - got " + treeNodeName;
+		if ("tree" != treeNodeName) {
+			_error = "unexpected node name - expected 'tree' - got " + treeNodeName;
 			continue;
 		}
 		const char *name = e->Attribute("name");
 		if (name == nullptr) {
-			_error = "node 'behaviour' does not have a 'name' attribute";
+			_error = "node 'tree' does not have a 'name' attribute";
 			continue;
 		}
 		tinyxml2::XMLNode* rootXMLNode = e->FirstChild();

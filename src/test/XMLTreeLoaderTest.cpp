@@ -4,19 +4,19 @@
 
 namespace {
 const char *TREE = "<?xml version=\"1.0\" standalone=\"no\" ?>"
-	"<behaviours>"
-		"<behaviour name=\"example1\">"
+	"<trees>"
+		"<tree name=\"example1\">"
 			"<node type=\"PrioritySelector\" name=\"root\">"
 				"<node type=\"Idle{3000}\" name=\"idle\" condition=\"HasEnemies{3}\" />"
 			"</node>"
-		"</behaviour>"
-		"<behaviour name=\"example2\">"
+		"</tree>"
+		"<tree name=\"example2\">"
 			"<node type=\"PrioritySelector\" name=\"root\">"
 				"<node type=\"Idle{3000}\" name=\"idle\" />"
 				"<node type=\"Wander\" name=\"wander\" />"
 			"</node>"
-		"</behaviour>"
-	"</behaviours>";
+		"</tree>"
+	"</trees>";
 }
 
 class XMLTreeLoaderTest: public TestSuite {
