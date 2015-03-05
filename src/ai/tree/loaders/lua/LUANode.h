@@ -29,6 +29,10 @@ public:
 		return _node;
 	}
 
+	inline const TreeNodePtr& getTreeNode() const {
+		return _node;
+	}
+
 	inline void setCondition(LUACondition *condition) {
 		_condition = condition;
 		_node->setCondition(condition->getCondition());

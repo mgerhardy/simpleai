@@ -48,6 +48,12 @@ static int luaTree_ToString(lua_State * l) {
 	return 1;
 }
 
+static int luaTree_GetName(lua_State * l) {
+	const LUATree *tree = luaGetTreeContext(l, 1);
+	lua_pushstring(l, tree->getName().c_str());
+	return 1;
+}
+
 static int luaNode_GC(lua_State * l) {
 	LUANode *node = luaGetNodeContext(l, 1);
 	delete node;
@@ -59,6 +65,12 @@ static int luaNode_ToString(lua_State * l) {
 	const LUACondition* condition = node->getCondition();
 	lua_pushfstring(l, "node: %d children [condition: %s]", (int)node->getChildren().size(),
 			condition ? condition->getCondition()->getName().c_str() : "no condition");
+	return 1;
+}
+
+static int luaNode_GetName(lua_State * l) {
+	const LUANode *node = luaGetNodeContext(l, 1);
+	lua_pushstring(l, node->getTreeNode()->getName().c_str());
 	return 1;
 }
 

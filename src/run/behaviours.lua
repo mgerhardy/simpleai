@@ -1,5 +1,9 @@
+function subtreeExample (tree)
+	tree:createRoot("Steer(Wander)", tree:getName())
+end
+
 function init ()
-	AI.createTree("wander"):createRoot("Steer(Wander)", "wander")
+	subtreeExample(AI.createTree("wander"))
 
 	local example = AI.createTree("example")
 	local rootNodeExample = example:createRoot("PrioritySelector", "root")

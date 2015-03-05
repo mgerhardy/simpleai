@@ -16,11 +16,13 @@ bool LUATreeLoader::init(const std::string& luaString) {
 
 	LUAType tree = lua.registerType("Tree");
 	tree.addFunction("createRoot", luaTree_CreateRoot);
+	tree.addFunction("getName", luaTree_GetName);
 	tree.addFunction("__gc", luaTree_GC);
 	tree.addFunction("__tostring", luaTree_ToString);
 
 	LUAType node = lua.registerType("Node");
 	node.addFunction("addNode", luaNode_AddNode);
+	node.addFunction("getName", luaNode_GetName);
 	node.addFunction("setCondition", luaNode_SetCondition);
 	node.addFunction("__gc", luaNode_GC);
 	node.addFunction("__tostring", luaNode_ToString);
