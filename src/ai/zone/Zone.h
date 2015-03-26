@@ -68,6 +68,7 @@ public:
 	 * none of the managed entities is broadcasted.
 	 */
 	void setDebug(bool debug);
+	bool isDebug () const;
 
 	GroupMgr& getGroupMgr();
 
@@ -128,6 +129,10 @@ public:
 
 inline void Zone::setDebug (bool debug) {
 	_debug = debug;
+}
+
+inline bool Zone::isDebug () const {
+	return _debug;
 }
 
 inline const std::string& Zone::getName() const {
