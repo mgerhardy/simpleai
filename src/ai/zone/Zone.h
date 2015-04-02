@@ -5,6 +5,7 @@
 #include "common/Thread.h"
 #include "common/Types.h"
 #include <unordered_map>
+#include <list>
 
 namespace ai {
 
@@ -20,14 +21,19 @@ namespace ai {
 class Zone {
 public:
 	typedef std::unordered_map<CharacterId, AI*> AIMap;
+	typedef std::list<AI*> AIScheduleList;
+	typedef std::list<const AI*> AIScheduleConstList;
 	typedef AIMap::const_iterator AIMapConstIter;
 	typedef AIMap::iterator AIMapIter;
 
 protected:
 	const std::string _name;
 	AIMap _ais;
+	AIScheduleList _scheduledAdd;
+	AIScheduleConstList _scheduledRemove;
 	bool _debug;
 	ReadWriteLock _lock;
+	ReadWriteLock _scheduleLock;
 	ai::GroupMgr _groupManager;
 
 public:
@@ -55,6 +61,22 @@ public:
 	 * @note This locks the zone for writing
 	 */
 	bool removeAI(const AI* ai);
+
+	/**
+	 * @brief If you need to add new @code AI entities to a zone from within the @code AI tick (e.g. spawning via behaviour
+	 * tree) - then you need to schedule the spawn. Otherwise you will end up in a deadlock
+	 *
+	 * @note This does not lock the zone for writing but a dedicated schedule lock
+	 */
+	bool scheduleAdd(AI* ai);
+
+	/**
+	 * @brief If you need to remove @code AI entities from a zone from within the @code AI tick (e.g. despawning via behaviour
+	 * tree) - then you need to schedule the despawn. Otherwise you will end up in a deadlock
+	 *
+	 * @note This does not lock the zone for writing but a dedicated schedule lock
+	 */
+	bool scheduleRemove(const AI* ai);
 
 	/**
 	 * @brief Every zone has its own name that identifies it
