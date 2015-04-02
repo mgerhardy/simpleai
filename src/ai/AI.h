@@ -48,6 +48,11 @@ protected:
 	typedef std::unordered_map<int, long> LastExecMap;
 	LastExecMap _lastExecMillis;
 
+	/**
+	 * @note The filtered entities are kept even over several ticks. The caller should decide
+	 * whether he still needs an old/previous filtered selection
+	 * @sa @code IFilter
+	 */
 	mutable FilteredEntities _filteredEntities;
 
 	/**

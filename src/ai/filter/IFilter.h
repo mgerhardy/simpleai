@@ -68,6 +68,12 @@ protected:
 	const std::string _name;
 	const std::string _parameters;
 
+	/**
+	 * @note The filtered entities are kept even over several ticks. The caller should decide
+	 * whether he still needs an old/previous filtered selection
+	 *
+	 * @see @code SelectEmpty to do the clear from within the behaviour tree
+	 */
 	inline FilteredEntities& getFilteredEntities(const AI& ai) {
 		return ai._filteredEntities;
 	}
