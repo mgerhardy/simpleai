@@ -129,3 +129,5 @@ TEST_F(ParserTest, testSteerWanderWithoutAnyParam) {
 	const ai::TreeNodePtr& c = parser.getTreeNode();
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
+
+//And(Filter(SelectFooWithParam{param}),AnotherConditionWithParam{1})
