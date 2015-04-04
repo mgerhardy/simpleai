@@ -72,6 +72,7 @@ bool ConditionParser::fillInnerConditions(ConditionFactoryContext& ctx, const st
 			ctx.filters.push_back(c);
 		} else {
 			ConditionFactoryContext ctxInner(parameters);
+			ctxInner.filter = name == FILTER_NAME;
 			n = conditionStr.find("(");
 			if (n != std::string::npos) {
 				const std::size_t r = conditionStr.rfind(")");
