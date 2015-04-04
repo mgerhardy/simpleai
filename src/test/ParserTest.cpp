@@ -130,4 +130,8 @@ TEST_F(ParserTest, testSteerWanderWithoutAnyParam) {
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
 
-//And(Filter(SelectFooWithParam{param}),AnotherConditionWithParam{1})
+TEST_F(ParserTest, testFilterInAnd) {
+	ai::ConditionParser parser(_registry, "And(Filter(SelectEmpty,SelectHighestAggro),True)");
+	const ai::ConditionPtr& c = parser.getCondition();
+	ASSERT_NE(nullptr, c.get()) << parser.getError();
+}
