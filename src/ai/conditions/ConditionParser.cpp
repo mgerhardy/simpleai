@@ -14,20 +14,20 @@ ConditionParser::~ConditionParser() {
 }
 
 void ConditionParser::splitConditions(const std::string& string, std::vector<std::string>& tokens) const {
-	bool inParameter = false;
-	bool inChildren = false;
+	int inParameter = 0;
+	int inChildren = 0;
 	std::string token;
 	for (std::string::const_iterator i = string.begin(); i != string.end(); ++i) {
 		if (*i == '{')
-			inParameter = true;
+			++inParameter;
 		else if (*i == '}')
-			inParameter = false;
+			--inParameter;
 		else if (*i == '(')
-			inChildren = true;
+			++inChildren;
 		else if (*i == ')')
-			inChildren = false;
+			--inChildren;
 
-		if (!inParameter && !inChildren) {
+		if (inParameter == 0 && inChildren == 0) {
 			if (*i == ',') {
 				tokens.push_back(token);
 				token.clear();
