@@ -8,6 +8,10 @@
 namespace ai {
 namespace Str {
 
+inline bool startsWith(const std::string& string, const std::string& token) {
+	return !string.compare(0, token.size(), token);
+}
+
 inline float strToFloat(const std::string& str) {
 	return static_cast<float>(::atof(str.c_str()));
 }
