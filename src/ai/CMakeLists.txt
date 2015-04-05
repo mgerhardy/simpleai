@@ -1,7 +1,59 @@
 include(CheckFunctionExists)
 include(CheckLibraryExists)
 
-file(GLOB_RECURSE SRC *.cpp *.h)
+list(APPEND SRC
+	group/GroupMgr.cpp
+	AI.cpp
+	server/ResetHandler.cpp
+	server/StepHandler.cpp
+	server/SelectHandler.cpp
+	server/ProtocolMessageFactory.cpp
+	server/Server.cpp
+	server/PauseHandler.cpp
+	server/Network.cpp
+	server/ChangeHandler.cpp
+	filter/SelectZone.cpp
+	filter/SelectHighestAggro.cpp
+	filter/SelectEmpty.cpp
+	filter/SelectGroupMembers.cpp
+	filter/SelectGroupLeader.cpp
+	tree/Sequence.cpp
+	tree/Invert.cpp
+	tree/Succeed.cpp
+	tree/TreeNode.cpp
+	tree/Parallel.cpp
+	tree/loaders/lua/LUANode.cpp
+	tree/loaders/lua/LUA.cpp
+	tree/loaders/lua/LUATreeLoader.cpp
+	tree/loaders/lua/LUATree.cpp
+	tree/loaders/xml/XMLTreeLoader.cpp
+	tree/TreeNodeParser.cpp
+	tree/Print.cpp
+	tree/Steer.cpp
+	tree/Idle.cpp
+	tree/RandomSelector.cpp
+	tree/PrioritySelector.cpp
+	tree/ITask.cpp
+	tree/ProbabilitySelector.cpp
+	tree/ITimedNode.cpp
+	conditions/And.cpp
+	conditions/ConditionParser.cpp
+	conditions/Not.cpp
+	conditions/Or.cpp
+	conditions/True.cpp
+	conditions/IsInGroup.cpp
+	conditions/HasEnemies.cpp
+	conditions/IsCloseToGroup.cpp
+	conditions/IsGroupLeader.cpp
+	conditions/ICondition.cpp
+	conditions/Filter.cpp
+	conditions/False.cpp
+	common/Vector3f.cpp
+	AIRegistry.cpp
+	zone/Zone.cpp
+	movement/Steering.cpp
+	aggro/AggroMgr.cpp
+)
 
 set(DEPS ${CMAKE_THREAD_LIBS_INIT} ${GOOGLE_PROFILER_LIB} ${GOOGLE_TCMALLOC_LIB})
 
@@ -42,7 +94,7 @@ endif()
 find_package(Threads)
 
 include_directories(.)
-add_library(simpleai ${SRC})
+add_library(simpleai ${SRC} ${simpleai_HEADER_DIRS})
 if (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
 elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Darwin")
 elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")

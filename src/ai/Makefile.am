@@ -38,6 +38,7 @@ libsimpleai_la_SOURCES = \
 	tree/ITask.cpp \
 	tree/ITimedNode.cpp \
 	tree/Parallel.cpp \
+	tree/Print.cpp \
 	tree/PrioritySelector.cpp \
 	tree/ProbabilitySelector.cpp \
 	tree/RandomSelector.cpp \
