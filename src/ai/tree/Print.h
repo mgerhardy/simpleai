@@ -30,7 +30,7 @@ private:
 	void lastnode(AI& entity) const;
 	void attributes(AI& entity) const;
 
-	void handleCommand(AI& entity);
+	TreeNodeStatus handleCommand(AI& entity) const;
 
 public:
 	TASK_CLASS(Print)

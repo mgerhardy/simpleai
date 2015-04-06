@@ -23,7 +23,7 @@ void Print::attributes(AI& entity) const {
 	}
 }
 
-void Print::handleCommand(AI& entity) {
+TreeNodeStatus Print::handleCommand(AI& entity) const {
 	if (_parameters == "::tree") {
 		tree(entity);
 	} else if (_parameters == "::lastcondition") {
@@ -34,13 +34,14 @@ void Print::handleCommand(AI& entity) {
 		attributes(entity);
 	} else {
 		std::cout << "Unknown command: " << _parameters << std::endl;
+		return FAILED;
 	}
+	return FINISHED;
 }
 
 TreeNodeStatus Print::doAction(AI& entity, long /*deltaMillis*/) {
 	if (ai::Str::startsWith(_parameters, "::")) {
-		handleCommand(entity);
-		return FINISHED;
+		return handleCommand(entity);
 	}
 	std::cout << _parameters << std::endl;
 	return FINISHED;
