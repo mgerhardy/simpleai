@@ -18,14 +18,17 @@ namespace ai {
  *     Will print the state of the last condition
  *   - ::lastnode
  *     Will print the state of the last node
+ *   - ::attributes
+ *     Will print the entity attributes
  *
  * Every other parameter will just be directly forwarded to be printed.
  */
 class Print: public ITask {
 private:
-	void tree(AI& entity);
-	void lastcondition(AI& entity);
-	void lastnode(AI& entity);
+	void tree(AI& entity) const;
+	void lastcondition(AI& entity) const;
+	void lastnode(AI& entity) const;
+	void attributes(AI& entity) const;
 
 	void handleCommand(AI& entity);
 
