@@ -3,27 +3,27 @@
 
 namespace ai {
 
-void Print::tree(AI& entity) const {
+void Print::tree(const AI& entity) const {
 	const TreeNodePtr behaviour = entity.getBehaviour();
 	std::cout << behaviour.get() << std::endl;
 }
 
-void Print::lastcondition(AI& /*entity*/) const {
+void Print::lastcondition(const AI& /*entity*/) const {
 	// TODO:
 }
 
-void Print::lastnode(AI& /*entity*/) const {
+void Print::lastnode(const AI& /*entity*/) const {
 	// TODO:
 }
 
-void Print::attributes(AI& entity) const {
+void Print::attributes(const AI& entity) const {
 	const CharacterAttributes& attribs = entity.getCharacter().getAttributes();
 	for (auto i = attribs.begin(); i != attribs.end(); ++i) {
 		std::cout << i->first << ": " << i->second << std::endl;
 	}
 }
 
-TreeNodeStatus Print::handleCommand(AI& entity) const {
+TreeNodeStatus Print::handleCommand(const AI& entity) const {
 	if (_parameters == "::tree") {
 		tree(entity);
 	} else if (_parameters == "::lastcondition") {

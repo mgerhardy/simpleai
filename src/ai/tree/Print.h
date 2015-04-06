@@ -25,12 +25,12 @@ namespace ai {
  */
 class Print: public ITask {
 private:
-	void tree(AI& entity) const;
-	void lastcondition(AI& entity) const;
-	void lastnode(AI& entity) const;
-	void attributes(AI& entity) const;
+	void tree(const AI& entity) const;
+	void lastcondition(const AI& entity) const;
+	void lastnode(const AI& entity) const;
+	void attributes(const AI& entity) const;
 
-	TreeNodeStatus handleCommand(AI& entity) const;
+	TreeNodeStatus handleCommand(const AI& entity) const;
 
 public:
 	TASK_CLASS(Print)
