@@ -14,10 +14,6 @@ namespace ai {
  * Available parameters:
  *   - ::tree
  *     Will print the current behaviour tree of the entity
- *   - ::lastcondition
- *     Will print the state of the last condition
- *   - ::lastnode
- *     Will print the state of the last node
  *   - ::attributes
  *     Will print the entity attributes
  *
@@ -26,8 +22,6 @@ namespace ai {
 class Print: public ITask {
 private:
 	void tree(const AI& entity) const;
-	void lastcondition(const AI& entity) const;
-	void lastnode(const AI& entity) const;
 	void attributes(const AI& entity) const;
 
 	TreeNodeStatus handleCommand(const AI& entity) const;

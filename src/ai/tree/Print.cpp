@@ -8,14 +8,6 @@ void Print::tree(const AI& entity) const {
 	std::cout << behaviour.get() << std::endl;
 }
 
-void Print::lastcondition(const AI& /*entity*/) const {
-	// TODO:
-}
-
-void Print::lastnode(const AI& /*entity*/) const {
-	// TODO:
-}
-
 void Print::attributes(const AI& entity) const {
 	const CharacterAttributes& attribs = entity.getCharacter().getAttributes();
 	for (auto i = attribs.begin(); i != attribs.end(); ++i) {
@@ -26,10 +18,6 @@ void Print::attributes(const AI& entity) const {
 TreeNodeStatus Print::handleCommand(const AI& entity) const {
 	if (_parameters == "::tree") {
 		tree(entity);
-	} else if (_parameters == "::lastcondition") {
-		lastcondition(entity);
-	} else if (_parameters == "::lastnode") {
-		lastnode(entity);
 	} else if (_parameters == "::attributes") {
 		attributes(entity);
 	} else {
