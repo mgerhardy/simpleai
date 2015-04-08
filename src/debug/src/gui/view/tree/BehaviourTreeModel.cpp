@@ -77,33 +77,35 @@ QVariant BehaviourTreeModel::data(const QModelIndex &index, int role) const {
 		if (index.column() == 0)
 			return nodeItem->icon();
 	} else if (role == Qt::TextColorRole) {
-		const TreeNodeStatus status = nodeItem->node()->getStatus();
-		switch (status) {
-		case UNKNOWN:
-		case CANNOTEXECUTE:
-			return QColor(Qt::gray);
-		case RUNNING:
-		case FINISHED:
-			return QColor(Qt::darkGreen);
-		case FAILED:
-		case EXCEPTION:
-			return QColor(Qt::red);
-		case MAX_TREENODESTATUS:
-			break;
-		}
-		return QVariant();
+		return nodeItem->color();
 	}
 
-	if (role == Qt::DisplayRole)
+	if (role == Qt::DisplayRole || role == Qt::EditRole)
 		return nodeItem->data(index.column());
 	else if (role == Qt::ToolTipRole)
 		return nodeItem->tooltip(index.column());
 	return QVariant();
 }
 
+Qt::ItemFlags BehaviourTreeModel::flags(const QModelIndex &index) const {
+	if (!index.isValid())
+		return Qt::ItemIsEnabled;
+
+	return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+}
+
+bool BehaviourTreeModel::setData(const QModelIndex &index, const QVariant &value, int role) {
+	if (index.isValid() && role == Qt::EditRole) {
+		_rootItem->child(index.row())->setData(index.column(), value);
+		emit dataChanged(index, index);
+		return true;
+	}
+	return false;
+}
+
 QVariant BehaviourTreeModel::headerData(int section, Qt::Orientation orientation, int role) const {
 	if (orientation == Qt::Horizontal && role == Qt::DisplayRole && _rootItem != nullptr)
-		return _rootItem->data(section);
+		return _rootItem->headerData(section);
 
 	return QVariant();
 }

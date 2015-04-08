@@ -7,6 +7,16 @@
 namespace ai {
 namespace debug {
 
+enum {
+	COL_NAME,
+	COL_TYPE,
+	COL_CONDITION,
+	COL_STATE,
+	COL_LASTRUN,
+
+	COL_MAX
+};
+
 class AINodeStaticResolver;
 
 class BehaviourTreeModelItem {
@@ -18,16 +28,26 @@ private:
 	QList<BehaviourTreeModelItem*> _rows;
 	BehaviourTreeModelItem* _parent;
 	QIcon _icon;
+
+	QString _editedType;
+	QString _editedName;
+	QString _editedCondition;
+
 public:
 	BehaviourTreeModelItem(AIStateNode* node, AINodeStaticResolver& resolver, BehaviourTreeModelItem* parent = nullptr);
 	virtual ~BehaviourTreeModelItem();
 
-	QVariant data(int column);
-	QString tooltip(int column);
-	QIcon icon();
+	void setData(int column, const QVariant& data);
+
+	QVariant headerData(int column) const;
+	QVariant data(int column) const;
+	QString tooltip(int column) const;
+	QIcon icon() const;
+
+	QVariant color() const;
 
 	inline int columnCount() const {
-		return 4;
+		return COL_MAX;
 	}
 
 	inline int childCount() const {

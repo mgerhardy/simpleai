@@ -12,6 +12,7 @@
 #include "BehaviourTreeModel.h"
 #include "AICompressorProxy.h"
 #include "AINodeStaticResolver.h"
+#include "BehaviourTreeModelItem.h"
 
 namespace ai {
 namespace debug {

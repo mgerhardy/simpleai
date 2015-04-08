@@ -202,10 +202,11 @@ QWidget *AIDebuggerWidget::createTreePanelWidget() {
 	_tree->setModel(&_model);
 	QHeaderView *header = _tree->header();
 	header->setStretchLastSection(false);
-	header->setSectionResizeMode(0, QHeaderView::Stretch);
-	header->setSectionResizeMode(1, QHeaderView::Stretch);
-	header->setSectionResizeMode(2, QHeaderView::ResizeToContents);
-	header->setSectionResizeMode(3, QHeaderView::ResizeToContents);
+	header->setSectionResizeMode(COL_NAME, QHeaderView::Stretch);
+	header->setSectionResizeMode(COL_TYPE, QHeaderView::Stretch);
+	header->setSectionResizeMode(COL_CONDITION, QHeaderView::Stretch);
+	header->setSectionResizeMode(COL_STATE, QHeaderView::ResizeToContents);
+	header->setSectionResizeMode(COL_LASTRUN, QHeaderView::ResizeToContents);
 
 	QPushButton *toggle = new QPushButton(QIcon(":/images/switch.png"), "", treePanel);
 	toggle->setFlat(true);
