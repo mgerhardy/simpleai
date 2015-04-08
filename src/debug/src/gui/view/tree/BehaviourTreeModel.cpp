@@ -8,7 +8,7 @@ namespace ai {
 namespace debug {
 
 BehaviourTreeModel::BehaviourTreeModel(AINodeStaticResolver& resolver, QObject *parent) :
-		QAbstractItemModel(parent), _rootItem(nullptr), _resolver(resolver) {
+		QAbstractItemModel(parent), _rootItem(nullptr), _resolver(resolver), _allowUpdate(true) {
 }
 
 BehaviourTreeModel::~BehaviourTreeModel() {
@@ -80,6 +80,11 @@ QVariant BehaviourTreeModel::data(const QModelIndex &index, int role) const {
 		return nodeItem->color();
 	}
 
+	if (role == Qt::EditRole && _allowUpdate) {
+		qDebug() << "start editing";
+		_allowUpdate = false;
+	}
+
 	if (role == Qt::DisplayRole || role == Qt::EditRole)
 		return nodeItem->data(index.column());
 	else if (role == Qt::ToolTipRole)
@@ -87,11 +92,25 @@ QVariant BehaviourTreeModel::data(const QModelIndex &index, int role) const {
 	return QVariant();
 }
 
+bool BehaviourTreeModel::submit() {
+	if (!_allowUpdate)
+		qDebug() << "end editing";
+	_allowUpdate = true;
+	return QAbstractItemModel::submit();
+}
+
 Qt::ItemFlags BehaviourTreeModel::flags(const QModelIndex &index) const {
 	if (!index.isValid())
 		return Qt::ItemIsEnabled;
 
-	return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+	const Qt::ItemFlags flags = QAbstractItemModel::flags(index);
+	switch (index.column()) {
+	case COL_NAME:
+	case COL_TYPE:
+	case COL_CONDITION:
+		flags |= Qt::ItemIsEditable;
+	}
+	return flags;
 }
 
 bool BehaviourTreeModel::setData(const QModelIndex &index, const QVariant &value, int role) {
@@ -111,6 +130,8 @@ QVariant BehaviourTreeModel::headerData(int section, Qt::Orientation orientation
 }
 
 void BehaviourTreeModel::setRootNode(AIStateNode* node) {
+	if (!_allowUpdate)
+		return;
 	beginResetModel();
 	if (_rootItem) {
 		delete _rootItem;

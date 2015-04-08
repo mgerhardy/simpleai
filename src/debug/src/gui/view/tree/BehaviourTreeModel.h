@@ -14,6 +14,7 @@ Q_OBJECT
 private:
 	BehaviourTreeModelItem *_rootItem;
 	AINodeStaticResolver& _resolver;
+	mutable bool _allowUpdate;
 
 	inline BehaviourTreeModelItem* item(const QModelIndex& index) const {
 		return static_cast<BehaviourTreeModelItem*>(index.internalPointer());
@@ -33,6 +34,9 @@ public:
 	Qt::ItemFlags flags(const QModelIndex &index) const override;
 
 	void setRootNode(AIStateNode* node);
+
+public slots:
+	bool submit() override;
 };
 
 }
