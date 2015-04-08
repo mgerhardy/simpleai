@@ -37,6 +37,9 @@ public:
 
 public slots:
 	bool submit() override;
+
+signals:
+	void behaviourUpdated();
 };
 
 }

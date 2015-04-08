@@ -93,8 +93,10 @@ QVariant BehaviourTreeModel::data(const QModelIndex &index, int role) const {
 }
 
 bool BehaviourTreeModel::submit() {
-	if (!_allowUpdate)
+	if (!_allowUpdate) {
+		emit behaviourUpdated();
 		qDebug() << "end editing";
+	}
 	_allowUpdate = true;
 	return QAbstractItemModel::submit();
 }
@@ -103,7 +105,7 @@ Qt::ItemFlags BehaviourTreeModel::flags(const QModelIndex &index) const {
 	if (!index.isValid())
 		return Qt::ItemIsEnabled;
 
-	const Qt::ItemFlags flags = QAbstractItemModel::flags(index);
+	Qt::ItemFlags flags = QAbstractItemModel::flags(index);
 	switch (index.column()) {
 	case COL_NAME:
 	case COL_TYPE:
