@@ -77,13 +77,32 @@ bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const st
 	return success;
 }
 
-bool Server::addNode(const CharacterId& characterId, int32_t /*parentNodeId*/, const std::string& /*name*/, const std::string& /*type*/, const std::string& /*condition*/) {
+bool Server::addNode(const CharacterId& characterId, int32_t parentNodeId, const std::string& name, const std::string& type, const std::string& condition) {
 	Zone* zone = _zone;
 	if (zone == nullptr)
 		return false;
 	bool success = false;
-	auto func = [&] (AI& /*ai*/) {
-		// TODO
+	auto func = [&] (AI& ai) {
+		TreeNodePtr node = ai.getBehaviour();
+		if (node->getId() != parentNodeId) {
+			node = node->getChild(parentNodeId);
+		}
+		if (!node)
+			return;
+		ConditionParser conditionParser(_aiRegistry, condition);
+		const ConditionPtr& conditionPtr = conditionParser.getCondition();
+		if (!conditionPtr) {
+			std::cerr << "Failed to parse the condition '" << condition << "'" << std::endl;
+			return;
+		}
+		TreeNodeParser treeNodeParser(_aiRegistry, type);
+		TreeNodePtr newNode = treeNodeParser.getTreeNode(name);
+		if (!newNode) {
+			std::cerr << "Failed to parse the node '" << type << "'" << std::endl;
+			return;
+		}
+		newNode->setCondition(conditionPtr);
+		node->addChild(newNode);
 		success = true;
 	};
 	zone->execute(characterId, func);
@@ -93,13 +112,23 @@ bool Server::addNode(const CharacterId& characterId, int32_t /*parentNodeId*/, c
 	return success;
 }
 
-bool Server::deleteNode(const CharacterId& characterId, int32_t /*nodeId*/) {
+bool Server::deleteNode(const CharacterId& characterId, int32_t nodeId) {
 	Zone* zone = _zone;
 	if (zone == nullptr)
 		return false;
 	bool success = false;
-	auto func = [&] (AI& /*ai*/) {
-		// TODO
+	auto func = [&] (AI& ai) {
+		// don't delete the root
+		const TreeNodePtr& root = ai.getBehaviour();
+		if (root->getId() == nodeId)
+			return;
+
+		const TreeNodePtr& parent = root->getParent(root, nodeId);
+		if (!parent) {
+			std::cerr << "No parent for non-root node '" << nodeId << "'" << std::endl;
+			return;
+		}
+		parent->replaceChild(nodeId, TreeNodePtr());
 		success = true;
 	};
 	zone->execute(characterId, func);
