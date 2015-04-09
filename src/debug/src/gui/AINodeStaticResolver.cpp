@@ -7,7 +7,7 @@ namespace ai {
 namespace debug {
 
 namespace {
-const AIStateNodeStatic UNKNOWN(-1, "unknown", "unknown");
+const AIStateNodeStatic UNKNOWN(-1, "unknown", "unknown", "unknown", "unknown", "unknown");
 }
 
 AINodeStaticResolver::AINodeStaticResolver() {

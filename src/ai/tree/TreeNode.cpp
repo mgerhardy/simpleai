@@ -102,4 +102,51 @@ std::ostream& TreeNode::print(std::ostream& stream, int level) const {
 	return stream;
 }
 
+TreeNodePtr TreeNode::getChild(int id) const {
+	for (auto& child : _children) {
+		if (child->getId() == id)
+			return child;
+		const TreeNodePtr& node = child->getChild(id);
+		if (node)
+			return node;
+	}
+	return TreeNodePtr();
+}
+
+bool TreeNode::replaceChild(int id, const TreeNodePtr& newNode) {
+	for (TreeNodes::iterator i = _children.begin(); i != _children.end(); ++i) {
+		if ((*i)->getId() == id) {
+			if (newNode)
+				*i = newNode;
+			else
+				_children.erase(i);
+			return true;
+		}
+	}
+	return false;
+}
+
+TreeNodePtr TreeNode::getParent_r(const TreeNodePtr& parent, int id) const {
+	for (auto& child : _children) {
+		if (child->getId() == id)
+			return parent;
+		const TreeNodePtr& parentPtr = child->getParent_r(child, id);
+		if (parentPtr)
+			return parentPtr;
+	}
+	return TreeNodePtr();
+}
+
+TreeNodePtr TreeNode::getParent(const TreeNodePtr& self, int id) const {
+	ai_assert(getId() != id, "Root nodes don't have a parent");
+	for (auto& child : _children) {
+		if (child->getId() == id)
+			return self;
+		const TreeNodePtr& parent = child->getParent_r(child, id);
+		if (parent)
+			return parent;
+	}
+	return TreeNodePtr();
+}
+
 }

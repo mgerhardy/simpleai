@@ -90,6 +90,8 @@ protected:
 	void setSelectorState(AI& entity, int selected);
 	void setLastExecMillis(AI& entity);
 
+	TreeNodePtr getParent_r(const TreeNodePtr& parent, int id) const;
+
 public:
 	/**
 	 * @param name The internal name of the node
@@ -109,6 +111,18 @@ public:
 	 * @brief Each node can have a user defines name that can be retrieved with this method.
 	 */
 	const std::string& getName() const;
+
+	/**
+	 * @brief Return the raw parameters for this node
+	 */
+	const std::string& getParameters() const;
+
+	/**
+	 * @brief Updates the custom name of this @c ITreeNode
+	 *
+	 * @param[in] name The name to set - empty strings are ignored here
+	 */
+	void setName(const std::string& name);
 	/**
 	 * @brief The node type - this usually matches the class name of the @c TreeNode
 	 */
@@ -116,6 +130,7 @@ public:
 	const ConditionPtr& getCondition() const;
 	void setCondition(const ConditionPtr& condition);
 	const TreeNodes& getChildren() const;
+	TreeNodes& getChildren();
 	/**
 	 * @brief Returns the time in milliseconds when this node was last run. This is only updated if @c #execute() was called
 	 */
@@ -137,12 +152,36 @@ public:
 	virtual void resetState(AI& entity);
 
 	virtual void addChild(const TreeNodePtr& child);
+	TreeNodePtr getChild(int id) const;
+	/**
+	 * @brief Replace the given child node with a new one (or removes it)
+	 *
+	 * @param[in] id The child node id
+	 * @param[in] newNode If this is an empty TreeNodePtr the child will be removed
+	 * @return @c true if the removal/replace was successful, @c false otherwise
+	 */
+	bool replaceChild(int id, const TreeNodePtr& newNode);
+	/**
+	 * @brief Get the parent node for a given TreeNode id - This should only be called on the root node of the behaviour
+	 *
+	 * @param[in] self The pointer to the root node that is returned if one of the direct children need their parent
+	 * @param[in] id The child node id
+	 *
+	 * @return An empty @c TreeNodePtr if not found, or the parent is the root node of the behaviour tree
+	 */
+	TreeNodePtr getParent(const TreeNodePtr& self, int id) const;
 
 	virtual std::ostream& print(std::ostream& stream, int level) const override;
 };
 
 inline int TreeNode::getId() const {
 	return _id;
+}
+
+inline void TreeNode::setName(const std::string& name) {
+	if (name.empty())
+		return;
+	_name = name;
 }
 
 inline const std::string& TreeNode::getType() const {
@@ -161,7 +200,15 @@ inline void TreeNode::setCondition(const ConditionPtr& condition) {
 	_condition = condition;
 }
 
+inline const std::string& TreeNode::getParameters() const {
+	return _parameters;
+}
+
 inline const TreeNodes& TreeNode::getChildren() const {
+	return _children;
+}
+
+inline TreeNodes& TreeNode::getChildren() {
 	return _children;
 }
 

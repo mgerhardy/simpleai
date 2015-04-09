@@ -25,6 +25,12 @@ BehaviourTreeModelItem::~BehaviourTreeModelItem() {
 	qDeleteAll(_rows);
 }
 
+void BehaviourTreeModelItem::resetEdit() {
+	_editedName = "";
+	_editedCondition = "";
+	_editedType = "";
+}
+
 BehaviourTreeModelItem* BehaviourTreeModelItem::child(int row) {
 	return _rows.value(row);
 }
@@ -60,6 +66,8 @@ QIcon BehaviourTreeModelItem::icon() const {
 QString BehaviourTreeModelItem::tooltip(int column) const {
 	if (column == COL_NAME)
 		return QString::fromStdString(_staticNodeData.getType());
+	if (column == COL_CONDITION)
+		return QString::fromStdString(_staticNodeData.getCondition());
 	return QString();
 }
 

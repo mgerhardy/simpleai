@@ -97,7 +97,7 @@ protected:
 	 */
 	virtual void getConditionNameWithValue(std::stringstream& s, const AI& entity) {
 		(void)entity;
-		(void)s;
+		s << "{" << _parameters << "}";
 	}
 public:
 	ICondition(const std::string& name, const std::string& parameters) :

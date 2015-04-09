@@ -205,7 +205,8 @@ void AIDebugger::change(const QString& name) {
 }
 
 void AIDebugger::updateNode(int32_t id, const QVariant& name, const QVariant& type, const QVariant& condition) {
-	writeMessage(AIUpdateNodeMessage(id, name.toString().toStdString(), type.toString().toStdString(), condition.toString().toStdString()));
+	qDebug() << "update " << id << " with name: " << name << ", type: " << type << ", condition: " << condition;
+	writeMessage(AIUpdateNodeMessage(id, _selectedId, name.toString().toStdString(), type.toString().toStdString(), condition.toString().toStdString()));
 }
 
 bool AIDebugger::connectToAIServer(const QString& hostname, short port) {

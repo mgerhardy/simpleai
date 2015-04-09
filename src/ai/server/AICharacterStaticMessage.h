@@ -28,7 +28,10 @@ public:
 			const int32_t id = readInt(in);
 			const std::string& name = readString(in);
 			const std::string& type = readString(in);
-			const AIStateNodeStatic staticData(id, name, type);
+			const std::string& parameters = readString(in);
+			const std::string& conditionType = readString(in);
+			const std::string& conditionParameters = readString(in);
+			const AIStateNodeStatic staticData(id, name, type, parameters, conditionType, conditionParameters);
 			_nodeStaticData.push_back(staticData);
 		}
 	}
@@ -42,6 +45,9 @@ public:
 			addInt(out, (*_nodeStaticDataPtr)[i].getId());
 			addString(out, (*_nodeStaticDataPtr)[i].getName());
 			addString(out, (*_nodeStaticDataPtr)[i].getType());
+			addString(out, (*_nodeStaticDataPtr)[i].getParameters());
+			addString(out, (*_nodeStaticDataPtr)[i].getConditionType());
+			addString(out, (*_nodeStaticDataPtr)[i].getConditionParameters());
 		}
 	}
 

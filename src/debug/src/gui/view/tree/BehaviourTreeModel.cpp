@@ -28,6 +28,7 @@ void BehaviourTreeModel::onDataChanged(const QModelIndex& topLeft, const QModelI
 	const QVariant& type = nodeItem->data(COL_TYPE);
 	const QVariant& condition = nodeItem->data(COL_CONDITION);
 	_debugger.updateNode(nodeItem->node()->getNodeId(), name, type, condition);
+	nodeItem->resetEdit();
 }
 
 QModelIndex BehaviourTreeModel::index(int row, int column, const QModelIndex &parent) const {

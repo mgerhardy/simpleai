@@ -17,6 +17,8 @@ inline float strToFloat(const std::string& str) {
 }
 
 inline std::string eraseAllSpaces(const std::string& str) {
+	if (str.empty())
+		return str;
 	std::string tmp = str;
 	tmp.erase(std::remove(tmp.begin(), tmp.end(), ' '), tmp.end());
 	return tmp;

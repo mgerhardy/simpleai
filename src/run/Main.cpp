@@ -29,6 +29,10 @@ public:
 		return _loader.load(name);
 	}
 
+	operator ai::AIRegistry& () {
+		return _registry;
+	}
+
 	void getTrees(std::vector<std::string>& trees) const {
 		_loader.getTrees(trees);
 	}
@@ -196,7 +200,7 @@ int main(int argc, char **argv) {
 	std::cout << "compiled with threading support" << std::endl;
 #endif
 
-	ai::Server server(port, interface);
+	ai::Server server(loader, port, interface);
 	if (!server.start()) {
 		std::cerr << "Could not start the server on port " << port << std::endl;
 		return EXIT_FAILURE;

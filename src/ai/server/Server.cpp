@@ -5,11 +5,13 @@
 #include "AICharacterDetailsMessage.h"
 #include "AICharacterStaticMessage.h"
 #include "ProtocolHandlerRegistry.h"
+#include "../conditions/ConditionParser.h"
+#include "../tree/TreeNodeParser.h"
 
 namespace ai {
 
-Server::Server(short port, const std::string& hostname) :
-		_network(port, hostname), _selectedCharacterId(-1), _time(0L), _selectHandler(*this), _pauseHandler(*this), _resetHandler(*this), _stepHandler(*this), _changeHandler(
+Server::Server(AIRegistry& aiRegistry, short port, const std::string& hostname) :
+		_aiRegistry(aiRegistry), _network(port, hostname), _selectedCharacterId(-1), _time(0L), _selectHandler(*this), _pauseHandler(*this), _resetHandler(*this), _stepHandler(*this), _changeHandler(
 				*this), _addNodeHandler(*this), _deleteNodeHandler(*this), _updateNodeHandler(*this), _pause(false), _zone(nullptr) {
 	_network.addListener(this);
 	ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
@@ -26,6 +28,85 @@ Server::Server(short port, const std::string& hostname) :
 
 Server::~Server() {
 	_network.removeListener(this);
+}
+
+bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const std::string& name, const std::string& type, const std::string& condition) {
+	Zone* zone = _zone;
+	if (zone == nullptr)
+		return false;
+	bool success = false;
+	auto func = [&] (AI& ai) {
+		const TreeNodePtr& node = ai.getBehaviour()->getId() == nodeId ? ai.getBehaviour() : ai.getBehaviour()->getChild(nodeId);
+		if (!node)
+			return;
+		ConditionParser conditionParser(_aiRegistry, condition);
+		const ConditionPtr& conditionPtr = conditionParser.getCondition();
+		if (!conditionPtr) {
+			std::cerr << "Failed to parse the condition '" << condition << "'" << std::endl;
+			return;
+		}
+		TreeNodeParser treeNodeParser(_aiRegistry, type);
+		TreeNodePtr newNode = treeNodeParser.getTreeNode(name);
+		if (!newNode) {
+			std::cerr << "Failed to parse the node '" << type << "'" << std::endl;
+			return;
+		}
+		newNode->setCondition(conditionPtr);
+		for (auto& child : node->getChildren()) {
+			newNode->addChild(child);
+		}
+
+		const TreeNodePtr& root = ai.getBehaviour();
+		if (node == root) {
+			ai.setBehaviour(newNode);
+		} else {
+			const TreeNodePtr& parent = root->getParent(root, nodeId);
+			if (!parent) {
+				std::cerr << "No parent for non-root node '" << nodeId << "'" << std::endl;
+				return;
+			}
+			parent->replaceChild(nodeId, newNode);
+		}
+
+		success = true;
+	};
+	zone->execute(characterId, func);
+	if (success) {
+		broadcastStaticCharacterDetails(zone);
+	}
+	return success;
+}
+
+bool Server::addNode(const CharacterId& characterId, int32_t /*parentNodeId*/, const std::string& /*name*/, const std::string& /*type*/, const std::string& /*condition*/) {
+	Zone* zone = _zone;
+	if (zone == nullptr)
+		return false;
+	bool success = false;
+	auto func = [&] (AI& /*ai*/) {
+		// TODO
+		success = true;
+	};
+	zone->execute(characterId, func);
+	if (success) {
+		broadcastStaticCharacterDetails(zone);
+	}
+	return success;
+}
+
+bool Server::deleteNode(const CharacterId& characterId, int32_t /*nodeId*/) {
+	Zone* zone = _zone;
+	if (zone == nullptr)
+		return false;
+	bool success = false;
+	auto func = [&] (AI& /*ai*/) {
+		// TODO
+		success = true;
+	};
+	zone->execute(characterId, func);
+	if (success) {
+		broadcastStaticCharacterDetails(zone);
+	}
+	return success;
 }
 
 void Server::step(long stepMillis) {
@@ -135,7 +216,7 @@ void Server::pause(const ClientId& /*clientId*/, bool state) {
 void Server::addChildren(const TreeNodePtr& node, std::vector<AIStateNodeStatic>& out) const {
 	for (const TreeNodePtr& childNode : node->getChildren()) {
 		const int32_t nodeId = childNode->getId();
-		out.push_back(AIStateNodeStatic(nodeId, childNode->getName(), childNode->getType()));
+		out.push_back(AIStateNodeStatic(nodeId, childNode->getName(), childNode->getType(), childNode->getParameters(), childNode->getCondition()->getName(), childNode->getCondition()->getParameters()));
 		addChildren(childNode, out);
 	}
 }
@@ -179,7 +260,7 @@ void Server::broadcastStaticCharacterDetails(Zone* zone) {
 		std::vector<AIStateNodeStatic> nodeStaticData;
 		const TreeNodePtr& node = ai.getBehaviour();
 		const int32_t nodeId = node->getId();
-		nodeStaticData.push_back(AIStateNodeStatic(nodeId, node->getName(), node->getType()));
+		nodeStaticData.push_back(AIStateNodeStatic(nodeId, node->getName(), node->getType(), node->getParameters(), node->getCondition()->getName(), node->getCondition()->getParameters()));
 		addChildren(node, nodeStaticData);
 
 		const AICharacterStaticMessage msgStatic(id, nodeStaticData);

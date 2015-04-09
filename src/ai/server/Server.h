@@ -39,6 +39,7 @@ protected:
 	typedef Zones::const_iterator ZoneConstIter;
 	typedef Zones::iterator ZoneIter;
 	Zones _zones;
+	AIRegistry& _aiRegistry;
 	Network _network;
 	CharacterId _selectedCharacterId;
 	long _time;
@@ -68,7 +69,7 @@ protected:
 	void onConnect(Client* client) override;
 	void onDisconnect(Client* client) override;
 public:
-	Server(short port = 10001, const std::string& hostname = "0.0.0.0");
+	Server(AIRegistry& aiRegistry, short port = 10001, const std::string& hostname = "0.0.0.0");
 	virtual ~Server();
 
 	/**
@@ -90,6 +91,45 @@ public:
 	 * @brief Performs one step of the ai in pause mode
 	 */
 	void step(long stepMillis = 1L);
+
+	/**
+	 * @brief Update the specified node with the given values for the specified character and all the
+	 * other characters that are using the same behaviour tree instance
+	 *
+	 * @param[in] characterId The id of the character where we want to update the specified node
+	 * @param[in] nodeId The id of the @c ITreeNode to update with the new values
+	 * @param[in] name The new name for the node
+	 * @param[in] type The new node type (including parameters)
+	 * @param[in] condition The new condition (including parameters)
+	 *
+	 * @see @c TreeNodeParser
+	 * @see @c ConditionParser
+	 */
+	bool updateNode(const CharacterId& characterId, int32_t nodeId, const std::string& name, const std::string& type, const std::string& condition);
+
+	/**
+	 * @brief Add a new node with the given values to the specified character and all the
+	 * other characters that are using the same behaviour tree instance
+	 *
+	 * @param[in] characterId The id of the character where we want to add the specified node
+	 * @param[in] parentNodeId The id of the @c ITreeNode to attach the new @c ITreeNode as children
+	 * @param[in] name The new name for the node
+	 * @param[in] type The new node type (including parameters)
+	 * @param[in] condition The new condition (including parameters)
+	 *
+	 * @see @c TreeNodeParser
+	 * @see @c ConditionParser
+	 */
+	bool addNode(const CharacterId& characterId, int32_t parentNodeId, const std::string& name, const std::string& type, const std::string& condition);
+
+	/**
+	 * @brief Delete the specified node from the character's behaviour tree and all the
+	 * other characters that are using the same behaviour tree instance
+	 *
+	 * @param[in] characterId The id of the character where we want to delete the specified node
+	 * @param[in] nodeId The id of the @c ITreeNode to delete
+	 */
+	bool deleteNode(const CharacterId& characterId, int32_t nodeId);
 
 	/**
 	 * @brief Adds a new zone to this server instance that can be debugged. The server does not own this pointer

@@ -39,6 +39,8 @@ public:
 
 	void setData(int column, const QVariant& data);
 
+	void resetEdit();
+
 	QVariant headerData(int column) const;
 	QVariant data(int column) const;
 	QString tooltip(int column) const;

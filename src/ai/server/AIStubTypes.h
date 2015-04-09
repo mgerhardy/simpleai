@@ -41,19 +41,22 @@ public:
 
 class AIStateNodeStatic {
 private:
-	int _id;
+	int32_t _id;
 	std::string _name;
 	std::string _type;
+	std::string _parameters;
+	std::string _conditionType;
+	std::string _conditionParameters;
 public:
-	AIStateNodeStatic(const int id, const std::string& name, const std::string& type) :
-			_id(id), _name(name), _type(type) {
+	AIStateNodeStatic(const int32_t id, const std::string& name, const std::string& type, const std::string& parameters, const std::string& conditionType, const std::string& conditionParameters) :
+			_id(id), _name(name), _type(type), _parameters(parameters), _conditionType(conditionType), _conditionParameters(conditionParameters) {
 	}
 
 	AIStateNodeStatic() :
 			_id(-1) {
 	}
 
-	inline int getId() const {
+	inline int32_t getId() const {
 		return _id;
 	}
 
@@ -63,6 +66,31 @@ public:
 
 	inline const std::string& getType() const {
 		return _type;
+	}
+
+	/**
+	 * @brief Returns the raw parameters for the task node
+	 */
+	inline const std::string& getParameters() const {
+		return _parameters;
+	}
+
+	/**
+	 * @brief Returns the raw condition parameters
+	 */
+	inline const std::string& getConditionParameters() const {
+		return _conditionParameters;
+	}
+
+	inline std::string getCondition() const {
+		return _conditionType + "(" + _conditionParameters + ")";
+	}
+
+	/**
+	 * @brief Returns the raw condition type string
+	 */
+	inline const std::string& getConditionType() const {
+		return _conditionType;
 	}
 };
 
