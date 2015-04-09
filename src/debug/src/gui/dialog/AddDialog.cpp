@@ -1,4 +1,6 @@
 #include "AddDialog.h"
+#include <QGridLayout>
+#include <QLabel>
 
 AddDialog::AddDialog() :
 		IDialog(tr("Create new node")), _nameText(nullptr), _typeText(nullptr), _conditionText(nullptr), _group(
@@ -14,14 +16,17 @@ AddDialog::~AddDialog() {
 
 void AddDialog::addMainWidgets(QBoxLayout& layout) {
 	_group = new QGroupBox(tr("Node"));
-	QVBoxLayout *boxLayout = new QVBoxLayout;
+	QGridLayout *innerLayout = new QGridLayout;
 	_nameText = new QLineEdit("NewNode");
-	boxLayout->addWidget(_nameText);
+	innerLayout->addWidget(new QLabel(tr("Name")), 0, 0);
+	innerLayout->addWidget(_nameText, 0, 1);
 	_typeText = new QLineEdit("PrioritySelector");
-	boxLayout->addWidget(_typeText);
+	innerLayout->addWidget(new QLabel(tr("Type")), 1, 0);
+	innerLayout->addWidget(_typeText, 1, 1);
 	_conditionText = new QLineEdit("True");
-	boxLayout->addWidget(_conditionText);
-	_group->setLayout(boxLayout);
+	innerLayout->addWidget(new QLabel(tr("Condition")), 2, 0);
+	innerLayout->addWidget(_conditionText, 2, 1);
+	_group->setLayout(innerLayout);
 	layout.addWidget(_group);
 }
 

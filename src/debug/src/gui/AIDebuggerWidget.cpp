@@ -201,10 +201,7 @@ void AIDebuggerWidget::showContextMenu(const QPoint &pos) {
 		qDebug() << "No item found for index: " << index;
 		return;
 	}
-	qDebug() << "Show context menu for " << index;
 	const AIStateNode* node = item->node();
-	qDebug() << "Node: " << node->getNodeId() << item->data(COL_NAME);
-
 	QMenu *menu = new QMenu(this);
 	AddAction* addAction = new AddAction(node->getNodeId(), this);
 	connect(addAction, SIGNAL(triggered(int, const QVariant&, const QVariant&, const QVariant&)), this,
