@@ -61,6 +61,7 @@ list(APPEND simpleai_debugger_SOURCES
            src/AIDebugger.cpp
            src/gui/AIDebuggerWidget.cpp
            src/gui/AINodeStaticResolver.cpp
+           src/gui/dialog/AddDialog.cpp
            src/gui/dialog/ConnectDialog.cpp
            src/gui/dialog/IDialog.cpp
            src/gui/view/list/EntityList.cpp
