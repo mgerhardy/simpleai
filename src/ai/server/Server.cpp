@@ -10,7 +10,7 @@ namespace ai {
 
 Server::Server(short port, const std::string& hostname) :
 		_network(port, hostname), _selectedCharacterId(-1), _time(0L), _selectHandler(*this), _pauseHandler(*this), _resetHandler(*this), _stepHandler(*this), _changeHandler(
-				*this), _pause(false), _zone(nullptr) {
+				*this), _addNodeHandler(*this), _deleteNodeHandler(*this), _updateNodeHandler(*this), _pause(false), _zone(nullptr) {
 	_network.addListener(this);
 	ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
 	r.registerHandler(ai::PROTO_SELECT, &_selectHandler);
@@ -19,6 +19,9 @@ Server::Server(short port, const std::string& hostname) :
 	r.registerHandler(ai::PROTO_STEP, &_stepHandler);
 	r.registerHandler(ai::PROTO_PING, &_nopHandler);
 	r.registerHandler(ai::PROTO_CHANGE, &_changeHandler);
+	r.registerHandler(ai::PROTO_ADDNODE, &_addNodeHandler);
+	r.registerHandler(ai::PROTO_DELETENODE, &_deleteNodeHandler);
+	r.registerHandler(ai::PROTO_UPDATENODE, &_updateNodeHandler);
 }
 
 Server::~Server() {

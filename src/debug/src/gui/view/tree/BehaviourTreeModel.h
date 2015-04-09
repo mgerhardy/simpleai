@@ -7,6 +7,7 @@
 namespace ai {
 namespace debug {
 
+class AIDebugger;
 class BehaviourTreeModelItem;
 
 class BehaviourTreeModel: public QAbstractItemModel {
@@ -14,13 +15,14 @@ Q_OBJECT
 private:
 	BehaviourTreeModelItem *_rootItem;
 	AINodeStaticResolver& _resolver;
+	AIDebugger& _debugger;
 	mutable bool _allowUpdate;
 
 	inline BehaviourTreeModelItem* item(const QModelIndex& index) const {
 		return static_cast<BehaviourTreeModelItem*>(index.internalPointer());
 	}
 public:
-	explicit BehaviourTreeModel(AINodeStaticResolver& resolver, QObject *parent = nullptr);
+	explicit BehaviourTreeModel(AIDebugger& debugger, AINodeStaticResolver& resolver, QObject *parent = nullptr);
 	~BehaviourTreeModel();
 
 	QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
@@ -37,6 +39,7 @@ public:
 
 public slots:
 	bool submit() override;
+	void onDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight);
 
 signals:
 	void behaviourUpdated();

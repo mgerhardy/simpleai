@@ -1,5 +1,6 @@
 #include "BehaviourTreeModel.h"
 #include "BehaviourTreeModelItem.h"
+#include "AIDebugger.h"
 
 #include <QIcon>
 #include <QDebug>
@@ -7,12 +8,25 @@
 namespace ai {
 namespace debug {
 
-BehaviourTreeModel::BehaviourTreeModel(AINodeStaticResolver& resolver, QObject *parent) :
-		QAbstractItemModel(parent), _rootItem(nullptr), _resolver(resolver), _allowUpdate(true) {
+BehaviourTreeModel::BehaviourTreeModel(AIDebugger& debugger, AINodeStaticResolver& resolver, QObject *parent) :
+		QAbstractItemModel(parent), _rootItem(nullptr), _resolver(resolver), _debugger(debugger), _allowUpdate(true) {
+	connect(this, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(onDataChanged(const QModelIndex&, const QModelIndex&)));
 }
 
 BehaviourTreeModel::~BehaviourTreeModel() {
 	delete _rootItem;
+}
+
+void BehaviourTreeModel::onDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight) {
+	BehaviourTreeModelItem *nodeItem = item(topLeft);
+	if (nodeItem == nullptr) {
+		qDebug() << "No item found at: " << topLeft;
+		return;
+	}
+
+	const QVariant& value = nodeItem->data(topLeft.column());
+	qDebug() << "Update " << nodeItem->node()->getNodeId() << " with new value " << value;
+	_debugger.updateNode(nodeItem->node()->getNodeId(), value);
 }
 
 QModelIndex BehaviourTreeModel::index(int row, int column, const QModelIndex &parent) const {

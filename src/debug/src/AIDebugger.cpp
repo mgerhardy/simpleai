@@ -4,6 +4,9 @@
 #include "MapView.h"
 #include <server/IProtocolMessage.h>
 #include <server/AISelectMessage.h>
+#include <server/AIUpdateNodeMessage.h>
+#include <server/AIUpdateAddMessage.h>
+#include <server/AIUpdateDeleteMessage.h>
 #include <server/AICharacterDetailsMessage.h>
 #include <server/AICharacterStaticMessage.h>
 #include <server/AIChangeMessage.h>
@@ -199,6 +202,10 @@ void AIDebugger::reset() {
 
 void AIDebugger::change(const QString& name) {
 	writeMessage(AIChangeMessage(name.toStdString()));
+}
+
+void AIDebugger::updateNode(int32_t id, const QVariant& name, const QVariant& type, const QVariant& condition) {
+	writeMessage(AIUpdateNodeMessage(id, name.toString().toStdString(), type.toString().toStdString(), condition.toString().toStdString()));
 }
 
 bool AIDebugger::connectToAIServer(const QString& hostname, short port) {

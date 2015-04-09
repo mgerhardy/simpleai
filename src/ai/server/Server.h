@@ -11,6 +11,9 @@
 #include "ResetHandler.h"
 #include "StepHandler.h"
 #include "ChangeHandler.h"
+#include "AddNodeHandler.h"
+#include "DeleteNodeHandler.h"
+#include "UpdateNodeHandler.h"
 
 namespace ai {
 
@@ -44,6 +47,9 @@ protected:
 	ResetHandler _resetHandler;
 	StepHandler _stepHandler;
 	ChangeHandler _changeHandler;
+	AddNodeHandler _addNodeHandler;
+	DeleteNodeHandler _deleteNodeHandler;
+	UpdateNodeHandler _updateNodeHandler;
 	NopHandler _nopHandler;
 	bool _pause;
 	// the current active debugging zone

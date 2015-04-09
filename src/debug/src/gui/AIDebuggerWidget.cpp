@@ -22,7 +22,7 @@ namespace ai {
 namespace debug {
 
 AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger, AINodeStaticResolver& resolver) :
-		QWidget(), _resolver(resolver), _model(resolver), _debugger(debugger), _proxy(this) {
+		QWidget(), _resolver(resolver), _model(debugger, resolver), _debugger(debugger), _proxy(this) {
 	createView();
 	createActions();
 

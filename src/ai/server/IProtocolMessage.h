@@ -45,6 +45,9 @@ const ProtocolId PROTO_CHANGE = 6;
 const ProtocolId PROTO_NAMES = 7;
 const ProtocolId PROTO_RESET = 8;
 const ProtocolId PROTO_STEP = 9;
+const ProtocolId PROTO_UPDATENODE = 10;
+const ProtocolId PROTO_DELETENODE = 11;
+const ProtocolId PROTO_ADDNODE = 12;
 
 /**
  * @brief A protocol message is used for the serialization of the ai states for remote debugging

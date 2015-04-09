@@ -4,6 +4,9 @@ include(CheckLibraryExists)
 list(APPEND SRC
 	group/GroupMgr.cpp
 	AI.cpp
+	server/AddNodeHandler.cpp
+	server/UpdateNodeHandler.cpp
+	server/DeleteNodeHandler.cpp
 	server/ResetHandler.cpp
 	server/StepHandler.cpp
 	server/SelectHandler.cpp
@@ -154,16 +157,21 @@ list(APPEND simpleai_HEADERS
 	movement/TargetSeek.h
 	movement/Wander.h
 	movement/WeightedSteering.h
+	server/AIAddNodeMessage.h
 	server/AIChangeMessage.h
 	server/AICharacterDetailsMessage.h
 	server/AICharacterStaticMessage.h
+	server/AIDeleteNodeMessage.h
 	server/AINamesMessage.h
 	server/AIPauseMessage.h
 	server/AISelectMessage.h
 	server/AIStateMessage.h
 	server/AIStepMessage.h
 	server/AIStubTypes.h
+	server/AIUpdateNodeMessage.h
+	server/AddNodeHandler.h
 	server/ChangeHandler.h
+	server/DeleteNodeHandler.h
 	server/IProtocolHandler.h
 	server/IProtocolMessage.h
 	server/Network.h
@@ -174,6 +182,7 @@ list(APPEND simpleai_HEADERS
 	server/SelectHandler.h
 	server/Server.h
 	server/StepHandler.h
+	server/UpdateNodeHandler.h
 	zone/Zone.h
 	SimpleAI.h
 	tree/Idle.h

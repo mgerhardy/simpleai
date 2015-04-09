@@ -8,6 +8,9 @@
 #include "AINamesMessage.h"
 #include "AIChangeMessage.h"
 #include "AIStepMessage.h"
+#include "AIUpdateNodeMessage.h"
+#include "AIAddNodeMessage.h"
+#include "AIDeleteNodeMessage.h"
 
 namespace ai {
 
@@ -54,6 +57,12 @@ IProtocolMessage *ProtocolMessageFactory::create(streamContainer& in) {
 		return new AICharacterDetailsMessage(in);
 	} else if (type == PROTO_CHARACTER_STATIC) {
 		return new AICharacterStaticMessage(in);
+	} else if (type == PROTO_UPDATENODE) {
+		return new AIUpdateNodeMessage(in);
+	} else if (type == PROTO_ADDNODE) {
+		return new AIAddNodeMessage(in);
+	} else if (type == PROTO_DELETENODE) {
+		return new AIDeleteNodeMessage(in);
 	}
 
 	return nullptr;
