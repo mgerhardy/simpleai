@@ -16,6 +16,9 @@ abstract class ProtocolMessage {
 	public static final byte PROTO_NAMES = 7;
 	public static final byte PROTO_RESET = 8;
 	public static final byte PROTO_STEP = 9;
+	public static final byte PROTO_UPDATENODE = 10;
+	public static final byte PROTO_DELETENODE = 11;
+	public static final byte PROTO_ADDNODE = 12;
 
 	protected byte _id;
 

@@ -17,7 +17,10 @@ public class AICharacterStaticMessage extends ProtocolMessage {
 			int id = in.readInt();
 			String name = readString( in );
 			String type = readString( in );
-			AIStateNodeStatic staticData = new AIStateNodeStatic( id, name, type );
+			String parameters = readString( in );
+			String conditionType = readString( in );
+			String conditionParameters = readString( in );
+			AIStateNodeStatic staticData = new AIStateNodeStatic( id, name, type, parameters, conditionType, conditionParameters );
 			_nodeStaticData.add( staticData );
 		}
 	}
@@ -45,6 +48,9 @@ public class AICharacterStaticMessage extends ProtocolMessage {
 			out.writeInt( i.getId() );
 			writeString( out, i.getName() );
 			writeString( out, i.getType() );
+			writeString( out, i.getParameters() );
+			writeString( out, i.getConditionType() );
+			writeString( out, i.getConditionParameters() );
 		}
 	}
 }
