@@ -31,7 +31,7 @@ AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger, AINodeStaticResolver& r
 	_statusBarLabel = new QLabel(tr("not connected"));
 	_selectedLabel = new QLabel(tr("nothing selected"));
 
-	connect(_namesComboBox, SIGNAL(activated(const QString &)), SLOT(change(const QString &)));
+	connect(_namesComboBox, SIGNAL(currentIndexChanged(const QString &)), SLOT(change(const QString &)));
 	connect(&_debugger, SIGNAL(onPause(bool)), SLOT(setPause(bool)));
 	connect(&_debugger, SIGNAL(disconnected()), SLOT(onDisconnect()));
 
