@@ -120,6 +120,11 @@ public:
 	const std::string& getName() const;
 
 	/**
+	 * @brief Returns the raw parameters of the condition
+	 */
+	const std::string& getParameters() const;
+
+	/**
 	 * @brief Returns the full condition string with all related conditions and results of the evaluation method
 	 * @param[in,out] entity The entity that is used to evaluate the condition
 	 * @sa getConditionNameWithValue
@@ -139,6 +144,10 @@ public:
 
 inline const std::string& ICondition::getName() const {
 	return _name;
+}
+
+inline const std::string& ICondition::getParameters() const {
+	return _parameters;
 }
 
 }

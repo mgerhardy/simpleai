@@ -89,6 +89,10 @@ public:
 		return _name;
 	}
 
+	inline const std::string& getParameters() const {
+		return _parameters;
+	}
+
 	virtual void filter (const AI& entity) = 0;
 };
 
