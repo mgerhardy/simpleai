@@ -90,7 +90,7 @@ QVariant BehaviourTreeModel::data(const QModelIndex &index, int role) const {
 		return QVariant();
 
 	if (role == Qt::DecorationRole) {
-		if (index.column() == 0)
+		if (index.column() == COL_NAME)
 			return nodeItem->icon();
 	} else if (role == Qt::TextColorRole) {
 		return nodeItem->color();
