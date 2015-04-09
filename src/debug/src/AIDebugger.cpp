@@ -204,12 +204,16 @@ void AIDebugger::change(const QString& name) {
 	writeMessage(AIChangeMessage(name.toStdString()));
 }
 
-void AIDebugger::updateNode(int32_t id, const QVariant& name, const QVariant& type, const QVariant& condition) {
-	writeMessage(AIUpdateNodeMessage(id, _selectedId, name.toString().toStdString(), type.toString().toStdString(), condition.toString().toStdString()));
+void AIDebugger::updateNode(int32_t nodeId, const QVariant& name, const QVariant& type, const QVariant& condition) {
+	writeMessage(AIUpdateNodeMessage(nodeId, _selectedId, name.toString().toStdString(), type.toString().toStdString(), condition.toString().toStdString()));
 }
 
-void AIDebugger::deleteNode(int32_t id) {
-	writeMessage(AIDeleteNodeMessage(id, _selectedId));
+void AIDebugger::deleteNode(int32_t nodeId) {
+	writeMessage(AIDeleteNodeMessage(nodeId, _selectedId));
+}
+
+void AIDebugger::addNode(int32_t parentNodeId, const QVariant& name, const QVariant& type, const QVariant& condition) {
+	writeMessage(AIAddNodeMessage(parentNodeId, _selectedId, name.toString().toStdString(), type.toString().toStdString(), condition.toString().toStdString()));
 }
 
 bool AIDebugger::connectToAIServer(const QString& hostname, short port) {

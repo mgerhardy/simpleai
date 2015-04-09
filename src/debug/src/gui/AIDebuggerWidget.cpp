@@ -17,6 +17,8 @@
 #include "MapView.h"
 #include "ZoomFrame.h"
 #include "NodeTreeView.h"
+#include "AddAction.h"
+#include "DeleteAction.h"
 
 namespace ai {
 namespace debug {
@@ -184,31 +186,32 @@ QWidget *AIDebuggerWidget::createTopWidget() {
 	return splitter;
 }
 
-void AIDebuggerWidget::onDeleteNode() {
-	QAction* action = static_cast<QAction*>(sender());
-	BehaviourTreeModelItem* item = reinterpret_cast<BehaviourTreeModelItem*>(action->userData(0));
-	_debugger.deleteNode(item->node()->getNodeId());
+void AIDebuggerWidget::onDeleteNode(int nodeId) {
+	_debugger.deleteNode(nodeId);
 }
 
-void AIDebuggerWidget::onAddNode() {
-#if 0
-	QAction* action = static_cast<QAction*>(sender());
-	BehaviourTreeModelItem* item = reinterpret_cast<BehaviourTreeModelItem*>(action->userData(0));
-	// TODO:
-#endif
+void AIDebuggerWidget::onAddNode(int parentNodeId, const QVariant& name, const QVariant& type, const QVariant& condition) {
+	_debugger.addNode(parentNodeId, name, type, condition);
 }
 
 void AIDebuggerWidget::showContextMenu(const QPoint &pos) {
 	const QModelIndex& index = _tree->indexAt(pos);
 	BehaviourTreeModelItem* item = _model.item(index);
+	if (item == nullptr) {
+		qDebug() << "No item found for index: " << index;
+		return;
+	}
+	qDebug() << "Show context menu for " << index;
+	const AIStateNode* node = item->node();
+	qDebug() << "Node: " << node->getNodeId() << item->data(COL_NAME);
 
 	QMenu *menu = new QMenu(this);
-	QAction* addAction = new QAction(tr("Add node"), this);
-	addAction->setUserData(0, reinterpret_cast<QObjectUserData*>(item));
-	connect(addAction, SIGNAL(triggered()), this, SLOT(onAddNode()));
-	QAction* deleteAction = new QAction(tr("Delete node"), this);
-	deleteAction->setUserData(0, reinterpret_cast<QObjectUserData*>(item));
-	connect(deleteAction, SIGNAL(triggered()), this, SLOT(onDeleteNode()));
+	AddAction* addAction = new AddAction(node->getNodeId(), this);
+	connect(addAction, SIGNAL(triggered(int, const QVariant&, const QVariant&, const QVariant&)), this,
+			SLOT(onAddNode(int, const QVariant&, const QVariant&, const QVariant&)));
+	QAction* deleteAction = new DeleteAction(node->getNodeId(), this);
+	connect(deleteAction, SIGNAL(triggered(int)), this,
+			SLOT(onDeleteNode(int)));
 	menu->addAction(addAction);
 	menu->addAction(deleteAction);
 	menu->popup(_tree->viewport()->mapToGlobal(pos));

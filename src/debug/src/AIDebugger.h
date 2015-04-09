@@ -107,8 +107,9 @@ public:
 	void step();
 	void reset();
 	void change(const QString& name);
-	void updateNode(int32_t id, const QVariant& name, const QVariant& type, const QVariant& condition);
-	void deleteNode(int32_t id);
+	void updateNode(int32_t nodeId, const QVariant& name, const QVariant& type, const QVariant& condition);
+	void deleteNode(int32_t nodeId);
+	void addNode(int32_t parentNodeId, const QVariant& name, const QVariant& type, const QVariant& condition);
 
 	/**
 	 * @brief override this if you would like to create your own @c MapView implementation that renders

@@ -87,6 +87,7 @@ include_directories(
            ${AUTOMOC_TARGETS_FOLDER}
            ${CMAKE_CURRENT_SOURCE_DIR}/src
            ${CMAKE_CURRENT_SOURCE_DIR}/src/gui
+           ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/action
            ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/dialog
            ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/widget
            ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/view/map

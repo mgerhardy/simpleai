@@ -30,7 +30,7 @@ public:
 	 */
 	virtual TreeNodeStatus doAction(AI& entity, long deltaMillis) = 0;
 
-	void addChild(const TreeNodePtr& child) override;
+	bool addChild(const TreeNodePtr& child) override;
 };
 
 }

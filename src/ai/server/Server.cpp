@@ -102,8 +102,7 @@ bool Server::addNode(const CharacterId& characterId, int32_t parentNodeId, const
 			return;
 		}
 		newNode->setCondition(conditionPtr);
-		node->addChild(newNode);
-		success = true;
+		success = node->addChild(newNode);
 	};
 	zone->execute(characterId, func);
 	if (success) {

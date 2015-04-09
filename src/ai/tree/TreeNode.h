@@ -151,7 +151,7 @@ public:
 	 */
 	virtual void resetState(AI& entity);
 
-	virtual void addChild(const TreeNodePtr& child);
+	virtual bool addChild(const TreeNodePtr& child);
 	TreeNodePtr getChild(int id) const;
 	/**
 	 * @brief Replace the given child node with a new one (or removes it)
@@ -212,8 +212,9 @@ inline TreeNodes& TreeNode::getChildren() {
 	return _children;
 }
 
-inline void TreeNode::addChild(const TreeNodePtr& child) {
+inline bool TreeNode::addChild(const TreeNodePtr& child) {
 	_children.push_back(child);
+	return true;
 }
 
 }

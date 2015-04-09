@@ -25,8 +25,8 @@ TreeNodeStatus ITask::execute(AI& entity, long deltaMillis) {
 #endif
 }
 
-void ITask::addChild(const TreeNodePtr& /*child*/) {
-	ai_assert(false, "An action node may not have a child");
+bool ITask::addChild(const TreeNodePtr& /*child*/) {
+	return false;
 }
 
 }

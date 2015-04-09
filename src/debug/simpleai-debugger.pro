@@ -8,7 +8,7 @@ TARGET = simpleai-debugger
 DEPENDPATH += . \
               src \
               src/gui
-INCLUDEPATH += . src src/gui src/gui/dialog src/gui/widget src/gui/view/map src/gui/view/tree src/gui/view/aggro src/gui/view/state src/gui/view/list src/common
+INCLUDEPATH += . src src/gui src/gui/dialog src/gui/widget src/gui/view/map src/gui/view/tree src/gui/view/aggro src/gui/view/state src/gui/action src/gui/view/list src/common
 
 CONFIG += qt debug_and_release
 
@@ -23,8 +23,11 @@ HEADERS += \
            src/gui/AIDebuggerWidget.h \
            src/gui/AICompressorProxy.h \
            src/gui/AINodeStaticResolver.h \
+           src/gui/dialog/AddDialog.h \
            src/gui/dialog/ConnectDialog.h \
            src/gui/dialog/IDialog.h \
+           src/gui/action/AddAction.h \
+           src/gui/action/DeleteAction.h \
            src/gui/view/list/EntityList.h \
            src/gui/view/list/EntityListModel.h \
            src/gui/view/map/MapView.h \
@@ -49,6 +52,7 @@ SOURCES += \
            src/AIDebugger.cpp \
            src/gui/AIDebuggerWidget.cpp \
            src/gui/AINodeStaticResolver.cpp \
+           src/gui/dialog/AddDialog.cpp \
            src/gui/dialog/ConnectDialog.cpp \
            src/gui/dialog/IDialog.cpp \
            src/gui/view/list/EntityList.cpp \
