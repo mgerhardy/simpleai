@@ -16,29 +16,7 @@ class Filter: public ICondition {
 protected:
 	Filters _filters;
 
-	void getConditionNameWithValue(std::stringstream& s, const AI& entity) override {
-		bool first = true;
-		s << "(";
-		auto copy = entity._filteredEntities;
-		for (const FilterPtr& filter : _filters) {
-			if (!first)
-				s << ",";
-			s << filter->getName() << "{" << filter->getParameters() << "}[";
-			entity._filteredEntities.clear();
-			filter->filter(entity);
-			bool firstChr = true;
-			for (CharacterId id : entity._filteredEntities) {
-				if (!firstChr)
-					s << ",";
-				s << id;
-				firstChr = false;
-			}
-			s << "]";
-			first = false;
-		}
-		entity._filteredEntities = copy;
-		s << ")";
-	}
+	void getConditionNameWithValue(std::stringstream& s, const AI& entity) override;
 
 public:
 	class Factory: public IConditionFactory {
