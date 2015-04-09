@@ -17,14 +17,16 @@ private:
 	AINodeStaticResolver& _resolver;
 	AIDebugger& _debugger;
 	mutable bool _allowUpdate;
-
-	inline BehaviourTreeModelItem* item(const QModelIndex& index) const {
-		return static_cast<BehaviourTreeModelItem*>(index.internalPointer());
-	}
 public:
 	explicit BehaviourTreeModel(AIDebugger& debugger, AINodeStaticResolver& resolver, QObject *parent = nullptr);
 	~BehaviourTreeModel();
 
+	inline BehaviourTreeModelItem* item(const QModelIndex& index) const {
+		if (!index.isValid())
+			return nullptr;
+
+		return static_cast<BehaviourTreeModelItem*>(index.internalPointer());
+	}
 	QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
 	QModelIndex parent(const QModelIndex &child) const override;
 	int rowCount(const QModelIndex &parent = QModelIndex()) const override;

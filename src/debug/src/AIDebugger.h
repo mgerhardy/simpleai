@@ -108,6 +108,7 @@ public:
 	void reset();
 	void change(const QString& name);
 	void updateNode(int32_t id, const QVariant& name, const QVariant& type, const QVariant& condition);
+	void deleteNode(int32_t id);
 
 	/**
 	 * @brief override this if you would like to create your own @c MapView implementation that renders

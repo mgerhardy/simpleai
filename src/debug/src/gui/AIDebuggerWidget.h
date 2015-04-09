@@ -86,6 +86,8 @@ private slots:
 	void onEntitiesUpdated();
 	void onSelected();
 	void showContextMenu(const QPoint& pos);
+	void onDeleteNode();
+	void onAddNode();
 
 private:
 	void createView();

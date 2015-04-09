@@ -184,13 +184,33 @@ QWidget *AIDebuggerWidget::createTopWidget() {
 	return splitter;
 }
 
+void AIDebuggerWidget::onDeleteNode() {
+	QAction* action = static_cast<QAction*>(sender());
+	BehaviourTreeModelItem* item = reinterpret_cast<BehaviourTreeModelItem*>(action->userData(0));
+	_debugger.deleteNode(item->node()->getNodeId());
+}
+
+void AIDebuggerWidget::onAddNode() {
+#if 0
+	QAction* action = static_cast<QAction*>(sender());
+	BehaviourTreeModelItem* item = reinterpret_cast<BehaviourTreeModelItem*>(action->userData(0));
+	// TODO:
+#endif
+}
+
 void AIDebuggerWidget::showContextMenu(const QPoint &pos) {
 	const QModelIndex& index = _tree->indexAt(pos);
+	BehaviourTreeModelItem* item = _model.item(index);
 
 	QMenu *menu = new QMenu(this);
-	// TODO:
-	menu->addAction(new QAction(tr("Add node"), this));
-	menu->addAction(new QAction(tr("Delete node"), this));
+	QAction* addAction = new QAction(tr("Add node"), this);
+	addAction->setUserData(0, reinterpret_cast<QObjectUserData*>(item));
+	connect(addAction, SIGNAL(triggered()), this, SLOT(onAddNode()));
+	QAction* deleteAction = new QAction(tr("Delete node"), this);
+	deleteAction->setUserData(0, reinterpret_cast<QObjectUserData*>(item));
+	connect(deleteAction, SIGNAL(triggered()), this, SLOT(onDeleteNode()));
+	menu->addAction(addAction);
+	menu->addAction(deleteAction);
 	menu->popup(_tree->viewport()->mapToGlobal(pos));
 }
 
@@ -210,6 +230,7 @@ QWidget *AIDebuggerWidget::createTreePanelWidget() {
 	_tree->setAlternatingRowColors(true);
 	_tree->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	_tree->setModel(&_model);
+	_tree->setContextMenuPolicy(Qt::CustomContextMenu);
 
 	connect(_tree, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showContextMenu(const QPoint &)));
 
