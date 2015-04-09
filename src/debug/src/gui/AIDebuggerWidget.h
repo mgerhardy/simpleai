@@ -85,6 +85,7 @@ private slots:
 	void onDisconnect();
 	void onEntitiesUpdated();
 	void onSelected();
+	void showContextMenu(const QPoint& pos);
 
 private:
 	void createView();

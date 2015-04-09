@@ -120,7 +120,7 @@ void AIDebuggerWidget::contributeToFileMenu(QMenu *fileMenu) {
 
 void AIDebuggerWidget::contributeToHelpMenu(QMenu *helpMenu) {
 	helpMenu->addAction(_documentationAction);
-	helpMenu->addAction(_bugAction);;
+	helpMenu->addAction(_bugAction);
 	helpMenu->addAction(_aboutAction);
 }
 
@@ -184,6 +184,16 @@ QWidget *AIDebuggerWidget::createTopWidget() {
 	return splitter;
 }
 
+void AIDebuggerWidget::showContextMenu(const QPoint &pos) {
+	const QModelIndex& index = _tree->indexAt(pos);
+
+	QMenu *menu = new QMenu(this);
+	// TODO:
+	menu->addAction(new QAction(tr("Add node"), this));
+	menu->addAction(new QAction(tr("Delete node"), this));
+	menu->popup(_tree->viewport()->mapToGlobal(pos));
+}
+
 QWidget *AIDebuggerWidget::createTreePanelWidget() {
 	QWidget* treePanel = new QWidget();
 	treePanel->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
@@ -200,6 +210,9 @@ QWidget *AIDebuggerWidget::createTreePanelWidget() {
 	_tree->setAlternatingRowColors(true);
 	_tree->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	_tree->setModel(&_model);
+
+	connect(_tree, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showContextMenu(const QPoint &)));
+
 	QHeaderView *header = _tree->header();
 	header->setStretchLastSection(false);
 	header->setSectionResizeMode(COL_NAME, QHeaderView::Stretch);
