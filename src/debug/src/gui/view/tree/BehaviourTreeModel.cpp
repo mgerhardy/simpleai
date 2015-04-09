@@ -17,16 +17,17 @@ BehaviourTreeModel::~BehaviourTreeModel() {
 	delete _rootItem;
 }
 
-void BehaviourTreeModel::onDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight) {
+void BehaviourTreeModel::onDataChanged(const QModelIndex& topLeft, const QModelIndex& /*bottomRight*/) {
 	BehaviourTreeModelItem *nodeItem = item(topLeft);
 	if (nodeItem == nullptr) {
 		qDebug() << "No item found at: " << topLeft;
 		return;
 	}
 
-	const QVariant& value = nodeItem->data(topLeft.column());
-	qDebug() << "Update " << nodeItem->node()->getNodeId() << " with new value " << value;
-	_debugger.updateNode(nodeItem->node()->getNodeId(), value);
+	const QVariant& name = nodeItem->data(COL_NAME);
+	const QVariant& type = nodeItem->data(COL_TYPE);
+	const QVariant& condition = nodeItem->data(COL_CONDITION);
+	_debugger.updateNode(nodeItem->node()->getNodeId(), name, type, condition);
 }
 
 QModelIndex BehaviourTreeModel::index(int row, int column, const QModelIndex &parent) const {

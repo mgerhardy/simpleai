@@ -5,8 +5,8 @@
 #include <server/IProtocolMessage.h>
 #include <server/AISelectMessage.h>
 #include <server/AIUpdateNodeMessage.h>
-#include <server/AIUpdateAddMessage.h>
-#include <server/AIUpdateDeleteMessage.h>
+#include <server/AIAddNodeMessage.h>
+#include <server/AIUpdateNodeMessage.h>
 #include <server/AICharacterDetailsMessage.h>
 #include <server/AICharacterStaticMessage.h>
 #include <server/AIChangeMessage.h>
