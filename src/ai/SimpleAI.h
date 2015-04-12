@@ -96,6 +96,9 @@
 #include "server/AIStateMessage.h"
 #include "server/AINamesMessage.h"
 #include "server/AIChangeMessage.h"
+#include "server/AIAddNodeMessage.h"
+#include "server/AIDeleteNodeMessage.h"
+#include "server/AIUpdateNodeMessage.h"
 
 #include "zone/Zone.h"
 
