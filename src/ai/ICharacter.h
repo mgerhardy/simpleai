@@ -152,7 +152,7 @@ inline CharacterType& character_cast(ICharacter& character) {
 
 template <typename CharacterType>
 inline CharacterType& character_cast(const ICharacterPtr& character) {
-	return static_cast<CharacterType*>(character.get());
+	return *static_cast<CharacterType*>(character.get());
 }
 
 }

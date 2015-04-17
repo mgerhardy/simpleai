@@ -145,6 +145,11 @@ public:
 	ICharacterPtr getCharacter() const;
 	void setCharacter(const ICharacterPtr& character);
 
+	template <typename CharacterType>
+	inline CharacterType& getCharacterCast() const {
+		return *static_cast<CharacterType*>(_character.get());
+	}
+
 	CharacterId getId() const;
 
 	/**
