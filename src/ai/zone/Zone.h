@@ -23,6 +23,7 @@ public:
 	typedef std::unordered_map<CharacterId, AI*> AIMap;
 	typedef std::list<AI*> AIScheduleList;
 	typedef std::list<const AI*> AIScheduleConstList;
+	typedef std::list<CharacterId> CharacterIdList;
 	typedef AIMap::const_iterator AIMapConstIter;
 	typedef AIMap::iterator AIMapIter;
 
@@ -31,6 +32,7 @@ protected:
 	AIMap _ais;
 	AIScheduleList _scheduledAdd;
 	AIScheduleConstList _scheduledRemove;
+	CharacterIdList _scheduledDestroy;
 	bool _debug;
 	ReadWriteLock _lock;
 	ReadWriteLock _scheduleLock;
@@ -85,6 +87,11 @@ public:
 	 * @note This does not lock the zone for writing but a dedicated schedule lock
 	 */
 	bool scheduleRemove(const AI* ai);
+
+	/**
+	 * @sa destroyAI
+	 */
+	bool scheduleDestroy(const CharacterId& id);
 
 	/**
 	 * @brief Every zone has its own name that identifies it

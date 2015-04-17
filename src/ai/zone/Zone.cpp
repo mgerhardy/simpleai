@@ -49,6 +49,14 @@ bool Zone::scheduleAdd(AI* ai) {
 	return true;
 }
 
+bool Zone::scheduleDestroy(const CharacterId& id) {
+	if (ai == nullptr)
+		return false;
+	ScopedWriteLock scopedLock(_scheduleLock);
+	_scheduledDestroy.push_back(id);
+	return true;
+}
+
 bool Zone::scheduleRemove(const AI* ai) {
 	if (ai == nullptr)
 		return false;
@@ -68,6 +76,10 @@ void Zone::update(long dt) {
 			removeAI(ai);
 		}
 		_scheduledRemove.clear();
+		for (auto id : _scheduledDestroy) {
+			destroyAI(id);
+		}
+		_scheduledDestroy.clear();
 	}
 
 	auto func = [&] (AI& ai) {
