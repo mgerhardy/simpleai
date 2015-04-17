@@ -50,8 +50,6 @@ bool Zone::scheduleAdd(AI* ai) {
 }
 
 bool Zone::scheduleDestroy(const CharacterId& id) {
-	if (ai == nullptr)
-		return false;
 	ScopedWriteLock scopedLock(_scheduleLock);
 	_scheduledDestroy.push_back(id);
 	return true;
