@@ -16,11 +16,11 @@ public:
 			SelectionSteering() {
 	}
 
-	virtual MoveVector execute (const ICharacter& character, float speed) const override {
-		const Vector3f& target = getSelectionTarget(character, 0);
+	virtual MoveVector execute (const AIPtr& ai, float speed) const override {
+		const Vector3f& target = getSelectionTarget(ai, 0);
 		if (target == Vector3f::INFINITE)
 			const MoveVector d(target, 0.0);
-		Vector3f v = character.getPosition() - target;
+		Vector3f v = ai->getCharacter()->getPosition() - target;
 		double orientation = 0.0;
 		if (v.squareLength() > 0) {
 			v.normalize();

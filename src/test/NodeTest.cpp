@@ -17,32 +17,42 @@ TEST_F(NodeTest, testSequence) {
 	node->addChild(idle1);
 	node->addChild(idle2);
 
-	TestEntity e(1, node);
-	e.update(1, true);
-	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
-	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
-	e.update(1, true);
-	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
-	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
-	e.update(1, true);
-	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
-	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
-	e.update(1, true);
-	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
-	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
-	e.update(1, true);
-	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
-	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus(e));
-	e.update(1, true);
-	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
-	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus(e));
+	ai::AIPtr ai(new ai::AI(node));
+	ai::ICharacterPtr chr(new ai::ICharacter(1));
+	ai->setCharacter(chr);
+	ai->update(1, true);
+	ai->getBehaviour()->execute(ai, 1);
+	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(ai));
+	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(ai));
+	ai->update(1, true);
+	ai->getBehaviour()->execute(ai, 1);
+	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(ai));
+	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(ai));
+	ai->update(1, true);
+	ai->getBehaviour()->execute(ai, 1);
+	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(ai));
+	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(ai));
+	ai->update(1, true);
+	ai->getBehaviour()->execute(ai, 1);
+	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(ai));
+	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(ai));
+	ai->update(1, true);
+	ai->getBehaviour()->execute(ai, 1);
+	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(ai));
+	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus(ai));
+	ai->update(1, true);
+	ai->getBehaviour()->execute(ai, 1);
+	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(ai));
+	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus(ai));
 }
 
 TEST_F(NodeTest, testIdle) {
 	ai::Idle::Factory f;
 	ai::TreeNodeFactoryContext ctx("testidle", "1000", ai::True::get());
 	ai::TreeNodePtr node = f.create(&ctx);
-	TestEntity entity(1, ai::TreeNodePtr());
+	ai::AIPtr entity(new ai::AI(node));
+	ai::ICharacterPtr chr(new ai::ICharacter(1));
+	entity->setCharacter(chr);
 	ASSERT_EQ(ai::RUNNING, node->execute(entity, 1));
 	ASSERT_EQ(ai::FINISHED, node->execute(entity, 1000));
 }
@@ -61,14 +71,19 @@ TEST_F(NodeTest, testParallel) {
 	node->addChild(idle1);
 	node->addChild(idle2);
 
-	TestEntity e(1, node);
-	e.update(1, true);
+	ai::AIPtr e(new ai::AI(node));
+	ai::ICharacterPtr chr(new ai::ICharacter(1));
+	e->setCharacter(chr);
+	e->update(1, true);
+	e->getBehaviour()->execute(e, 1);
 	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
-	e.update(1, true);
+	e->update(1, true);
+	e->getBehaviour()->execute(e, 1);
 	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
-	e.update(1, true);
+	e->update(1, true);
+	e->getBehaviour()->execute(e, 1);
 	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus(e));
 }
@@ -87,14 +102,19 @@ TEST_F(NodeTest, testPrioritySelector) {
 	node->addChild(idle1);
 	node->addChild(idle2);
 
-	TestEntity e(1, node);
-	e.update(1, true);
+	ai::AIPtr e(new ai::AI(node));
+	ai::ICharacterPtr chr(new ai::ICharacter(1));
+	e->setCharacter(chr);
+	e->update(1, true);
+	e->getBehaviour()->execute(e, 1);
 	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
-	e.update(1, true);
+	e->update(1, true);
+	e->getBehaviour()->execute(e, 1);
 	ASSERT_EQ(ai::RUNNING, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
-	e.update(1, true);
+	e->update(1, true);
+	e->getBehaviour()->execute(e, 1);
 	ASSERT_EQ(ai::FINISHED, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::UNKNOWN, idle2->getLastStatus(e));
 }
@@ -113,14 +133,19 @@ TEST_F(NodeTest, testPrioritySelectorWithCondition) {
 	node->addChild(idle1);
 	node->addChild(idle2);
 
-	TestEntity e(1, node);
-	e.update(1, true);
+	ai::AIPtr e(new ai::AI(node));
+	ai::ICharacterPtr chr(new ai::ICharacter(1));
+	e->setCharacter(chr);
+	e->update(1, true);
+	e->getBehaviour()->execute(e, 1);
 	ASSERT_EQ(ai::CANNOTEXECUTE, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
-	e.update(1, true);
+	e->update(1, true);
+	e->getBehaviour()->execute(e, 1);
 	ASSERT_EQ(ai::CANNOTEXECUTE, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::RUNNING, idle2->getLastStatus(e));
-	e.update(1, true);
+	e->update(1, true);
+	e->getBehaviour()->execute(e, 1);
 	ASSERT_EQ(ai::CANNOTEXECUTE, idle1->getLastStatus(e));
 	ASSERT_EQ(ai::FINISHED, idle2->getLastStatus(e));
 }

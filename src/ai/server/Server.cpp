@@ -35,8 +35,8 @@ bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const st
 	if (zone == nullptr)
 		return false;
 	bool success = false;
-	auto func = [&] (AI& ai) {
-		const TreeNodePtr& node = ai.getBehaviour()->getId() == nodeId ? ai.getBehaviour() : ai.getBehaviour()->getChild(nodeId);
+	auto func = [&] (const AIPtr& ai) {
+		const TreeNodePtr& node = ai->getBehaviour()->getId() == nodeId ? ai->getBehaviour() : ai->getBehaviour()->getChild(nodeId);
 		if (!node)
 			return;
 		ConditionParser conditionParser(_aiRegistry, condition);
@@ -56,9 +56,9 @@ bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const st
 			newNode->addChild(child);
 		}
 
-		const TreeNodePtr& root = ai.getBehaviour();
+		const TreeNodePtr& root = ai->getBehaviour();
 		if (node == root) {
-			ai.setBehaviour(newNode);
+			ai->setBehaviour(newNode);
 		} else {
 			const TreeNodePtr& parent = root->getParent(root, nodeId);
 			if (!parent) {
@@ -82,8 +82,8 @@ bool Server::addNode(const CharacterId& characterId, int32_t parentNodeId, const
 	if (zone == nullptr)
 		return false;
 	bool success = false;
-	auto func = [&] (AI& ai) {
-		TreeNodePtr node = ai.getBehaviour();
+	auto func = [&] (const AIPtr& ai) {
+		TreeNodePtr node = ai->getBehaviour();
 		if (node->getId() != parentNodeId) {
 			node = node->getChild(parentNodeId);
 		}
@@ -116,9 +116,9 @@ bool Server::deleteNode(const CharacterId& characterId, int32_t nodeId) {
 	if (zone == nullptr)
 		return false;
 	bool success = false;
-	auto func = [&] (AI& ai) {
+	auto func = [&] (const AIPtr& ai) {
 		// don't delete the root
-		const TreeNodePtr& root = ai.getBehaviour();
+		const TreeNodePtr& root = ai->getBehaviour();
 		if (root->getId() == nodeId)
 			return;
 
@@ -145,12 +145,13 @@ void Server::step(long stepMillis) {
 	if (!_pause)
 		return;
 
-	auto func = [&] (AI& ai) {
-		if (!ai.isPause())
+	auto func = [&] (const AIPtr& ai) {
+		if (!ai->isPause())
 			return;
-		ai.setPause(false);
-		ai.update(stepMillis, true);
-		ai.setPause(true);
+		ai->setPause(false);
+		ai->update(stepMillis, true);
+		ai->getBehaviour()->execute(ai, stepMillis);
+		ai->setPause(true);
 	};
 	zone->visit(func);
 	broadcastState(zone);
@@ -161,8 +162,8 @@ void Server::reset() {
 	Zone* zone = _zone;
 	if (zone == nullptr)
 		return;
-	static auto func = [] (AI& ai) {
-		ai.getBehaviour()->resetState(ai);
+	static auto func = [] (const AIPtr& ai) {
+		ai->getBehaviour()->resetState(ai);
 	};
 	zone->visit(func);
 }
@@ -230,8 +231,8 @@ void Server::pause(const ClientId& /*clientId*/, bool state) {
 	if (zone == nullptr)
 		return;
 	_pause = state;
-	auto func = [&] (AI& ai) {
-		ai.setPause(state);
+	auto func = [&] (const AIPtr& ai) {
+		ai->setPause(state);
 	};
 	zone->visit(func);
 	_network.broadcast(AIPauseMessage(state));
@@ -249,11 +250,11 @@ void Server::addChildren(const TreeNodePtr& node, std::vector<AIStateNodeStatic>
 	}
 }
 
-void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, const AI& ai) const {
+void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, const AIPtr& ai) const {
 	const TreeNodes& children = node->getChildren();
 	std::vector<bool> currentlyRunning(children.size());
 	node->getRunningChildren(ai, currentlyRunning);
-	const long aiTime = ai._time;
+	const long aiTime = ai->_time;
 	const std::size_t length = children.size();
 	for (std::size_t i = 0; i < length; ++i) {
 		const TreeNodePtr& childNode = children[i];
@@ -270,9 +271,9 @@ void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, const AI&
 
 void Server::broadcastState(Zone* zone) {
 	AIStateMessage msg;
-	auto func = [&] (AI& ai) {
-		const ICharacter& chr = ai.getCharacter();
-		const AIStateWorld b(chr.getId(), chr.getPosition(), chr.getOrientation(), chr.getAttributes());
+	auto func = [&] (const AIPtr& ai) {
+		const ICharacterPtr& chr = ai->getCharacter();
+		const AIStateWorld b(chr->getId(), chr->getPosition(), chr->getOrientation(), chr->getAttributes());
 		msg.addState(b);
 	};
 	zone->visit(func);
@@ -284,9 +285,9 @@ void Server::broadcastStaticCharacterDetails(Zone* zone) {
 	if (id == -1)
 		return;
 
-	auto func = [&] (AI& ai) {
+	auto func = [&] (const AIPtr& ai) {
 		std::vector<AIStateNodeStatic> nodeStaticData;
-		const TreeNodePtr& node = ai.getBehaviour();
+		const TreeNodePtr& node = ai->getBehaviour();
 		const int32_t nodeId = node->getId();
 		nodeStaticData.push_back(AIStateNodeStatic(nodeId, node->getName(), node->getType(), node->getParameters(), node->getCondition()->getName(), node->getCondition()->getParameters()));
 		addChildren(node, nodeStaticData);
@@ -304,8 +305,8 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 	if (id == -1)
 		return;
 
-	auto func = [&] (AI& ai) {
-		const TreeNodePtr& node = ai.getBehaviour();
+	auto func = [&] (const AIPtr& ai) {
+		const TreeNodePtr& node = ai->getBehaviour();
 		const int32_t nodeId = node->getId();
 		const ConditionPtr& condition = node->getCondition();
 		const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
@@ -313,7 +314,7 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 		addChildren(node, root, ai);
 
 		AIStateAggro aggro;
-		const ai::AggroMgr::Entries& entries = ai.getAggroMgr().getEntries();
+		const ai::AggroMgr::Entries& entries = ai->getAggroMgr().getEntries();
 		aggro.reserve(entries.size());
 		for (const Entry& e : entries) {
 			aggro.addAggro(AIStateAggroEntry(e.getCharacterId(), e.getAggro()));

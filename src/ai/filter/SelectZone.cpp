@@ -3,13 +3,13 @@
 
 namespace ai {
 
-void SelectZone::filter (const AI& entity) {
+void SelectZone::filter (const AIPtr& entity) {
 	FilteredEntities& entities = getFilteredEntities(entity);
-	auto func = [&] (const AI& ai) {
-		entities.push_back(ai.getCharacter().getId());
+	auto func = [&] (const AIPtr& ai) {
+		entities.push_back(ai->getId());
 		return true;
 	};
-	entity.getZone().visit(func);
+	entity->getZone()->visit(func);
 }
 
 FILTER_FACTORY_IMPL(SelectZone)

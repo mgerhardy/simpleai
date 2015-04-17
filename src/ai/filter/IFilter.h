@@ -74,8 +74,8 @@ protected:
 	 *
 	 * @see @code SelectEmpty to do the clear from within the behaviour tree
 	 */
-	inline FilteredEntities& getFilteredEntities(const AI& ai) {
-		return ai._filteredEntities;
+	inline FilteredEntities& getFilteredEntities(const AIPtr& ai) {
+		return ai->_filteredEntities;
 	}
 public:
 	IFilter (const std::string& name, const std::string& parameters) :
@@ -93,7 +93,7 @@ public:
 		return _parameters;
 	}
 
-	virtual void filter (const AI& entity) = 0;
+	virtual void filter (const AIPtr& entity) = 0;
 };
 
 }

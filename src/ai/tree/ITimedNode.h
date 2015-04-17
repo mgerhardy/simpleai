@@ -25,13 +25,13 @@ public:
 	ITimedNode(const std::string& name, const std::string& parameters, const ConditionPtr& condition);
 	virtual ~ITimedNode();
 
-	TreeNodeStatus execute(AI& entity, long deltaMillis);
+	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis);
 
 	/**
 	 * @brief Called whenever the timer is started or restarted
 	 * @note The returned @c TreeNodeStatus is recorded automatically
 	 */
-	virtual TreeNodeStatus executeStart(AI& /*entity*/, long /*deltaMillis*/) {
+	virtual TreeNodeStatus executeStart(const AIPtr& /*entity*/, long /*deltaMillis*/) {
 		return RUNNING;
 	}
 
@@ -43,7 +43,7 @@ public:
 	 * not get into @c executeRunning, but directly into @c executeExpired.
 	 * @note The returned @c TreeNodeStatus is recorded automatically
 	 */
-	virtual TreeNodeStatus executeRunning(AI& /*entity*/, long /*deltaMillis*/) {
+	virtual TreeNodeStatus executeRunning(const AIPtr& /*entity*/, long /*deltaMillis*/) {
 		return RUNNING;
 	}
 
@@ -51,7 +51,7 @@ public:
 	 * @brief Called in the frame where the timer expired.
 	 * @note The returned @c TreeNodeStatus is recorded automatically
 	 */
-	virtual TreeNodeStatus executeExpired(AI& /*entity*/, long /*deltaMillis*/) {
+	virtual TreeNodeStatus executeExpired(const AIPtr& /*entity*/, long /*deltaMillis*/) {
 		return FINISHED;
 	}
 };

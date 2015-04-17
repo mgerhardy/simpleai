@@ -5,15 +5,11 @@
 
 namespace ai {
 
-AI::AI(ICharacter& character, const TreeNodePtr& behaviour) :
-		_behaviour(behaviour), _character(character), _pause(false), _debuggingActive(false), _time(0L), _zone(nullptr), _reset(false) {
+AI::AI(const TreeNodePtr& behaviour) :
+		_behaviour(behaviour), _pause(false), _debuggingActive(false), _time(0L), _zone(nullptr), _reset(false) {
 }
 
 AI::~AI() {
-	Zone* local = _zone;
-	if (local != nullptr) {
-		local->getGroupMgr().removeFromAllGroups(&_character);
-	}
 }
 
 Vector3f AI::getGroupPosition(GroupId id) const {
@@ -29,15 +25,24 @@ Vector3f AI::getGroupLeaderPosition(GroupId id) const {
 	if (local == nullptr)
 		return Vector3f::INFINITE;
 
-	const ICharacter* groupLeader = local->getGroupMgr().getLeader(id);
-	if (groupLeader != nullptr)
-		return groupLeader->getPosition();
+	const AIPtr& groupLeader = local->getGroupMgr().getLeader(id);
+	if (groupLeader)
+		return groupLeader->getCharacter()->getPosition();
 	return Vector3f::INFINITE;
+}
+
+CharacterId AI::getId() const {
+	if (!_character)
+		return NOTHING_SELECTED;
+	return _character->getId();
 }
 
 void AI::update(long dt, bool debuggingActive) {
 	if (isPause())
 		return;
+
+	if (_character)
+		_character->update(dt, debuggingActive);
 
 	if (_reset) {
 		// safe to do it like this, because update is not called from multiple threads
@@ -51,7 +56,6 @@ void AI::update(long dt, bool debuggingActive) {
 	_debuggingActive = debuggingActive;
 	_time += dt;
 	_aggroList.update(dt);
-	_behaviour->execute(*this, dt);
 }
 
 }

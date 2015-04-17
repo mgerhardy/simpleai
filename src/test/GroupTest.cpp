@@ -4,22 +4,23 @@ class GroupMgrTest: public TestSuite {
 };
 
 TEST_F(GroupMgrTest, testMassGroupAveragePosition) {
-	std::vector<std::shared_ptr<TestEntity> > ais;
 	const ai::GroupId groupId = 1;
 	const ai::Vector3f pos1(3.0f, 3.0f, 0.0f);
 	const ai::Vector3f pos2(300.0f, 300.0f, 0.0f);
 	for (int i = 1; i <= 2; ++i) {
 		const ai::CharacterId id = i;
-		TestEntity *e = new TestEntity(id, ai::TreeNodePtr());
-		ais.push_back(std::shared_ptr<TestEntity>(e));
-		e->setPosition(pos1);
+		ai::AIPtr e(new ai::AI(ai::TreeNodePtr()));
+		ai::ICharacterPtr chr(new ai::ICharacter(id));
+		e->setCharacter(chr);
+		chr->setPosition(pos1);
 		_groupManager.add(groupId, e);
 	}
 	for (int i = 3; i <= 4; ++i) {
 		const ai::CharacterId id = i;
-		TestEntity *e = new TestEntity(id, ai::TreeNodePtr());
-		ais.push_back(std::shared_ptr<TestEntity>(e));
-		e->setPosition(pos2);
+		ai::AIPtr e(new ai::AI(ai::TreeNodePtr()));
+		ai::ICharacterPtr chr(new ai::ICharacter(id));
+		e->setCharacter(chr);
+		chr->setPosition(pos2);
 		_groupManager.add(groupId, e);
 	}
 	_groupManager.update(0);
@@ -32,12 +33,14 @@ TEST_F(GroupMgrTest, testMassGroupAveragePosition) {
 class GroupTest: public TestSuite {
 private:
 public:
-	typedef std::vector<std::shared_ptr<TestEntity> > TestEntities;
+	typedef std::vector<ai::AIPtr> TestEntities;
 	inline void addMass(int max, ai::GroupId groupId, TestEntities& ais, ai::GroupMgr& mgr) const {
 		for (int i = 1; i <= max; ++i) {
 			const ai::CharacterId id = i;
-			TestEntity *e = new TestEntity(id, ai::TreeNodePtr());
-			ais.push_back(std::shared_ptr<TestEntity>(e));
+			ai::AIPtr e(new ai::AI(ai::TreeNodePtr()));
+			ai::ICharacterPtr chr(new ai::ICharacter(id));
+			e->setCharacter(chr);
+			ais.push_back(e);
 			mgr.add(groupId, e);
 		}
 		ASSERT_EQ(max, mgr.getGroupSize(groupId));
@@ -45,7 +48,7 @@ public:
 
 	inline void remove(ai::GroupId groupId, TestEntities& ais, ai::GroupMgr& mgr) const {
 		for (auto i = ais.begin(); i != ais.end(); ++i) {
-			mgr.remove(groupId, i->get());
+			mgr.remove(groupId, *i);
 		}
 		const int nEmpty = mgr.getGroupSize(groupId);
 		ASSERT_EQ(0, nEmpty) << "Unexpected group size for " << groupId;
@@ -64,47 +67,58 @@ public:
 TEST_F(GroupTest, testGroupAddRemove) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr());
-	ASSERT_TRUE(groupMgr.add(id, &entity1));
-	ASSERT_FALSE(groupMgr.remove(0, &entity1));
-	ASSERT_TRUE(groupMgr.remove(id, &entity1));
-	ASSERT_FALSE(groupMgr.remove(id, &entity1));
+	ai::AIPtr entity1(new ai::AI(ai::TreeNodePtr()));
+	ai::ICharacterPtr chr(new ai::ICharacter(id));
+	entity1->setCharacter(chr);
+	ASSERT_TRUE(groupMgr.add(id, entity1));
+	ASSERT_FALSE(groupMgr.remove(0, entity1));
+	ASSERT_TRUE(groupMgr.remove(id, entity1));
+	ASSERT_FALSE(groupMgr.remove(id, entity1));
 }
 
 TEST_F(GroupTest, testGroupIsInAny) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr());
-	ASSERT_TRUE(groupMgr.add(id, &entity1));
+	ai::AIPtr entity1(new ai::AI(ai::TreeNodePtr()));
+	ai::ICharacterPtr chr(new ai::ICharacter(id));
+	entity1->setCharacter(chr);
+	ASSERT_TRUE(groupMgr.add(id, entity1));
 	ASSERT_TRUE(groupMgr.isInAnyGroup(entity1));
-	ASSERT_TRUE(groupMgr.remove(id, &entity1));
+	ASSERT_TRUE(groupMgr.remove(id, entity1));
 	ASSERT_FALSE(groupMgr.isInAnyGroup(entity1));
 }
 
 TEST_F(GroupTest, testGroupSize) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr());
-	ASSERT_TRUE(groupMgr.add(id, &entity1));
-	TestEntity entity2(2, ai::TreeNodePtr());
-	ASSERT_TRUE(groupMgr.add(id, &entity2));
+	ai::AIPtr entity1(new ai::AI(ai::TreeNodePtr()));
+	ai::ICharacterPtr chr(new ai::ICharacter(id));
+	entity1->setCharacter(chr);
+	ASSERT_TRUE(groupMgr.add(id, entity1));
+	ai::AIPtr entity2(new ai::AI(ai::TreeNodePtr()));
+	entity2->setCharacter(ai::ICharacterPtr(new ai::ICharacter(2)));
+	ASSERT_TRUE(groupMgr.add(id, entity2));
 	ASSERT_EQ(2, groupMgr.getGroupSize(id));
 }
 
 TEST_F(GroupTest, testGroupLeader) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr());
-	ASSERT_TRUE(groupMgr.add(id, &entity1));
-	TestEntity entity2(2, ai::TreeNodePtr());
-	ASSERT_TRUE(groupMgr.add(id, &entity2));
-	TestEntity entity3(3, ai::TreeNodePtr());
-	ASSERT_TRUE(groupMgr.add(id, &entity3));
+	ai::AIPtr entity1(new ai::AI(ai::TreeNodePtr()));
+	ai::ICharacterPtr chr(new ai::ICharacter(id));
+	entity1->setCharacter(chr);
+	ASSERT_TRUE(groupMgr.add(id, entity1));
+	ai::AIPtr entity2(new ai::AI(ai::TreeNodePtr()));
+	entity2->setCharacter(ai::ICharacterPtr(new ai::ICharacter(2)));
+	ASSERT_TRUE(groupMgr.add(id, entity2));
+	ai::AIPtr entity3(new ai::AI(ai::TreeNodePtr()));
+	entity3->setCharacter(ai::ICharacterPtr(new ai::ICharacter(3)));
+	ASSERT_TRUE(groupMgr.add(id, entity3));
 	ASSERT_EQ(3, groupMgr.getGroupSize(id));
 	ASSERT_TRUE(groupMgr.isGroupLeader(id, entity1));
 	ASSERT_FALSE(groupMgr.isGroupLeader(id, entity2));
 	ASSERT_FALSE(groupMgr.isGroupLeader(id, entity3));
-	ASSERT_TRUE(groupMgr.remove(id, &entity1));
+	ASSERT_TRUE(groupMgr.remove(id, entity1));
 	ASSERT_FALSE(groupMgr.isInGroup(id, entity1));
 	ASSERT_FALSE(groupMgr.isGroupLeader(id, entity1));
 	ASSERT_TRUE(groupMgr.isGroupLeader(id, entity2) || groupMgr.isGroupLeader(id, entity3));
@@ -114,15 +128,18 @@ TEST_F(GroupTest, testGroupAveragePosition) {
 	const ai::GroupId id = 1;
 	ai::Vector3f avg;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr());
-	entity1.setPosition(ai::Vector3f(1.0f, 1.0f, 0.0f));
-	ASSERT_TRUE(groupMgr.add(id, &entity1));
+	ai::AIPtr entity1(new ai::AI(ai::TreeNodePtr()));
+	ai::ICharacterPtr chr(new ai::ICharacter(id));
+	entity1->setCharacter(chr);
+	chr->setPosition(ai::Vector3f(1.0f, 1.0f, 0.0f));
+	ASSERT_TRUE(groupMgr.add(id, entity1));
 	groupMgr.update(0);
 	avg = groupMgr.getPosition(id);
 	ASSERT_EQ(ai::Vector3f(1.0f, 1.0f, 0.0f), avg);
-	TestEntity entity2(2, ai::TreeNodePtr());
-	entity2.setPosition(ai::Vector3f(3.0f, 3.0f, 0.0f));
-	ASSERT_TRUE(groupMgr.add(id, &entity2));
+	ai::AIPtr entity2(new ai::AI(ai::TreeNodePtr()));
+	entity2->setCharacter(ai::ICharacterPtr(new ai::ICharacter(2)));
+	entity2->getCharacter()->setPosition(ai::Vector3f(3.0f, 3.0f, 0.0f));
+	ASSERT_TRUE(groupMgr.add(id, entity2));
 	groupMgr.update(0);
 	avg = groupMgr.getPosition(id);
 	ASSERT_EQ(ai::Vector3f(2.0f, 2.0f, 0.0f), avg);
@@ -153,22 +170,25 @@ public:
 };
 
 TEST_F(GroupMassTest, testIsInAnyGroupMass100x100) {
-	std::shared_ptr<TestEntity> e = _ais.back();
-	ASSERT_TRUE(_groupManager.isInAnyGroup(*e));
+	const ai::AIPtr& e = _ais.back();
+	ASSERT_TRUE(_groupManager.isInAnyGroup(e));
 }
 
 TEST_F(GroupTest, testGroupRemove) {
 	const ai::GroupId id = 1;
 	ai::GroupMgr groupMgr;
-	TestEntity entity1(1, ai::TreeNodePtr());
-	ASSERT_TRUE(groupMgr.add(id, &entity1));
-	TestEntity entity2(2, ai::TreeNodePtr());
-	ASSERT_TRUE(groupMgr.add(id, &entity2));
-	TestEntity entity3(3, ai::TreeNodePtr());
-	ASSERT_TRUE(groupMgr.add(id, &entity3));
+	ai::AIPtr entity1(new ai::AI(ai::TreeNodePtr()));
+	entity1->setCharacter(ai::ICharacterPtr(new ai::ICharacter(1)));
+	ASSERT_TRUE(groupMgr.add(id, entity1));
+	ai::AIPtr entity2(new ai::AI(ai::TreeNodePtr()));
+	entity2->setCharacter(ai::ICharacterPtr(new ai::ICharacter(2)));
+	ASSERT_TRUE(groupMgr.add(id, entity2));
+	ai::AIPtr entity3(new ai::AI(ai::TreeNodePtr()));
+	entity3->setCharacter(ai::ICharacterPtr(new ai::ICharacter(3)));
+	ASSERT_TRUE(groupMgr.add(id, entity3));
 	ASSERT_EQ(3, groupMgr.getGroupSize(id));
-	ASSERT_TRUE(groupMgr.remove(id, &entity1));
-	ASSERT_TRUE(groupMgr.remove(id, &entity2));
-	ASSERT_TRUE(groupMgr.remove(id, &entity3));
+	ASSERT_TRUE(groupMgr.remove(id, entity1));
+	ASSERT_TRUE(groupMgr.remove(id, entity2));
+	ASSERT_TRUE(groupMgr.remove(id, entity3));
 	ASSERT_EQ(0, groupMgr.getGroupSize(id));
 }

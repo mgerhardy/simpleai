@@ -20,9 +20,9 @@ namespace ai {
  */
 class Zone {
 public:
-	typedef std::unordered_map<CharacterId, AI*> AIMap;
-	typedef std::list<AI*> AIScheduleList;
-	typedef std::list<const AI*> AIScheduleConstList;
+	typedef std::unordered_map<CharacterId, AIPtr> AIMap;
+	typedef std::list<AIPtr> AIScheduleList;
+	typedef std::list<AIPtr> AIScheduleConstList;
 	typedef std::list<CharacterId> CharacterIdList;
 	typedef AIMap::const_iterator AIMapConstIter;
 	typedef AIMap::iterator AIMapIter;
@@ -58,11 +58,11 @@ public:
 	 * @note Make sure to also call @c removeAI whenever you despawn the given @c AI instance
 	 * @note This locks the zone for writing
 	 */
-	bool addAI(AI* ai);
+	bool addAI(const AIPtr& ai);
 	/**
 	 * @note This locks the zone for writing
 	 */
-	bool removeAI(const AI* ai);
+	bool removeAI(const AIPtr& ai);
 
 	/**
 	 * @brief @c removeAI will access the character and the @c AI object, this method does not need access to the data anymore.
@@ -78,7 +78,7 @@ public:
 	 *
 	 * @note This does not lock the zone for writing but a dedicated schedule lock
 	 */
-	bool scheduleAdd(AI* ai);
+	bool scheduleAdd(const AIPtr& ai);
 
 	/**
 	 * @brief If you need to remove @code AI entities from a zone from within the @code AI tick (e.g. despawning via behaviour
@@ -86,7 +86,7 @@ public:
 	 *
 	 * @note This does not lock the zone for writing but a dedicated schedule lock
 	 */
-	bool scheduleRemove(const AI* ai);
+	bool scheduleRemove(const AIPtr& ai);
 
 	/**
 	 * @sa destroyAI
@@ -125,8 +125,8 @@ public:
 		auto i = _ais.find(id);
 		if (i == _ais.end())
 			return false;
-		AI *ai = i->second;
-		func(*ai);
+		AIPtr ai = i->second;
+		func(ai);
 		return true;
 	}
 
@@ -139,8 +139,8 @@ public:
 	void visit(Func& func) {
 		ScopedReadLock scopedLock(_lock);
 		for (auto i = _ais.begin(); i != _ais.end(); ++i) {
-			AI *ai = i->second;
-			func(*ai);
+			AIPtr ai = i->second;
+			func(ai);
 		}
 	}
 
@@ -153,8 +153,8 @@ public:
 	void visit(const Func& func) const {
 		ScopedReadLock scopedLock(_lock);
 		for (auto i = _ais.begin(), end = _ais.end(); i != end; ++i) {
-			const AI *ai = i->second;
-			func(*ai);
+			AIPtr ai = i->second;
+			func(ai);
 		}
 	}
 

@@ -21,7 +21,7 @@ public:
 			_groupId = std::stoi(_parameters);
 	}
 
-	void filter (const AI& entity) override;
+	void filter (const AIPtr& entity) override;
 };
 
 }

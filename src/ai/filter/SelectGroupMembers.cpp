@@ -3,13 +3,13 @@
 
 namespace ai {
 
-void SelectGroupMembers::filter (const AI& entity) {
+void SelectGroupMembers::filter (const AIPtr& entity) {
 	FilteredEntities& entities = getFilteredEntities(entity);
-	auto func = [&] (const ICharacter& chr) {
-		entities.push_back(chr.getId());
+	auto func = [&] (const AIPtr& ai) {
+		entities.push_back(ai->getId());
 		return true;
 	};
-	entity.getZone().getGroupMgr().visit(_groupId, func);
+	entity->getZone()->getGroupMgr().visit(_groupId, func);
 }
 
 FILTER_FACTORY_IMPL(SelectGroupMembers)

@@ -84,11 +84,11 @@ protected:
 	std::string _parameters;
 	ConditionPtr _condition;
 
-	void setResetSinceLastExec(AI& entity, bool status);
-	TreeNodeStatus state(AI& entity, TreeNodeStatus treeNodeState);
-	int getSelectorState(const AI& entity) const;
-	void setSelectorState(AI& entity, int selected);
-	void setLastExecMillis(AI& entity);
+	void setResetSinceLastExec(const AIPtr& entity, bool status);
+	TreeNodeStatus state(const AIPtr& entity, TreeNodeStatus treeNodeState);
+	int getSelectorState(const AIPtr& entity) const;
+	void setSelectorState(const AIPtr& entity, int selected);
+	void setLastExecMillis(const AIPtr& entity);
 
 	TreeNodePtr getParent_r(const TreeNodePtr& parent, int id) const;
 
@@ -134,22 +134,22 @@ public:
 	/**
 	 * @brief Returns the time in milliseconds when this node was last run. This is only updated if @c #execute() was called
 	 */
-	bool getResetSinceLastExec(const AI& entity) const;
+	bool getResetSinceLastExec(const AIPtr& entity) const;
 
 	/**
 	 * @brief Get the state of all child nodes for the given entity
 	 * @param[in] entity The entity to get the child node states for
 	 */
-	virtual void getRunningChildren(const AI& entity, std::vector<bool>& active) const;
-	long getLastExecMillis(const AI& ai) const;
-	TreeNodeStatus getLastStatus(const AI& ai) const;
+	virtual void getRunningChildren(const AIPtr& entity, std::vector<bool>& active) const;
+	long getLastExecMillis(const AIPtr& ai) const;
+	TreeNodeStatus getLastStatus(const AIPtr& ai) const;
 
-	virtual TreeNodeStatus execute(AI& entity, long deltaMillis);
+	virtual TreeNodeStatus execute(const AIPtr& entity, long deltaMillis);
 
 	/**
 	 * @brief Reset the states in the node and also in the entity
 	 */
-	virtual void resetState(AI& entity);
+	virtual void resetState(const AIPtr& entity);
 
 	virtual bool addChild(const TreeNodePtr& child);
 	TreeNodePtr getChild(int id) const;

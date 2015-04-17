@@ -5,18 +5,18 @@
 
 namespace ai {
 
-bool IsCloseToGroup::evaluate(const AI& entity) {
+bool IsCloseToGroup::evaluate(const AIPtr& entity) {
 	if (_groupId == -1)
 		return false;
 
 	if (_distance < 0.0f)
 		return false;
 
-	GroupMgr& mgr = entity.getZone().getGroupMgr();
+	const GroupMgr& mgr = entity->getZone()->getGroupMgr();
 	const Vector3f& pos = mgr.getPosition(_groupId);
 	if (pos.isInfinite())
 		return false;
-	return pos.distance(entity.getCharacter().getPosition()) <= _distance;
+	return pos.distance(entity->getCharacter()->getPosition()) <= _distance;
 }
 
 CONDITION_FACTORY_IMPL(IsCloseToGroup)

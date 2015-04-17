@@ -31,13 +31,13 @@ public:
 			_steerings(steerings) {
 	}
 
-	MoveVector execute (const ICharacter& character, float speed) const {
+	MoveVector execute (const AIPtr& ai, float speed) const {
 		float totalWeight = 0.0f;
 		Vector3f vecBlended;
 		float angularBlended = 0.0f;
 		for (const WeightedData& wd : _steerings) {
 			const float weight = wd.weight;
-			const MoveVector& mv = wd.steering->execute(character, speed);
+			const MoveVector& mv = wd.steering->execute(ai, speed);
 			if (mv.getVector().isInfinite())
 				continue;
 

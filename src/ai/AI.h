@@ -67,7 +67,7 @@ protected:
 	TreeNodePtr _behaviour;
 	AggroMgr _aggroList;
 
-	ICharacter& _character;
+	ICharacterPtr _character;
 
 	bool _pause;
 	bool _debuggingActive;
@@ -79,10 +79,9 @@ protected:
 	ATOMIC(bool) _reset;
 public:
 	/**
-	 * @param character The binding to your game entity
 	 * @param behaviour The behaviour tree node that is applied to this ai entity
 	 */
-	AI(ICharacter& character, const TreeNodePtr& behaviour);
+	AI(const TreeNodePtr& behaviour);
 	virtual ~AI();
 
 	/**
@@ -97,9 +96,9 @@ public:
 	 */
 	void setZone(Zone* zone);
 	/**
-	 * Returns the zone this entity is in. Make sure to call @c hasZone before.
+	 * Returns the zone this entity is in.
 	 */
-	Zone& getZone() const;
+	Zone* getZone() const;
 	/**
 	 * @brief Returns @c true if the entity is already in a zone. This must not be managed manually,
 	 * the @c Zone is doing that already.
@@ -143,7 +142,11 @@ public:
 	/**
 	 * @return The real world entity reference
 	 */
-	ICharacter& getCharacter() const;
+	ICharacterPtr getCharacter() const;
+	void setCharacter(const ICharacterPtr& character);
+
+	CharacterId getId() const;
+
 	/**
 	 * @return the @c AggroMgr for this @c AI instance. Each @c AI instance has its own @c AggroMgr instance.
 	 */
@@ -184,8 +187,12 @@ inline bool AI::isPause() const {
 	return _pause;
 }
 
-inline ICharacter& AI::getCharacter() const {
+inline ICharacterPtr AI::getCharacter() const {
 	return _character;
+}
+
+inline void AI::setCharacter(const ICharacterPtr& character) {
+	_character = character;
 }
 
 inline AggroMgr& AI::getAggroMgr() {
@@ -208,13 +215,14 @@ inline void AI::setZone(Zone* zone) {
 	_zone = zone;
 }
 
-inline Zone& AI::getZone() const {
-	ai_assert(_zone != nullptr, "No zone set yet for the AI instance");
-	return *_zone;
+inline Zone* AI::getZone() const {
+	return _zone;
 }
 
 inline bool AI::hasZone() const {
 	return _zone != nullptr;
 }
+
+typedef std::shared_ptr<AI> AIPtr;
 
 }

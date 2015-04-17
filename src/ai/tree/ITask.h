@@ -19,7 +19,7 @@ namespace ai {
  */
 class ITask: public TreeNode {
 protected:
-	TreeNodeStatus execute(AI& entity, long deltaMillis);
+	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis);
 public:
 	ITask(const std::string& name, const std::string& parameters, const ConditionPtr& condition);
 	virtual ~ITask();
@@ -28,7 +28,7 @@ public:
 	 * @note The returned @c TreeNodeStatus is automatically recorded. This method is only
 	 * called when the attached @c ICondition evaluated to @c true
 	 */
-	virtual TreeNodeStatus doAction(AI& entity, long deltaMillis) = 0;
+	virtual TreeNodeStatus doAction(const AIPtr& entity, long deltaMillis) = 0;
 
 	bool addChild(const TreeNodePtr& child) override;
 };

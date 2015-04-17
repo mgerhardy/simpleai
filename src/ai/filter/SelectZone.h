@@ -15,7 +15,7 @@ public:
 		IFilter("SelectZone", parameters) {
 	}
 
-	void filter (const AI& entity) override;
+	void filter (const AIPtr& entity) override;
 };
 
 }

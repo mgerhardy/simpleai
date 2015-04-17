@@ -4,18 +4,19 @@
 #include "common/Types.h"
 #include "common/Vector3f.h"
 #include <map>
+#include <memory>
 #include <unordered_map>
 #include <unordered_set>
 
 namespace ai {
 
-class ICharacter;
-
+class AI;
+typedef std::shared_ptr<AI> AIPtr;
 typedef int GroupId;
 
 /**
- * @brief Maintains the groups a @c ICharacter can be in.
- * @note Keep in mind that if you destroy an @c ICharacter somewhere in the game, to also
+ * @brief Maintains the groups a @c AI can be in.
+ * @note Keep in mind that if you destroy an @c AI somewhere in the game, to also
  * remove it from the groups.
  *
  * Every @c Zone has its own GroupMgr instance. It is automatically updated with the zone.
@@ -23,17 +24,17 @@ typedef int GroupId;
  */
 class GroupMgr {
 private:
-	typedef std::unordered_set<ICharacter*> GroupMembersSet;
+	typedef std::unordered_set<AIPtr> GroupMembersSet;
 	typedef GroupMembersSet::iterator GroupMembersSetIter;
 	typedef GroupMembersSet::const_iterator GroupMembersSetConstIter;
 
 	struct Group {
-		ICharacter* leader;
+		AIPtr leader;
 		GroupMembersSet members;
 		Vector3f position;
 	};
 
-	typedef std::unordered_multimap<const ICharacter*, GroupId> GroupMembers;
+	typedef std::unordered_multimap<AIPtr, GroupId> GroupMembers;
 	typedef std::unordered_map<GroupId, Group> Groups;
 	typedef Groups::const_iterator GroupsConstIter;
 	typedef Groups::iterator GroupsIter;
@@ -49,19 +50,19 @@ public:
 
 	/**
 	 * @brief Adds a new group member to the given @c GroupId. If the group does not yet
-	 * exists, it it created and the given @c ICharacter instance will be the leader of th
+	 * exists, it it created and the given @c AI instance will be the leader of the
 	 * group.
 	 *
 	 * @sa remove()
 	 *
-	 * @param character The @c ICharacter to add to the group. Keep
+	 * @param ai The @c AI to add to the group. Keep
 	 * in mind that you have to remove it manually from any group
-	 * whenever you destroy the @c ICharacter instance.
+	 * whenever you destroy the @c AI instance.
 	 * @return @c true if the add to the group was successful.
 	 *
 	 * @note This method performs a write lock on the group manager
 	 */
-	bool add(GroupId id, ICharacter* character);
+	bool add(GroupId id, const AIPtr& ai);
 
 	void update(long deltaTime);
 
@@ -71,22 +72,22 @@ public:
 	 * removal of the member only one other member is left in the group, the
 	 * group is destroyed.
 	 *
-	 * @param character The @c ICharacter to remove from this the group.
-	 * @return @c true if the given character was removed from the group,
-	 * @c false if the removal failed (e.g. the character was not part of
+	 * @param ai The @c AI to remove from this the group.
+	 * @return @c true if the given ai was removed from the group,
+	 * @c false if the removal failed (e.g. the ai instance was not part of
 	 * the group)
 	 *
 	 * @note This method performs a write lock on the group manager
 	 */
-	bool remove(GroupId id, ICharacter* character);
+	bool remove(GroupId id, const AIPtr& ai);
 
 	/**
-	 * @brief Use this method to remove a @c ICharacter instance from all the group it is
-	 * part of. Useful if you e.g. destroy a @c ICharacter instance.
+	 * @brief Use this method to remove a @c AI instance from all the group it is
+	 * part of. Useful if you e.g. destroy a @c AI instance.
 	 *
 	 * @note This method performs a write lock on the group manager
 	 */
-	bool removeFromAllGroups(ICharacter* character);
+	bool removeFromAllGroups(const AIPtr& ai);
 
 	/**
 	 * @brief Returns the average position of the group
@@ -103,7 +104,7 @@ public:
 	 *
 	 * @note This method performs a read lock on the group manager
 	 */
-	const ICharacter* getLeader(GroupId id) const;
+	AIPtr getLeader(GroupId id) const;
 
 	/**
 	 * @brief Visit all the group members of the given group until the functor returns @c false
@@ -118,8 +119,8 @@ public:
 			return;
 		}
 		for (GroupMembersSetConstIter it = i->second.members.begin(); it != i->second.members.end(); ++it) {
-			const ICharacter* chr = *it;
-			if (!func(*chr))
+			const AIPtr& chr = *it;
+			if (!func(chr))
 				break;
 		}
 	}
@@ -135,17 +136,17 @@ public:
 	/**
 	 * @note This method performs a read lock on the group manager
 	 */
-	bool isInAnyGroup(const ICharacter& character) const;
+	bool isInAnyGroup(const AIPtr& ai) const;
 
 	/**
 	 * @note This method performs a read lock on the group manager
 	 */
-	bool isInGroup(GroupId id, const ICharacter& character) const;
+	bool isInGroup(GroupId id, const AIPtr& ai) const;
 
 	/**
 	 * @note This method performs a read lock on the group manager
 	 */
-	bool isGroupLeader(GroupId id, const ICharacter& character) const;
+	bool isGroupLeader(GroupId id, const AIPtr& ai) const;
 };
 
 }

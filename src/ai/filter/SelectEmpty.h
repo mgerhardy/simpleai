@@ -11,10 +11,10 @@ class SelectEmpty: public IFilter {
 public:
 	FILTER_CLASS_SINGLETON(SelectEmpty)
 
-	void filter (const AI& entity) override;
+	void filter (const AIPtr& entity) override;
 };
 
-inline void SelectEmpty::filter (const AI& entity) {
+inline void SelectEmpty::filter (const AIPtr& entity) {
 	getFilteredEntities(entity).clear();
 }
 

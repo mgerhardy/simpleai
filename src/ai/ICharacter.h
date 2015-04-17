@@ -4,6 +4,7 @@
 #include "common/Thread.h"
 #include "common/Types.h"
 #include "AI.h"
+#include <memory>
 
 namespace ai {
 
@@ -48,26 +49,13 @@ protected:
 	// m/s
 	ATOMIC(float) _speed;
 	CharacterAttributes _attributes;
-	AI _ai;
 
 public:
-	ICharacter(CharacterId id, const ai::TreeNodePtr& root) :
-			_id(id), _orientation(0.0f), _speed(0.0f), _ai(*this, root) {
+	ICharacter(CharacterId id) :
+			_id(id), _orientation(0.0f), _speed(0.0f) {
 	}
 
 	virtual ~ICharacter() {
-	}
-
-	inline operator ai::AI& () {
-		return _ai;
-	}
-
-	inline ai::AI& getAI() {
-		return _ai;
-	}
-
-	inline const ai::AI& getAI() const {
-		return _ai;
 	}
 
 	bool operator ==(const ICharacter& character) const;
@@ -95,7 +83,8 @@ public:
 	 * @param debuggingActive @c true if the debugging for this entity is activated
 	 */
 	virtual void update(long dt, bool debuggingActive) {
-		_ai.update(dt, debuggingActive);
+		(void)dt;
+		(void)debuggingActive;
 	}
 };
 
@@ -149,6 +138,8 @@ inline float ICharacter::getSpeed() const {
 	return _speed;
 }
 
+typedef std::shared_ptr<ICharacter> ICharacterPtr;
+
 template <typename CharacterType>
 inline const CharacterType& character_cast(const ICharacter& character) {
 	return static_cast<const CharacterType&>(character);
@@ -157,6 +148,11 @@ inline const CharacterType& character_cast(const ICharacter& character) {
 template <typename CharacterType>
 inline CharacterType& character_cast(ICharacter& character) {
 	return static_cast<CharacterType&>(character);
+}
+
+template <typename CharacterType>
+inline CharacterType& character_cast(const ICharacterPtr& character) {
+	return static_cast<CharacterType*>(character.get());
 }
 
 }

@@ -13,35 +13,20 @@ inline ai::Vector3f GameEntity::getStartPosition() const {
 	return ai::Vector3f(static_cast<float>(x), y, static_cast<float>(z));
 }
 
-GameEntity::GameEntity(const ai::CharacterId& id,
-		const ai::example::GameMap* map,
-		const ai::TreeNodePtr& root) :
-		ai::ICharacter(id, root), _map(map), _hitpoints(100), _damage(5), _attackDelay(500) {
+GameEntity::GameEntity(const ai::CharacterId& id, const ai::example::GameMap* map) :
+		ai::ICharacter(id), _map(map), _hitpoints(100), _damage(5), _attackDelay(500) {
 	// pick some random start position
 	setPosition(getStartPosition());
 	setOrientation(ai::randomf(M_2PI));
 	setAttribute(ai::attributes::NAME, "Example " + std::to_string(id));
 	setSpeed(50.0f + ai::randomf(10.0f));
-	_groupId = ai::random(1, 3);
 
-	setAttribute(ai::attributes::GROUP, std::to_string(_groupId));
 	setAttribute(ai::attributes::ID, std::to_string(getId()));
 	setAttribute("Damage", std::to_string(_damage));
 	setAttribute("Reloadtime", std::to_string(_attackDelay));
 }
 
-void GameEntity::onAdd() {
-	ai::Zone& zone = _ai.getZone();
-	ai::GroupMgr& groupMgr = zone.getGroupMgr();
-	groupMgr.add(_groupId, this);
-}
-
-void GameEntity::update(long deltaTime, bool debuggingActive) {
-	ICharacter::update(deltaTime, debuggingActive);
-	if (_ai.isPause()) {
-		return;
-	}
-
+void GameEntity::update(long /*deltaTime*/, bool debuggingActive) {
 	// cap position to the map
 	const float sizeF = static_cast<float>(_map->getSize());
 	const Vector3f& currentPos = _position;

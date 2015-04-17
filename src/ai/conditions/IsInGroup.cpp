@@ -4,11 +4,11 @@
 
 namespace ai {
 
-bool IsInGroup::evaluate(const AI& entity) {
-	GroupMgr& mgr = entity.getZone().getGroupMgr();
+bool IsInGroup::evaluate(const AIPtr& entity) {
+	const GroupMgr& mgr = entity->getZone()->getGroupMgr();
 	if (_groupId == -1)
-		return mgr.isInAnyGroup(entity.getCharacter());
-	return mgr.isInGroup(_groupId, entity.getCharacter());
+		return mgr.isInAnyGroup(entity);
+	return mgr.isInGroup(_groupId, entity);
 }
 
 CONDITION_FACTORY_IMPL(IsInGroup)

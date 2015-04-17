@@ -3,7 +3,7 @@
 
 namespace ai {
 
-TreeNodeStatus Sequence::execute(AI& entity, long deltaMillis) {
+TreeNodeStatus Sequence::execute(const AIPtr& entity, long deltaMillis) {
 	if (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
 
@@ -34,7 +34,7 @@ TreeNodeStatus Sequence::execute(AI& entity, long deltaMillis) {
 	return state(entity, result);
 }
 
-void Sequence::resetState(AI& entity) {
+void Sequence::resetState(const AIPtr& entity) {
 	setSelectorState(entity, NOTHING_SELECTED);
 	TreeNode::resetState(entity);
 }

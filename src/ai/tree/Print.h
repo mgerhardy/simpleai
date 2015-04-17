@@ -21,16 +21,16 @@ namespace ai {
  */
 class Print: public ITask {
 private:
-	void tree(const AI& entity) const;
-	void attributes(const AI& entity) const;
+	void tree(const AIPtr& entity) const;
+	void attributes(const AIPtr& entity) const;
 
-	TreeNodeStatus handleCommand(const AI& entity) const;
+	TreeNodeStatus handleCommand(const AIPtr& entity) const;
 
 public:
 	TASK_CLASS(Print)
 	NODE_FACTORY
 
-	TreeNodeStatus doAction(AI& entity, long deltaMillis) override;
+	TreeNodeStatus doAction(const AIPtr& entity, long deltaMillis) override;
 };
 
 }

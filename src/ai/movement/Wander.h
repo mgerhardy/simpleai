@@ -22,8 +22,8 @@ public:
 			ISteering(), _rotation(parameter.empty() ? ai::toRadians(10.0f) : Str::strToFloat(parameter)) {
 	}
 
-	MoveVector execute (const ICharacter& character, float speed) const override {
-		const Vector3f& v = Vector3f::fromRadians(character.getOrientation()) * speed;
+	MoveVector execute (const AIPtr& ai, float speed) const override {
+		const Vector3f& v = Vector3f::fromRadians(ai->getCharacter()->getOrientation()) * speed;
 		const MoveVector d(v, ai::randomBinomial() * _rotation);
 		return d;
 	}

@@ -3,13 +3,13 @@
 
 namespace ai {
 
-void Parallel::getRunningChildren(const AI& entity, std::vector<bool>& active) const {
+void Parallel::getRunningChildren(const AIPtr& entity, std::vector<bool>& active) const {
 	for (TreeNodes::const_iterator i = _children.begin(); i != _children.end(); ++i) {
 		active.push_back((*i)->getLastStatus(entity) != RUNNING);
 	}
 }
 
-TreeNodeStatus Parallel::execute(AI& entity, long deltaMillis) {
+TreeNodeStatus Parallel::execute(const AIPtr& entity, long deltaMillis) {
 	if (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
 

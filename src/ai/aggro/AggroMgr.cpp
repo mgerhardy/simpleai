@@ -77,8 +77,8 @@ inline void AggroMgr::sort() const {
 	_dirty = false;
 }
 
-Entry* AggroMgr::addAggro(AI& entity, float amount) {
-	const CharacterId id = entity.getCharacter().getId();
+Entry* AggroMgr::addAggro(const AIPtr& entity, float amount) {
+	const CharacterId id = entity->getId();
 	const CharacterIdPredicate p(id);
 	EntriesIter i = std::find_if(_entries.begin(), _entries.end(), p);
 	if (i == _entries.end()) {

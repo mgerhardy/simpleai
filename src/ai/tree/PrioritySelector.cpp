@@ -3,7 +3,7 @@
 
 namespace ai {
 
-TreeNodeStatus PrioritySelector::execute(AI& entity, long deltaMillis) {
+TreeNodeStatus PrioritySelector::execute(const AIPtr& entity, long deltaMillis) {
 	if (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
 

@@ -74,8 +74,11 @@ static ai::example::GameMap *createMap(int amount, ai::Server& server, const std
 	for (int i = 0; i < amount; ++i) {
 		auto randomIter = ai::randomElement(trees.begin(), trees.end());
 		ai::TreeNodePtr root = loader.load(*randomIter);
-		ai::example::GameEntity* e = new ai::example::GameEntity(id++, map, root);
-		map->addEntity(e);
+		ai::ICharacterPtr e(new ai::example::GameEntity(id++, map));
+		ai::AIPtr ai(new ai::AI(root));
+		ai->setCharacter(e);
+		const ai::GroupId groupId = ai::random(1, 3);
+		map->addEntity(ai, groupId);
 	}
 
 	map->initializeAggro();
@@ -112,18 +115,20 @@ static void runDespawnSpawn(ai::example::GameMap* map) {
 	const std::chrono::milliseconds delay(15000);
 	while (!shutdownThreads) {
 		if (autospawn) {
-			ai::example::GameEntity *rnd = map->getRandomEntity();
-			if (rnd != nullptr) {
+			const ai::AIPtr& rnd = map->getRandomEntity();
+			if (rnd) {
 				map->remove(rnd);
-				delete rnd;
 			}
 
 			std::vector<std::string> trees;
 			loader.getTrees(trees);
 			auto randomIter = ai::randomElement(trees.begin(), trees.end());
 			ai::TreeNodePtr root = loader.load(*randomIter);
-
-			map->addEntity(new ai::example::GameEntity(id++, map, root));
+			ai::ICharacterPtr e(new ai::example::GameEntity(id++, map));
+			ai::AIPtr ai(new ai::AI(root));
+			ai->setCharacter(e);
+			const ai::GroupId groupId = ai::random(1, 3);
+			map->addEntity(ai, groupId);
 		}
 		std::this_thread::sleep_for(delay);
 	}
@@ -261,10 +266,10 @@ int main(int argc, char **argv) {
 				std::cout << "groups: " << std::endl;
 				const ai::GroupMgr& groupMgr = zone.getGroupMgr();
 				for (int groupId = 1; groupId <= 3; ++groupId) {
-					const ai::ICharacter* leader = groupMgr.getLeader(groupId);
-					if (leader == nullptr)
+					const ai::AIPtr& leader = groupMgr.getLeader(groupId);
+					if (!leader)
 						continue;
-					std::cout << " \\- group " << groupId << ":" << groupMgr.getPosition(groupId) << " - " << leader->getPosition() << std::endl;
+					std::cout << " \\- group " << groupId << ":" << groupMgr.getPosition(groupId) << " - " << leader->getCharacter()->getPosition() << std::endl;
 				}
 			}
 		} else if (c == "d") {
@@ -273,20 +278,21 @@ int main(int argc, char **argv) {
 				std::cout << map->getName() << std::endl;
 				const ai::Zone& zone = map->getZone();
 				int count = 0;
-				auto func = [&] (const ai::AI& ai) {
-					const ai::ICharacter& chr = ai.getCharacter();
-					std::cout << "id: " << chr.getId() << std::endl;
-					std::cout << " \\- pos: " << chr.getPosition() << std::endl;
-					std::cout << " \\- speed: " << chr.getSpeed() << std::endl;
-					std::cout << " \\- group leader 1: " << (zone.getGroupMgr().isGroupLeader(1, chr) ? "true" : "false") << std::endl;
-					std::cout << " \\- group leader 2: " << (zone.getGroupMgr().isGroupLeader(2, chr) ? "true" : "false") << std::endl;
-					std::cout << " \\- group leader 3: " << (zone.getGroupMgr().isGroupLeader(3, chr) ? "true" : "false") << std::endl;
-					std::cout << " \\- group 1: " << (zone.getGroupMgr().isInGroup(1, chr) ? "true" : "false") << std::endl;
-					std::cout << " \\- group 2: " << (zone.getGroupMgr().isInGroup(2, chr) ? "true" : "false") << std::endl;
-					std::cout << " \\- group 3: " << (zone.getGroupMgr().isInGroup(3, chr) ? "true" : "false") << std::endl;
-					std::cout << " \\- orientation: " << chr.getOrientation() << std::endl;
+				auto func = [&] (const ai::AIPtr& ai) {
+					const ai::ICharacterPtr& chr = ai->getCharacter();
+					const ai::GroupMgr& groupMgr = zone.getGroupMgr();
+					std::cout << "id: " << chr->getId() << std::endl;
+					std::cout << " \\- pos: " << chr->getPosition() << std::endl;
+					std::cout << " \\- speed: " << chr->getSpeed() << std::endl;
+					std::cout << " \\- group leader 1: " << (groupMgr.isGroupLeader(1, ai) ? "true" : "false") << std::endl;
+					std::cout << " \\- group leader 2: " << (groupMgr.isGroupLeader(2, ai) ? "true" : "false") << std::endl;
+					std::cout << " \\- group leader 3: " << (groupMgr.isGroupLeader(3, ai) ? "true" : "false") << std::endl;
+					std::cout << " \\- group 1: " << (groupMgr.isInGroup(1, ai) ? "true" : "false") << std::endl;
+					std::cout << " \\- group 2: " << (groupMgr.isInGroup(2, ai) ? "true" : "false") << std::endl;
+					std::cout << " \\- group 3: " << (groupMgr.isInGroup(3, ai) ? "true" : "false") << std::endl;
+					std::cout << " \\- orientation: " << chr->getOrientation() << std::endl;
 					std::cout << " \\- attributes:" << std::endl;
-					const ai::CharacterAttributes& attributes = chr.getAttributes();
+					const ai::CharacterAttributes& attributes = chr->getAttributes();
 					for (ai::CharacterAttributes::const_iterator attribIter = attributes.begin(); attribIter != attributes.end(); ++attribIter) {
 						std::cout << "  \\- " << attribIter->first << ": \"" << attribIter->second << "\"" << std::endl;
 					}
@@ -304,8 +310,8 @@ int main(int argc, char **argv) {
 
 			for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
 				ai::example::GameMap *map = *i;
-				ai::example::GameEntity *rnd = map->getRandomEntity();
-				if (rnd != nullptr) {
+				const ai::AIPtr& rnd = map->getRandomEntity();
+				if (rnd) {
 					if (!map->remove(rnd)) {
 						std::cout << "failed to remove " << rnd->getId() << " from map " << map->getName() << std::endl;
 					} else {
@@ -314,20 +320,24 @@ int main(int argc, char **argv) {
 				}
 
 				auto randomIter = ai::randomElement(trees.begin(), trees.end());
-				ai::TreeNodePtr root = loader.load(*randomIter);
+				const ai::TreeNodePtr& root = loader.load(*randomIter);
 
-				ai::example::GameEntity* ent = map->addEntity(new ai::example::GameEntity(id++, map, root));
+				ai::ICharacterPtr e(new ai::example::GameEntity(id++, map));
+				ai::AIPtr ai(new ai::AI(root));
+				ai->setCharacter(e);
+				const ai::GroupId groupId = ai::random(1, 3);
+				const ai::AIPtr& ent = map->addEntity(ai, groupId);
 				std::cout << "spawned " << ent->getId() << " on map " << map->getName() << std::endl;
 			}
 		} else if (c == "reload") {
 			if (!load(filename))
 				continue;
-			auto func = [&] (ai::AI& ai) {
-				const std::string& name = ai.getBehaviour()->getName();
-				ai::TreeNodePtr newRoot = loader.load(name);
+			auto func = [&] (const ai::AIPtr& ai) {
+				const std::string& name = ai->getBehaviour()->getName();
+				const ai::TreeNodePtr& newRoot = loader.load(name);
 				if (!newRoot)
 					return;
-				ai.setBehaviour(newRoot);
+				ai->setBehaviour(newRoot);
 			};
 			for (ai::example::GameMap* map : maps) {
 				map->getZone().visit(func);

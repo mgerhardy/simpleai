@@ -61,7 +61,7 @@ protected:
 	void resetSelection();
 
 	void addChildren(const TreeNodePtr& node, std::vector<AIStateNodeStatic>& out) const;
-	void addChildren(const TreeNodePtr& node, AIStateNode& parent, const AI& ai) const;
+	void addChildren(const TreeNodePtr& node, AIStateNode& parent, const AIPtr& ai) const;
 	void broadcastState(Zone* zone);
 	void broadcastCharacterDetails(Zone* zone);
 	void broadcastStaticCharacterDetails(Zone* zone);

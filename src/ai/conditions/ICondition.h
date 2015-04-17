@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <memory>
 
 #include <memory>
 #include "common/MemoryAllocator.h"
@@ -20,6 +21,7 @@
 namespace ai {
 
 class AI;
+typedef std::shared_ptr<AI> AIPtr;
 
 /**
  * @brief Macro to simplify the condition creation. Just give the class name of the condition as parameter.
@@ -95,7 +97,7 @@ protected:
 	 * @param[in,out] entity The entity that is used to evaluate a condition
 	 * @sa getNameWithConditions
 	 */
-	virtual void getConditionNameWithValue(std::stringstream& s, const AI& entity) {
+	virtual void getConditionNameWithValue(std::stringstream& s, const AIPtr& entity) {
 		(void)entity;
 		s << "{" << _parameters << "}";
 	}
@@ -112,7 +114,7 @@ public:
 	 * @param[in,out] entity The entity that is used to evaluate the condition
 	 * @return @c true if the condition is fulfilled, @c false otherwise.
 	 */
-	virtual bool evaluate(const AI& entity) = 0;
+	virtual bool evaluate(const AIPtr& entity) = 0;
 
 	/**
 	 * @brief Returns the short name of the condition - without any related conditions or results.
@@ -129,12 +131,12 @@ public:
 	 * @param[in,out] entity The entity that is used to evaluate the condition
 	 * @sa getConditionNameWithValue
 	 */
-	inline std::string getNameWithConditions(const AI& entity) {
+	inline std::string getNameWithConditions(const AIPtr& entity) {
 		std::stringstream s;
 		s << getName();
 		getConditionNameWithValue(s, entity);
 		s << "[";
-		s << (evaluate(const_cast<AI&>(entity)) ? "1" : "0");
+		s << (evaluate(entity) ? "1" : "0");
 		s << "]";
 		return s.str();
 	}

@@ -4,11 +4,11 @@
 
 namespace ai {
 
-bool IsGroupLeader::evaluate(const AI& entity) {
+bool IsGroupLeader::evaluate(const AIPtr& entity) {
 	if (_groupId == -1)
 		return false;
-	GroupMgr& mgr = entity.getZone().getGroupMgr();
-	return mgr.isGroupLeader(_groupId, entity.getCharacter());
+	const GroupMgr& mgr = entity->getZone()->getGroupMgr();
+	return mgr.isGroupLeader(_groupId, entity);
 }
 
 CONDITION_FACTORY_IMPL(IsGroupLeader)

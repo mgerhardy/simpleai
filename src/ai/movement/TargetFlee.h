@@ -23,10 +23,10 @@ public:
 		return !_target.isInfinite();
 	}
 
-	virtual MoveVector execute (const ICharacter& character, float speed) const override {
+	virtual MoveVector execute (const AIPtr& ai, float speed) const override {
 		if (_target.isInfinite())
 			return MoveVector(_target, 0.0f);
-		Vector3f v = character.getPosition();
+		Vector3f v = ai->getCharacter()->getPosition();
 		v -= _target;
 		double orientation = 0.0;
 		if (v.squareLength() > 0.0f) {

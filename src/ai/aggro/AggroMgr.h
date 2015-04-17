@@ -6,6 +6,7 @@
 namespace ai {
 
 class AI;
+typedef std::shared_ptr<AI> AIPtr;
 
 /**
  * @brief Manages the aggro values for one @c AI instance. There are several ways to degrade the aggro values.
@@ -42,7 +43,7 @@ public:
 	 * @param[in] amount The amount to increase the aggro for
 	 * @return The aggro @c Entry that was added or updated. Useful for changing the reduce type or amount.
 	 */
-	EntryPtr addAggro(AI& entity, float amount);
+	EntryPtr addAggro(const AIPtr& entity, float amount);
 
 	/**
 	 * @return All the aggro entries

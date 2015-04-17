@@ -10,7 +10,7 @@ ITask::ITask(const std::string& name, const std::string& parameters, const Condi
 ITask::~ITask() {
 }
 
-TreeNodeStatus ITask::execute(AI& entity, long deltaMillis) {
+TreeNodeStatus ITask::execute(const AIPtr& entity, long deltaMillis) {
 	if (TreeNode::execute(entity, deltaMillis) == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
 

@@ -14,12 +14,12 @@ class Parallel: public Selector {
 public:
 	SELECTOR_CLASS(Parallel)
 
-	void getRunningChildren(const AI& entity, std::vector<bool>& active) const override;
+	void getRunningChildren(const AIPtr& entity, std::vector<bool>& active) const override;
 	/**
 	 * @brief If one of the children was executed, and is still running, the ::TreeNodeStatus::RUNNING
 	 * is returned, otherwise ::TreeNodeStatus::FINISHED is returned.
 	 */
-	TreeNodeStatus execute(AI& entity, long deltaMillis) override;
+	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis) override;
 };
 
 }

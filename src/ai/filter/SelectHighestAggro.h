@@ -11,11 +11,11 @@ class SelectHighestAggro: public IFilter {
 public:
 	FILTER_CLASS_SINGLETON(SelectHighestAggro)
 
-	void filter (const AI& entity) override;
+	void filter (const AIPtr& entity) override;
 };
 
-inline void SelectHighestAggro::filter (const AI& entity) {
-	const EntryPtr entry = entity.getAggroMgr().getHighestEntry();
+inline void SelectHighestAggro::filter (const AIPtr& entity) {
+	const EntryPtr entry = entity->getAggroMgr().getHighestEntry();
 	if (!entry)
 		return;
 

@@ -5,8 +5,8 @@
 namespace ai {
 
 struct AveragePositionFunctor {
-	Vector3f operator()(const Vector3f& result, const ICharacter* chr) {
-		return chr->getPosition() + result;
+	Vector3f operator()(const Vector3f& result, const AIPtr& ai) {
+		return ai->getCharacter()->getPosition() + result;
 	}
 };
 
@@ -26,38 +26,38 @@ void GroupMgr::update(long) {
 	}
 }
 
-bool GroupMgr::add(GroupId id, ICharacter* character) {
+bool GroupMgr::add(GroupId id, const AIPtr& ai) {
 	ScopedWriteLock scopedLock(_lock);
 	GroupsIter i = _groups.find(id);
 	if (i == _groups.end()) {
 		Group group;
-		group.leader = character;
+		group.leader = ai;
 		i = _groups.insert(std::pair<GroupId, Group>(id, group)).first;
 	}
 
-	std::pair<GroupMembersSetIter, bool> ret = i->second.members.insert(character);
+	std::pair<GroupMembersSetIter, bool> ret = i->second.members.insert(ai);
 	if (ret.second) {
-		_groupMembers.insert(GroupMembers::value_type(character, id));
+		_groupMembers.insert(GroupMembers::value_type(ai, id));
 		return true;
 	}
 	return false;
 }
 
-bool GroupMgr::remove(GroupId id, ICharacter* character) {
+bool GroupMgr::remove(GroupId id, const AIPtr& ai) {
 	ScopedWriteLock scopedLock(_lock);
 	const GroupsIter& i = _groups.find(id);
 	if (i == _groups.end())
 		return false;
-	const GroupMembersSetIter& si = i->second.members.find(character);
+	const GroupMembersSetIter& si = i->second.members.find(ai);
 	if (si == i->second.members.end())
 		return false;
 	i->second.members.erase(si);
 
 	if (i->second.members.empty())
 		_groups.erase(i);
-	else if (i->second.leader == character)
+	else if (i->second.leader == ai)
 		i->second.leader = *i->second.members.begin();
-	auto range = _groupMembers.equal_range(character);
+	auto range = _groupMembers.equal_range(ai);
 	for (auto it = range.first; it != range.second; ++it) {
 		if (it->second == id) {
 			_groupMembers.erase(it);
@@ -67,26 +67,26 @@ bool GroupMgr::remove(GroupId id, ICharacter* character) {
 	return true;
 }
 
-bool GroupMgr::removeFromAllGroups(ICharacter* character) {
+bool GroupMgr::removeFromAllGroups(const AIPtr& ai) {
 	std::list<GroupId> groups;
 	{
 		ScopedReadLock scopedLock(_lock);
-		auto range = _groupMembers.equal_range(character);
+		auto range = _groupMembers.equal_range(ai);
 		for (auto it = range.first; it != range.second; ++it) {
 			groups.push_back(it->second);
 		}
 	}
 	for (GroupId groupId : groups) {
-		remove(groupId, character);
+		remove(groupId, ai);
 	}
 	return true;
 }
 
-const ICharacter* GroupMgr::getLeader(GroupId id) const {
+AIPtr GroupMgr::getLeader(GroupId id) const {
 	ScopedReadLock scopedLock(_lock);
 	const GroupsConstIter& i = _groups.find(id);
 	if (i == _groups.end())
-		return nullptr;
+		return AIPtr();
 
 	return i->second.leader;
 }
@@ -100,13 +100,13 @@ Vector3f GroupMgr::getPosition(GroupId id) const {
 	return i->second.position;
 }
 
-bool GroupMgr::isGroupLeader(GroupId id, const ICharacter& character) const {
+bool GroupMgr::isGroupLeader(GroupId id, const AIPtr& ai) const {
 	ScopedReadLock scopedLock(_lock);
 	const GroupsConstIter& i = _groups.find(id);
 	if (i == _groups.end()) {
 		return 0;
 	}
-	return i->second.leader == &character;
+	return i->second.leader == ai;
 }
 
 int GroupMgr::getGroupSize(GroupId id) const {
@@ -118,14 +118,14 @@ int GroupMgr::getGroupSize(GroupId id) const {
 	return static_cast<int>(std::distance(i->second.members.begin(), i->second.members.end()));
 }
 
-bool GroupMgr::isInAnyGroup(const ICharacter& character) const {
+bool GroupMgr::isInAnyGroup(const AIPtr& ai) const {
 	ScopedReadLock scopedLock(_lock);
-	return _groupMembers.find(&character) != _groupMembers.end();
+	return _groupMembers.find(ai) != _groupMembers.end();
 }
 
-bool GroupMgr::isInGroup(GroupId id, const ICharacter& character) const {
+bool GroupMgr::isInGroup(GroupId id, const AIPtr& ai) const {
 	ScopedReadLock scopedLock(_lock);
-	auto range = _groupMembers.equal_range(&character);
+	auto range = _groupMembers.equal_range(ai);
 	for (auto it = range.first; it != range.second; ++it) {
 		if (it->second == id)
 			return true;

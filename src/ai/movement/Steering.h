@@ -54,7 +54,7 @@ public:
 	 * @return If the @c MoveVector contains @c Vector3f::INFINITE as vector, the result should not be used
 	 * because there was an error.
 	 */
-	virtual MoveVector execute (const ICharacter& character, float speed) const = 0;
+	virtual MoveVector execute (const AIPtr& ai, float speed) const = 0;
 
 	virtual std::ostream& print(std::ostream& output, int level) const = 0;
 };
@@ -64,17 +64,17 @@ public:
  */
 class SelectionSteering : public ISteering {
 protected:
-	Vector3f getSelectionTarget(const ICharacter& character, std::size_t index) const {
-		const FilteredEntities& selection = character.getAI().getFilteredEntities();
+	Vector3f getSelectionTarget(const AIPtr& ai, std::size_t index) const {
+		const FilteredEntities& selection = ai->getFilteredEntities();
 		if (selection.empty() || selection.size() <= index)
 			return Vector3f::INFINITE;
 		const CharacterId characterId = selection[index];
 		Vector3f target = Vector3f::INFINITE;
-		const Zone& zone = character.getAI().getZone();
-		auto func = [&] (const AI& ai) {
-			target = ai.getCharacter().getPosition();
+		const Zone* zone = ai->getZone();
+		auto func = [&] (const AIPtr& ai) {
+			target = ai->getCharacter()->getPosition();
 		};
-		if (!zone.execute(characterId, func)) {
+		if (!zone->execute(characterId, func)) {
 			return Vector3f::INFINITE;
 		}
 		return target;

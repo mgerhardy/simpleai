@@ -16,7 +16,7 @@ class Filter: public ICondition {
 protected:
 	Filters _filters;
 
-	void getConditionNameWithValue(std::stringstream& s, const AI& entity) override;
+	void getConditionNameWithValue(std::stringstream& s, const AIPtr& entity) override;
 
 public:
 	class Factory: public IConditionFactory {
@@ -32,7 +32,7 @@ public:
 	 *
 	 * @return @c true if the attached filters lead to a non-empty set, @c false otherwise
 	 */
-	bool evaluate(const AI& entity) override;
+	bool evaluate(const AIPtr& entity) override;
 };
 
 }

@@ -30,7 +30,7 @@ public:
 	}
 	CONDITION_FACTORY
 
-	bool evaluate(const AI& entity) override;
+	bool evaluate(const AIPtr& entity) override;
 };
 
 }

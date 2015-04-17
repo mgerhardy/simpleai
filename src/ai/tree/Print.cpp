@@ -3,19 +3,19 @@
 
 namespace ai {
 
-void Print::tree(const AI& entity) const {
-	const TreeNodePtr behaviour = entity.getBehaviour();
+void Print::tree(const AIPtr& entity) const {
+	const TreeNodePtr behaviour = entity->getBehaviour();
 	std::cout << behaviour.get() << std::endl;
 }
 
-void Print::attributes(const AI& entity) const {
-	const CharacterAttributes& attribs = entity.getCharacter().getAttributes();
+void Print::attributes(const AIPtr& entity) const {
+	const CharacterAttributes& attribs = entity->getCharacter()->getAttributes();
 	for (auto i = attribs.begin(); i != attribs.end(); ++i) {
 		std::cout << i->first << ": " << i->second << std::endl;
 	}
 }
 
-TreeNodeStatus Print::handleCommand(const AI& entity) const {
+TreeNodeStatus Print::handleCommand(const AIPtr& entity) const {
 	if (_parameters == "::tree") {
 		tree(entity);
 	} else if (_parameters == "::attributes") {
@@ -27,7 +27,7 @@ TreeNodeStatus Print::handleCommand(const AI& entity) const {
 	return FINISHED;
 }
 
-TreeNodeStatus Print::doAction(AI& entity, long /*deltaMillis*/) {
+TreeNodeStatus Print::doAction(const AIPtr& entity, long /*deltaMillis*/) {
 	if (ai::Str::startsWith(_parameters, "::")) {
 		return handleCommand(entity);
 	}

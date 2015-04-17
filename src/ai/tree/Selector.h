@@ -26,7 +26,7 @@ public:
 	/**
 	 * @brief Will only deliver valid results if the debugging for the given entity is active
 	 */
-	virtual void getRunningChildren(const AI& entity, std::vector<bool>& active) const override {
+	virtual void getRunningChildren(const AIPtr& entity, std::vector<bool>& active) const override {
 		int n = 0;
 		int selectorState = getSelectorState(entity);
 		for (TreeNodes::const_iterator i = _children.begin(); i != _children.end(); ++i, ++n)

@@ -4,6 +4,7 @@
 #include <set>
 #include <iterator>
 #include <iostream>
+#include <unordered_set>
 
 namespace ai {
 namespace example {
@@ -13,7 +14,7 @@ private:
 	int _size;
 	ai::Zone _zone;
 	ai::Server& _server;
-	typedef std::set<ai::example::GameEntity*> Entities;
+	typedef std::unordered_set<ai::AIPtr> Entities;
 	Entities _entities;
 	MUTEX(_mutex);
 
@@ -24,9 +25,7 @@ public:
 	}
 
 	~GameMap() {
-		for (Entities::iterator i = _entities.begin(); i != _entities.end(); ++i) {
-			delete *i;
-		}
+		_entities.clear();
 		_server.removeZone(&_zone);
 	}
 
@@ -38,13 +37,13 @@ public:
 		return _zone;
 	}
 
-	inline GameEntity* getRandomEntity() const {
+	inline ai::AIPtr getRandomEntity() const {
 		SCOPEDLOCK(_mutex);
 		if (_entities.empty())
-			return nullptr;
+			return ai::AIPtr();
 		const int size = static_cast<int>(_entities.size());
 		const int randomIndex = ai::random(0, size - 1);
-		Entities::iterator i = _entities.begin();
+		Entities::const_iterator i = _entities.begin();
 		std::advance(i, randomIndex);
 		return *i;
 	}
@@ -53,13 +52,15 @@ public:
 		return _zone.getName();
 	}
 
-	inline GameEntity* addEntity(GameEntity* entity) {
+	inline ai::AIPtr addEntity(const ai::AIPtr& entity, GroupId groupId) {
 		{
 			SCOPEDLOCK(_mutex);
 			_entities.insert(entity);
 		}
-		ai_assert(_zone.addAI(&entity->getAI()), "Could not add entity to zone with id " + std::to_string(entity->getId()));
-		entity->onAdd();
+		ai_assert(_zone.addAI(entity), "Could not add entity to zone with id " + std::to_string(entity->getId()));
+		ai::GroupMgr& groupMgr = _zone.getGroupMgr();
+		entity->getCharacter()->setAttribute(ai::attributes::GROUP, std::to_string(groupId));
+		groupMgr.add(groupId, entity);
 		return entity;
 	}
 
@@ -67,27 +68,25 @@ public:
 		SCOPEDLOCK(_mutex);
 		// TODO: improve
 		for (Entities::iterator i = _entities.begin(); i != _entities.end(); ++i) {
-			GameEntity* entity = *i;
+			const ai::AIPtr& entity = *i;
 			if (entity->getId() == id) {
 				if (!remove(entity))
 					return false;
-				delete entity;
 				return true;
 			}
 		}
 		return false;
 	}
 
-	inline bool remove(GameEntity* entity) {
-		if (entity == nullptr)
+	inline bool remove(const ai::AIPtr& entity) {
+		if (!entity)
 			return false;
 		{
 			SCOPEDLOCK(_mutex);
 			if (_entities.erase(entity) != 1)
 				return false;
 		}
-		ai::AI& ai = *entity;
-		_zone.removeAI(&ai);
+		_zone.removeAI(entity);
 		return true;
 	}
 
@@ -105,9 +104,9 @@ public:
 		Entities::iterator i = _entities.begin();
 		if (i == _entities.end())
 			return;
-		GameEntity *firstEntity = *i++;
+		const ai::AIPtr& firstEntity = *i++;
 		for (; i != _entities.end(); ++i) {
-			ai::Entry* e = firstEntity->addAggro(**i, 1000.0f + static_cast<float>(rand() % 1000));
+			ai::Entry* e = firstEntity->getAggroMgr().addAggro((*i), 1000.0f + static_cast<float>(rand() % 1000));
 			e->setReduceByValue(1.0f + static_cast<float>(rand() % 3));
 		}
 	}

@@ -23,7 +23,7 @@ public:
 
 	NODE_FACTORY
 
-	TreeNodeStatus execute(AI& entity, long deltaMillis) override;
+	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis) override;
 };
 
 }

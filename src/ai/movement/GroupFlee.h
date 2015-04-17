@@ -23,12 +23,11 @@ public:
 		return _groupId != -1;
 	}
 
-	virtual MoveVector execute (const ICharacter& character, float speed) const override {
-		const AI& ai = character.getAI();
-		const Vector3f& target = ai.getGroupPosition(_groupId);
+	virtual MoveVector execute (const AIPtr& ai, float speed) const override {
+		const Vector3f& target = ai->getGroupPosition(_groupId);
 		if (target.isInfinite())
 			return MoveVector(target, 0.0f);
-		Vector3f v = character.getPosition() - target;
+		Vector3f v = ai->getCharacter()->getPosition() - target;
 		double orientation = 0.0;
 		if (v.squareLength() > 0.0f) {
 			v.normalize();

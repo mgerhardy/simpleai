@@ -3,10 +3,10 @@
 
 namespace ai {
 
-void SelectGroupLeader::filter (const AI& entity) {
+void SelectGroupLeader::filter (const AIPtr& entity) {
 	FilteredEntities& entities = getFilteredEntities(entity);
-	const ICharacter* groupLeader = entity.getZone().getGroupMgr().getLeader(_groupId);
-	if (groupLeader != nullptr) {
+	const AIPtr& groupLeader = entity->getZone()->getGroupMgr().getLeader(_groupId);
+	if (groupLeader) {
 		entities.push_back(groupLeader->getId());
 	}
 }

@@ -11,8 +11,8 @@ HasEnemies::HasEnemies(const std::string& parameters) :
 		_enemyCount = std::stoi(_parameters);
 }
 
-bool HasEnemies::evaluate(const AI& entity) {
-	const AggroMgr& mgr = entity.getAggroMgr();
+bool HasEnemies::evaluate(const AIPtr& entity) {
+	const AggroMgr& mgr = entity->getAggroMgr();
 	if (_enemyCount == -1) {
 		// TODO: check why boolean operator isn't working here
 		const bool hasEnemy = mgr.getHighestEntry() != nullptr;

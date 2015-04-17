@@ -8,7 +8,7 @@ ConditionPtr And::Factory::create(const ConditionFactoryContext *ctx) const {
 	return ConditionPtr(new And(ctx->conditions));
 }
 
-void And::getConditionNameWithValue(std::stringstream& s, const AI& entity) {
+void And::getConditionNameWithValue(std::stringstream& s, const AIPtr& entity) {
 	bool first = true;
 	s << "(";
 	for (ConditionsConstIter i = _conditions.begin(); i != _conditions.end(); ++i) {
@@ -20,7 +20,7 @@ void And::getConditionNameWithValue(std::stringstream& s, const AI& entity) {
 	s << ")";
 }
 
-bool And::evaluate(const AI& entity) {
+bool And::evaluate(const AIPtr& entity) {
 	for (ConditionsIter i = _conditions.begin(); i != _conditions.end(); ++i) {
 		if (!(*i)->evaluate(entity))
 			return false;

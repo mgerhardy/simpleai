@@ -11,7 +11,6 @@ class GameMap;
 class GameEntity : public ai::ICharacter {
 private:
 	const ai::example::GameMap* _map;
-	GroupId _groupId;
 	ATOMICINT _hitpoints;
 	int _damage;
 	int _attackDelay;
@@ -19,21 +18,9 @@ private:
 	ai::Vector3f getStartPosition() const;
 
 public:
-	GameEntity(const ai::CharacterId& id,
-			const ai::example::GameMap* map,
-			const ai::TreeNodePtr& root);
+	GameEntity(const ai::CharacterId& id, const ai::example::GameMap* map);
 
 	~GameEntity () {
-	}
-
-	void onAdd();
-
-	operator ai::AI& () {
-		return _ai;
-	}
-
-	ai::Entry* addAggro (GameEntity& entity, float aggro) {
-		return _ai.getAggroMgr().addAggro(entity, aggro);
 	}
 
 	inline int getHitpoints () const {

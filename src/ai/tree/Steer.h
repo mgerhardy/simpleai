@@ -23,7 +23,7 @@ public:
 	};
 	static Factory FACTORY;
 
-	TreeNodeStatus doAction(AI& entity, long deltaMillis) override;
+	TreeNodeStatus doAction(const AIPtr& entity, long deltaMillis) override;
 
 	std::ostream& print(std::ostream& stream, int level) const override;
 };
