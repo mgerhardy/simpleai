@@ -63,6 +63,14 @@ public:
 	bool removeAI(const AI* ai);
 
 	/**
+	 * @brief @c removeAI will access the character and the @c AI object, this method does not need access to the data anymore.
+	 *
+	 * @note That means, that this can be called in case the attached @c ICharacter instances or the @c AI instance itself is
+	 * already invalid.
+	 */
+	bool destroyAI(const CharacterId& id);
+
+	/**
 	 * @brief If you need to add new @code AI entities to a zone from within the @code AI tick (e.g. spawning via behaviour
 	 * tree) - then you need to schedule the spawn. Otherwise you will end up in a deadlock
 	 *

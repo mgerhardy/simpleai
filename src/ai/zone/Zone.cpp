@@ -32,6 +32,15 @@ bool Zone::removeAI(const AI* ai) {
 	return true;
 }
 
+bool Zone::destroyAI(const CharacterId& id) {
+	ScopedWriteLock scopedLock(_lock);
+	AIMapIter i = _ais.find(id);
+	if (i == _ais.end())
+		return false;
+	_ais.erase(i);
+	return true;
+}
+
 bool Zone::scheduleAdd(AI* ai) {
 	if (ai == nullptr)
 		return false;
