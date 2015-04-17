@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>
+#include <memory>
 
 #include "aggro/AggroMgr.h"
 #include "tree/TreeNode.h"
@@ -13,6 +14,7 @@
 namespace ai {
 
 class ICharacter;
+typedef std::shared_ptr<ICharacter> ICharacterPtr;
 class Zone;
 
 typedef std::vector<CharacterId> FilteredEntities;
