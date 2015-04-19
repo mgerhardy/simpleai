@@ -119,8 +119,12 @@ QVariant BehaviourTreeModelItem::data(int column) const {
 		if (!_editedCondition.isEmpty())
 			return _editedCondition;
 		return QString::fromStdString(_node->getCondition());
-	case COL_STATE:
-		return stateNames[_node->getStatus()];
+	case COL_STATE: {
+		const TreeNodeStatus status = _node->getStatus();
+		if (status >= UNKNOWN && status <= MAX_TREENODESTATUS)
+			return stateNames[status];
+		return stateNames[UNKNOWN];
+	}
 	case COL_LASTRUN:
 		return QString::number(_node->getLastRun() / 1000);
 	}
