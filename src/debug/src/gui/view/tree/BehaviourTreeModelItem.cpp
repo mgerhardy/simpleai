@@ -121,7 +121,7 @@ QVariant BehaviourTreeModelItem::data(int column) const {
 		return QString::fromStdString(_node->getCondition());
 	case COL_STATE: {
 		const TreeNodeStatus status = _node->getStatus();
-		if (status >= UNKNOWN && status <= MAX_TREENODESTATUS)
+		if (status >= UNKNOWN && status < MAX_TREENODESTATUS)
 			return stateNames[status];
 		return stateNames[UNKNOWN];
 	}
