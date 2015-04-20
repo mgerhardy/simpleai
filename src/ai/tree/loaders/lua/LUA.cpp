@@ -78,10 +78,14 @@ LUA::LUA (bool debug)
 
 	// Register debug callback function
 	lua_sethook(_state, debugHook, mask, 0);
+
+	lua_gc(_state, LUA_GCSTOP, 0);
 }
 
 LUA::~LUA ()
 {
+	//const int bytes = lua_gc(_state, LUA_GCCOUNT, 0) * 1024 + lua_gc(_state, LUA_GCCOUNTB, 0);
+	lua_gc(_state, LUA_GCRESTART, 0);
 	lua_close(_state);
 }
 
