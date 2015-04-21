@@ -20,6 +20,7 @@ list(APPEND SRC
 	filter/SelectEmpty.cpp
 	filter/SelectGroupMembers.cpp
 	filter/SelectGroupLeader.cpp
+	tree/Fail.cpp
 	tree/Sequence.cpp
 	tree/Invert.cpp
 	tree/Succeed.cpp
@@ -185,6 +186,7 @@ list(APPEND simpleai_HEADERS
 	server/UpdateNodeHandler.h
 	zone/Zone.h
 	SimpleAI.h
+	tree/Fail.h
 	tree/Idle.h
 	tree/Invert.h
 	tree/ITask.h
