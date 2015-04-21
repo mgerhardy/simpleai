@@ -322,9 +322,9 @@ int main(int argc, char **argv) {
 				auto randomIter = ai::randomElement(trees.begin(), trees.end());
 				const ai::TreeNodePtr& root = loader.load(*randomIter);
 
-				ai::ICharacterPtr e(new ai::example::GameEntity(id++, map));
+				ai::ICharacterPtr chr(new ai::example::GameEntity(id++, map));
 				ai::AIPtr ai(new ai::AI(root));
-				ai->setCharacter(e);
+				ai->setCharacter(chr);
 				const ai::GroupId groupId = ai::random(1, 3);
 				const ai::AIPtr& ent = map->addEntity(ai, groupId);
 				std::cout << "spawned " << ent->getId() << " on map " << map->getName() << std::endl;

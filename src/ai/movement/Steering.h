@@ -64,13 +64,13 @@ public:
  */
 class SelectionSteering : public ISteering {
 protected:
-	Vector3f getSelectionTarget(const AIPtr& ai, std::size_t index) const {
-		const FilteredEntities& selection = ai->getFilteredEntities();
+	Vector3f getSelectionTarget(const AIPtr& entity, std::size_t index) const {
+		const FilteredEntities& selection = entity->getFilteredEntities();
 		if (selection.empty() || selection.size() <= index)
 			return Vector3f::INFINITE;
 		const CharacterId characterId = selection[index];
 		Vector3f target = Vector3f::INFINITE;
-		const Zone* zone = ai->getZone();
+		const Zone* zone = entity->getZone();
 		auto func = [&] (const AIPtr& ai) {
 			target = ai->getCharacter()->getPosition();
 		};

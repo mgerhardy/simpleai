@@ -14,9 +14,7 @@ TreeNodeStatus Parallel::execute(const AIPtr& entity, long deltaMillis) {
 		return CANNOTEXECUTE;
 
 	bool totalStatus = false;
-	const std::size_t size = _children.size();
-	for (std::size_t i = 0; i < size; ++i) {
-		TreeNodePtr& child = _children[i];
+	for (const TreeNodePtr& child : _children) {
 		const bool isActive = child->execute(entity, deltaMillis) == RUNNING;
 		if (!isActive) {
 			child->resetState(entity);
