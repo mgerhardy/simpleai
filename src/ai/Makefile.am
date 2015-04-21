@@ -37,6 +37,7 @@ libsimpleai_la_SOURCES = \
 	server/StepHandler.cpp \
 	zone/Zone.cpp \
 	tree/Fail.cpp \
+	tree/Limit.cpp \
 	tree/Idle.cpp \
 	tree/Invert.cpp \
 	tree/ITask.cpp \
@@ -128,6 +129,7 @@ nobase_library_include_HEADERS = \
 	zone/Zone.h \
 	SimpleAI.h \
 	tree/Fail.h \
+	tree/Limit.h \
 	tree/Idle.h \
 	tree/Invert.h \
 	tree/ITask.h \

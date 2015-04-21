@@ -64,6 +64,12 @@ protected:
 	typedef std::unordered_map<int, int> SelectorStates;
 	SelectorStates _selectorStates;
 
+	/**
+	 * This map stores the amount of execution for the @c Limit node. The key is the node id
+	 */
+	typedef std::unordered_map<int, int> LimitStates;
+	LimitStates _limitStates;
+
 	TreeNodePtr _behaviour;
 	AggroMgr _aggroList;
 

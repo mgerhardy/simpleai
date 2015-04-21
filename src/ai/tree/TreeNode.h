@@ -88,6 +88,8 @@ protected:
 	TreeNodeStatus state(const AIPtr& entity, TreeNodeStatus treeNodeState);
 	int getSelectorState(const AIPtr& entity) const;
 	void setSelectorState(const AIPtr& entity, int selected);
+	int getLimitState(const AIPtr& entity) const;
+	void setLimitState(const AIPtr& entity, int amount);
 	void setLastExecMillis(const AIPtr& entity);
 
 	TreeNodePtr getParent_r(const TreeNodePtr& parent, int id) const;

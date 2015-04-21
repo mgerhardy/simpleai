@@ -21,6 +21,7 @@ list(APPEND SRC
 	filter/SelectGroupMembers.cpp
 	filter/SelectGroupLeader.cpp
 	tree/Fail.cpp
+	tree/Limit.cpp
 	tree/Sequence.cpp
 	tree/Invert.cpp
 	tree/Succeed.cpp
@@ -187,6 +188,7 @@ list(APPEND simpleai_HEADERS
 	zone/Zone.h
 	SimpleAI.h
 	tree/Fail.h
+	tree/Limit.h
 	tree/Idle.h
 	tree/Invert.h
 	tree/ITask.h

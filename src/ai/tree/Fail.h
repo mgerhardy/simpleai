@@ -17,7 +17,7 @@ public:
 
 	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis) override {
 		if (_children.size() != 1) {
-			ai_assert(false, "Succeed can not have more than one child");
+			ai_assert(false, "Fail can not have more than one child");
 		}
 
 		if (TreeNode::execute(entity, deltaMillis) == CANNOTEXECUTE)

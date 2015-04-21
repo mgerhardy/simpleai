@@ -2,6 +2,7 @@
 #include "tree/TreeNode.h"
 #include "conditions/ICondition.h"
 #include "tree/Fail.h"
+#include "tree/Limit.h"
 #include "tree/Invert.h"
 #include "tree/Idle.h"
 #include "tree/Print.h"
@@ -66,6 +67,7 @@ AIRegistry::FilterFactory::FilterFactory() {
 
 AIRegistry::TreeNodeFactory::TreeNodeFactory() {
 	R(Fail);
+	R(Limit);
 	R(Invert);
 	R(Succeed);
 	R(Parallel);

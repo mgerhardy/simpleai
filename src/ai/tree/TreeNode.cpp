@@ -48,6 +48,17 @@ void TreeNode::setSelectorState(const AIPtr& entity, int selected) {
 	entity->_selectorStates[getId()] = selected;
 }
 
+int TreeNode::getLimitState(const AIPtr& entity) const {
+	AI::LimitStates::const_iterator i = entity->_limitStates.find(getId());
+	if (i == entity->_limitStates.end())
+		return 0;
+	return i->second;
+}
+
+void TreeNode::setLimitState(const AIPtr& entity, int amount) {
+	entity->_limitStates[getId()] = amount;
+}
+
 TreeNodeStatus TreeNode::state(const AIPtr& entity, TreeNodeStatus treeNodeState) {
 	if (!entity->_debuggingActive)
 		return treeNodeState;

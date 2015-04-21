@@ -60,6 +60,7 @@
 #include "ICharacter.h"
 
 #include "tree/Fail.h"
+#include "tree/Limit.h"
 #include "tree/Idle.h"
 #include "tree/Invert.h"
 #include "tree/Parallel.h"
