@@ -84,7 +84,6 @@ protected:
 	std::string _parameters;
 	ConditionPtr _condition;
 
-	void setResetSinceLastExec(const AIPtr& entity, bool status);
 	TreeNodeStatus state(const AIPtr& entity, TreeNodeStatus treeNodeState);
 	int getSelectorState(const AIPtr& entity) const;
 	void setSelectorState(const AIPtr& entity, int selected);
@@ -133,16 +132,15 @@ public:
 	void setCondition(const ConditionPtr& condition);
 	const TreeNodes& getChildren() const;
 	TreeNodes& getChildren();
-	/**
-	 * @brief Returns the time in milliseconds when this node was last run. This is only updated if @c #execute() was called
-	 */
-	bool getResetSinceLastExec(const AIPtr& entity) const;
 
 	/**
 	 * @brief Get the state of all child nodes for the given entity
 	 * @param[in] entity The entity to get the child node states for
 	 */
 	virtual void getRunningChildren(const AIPtr& entity, std::vector<bool>& active) const;
+	/**
+	 * @brief Returns the time in milliseconds when this node was last run. This is only updated if @c #execute() was called
+	 */
 	long getLastExecMillis(const AIPtr& ai) const;
 	TreeNodeStatus getLastStatus(const AIPtr& ai) const;
 
