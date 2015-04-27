@@ -41,9 +41,9 @@ end
 
 function simpleai.init()
 	local fields = simpleai.fields
-	f.msgid = ProtoFields.uint8("simpleai.msgid", "Message Id")
+	fields.msgid = ProtoField.uint8("simpleai.msgid", "Message Id")
 
 	simpleai_table = DissectorTable.get("tcp.port")
-	simpleai_table:add(10001, SIMPLEAI)
+	simpleai_table:add(10001, simpleai)
 end
 
