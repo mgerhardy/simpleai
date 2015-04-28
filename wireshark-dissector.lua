@@ -25,130 +25,111 @@ simpleai = Proto("simpleai", "SimpleAI remote debugger")
 
 simpleai.prefs.port = Pref.uint("Port number", default_settings.port, "The TCP port number for the simpleai debug server")
 
-local fieldZoneNamesAmount = ProtoField.uint32("simpleai.zonenames.amount", "Number of zone names")
-local fieldZoneNamesName = ProtoField.string("simpleai.zonenames.name", "Zone name")
-
-local fieldStatesAmount = ProtoField.uint32("simpleai.states.amount", "Number of states")
-local fieldStatesId = ProtoField.uint32("simpleai.states.id", "Node id")
-local fieldStatesX = ProtoField.float("simpleai.states.x", "X position of the entity")
-local fieldStatesY = ProtoField.float("simpleai.states.y", "Y position of the entity")
-local fieldStatesZ = ProtoField.float("simpleai.states.z", "Z position of the entity")
-local fieldStateOrientation = ProtoField.float("simpleai.states.orientation", "Orientation of the entity")
-local fieldStatesAttributesCount = ProtoField.uint16("simpleai.states.attribcount", "Attribute count")
-local fieldStatesAttributesKey = ProtoField.stringz("simpleai.states.attribkey", "Key")
-local fieldStatesAttributesValue = ProtoField.stringz("simpleai.states.attribvalue", "Value")
-
-local fieldStaticCharacterId = ProtoField.uint32("simpleai.static.chrid", "Character id")
-local fieldStaticNodeCount = ProtoField.uint32("simpleai.static.count", "Static node data count")
-local fieldStaticNodeId = ProtoField.uint32("simpleai.static.id", "Node id")
-local fieldStaticNodeName = ProtoField.stringz("simpleai.static.name", "Node name")
-local fieldStaticNodeType = ProtoField.stringz("simpleai.static.type", "Node type")
-local fieldStaticParameters = ProtoField.stringz("simpleai.static.parameters", "Node parameters")
-local fieldStaticConditionType = ProtoField.stringz("simpleai.static.conditiontype", "Character type")
-local fieldStaticConditionParameters = ProtoField.stringz("simpleai.static.conditionparameters", "Condition parameters")
-
-local fieldDetailsCharacterId = ProtoField.stringz("simpleai.detail.chrid", "Character id")
-local fieldDetailsAggroCount = ProtoField.uint16("simpleai.details.aggrocount", "Aggro entries")
-local fieldDetailsAggroChrId = ProtoField.uint32("simpleai.details.aggrochrid", "Character id")
-local fieldDetailsAggroAmount = ProtoField.float("simpleai.details.aggroamount", "Aggro amount")
-local fieldDetailsNodeId = ProtoField.uint32("simpleai.details.id", "Node id")
-
-local fieldSelectCharacterId = ProtoField.uint32("simpleai.select.chrid", "Character id")
-
-local fieldPauseState = ProtoField.bool("simpleai.pause.state", "Pause state")
-
-local fieldChangeName = ProtoField.stringz("simpleai.change.name", "Zone name")
-
-local fieldStepMillis = ProtoField.int64("simpleai.step.millis", "Milliseconds")
-
 function disPingMessage(buffer, tree)
 	-- Nothing to do here
 end
 
 function disStateMessage(buffer, tree)
-	tree:add(fieldStatesAmount, buffer(1, 4))
+	tree:add(simpleai.fields.fieldStatesAmount, buffer(1, 4))
 	local count = buffer(1, 4):uint()
 	local offset = 5
 	for i = 1, count do
-		tree:add(fieldStatesId, buffer(offset, 4))
+		tree:add(simpleai.fields.fieldStatesId, buffer(offset, 4))
 		offset = offset + 4;
-		tree:add(fieldStatesX, buffer(offset, 4))
+		tree:add(simpleai.fields.fieldStatesX, buffer(offset, 4))
 		offset = offset + 4;
-		tree:add(fieldStatesY, buffer(offset, 4))
+		tree:add(simpleai.fields.fieldStatesY, buffer(offset, 4))
 		offset = offset + 4;
-		tree:add(fieldStatesZ, buffer(offset, 4))
+		tree:add(simpleai.fields.fieldStatesZ, buffer(offset, 4))
 		offset = offset + 4;
-		tree:add(fieldStatesOrientation, buffer(offset, 4))
+		tree:add(simpleai.fields.fieldStatesOrientation, buffer(offset, 4))
 		offset = offset + 4;
 		local attributesCount = buffer(offset, 2):uint()
-		tree:add(fieldStatesAttributesCount, buffer(offset, 2))
+		tree:add(simpleai.fields.fieldStatesAttributesCount, buffer(offset, 2))
 		offset = offset + 2;
 		for i = 1, attributesCount do
-			tree:add(fieldStatesAttributesKey, buffer(offset))
+			tree:add(simpleai.fields.fieldStatesAttributesKey, buffer(offset))
 			offset = offset + buffer(offset):stringz():len()
-			tree:add(fieldStatesAttributesValue, buffer(offset))
+			tree:add(simpleai.fields.fieldStatesAttributesValue, buffer(offset))
 			offset = offset + buffer(offset):stringz():len()
 		end
 	end
 end
 
 function disCharacterStaticMessage(buffer, tree)
-	tree:add(fieldStaticCharacterId, buffer(1, 4))
+	tree:add(simpleai.fields.fieldStaticCharacterId, buffer(1, 4))
 	local count = buffer(5, 4):uint()
-	tree:add(fieldStaticNodeCount, buffer(5, 4))
+	tree:add(simpleai.fields.fieldStaticNodeCount, buffer(5, 4))
 	local offset = 9
 	for i = 1, count do
-		tree:add(fieldStaticNodeId, buffer(offset, 4))
+		tree:add(simpleai.fields.fieldStaticNodeId, buffer(offset, 4))
 		offset = offset + 4;
-		tree:add(fieldStaticNodeName, buffer(offset))
+		tree:add(simpleai.fields.fieldStaticNodeName, buffer(offset))
 		offset = offset + buffer(offset):stringz():len()
-		tree:add(fieldStaticNodeType, buffer(offset))
+		tree:add(simpleai.fields.fieldStaticNodeType, buffer(offset))
 		offset = offset + buffer(offset):stringz():len()
-		tree:add(fieldStaticParameters, buffer(offset))
+		tree:add(simpleai.fields.fieldStaticParameters, buffer(offset))
 		offset = offset + buffer(offset):stringz():len()
-		tree:add(fieldStaticConditionType, buffer(offset))
+		tree:add(simpleai.fields.fieldStaticConditionType, buffer(offset))
 		offset = offset + buffer(offset):stringz():len()
-		tree:add(fieldStaticConditionParameters, buffer(offset))
+		tree:add(simpleai.fields.fieldStaticConditionParameters, buffer(offset))
 		offset = offset + buffer(offset):stringz():len()
 	end
 end
 
+function disCharacterDetailsMessageNode(buffer, tree, offset)
+	tree:add(simpleai.fields.fieldDetailsNodeId, buffer(offset, 4))
+	offset = offset + 4
+	tree:add(simpleai.fields.fieldDetailsNodeCondition, buffer(offset))
+	offset = offset + buffer(offset):stringz():len()
+	tree:add(simpleai.fields.fieldDetailsNodeLastRun, buffer(offset, 8))
+	offset = offset + 8
+	local childrenCount = buffer(offset, 2):uint()
+	tree:add(simpleai.fields.fieldDetailsChildrenCount, buffer(offset, 2))
+	offset = offset + 2
+	for i = 1, childrenCount do
+		fields.advance = disCharacterDetailsMessageNode(buffer, tree, offset)
+		offset = offset + advance
+	end
+	return offset
+end
+
 function disCharacterDetailsMessage(buffer, tree)
-	tree:add(fieldDetailsCharacterId, buffer(1, 4))
+	tree:add(simpleai.fields.fieldDetailsCharacterId, buffer(1, 4))
 
 	-- read the aggro
 	local aggroCount = buffer(5, 2):uint()
-	tree:add(fieldStatesAttributesCount, buffer(5, 2))
+	tree:add(simpleai.fields.fieldDetailsAggroCount, buffer(5, 2))
 	local offset = 7
 	for i = 1, aggroCount do
-		tree:add(fieldDetailsAggroChrId, buffer(offset, 4))
+		tree:add(simpleai.fields.fieldDetailsAggroChrId, buffer(offset, 4))
 		offset = offset + 4
-		tree:add(fieldDetailsAggroAmount, buffer(offset, 4))
+		tree:add(simpleai.fields.fieldDetailsAggroAmount, buffer(offset, 4))
 		offset = offset + 4
 	end
 
 	-- now read the nodes
-	-- TODO
+	disCharacterDetailsMessageNode(buffer, tree, offset)
 end
 
 function disSelectMessage(buffer, tree)
-	tree:add(fieldSelectCharacterId, buffer(1, 4))
+	tree:add(simpleai.fields.fieldSelectCharacterId, buffer(1, 4))
 end
 
 function disPauseMessage(buffer, tree)
-	tree:add(fieldPauseState, buffer(1, 1))
+	tree:add(simpleai.fields.fieldPauseState, buffer(1, 1))
 end
 
 function disChangeMessage(buffer, tree)
-	tree:add(fieldChangeName, buffer(1))
+	tree:add(simpleai.fields.fieldChangeName, buffer(1))
 end
 
 function disNamesMessage(buffer, tree)
-	tree:add(fieldZoneNamesAmount, buffer(1, 4))
+	tree:add(simpleai.fields.fieldZoneNamesAmount, buffer(1, 4))
 	local count = buffer(1, 4):uint()
-	local offset = 6
+	local offset = 5
 	for i = 1, count do
-		tree:add(fieldZoneNamesName, buffer(offset):stringz())
+		tree:add(simpleai.fields.fieldZoneNamesName, buffer(offset))
 		offset = offset + buffer(offset):stringz():len()
 	end
 end
@@ -158,7 +139,7 @@ function disResetMessage(buffer, tree)
 end
 
 function disStepMessage(buffer, tree)
-		tree:add(fieldStepMillis, buffer(1, 8))
+	tree:add(simpleai.fields.fieldStepMillis, buffer(1, 8))
 end
 
 function disUpdateNodeMessage(buffer, tree)
@@ -171,6 +152,7 @@ function disAddNodeMessage(buffer, tree)
 end
 
 function simpleai.dissector(buffer, pinfo, tree)
+	local subtree = tree:add(simpleai, buffer())
 	local id = buffer(0, 1):uint()
 
 	local name = PROTO[id]
@@ -182,31 +164,31 @@ function simpleai.dissector(buffer, pinfo, tree)
 	pinfo.cols.info = "Type: " .. name
 
 	if id == 0 then
-		disPingMessage(buffer, tree)
+		disPingMessage(buffer, subtree)
 	elseif id == 1 then
-		disStateMessage(buffer, tree)
+		disStateMessage(buffer, subtree)
 	elseif id == 2 then
-		disCharacterStaticMessage(buffer, tree)
+		disCharacterStaticMessage(buffer, subtree)
 	elseif id == 3 then
-		disCharacterDetailsMessage(buffer, tree)
+		disCharacterDetailsMessage(buffer, subtree)
 	elseif id == 4 then
-		disSelectMessage(buffer, tree)
+		disSelectMessage(buffer, subtree)
 	elseif id == 5 then
-		disPauseMessage(buffer, tree)
+		disPauseMessage(buffer, subtree)
 	elseif id == 6 then
-		disChangeMessage(buffer, tree)
+		disChangeMessage(buffer, subtree)
 	elseif id == 7 then
-		disNamesMessage(buffer, tree)
+		disNamesMessage(buffer, subtree)
 	elseif id == 8 then
-		disResetMessage(buffer, tree)
+		disResetMessage(buffer, subtree)
 	elseif id == 9 then
-		disStepMessage(buffer, tree)
+		disStepMessage(buffer, subtree)
 	elseif id == 10 then
-		disUpdateNodeMessage(buffer, tree)
+		disUpdateNodeMessage(buffer, subtree)
 	elseif id == 11 then
-		disDeleteNodeMessage(buffer, tree)
+		disDeleteNodeMessage(buffer, subtree)
 	elseif id == 12 then
-		disAddNodeMessage(buffer, tree)
+		disAddNodeMessage(buffer, subtree)
 	end
 end
 
@@ -225,6 +207,44 @@ end
 function simpleai.init()
 	local fields = simpleai.fields
 	fields.msgid = ProtoField.uint8("simpleai.msgid", "Message Id")
+	fields.fieldZoneNamesAmount = ProtoField.uint32("simpleai.zonenames.amount", "Number of zone names")
+	fields.fieldZoneNamesName = ProtoField.string("simpleai.zonenames.name", "Zone name")
+
+	fields.fieldStatesAmount = ProtoField.uint32("simpleai.states.amount", "Number of states")
+	fields.fieldStatesId = ProtoField.uint32("simpleai.states.id", "Node id")
+	fields.fieldStatesX = ProtoField.float("simpleai.states.x", "X position of the entity")
+	fields.fieldStatesY = ProtoField.float("simpleai.states.y", "Y position of the entity")
+	fields.fieldStatesZ = ProtoField.float("simpleai.states.z", "Z position of the entity")
+	fields.fieldStateOrientation = ProtoField.float("simpleai.states.orientation", "Orientation of the entity")
+	fields.fieldStatesAttributesCount = ProtoField.uint16("simpleai.states.attribcount", "Attribute count")
+	fields.fieldStatesAttributesKey = ProtoField.stringz("simpleai.states.attribkey", "Key")
+	fields.fieldStatesAttributesValue = ProtoField.stringz("simpleai.states.attribvalue", "Value")
+
+	fields.fieldStaticCharacterId = ProtoField.uint32("simpleai.static.chrid", "Character id")
+	fields.fieldStaticNodeCount = ProtoField.uint32("simpleai.static.count", "Static node data count")
+	fields.fieldStaticNodeId = ProtoField.uint32("simpleai.static.id", "Node id")
+	fields.fieldStaticNodeName = ProtoField.stringz("simpleai.static.name", "Node name")
+	fields.fieldStaticNodeType = ProtoField.stringz("simpleai.static.type", "Node type")
+	fields.fieldStaticParameters = ProtoField.stringz("simpleai.static.parameters", "Node parameters")
+	fields.fieldStaticConditionType = ProtoField.stringz("simpleai.static.conditiontype", "Character type")
+	fields.fieldStaticConditionParameters = ProtoField.stringz("simpleai.static.conditionparameters", "Condition parameters")
+
+	fields.fieldDetailsCharacterId = ProtoField.stringz("simpleai.detail.chrid", "Character id")
+	fields.fieldDetailsAggroCount = ProtoField.uint16("simpleai.details.aggrocount", "Aggro entries")
+	fields.fieldDetailsAggroChrId = ProtoField.uint32("simpleai.details.aggrochrid", "Character id")
+	fields.fieldDetailsAggroAmount = ProtoField.float("simpleai.details.aggroamount", "Aggro amount")
+	fields.fieldDetailsNodeId = ProtoField.uint32("simpleai.details.id", "Node id")
+	fields.fieldDetailsNodeCondition = ProtoField.stringz("simpleai.details.condition", "Condition")
+	fields.fieldDetailsNodeLastRun = ProtoField.int64("simpleai.details.lastrun", "Last run")
+	fields.fieldDetailsChildrenCount = ProtoField.int64("simpleai.details.childrencount", "Amount of children")
+
+	fields.fieldSelectCharacterId = ProtoField.uint32("simpleai.select.chrid", "Character id")
+
+	fields.fieldPauseState = ProtoField.bool("simpleai.pause.state", "Pause state")
+
+	fields.fieldChangeName = ProtoField.stringz("simpleai.change.name", "Zone name")
+
+	fields.fieldStepMillis = ProtoField.int64("simpleai.step.millis", "Milliseconds")
 
 	simpleai_table = DissectorTable.get("tcp.port")
 	simpleai_table:add(default_settings.port, simpleai)
