@@ -21,6 +21,21 @@ PROTO[10] = "PROTO_UPDATENODE"
 PROTO[11] = "PROTO_DELETENODE"
 PROTO[12] = "PROTO_ADDNODE"
 
+MINLENGTH = {}
+MINLENGTH[0] = 1
+MINLENGTH[1] = 27
+MINLENGTH[2] = 9
+MINLENGTH[3] = 24
+MINLENGTH[4] = 5
+MINLENGTH[5] = 2
+MINLENGTH[6] = 2
+MINLENGTH[7] = 5
+MINLENGTH[8] = 1
+MINLENGTH[9] = 9
+MINLENGTH[10] = 12
+MINLENGTH[11] = 9
+MINLENGTH[12] = 12
+
 simpleai = Proto("simpleai", "SimpleAI remote debugger")
 
 simpleai.prefs.port = Pref.uint("Port number", default_settings.port, "The TCP port number for the simpleai debug server")
@@ -157,11 +172,29 @@ function simpleai.dissector(buffer, pinfo, tree)
 
 	local name = PROTO[id]
 	if name == nil then
-		name = "Unknown"
+		subtree:add_expert_info(PI_MALFORMED, PI_ERROR, "Unknown message type " .. id)
+		return
+	end
+
+	local minlen = MINLENGTH[id]
+	if minlen == nil then
+		subtree:add_expert_info(PI_MALFORMED, PI_ERROR, "No length given for message type " .. id)
+		return
+	end
+
+	if buffer:reported_length_remaining() >= minlen then
+		subtree:add_expert_info(PI_UNDECODED, PI_INFO, "Only part of this packet was captured, unable to decode.")
+		return
+	elseif buffer:len() < minlen then
+		subtree:add_expert_info(PI_MALFORMED, PI_ERROR, "Message is too short")
+		return
 	end
 
 	pinfo.cols.protocol = simpleai.name
 	pinfo.cols.info = "Type: " .. name
+
+	subtree:set_len(minlen)
+	subtree:set_text("SimpleAI: " .. name)
 
 	if id == 0 then
 		disPingMessage(buffer, subtree)
