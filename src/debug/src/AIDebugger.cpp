@@ -278,7 +278,7 @@ void AIDebugger::readTcpData() {
 		for (;;) {
 			if (!mf.isNewMessageAvailable(_stream))
 				break;
-			std::unique_ptr<ai::IProtocolMessage> msg(mf.create(_stream));
+			ai::IProtocolMessage* msg = mf.create(_stream);
 			if (!msg) {
 				qDebug() << "unknown server message - disconnecting";
 				_socket.disconnectFromHost();

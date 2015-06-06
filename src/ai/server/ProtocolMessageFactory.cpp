@@ -14,7 +14,36 @@
 
 namespace ai {
 
-ProtocolMessageFactory::ProtocolMessageFactory() {
+ProtocolMessageFactory::ProtocolMessageFactory() :
+	_aiState(new uint8_t[sizeof(AIStateMessage)]),
+	_aiSelect(new uint8_t[sizeof(AISelectMessage)]),
+	_aiPause(new uint8_t[sizeof(AIPauseMessage)]),
+	_aiNames(new uint8_t[sizeof(AINamesMessage)]),
+	_aiChange(new uint8_t[sizeof(AIChangeMessage)]),
+	_aiReset(new uint8_t[sizeof(AIResetMessage)]),
+	_aiStep(new uint8_t[sizeof(AIStepMessage)]),
+	_aiPing(new uint8_t[sizeof(AIPingMessage)]),
+	_aiCharacterDetails(new uint8_t[sizeof(AICharacterDetailsMessage)]),
+	_aiCharacterStatic(new uint8_t[sizeof(AICharacterStaticMessage)]),
+	_aiUpdateNode(new uint8_t[sizeof(AIUpdateNodeMessage)]),
+	_aiAddNode(new uint8_t[sizeof(AIAddNodeMessage)]),
+	_aiDeleteNode(new uint8_t[sizeof(AIDeleteNodeMessage)]) {
+}
+
+ProtocolMessageFactory::~ProtocolMessageFactory() {
+	delete[] _aiState;
+	delete[] _aiSelect;
+	delete[] _aiPause;
+	delete[] _aiNames;
+	delete[] _aiChange;
+	delete[] _aiReset;
+	delete[] _aiStep;
+	delete[] _aiPing;
+	delete[] _aiCharacterDetails;
+	delete[] _aiCharacterStatic;
+	delete[] _aiUpdateNode;
+	delete[] _aiAddNode;
+	delete[] _aiDeleteNode;
 }
 
 bool ProtocolMessageFactory::isNewMessageAvailable(const streamContainer& in) const {
@@ -38,31 +67,31 @@ IProtocolMessage *ProtocolMessageFactory::create(streamContainer& in) {
 	const uint8_t type = in.front();
 	in.pop_front();
 	if (type == PROTO_STATE) {
-		return new AIStateMessage(in);
+		return new (_aiState) AIStateMessage(in);
 	} else if (type == PROTO_SELECT) {
-		return new AISelectMessage(in);
+		return new (_aiSelect) AISelectMessage(in);
 	} else if (type == PROTO_PAUSE) {
-		return new AIPauseMessage(in);
+		return new (_aiPause) AIPauseMessage(in);
 	} else if (type == PROTO_NAMES) {
-		return new AINamesMessage(in);
+		return new (_aiNames) AINamesMessage(in);
 	} else if (type == PROTO_CHANGE) {
-		return new AIChangeMessage(in);
+		return new (_aiChange) AIChangeMessage(in);
 	} else if (type == PROTO_RESET) {
-		return new AIResetMessage();
+		return new (_aiReset) AIResetMessage();
 	} else if (type == PROTO_STEP) {
-		return new AIStepMessage(in);
+		return new (_aiStep) AIStepMessage(in);
 	} else if (type == PROTO_PING) {
-		return new AIPingMessage();
+		return new (_aiPing) AIPingMessage();
 	} else if (type == PROTO_CHARACTER_DETAILS) {
-		return new AICharacterDetailsMessage(in);
+		return new (_aiCharacterDetails) AICharacterDetailsMessage(in);
 	} else if (type == PROTO_CHARACTER_STATIC) {
-		return new AICharacterStaticMessage(in);
+		return new (_aiCharacterStatic) AICharacterStaticMessage(in);
 	} else if (type == PROTO_UPDATENODE) {
-		return new AIUpdateNodeMessage(in);
+		return new (_aiUpdateNode) AIUpdateNodeMessage(in);
 	} else if (type == PROTO_ADDNODE) {
-		return new AIAddNodeMessage(in);
+		return new (_aiAddNode) AIAddNodeMessage(in);
 	} else if (type == PROTO_DELETENODE) {
-		return new AIDeleteNodeMessage(in);
+		return new (_aiDeleteNode) AIDeleteNodeMessage(in);
 	}
 
 	return nullptr;

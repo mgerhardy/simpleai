@@ -31,7 +31,7 @@ TEST_F(MessageTest, testAICharacterDetailsMessage) {
 	ASSERT_EQ(ai::RUNNING, m.getNode().getStatus());
 	ASSERT_TRUE(m.getNode().isRunning());
 
-	std::unique_ptr<ai::AICharacterDetailsMessage> d(serializeDeserialize(m));
+	ai::AICharacterDetailsMessage* d(serializeDeserialize(m));
 	ASSERT_EQ(m.getId(), d->getId());
 	ASSERT_EQ(id, d->getCharacterId());
 	ASSERT_EQ(2, d->getAggro().getAggro()[0].id);
@@ -46,13 +46,13 @@ TEST_F(MessageTest, testAICharacterDetailsMessage) {
 TEST_F(MessageTest, testAIPauseMessage) {
 	{
 		ai::AIPauseMessage m(true);
-		std::unique_ptr<ai::AIPauseMessage> d(serializeDeserialize(m));
+		ai::AIPauseMessage* d = serializeDeserialize(m);
 		ASSERT_EQ(m.getId(), d->getId());
 		ASSERT_TRUE(d->isPause());
 	}
 	{
 		ai::AIPauseMessage m(false);
-		std::unique_ptr<ai::AIPauseMessage> d(serializeDeserialize(m));
+		ai::AIPauseMessage* d = serializeDeserialize(m);
 		ASSERT_EQ(m.getId(), d->getId());
 		ASSERT_FALSE(d->isPause());
 	}
@@ -62,21 +62,21 @@ TEST_F(MessageTest, testAINamesMessage) {
 	std::vector<std::string> names;
 	names.push_back("Test");
 	ai::AINamesMessage m(names);
-	std::unique_ptr<ai::AINamesMessage> d(serializeDeserialize(m));
+	ai::AINamesMessage* d = serializeDeserialize(m);
 	ASSERT_EQ(m.getId(), d->getId());
 	ASSERT_EQ("Test", d->getNames()[0]);
 }
 
 TEST_F(MessageTest, testAIChangeMessage) {
 	ai::AIChangeMessage m("Test");
-	std::unique_ptr<ai::AIChangeMessage> d(serializeDeserialize(m));
+	ai::AIChangeMessage* d = serializeDeserialize(m);
 	ASSERT_EQ(m.getId(), d->getId());
 	ASSERT_EQ("Test", d->getName());
 }
 
 TEST_F(MessageTest, testAISelectMessage) {
 	ai::AISelectMessage m(1);
-	std::unique_ptr<ai::AISelectMessage> d(serializeDeserialize(m));
+	ai::AISelectMessage* d = serializeDeserialize(m);
 	ASSERT_EQ(m.getId(), d->getId());
 	ASSERT_EQ(1, d->getCharacterId());
 }
@@ -92,7 +92,7 @@ TEST_F(MessageTest, testAIStateMessage) {
 	ASSERT_EQ("SomeValue", state.getAttributes().find("SomethingElse")->second);
 	m.addState(state);
 
-	std::unique_ptr<ai::AIStateMessage> d(serializeDeserialize(m));
+	ai::AIStateMessage* d = serializeDeserialize(m);
 	ASSERT_EQ(m.getId(), d->getId());
 	ASSERT_EQ(1u, d->getStates().size());
 	ASSERT_EQ("Test", d->getStates()[0].getAttributes().find("Name")->second);
@@ -103,12 +103,12 @@ TEST_F(MessageTest, testAIStateMessage) {
 
 TEST_F(MessageTest, testIProtocolMessageStep) {
 	ai::IProtocolMessage m(ai::PROTO_STEP);
-	std::unique_ptr<ai::IProtocolMessage> d(serializeDeserialize(m));
+	ai::IProtocolMessage* d = serializeDeserialize(m);
 	ASSERT_EQ(m.getId(), d->getId());
 }
 
 TEST_F(MessageTest, testIProtocolMessageReset) {
 	ai::IProtocolMessage m(ai::PROTO_RESET);
-	std::unique_ptr<ai::IProtocolMessage> d(serializeDeserialize(m));
+	ai::IProtocolMessage* d = serializeDeserialize(m);
 	ASSERT_EQ(m.getId(), d->getId());
 }

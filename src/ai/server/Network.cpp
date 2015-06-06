@@ -196,7 +196,7 @@ void Network::update(long deltaTime) {
 
 		ProtocolMessageFactory& factory = ProtocolMessageFactory::get();
 		if (factory.isNewMessageAvailable(client.in)) {
-			std::unique_ptr<IProtocolMessage> msg(factory.create(client.in));
+			IProtocolMessage* msg = factory.create(client.in);
 			if (!msg) {
 				i = closeClient(i);
 				continue;
