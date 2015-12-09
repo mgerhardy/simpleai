@@ -43,7 +43,9 @@ Makefile
 .settings
 
 CMakeFiles
-*.cmake
+/*.cmake
+/compile_commands.json
+cmake_install.cmake
 CMakeCache.txt
 /install_manifest.txt
 /testbuild.log

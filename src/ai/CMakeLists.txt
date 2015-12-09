@@ -1,7 +1,7 @@
 include(CheckFunctionExists)
 include(CheckLibraryExists)
 
-list(APPEND SRC
+set(SRC
 	group/GroupMgr.cpp
 	AI.cpp
 	server/AddNodeHandler.cpp
@@ -27,11 +27,6 @@ list(APPEND SRC
 	tree/Succeed.cpp
 	tree/TreeNode.cpp
 	tree/Parallel.cpp
-	tree/loaders/lua/LUANode.cpp
-	tree/loaders/lua/LUA.cpp
-	tree/loaders/lua/LUATreeLoader.cpp
-	tree/loaders/lua/LUATree.cpp
-	tree/loaders/xml/XMLTreeLoader.cpp
 	tree/TreeNodeParser.cpp
 	tree/Print.cpp
 	tree/Steer.cpp
@@ -80,6 +75,12 @@ if (SIMPLEAI_LUA)
 	else()
 		include_directories(${LUA_INCLUDE_DIR})
 	endif()
+	list(APPEND SRC
+		tree/loaders/lua/LUANode.cpp
+		tree/loaders/lua/LUA.cpp
+		tree/loaders/lua/LUATreeLoader.cpp
+		tree/loaders/lua/LUATree.cpp
+	)
 else()
 	message(STATUS "Build lib without lua support")
 	file(GLOB LUA_REMOVE tree/loaders/lua/*)
@@ -90,6 +91,7 @@ if (SIMPLEAI_XML)
 	message(STATUS "Build lib with XML support")
 	include_directories(${SIMPLEAI_SOURCE_DIR}/src/libs/tinyxml2/)
 	list(APPEND DEPS tinyxml2)
+	list(APPEND SRC tree/loaders/xml/XMLTreeLoader.cpp)
 else()
 	message(STATUS "Build lib without XML support")
 	file(GLOB XML_REMOVE tree/loaders/xml/*)
