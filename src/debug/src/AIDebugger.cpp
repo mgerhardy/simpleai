@@ -262,7 +262,6 @@ void AIDebugger::onDisconnect() {
 		_entities.clear();
 		emit onEntitiesUpdated();
 	}
-	emit disconnect();
 }
 
 void AIDebugger::readTcpData() {
