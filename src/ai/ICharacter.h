@@ -44,7 +44,7 @@ const char* const ORIENTATION = "Orientation";
 class ICharacter : public NonCopyable {
 protected:
 	CharacterId _id;
-	ATOMIC(Vector3f) _position;
+	Vector3f _position;
 	ATOMIC(float) _orientation;
 	// m/s
 	ATOMIC(float) _speed;
