@@ -4,3 +4,5 @@ Thread safety improvements. singletons for tree nodes, conditions and filters
 Filter for group members/leader
 Zone for ICharacter shared_ptr instead of AI?
 Allow to highlight entities depending on attributes. E.g. make them blue if they are in the group 1
+Use opensteer for movement
+Use glm - remove own vector classes
