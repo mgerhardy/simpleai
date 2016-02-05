@@ -2,8 +2,8 @@
 
 #include <list>
 #include <vector>
-#include <ICharacter.h>
-#include <common/MemoryAllocator.h>
+#include "ICharacter.h"
+#include "common/MemoryAllocator.h"
 
 namespace ai {
 
@@ -22,14 +22,14 @@ public: \
 public: \
 	class Factory: public IFilterFactory { \
 	public: \
-		FilterPtr create (const FilterFactoryContext *ctx) const; \
+		FilterPtr create (const FilterFactoryContext *ctx) const override; \
 	}; \
 	static Factory FACTORY;
 
 #define FILTER_FACTORY_SINGLETON \
 public: \
 	class Factory: public IFilterFactory { \
-		FilterPtr create (const FilterFactoryContext */*ctx*/) const { \
+		FilterPtr create (const FilterFactoryContext */*ctx*/) const override { \
 			return get(); \
 		} \
 	}; \

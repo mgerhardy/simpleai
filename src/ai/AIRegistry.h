@@ -69,35 +69,35 @@ class ITreeNodeFactory: public IFactory<TreeNode, TreeNodeFactoryContext> {
 public:
 	virtual ~ITreeNodeFactory() {
 	}
-	virtual TreeNodePtr create(const TreeNodeFactoryContext *ctx) const = 0;
+	virtual TreeNodePtr create(const TreeNodeFactoryContext *ctx) const override = 0;
 };
 
 class ISteeringFactory: public IFactory<movement::ISteering, SteeringFactoryContext> {
 public:
 	virtual ~ISteeringFactory() {
 	}
-	virtual SteeringPtr create(const SteeringFactoryContext* ctx) const = 0;
+	virtual SteeringPtr create(const SteeringFactoryContext* ctx) const override = 0;
 };
 
 class ISteerNodeFactory: public IFactory<TreeNode, SteerNodeFactoryContext> {
 public:
 	virtual ~ISteerNodeFactory() {
 	}
-	virtual TreeNodePtr create(const SteerNodeFactoryContext *ctx) const = 0;
+	virtual TreeNodePtr create(const SteerNodeFactoryContext *ctx) const override = 0;
 };
 
 class IFilterFactory: public IFactory<IFilter, FilterFactoryContext> {
 public:
 	virtual ~IFilterFactory() {
 	}
-	virtual FilterPtr create(const FilterFactoryContext *ctx) const = 0;
+	virtual FilterPtr create(const FilterFactoryContext *ctx) const override = 0;
 };
 
 class IConditionFactory: public IFactory<ICondition, ConditionFactoryContext> {
 public:
 	virtual ~IConditionFactory() {
 	}
-	virtual ConditionPtr create(const ConditionFactoryContext *ctx) const = 0;
+	virtual ConditionPtr create(const ConditionFactoryContext *ctx) const override = 0;
 };
 
 /**

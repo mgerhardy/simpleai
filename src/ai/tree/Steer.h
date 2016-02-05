@@ -19,7 +19,7 @@ public:
 	}
 	class Factory: public ISteerNodeFactory {
 	public:
-		TreeNodePtr create (const SteerNodeFactoryContext *ctx) const;
+		TreeNodePtr create (const SteerNodeFactoryContext *ctx) const override;
 	};
 	static Factory FACTORY;
 

@@ -1,6 +1,6 @@
 #include "ConditionParser.h"
-#include <conditions/Filter.h>
-#include <AIRegistry.h>
+#include "conditions/Filter.h"
+#include "AIRegistry.h"
 #include <iostream>
 
 namespace ai {

@@ -19,7 +19,7 @@ namespace ai {
  */
 class ITask: public TreeNode {
 protected:
-	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis);
+	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis) override;
 public:
 	ITask(const std::string& name, const std::string& parameters, const ConditionPtr& condition);
 	virtual ~ITask();

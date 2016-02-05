@@ -1,7 +1,8 @@
 #pragma once
 
 #include <vector>
-#include <aggro/Entry.h>
+#include <memory>
+#include "aggro/Entry.h"
 
 namespace ai {
 

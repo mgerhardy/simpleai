@@ -35,6 +35,8 @@ TreeNodeStatus Print::doAction(const AIPtr& entity, long /*deltaMillis*/) {
 	return FINISHED;
 }
 
-NODE_FACTORY_IMPL(Print)
-
+TreeNodePtr Print::Factory::create(const TreeNodeFactoryContext *ctx) const {
+		return TreeNodePtr(new Print(ctx->name, ctx->parameters, ctx->condition));
+	}
+	Print::Factory Print::FACTORY;
 }

@@ -25,7 +25,7 @@ public:
 	ITimedNode(const std::string& name, const std::string& parameters, const ConditionPtr& condition);
 	virtual ~ITimedNode();
 
-	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis);
+	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis) override;
 
 	/**
 	 * @brief Called whenever the timer is started or restarted

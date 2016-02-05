@@ -1,7 +1,7 @@
 #pragma once
 
-#include <conditions/ICondition.h>
-#include <common/IParser.h>
+#include "conditions/ICondition.h"
+#include "common/IParser.h"
 
 namespace ai {
 

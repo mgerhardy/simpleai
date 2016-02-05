@@ -1,5 +1,5 @@
-#include <conditions/Filter.h>
-#include <AIRegistry.h>
+#include "conditions/Filter.h"
+#include "AIRegistry.h"
 
 namespace ai {
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <conditions/ICondition.h>
-#include <filter/IFilter.h>
+#include "conditions/ICondition.h"
+#include "filter/IFilter.h"
 
 #define FILTER_NAME "Filter"
 
@@ -21,7 +21,7 @@ protected:
 public:
 	class Factory: public IConditionFactory {
 	public:
-		ConditionPtr create (const ConditionFactoryContext *ctx) const;
+		ConditionPtr create (const ConditionFactoryContext *ctx) const override;
 	};
 	static Factory FACTORY;
 

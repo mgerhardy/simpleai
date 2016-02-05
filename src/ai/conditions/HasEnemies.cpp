@@ -1,5 +1,5 @@
-#include <conditions/HasEnemies.h>
-#include <AI.h>
+#include "conditions/HasEnemies.h"
+#include "AI.h"
 
 namespace ai {
 

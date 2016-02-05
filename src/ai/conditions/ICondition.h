@@ -12,7 +12,6 @@
 #include <sstream>
 #include <memory>
 
-#include <memory>
 #include "common/MemoryAllocator.h"
 #include "common/IPrintable.h"
 
@@ -38,7 +37,7 @@ public: \
 public: \
 	class Factory: public IConditionFactory { \
 	public: \
-		ConditionPtr create (const ConditionFactoryContext *ctx) const; \
+		ConditionPtr create (const ConditionFactoryContext *ctx) const override; \
 	}; \
 	static Factory FACTORY;
 

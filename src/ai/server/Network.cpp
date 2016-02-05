@@ -141,7 +141,7 @@ void Network::update(long deltaTime) {
 		return;
 	}
 	if (_socketFD != INVALID_SOCKET && FD_ISSET(_socketFD, &readFDsOut)) {
-		const SOCKET clientSocket = accept(_socketFD, nullptr, 0);
+		const SOCKET clientSocket = accept(_socketFD, nullptr, nullptr);
 		if (clientSocket != INVALID_SOCKET) {
 			FD_SET(clientSocket, &_readFDSet);
 			const Client c(clientSocket);
