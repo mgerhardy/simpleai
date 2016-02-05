@@ -5,21 +5,26 @@ set -e
 
 JOBS=4
 
-echo "" > testbuild.log
+TESTLOG="../testbuild.log"
+echo "Write logs to ${TESTLOG}"
+echo "" > ${TESTLOG}
 
 run_configure() {
 	echo "===========================START========================"
 	echo "configure $*"
 	echo "clean"
-	git clean -fdx >> testbuild.log 2>&1
+	git clean -fdx >> ${TESTLOG} 2>&1
 	set +e
-	echo "autogen"
-	./autogen.sh >> testbuild.log 2>&1
+	echo -n "autogen: "
+	./autogen.sh >> ${TESTLOG} 2>&1
+	[ $? -ne 0 ] && echo "Failed" || echo "Success"
 	set -e
-	echo "configure"
-	./configure $* >> testbuild.log 2>&1
-	echo "make"
-	make -j ${JOBS} >> testbuild.log 2>&1
+	echo -n "configure: "
+	./configure $* >> ${TESTLOG} 2>&1
+	[ $? -ne 0 ] && echo "Failed" || echo "Success"
+	echo -n "make: "
+	make -j ${JOBS} >> ${TESTLOG} 2>&1
+	[ $? -ne 0 ] && echo "Failed" || echo "Success"
 	echo "============================DONE========================"
 }
 
@@ -33,14 +38,17 @@ run_configure --disable-run
 
 run_cmake() {
 	echo "===========================START========================"
-	echo "cmake $*"
-	git clean -fdx >> testbuild.log 2>&1
-	cmake CMakeLists.txt $* >> testbuild.log 2>&1
-	make -j ${JOBS} >> testbuild.log 2>&1
+	echo -n "cmake $*: "
+	git clean -fdx >> ${TESTLOG} 2>&1
+	cmake CMakeLists.txt $* >> ${TESTLOG} 2>&1
+	[ $? -ne 0 ] && echo "Failed" || echo "Success"
+	echo -n "make: "
+	make -j ${JOBS} >> ${TESTLOG} 2>&1
+	[ $? -ne 0 ] && echo "Failed" || echo "Success"
 	echo "============================DONE========================"
 }
 
-run_cmake -DSIMPLEAI_EXCEPTIONS=ON -DSIMPLEAI_LUA=ON -DSIMPLEAI_XML=ON -DSIMPLEAI_TESTS=ON -DSIMPLEAI_RUN=ON
-run_cmake -DSIMPLEAI_EXCEPTIONS=OFF -DSIMPLEAI_LUA=ON -DSIMPLEAI_XML=ON -DSIMPLEAI_TESTS=ON -DSIMPLEAI_RUN=ON
-run_cmake -DSIMPLEAI_EXCEPTIONS=OFF -DSIMPLEAI_LUA=OFF -DSIMPLEAI_XML=ON -DSIMPLEAI_TESTS=ON -DSIMPLEAI_RUN=ON
-run_cmake -DSIMPLEAI_EXCEPTIONS=OFF -DSIMPLEAI_LUA=OFF -DSIMPLEAI_XML=OFF -DSIMPLEAI_TESTS=OFF -DSIMPLEAI_RUN=OFF
+run_cmake -DSIMPLEAI_EXCEPTIONS=ON -DSIMPLEAI_LUA=ON -DSIMPLEAI_XML=ON -DSIMPLEAI_TEST=ON -DSIMPLEAI_RUN=ON
+run_cmake -DSIMPLEAI_EXCEPTIONS=OFF -DSIMPLEAI_LUA=ON -DSIMPLEAI_XML=ON -DSIMPLEAI_TEST=ON -DSIMPLEAI_RUN=ON
+run_cmake -DSIMPLEAI_EXCEPTIONS=OFF -DSIMPLEAI_LUA=OFF -DSIMPLEAI_XML=ON -DSIMPLEAI_TEST=ON -DSIMPLEAI_RUN=ON
+run_cmake -DSIMPLEAI_EXCEPTIONS=OFF -DSIMPLEAI_LUA=OFF -DSIMPLEAI_XML=OFF -DSIMPLEAI_TEST=OFF -DSIMPLEAI_RUN=OFF
