@@ -64,7 +64,7 @@ public:
 	 */
 	bool add(GroupId id, const AIPtr& ai);
 
-	void update(long deltaTime);
+	void update(int64_t deltaTime);
 
 	/**
 	 * @brief Removes a group member from the given @c GroupId. If the member

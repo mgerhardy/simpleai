@@ -19,7 +19,7 @@ public:
 	 * @brief If one of the children was executed, and is still running, the ::TreeNodeStatus::RUNNING
 	 * is returned, otherwise ::TreeNodeStatus::FINISHED is returned.
 	 */
-	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis) override;
+	TreeNodeStatus execute(const AIPtr& entity, int64_t deltaMillis) override;
 };
 
 }

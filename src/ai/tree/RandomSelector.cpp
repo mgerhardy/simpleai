@@ -4,7 +4,7 @@
 
 namespace ai {
 
-TreeNodeStatus RandomSelector::execute(const AIPtr& entity, long deltaMillis) {
+TreeNodeStatus RandomSelector::execute(const AIPtr& entity, int64_t deltaMillis) {
 	if (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
 

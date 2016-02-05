@@ -17,7 +17,7 @@ ITimedNode::ITimedNode(const std::string& name, const std::string& parameters, c
 ITimedNode::~ITimedNode() {
 }
 
-TreeNodeStatus ITimedNode::execute(const AIPtr& entity, long deltaMillis) {
+TreeNodeStatus ITimedNode::execute(const AIPtr& entity, int64_t deltaMillis) {
 	const TreeNodeStatus result = TreeNode::execute(entity, deltaMillis);
 	if (result == CANNOTEXECUTE)
 		return CANNOTEXECUTE;

@@ -26,7 +26,7 @@ GameEntity::GameEntity(const ai::CharacterId& id, const ai::example::GameMap* ma
 	setAttribute("Reloadtime", std::to_string(_attackDelay));
 }
 
-void GameEntity::update(long /*deltaTime*/, bool debuggingActive) {
+void GameEntity::update(int64_t /*deltaTime*/, bool debuggingActive) {
 	// cap position to the map
 	const float sizeF = static_cast<float>(_map->getSize());
 	const Vector3f& currentPos = _position;

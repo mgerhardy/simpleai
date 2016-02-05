@@ -42,7 +42,7 @@ public:
 		return (_hitpoints -= damage) <= 0;
 	}
 
-	void update (long deltaTime, bool debuggingActive) override;
+	void update (int64_t deltaTime, bool debuggingActive) override;
 };
 
 }

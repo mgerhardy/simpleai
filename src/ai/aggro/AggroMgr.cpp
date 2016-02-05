@@ -38,7 +38,7 @@ void AggroMgr::cleanupList() {
 	_entries.erase(_entries.begin(), i);
 }
 
-void AggroMgr::update(long deltaMillis) {
+void AggroMgr::update(int64_t deltaMillis) {
 	for (EntriesIter i = _entries.begin(); i != _entries.end(); ++i) {
 		_dirty |= i->reduceByTime(deltaMillis);
 	}

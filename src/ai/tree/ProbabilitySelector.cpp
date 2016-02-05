@@ -17,7 +17,7 @@ ProbabilitySelector::ProbabilitySelector(const std::string& name, const std::str
 	}
 }
 
-TreeNodeStatus ProbabilitySelector::execute(const AIPtr& entity, long deltaMillis) {
+TreeNodeStatus ProbabilitySelector::execute(const AIPtr& entity, int64_t deltaMillis) {
 	if (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)
 		return CANNOTEXECUTE;
 

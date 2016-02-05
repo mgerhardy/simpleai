@@ -63,7 +63,7 @@ bool Zone::scheduleRemove(const AIPtr& ai) {
 	return true;
 }
 
-void Zone::update(long dt) {
+void Zone::update(int64_t dt) {
 	{
 		ScopedWriteLock scopedLock(_scheduleLock);
 		for (const AIPtr& ai : _scheduledAdd) {

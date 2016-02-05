@@ -30,7 +30,7 @@ public:
 	TASK_CLASS(Print)
 	NODE_FACTORY
 
-	TreeNodeStatus doAction(const AIPtr& entity, long deltaMillis) override;
+	TreeNodeStatus doAction(const AIPtr& entity, int64_t deltaMillis) override;
 };
 
 }

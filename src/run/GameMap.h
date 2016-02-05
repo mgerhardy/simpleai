@@ -90,7 +90,7 @@ public:
 		return true;
 	}
 
-	inline void update(long dt) {
+	inline void update(int64_t dt) {
 		_zone.update(dt);
 	}
 

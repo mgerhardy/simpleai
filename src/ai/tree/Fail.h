@@ -15,7 +15,7 @@ class Fail: public TreeNode {
 public:
 	NODE_CLASS(Fail)
 
-	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis) override {
+	TreeNodeStatus execute(const AIPtr& entity, int64_t deltaMillis) override {
 		if (_children.size() != 1) {
 			ai_assert(false, "Fail can not have more than one child");
 		}

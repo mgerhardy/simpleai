@@ -137,7 +137,7 @@ bool Server::deleteNode(const CharacterId& characterId, int32_t nodeId) {
 	return success;
 }
 
-void Server::step(long stepMillis) {
+void Server::step(int64_t stepMillis) {
 	Zone* zone = _zone;
 	if (zone == nullptr)
 		return;
@@ -254,15 +254,15 @@ void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, const AIP
 	const TreeNodes& children = node->getChildren();
 	std::vector<bool> currentlyRunning(children.size());
 	node->getRunningChildren(ai, currentlyRunning);
-	const long aiTime = ai->_time;
+	const int64_t aiTime = ai->_time;
 	const std::size_t length = children.size();
 	for (std::size_t i = 0; i < length; ++i) {
 		const TreeNodePtr& childNode = children[i];
 		const int32_t id = childNode->getId();
 		const ConditionPtr& condition = childNode->getCondition();
 		const std::string conditionStr = condition ? condition->getNameWithConditions(ai) : "";
-		const long lastRun = childNode->getLastExecMillis(ai);
-		const long delta = lastRun == -1 ? -1 : aiTime - lastRun;
+		const int64_t lastRun = childNode->getLastExecMillis(ai);
+		const int64_t delta = lastRun == -1 ? -1 : aiTime - lastRun;
 		AIStateNode child(id, conditionStr, delta, childNode->getLastStatus(ai), currentlyRunning[i]);
 		addChildren(childNode, child, ai);
 		parent.addChildren(child);
@@ -328,7 +328,7 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 	}
 }
 
-void Server::update(long deltaTime) {
+void Server::update(int64_t deltaTime) {
 	_time += deltaTime;
 	const int clients = _network.getConnectedClients();
 	Zone* zone = _zone;

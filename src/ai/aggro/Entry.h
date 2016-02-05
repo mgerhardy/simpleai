@@ -45,7 +45,7 @@ public:
 	/**
 	 * @return @c true if any reduction was done
 	 */
-	bool reduceByTime(long millis);
+	bool reduceByTime(int64_t millis);
 	void resetAggro();
 
 	const CharacterId& getCharacterId() const;
@@ -70,7 +70,7 @@ inline void Entry::setReduceByValue(float reduceValueSecond) {
 	_reduceValueSecond = reduceValueSecond;
 }
 
-inline bool Entry::reduceByTime(long millis) {
+inline bool Entry::reduceByTime(int64_t millis) {
 	switch (_reduceType) {
 	case RATIO: {
 		const float f = static_cast<float>(millis) / 1000.0f;

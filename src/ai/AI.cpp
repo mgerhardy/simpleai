@@ -37,7 +37,7 @@ CharacterId AI::getId() const {
 	return _character->getId();
 }
 
-void AI::update(long dt, bool debuggingActive) {
+void AI::update(int64_t dt, bool debuggingActive) {
 	if (isPause())
 		return;
 

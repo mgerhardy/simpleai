@@ -19,19 +19,19 @@ namespace ai {
  */
 class ITimedNode : public TreeNode {
 protected:
-	long _timerMillis;
-	long _millis;
+	int64_t _timerMillis;
+	int64_t _millis;
 public:
 	ITimedNode(const std::string& name, const std::string& parameters, const ConditionPtr& condition);
 	virtual ~ITimedNode();
 
-	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis) override;
+	TreeNodeStatus execute(const AIPtr& entity, int64_t deltaMillis) override;
 
 	/**
 	 * @brief Called whenever the timer is started or restarted
 	 * @note The returned @c TreeNodeStatus is recorded automatically
 	 */
-	virtual TreeNodeStatus executeStart(const AIPtr& /*entity*/, long /*deltaMillis*/) {
+	virtual TreeNodeStatus executeStart(const AIPtr& /*entity*/, int64_t /*deltaMillis*/) {
 		return RUNNING;
 	}
 
@@ -43,7 +43,7 @@ public:
 	 * not get into @c executeRunning, but directly into @c executeExpired.
 	 * @note The returned @c TreeNodeStatus is recorded automatically
 	 */
-	virtual TreeNodeStatus executeRunning(const AIPtr& /*entity*/, long /*deltaMillis*/) {
+	virtual TreeNodeStatus executeRunning(const AIPtr& /*entity*/, int64_t /*deltaMillis*/) {
 		return RUNNING;
 	}
 
@@ -51,7 +51,7 @@ public:
 	 * @brief Called in the frame where the timer expired.
 	 * @note The returned @c TreeNodeStatus is recorded automatically
 	 */
-	virtual TreeNodeStatus executeExpired(const AIPtr& /*entity*/, long /*deltaMillis*/) {
+	virtual TreeNodeStatus executeExpired(const AIPtr& /*entity*/, int64_t /*deltaMillis*/) {
 		return FINISHED;
 	}
 };

@@ -66,7 +66,7 @@ TreeNodeStatus TreeNode::state(const AIPtr& entity, TreeNodeStatus treeNodeState
 	return treeNodeState;
 }
 
-long TreeNode::getLastExecMillis(const AIPtr& entity) const {
+int64_t TreeNode::getLastExecMillis(const AIPtr& entity) const {
 	if (!entity->_debuggingActive)
 		return -1L;
 	AI::LastExecMap::const_iterator i = entity->_lastExecMillis.find(getId());

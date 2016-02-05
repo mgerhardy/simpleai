@@ -11,10 +11,10 @@ namespace ai {
  */
 class AIStepMessage: public IProtocolMessage {
 private:
-	long _millis;
+	int64_t _millis;
 
 public:
-	AIStepMessage(long millis) :
+	AIStepMessage(int64_t millis) :
 			IProtocolMessage(PROTO_STEP) {
 		_millis = millis;
 	}
@@ -29,7 +29,7 @@ public:
 		addLong(out, _millis);
 	}
 
-	inline long getStepMillis() const {
+	inline int64_t getStepMillis() const {
 		return _millis;
 	}
 };

@@ -78,7 +78,7 @@ protected:
 	bool _pause;
 	bool _debuggingActive;
 
-	long _time;
+	int64_t _time;
 
 	Zone* _zone;
 
@@ -95,7 +95,7 @@ public:
 	 * @param[in] dt The current milliseconds to update the aggro entries and
 	 * time based tasks or conditions.
 	 */
-	virtual void update(long dt, bool debuggingActive);
+	virtual void update(int64_t dt, bool debuggingActive);
 
 	/**
 	 * @brief Set the new @c Zone this entity is in

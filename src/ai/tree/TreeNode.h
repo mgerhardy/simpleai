@@ -141,10 +141,10 @@ public:
 	/**
 	 * @brief Returns the time in milliseconds when this node was last run. This is only updated if @c #execute() was called
 	 */
-	long getLastExecMillis(const AIPtr& ai) const;
+	int64_t getLastExecMillis(const AIPtr& ai) const;
 	TreeNodeStatus getLastStatus(const AIPtr& ai) const;
 
-	virtual TreeNodeStatus execute(const AIPtr& entity, long deltaMillis);
+	virtual TreeNodeStatus execute(const AIPtr& entity, int64_t deltaMillis);
 
 	/**
 	 * @brief Reset the states in the node and also in the entity

@@ -28,7 +28,7 @@ private:
 public:
 	NODE_FACTORY
 
-	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis) override {
+	TreeNodeStatus execute(const AIPtr& entity, int64_t deltaMillis) override {
 		if (_children.size() != 1) {
 			ai_assert(false, "Limit can not have more than one child");
 		}

@@ -43,7 +43,7 @@ protected:
 	SOCKET _socketFD;
 	fd_set _readFDSet;
 	fd_set _writeFDSet;
-	long _time;
+	int64_t _time;
 
 	typedef std::list<Client> ClientSockets;
 	typedef ClientSockets::iterator ClientSocketsIter;
@@ -57,7 +57,7 @@ public:
 	virtual ~Network();
 
 	bool start();
-	void update(long deltaTime);
+	void update(int64_t deltaTime);
 
 	void addListener(INetworkListener* listener);
 	void removeListener(INetworkListener* listener);

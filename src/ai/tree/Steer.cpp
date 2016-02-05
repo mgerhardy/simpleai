@@ -5,7 +5,7 @@
 
 namespace ai {
 
-TreeNodeStatus Steer::doAction(const AIPtr& entity, long deltaMillis) {
+TreeNodeStatus Steer::doAction(const AIPtr& entity, int64_t deltaMillis) {
 	const ICharacterPtr& chr = entity->getCharacter();
 	const MoveVector& mv = _w.execute(entity, chr->getSpeed());
 	if (mv.getVector().isInfinite())

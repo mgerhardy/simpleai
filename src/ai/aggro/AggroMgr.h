@@ -36,7 +36,7 @@ public:
 	 * @brief this will update the aggro list according to the reduction type of an entry.
 	 * @param[in] deltaMillis The current milliseconds to use to update the aggro value of the entries.
 	 */
-	void update(long deltaMillis);
+	void update(int64_t deltaMillis);
 
 	/**
 	 * @brief will increase the aggro

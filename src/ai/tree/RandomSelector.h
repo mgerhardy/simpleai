@@ -15,7 +15,7 @@ class RandomSelector: public Selector {
 public:
 	SELECTOR_CLASS(RandomSelector)
 
-	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis) override;
+	TreeNodeStatus execute(const AIPtr& entity, int64_t deltaMillis) override;
 };
 
 }

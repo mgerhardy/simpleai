@@ -82,7 +82,7 @@ public:
 	 * @param dt the time delta in millis since the last update was executed
 	 * @param debuggingActive @c true if the debugging for this entity is activated
 	 */
-	virtual void update(long dt, bool debuggingActive) {
+	virtual void update(int64_t dt, bool debuggingActive) {
 		(void)dt;
 		(void)debuggingActive;
 	}

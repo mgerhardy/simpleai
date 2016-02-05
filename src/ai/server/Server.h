@@ -42,7 +42,7 @@ protected:
 	AIRegistry& _aiRegistry;
 	Network _network;
 	CharacterId _selectedCharacterId;
-	long _time;
+	int64_t _time;
 	SelectHandler _selectHandler;
 	PauseHandler _pauseHandler;
 	ResetHandler _resetHandler;
@@ -90,7 +90,7 @@ public:
 	/**
 	 * @brief Performs one step of the ai in pause mode
 	 */
-	void step(long stepMillis = 1L);
+	void step(int64_t stepMillis = 1L);
 
 	/**
 	 * @brief Update the specified node with the given values for the specified character and all the
@@ -163,7 +163,7 @@ public:
 	/**
 	 * @brief call this to update the server - should get called somewhere from your game tick
 	 */
-	void update(long deltaTime);
+	void update(int64_t deltaTime);
 };
 
 }

@@ -98,7 +98,7 @@ bool Network::start() {
 	fcntl(_socketFD, F_SETFL, O_NONBLOCK);
 #endif
 #ifdef WIN32
-	unsigned long mode = 1;
+	uint64_t mode = 1;
 	ioctlsocket(_socketFD, FIONBIO, &mode);
 #endif
 
@@ -120,7 +120,7 @@ Network::ClientSocketsIter Network::closeClient(ClientSocketsIter& iter) {
 	return _clientSockets.erase(iter);
 }
 
-void Network::update(long deltaTime) {
+void Network::update(int64_t deltaTime) {
 	_time += deltaTime;
 	if (_time > 5000L) {
 		if (!broadcast(AIPingMessage()))

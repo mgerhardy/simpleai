@@ -50,7 +50,7 @@ public:
 	 * @param dt Delta time in millis since the last update call happened
 	 * @note You have to call this on your own.
 	 */
-	void update(long dt);
+	void update(int64_t dt);
 
 	/**
 	 * @brief call then when you spawn a new @code AI that should be traceable via the debug viewer.

@@ -27,7 +27,7 @@ TreeNodeStatus Print::handleCommand(const AIPtr& entity) const {
 	return FINISHED;
 }
 
-TreeNodeStatus Print::doAction(const AIPtr& entity, long /*deltaMillis*/) {
+TreeNodeStatus Print::doAction(const AIPtr& entity, int64_t /*deltaMillis*/) {
 	if (ai::Str::startsWith(_parameters, "::")) {
 		return handleCommand(entity);
 	}

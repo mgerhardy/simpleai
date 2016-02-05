@@ -17,7 +17,7 @@ class Invert: public TreeNode {
 public:
 	NODE_CLASS(Invert)
 
-	TreeNodeStatus execute(const AIPtr& entity, long deltaMillis) override {
+	TreeNodeStatus execute(const AIPtr& entity, int64_t deltaMillis) override {
 		if (_children.size() != 1) {
 			ai_assert(false, "Invert can not have more than one child");
 		}
