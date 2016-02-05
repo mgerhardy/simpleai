@@ -36,3 +36,5 @@ TreeNodeStatus Print::doAction(const AIPtr& entity, int64_t /*deltaMillis*/) {
 }
 
 NODE_FACTORY_IMPL(Print)
+
+}
