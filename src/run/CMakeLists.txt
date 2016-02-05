@@ -1,30 +1,14 @@
 include(CheckFunctionExists)
 include(CheckLibraryExists)
 
-if (SIMPLEAI_RUN)
-	if (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
-	elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Darwin")
-	elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
-		if (CMAKE_COMPILER_IS_GNUCXX)
-			set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -pedantic -Wabi -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-declarations -Wmissing-format-attribute -Wno-long-long -Woverloaded-virtual -Wpacked -Wredundant-decls -Wshadow -Wsign-promo -Wno-sign-compare")
-		endif()
-	endif()
+set(SRC
+	GameEntity.cpp GameEntity.h
+	GameMap.h
+	Main.cpp
+)
 
-	include_directories(${SIMPLEAI_SOURCE_DIR}/src/ai)
-	link_directories(${SIMPLEAI_BINARY_DIR}/src/ai)
-	file(GLOB_RECURSE SRC ${SIMPLEAI_SOURCE_DIR}/src/run/*.cpp ${SIMPLEAI_SOURCE_DIR}/src/run/*.h)
-	add_executable(simpleai-run ${SRC})
-	if (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
-	elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Darwin")
-	elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
-		check_function_exists(__atomic_fetch_add_4 HAVE___ATOMIC_FETCH_ADD_4)
-		if (NOT HAVE___ATOMIC_FETCH_ADD_4)
-			check_library_exists(atomic __atomic_fetch_add_4 "" HAVE_LIBATOMIC)
-			if (HAVE_LIBATOMIC)
-				list(APPEND DEPS "-latomic")
-			endif()
-		endif()
-	endif()
+include_directories(${SIMPLEAI_SOURCE_DIR}/src/ai)
+link_directories(${SIMPLEAI_BINARY_DIR}/src/ai)
 
-	target_link_libraries(simpleai-run simpleai ${CMAKE_THREAD_LIBS_INIT} ${DEPS} ${GOOGLE_PROFILER_LIB} ${GOOGLE_TCMALLOC_LIB})
-endif()
+add_executable(simpleai-run ${SRC})
+target_link_libraries(simpleai-run simpleai)

@@ -8,3 +8,5 @@ endif()
 if (SIMPLEAI_XML)
 	add_subdirectory(tinyxml2)
 endif()
+
+add_subdirectory(glm)
