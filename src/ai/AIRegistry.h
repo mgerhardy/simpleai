@@ -9,6 +9,10 @@ namespace ai {
 namespace movement {
 typedef std::vector<SteeringPtr> Steerings;
 }
+
+/**
+ * @brief Context for ITreeNodeFactory
+ */
 struct TreeNodeFactoryContext {
 	std::string name;
 	std::string parameters;
@@ -57,6 +61,10 @@ struct ConditionFactoryContext {
 	}
 };
 
+/**
+ * @brief This factory will create tree nodes. It uses the @c TreeNodeFactoryContext to
+ * collect all the needed data for this action.
+ */
 class ITreeNodeFactory: public IFactory<TreeNode, TreeNodeFactoryContext> {
 public:
 	virtual ~ITreeNodeFactory() {
@@ -135,6 +143,13 @@ public:
 	AIRegistry();
 	virtual ~AIRegistry();
 
+	/**
+	 * @brief Registers a tree node factory of the given @c type.
+	 * @param[in] type The name that is used in the behaviour tree to identify nodes of the
+	 * that are assigned to the given factory
+	 * @param[in] factory The factory that will create the real node.
+	 * @return @c true if the unregister action was successful, @c false if not (e.g. it wasn't registered at all)
+	 */
 	bool registerNodeFactory(const std::string& type, const ITreeNodeFactory& factory);
 	/**
 	 * @brief Unregisters a tree node factory of the given @c type. This can also be used to replace a built-in
