@@ -1,55 +1,18 @@
-cmake_minimum_required(VERSION 2.8.12)
-project(simpleai-debugger)
+project(simpleai-debugger CXX)
 
 # Tell CMake to run moc when necessary:
 set(CMAKE_AUTOMOC ON)
 # Tell CMake to run rcc when necessary:
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/../ai/")
 set(AUTOGEN_TARGETS_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/.moc")
 set(AUTOMOC_TARGETS_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/.moc")
-
-if (${CMAKE_EXTRA_GENERATOR} MATCHES "Eclipse CDT4")
-	message(STATUS "Generate eclipse projects")
-	set(CMAKE_ECLIPSE_GENERATE_LINKED_RESOURCES OFF)
-	set(CMAKE_ECLIPSE_GENERATE_SOURCE_PROJECT ON)
-	set(CMAKE_ECLIPSE_VERSION "4.3" CACHE STRING "Eclipse version")
-	set(CMAKE_CXX_COMPILER_ARG1 "-std=c++11" CACHE STRING "C++ version for Eclipse")
-endif()
-
-find_package(SimpleAI REQUIRED)
-
-option(SIMPLEAI_PROFILER "Use Google cpu profiler" OFF)
-
-if (SIMPLEAI_PROFILER)
-	find_library(GOOGLE_PROFILER_LIB profiler)
-	find_library(GOOGLE_TCMALLOC_LIB tcmalloc)
-	if (GOOGLE_PROFILER_LIB AND GOOGLE_TCMALLOC_LIB)
-		message(STATUS "Found Google profiler: ${GOOGLE_PROFILER_LIB} ${GOOGLE_TCMALLOC_LIB}")
-		add_definitions(-DAI_PROFILER)
-	else()
-		message(STATUS "Can't find Google profiler")
-	endif()
-endif()
 
 # Widgets finds its own dependencies.
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
-
-if (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
-elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Darwin")
-elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
-	if (CMAKE_COMPILER_IS_GNUCXX)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra")
-		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -ftree-vectorize -msse3 -Wall -Wextra -DNDEBUG")
-		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -DDEBUG -Wall -Wextra -Werror -pedantic -Wabi -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-declarations -Wmissing-format-attribute -Wno-long-long -Woverloaded-virtual -Wpacked -Wredundant-decls -Wshadow -Wsign-promo -Wno-sign-compare")
-	else()
-		message(ERROR "unsupported compiler")
-	endif()
-endif()
 
 set(simpleai_debugger_TRANSLATIONS
 	data/simpleai_de_DE.ts
@@ -117,6 +80,7 @@ list(APPEND simpleai_debugger_SOURCES
 )
 
 include_directories(
+	${CMAKE_CURRENT_SOURCE_DIR}/../ai
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${AUTOGEN_TARGETS_FOLDER}
 	${AUTOMOC_TARGETS_FOLDER}
@@ -130,8 +94,7 @@ include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/src/gui/view/aggro
 	${CMAKE_CURRENT_SOURCE_DIR}/src/gui/view/state
 	${CMAKE_CURRENT_SOURCE_DIR}/src/gui/view/list
-	${CMAKE_CURRENT_SOURCE_DIR}/src/common
-	${SIMPLEAI_INCLUDE_DIRS})
+	${CMAKE_CURRENT_SOURCE_DIR}/src/common)
 
 qt5_create_translation(
 	simpleai_debugger_TRANSLATION_FILES
@@ -147,4 +110,4 @@ add_custom_target(translations ALL DEPENDS ${simpleai_debugger_QM})
 qt5_add_resources(simpleai_debugger_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/data/resources.qrc)
 add_executable(simpleai-debugger ${simpleai_debugger_SOURCES} ${simpleai_debugger_QM} ${simpleai_debugger_RESOURCES} ${simpleai_debugger_HEADERS})
 qt5_use_modules(simpleai-debugger Widgets Gui Network)
-target_link_libraries(simpleai-debugger ${SIMPLEAI_LIBRARIES} ${GOOGLE_PROFILER_LIB} ${GOOGLE_TCMALLOC_LIB})
+target_link_libraries(simpleai-debugger simpleai)

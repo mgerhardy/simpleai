@@ -55,16 +55,6 @@ set(SRC
 	aggro/AggroMgr.cpp
 )
 
-set(DEPS ${CMAKE_THREAD_LIBS_INIT} ${GOOGLE_PROFILER_LIB} ${GOOGLE_TCMALLOC_LIB})
-
-if (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
-elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Darwin")
-elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
-	if (CMAKE_COMPILER_IS_GNUCXX)
-		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -pedantic -Wabi -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-declarations -Wmissing-format-attribute -Wno-long-long -Woverloaded-virtual -Wpacked -Wredundant-decls -Wshadow -Wsign-promo -Wno-sign-compare")
-	endif()
-endif()
-
 if (SIMPLEAI_LUA)
 	message(STATUS "Build lib with lua support")
 	find_package(Lua)
