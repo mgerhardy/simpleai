@@ -11,7 +11,7 @@ class GameMap;
 class GameEntity : public ai::ICharacter {
 private:
 	const ai::example::GameMap* _map;
-	ATOMICINT _hitpoints;
+	std::atomic_int _hitpoints;
 	int _damage;
 	int _attackDelay;
 

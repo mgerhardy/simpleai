@@ -16,7 +16,7 @@ GroupMgr::GroupMgr() {
 GroupMgr::~GroupMgr() {
 }
 
-void GroupMgr::update(long) {
+void GroupMgr::update(int64_t) {
 	ScopedReadLock scopedLock(_lock);
 	for (auto i = _groups.begin(); i != _groups.end(); ++i) {
 		Group& group = i->second;

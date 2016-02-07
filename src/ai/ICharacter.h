@@ -45,9 +45,9 @@ class ICharacter : public NonCopyable {
 protected:
 	CharacterId _id;
 	Vector3f _position;
-	ATOMIC(float) _orientation;
+	std::atomic<float> _orientation;
 	// m/s
-	ATOMIC(float) _speed;
+	std::atomic<float> _speed;
 	CharacterAttributes _attributes;
 
 public:

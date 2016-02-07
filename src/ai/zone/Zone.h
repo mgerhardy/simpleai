@@ -3,6 +3,7 @@
 #include <AI.h>
 #include <group/GroupMgr.h>
 #include "common/Thread.h"
+#include "common/ThreadPool.h"
 #include "common/Types.h"
 #include <unordered_map>
 #include <list>
@@ -37,10 +38,11 @@ protected:
 	ReadWriteLock _lock;
 	ReadWriteLock _scheduleLock;
 	ai::GroupMgr _groupManager;
+	mutable ThreadPool _threadPool;
 
 public:
-	Zone(const std::string& name) :
-			_name(name), _debug(false) {
+	Zone(const std::string& name, int threadCount = std::min(1u, std::thread::hardware_concurrency())) :
+			_name(name), _debug(false), _threadPool(threadCount) {
 	}
 
 	virtual ~Zone() {}
@@ -116,6 +118,9 @@ public:
 	 *
 	 * @return @c true if the func was called for the character, @c false if not
 	 * e.g. in the case the given @c CharacterId wasn't found in this zone.
+	 * @note This is executed in a thread pool - so make sure to synchronize your lambda or functor.
+	 * We also don't wait for the functor or lambda here, we are scheduling it in a worker in the
+	 * thread pool.
 	 *
 	 * @note This locks the zone for reading
 	 */
@@ -125,37 +130,53 @@ public:
 		auto i = _ais.find(id);
 		if (i == _ais.end())
 			return false;
-		AIPtr ai = i->second;
-		func(ai);
+		const AIPtr& ai = i->second;
+		_threadPool.enqueue([func, ai] {func(ai);});
 		return true;
 	}
 
 	/**
 	 * @brief Executes a lambda or functor for all the @c AI instances in this zone
+	 * @note This is executed in a thread pool - so make sure to synchronize your lambda or functor.
+	 * We are waiting for the execution of this.
 	 *
 	 * @note This locks the zone for reading
 	 */
 	template<typename Func>
 	void visit(Func& func) {
-		ScopedReadLock scopedLock(_lock);
-		for (auto i = _ais.begin(); i != _ais.end(); ++i) {
-			AIPtr ai = i->second;
-			func(ai);
+		std::vector<std::future<void> > results;
+		{
+			ScopedReadLock scopedLock(_lock);
+			for (auto i = _ais.begin(); i != _ais.end(); ++i) {
+				const AIPtr& ai = i->second;
+				results.emplace_back(_threadPool.enqueue([func, ai] {func(ai);}));
+			}
 		}
+		std::cout << "waiting for " << results.size() << " jobs" << std::endl;
+		for (auto && result: results)
+			result.wait();
+		std::cout << "done" << std::endl;
 	}
 
 	/**
-	 * @brief Executes a lambda or functor for all the @c AI instances in this zone
+	 * @brief Executes a lambda or functor for all the @c AI instances in this zone.
+	 * @note This is executed in a thread pool - so make sure to synchronize your lambda or functor.
+	 * We are waiting for the execution of this.
 	 *
 	 * @note This locks the zone for reading
 	 */
 	template<typename Func>
 	void visit(const Func& func) const {
-		ScopedReadLock scopedLock(_lock);
-		for (auto i = _ais.begin(), end = _ais.end(); i != end; ++i) {
-			AIPtr ai = i->second;
-			func(ai);
+		std::vector<std::future<void> > results;
+		{
+			ScopedReadLock scopedLock(_lock);
+			for (auto i = _ais.begin(); i != _ais.end(); ++i) {
+				const AIPtr& ai = i->second;
+				results.emplace_back(_threadPool.enqueue([func, ai] {func(ai);}));
+			}
 		}
+		for (auto && result: results)
+			result.wait();
 	}
 
 	inline std::size_t size() const {
@@ -183,6 +204,5 @@ inline GroupMgr& Zone::getGroupMgr() {
 inline const GroupMgr& Zone::getGroupMgr() const {
 	return _groupManager;
 }
-
 
 }

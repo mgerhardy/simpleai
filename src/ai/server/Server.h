@@ -54,7 +54,7 @@ protected:
 	NopHandler _nopHandler;
 	bool _pause;
 	// the current active debugging zone
-	ATOMIC(Zone*) _zone;
+	std::atomic<Zone*> _zone;
 	ReadWriteLock _lock;
 	std::vector<std::string> _names;
 

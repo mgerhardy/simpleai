@@ -16,7 +16,7 @@ private:
 	ai::Server& _server;
 	typedef std::unordered_set<ai::AIPtr> Entities;
 	Entities _entities;
-	MUTEX(_mutex);
+	mutable std::recursive_mutex _mutex;
 
 public:
 	GameMap(int size, const std::string& name, ai::Server& server) :
@@ -38,7 +38,7 @@ public:
 	}
 
 	inline ai::AIPtr getRandomEntity() const {
-		SCOPEDLOCK(_mutex);
+		std::lock_guard<std::recursive_mutex> lock(_mutex);
 		if (_entities.empty())
 			return ai::AIPtr();
 		const int size = static_cast<int>(_entities.size());
@@ -54,7 +54,7 @@ public:
 
 	inline ai::AIPtr addEntity(const ai::AIPtr& entity, GroupId groupId) {
 		{
-			SCOPEDLOCK(_mutex);
+			std::lock_guard<std::recursive_mutex> lock(_mutex);
 			_entities.insert(entity);
 		}
 		ai_assert(_zone.addAI(entity), "Could not add entity to zone with id " + std::to_string(entity->getId()));
@@ -65,7 +65,7 @@ public:
 	}
 
 	inline bool remove(const ai::CharacterId& id) {
-		SCOPEDLOCK(_mutex);
+		std::lock_guard<std::recursive_mutex> lock(_mutex);
 		// TODO: improve
 		for (Entities::iterator i = _entities.begin(); i != _entities.end(); ++i) {
 			const ai::AIPtr& entity = *i;
@@ -82,7 +82,7 @@ public:
 		if (!entity)
 			return false;
 		{
-			SCOPEDLOCK(_mutex);
+			std::lock_guard<std::recursive_mutex> lock(_mutex);
 			if (_entities.erase(entity) != 1)
 				return false;
 		}
@@ -99,7 +99,7 @@ public:
 	}
 
 	void initializeAggro() {
-		SCOPEDLOCK(_mutex);
+		std::lock_guard<std::recursive_mutex> lock(_mutex);
 		// TODO: remove me once we have an attack
 		Entities::iterator i = _entities.begin();
 		if (i == _entities.end())

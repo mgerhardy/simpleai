@@ -86,7 +86,6 @@ static ai::example::GameMap *createMap(int amount, ai::Server& server, const std
 	return map;
 }
 
-#ifndef AI_NO_THREADING
 static void runMap(ai::example::GameMap* map) {
 	const std::chrono::milliseconds delay(250);
 	auto timeLast = std::chrono::steady_clock::now();
@@ -94,7 +93,9 @@ static void runMap(ai::example::GameMap* map) {
 		const auto timeNow = std::chrono::steady_clock::now();
 		const auto dt = std::chrono::duration_cast < std::chrono::milliseconds > (timeNow - timeLast).count();
 		timeLast = timeNow;
+		std::cout << "ticking..." << std::endl;
 		map->update(static_cast<uint32_t>(dt));
+		std::cout << "ticked" << std::endl;
 		std::this_thread::sleep_for(delay);
 	}
 }
@@ -133,8 +134,6 @@ static void runDespawnSpawn(ai::example::GameMap* map) {
 		std::this_thread::sleep_for(delay);
 	}
 }
-
-#endif
 
 static bool load(const std::string filename) {
 	std::ifstream btStream(filename);
@@ -199,11 +198,6 @@ int main(int argc, char **argv) {
 	std::cout << "now run this behaviour tree with " << amount << " entities on each map" << std::endl;
 	std::cout << "spawn " << mapAmount << " maps with seed " << seed << std::endl;
 	std::cout << "automatic respawn: " << (autospawn ? "true" : "false") << std::endl;
-#ifdef AI_NO_THREADING
-	std::cout << "compiled without threading support" << std::endl;
-#else
-	std::cout << "compiled with threading support" << std::endl;
-#endif
 
 	ai::Server server(loader, port, interface);
 	if (!server.start()) {
@@ -219,20 +213,6 @@ int main(int argc, char **argv) {
 		maps.push_back(createMap(amount, server, "Map" + std::to_string(i)));
 	}
 
-#ifdef AI_NO_THREADING
-	const std::chrono::milliseconds delay(100);
-	auto timeLast = std::chrono::steady_clock::now();
-	for (;;) {
-		const auto timeNow = std::chrono::steady_clock::now();
-		const auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - timeLast).count();
-		timeLast = timeNow;
-		for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
-			(*i)->update(static_cast<uint32_t>(dt));
-		}
-		server.update(dt);
-		std::this_thread::sleep_for(delay);
-	}
-#else
 	typedef std::vector<std::thread> Threads;
 	Threads threads;
 	for (auto i = maps.begin(); i != maps.end(); ++i) {
@@ -358,7 +338,6 @@ int main(int argc, char **argv) {
 	for (std::thread& t : threads) {
 		t.join();
 	}
-#endif
 
 #ifdef AI_PROFILER
 	ProfilerStop();

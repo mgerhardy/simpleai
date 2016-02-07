@@ -82,7 +82,7 @@ protected:
 
 	Zone* _zone;
 
-	ATOMIC(bool) _reset;
+	std::atomic_bool _reset;
 public:
 	/**
 	 * @param behaviour The behaviour tree node that is applied to this ai entity
