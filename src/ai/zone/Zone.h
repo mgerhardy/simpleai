@@ -1,7 +1,7 @@
 #pragma once
 
-#include <AI.h>
-#include <group/GroupMgr.h>
+#include "AI.h"
+#include "group/GroupMgr.h"
 #include "common/Thread.h"
 #include "common/ThreadPool.h"
 #include "common/Types.h"
