@@ -1,8 +1,7 @@
 #pragma once
 
-#include <AI.h>
-#include <common/Thread.h>
-#include <tree/TreeNode.h>
+#include "common/Thread.h"
+#include "tree/TreeNode.h"
 #include <unordered_set>
 #include "Network.h"
 #include "zone/Zone.h"

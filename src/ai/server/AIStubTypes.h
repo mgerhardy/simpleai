@@ -1,7 +1,10 @@
 #pragma once
 
 #include <vector>
-#include <AI.h>
+#include <string>
+#include "common/Types.h"
+#include "common/Vector3f.h"
+#include "tree/TreeNode.h"
 
 namespace ai {
 
