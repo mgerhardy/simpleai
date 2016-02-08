@@ -114,6 +114,22 @@ public:
 	const GroupMgr& getGroupMgr() const;
 
 	/**
+	 * @brief Lookup for a particular @c AI in the zone.
+	 *
+	 * @return empty @c AIPtr() in the case the given @c CharacterId wasn't found in this zone.
+	 *
+	 * @note This locks the zone for reading to perform the CharacterId lookup
+	 */
+	inline AIPtr getAI(CharacterId id) const {
+		ScopedReadLock scopedLock(_lock);
+		auto i = _ais.find(id);
+		if (i == _ais.end())
+			return AIPtr();
+		const AIPtr& ai = i->second;
+		return ai;
+	}
+
+	/**
 	 * @brief Executes a lambda or functor for the given character
 	 *
 	 * @return @c true if the func was called for the character, @c false if not
@@ -125,25 +141,18 @@ public:
 	 * @note This locks the zone for reading to perform the CharacterId lookup
 	 */
 	template<typename Func>
-	bool execute(CharacterId id, const Func& func) const {
-		ScopedReadLock scopedLock(_lock);
-		auto i = _ais.find(id);
-		if (i == _ais.end())
+	inline bool execute(CharacterId id, const Func& func) const {
+		const AIPtr& ai = getAI(id);
+		if (!ai)
 			return false;
-		const AIPtr& ai = i->second;
 		_threadPool.enqueue([func, ai] {func(ai);});
 		return true;
 	}
 
 	template<typename Func>
-	bool executeSync(CharacterId id, const Func& func) const {
-		ScopedReadLock scopedLock(_lock);
-		auto i = _ais.find(id);
-		if (i == _ais.end())
-			return false;
-		const AIPtr& ai = i->second;
-		_threadPool.enqueue([func, ai] {func(ai);}).wait();
-		return true;
+	inline auto executeAsync(const AIPtr& ai, const Func& func) const
+		-> std::future<typename std::result_of<Func(const AIPtr&)>::type> {
+		return _threadPool.enqueue(func, ai);
 	}
 
 	/**

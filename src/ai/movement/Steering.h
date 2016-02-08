@@ -68,16 +68,11 @@ protected:
 		const FilteredEntities& selection = entity->getFilteredEntities();
 		if (selection.empty() || selection.size() <= index)
 			return Vector3f::INFINITE;
+		Zone* zone = entity->getZone();
 		const CharacterId characterId = selection[index];
-		Vector3f target = Vector3f::INFINITE;
-		const Zone* zone = entity->getZone();
-		auto func = [&] (const AIPtr& ai) {
-			target = ai->getCharacter()->getPosition();
-		};
-		if (!zone->executeSync(characterId, func)) {
-			return Vector3f::INFINITE;
-		}
-		return target;
+		const AIPtr& ai = zone->getAI(characterId);
+		const ICharacterPtr character = ai->getCharacter();
+		return character->getPosition();
 	}
 
 public:
