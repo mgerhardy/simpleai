@@ -122,7 +122,7 @@ public:
 	 * We also don't wait for the functor or lambda here, we are scheduling it in a worker in the
 	 * thread pool.
 	 *
-	 * @note This locks the zone for reading
+	 * @note This locks the zone for reading to perform the CharacterId lookup
 	 */
 	template<typename Func>
 	bool execute(CharacterId id, const Func& func) const {
@@ -132,6 +132,17 @@ public:
 			return false;
 		const AIPtr& ai = i->second;
 		_threadPool.enqueue([func, ai] {func(ai);});
+		return true;
+	}
+
+	template<typename Func>
+	bool executeSync(CharacterId id, const Func& func) const {
+		ScopedReadLock scopedLock(_lock);
+		auto i = _ais.find(id);
+		if (i == _ais.end())
+			return false;
+		const AIPtr& ai = i->second;
+		_threadPool.enqueue([func, ai] {func(ai);}).wait();
 		return true;
 	}
 

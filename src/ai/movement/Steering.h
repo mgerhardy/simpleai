@@ -74,7 +74,7 @@ protected:
 		auto func = [&] (const AIPtr& ai) {
 			target = ai->getCharacter()->getPosition();
 		};
-		if (!zone->execute(characterId, func)) {
+		if (!zone->executeSync(characterId, func)) {
 			return Vector3f::INFINITE;
 		}
 		return target;
