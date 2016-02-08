@@ -93,9 +93,8 @@ static void runMap(ai::example::GameMap* map) {
 		const auto timeNow = std::chrono::steady_clock::now();
 		const auto dt = std::chrono::duration_cast < std::chrono::milliseconds > (timeNow - timeLast).count();
 		timeLast = timeNow;
-		std::cout << "ticking..." << std::endl;
 		map->update(static_cast<uint32_t>(dt));
-		std::cout << "ticked" << std::endl;
+		std::cout << "ticked " << map->getName() << " - dt: " << dt << std::endl;
 		std::this_thread::sleep_for(delay);
 	}
 }
