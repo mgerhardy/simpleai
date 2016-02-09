@@ -40,6 +40,26 @@ protected:
 	ai::GroupMgr _groupManager;
 	mutable ThreadPool _threadPool;
 
+	/**
+	 * @brief called in the zone update to add new @c AI instances.
+	 *
+	 * @note Make sure to also call @c removeAI whenever you despawn the given @c AI instance
+	 * @note This doesn't lock the zone - but because @c Zone::update already does it
+	 */
+	bool doAddAI(const AIPtr& ai);
+	/**
+	 * @note This doesn't lock the zone - but because @c Zone::update already does it
+	 */
+	bool doRemoveAI(const AIPtr& ai);
+	/**
+	 * @brief @c removeAI will access the character and the @c AI object, this method does not need access to the data anymore.
+	 *
+	 * @note That means, that this can be called in case the attached @c ICharacter instances or the @c AI instance itself is
+	 * already invalid.
+	 * @note This doesn't lock the zone - but because @c Zone::update already does it
+	 */
+	bool doDestroyAI(const CharacterId& id);
+
 public:
 	Zone(const std::string& name, int threadCount = std::min(1u, std::thread::hardware_concurrency())) :
 			_name(name), _debug(false), _threadPool(threadCount) {
@@ -55,45 +75,28 @@ public:
 	void update(int64_t dt);
 
 	/**
-	 * @brief call then when you spawn a new @code AI that should be traceable via the debug viewer.
-	 *
-	 * @note Make sure to also call @c removeAI whenever you despawn the given @c AI instance
-	 * @note This locks the zone for writing
-	 */
-	bool addAI(const AIPtr& ai);
-	/**
-	 * @note This locks the zone for writing
-	 */
-	bool removeAI(const AIPtr& ai);
-
-	/**
-	 * @brief @c removeAI will access the character and the @c AI object, this method does not need access to the data anymore.
-	 *
-	 * @note That means, that this can be called in case the attached @c ICharacter instances or the @c AI instance itself is
-	 * already invalid.
-	 */
-	bool destroyAI(const CharacterId& id);
-
-	/**
 	 * @brief If you need to add new @code AI entities to a zone from within the @code AI tick (e.g. spawning via behaviour
 	 * tree) - then you need to schedule the spawn. Otherwise you will end up in a deadlock
 	 *
 	 * @note This does not lock the zone for writing but a dedicated schedule lock
 	 */
-	bool scheduleAdd(const AIPtr& ai);
+	bool addAI(const AIPtr& ai);
 
 	/**
-	 * @brief If you need to remove @code AI entities from a zone from within the @code AI tick (e.g. despawning via behaviour
-	 * tree) - then you need to schedule the despawn. Otherwise you will end up in a deadlock
+	 * @brief Will trigger a removal of the specified @c AI instance in the next @c Zone::update call
 	 *
 	 * @note This does not lock the zone for writing but a dedicated schedule lock
 	 */
-	bool scheduleRemove(const AIPtr& ai);
+	bool removeAI(const AIPtr& ai);
 
 	/**
+	 * @brief Will trigger a destroy of the specified @c AI instance in the next @c Zone::update call
 	 * @sa destroyAI
+	 * @note @c removeAI will access the character and the @c AI object, this method does not need access to the data anymore.
+	 * That means, that this can be called in case the attached @c ICharacter instances or the @c AI instance itself is
+	 * already invalid.
 	 */
-	bool scheduleDestroy(const CharacterId& id);
+	bool destroyAI(const CharacterId& id);
 
 	/**
 	 * @brief Every zone has its own name that identifies it

@@ -3,26 +3,21 @@
 
 namespace ai {
 
-bool Zone::addAI(const AIPtr& ai) {
+bool Zone::doAddAI(const AIPtr& ai) {
 	if (ai == nullptr)
 		return false;
 	const CharacterId& id = ai->getCharacter()->getId();
-	{
-		ScopedReadLock scopedLock(_lock);
-		if (_ais.find(id) != _ais.end())
-			return false;
-	}
-	ScopedWriteLock scopedLock(_lock);
+	if (_ais.find(id) != _ais.end())
+		return false;
 	_ais.insert(std::make_pair(id, ai));
 	ai->setZone(this);
 	return true;
 }
 
-bool Zone::removeAI(const AIPtr& ai) {
+bool Zone::doRemoveAI(const AIPtr& ai) {
 	if (!ai)
 		return false;
 	const CharacterId& id = ai->getCharacter()->getId();
-	ScopedWriteLock scopedLock(_lock);
 	AIMapIter i = _ais.find(id);
 	if (i == _ais.end())
 		return false;
@@ -32,8 +27,7 @@ bool Zone::removeAI(const AIPtr& ai) {
 	return true;
 }
 
-bool Zone::destroyAI(const CharacterId& id) {
-	ScopedWriteLock scopedLock(_lock);
+bool Zone::doDestroyAI(const CharacterId& id) {
 	AIMapIter i = _ais.find(id);
 	if (i == _ais.end())
 		return false;
@@ -41,7 +35,7 @@ bool Zone::destroyAI(const CharacterId& id) {
 	return true;
 }
 
-bool Zone::scheduleAdd(const AIPtr& ai) {
+bool Zone::addAI(const AIPtr& ai) {
 	if (!ai)
 		return false;
 	ScopedWriteLock scopedLock(_scheduleLock);
@@ -49,13 +43,13 @@ bool Zone::scheduleAdd(const AIPtr& ai) {
 	return true;
 }
 
-bool Zone::scheduleDestroy(const CharacterId& id) {
+bool Zone::destroyAI(const CharacterId& id) {
 	ScopedWriteLock scopedLock(_scheduleLock);
 	_scheduledDestroy.push_back(id);
 	return true;
 }
 
-bool Zone::scheduleRemove(const AIPtr& ai) {
+bool Zone::removeAI(const AIPtr& ai) {
 	if (!ai)
 		return false;
 	ScopedWriteLock scopedLock(_scheduleLock);
@@ -67,15 +61,15 @@ void Zone::update(int64_t dt) {
 	{
 		ScopedWriteLock scopedLock(_scheduleLock);
 		for (const AIPtr& ai : _scheduledAdd) {
-			addAI(ai);
+			doAddAI(ai);
 		}
 		_scheduledAdd.clear();
 		for (const AIPtr& ai : _scheduledRemove) {
-			removeAI(ai);
+			doRemoveAI(ai);
 		}
 		_scheduledRemove.clear();
 		for (auto id : _scheduledDestroy) {
-			destroyAI(id);
+			doDestroyAI(id);
 		}
 		_scheduledDestroy.clear();
 	}
