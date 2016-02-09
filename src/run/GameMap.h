@@ -4,7 +4,7 @@
 #include <set>
 #include <iterator>
 #include <iostream>
-#include <unordered_set>
+#include <unordered_map>
 
 namespace ai {
 namespace example {
@@ -14,7 +14,7 @@ private:
 	int _size;
 	ai::Zone _zone;
 	ai::Server& _server;
-	typedef std::unordered_set<ai::AIPtr> Entities;
+	typedef std::unordered_map<CharacterId, ai::AIPtr> Entities;
 	Entities _entities;
 	mutable std::recursive_mutex _mutex;
 
@@ -45,7 +45,7 @@ public:
 		const int randomIndex = ai::random(0, size - 1);
 		Entities::const_iterator i = _entities.begin();
 		std::advance(i, randomIndex);
-		return *i;
+		return i->second;
 	}
 
 	inline const std::string& getName() const {
@@ -55,7 +55,7 @@ public:
 	inline ai::AIPtr addEntity(const ai::AIPtr& entity, GroupId groupId) {
 		{
 			std::lock_guard<std::recursive_mutex> lock(_mutex);
-			_entities.insert(entity);
+			_entities.insert(std::make_pair(entity->getId(), entity));
 		}
 		ai_assert(_zone.addAI(entity), "Could not add entity to zone with id " + std::to_string(entity->getId()));
 		ai::GroupMgr& groupMgr = _zone.getGroupMgr();
@@ -66,28 +66,18 @@ public:
 
 	inline bool remove(const ai::CharacterId& id) {
 		std::lock_guard<std::recursive_mutex> lock(_mutex);
-		// TODO: improve
-		for (Entities::iterator i = _entities.begin(); i != _entities.end(); ++i) {
-			const ai::AIPtr& entity = *i;
-			if (entity->getId() == id) {
-				if (!remove(entity))
-					return false;
-				return true;
-			}
-		}
-		return false;
+		auto iter = _entities.find(id);
+		if (iter == _entities.end())
+			return false;
+		_zone.removeAI(iter->second);
+		_entities.erase(iter);
+		return true;
 	}
 
 	inline bool remove(const ai::AIPtr& entity) {
 		if (!entity)
 			return false;
-		{
-			std::lock_guard<std::recursive_mutex> lock(_mutex);
-			if (_entities.erase(entity) != 1)
-				return false;
-		}
-		_zone.removeAI(entity);
-		return true;
+		return remove(entity->getId());
 	}
 
 	inline void update(int64_t dt) {
@@ -104,9 +94,9 @@ public:
 		Entities::iterator i = _entities.begin();
 		if (i == _entities.end())
 			return;
-		const ai::AIPtr& firstEntity = *i++;
-		for (; i != _entities.end(); ++i) {
-			ai::Entry* e = firstEntity->getAggroMgr().addAggro((*i), 1000.0f + static_cast<float>(rand() % 1000));
+		const ai::AIPtr& firstEntity = i->second;
+		for (++i; i != _entities.end(); ++i) {
+			ai::Entry* e = firstEntity->getAggroMgr().addAggro(i->second, 1000.0f + static_cast<float>(rand() % 1000));
 			e->setReduceByValue(1.0f + static_cast<float>(rand() % 3));
 		}
 	}
