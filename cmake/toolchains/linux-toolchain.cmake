@@ -5,15 +5,20 @@ include(CheckCCompilerFlag)
 set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 find_package(Threads)
 
-set(CMAKE_REQUIRED_FLAGS "-Werror -fsanitize=undefined")
-check_c_compiler_flag("-fsanitize=undefined" HAVE_FLAG_SANITIZE_UNDEFINED)
-set(CMAKE_REQUIRED_FLAGS "-Werror -fsanitize=address")
-check_c_compiler_flag("-fsanitize=address" HAVE_FLAG_SANITIZE_ADDRESS)
+# thread sanitizer doesn't work in combination with address and leak
 set(CMAKE_REQUIRED_FLAGS "-Werror -fsanitize=thread")
 check_c_compiler_flag("-fsanitize=thread" HAVE_FLAG_SANITIZE_THREAD)
-set(CMAKE_REQUIRED_FLAGS "-Werror -fsanitize=leak")
-check_c_compiler_flag("-fsanitize=leak" HAVE_FLAG_SANITIZE_LEAK)
+set(CMAKE_REQUIRED_FLAGS "-Werror -fsanitize=undefined")
+check_c_compiler_flag("-fsanitize=undefined" HAVE_FLAG_SANITIZE_UNDEFINED)
+#set(CMAKE_REQUIRED_FLAGS "-Werror -fsanitize=address")
+#check_c_compiler_flag("-fsanitize=address" HAVE_FLAG_SANITIZE_ADDRESS)
+#set(CMAKE_REQUIRED_FLAGS "-Werror -fsanitize=leak")
+#check_c_compiler_flag("-fsanitize=leak" HAVE_FLAG_SANITIZE_LEAK)
+set(CMAKE_REQUIRED_FLAGS "-Werror -fexpensive-optimizations")
+check_c_compiler_flag("-fexpensive-optimizations" HAVE_EXPENSIVE_OPTIMIZATIONS)
 unset(CMAKE_REQUIRED_FLAGS)
+
+#-Wthread-safety - http://clang.llvm.org/docs/ThreadSafetyAnalysis.html
 
 if (HAVE_FLAG_SANITIZE_UNDEFINED)
 	set(SANITIZE_FLAGS "${SANITIZE_FLAGS} -fsanitize=undefined")
@@ -62,7 +67,10 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wcast-qual -Wcast-align -Wpointer-arith 
 if (CMAKE_USE_PTHREADS_INIT)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread")
 endif()
-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -D_GNU_SOURCE -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_XOPEN_SOURCE -D_FORTIFY_SOURCE=2 -DNDEBUG -fexpensive-optimizations -fomit-frame-pointer -O3")
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -D_GNU_SOURCE -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_XOPEN_SOURCE -D_FORTIFY_SOURCE=2 -DNDEBUG -fomit-frame-pointer -O3")
+if (HAVE_EXPENSIVE_OPTIMIZATIONS)
+	set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fexpensive-optimizations")
+endif()
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG -fno-omit-frame-pointer ${SANITIZE_FLAGS}")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_C_FLAGS} -Wnon-virtual-dtor")
