@@ -12,11 +12,6 @@ set(AUTOMOC_TARGETS_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/.moc")
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Gui REQUIRED)
-find_package(Qt5LinguistTools REQUIRED)
-
-set(simpleai_debugger_TRANSLATIONS
-	data/simpleai_de_DE.ts
-)
 
 set(simpleai_debugger_HEADERS
 	src/gui/action/AddAction.h
@@ -96,18 +91,7 @@ include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/src/gui/view/list
 	${CMAKE_CURRENT_SOURCE_DIR}/src/common)
 
-qt5_create_translation(
-	simpleai_debugger_TRANSLATION_FILES
-	${simpleai_debugger_FORMS}
-	${simpleai_debugger_HEADERS}
-	${simpleai_debugger_SOURCES}
-	${simpleai_debugger_RESOURCES}
-	${simpleai_debugger_TRANSLATIONS}
-)
-
-qt5_add_translation(simpleai_debugger_QM ${simpleai_debugger_TRANSLATIONS})
-add_custom_target(translations ALL DEPENDS ${simpleai_debugger_QM})
 qt5_add_resources(simpleai_debugger_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/data/resources.qrc)
-add_executable(simpleai-debugger ${simpleai_debugger_SOURCES} ${simpleai_debugger_QM} ${simpleai_debugger_RESOURCES} ${simpleai_debugger_HEADERS})
+add_executable(simpleai-debugger ${simpleai_debugger_SOURCES} ${simpleai_debugger_RESOURCES} ${simpleai_debugger_HEADERS})
 qt5_use_modules(simpleai-debugger Widgets Gui Network)
 target_link_libraries(simpleai-debugger simpleai)

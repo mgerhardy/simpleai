@@ -14,7 +14,6 @@
 		<file>images/node.png</file>
 		<file>images/selector.png</file>
 		<file>images/priorityselector.png</file>
-<!--		<file>../simpleai_de_DE.qm</file>-->
 	</qresource>
 </RCC>
 <!--
