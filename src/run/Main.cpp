@@ -307,8 +307,8 @@ int main(int argc, char **argv) {
 				ai::AIPtr ai(new ai::AI(root));
 				ai->setCharacter(chr);
 				const ai::GroupId groupId = ai::random(1, 3);
-				const ai::AIPtr& ent = map->addEntity(ai, groupId);
-				std::cout << "spawned " << ent->getId() << " on map " << map->getName() << std::endl;
+				map->addEntity(ai, groupId);
+				std::cout << "spawned " << ai->getId() << " on map " << map->getName() << std::endl;
 			}
 		} else if (c == "reload") {
 			if (!load(filename))

@@ -52,7 +52,7 @@ public:
 		return _zone.getName();
 	}
 
-	inline ai::AIPtr addEntity(const ai::AIPtr& entity, GroupId groupId) {
+	inline void addEntity(const ai::AIPtr& entity, GroupId groupId) {
 		{
 			std::lock_guard<std::recursive_mutex> lock(_mutex);
 			_entities.insert(std::make_pair(entity->getId(), entity));
@@ -61,7 +61,6 @@ public:
 		ai::GroupMgr& groupMgr = _zone.getGroupMgr();
 		entity->getCharacter()->setAttribute(ai::attributes::GROUP, std::to_string(groupId));
 		groupMgr.add(groupId, entity);
-		return entity;
 	}
 
 	inline bool remove(const ai::CharacterId& id) {
