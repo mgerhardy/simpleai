@@ -38,4 +38,5 @@ TEST_F(ZoneTest, testMassAdd1000000) {
 		ai->setCharacter(character);
 		ASSERT_TRUE(zone.addAI(ai)) << "Could not add ai to the zone";
 	}
+	zone.update(0l);
 }
