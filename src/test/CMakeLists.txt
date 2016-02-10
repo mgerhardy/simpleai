@@ -1,3 +1,5 @@
+enable_testing()
+
 include_directories(
 	${SIMPLEAI_SOURCE_DIR}/src/ai
 	${SIMPLEAI_SOURCE_DIR}/src/test/gtest ${SIMPLEAI_SOURCE_DIR}/src/test/gtest/include
@@ -34,3 +36,4 @@ endif()
 
 add_executable(simpleai-tests ${SRC})
 target_link_libraries(simpleai-tests simpleai)
+add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})

@@ -7,6 +7,7 @@ SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 set(SIMPLEAI_VERSION "0.1")
 
+option(SIMPLEAI_USE_CCACHE "Use ccache if available" ON)
 option(SIMPLEAI_RUN "Compile run program" ON)
 option(SIMPLEAI_DEBUGGER "Compile with qt debugger support" OFF)
 option(SIMPLEAI_TEST "Compile tests" ON)
@@ -75,6 +76,15 @@ if (NOT CMAKE_TOOLCHAIN_FILE)
 		include(${CMAKE_MODULE_PATH}/toolchains/windows-toolchain.cmake)
 	else()
 		include(${CMAKE_MODULE_PATH}/toolchains/linux-toolchain.cmake)
+	endif()
+endif()
+
+if (SIMPLEAI_USE_CCACHE)
+	find_program(CCACHE "ccache")
+	if (CCACHE)
+		message(STATUS "Using ccache")
+		set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ${CCACHE})
+		set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ${CCACHE})
 	endif()
 endif()
 
