@@ -44,32 +44,34 @@ public:
 	~ThreadPool();
 private:
 	// need to keep track of threads so we can join them
-	std::vector<std::thread> workers;
+	std::vector<std::thread> _workers;
 	// the task queue
-	std::queue<std::function<void()> > tasks;
+	std::queue<std::function<void()> > _tasks;
 
 	// synchronization
-	std::mutex queue_mutex;
-	std::condition_variable condition;
-	std::atomic_bool stop;
+	std::mutex _queueMutex;
+	std::condition_variable _condition;
+	std::atomic_bool _stop;
 };
 
 // the constructor just launches some amount of workers
 inline ThreadPool::ThreadPool(size_t threads) :
-		stop(false) {
-	workers.reserve(threads);
+		_stop(false) {
+	_workers.reserve(threads);
 	for (size_t i = 0; i < threads; ++i) {
-		workers.emplace_back([this] {
+		_workers.emplace_back([this] {
 			for (;;) {
 				std::function<void()> task;
 				{
-					std::unique_lock<std::mutex> lock(this->queue_mutex);
-					this->condition.wait(lock,
-							[this] {return this->stop || !this->tasks.empty();});
-					if(this->stop && this->tasks.empty())
-					return;
-					task = std::move(this->tasks.front());
-					this->tasks.pop();
+					std::unique_lock<std::mutex> lock(this->_queueMutex);
+					this->_condition.wait(lock, [this] {
+						return this->_stop || !this->_tasks.empty();
+					});
+					if (this->_stop && this->_tasks.empty()) {
+						return;
+					}
+					task = std::move(this->_tasks.front());
+					this->_tasks.pop();
 				}
 
 				task();
@@ -88,18 +90,18 @@ auto ThreadPool::enqueue(F&& f, Args&&... args)
 
 	std::future<return_type> res = task->get_future();
 	{
-		std::unique_lock<std::mutex> lock(queue_mutex);
-		tasks.emplace([task]() {(*task)();});
+		std::unique_lock<std::mutex> lock(_queueMutex);
+		_tasks.emplace([task]() {(*task)();});
+		_condition.notify_one();
 	}
-	condition.notify_one();
 	return res;
 }
 
 // the destructor joins all threads
 inline ThreadPool::~ThreadPool() {
-	stop = true;
-	condition.notify_all();
-	for (std::thread &worker : workers)
+	_stop = true;
+	_condition.notify_all();
+	for (std::thread &worker : _workers)
 		worker.join();
 }
 

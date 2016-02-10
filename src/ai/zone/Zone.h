@@ -175,10 +175,8 @@ public:
 				results.emplace_back(_threadPool.enqueue([func, ai] {func(ai);}));
 			}
 		}
-		std::cout << "waiting for " << results.size() << " jobs" << std::endl;
 		for (auto && result: results)
 			result.wait();
-		std::cout << "done" << std::endl;
 	}
 
 	/**
