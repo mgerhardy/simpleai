@@ -9,6 +9,9 @@ LUATreeLoader::LUATreeLoader(const IAIFactory& aiFactory) :
 }
 
 bool LUATreeLoader::init(const std::string& luaString) {
+	_error = "";
+	_treeMap.clear();
+
 	LUA lua;
 	luaL_Reg createTree = { "createTree", luaMain_CreateTree };
 	luaL_Reg eof = { nullptr, nullptr };

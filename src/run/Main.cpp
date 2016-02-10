@@ -289,8 +289,7 @@ int main(int argc, char **argv) {
 			std::vector<std::string> trees;
 			loader.getTrees(trees);
 
-			for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
-				ai::example::GameMap *map = *i;
+			for (ai::example::GameMap* map : maps) {
 				const ai::AIPtr& rnd = map->getRandomEntity();
 				if (rnd) {
 					if (!map->remove(rnd)) {

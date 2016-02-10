@@ -54,6 +54,7 @@
 #include "common/MoveVector.h"
 #include "common/Random.h"
 #include "common/Thread.h"
+#include "common/ThreadPool.h"
 
 #include "AI.h"
 #include "AIRegistry.h"

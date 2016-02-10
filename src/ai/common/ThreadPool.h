@@ -21,7 +21,7 @@
  distribution.
  */
 
-#pragma onc
+#pragma once
 
 #include <vector>
 #include <queue>
@@ -32,6 +32,8 @@
 #include <atomic>
 #include <future>
 #include <functional>
+
+namespace ai {
 
 class ThreadPool final {
 public:
@@ -99,4 +101,6 @@ inline ThreadPool::~ThreadPool() {
 	condition.notify_all();
 	for (std::thread &worker : workers)
 		worker.join();
+}
+
 }
