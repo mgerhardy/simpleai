@@ -86,54 +86,24 @@ static ai::example::GameMap *createMap(int amount, ai::Server& server, const std
 	return map;
 }
 
-static void runMap(ai::example::GameMap* map) {
-	const std::chrono::milliseconds delay(250);
-	auto timeLast = std::chrono::steady_clock::now();
-	while (!shutdownThreads) {
-		const auto timeNow = std::chrono::steady_clock::now();
-		const auto dt = std::chrono::duration_cast < std::chrono::milliseconds > (timeNow - timeLast).count();
-		timeLast = timeNow;
-		map->update(static_cast<uint32_t>(dt));
-		const auto end = std::chrono::steady_clock::now();
-		auto elapsed = end - timeNow;
-		std::cout << "ticked " << map->getName() << " - dt: " << dt << std::endl;
-		std::this_thread::sleep_for(delay - elapsed);
-	}
-}
-
-static void runServer(ai::Server* server) {
-	const std::chrono::milliseconds delay(500);
-	auto timeLast = std::chrono::steady_clock::now();
-	while (!shutdownThreads) {
-		const auto timeNow = std::chrono::steady_clock::now();
-		const auto dt = std::chrono::duration_cast < std::chrono::milliseconds > (timeNow - timeLast).count();
-		timeLast = timeNow;
-		server->update(dt);
-		std::this_thread::sleep_for(delay);
-	}
-}
-
 static void runDespawnSpawn(ai::example::GameMap* map) {
-	const std::chrono::milliseconds delay(15000);
-	while (!shutdownThreads) {
-		if (autospawn) {
-			const ai::AIPtr& rnd = map->getRandomEntity();
-			if (rnd) {
-				map->remove(rnd);
-			}
-
-			std::vector<std::string> trees;
-			loader.getTrees(trees);
-			auto randomIter = ai::randomElement(trees.begin(), trees.end());
-			ai::TreeNodePtr root = loader.load(*randomIter);
-			ai::ICharacterPtr e(new ai::example::GameEntity(id++, map));
-			ai::AIPtr ai(new ai::AI(root));
-			ai->setCharacter(e);
-			const ai::GroupId groupId = ai::random(1, 3);
-			map->addEntity(ai, groupId);
-		}
-		std::this_thread::sleep_for(delay);
+	if (!autospawn) {
+		return;
 	}
+	const ai::AIPtr& rnd = map->getRandomEntity();
+	if (rnd) {
+		map->remove(rnd);
+	}
+
+	std::vector<std::string> trees;
+	loader.getTrees(trees);
+	auto randomIter = ai::randomElement(trees.begin(), trees.end());
+	ai::TreeNodePtr root = loader.load(*randomIter);
+	ai::ICharacterPtr e(new ai::example::GameEntity(id++, map));
+	ai::AIPtr ai(new ai::AI(root));
+	ai->setCharacter(e);
+	const ai::GroupId groupId = ai::random(1, 3);
+	map->addEntity(ai, groupId);
 }
 
 static bool load(const std::string filename) {
@@ -313,20 +283,20 @@ int main(int argc, char **argv) {
 	std::cout << "Started server on " << interface << ":" << port << std::endl;
 
 	std::vector<ai::example::GameMap*> maps;
-	for (int i = 0; i < mapAmount; ++i) {
-		maps.push_back(createMap(amount, server, "Map" + std::to_string(i)));
+	for (int i = 1; i <= mapAmount; ++i) {
+		maps.push_back(createMap(amount, server, "map-" + std::to_string(i)));
 	}
 
 	{
-		ai::ThreadPool threadPool(std::min(1u, std::thread::hardware_concurrency()));
-		// TODO: these contain sleep calls - not the best for a thread pool ;) - somehow rebuild to yield
-		for (auto i = maps.begin(); i != maps.end(); ++i) {
-			threadPool.enqueue(runMap, *i);
+		ai::ThreadScheduler threadScheduler;
+		int i = 0;
+		for (ai::example::GameMap* map : maps) {
+			threadScheduler.scheduleAtFixedRate(std::chrono::milliseconds(i++ * 50), std::chrono::milliseconds(250), [=] () {map->update(250u);});
 		}
-		for (auto i = maps.begin(); i != maps.end(); ++i) {
-			threadPool.enqueue(runDespawnSpawn, *i);
+		for (ai::example::GameMap* map : maps) {
+			threadScheduler.scheduleAtFixedRate(std::chrono::milliseconds(800), std::chrono::milliseconds(15000), runDespawnSpawn, map);
 		}
-		threadPool.enqueue(runServer, &server);
+		threadScheduler.scheduleAtFixedRate(std::chrono::milliseconds(10), std::chrono::milliseconds(500), [&] () {server.update(500u);});
 
 		handleInput(filename, maps);
 	}

@@ -55,6 +55,7 @@
 #include "common/Random.h"
 #include "common/Thread.h"
 #include "common/ThreadPool.h"
+#include "common/ThreadScheduler.h"
 
 #include "AI.h"
 #include "AIRegistry.h"
