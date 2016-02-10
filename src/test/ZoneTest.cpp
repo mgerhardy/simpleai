@@ -32,11 +32,13 @@ TEST_F(ZoneTest, testChanges) {
 TEST_F(ZoneTest, testMassAdd1000000) {
 	ai::Zone zone("test1");
 	ai::TreeNodePtr root(new ai::PrioritySelector("test", "", ai::True::get()));
-	for (int i = 0; i < 1000000; ++i) {
+	const int n = 1000000;
+	for (int i = 0; i < n; ++i) {
 		ai::ICharacterPtr character(new TestEntity(i));
 		ai::AIPtr ai(new ai::AI(root));
 		ai->setCharacter(character);
 		ASSERT_TRUE(zone.addAI(ai)) << "Could not add ai to the zone";
 	}
 	zone.update(0l);
+	ASSERT_EQ(n, zone.size());
 }
