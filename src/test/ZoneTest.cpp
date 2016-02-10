@@ -5,13 +5,13 @@ class ZoneTest: public TestSuite {
 
 TEST_F(ZoneTest, testChanges) {
 	ai::Zone zone("test1");
-	ai::TreeNodePtr root(new ai::PrioritySelector("test", "", ai::True::get()));
-	ai::ICharacterPtr character(new TestEntity(1));
-	ai::AIPtr ai(new ai::AI(root));
+	ai::TreeNodePtr root = std::make_shared<ai::PrioritySelector>("test", "", ai::True::get());
+	ai::ICharacterPtr character = std::make_shared<TestEntity>(1);
+	ai::AIPtr ai = std::make_shared<ai::AI>(root);
 	ai->setCharacter(character);
 
-	ai::ICharacterPtr character2(new TestEntity(2));
-	ai::AIPtr ai2(new ai::AI(root));
+	ai::ICharacterPtr character2 = std::make_shared<TestEntity>(2);
+	ai::AIPtr ai2 = std::make_shared<ai::AI>(root);
 	ai2->setCharacter(character2);
 
 	ASSERT_TRUE(zone.addAI(ai)) << "Could not add ai to the zone";
@@ -31,11 +31,11 @@ TEST_F(ZoneTest, testChanges) {
 
 TEST_F(ZoneTest, testMassAdd1000000) {
 	ai::Zone zone("test1");
-	ai::TreeNodePtr root(new ai::PrioritySelector("test", "", ai::True::get()));
+	ai::TreeNodePtr root = std::make_shared<ai::PrioritySelector>("test", "", ai::True::get());
 	const int n = 1000000;
 	for (int i = 0; i < n; ++i) {
-		ai::ICharacterPtr character(new TestEntity(i));
-		ai::AIPtr ai(new ai::AI(root));
+		ai::ICharacterPtr character = std::make_shared<TestEntity>(i);
+		ai::AIPtr ai = std::make_shared<ai::AI>(root);
 		ai->setCharacter(character);
 		ASSERT_TRUE(zone.addAI(ai)) << "Could not add ai to the zone";
 	}
