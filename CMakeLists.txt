@@ -99,6 +99,26 @@ else()
 	message(STATUS "Build without exception support")
 endif()
 
+macro(check_lua_files TARGET FILES)
+	find_program(LUAC_EXECUTABLE NAMES luac)
+	if (LUAC_EXECUTABLE)
+		message(STATUS "${LUAC_EXECUTABLE} found")
+		foreach(_FILE ${FILES})
+			string(REPLACE "/" "-" TARGETNAME ${_FILE})
+			add_custom_target(
+				${TARGETNAME}
+				COMMENT "checking lua file ${_FILE} with ${LUAC_EXECUTABLE}"
+				COMMAND ${LUAC_EXECUTABLE} -p ${_FILE}
+				WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+			)
+			add_dependencies(${TARGET} ${TARGETNAME})
+		endforeach()
+	else()
+		message(STATUS "No lua compiler (luac) found")
+	endif()
+endmacro()
+
+
 add_subdirectory(src/ai)
 add_subdirectory(src/libs)
 
