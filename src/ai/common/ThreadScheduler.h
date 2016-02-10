@@ -17,24 +17,26 @@ private:
 	struct ScheduledTask {
 		ThreadScheduler* _scheduler;
 		std::function<void()> _callback;
+		std::chrono::milliseconds _now;
 		std::chrono::milliseconds _initialDelay;
 		std::chrono::milliseconds _delay;
 
-		ScheduledTask(ThreadScheduler* scheduler, const std::function<void()>& callback, const std::chrono::milliseconds& initialDelay, const std::chrono::milliseconds& delay) :
-				_scheduler(scheduler), _callback(callback), _initialDelay(initialDelay), _delay(delay) {
+		ScheduledTask(ThreadScheduler* scheduler, const std::function<void()>& callback, const std::chrono::milliseconds& now, const std::chrono::milliseconds& initialDelay, const std::chrono::milliseconds& delay) :
+				_scheduler(scheduler), _callback(callback), _now(now), _initialDelay(initialDelay), _delay(delay) {
 		}
 
 		void operator()() const {
 			_callback();
-			// TODO: no need to reschedule in case the delay parameter is not valid
-			//if (_delay <= 0)
-			//	return;
-			const ScheduledTask reschedule(_scheduler, _callback, _initialDelay + _delay, _delay);
+			if (_delay.count() <= 0)
+				return;
+			auto epoch = std::chrono::system_clock::now().time_since_epoch();
+			auto now = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
+			const ScheduledTask reschedule(_scheduler, _callback, now, _delay, _delay);
 			_scheduler->_tasks.emplace(reschedule);
 		}
 
-		bool operator<(const ScheduledTask& other) const {
-			return other._initialDelay < _initialDelay;
+		inline bool operator<(const ScheduledTask& other) const {
+			return other._now + other._initialDelay < _now + _initialDelay;
 		}
 	};
 
@@ -64,8 +66,7 @@ public:
 					if (this->_stop) {
 						return;
 					}
-					// TODO: use std::async here to not delay the tasks in this loop
-					this->_tasks.top()();
+					std::async(std::launch::async, this->_tasks.top());
 					this->_tasks.pop();
 				}
 				if (this->_stop) {
@@ -107,7 +108,7 @@ public:
 		auto epoch = std::chrono::system_clock::now().time_since_epoch();
 		auto now = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
 		std::unique_lock<std::mutex> lock(_queueMutex);
-		_tasks.emplace(ScheduledTask(this, [task]() {task();}, now + initialDelay, delay));
+		_tasks.emplace(ScheduledTask(this, [task]() {task();}, now, initialDelay, delay));
 		_condition.notify_one();
 	}
 };
