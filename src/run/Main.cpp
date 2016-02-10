@@ -152,96 +152,17 @@ static bool load(const std::string filename) {
 	return true;
 }
 
-int main(int argc, char **argv) {
-	char **b = argv;
-	char **e = argv + argc;
-	if (argc <= 1 || optExists(b, e, "-h") || optExists(b, e, "-help") || !optExists(b, e, "-file")) {
-		std::cerr << "usage: simpleai-run -file behaviourtree.lua [options]" << std::endl;
-		std::cerr << "Valid options are (default values are given here):" << std::endl;
-		std::cerr << "-amount 10            - how many entities are spawned on each map" << std::endl;
-		std::cerr << "-maps 4               - how many maps should get spawned" << std::endl;
-		std::cerr << "-autospawn true|false - automatic respawn (despawn random and respawn) of entities" << std::endl;
-		std::cerr << "-seed 1               - use a fixed seed for all the random actions" << std::endl;
-		std::cerr << "-help -h              - show this help screen" << std::endl;
-		std::cerr << std::endl;
-		std::cerr << "Network related options" << std::endl;
-		std::cerr << "-interface 0.0.0.0    - the interface the server will listen on" << std::endl;
-		std::cerr << "-port 12345           - the port of the server to listen on" << std::endl;
-#ifdef AI_PROFILER
-		std::cerr << "-profilerOutput       - google profiler output file" << std::endl;
-#endif
-		return EXIT_FAILURE;
-	}
-
-	autospawn = getOptParam(b, e, "-autospawn", "true") == "true";
-	int seed = std::stoi(getOptParam(b, e, "-seed", "-1"));
-	const int mapAmount = std::stoi(getOptParam(b, e, "-maps", "4"));
-	const int amount = std::stoi(getOptParam(b, e, "-amount", "10"));
-	const short port = static_cast<short>(std::stoi(getOptParam(b, e, "-port", "12345")));
-	const std::string filename = getOptParam(b, e, "-file");
-	const std::string interface = getOptParam(b, e, "-interface", "0.0.0.0");
-
-#ifdef AI_PROFILER
-	const std::string profilerOutput = getOptParam(b, e, "-profilerOutput", "simpleai-run.prof");
-	ProfilerStart(profilerOutput.c_str());
-#endif
-
-	if (seed == -1) {
-		seed = 1;
-	}
-	ai::randomSeed(seed);
-
-	if (!load(filename)) {
-		return EXIT_FAILURE;
-	}
-
-	std::cout << "successfully loaded the behaviour trees" << std::endl;
-	std::cout << "now run this behaviour tree with " << amount << " entities on each map" << std::endl;
-	std::cout << "spawn " << mapAmount << " maps with seed " << seed << std::endl;
-	std::cout << "automatic respawn: " << (autospawn ? "true" : "false") << std::endl;
-
-	ai::Server server(loader, port, interface);
-	if (!server.start()) {
-		std::cerr << "Could not start the server on port " << port << std::endl;
-		return EXIT_FAILURE;
-	}
-
-	std::cout << "Started server on " << interface << ":" << port << std::endl;
-
-	typedef std::vector<ai::example::GameMap*> Maps;
-	Maps maps;
-	for (int i = 0; i < mapAmount; ++i) {
-		maps.push_back(createMap(amount, server, "Map" + std::to_string(i)));
-	}
-
-	typedef std::vector<std::thread> Threads;
-	Threads threads;
-	for (auto i = maps.begin(); i != maps.end(); ++i) {
-		threads.push_back(std::thread(runMap, *i));
-		const std::string threadName = "tick-" + (*i)->getName();
-		pthread_setname_np(threads.back().native_handle(), threadName.c_str());
-	}
-
-	for (auto i = maps.begin(); i != maps.end(); ++i) {
-		threads.push_back(std::thread(runDespawnSpawn, *i));
-		const std::string threadName = "spawn-" + (*i)->getName();
-		pthread_setname_np(threads.back().native_handle(), threadName.c_str());
-	}
-
-	threads.push_back(std::thread(runServer, &server));
-	pthread_setname_np(threads.back().native_handle(), "tick-server");
-
+static void handleInput(const std::string& filename, const std::vector<ai::example::GameMap*>& maps) {
 	std::cout << "hit q to quit or h for help" << std::endl;
 	for (;;) {
 		std::string c;
 		std::getline(std::cin, c);
 
 		if (c == "q") {
-			std::cout << "quitting - waiting for threads" << std::endl;
+			std::cout << "quitting" << std::endl;
 			break;
 		} else if (c == "g") {
-			for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
-				ai::example::GameMap *map = *i;
+			for (ai::example::GameMap* map : maps) {
 				std::cout << map->getName() << std::endl;
 				const ai::Zone& zone = map->getZone();
 				std::cout << "groups: " << std::endl;
@@ -254,8 +175,7 @@ int main(int argc, char **argv) {
 				}
 			}
 		} else if (c == "d") {
-			for (std::vector<ai::example::GameMap*>::const_iterator i = maps.begin(); i != maps.end(); ++i) {
-				ai::example::GameMap *map = *i;
+			for (ai::example::GameMap* map : maps) {
 				std::cout << map->getName() << std::endl;
 				const ai::Zone& zone = map->getZone();
 				int count = 0;
@@ -333,12 +253,83 @@ int main(int argc, char **argv) {
 			std::cout << "reload - reload the behaviour tree from file" << std::endl;
 		}
 	}
-
 	shutdownThreads = true;
-	for (std::thread& t : threads) {
-		t.join();
+}
+
+int main(int argc, char **argv) {
+	char **b = argv;
+	char **e = argv + argc;
+	if (argc <= 1 || optExists(b, e, "-h") || optExists(b, e, "-help") || !optExists(b, e, "-file")) {
+		std::cerr << "usage: simpleai-run -file behaviourtree.lua [options]" << std::endl;
+		std::cerr << "Valid options are (default values are given here):" << std::endl;
+		std::cerr << "-amount 10            - how many entities are spawned on each map" << std::endl;
+		std::cerr << "-maps 4               - how many maps should get spawned" << std::endl;
+		std::cerr << "-autospawn true|false - automatic respawn (despawn random and respawn) of entities" << std::endl;
+		std::cerr << "-seed 1               - use a fixed seed for all the random actions" << std::endl;
+		std::cerr << "-help -h              - show this help screen" << std::endl;
+		std::cerr << std::endl;
+		std::cerr << "Network related options" << std::endl;
+		std::cerr << "-interface 0.0.0.0    - the interface the server will listen on" << std::endl;
+		std::cerr << "-port 12345           - the port of the server to listen on" << std::endl;
+#ifdef AI_PROFILER
+		std::cerr << "-profilerOutput       - google profiler output file" << std::endl;
+#endif
+		return EXIT_FAILURE;
 	}
 
+	autospawn = getOptParam(b, e, "-autospawn", "true") == "true";
+	int seed = std::stoi(getOptParam(b, e, "-seed", "-1"));
+	const int mapAmount = std::stoi(getOptParam(b, e, "-maps", "4"));
+	const int amount = std::stoi(getOptParam(b, e, "-amount", "10"));
+	const short port = static_cast<short>(std::stoi(getOptParam(b, e, "-port", "12345")));
+	const std::string filename = getOptParam(b, e, "-file");
+	const std::string interface = getOptParam(b, e, "-interface", "0.0.0.0");
+
+#ifdef AI_PROFILER
+	const std::string profilerOutput = getOptParam(b, e, "-profilerOutput", "simpleai-run.prof");
+	ProfilerStart(profilerOutput.c_str());
+#endif
+
+	if (seed == -1) {
+		seed = 1;
+	}
+	ai::randomSeed(seed);
+
+	if (!load(filename)) {
+		return EXIT_FAILURE;
+	}
+
+	std::cout << "successfully loaded the behaviour trees" << std::endl;
+	std::cout << "now run this behaviour tree with " << amount << " entities on each map" << std::endl;
+	std::cout << "spawn " << mapAmount << " maps with seed " << seed << std::endl;
+	std::cout << "automatic respawn: " << (autospawn ? "true" : "false") << std::endl;
+
+	ai::Server server(loader, port, interface);
+	if (!server.start()) {
+		std::cerr << "Could not start the server on port " << port << std::endl;
+		return EXIT_FAILURE;
+	}
+
+	std::cout << "Started server on " << interface << ":" << port << std::endl;
+
+	std::vector<ai::example::GameMap*> maps;
+	for (int i = 0; i < mapAmount; ++i) {
+		maps.push_back(createMap(amount, server, "Map" + std::to_string(i)));
+	}
+
+	{
+		ai::ThreadPool threadPool(std::min(1u, std::thread::hardware_concurrency()));
+		// TODO: these contain sleep calls - not the best for a thread pool ;) - somehow rebuild to yield
+		for (auto i = maps.begin(); i != maps.end(); ++i) {
+			threadPool.enqueue(runMap, *i);
+		}
+		for (auto i = maps.begin(); i != maps.end(); ++i) {
+			threadPool.enqueue(runDespawnSpawn, *i);
+		}
+		threadPool.enqueue(runServer, &server);
+
+		handleInput(filename, maps);
+	}
 #ifdef AI_PROFILER
 	ProfilerStop();
 #endif
