@@ -9,7 +9,7 @@ set(SIMPLEAI_VERSION "0.1")
 
 option(SIMPLEAI_RUN "Compile run program" ON)
 option(SIMPLEAI_DEBUGGER "Compile with qt debugger support" OFF)
-option(SIMPLEAI_TEST "Compile tests" OFF)
+option(SIMPLEAI_TEST "Compile tests" ON)
 option(SIMPLEAI_LUA "Compile with lua support" ON)
 option(SIMPLEAI_XML "Compile with xml support" OFF)
 option(SIMPLEAI_EXCEPTIONS "Compile with exception support" OFF)

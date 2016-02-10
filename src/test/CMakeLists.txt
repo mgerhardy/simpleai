@@ -1,5 +1,7 @@
-include_directories(${SIMPLEAI_SOURCE_DIR}/src/ai ${SIMPLEAI_SOURCE_DIR}/src/test/gtest ${SIMPLEAI_SOURCE_DIR}/src/test/gtest/include)
-link_directories(${SIMPLEAI_BINARY_DIR}/src/ai)
+include_directories(
+	${SIMPLEAI_SOURCE_DIR}/src/ai
+	${SIMPLEAI_SOURCE_DIR}/src/test/gtest ${SIMPLEAI_SOURCE_DIR}/src/test/gtest/include
+)
 set(SRC
 	AggroTest.cpp AggroTest.h
 	GeneralTest.cpp GeneralTest.h
@@ -12,6 +14,14 @@ set(SRC
 	TestEntity.h
 	TestShared.cpp TestShared.h
 	ZoneTest.cpp ZoneTest.h
+
+	gtest/src/gtest.cc
+	gtest/src/gtest-death-test.cc
+	gtest/src/gtest-filepath.cc
+	gtest/src/gtest-port.cc
+	gtest/src/gtest-printers.cc
+	gtest/src/gtest-test-part.cc
+	gtest/src/gtest-typed-test.cc
 )
 
 if (SIMPLEAI_LUA)
@@ -22,5 +32,5 @@ if (SIMPLEAI_XML)
 	list(APPEND SRC XMLTreeLoaderTest.cpp XMLTreeLoaderTest.h)
 endif()
 
-add_executable(tests ${SRC})
-target_link_libraries(tests simpleai)
+add_executable(simpleai-tests ${SRC})
+target_link_libraries(simpleai-tests simpleai)
