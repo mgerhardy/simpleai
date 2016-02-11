@@ -21,8 +21,12 @@ private:
 		std::chrono::milliseconds _initialDelay;
 		std::chrono::milliseconds _delay;
 
-		ScheduledTask(ThreadScheduler* scheduler, const std::function<void()>& callback, const std::chrono::milliseconds& now, const std::chrono::milliseconds& initialDelay, const std::chrono::milliseconds& delay) :
+		ScheduledTask(ThreadScheduler* scheduler, std::function<void()>&& callback, const std::chrono::milliseconds& now, const std::chrono::milliseconds& initialDelay, const std::chrono::milliseconds& delay) :
 				_scheduler(scheduler), _callback(callback), _now(now), _initialDelay(initialDelay), _delay(delay) {
+		}
+
+		ScheduledTask(ThreadScheduler* scheduler, const std::function<void()>& callback, const std::chrono::milliseconds& now, const std::chrono::milliseconds& initialDelay, const std::chrono::milliseconds& delay) :
+			_scheduler(scheduler), _callback(callback), _now(now), _initialDelay(initialDelay), _delay(delay) {
 		}
 
 		void operator()() const {
@@ -31,8 +35,7 @@ private:
 				return;
 			auto epoch = std::chrono::system_clock::now().time_since_epoch();
 			auto now = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
-			const ScheduledTask reschedule(_scheduler, _callback, now, _delay, _delay);
-			_scheduler->_tasks.emplace(reschedule);
+			_scheduler->_tasks.emplace(_scheduler, _callback, now, _delay, _delay);
 		}
 
 		inline bool operator<(const ScheduledTask& other) const {
@@ -69,7 +72,8 @@ public:
 					if (this->_stop) {
 						return;
 					}
-					std::async(std::launch::async, this->_tasks.top());
+					//std::async(std::launch::async, this->_tasks.top());
+					this->_tasks.top()();
 					this->_tasks.pop();
 				}
 				if (this->_stop) {
@@ -105,7 +109,7 @@ public:
 		auto epoch = std::chrono::system_clock::now().time_since_epoch();
 		auto now = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
 		std::unique_lock<std::mutex> lock(_queueMutex);
-		_tasks.emplace(ScheduledTask(this, task, now, initialDelay, delay));
+		_tasks.emplace(this, std::move<std::function<void()> >(task), now, initialDelay, delay);
 		_condition.notify_one();
 	}
 };
