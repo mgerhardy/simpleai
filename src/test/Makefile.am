@@ -13,6 +13,7 @@ tests_SOURCES = \
 	ParserTest.cpp \
 	TestAll.cpp \
 	TestShared.cpp \
+	ThreadTest.cpp \
 	ZoneTest.cpp \
 	\
 	gtest/src/gtest.cc \

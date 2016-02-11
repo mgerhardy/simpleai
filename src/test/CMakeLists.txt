@@ -15,6 +15,7 @@ set(SRC
 	TestAll.cpp
 	TestEntity.h
 	TestShared.cpp TestShared.h
+	ThreadTest.cpp ThreadTest.h
 	ZoneTest.cpp ZoneTest.h
 
 	gtest/src/gtest.cc

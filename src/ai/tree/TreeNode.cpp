@@ -1,5 +1,6 @@
 #include "tree/TreeNode.h"
 #include "AI.h"
+#include <algorithm>
 
 namespace ai {
 
@@ -101,8 +102,8 @@ std::ostream& TreeNode::print(std::ostream& stream, int level) const {
 	stream << ")";
 	if (!_children.empty()) {
 		stream << " {" << std::endl;
-		for (TreeNodes::const_iterator i = _children.begin(); i != _children.end(); ++i) {
-			(*i)->print(stream, level + 1);
+		for (auto& child : _children) {
+			child->print(stream, level + 1);
 			stream << std::endl;
 		}
 		for (int i = 0; i < level; ++i) {
@@ -125,16 +126,17 @@ TreeNodePtr TreeNode::getChild(int id) const {
 }
 
 bool TreeNode::replaceChild(int id, const TreeNodePtr& newNode) {
-	for (TreeNodes::iterator i = _children.begin(); i != _children.end(); ++i) {
-		if ((*i)->getId() == id) {
-			if (newNode)
-				*i = newNode;
-			else
-				_children.erase(i);
-			return true;
-		}
+	auto i = std::find_if(_children.begin(), _children.end(), [id] (const TreeNodePtr& other) { return other->getId() == id; });
+	if (i == _children.end())
+		return false;
+
+	if (newNode) {
+		*i = newNode;
+		return true;
 	}
-	return false;
+
+	_children.erase(i);
+	return true;
 }
 
 TreeNodePtr TreeNode::getParent_r(const TreeNodePtr& parent, int id) const {

@@ -81,6 +81,12 @@ public:
 	 */
 	~ThreadScheduler() {
 		_stop = true;
+		{
+			std::unique_lock<std::mutex> lock(_queueMutex);
+			while (!_tasks.empty()) {
+				_tasks.pop();
+			}
+		}
 		_condition.notify_one();
 		_thread.join();
 	}

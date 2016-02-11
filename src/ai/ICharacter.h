@@ -10,7 +10,7 @@ namespace ai {
 
 /**
  * @brief Defines some standard names for @c ICharacter attributes. None of these must be used. But if you
- * use them, the remote debugger can make use of known values to render more information in to the view.
+ * use them, the remote debugger can make use of known values to render more information into the view.
  */
 namespace attributes {
 /**
@@ -32,9 +32,7 @@ const char* const ORIENTATION = "Orientation";
  *
  * @note Update the values of the @c ICharacter class only in in the @c ICharacter::update
  * method or from within the @c Zone callbacks. Otherwise you will run into race conditions
- * if you run with multiple threads. You can use the atomic macros from common/Thread.h to
- * add more attributes to your implementation of the @c ICharacter class that you would like
- * to modify in your own update methods and from within the AI.
+ * if you run with multiple threads.
  *
  * You often need access to your world your character is living in. You need access to this
  * data to resolve the @c CharacterId's in the @c IFilter implementations, to interact with
