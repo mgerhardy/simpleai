@@ -53,8 +53,11 @@ public:
 				if (this->_tasks.empty()) {
 					std::unique_lock<std::mutex> lock(this->_queueMutex);
 					this->_condition.wait(lock, [this] {
-						// TODO: return this->_stop;
-						return false;
+						if (this->_stop)
+							return true;
+						auto epoch = std::chrono::system_clock::now().time_since_epoch();
+						auto now = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
+						return this->_tasks.top()._initialDelay <= now;
 					});
 					if (this->_stop) {
 						return;
@@ -62,7 +65,7 @@ public:
 				}
 				auto epoch = std::chrono::system_clock::now().time_since_epoch();
 				auto now = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
-				while (this->_tasks.top()._initialDelay < now) {
+				while (this->_tasks.top()._initialDelay <= now) {
 					if (this->_stop) {
 						return;
 					}
