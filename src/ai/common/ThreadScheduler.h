@@ -82,19 +82,13 @@ public:
 	 */
 	~ThreadScheduler() {
 		_stop = true;
-		{
-			std::unique_lock<std::mutex> lock(_queueMutex);
-			while (!_tasks.empty()) {
-				_tasks.pop();
-			}
-		}
 		_condition.notify_one();
 		_thread.join();
 	}
 
 	template<class F, class ... Args>
 	void schedule(const std::chrono::milliseconds& delay, F&& f, Args&&... args) {
-		scheduleAtFixedRate(delay, std::chrono::milliseconds(), f, args...);
+		scheduleAtFixedRate(delay, std::chrono::milliseconds(), std::forward<F>(f), std::forward<Args>(args)...);
 	}
 
 	/**
@@ -108,7 +102,7 @@ public:
 		auto epoch = std::chrono::system_clock::now().time_since_epoch();
 		auto now = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
 		std::unique_lock<std::mutex> lock(_queueMutex);
-		_tasks.emplace(ScheduledTask(this, [task]() {task();}, now, initialDelay, delay));
+		_tasks.emplace(ScheduledTask(this, task, now, initialDelay, delay));
 		_condition.notify_one();
 	}
 };

@@ -6,7 +6,9 @@ class ThreadTest: public TestSuite {
 TEST_F(ThreadTest, testThreadScheduler_schedule) {
 	ai::ThreadScheduler scheduler;
 	int countExecutionOnce = 0;
-	scheduler.schedule(std::chrono::milliseconds(0), [&] () {++countExecutionOnce;});
+	scheduler.schedule(std::chrono::milliseconds(0), [&] () {
+		++countExecutionOnce;
+	});
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	ASSERT_EQ(1, countExecutionOnce);
 }
