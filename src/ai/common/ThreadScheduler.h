@@ -17,16 +17,15 @@ private:
 	struct ScheduledTask {
 		ThreadScheduler* _scheduler;
 		std::function<void()> _callback;
-		std::chrono::milliseconds _now;
-		std::chrono::milliseconds _initialDelay;
 		std::chrono::milliseconds _delay;
+		std::chrono::milliseconds _execTime;
 
-		ScheduledTask(ThreadScheduler* scheduler, std::function<void()>&& callback, const std::chrono::milliseconds& now, const std::chrono::milliseconds& initialDelay, const std::chrono::milliseconds& delay) :
-				_scheduler(scheduler), _callback(callback), _now(now), _initialDelay(initialDelay), _delay(delay) {
+		ScheduledTask(ThreadScheduler* scheduler, std::function<void()>&& callback, const std::chrono::milliseconds& initialDelay, const std::chrono::milliseconds& delay) :
+				_scheduler(scheduler), _callback(callback), _delay(delay), _execTime(initialDelay) {
 		}
 
-		ScheduledTask(ThreadScheduler* scheduler, const std::function<void()>& callback, const std::chrono::milliseconds& now, const std::chrono::milliseconds& initialDelay, const std::chrono::milliseconds& delay) :
-			_scheduler(scheduler), _callback(callback), _now(now), _initialDelay(initialDelay), _delay(delay) {
+		ScheduledTask(ThreadScheduler* scheduler, const std::function<void()>& callback, const std::chrono::milliseconds& initialDelay, const std::chrono::milliseconds& delay) :
+				_scheduler(scheduler), _callback(callback), _delay(delay), _execTime(initialDelay) {
 		}
 
 		void operator()() const {
@@ -35,17 +34,17 @@ private:
 				return;
 			auto epoch = std::chrono::system_clock::now().time_since_epoch();
 			auto now = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
-			_scheduler->_tasks.emplace(_scheduler, _callback, now, _delay, _delay);
+			_scheduler->_tasks.emplace(_scheduler, _callback, now + _delay, _delay);
 		}
 
 		inline bool operator<(const ScheduledTask& other) const {
-			return other._now + other._initialDelay < _now + _initialDelay;
+			return other._execTime < _execTime;
 		}
 	};
 
 	std::priority_queue<ScheduledTask, std::vector<ScheduledTask> > _tasks;
-	std::condition_variable _condition;
 	std::atomic_bool _stop;
+	std::atomic_bool _notEmpty;
 	std::mutex _queueMutex;
 	std::thread _thread;
 
@@ -53,33 +52,27 @@ public:
 	ThreadScheduler() : _stop(false) {
 		_thread = std::thread([this] {
 			for (;;) {
-				if (this->_tasks.empty()) {
-					std::unique_lock<std::mutex> lock(this->_queueMutex);
-					this->_condition.wait(lock, [this] {
-						if (this->_stop)
-							return true;
-						auto epoch = std::chrono::system_clock::now().time_since_epoch();
-						auto now = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
-						return this->_tasks.top()._initialDelay <= now;
-					});
-					if (this->_stop) {
-						return;
-					}
-				}
-				auto epoch = std::chrono::system_clock::now().time_since_epoch();
-				auto now = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
-				while (this->_tasks.top()._initialDelay <= now) {
-					if (this->_stop) {
-						return;
-					}
-					//std::async(std::launch::async, this->_tasks.top());
-					this->_tasks.top()();
-					this->_tasks.pop();
-				}
 				if (this->_stop) {
 					return;
 				}
-				std::this_thread::yield();
+				if (this->_notEmpty) {
+					auto epoch = std::chrono::system_clock::now().time_since_epoch();
+					auto now = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
+					std::unique_lock<std::mutex> lock(_queueMutex);
+					while (!this->_tasks.empty() && this->_tasks.top()._execTime <= now) {
+						if (this->_stop) {
+							return;
+						}
+						//std::async(std::launch::async, this->_tasks.top());
+						this->_tasks.top()();
+						this->_tasks.pop();
+					}
+					if (this->_stop) {
+						return;
+					}
+					this->_notEmpty = !this->_tasks.empty();
+				}
+				std::this_thread::sleep_for(std::chrono::milliseconds(1));
 			}
 		});
 	}
@@ -89,7 +82,6 @@ public:
 	 */
 	~ThreadScheduler() {
 		_stop = true;
-		_condition.notify_one();
 		_thread.join();
 	}
 
@@ -109,8 +101,8 @@ public:
 		auto epoch = std::chrono::system_clock::now().time_since_epoch();
 		auto now = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
 		std::unique_lock<std::mutex> lock(_queueMutex);
-		_tasks.emplace(this, std::move<std::function<void()> >(task), now, initialDelay, delay);
-		_condition.notify_one();
+		_tasks.emplace(this, std::move<std::function<void()> >(task), now + initialDelay, delay);
+		_notEmpty = true;
 	}
 };
 }

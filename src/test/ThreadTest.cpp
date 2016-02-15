@@ -3,6 +3,17 @@
 class ThreadTest: public TestSuite {
 };
 
+TEST_F(ThreadTest, testThreadScheduler_scheduleAtFixedRate) {
+	ai::ThreadScheduler scheduler;
+	int countExecution = 0;
+	scheduler.scheduleAtFixedRate(std::chrono::milliseconds(0), std::chrono::milliseconds(10), [&] () {
+		++countExecution;
+	});
+	std::this_thread::sleep_for(std::chrono::milliseconds(200));
+	ASSERT_GE(countExecution, 10);
+	ASSERT_LE(countExecution, 30);
+}
+
 TEST_F(ThreadTest, testThreadScheduler_schedule) {
 	ai::ThreadScheduler scheduler;
 	int countExecutionOnce = 0;
@@ -11,12 +22,4 @@ TEST_F(ThreadTest, testThreadScheduler_schedule) {
 	});
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	ASSERT_EQ(1, countExecutionOnce);
-}
-
-TEST_F(ThreadTest, testThreadScheduler_scheduleAtFixedRate) {
-	ai::ThreadScheduler scheduler;
-	int countExecution = 0;
-	scheduler.scheduleAtFixedRate(std::chrono::milliseconds(0), std::chrono::milliseconds(10), [&] () {++countExecution;});
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	ASSERT_EQ(11, countExecution);
 }
