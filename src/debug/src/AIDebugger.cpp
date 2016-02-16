@@ -189,6 +189,8 @@ void AIDebugger::unselect() {
 	_selectedId = NOTHING_SELECTED;
 	_aggro.clear();
 	_node = AIStateNode();
+	_attributes.clear();
+	emit onSelected();
 	qDebug() << "unselect entity";
 }
 
@@ -277,6 +279,7 @@ void AIDebugger::readTcpData() {
 		for (;;) {
 			if (!mf.isNewMessageAvailable(_stream))
 				break;
+			// don't free this - preallocated memory that is reused
 			ai::IProtocolMessage* msg = mf.create(_stream);
 			if (!msg) {
 				qDebug() << "unknown server message - disconnecting";
@@ -302,16 +305,28 @@ MapView* AIDebugger::createMapWidget() {
 
 void AIDebugger::setNames(const std::vector<std::string>& names) {
 	_names.clear();
-	for (std::vector<std::string>::const_iterator i = names.begin(); i != names.end(); ++i) {
-		_names << QString::fromStdString(*i);
+	// TODO: reserve size in names map
+	// TODO: measure if contains/remove/insert manually is faster
+	for (const std::string& name : names) {
+		_names << QString::fromStdString(name);
 	}
 }
 
 void AIDebugger::setEntities(const std::vector<AIStateWorld>& entities) {
 	_entities.clear();
-	for (std::vector<AIStateWorld>::const_iterator i = entities.begin(); i != entities.end(); ++i) {
-		_entities.insert(i->getId(), *i);
+	// TODO: reserve size in entities map
+	// TODO: measure if contains/remove/insert manually is faster
+	for (const AIStateWorld& state : entities) {
+		_entities.insert(state.getId(), state);
 	}
+	if (_selectedId == NOTHING_SELECTED) {
+		return;
+	}
+	if (_entities.contains(_selectedId)) {
+		return;
+	}
+	// TODO: this doesn't work for some reason
+//	unselect();
 }
 
 }

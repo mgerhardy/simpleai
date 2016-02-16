@@ -25,8 +25,14 @@ EntityList::~EntityList() {
 }
 
 void EntityList::updateEntityList() {
+	const CharacterId chrId = _debugger.getSelected();
+	qDebug() << "selected character id " << chrId;
 	_model.update();
 	_model.sort(0);
+	const QModelIndex& index = _model.characterIndex(chrId);
+	if (!index.isValid())
+		return;
+	selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
 }
 
 void EntityList::selectEntity(const QModelIndex &current, const QModelIndex &previous) {
