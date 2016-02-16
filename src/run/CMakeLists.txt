@@ -1,6 +1,3 @@
-include(CheckFunctionExists)
-include(CheckLibraryExists)
-
 set(SRC
 	GameEntity.cpp GameEntity.h
 	GameMap.h
