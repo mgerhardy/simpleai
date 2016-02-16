@@ -5,7 +5,7 @@ class ThreadTest: public TestSuite {
 
 TEST_F(ThreadTest, testThreadScheduler_scheduleAtFixedRate) {
 	ai::ThreadScheduler scheduler;
-	int countExecution = 0;
+	std::atomic_int countExecution(0);
 	scheduler.scheduleAtFixedRate(std::chrono::milliseconds(0), std::chrono::milliseconds(10), [&] () {
 		++countExecution;
 	});
@@ -16,7 +16,7 @@ TEST_F(ThreadTest, testThreadScheduler_scheduleAtFixedRate) {
 
 TEST_F(ThreadTest, testThreadScheduler_schedule) {
 	ai::ThreadScheduler scheduler;
-	int countExecutionOnce = 0;
+	std::atomic_int countExecutionOnce(0);
 	scheduler.schedule(std::chrono::milliseconds(0), [&] () {
 		++countExecutionOnce;
 	});
