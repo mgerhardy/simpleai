@@ -75,7 +75,7 @@ SOURCES += \
 
 RESOURCES += data/resources.qrc
 FORMS +=
-TRANSLATIONS += data/simpleai_de_DE.ts
+TRANSLATIONS +=
 
 win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\lrelease.exe
 unix:QMAKE_LRELEASE = lrelease
