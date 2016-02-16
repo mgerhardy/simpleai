@@ -100,7 +100,7 @@ public:
 AIDebugger::AIDebugger(AINodeStaticResolver& resolver) :
 		QObject(), _stateHandler(new StateHandler(*this)), _characterHandler(new CharacterHandler(*this)), _characterStaticHandler(
 				new CharacterStaticHandler(*this)), _pauseHandler(new PauseHandler(*this)), _namesHandler(new NamesHandler(*this)), _nopHandler(
-				new NopHandler()), _selectedId(-1), _socket(this), _pause(false), _resolver(resolver) {
+				new NopHandler()), _selectedId(NOTHING_SELECTED), _socket(this), _pause(false), _resolver(resolver) {
 	connect(&_socket, SIGNAL(readyRead()), SLOT(readTcpData()));
 	connect(&_socket, SIGNAL(disconnected()), SLOT(onDisconnect()));
 
@@ -185,8 +185,8 @@ bool AIDebugger::writeMessage(const IProtocolMessage& msg) {
 }
 
 void AIDebugger::unselect() {
-	writeMessage(AISelectMessage(-1));
-	_selectedId = -1;
+	writeMessage(AISelectMessage(NOTHING_SELECTED));
+	_selectedId = NOTHING_SELECTED;
 	_aggro.clear();
 	_node = AIStateNode();
 	qDebug() << "unselect entity";
@@ -248,7 +248,7 @@ void AIDebugger::onDisconnect() {
 		emit onPause(_pause);
 	}
 	{
-		_selectedId = -1;
+		_selectedId = NOTHING_SELECTED;
 		_aggro.clear();
 		_attributes.clear();
 		_node = AIStateNode();
