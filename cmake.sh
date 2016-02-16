@@ -12,5 +12,5 @@ export CXX=/usr/bin/clang++
 cd $DIR/..
 mkdir -p simpleai-build
 cd simpleai-build
-cmake -DSIMPLEAI_DEBUGGER=OFF -DCMAKE_BUILD_TYPE=Release -G"Eclipse CDT4 - Unix Makefiles" $DIR $*
+cmake -DSIMPLEAI_DEBUGGER=ON -DCMAKE_BUILD_TYPE=Release -G"Eclipse CDT4 - Unix Makefiles" $DIR $*
 make -j ${JOBS} $*
