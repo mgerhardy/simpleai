@@ -33,7 +33,7 @@ Vector3f AI::getGroupLeaderPosition(GroupId id) const {
 
 CharacterId AI::getId() const {
 	if (!_character)
-		return NOTHING_SELECTED;
+		return AI_NOTHING_SELECTED;
 	return _character->getId();
 }
 

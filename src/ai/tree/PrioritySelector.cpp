@@ -8,7 +8,7 @@ TreeNodeStatus PrioritySelector::execute(const AIPtr& entity, int64_t deltaMilli
 		return CANNOTEXECUTE;
 
 	int index = getSelectorState(entity);
-	if (index == NOTHING_SELECTED) {
+	if (index == AI_NOTHING_SELECTED) {
 		index = 0;
 	}
 	const std::size_t size = _children.size();
@@ -24,10 +24,10 @@ TreeNodeStatus PrioritySelector::execute(const AIPtr& entity, int64_t deltaMilli
 			setSelectorState(entity, static_cast<int>(i));
 		} else if (result == CANNOTEXECUTE || result == FAILED) {
 			child->resetState(entity);
-			setSelectorState(entity, NOTHING_SELECTED);
+			setSelectorState(entity, AI_NOTHING_SELECTED);
 			continue;
 		} else {
-			setSelectorState(entity, NOTHING_SELECTED);
+			setSelectorState(entity, AI_NOTHING_SELECTED);
 		}
 		child->resetState(entity);
 		overallResult = result;

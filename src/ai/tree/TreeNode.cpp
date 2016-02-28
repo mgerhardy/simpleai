@@ -41,7 +41,7 @@ inline void TreeNode::setLastExecMillis(const AIPtr& entity) {
 int TreeNode::getSelectorState(const AIPtr& entity) const {
 	AI::SelectorStates::const_iterator i = entity->_selectorStates.find(getId());
 	if (i == entity->_selectorStates.end())
-		return NOTHING_SELECTED;
+		return AI_NOTHING_SELECTED;
 	return i->second;
 }
 

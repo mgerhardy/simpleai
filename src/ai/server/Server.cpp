@@ -11,7 +11,7 @@
 namespace ai {
 
 Server::Server(AIRegistry& aiRegistry, short port, const std::string& hostname) :
-		_aiRegistry(aiRegistry), _network(port, hostname), _selectedCharacterId(-1), _time(0L), _selectHandler(*this), _pauseHandler(*this), _resetHandler(*this), _stepHandler(*this), _changeHandler(
+		_aiRegistry(aiRegistry), _network(port, hostname), _selectedCharacterId(AI_NOTHING_SELECTED), _time(0L), _selectHandler(*this), _pauseHandler(*this), _resetHandler(*this), _stepHandler(*this), _changeHandler(
 				*this), _addNodeHandler(*this), _deleteNodeHandler(*this), _updateNodeHandler(*this), _pause(false), _zone(nullptr) {
 	_network.addListener(this);
 	ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
@@ -282,7 +282,7 @@ void Server::broadcastState(Zone* zone) {
 
 void Server::broadcastStaticCharacterDetails(Zone* zone) {
 	const CharacterId id = _selectedCharacterId;
-	if (id == -1)
+	if (id == AI_NOTHING_SELECTED)
 		return;
 
 	auto func = [&] (const AIPtr& ai) {
@@ -302,7 +302,7 @@ void Server::broadcastStaticCharacterDetails(Zone* zone) {
 
 void Server::broadcastCharacterDetails(Zone* zone) {
 	const CharacterId id = _selectedCharacterId;
-	if (id == -1)
+	if (id == AI_NOTHING_SELECTED)
 		return;
 
 	auto func = [&] (const AIPtr& ai) {
@@ -345,7 +345,7 @@ void Server::update(int64_t deltaTime) {
 }
 
 void Server::resetSelection() {
-	_selectedCharacterId = -1;
+	_selectedCharacterId = AI_NOTHING_SELECTED;
 }
 
 void Server::setDebug(const std::string& zoneName) {

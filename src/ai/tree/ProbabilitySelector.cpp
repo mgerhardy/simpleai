@@ -22,7 +22,7 @@ TreeNodeStatus ProbabilitySelector::execute(const AIPtr& entity, int64_t deltaMi
 		return CANNOTEXECUTE;
 
 	int index = getSelectorState(entity);
-	if (index == NOTHING_SELECTED) {
+	if (index == AI_NOTHING_SELECTED) {
 		float rndIndex = ai::randomf(_weightSum);
 		const int weightAmount = static_cast<int>(_weights.size());
 		for (; index < weightAmount; ++index) {
@@ -37,7 +37,7 @@ TreeNodeStatus ProbabilitySelector::execute(const AIPtr& entity, int64_t deltaMi
 	if (result == RUNNING) {
 		setSelectorState(entity, index);
 	} else {
-		setSelectorState(entity, NOTHING_SELECTED);
+		setSelectorState(entity, AI_NOTHING_SELECTED);
 	}
 	child->resetState(entity);
 

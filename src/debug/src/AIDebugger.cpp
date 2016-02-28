@@ -100,7 +100,7 @@ public:
 AIDebugger::AIDebugger(AINodeStaticResolver& resolver) :
 		QObject(), _stateHandler(new StateHandler(*this)), _characterHandler(new CharacterHandler(*this)), _characterStaticHandler(
 				new CharacterStaticHandler(*this)), _pauseHandler(new PauseHandler(*this)), _namesHandler(new NamesHandler(*this)), _nopHandler(
-				new NopHandler()), _selectedId(NOTHING_SELECTED), _socket(this), _pause(false), _resolver(resolver) {
+				new NopHandler()), _selectedId(AI_NOTHING_SELECTED), _socket(this), _pause(false), _resolver(resolver) {
 	connect(&_socket, SIGNAL(readyRead()), SLOT(readTcpData()));
 	connect(&_socket, SIGNAL(disconnected()), SLOT(onDisconnect()));
 
@@ -185,8 +185,8 @@ bool AIDebugger::writeMessage(const IProtocolMessage& msg) {
 }
 
 void AIDebugger::unselect() {
-	writeMessage(AISelectMessage(NOTHING_SELECTED));
-	_selectedId = NOTHING_SELECTED;
+	writeMessage(AISelectMessage(AI_NOTHING_SELECTED));
+	_selectedId = AI_NOTHING_SELECTED;
 	_aggro.clear();
 	_node = AIStateNode();
 	_attributes.clear();
@@ -250,7 +250,7 @@ void AIDebugger::onDisconnect() {
 		emit onPause(_pause);
 	}
 	{
-		_selectedId = NOTHING_SELECTED;
+		_selectedId = AI_NOTHING_SELECTED;
 		_aggro.clear();
 		_attributes.clear();
 		_node = AIStateNode();
@@ -319,7 +319,7 @@ void AIDebugger::setEntities(const std::vector<AIStateWorld>& entities) {
 	for (const AIStateWorld& state : entities) {
 		_entities.insert(state.getId(), state);
 	}
-	if (_selectedId == NOTHING_SELECTED) {
+	if (_selectedId == AI_NOTHING_SELECTED) {
 		return;
 	}
 	if (_entities.contains(_selectedId)) {

@@ -19,7 +19,9 @@ class Zone;
 
 typedef std::vector<CharacterId> FilteredEntities;
 
-#define NOTHING_SELECTED (-1)
+#ifndef AI_NOTHING_SELECTED
+#define AI_NOTHING_SELECTED (-1)
+#endif
 
 /**
  * @brief This is the type the library works with. It interacts with it's real world entity by

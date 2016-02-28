@@ -35,7 +35,7 @@ TreeNodeStatus Sequence::execute(const AIPtr& entity, int64_t deltaMillis) {
 }
 
 void Sequence::resetState(const AIPtr& entity) {
-	setSelectorState(entity, NOTHING_SELECTED);
+	setSelectorState(entity, AI_NOTHING_SELECTED);
 	TreeNode::resetState(entity);
 }
 
