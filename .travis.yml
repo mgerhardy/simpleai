@@ -1,5 +1,7 @@
 language: cpp
 
+sudo: false
+
 compiler:
   - gcc
   - clang
@@ -10,6 +12,24 @@ branches:
 
 os:
   - linux
+
+addons:
+  apt:
+    packages:
+    - g++-5
+    - gcc-5
+    - clang
+    - make
+    - cmake
+    - autoconf
+    - automake
+    - libtool
+    - build-essential
+    - lua5.1
+    - liblua5.2-dev
+    - libgtest-dev
+    sources:
+    - ubuntu-toolchain-r-test
 
 script:
   - ./autogen.sh
@@ -30,17 +50,7 @@ script:
   - ./configure --enable-debug --enable-gprof
   - make clean && make
   - cd src/debug && qmake -qt=qt5 && make
-
-before_install:
-  - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
-
-install:
-  - sudo apt-get install -qq g++-4.8
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
-  - sudo apt-get install -qq qt5-default ccache
+  - mkdir simpleai-build; cd simpleai-build; cmake -DSIMPLEAI_DEBUGGER=ON -DCMAKE_BUILD_TYPE=Release -G"Eclipse CDT4 - Unix Makefiles" ..; make
 
 notifications:
   email: true
-
