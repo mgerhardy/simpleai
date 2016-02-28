@@ -37,7 +37,7 @@ void EntityList::updateEntityList() {
 
 void EntityList::selectEntity(const QModelIndex &current, const QModelIndex &previous) {
 	Q_UNUSED(previous);
-	const AIStateWorld& state = _model.getEntities().at(_proxyModel.mapToSource(current).row());
+	const AIStateWorld& state = _model.getEntities().at(current.row());
 	_debugger.select(state);
 }
 
