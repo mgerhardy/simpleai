@@ -314,7 +314,6 @@ void AIDebugger::setNames(const std::vector<std::string>& names) {
 
 void AIDebugger::setEntities(const std::vector<AIStateWorld>& entities) {
 	_entities.clear();
-	// TODO: reserve size in entities map
 	// TODO: measure if contains/remove/insert manually is faster
 	for (const AIStateWorld& state : entities) {
 		_entities.insert(state.getId(), state);
