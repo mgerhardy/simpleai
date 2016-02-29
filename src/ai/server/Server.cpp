@@ -285,7 +285,7 @@ void Server::broadcastStaticCharacterDetails(Zone* zone) {
 	if (id == AI_NOTHING_SELECTED)
 		return;
 
-	auto func = [&] (const AIPtr& ai) {
+	auto func = [=] (const AIPtr& ai) {
 		std::vector<AIStateNodeStatic> nodeStaticData;
 		const TreeNodePtr& node = ai->getBehaviour();
 		const int32_t nodeId = node->getId();
@@ -305,7 +305,7 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 	if (id == AI_NOTHING_SELECTED)
 		return;
 
-	auto func = [&] (const AIPtr& ai) {
+	auto func = [=] (const AIPtr& ai) {
 		const TreeNodePtr& node = ai->getBehaviour();
 		const int32_t nodeId = node->getId();
 		const ConditionPtr& condition = node->getCondition();
