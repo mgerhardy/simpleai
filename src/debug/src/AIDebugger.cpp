@@ -305,7 +305,7 @@ MapView* AIDebugger::createMapWidget() {
 
 void AIDebugger::setNames(const std::vector<std::string>& names) {
 	_names.clear();
-	// TODO: reserve size in names map
+	_names.reserve(names.size());
 	// TODO: measure if contains/remove/insert manually is faster
 	for (const std::string& name : names) {
 		_names << QString::fromStdString(name);
