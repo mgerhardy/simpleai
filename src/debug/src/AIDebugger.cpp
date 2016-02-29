@@ -153,7 +153,9 @@ void AIDebugger::togglePause() {
 }
 
 void AIDebugger::select(const ai::AIStateWorld& ai) {
-	writeMessage(AISelectMessage(ai.getId()));
+	const ai::CharacterId id = ai.getId();
+	qDebug() << "select " << id;
+	writeMessage(AISelectMessage(id));
 }
 
 bool AIDebugger::writeMessage(const IProtocolMessage& msg) {
