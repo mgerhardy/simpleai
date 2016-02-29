@@ -15,7 +15,7 @@ QModelIndex EntityListModel::characterIndex(CharacterId id) const {
 	int row = 0;
 	for (const AIStateWorld& state : _list) {
 		if (state.getId() == id)
-			return index(row, 0, QModelIndex());
+			return createIndex(row, 0);
 		++row;
 	}
 	qDebug() << "Could not find entity " << id << " in the model";
