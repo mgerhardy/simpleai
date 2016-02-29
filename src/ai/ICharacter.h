@@ -41,7 +41,7 @@ const char* const ORIENTATION = "Orientation";
  */
 class ICharacter : public NonCopyable {
 protected:
-	CharacterId _id;
+	const CharacterId _id;
 	Vector3f _position;
 	std::atomic<float> _orientation;
 	// m/s
@@ -69,7 +69,13 @@ public:
 	 * @return the radians around the y (up) axis
 	 */
 	float getOrientation() const;
+	/**
+	 * @brief Sets the speed for the character in m/s
+	 */
 	void setSpeed(float speed);
+	/**
+	 * @return The speed for the character in m/s
+	 */
 	float getSpeed() const;
 	void setAttribute(const std::string& key, const std::string& value);
 	const CharacterAttributes& getAttributes() const;
