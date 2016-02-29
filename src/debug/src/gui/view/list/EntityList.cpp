@@ -13,6 +13,7 @@ EntityList::EntityList(AIDebugger& debugger, QLineEdit* entityFilter) :
 	setSortingEnabled(true);
 	setSelectionMode(QAbstractItemView::SingleSelection);
 	setSelectionBehavior(QAbstractItemView::SelectRows);
+	setEditTriggers(QAbstractItemView::NoEditTriggers);
 	setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 	verticalHeader()->hide();
 	horizontalHeader()->setStretchLastSection(true);
