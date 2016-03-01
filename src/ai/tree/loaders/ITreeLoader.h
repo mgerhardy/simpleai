@@ -1,5 +1,6 @@
 #pragma once
 
+#include "common/Thread.h"
 #include <memory>
 #include <string>
 #include <vector>
@@ -20,6 +21,8 @@ protected:
 	const IAIFactory& _aiFactory;
 	typedef std::map<std::string, TreeNodePtr> TreeMap;
 	TreeMap _treeMap;
+	ReadWriteLock _lock;
+private:
 	std::string _error;		/**< make sure to set this member if your own implementation ran into an error. @sa ITreeLoader::getError */
 public:
 	ITreeLoader(const IAIFactory& aiFactory) :
@@ -37,6 +40,7 @@ public:
 	 * @brief Fill the given vector with the loaded behaviour tree names
 	 */
 	void getTrees(std::vector<std::string>& trees) const {
+		ScopedReadLock scopedLock(_lock);
 		trees.reserve(_treeMap.size());
 		for (TreeMap::const_iterator it = _treeMap.begin(); it != _treeMap.end(); ++it) {
 			trees.push_back(it->first);
@@ -54,15 +58,19 @@ public:
 	 */
 	bool addTree(const std::string& name, const TreeNodePtr& root) {
 		if (!root) {
-			_error = "Empty behaviour tree with id " + name + " given";
 			return false;
 		}
-		TreeMap::const_iterator i = _treeMap.find(name);
-		if (i != _treeMap.end()) {
-			_error = "Behaviour tree with id " + name + " already exists";
-			return false;
+		{
+			ScopedReadLock scopedLock(_lock);
+			TreeMap::const_iterator i = _treeMap.find(name);
+			if (i != _treeMap.end()) {
+				return false;
+			}
 		}
-		_treeMap.insert(std::make_pair(name, root));
+		{
+			ScopedWriteLock scopedLock(_lock);
+			_treeMap.insert(std::make_pair(name, root));
+		}
 		return true;
 	}
 
@@ -70,17 +78,22 @@ public:
 	 * @brief Loads on particular behaviour tree.
 	 */
 	TreeNodePtr load(const std::string &name) {
+		ScopedReadLock scopedLock(_lock);
 		TreeMap::const_iterator i = _treeMap.find(name);
 		if (i != _treeMap.end())
 			return i->second;
-		_error = "No behaviour tree with id " + name + " found";
 		return TreeNodePtr();
+	}
+
+	void setError(const std::string& error) {
+		ScopedWriteLock scopedLock(_lock);
+		_error = error;
 	}
 
 	/**
 	 * @brief Gives access to the last error state of the @c ITreeLoader
 	 */
-	inline const std::string& getError() const {
+	inline std::string getError() const {
 		return _error;
 	}
 };

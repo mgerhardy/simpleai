@@ -72,21 +72,21 @@ bool XMLTreeLoader::init(const std::string& xmlData) {
 	for (tinyxml2::XMLNode* node = rootNode->FirstChild(); node; node = node->NextSibling()) {
 		tinyxml2::XMLElement* e = node->ToElement();
 		if (e == nullptr) {
-			_error = "unexpected node type";
+			setError("unexpected node type");
 			continue;
 		}
 		if (e->Name() == nullptr) {
-			_error = "expected node name but didn't find one";
+			setError("expected node name but didn't find one");
 			continue;
 		}
 		const std::string treeNodeName(e->Name());
 		if ("tree" != treeNodeName) {
-			_error = "unexpected node name - expected 'tree' - got " + treeNodeName;
+			setError("unexpected node name - expected 'tree' - got " + treeNodeName);
 			continue;
 		}
 		const char *name = e->Attribute("name");
 		if (name == nullptr) {
-			_error = "node 'tree' does not have a 'name' attribute";
+			setError("node 'tree' does not have a 'name' attribute");
 			continue;
 		}
 		tinyxml2::XMLNode* rootXMLNode = e->FirstChild();
@@ -94,7 +94,7 @@ bool XMLTreeLoader::init(const std::string& xmlData) {
 			continue;
 		const TreeNodePtr& root = loadTreeFromXML(_aiFactory, rootXMLNode->ToElement());
 		if (root.get() == nullptr) {
-			_error = "could not create the root node";
+			setError("could not create the root node");
 			continue;
 		}
 		addTree(name, root);

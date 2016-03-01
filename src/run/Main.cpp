@@ -41,7 +41,7 @@ public:
 		return _loader.init(lua);
 	}
 
-	inline const std::string& getError() const {
+	inline std::string getError() const {
 		return _loader.getError();
 	}
 };
@@ -169,7 +169,7 @@ static void handleInput(const std::string& filename, const std::vector<ai::examp
 					}
 					++count;
 				};
-				zone.visit(func);
+				zone.execute(func);
 				std::cout << " - sum: " << count << " entities" << std::endl;
 			}
 		} else if (c == "t") {
@@ -210,7 +210,7 @@ static void handleInput(const std::string& filename, const std::vector<ai::examp
 				ai->setBehaviour(newRoot);
 			};
 			for (ai::example::GameMap* map : maps) {
-				map->getZone().visit(func);
+				map->getZone().executeParallel(func);
 			}
 			std::cout << "reloaded the behaviour trees" << std::endl;
 		} else {

@@ -9,7 +9,7 @@ LUATreeLoader::LUATreeLoader(const IAIFactory& aiFactory) :
 }
 
 bool LUATreeLoader::init(const std::string& luaString) {
-	_error = "";
+	setError("");
 	_treeMap.clear();
 
 	LUA lua;
@@ -33,19 +33,19 @@ bool LUATreeLoader::init(const std::string& luaString) {
 	lua.reg("AI", funcs);
 
 	if (!lua.load(luaString)) {
-		_error = lua.getError();
+		setError(lua.getError());
 		return false;
 	}
 
 	// loads all the trees
 	lua.newGlobalData<LUATreeLoader>("Loader", this);
 	if (!lua.execute("init")) {
-		_error = lua.getError();
+		setError(lua.getError());
 		return false;
 	}
 
 	if (_treeMap.empty()) {
-		_error = "No behaviour trees specified";
+		setError("No behaviour trees specified");
 		return false;
 	}
 	return true;

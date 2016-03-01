@@ -135,7 +135,7 @@ public:
 	/**
 	 * @brief Executes a lambda or functor for the given character
 	 *
-	 * @return @c true if the func was called for the character, @c false if not
+	 * @return @c true if the func is going to get called for the character, @c false if not
 	 * e.g. in the case the given @c CharacterId wasn't found in this zone.
 	 * @note This is executed in a thread pool - so make sure to synchronize your lambda or functor.
 	 * We also don't wait for the functor or lambda here, we are scheduling it in a worker in the
@@ -144,14 +144,22 @@ public:
 	 * @note This locks the zone for reading to perform the CharacterId lookup
 	 */
 	template<typename Func>
-	inline bool execute(CharacterId id, const Func& func) const {
+	inline bool executeAsync(CharacterId id, const Func& func) const {
 		const AIPtr& ai = getAI(id);
 		if (!ai)
 			return false;
-		_threadPool.enqueue([func, ai] {func(ai);});
+		_threadPool.enqueue(func, ai);
 		return true;
 	}
 
+	/**
+	 * @brief Executes a lambda or functor for the given character
+	 *
+	 * @returns @c std::future with the result of @c func.
+	 * @note This is executed in a thread pool - so make sure to synchronize your lambda or functor.
+	 * We also don't wait for the functor or lambda here, we are scheduling it in a worker in the
+	 * thread pool. If you want to wait - you have to use the returned future.
+	 */
 	template<typename Func>
 	inline auto executeAsync(const AIPtr& ai, const Func& func) const
 		-> std::future<typename std::result_of<Func(const AIPtr&)>::type> {
@@ -166,13 +174,13 @@ public:
 	 * @note This locks the zone for reading
 	 */
 	template<typename Func>
-	void visit(Func& func) {
+	void executeParallel(Func& func) {
 		std::vector<std::future<void> > results;
 		{
 			ScopedReadLock scopedLock(_lock);
 			for (auto i = _ais.begin(); i != _ais.end(); ++i) {
 				const AIPtr& ai = i->second;
-				results.emplace_back(_threadPool.enqueue([func, ai] {func(ai);}));
+				results.emplace_back(_threadPool.enqueue(func, ai));
 			}
 		}
 		for (auto && result: results)
@@ -187,17 +195,47 @@ public:
 	 * @note This locks the zone for reading
 	 */
 	template<typename Func>
-	void visit(const Func& func) const {
+	void executeParallel(const Func& func) const {
 		std::vector<std::future<void> > results;
 		{
 			ScopedReadLock scopedLock(_lock);
 			for (auto i = _ais.begin(); i != _ais.end(); ++i) {
 				const AIPtr& ai = i->second;
-				results.emplace_back(_threadPool.enqueue([func, ai] {func(ai);}));
+				results.emplace_back(_threadPool.enqueue(func, ai));
 			}
 		}
 		for (auto && result: results)
 			result.wait();
+	}
+
+	/**
+	 * @brief Executes a lambda or functor for all the @c AI instances in this zone
+	 * We are waiting for the execution of this.
+	 *
+	 * @note This locks the zone for reading
+	 */
+	template<typename Func>
+	void execute(const Func& func) const {
+		ScopedReadLock scopedLock(_lock);
+		for (auto i = _ais.begin(); i != _ais.end(); ++i) {
+			const AIPtr& ai = i->second;
+			func(ai);
+		}
+	}
+
+	/**
+	 * @brief Executes a lambda or functor for all the @c AI instances in this zone
+	 * We are waiting for the execution of this.
+	 *
+	 * @note This locks the zone for reading
+	 */
+	template<typename Func>
+	void execute(Func& func) {
+		ScopedReadLock scopedLock(_lock);
+		for (auto i = _ais.begin(); i != _ais.end(); ++i) {
+			const AIPtr& ai = i->second;
+			func(ai);
+		}
 	}
 
 	inline std::size_t size() const {

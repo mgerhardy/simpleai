@@ -70,7 +70,7 @@ bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const st
 
 		success = true;
 	};
-	zone->execute(characterId, func);
+	zone->executeAsync(characterId, func);
 	if (success) {
 		broadcastStaticCharacterDetails(zone);
 	}
@@ -104,7 +104,7 @@ bool Server::addNode(const CharacterId& characterId, int32_t parentNodeId, const
 		newNode->setCondition(conditionPtr);
 		success = node->addChild(newNode);
 	};
-	zone->execute(characterId, func);
+	zone->executeAsync(characterId, func);
 	if (success) {
 		broadcastStaticCharacterDetails(zone);
 	}
@@ -130,7 +130,7 @@ bool Server::deleteNode(const CharacterId& characterId, int32_t nodeId) {
 		parent->replaceChild(nodeId, TreeNodePtr());
 		success = true;
 	};
-	zone->execute(characterId, func);
+	zone->executeAsync(characterId, func);
 	if (success) {
 		broadcastStaticCharacterDetails(zone);
 	}
@@ -153,7 +153,7 @@ void Server::step(int64_t stepMillis) {
 		ai->getBehaviour()->execute(ai, stepMillis);
 		ai->setPause(true);
 	};
-	zone->visit(func);
+	zone->executeParallel(func);
 	broadcastState(zone);
 	broadcastCharacterDetails(zone);
 }
@@ -165,7 +165,7 @@ void Server::reset() {
 	static auto func = [] (const AIPtr& ai) {
 		ai->getBehaviour()->resetState(ai);
 	};
-	zone->visit(func);
+	zone->executeParallel(func);
 }
 
 void Server::select(const ClientId& /*clientId*/, const CharacterId& id) {
@@ -234,7 +234,7 @@ void Server::pause(const ClientId& /*clientId*/, bool state) {
 	auto func = [&] (const AIPtr& ai) {
 		ai->setPause(state);
 	};
-	zone->visit(func);
+	zone->executeParallel(func);
 	_network.broadcast(AIPauseMessage(state));
 	if (state) {
 		broadcastState(zone);
@@ -276,7 +276,7 @@ void Server::broadcastState(Zone* zone) {
 		const AIStateWorld b(chr->getId(), chr->getPosition(), chr->getOrientation(), chr->getAttributes());
 		msg.addState(b);
 	};
-	zone->visit(func);
+	zone->executeParallel(func);
 	_network.broadcast(msg);
 }
 
@@ -295,7 +295,7 @@ void Server::broadcastStaticCharacterDetails(Zone* zone) {
 		const AICharacterStaticMessage msgStatic(id, nodeStaticData);
 		_network.broadcast(msgStatic);
 	};
-	if (!zone->execute(id, func)) {
+	if (!zone->executeAsync(id, func)) {
 		resetSelection();
 	}
 }
@@ -323,7 +323,7 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 		const AICharacterDetailsMessage msg(id, aggro, root);
 		_network.broadcast(msg);
 	};
-	if (!zone->execute(id, func)) {
+	if (!zone->executeAsync(id, func)) {
 		resetSelection();
 	}
 }

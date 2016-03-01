@@ -9,7 +9,7 @@ void SelectZone::filter (const AIPtr& entity) {
 		entities.push_back(ai->getId());
 		return true;
 	};
-	entity->getZone()->visit(func);
+	entity->getZone()->execute(func);
 }
 
 FILTER_FACTORY_IMPL(SelectZone)

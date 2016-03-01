@@ -80,7 +80,7 @@ void Zone::update(int64_t dt) {
 		ai->update(dt, _debug);
 		ai->getBehaviour()->execute(ai, dt);
 	};
-	visit(func);
+	executeParallel(func);
 	_groupManager.update(dt);
 }
 
