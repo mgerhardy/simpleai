@@ -120,6 +120,25 @@ Network::ClientSocketsIter Network::closeClient(ClientSocketsIter& iter) {
 	return _clientSockets.erase(iter);
 }
 
+bool Network::sendMessage(Client& client) {
+	while (!client.out.empty()) {
+		static uint8_t buf[16384];
+		const std::size_t len = std::min(sizeof(buf), client.out.size());
+		for (std::size_t n = 0; n < len; ++n) {
+			buf[n] = client.out.at(n);
+		}
+		const SOCKET clientSocket = client.socket;
+		const ssize_t sent = send(clientSocket, buf, len, 0);
+		if (sent < 0) {
+			return false;
+		}
+		for (ssize_t n = 0; n < sent; ++n) {
+			client.out.pop_front();
+		}
+	}
+	return true;
+}
+
 void Network::update(int64_t deltaTime) {
 	_time += deltaTime;
 	if (_time > 5000L) {
@@ -162,22 +181,7 @@ void Network::update(int64_t deltaTime) {
 		}
 
 		if (FD_ISSET(clientSocket, &writeFDsOut)) {
-			while (!client.out.empty()) {
-				uint8_t buf[4096];
-				const std::size_t len = std::min(sizeof(buf), client.out.size());
-				for (std::size_t n = 0; n < len; ++n) {
-					buf[n] = client.out.at(n);
-				}
-				const ssize_t sent = send(clientSocket, buf, len, 0);
-				if (sent < 0) {
-					i = closeClient(i);
-					continue;
-				}
-				for (ssize_t n = 0; n < sent; ++n) {
-					client.out.pop_front();
-				}
-			}
-			if (client.finished) {
+			if (!sendMessage(client) || client.finished) {
 				i = closeClient(i);
 				continue;
 			}
