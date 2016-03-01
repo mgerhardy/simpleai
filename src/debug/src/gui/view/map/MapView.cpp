@@ -34,7 +34,8 @@ MapItem* MapView::createMapItem(const AIStateWorld& state) {
 		item->setZValue((qreal)state.getPosition().y);
 	}
 	if (i != _items.end())
-		return nullptr;
+		return item;
+	_scene.addItem(item);
 	_items[state.getId()] = item;
 	return item;
 }
@@ -44,10 +45,7 @@ void MapView::updateMapView() {
 	const AIDebugger::Entities& e = _debugger.getEntities();
 	for (AIDebugger::EntitiesIter i = e.begin(); i != e.end(); ++i) {
 		copy.remove(i->getId());
-		MapItem* item = createMapItem(*i);
-		if (item == nullptr)
-			continue;
-		_scene.addItem(item);
+		createMapItem(*i);
 	}
 
 	// remove the remaining entities - they are no longer part of the snapshot

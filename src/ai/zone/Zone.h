@@ -166,6 +166,40 @@ public:
 		return _threadPool.enqueue(func, ai);
 	}
 
+	template<typename Func>
+	inline auto execute(const AIPtr& ai, const Func& func) const
+		-> typename std::result_of<Func(const AIPtr&)>::type {
+		return func(ai);
+	}
+
+	template<typename Func>
+	inline auto execute(const AIPtr& ai, Func& func)
+		-> typename std::result_of<Func(const AIPtr&)>::type {
+		return func(ai);
+	}
+
+	/**
+	 * @brief The given functor or lambda must be able to deal with invalid @c AIPtr instances
+	 * @note It's possible that the given @c CharacterId can't be found in the @c Zone.
+	 * @return the return value of your functor or lambda
+	 */
+	template<typename Func>
+	inline auto execute(CharacterId id, const Func& func) const
+		-> typename std::result_of<Func(const AIPtr&)>::type {
+		return execute(getAI(id), func);
+	}
+
+	/**
+	 * @brief The given functor or lambda must be able to deal with invalid @c AIPtr instances
+	 * @note It's possible that the given @c CharacterId can't be found in the @c Zone.
+	 * @return the return value of your functor or lambda
+	 */
+	template<typename Func>
+	inline auto execute(CharacterId id, Func& func)
+		-> typename std::result_of<Func(const AIPtr&)>::type {
+		return execute(getAI(id), func);
+	}
+
 	/**
 	 * @brief Executes a lambda or functor for all the @c AI instances in this zone
 	 * @note This is executed in a thread pool - so make sure to synchronize your lambda or functor.

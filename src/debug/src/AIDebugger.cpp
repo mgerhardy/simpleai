@@ -308,7 +308,6 @@ MapView* AIDebugger::createMapWidget() {
 void AIDebugger::setNames(const std::vector<std::string>& names) {
 	_names.clear();
 	_names.reserve(names.size());
-	// TODO: measure if contains/remove/insert manually is faster
 	for (const std::string& name : names) {
 		_names << QString::fromStdString(name);
 	}
@@ -316,7 +315,6 @@ void AIDebugger::setNames(const std::vector<std::string>& names) {
 
 void AIDebugger::setEntities(const std::vector<AIStateWorld>& entities) {
 	_entities.clear();
-	// TODO: measure if contains/remove/insert manually is faster
 	for (const AIStateWorld& state : entities) {
 		_entities.insert(state.getId(), state);
 	}

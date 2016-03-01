@@ -34,107 +34,92 @@ bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const st
 	Zone* zone = _zone;
 	if (zone == nullptr)
 		return false;
-	auto func = [=] (const AIPtr& ai) {
-		const TreeNodePtr& node = ai->getBehaviour()->getId() == nodeId ? ai->getBehaviour() : ai->getBehaviour()->getChild(nodeId);
-		if (!node)
-			return false;
-		ConditionParser conditionParser(_aiRegistry, condition);
-		const ConditionPtr& conditionPtr = conditionParser.getCondition();
-		if (!conditionPtr) {
-			std::cerr << "Failed to parse the condition '" << condition << "'" << std::endl;
-			return false;
-		}
-		TreeNodeParser treeNodeParser(_aiRegistry, type);
-		TreeNodePtr newNode = treeNodeParser.getTreeNode(name);
-		if (!newNode) {
-			std::cerr << "Failed to parse the node '" << type << "'" << std::endl;
-			return false;
-		}
-		newNode->setCondition(conditionPtr);
-		for (auto& child : node->getChildren()) {
-			newNode->addChild(child);
-		}
-
-		const TreeNodePtr& root = ai->getBehaviour();
-		if (node == root) {
-			ai->setBehaviour(newNode);
-		} else {
-			const TreeNodePtr& parent = root->getParent(root, nodeId);
-			if (!parent) {
-				std::cerr << "No parent for non-root node '" << nodeId << "'" << std::endl;
-				return false;
-			}
-			parent->replaceChild(nodeId, newNode);
-		}
-
-		return true;
-	};
-	auto future = zone->executeAsync(zone->getAI(characterId), func);
-	const bool success = future.get();
-	if (success) {
-		broadcastStaticCharacterDetails(zone);
+	const AIPtr& ai = zone->getAI(characterId);
+	const TreeNodePtr& node = ai->getBehaviour()->getId() == nodeId ? ai->getBehaviour() : ai->getBehaviour()->getChild(nodeId);
+	if (!node)
+		return false;
+	ConditionParser conditionParser(_aiRegistry, condition);
+	const ConditionPtr& conditionPtr = conditionParser.getCondition();
+	if (!conditionPtr) {
+		std::cerr << "Failed to parse the condition '" << condition << "'" << std::endl;
+		return false;
 	}
-	return success;
+	TreeNodeParser treeNodeParser(_aiRegistry, type);
+	TreeNodePtr newNode = treeNodeParser.getTreeNode(name);
+	if (!newNode) {
+		std::cerr << "Failed to parse the node '" << type << "'" << std::endl;
+		return false;
+	}
+	newNode->setCondition(conditionPtr);
+	for (auto& child : node->getChildren()) {
+		newNode->addChild(child);
+	}
+
+	const TreeNodePtr& root = ai->getBehaviour();
+	if (node == root) {
+		ai->setBehaviour(newNode);
+	} else {
+		const TreeNodePtr& parent = root->getParent(root, nodeId);
+		if (!parent) {
+			std::cerr << "No parent for non-root node '" << nodeId << "'" << std::endl;
+			return false;
+		}
+		parent->replaceChild(nodeId, newNode);
+	}
+
+	broadcastStaticCharacterDetails(zone);
+	return true;
 }
 
 bool Server::addNode(const CharacterId& characterId, int32_t parentNodeId, const std::string& name, const std::string& type, const std::string& condition) {
 	Zone* zone = _zone;
 	if (zone == nullptr)
 		return false;
-	auto func = [=] (const AIPtr& ai) {
-		TreeNodePtr node = ai->getBehaviour();
-		if (node->getId() != parentNodeId) {
-			node = node->getChild(parentNodeId);
-		}
-		if (!node)
-			return false;
-		ConditionParser conditionParser(_aiRegistry, condition);
-		const ConditionPtr& conditionPtr = conditionParser.getCondition();
-		if (!conditionPtr) {
-			std::cerr << "Failed to parse the condition '" << condition << "'" << std::endl;
-			return false;
-		}
-		TreeNodeParser treeNodeParser(_aiRegistry, type);
-		TreeNodePtr newNode = treeNodeParser.getTreeNode(name);
-		if (!newNode) {
-			std::cerr << "Failed to parse the node '" << type << "'" << std::endl;
-			return false;
-		}
-		newNode->setCondition(conditionPtr);
-		return node->addChild(newNode);
-	};
-	auto future = zone->executeAsync(zone->getAI(characterId), func);
-	const bool success = future.get();
-	if (success) {
-		broadcastStaticCharacterDetails(zone);
+	const AIPtr& ai = zone->getAI(characterId);
+	TreeNodePtr node = ai->getBehaviour();
+	if (node->getId() != parentNodeId) {
+		node = node->getChild(parentNodeId);
 	}
-	return success;
+	if (!node)
+		return false;
+	ConditionParser conditionParser(_aiRegistry, condition);
+	const ConditionPtr& conditionPtr = conditionParser.getCondition();
+	if (!conditionPtr) {
+		std::cerr << "Failed to parse the condition '" << condition << "'" << std::endl;
+		return false;
+	}
+	TreeNodeParser treeNodeParser(_aiRegistry, type);
+	TreeNodePtr newNode = treeNodeParser.getTreeNode(name);
+	if (!newNode) {
+		std::cerr << "Failed to parse the node '" << type << "'" << std::endl;
+		return false;
+	}
+	newNode->setCondition(conditionPtr);
+	if (!node->addChild(newNode))
+		return false;
+
+	broadcastStaticCharacterDetails(zone);
+	return true;
 }
 
 bool Server::deleteNode(const CharacterId& characterId, int32_t nodeId) {
 	Zone* zone = _zone;
 	if (zone == nullptr)
 		return false;
-	bool success = false;
-	auto func = [&] (const AIPtr& ai) {
-		// don't delete the root
-		const TreeNodePtr& root = ai->getBehaviour();
-		if (root->getId() == nodeId)
-			return;
+	const AIPtr& ai = zone->getAI(characterId);
+	// don't delete the root
+	const TreeNodePtr& root = ai->getBehaviour();
+	if (root->getId() == nodeId)
+		return false;
 
-		const TreeNodePtr& parent = root->getParent(root, nodeId);
-		if (!parent) {
-			std::cerr << "No parent for non-root node '" << nodeId << "'" << std::endl;
-			return;
-		}
-		parent->replaceChild(nodeId, TreeNodePtr());
-		success = true;
-	};
-	zone->executeAsync(characterId, func);
-	if (success) {
-		broadcastStaticCharacterDetails(zone);
+	const TreeNodePtr& parent = root->getParent(root, nodeId);
+	if (!parent) {
+		std::cerr << "No parent for non-root node '" << nodeId << "'" << std::endl;
+		return false;
 	}
-	return success;
+	parent->replaceChild(nodeId, TreeNodePtr());
+	broadcastStaticCharacterDetails(zone);
+	return true;
 }
 
 void Server::step(int64_t stepMillis) {
@@ -145,7 +130,7 @@ void Server::step(int64_t stepMillis) {
 	if (!_pause)
 		return;
 
-	auto func = [&] (const AIPtr& ai) {
+	auto func = [=] (const AIPtr& ai) {
 		if (!ai->isPause())
 			return;
 		ai->setPause(false);
