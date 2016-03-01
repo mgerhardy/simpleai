@@ -10,7 +10,7 @@ EntityList::EntityList(AIDebugger& debugger, QLineEdit* entityFilter) :
 	_proxyModel.setSourceModel(&_model);
 	setModel(&_proxyModel);
 	setAlternatingRowColors(true);
-	setSortingEnabled(true);
+	setSortingEnabled(false);
 	setSelectionMode(QAbstractItemView::SingleSelection);
 	setSelectionBehavior(QAbstractItemView::SelectRows);
 	setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -26,19 +26,15 @@ EntityList::~EntityList() {
 }
 
 void EntityList::updateEntityList() {
-	const CharacterId chrId = _debugger.getSelected();
-	qDebug() << "selected character id " << chrId;
 	_model.update();
-	_model.sort(0);
-	const QModelIndex& index = _model.characterIndex(chrId);
-	if (!index.isValid())
-		return;
-	selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
 }
 
 void EntityList::selectEntity(const QModelIndex &current, const QModelIndex &previous) {
 	Q_UNUSED(previous);
-	const AIStateWorld& state = _model.getEntities().at(current.row());
+	if (!current.isValid())
+		return;
+	const QModelIndex index = _proxyModel.mapToSource(current);
+	const AIStateWorld& state = _model.getEntities().at(index.row());
 	_debugger.select(state);
 }
 

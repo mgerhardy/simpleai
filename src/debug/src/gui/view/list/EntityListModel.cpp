@@ -25,6 +25,7 @@ QModelIndex EntityListModel::characterIndex(CharacterId id) const {
 void EntityListModel::update() {
 	beginResetModel();
 	_list = _debugger.getEntities().values();
+	// TODO: sort list - not model
 	endResetModel();
 }
 
