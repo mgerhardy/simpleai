@@ -188,7 +188,7 @@ void Network::update(int64_t deltaTime) {
 		}
 
 		if (FD_ISSET(clientSocket, &readFDsOut)) {
-			uint8_t buf[4096];
+			static uint8_t buf[16384];
 			const ssize_t len = recv(clientSocket, buf, sizeof(buf), 0);
 			if (len < 0) {
 				i = closeClient(i);
