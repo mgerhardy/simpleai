@@ -20,8 +20,13 @@ void GroupMgr::update(int64_t) {
 	ScopedReadLock scopedLock(_lock);
 	for (auto i = _groups.begin(); i != _groups.end(); ++i) {
 		Group& group = i->second;
-		Vector3f averagePosition = std::accumulate(group.members.begin(), group.members.end(), Vector3f(), AveragePositionFunctor());
-		averagePosition *= 1.0f / (float) group.members.size();
+		Vector3f averagePosition;
+		{
+			ScopedReadLock lock(_groupLock);
+			averagePosition = std::accumulate(group.members.begin(), group.members.end(), Vector3f(), AveragePositionFunctor());
+			averagePosition *= 1.0f / (float) group.members.size();
+		}
+		ScopedWriteLock lock(_groupLock);
 		group.position = averagePosition;
 	}
 }
@@ -35,7 +40,9 @@ bool GroupMgr::add(GroupId id, const AIPtr& ai) {
 		i = _groups.insert(std::pair<GroupId, Group>(id, group)).first;
 	}
 
-	std::pair<GroupMembersSetIter, bool> ret = i->second.members.insert(ai);
+	Group& group = i->second;
+	ScopedWriteLock lock(_groupLock);
+	std::pair<GroupMembersSetIter, bool> ret = group.members.insert(ai);
 	if (ret.second) {
 		_groupMembers.insert(GroupMembers::value_type(ai, id));
 		return true;
@@ -48,15 +55,23 @@ bool GroupMgr::remove(GroupId id, const AIPtr& ai) {
 	const GroupsIter& i = _groups.find(id);
 	if (i == _groups.end())
 		return false;
-	const GroupMembersSetIter& si = i->second.members.find(ai);
-	if (si == i->second.members.end())
-		return false;
-	i->second.members.erase(si);
+	Group& group = i->second;
+	GroupMembersSetIter si;
+	{
+		ScopedReadLock lock(_groupLock);
+		si = group.members.find(ai);
+		if (si == group.members.end())
+			return false;
+	}
+	{
+		ScopedWriteLock lock(_groupLock);
+		group.members.erase(si);
+		if (group.members.empty())
+			_groups.erase(i);
+		else if (group.leader == ai)
+			group.leader = *group.members.begin();
+	}
 
-	if (i->second.members.empty())
-		_groups.erase(i);
-	else if (i->second.leader == ai)
-		i->second.leader = *i->second.members.begin();
 	auto range = _groupMembers.equal_range(ai);
 	for (auto it = range.first; it != range.second; ++it) {
 		if (it->second == id) {
@@ -88,6 +103,7 @@ AIPtr GroupMgr::getLeader(GroupId id) const {
 	if (i == _groups.end())
 		return AIPtr();
 
+	ScopedReadLock lock(_groupLock);
 	return i->second.leader;
 }
 
@@ -97,6 +113,7 @@ Vector3f GroupMgr::getPosition(GroupId id) const {
 	if (i == _groups.end())
 		return Vector3f::INFINITE;
 
+	ScopedReadLock lock(_groupLock);
 	return i->second.position;
 }
 
@@ -106,6 +123,7 @@ bool GroupMgr::isGroupLeader(GroupId id, const AIPtr& ai) const {
 	if (i == _groups.end()) {
 		return 0;
 	}
+	ScopedReadLock lock(_groupLock);
 	return i->second.leader == ai;
 }
 
@@ -115,6 +133,7 @@ int GroupMgr::getGroupSize(GroupId id) const {
 	if (i == _groups.end()) {
 		return 0;
 	}
+	ScopedReadLock lock(_groupLock);
 	return static_cast<int>(std::distance(i->second.members.begin(), i->second.members.end()));
 }
 

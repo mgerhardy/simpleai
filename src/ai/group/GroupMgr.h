@@ -28,6 +28,7 @@ private:
 	typedef GroupMembersSet::iterator GroupMembersSetIter;
 	typedef GroupMembersSet::const_iterator GroupMembersSetConstIter;
 
+	ReadWriteLock _groupLock;
 	struct Group {
 		AIPtr leader;
 		GroupMembersSet members;
