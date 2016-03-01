@@ -162,7 +162,7 @@ void Network::update(int64_t deltaTime) {
 		}
 
 		if (FD_ISSET(clientSocket, &writeFDsOut)) {
-			if (!client.out.empty()) {
+			while (!client.out.empty()) {
 				uint8_t buf[4096];
 				const std::size_t len = std::min(sizeof(buf), client.out.size());
 				for (std::size_t n = 0; n < len; ++n) {
@@ -176,7 +176,8 @@ void Network::update(int64_t deltaTime) {
 				for (ssize_t n = 0; n < sent; ++n) {
 					client.out.pop_front();
 				}
-			} else if (client.finished) {
+			}
+			if (client.finished) {
 				i = closeClient(i);
 				continue;
 			}

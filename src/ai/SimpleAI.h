@@ -56,6 +56,7 @@
 #include "common/Thread.h"
 #include "common/ThreadPool.h"
 #include "common/ThreadScheduler.h"
+#include "common/ExecutionTime.h"
 
 #include "AI.h"
 #include "AIRegistry.h"
