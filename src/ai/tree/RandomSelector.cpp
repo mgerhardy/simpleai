@@ -13,7 +13,7 @@ TreeNodeStatus RandomSelector::execute(const AIPtr& entity, int64_t deltaMillis)
 	std::random_shuffle(childrenShuffled.begin(), childrenShuffled.end());
 	TreeNodeStatus overallResult = FINISHED;
 	std::size_t i;
-	for (i = 0; i < size; i++) {
+	for (i = 0; i < size; ++i) {
 		const TreeNodePtr& child = childrenShuffled[i];
 		const TreeNodeStatus result = child->execute(entity, deltaMillis);
 		if (result == RUNNING) {
