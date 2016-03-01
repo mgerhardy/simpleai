@@ -148,7 +148,7 @@ public:
 		const AIPtr& ai = getAI(id);
 		if (!ai)
 			return false;
-		_threadPool.enqueue(func, ai);
+		executeAsync(ai, func);
 		return true;
 	}
 
@@ -180,7 +180,7 @@ public:
 			ScopedReadLock scopedLock(_lock);
 			for (auto i = _ais.begin(); i != _ais.end(); ++i) {
 				const AIPtr& ai = i->second;
-				results.emplace_back(_threadPool.enqueue(func, ai));
+				results.emplace_back(executeAsync(ai, func));
 			}
 		}
 		for (auto && result: results)
@@ -201,7 +201,7 @@ public:
 			ScopedReadLock scopedLock(_lock);
 			for (auto i = _ais.begin(); i != _ais.end(); ++i) {
 				const AIPtr& ai = i->second;
-				results.emplace_back(_threadPool.enqueue(func, ai));
+				results.emplace_back(executeAsync(ai, func));
 			}
 		}
 		for (auto && result: results)

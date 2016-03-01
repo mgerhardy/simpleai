@@ -51,7 +51,7 @@ protected:
 	DeleteNodeHandler _deleteNodeHandler;
 	UpdateNodeHandler _updateNodeHandler;
 	NopHandler _nopHandler;
-	bool _pause;
+	std::atomic_bool _pause;
 	// the current active debugging zone
 	std::atomic<Zone*> _zone;
 	ReadWriteLock _lock;

@@ -34,22 +34,21 @@ bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const st
 	Zone* zone = _zone;
 	if (zone == nullptr)
 		return false;
-	bool success = false;
-	auto func = [&] (const AIPtr& ai) {
+	auto func = [=] (const AIPtr& ai) {
 		const TreeNodePtr& node = ai->getBehaviour()->getId() == nodeId ? ai->getBehaviour() : ai->getBehaviour()->getChild(nodeId);
 		if (!node)
-			return;
+			return false;
 		ConditionParser conditionParser(_aiRegistry, condition);
 		const ConditionPtr& conditionPtr = conditionParser.getCondition();
 		if (!conditionPtr) {
 			std::cerr << "Failed to parse the condition '" << condition << "'" << std::endl;
-			return;
+			return false;
 		}
 		TreeNodeParser treeNodeParser(_aiRegistry, type);
 		TreeNodePtr newNode = treeNodeParser.getTreeNode(name);
 		if (!newNode) {
 			std::cerr << "Failed to parse the node '" << type << "'" << std::endl;
-			return;
+			return false;
 		}
 		newNode->setCondition(conditionPtr);
 		for (auto& child : node->getChildren()) {
@@ -63,14 +62,15 @@ bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const st
 			const TreeNodePtr& parent = root->getParent(root, nodeId);
 			if (!parent) {
 				std::cerr << "No parent for non-root node '" << nodeId << "'" << std::endl;
-				return;
+				return false;
 			}
 			parent->replaceChild(nodeId, newNode);
 		}
 
-		success = true;
+		return true;
 	};
-	zone->executeAsync(characterId, func);
+	auto future = zone->executeAsync(zone->getAI(characterId), func);
+	const bool success = future.get();
 	if (success) {
 		broadcastStaticCharacterDetails(zone);
 	}
@@ -81,30 +81,30 @@ bool Server::addNode(const CharacterId& characterId, int32_t parentNodeId, const
 	Zone* zone = _zone;
 	if (zone == nullptr)
 		return false;
-	bool success = false;
-	auto func = [&] (const AIPtr& ai) {
+	auto func = [=] (const AIPtr& ai) {
 		TreeNodePtr node = ai->getBehaviour();
 		if (node->getId() != parentNodeId) {
 			node = node->getChild(parentNodeId);
 		}
 		if (!node)
-			return;
+			return false;
 		ConditionParser conditionParser(_aiRegistry, condition);
 		const ConditionPtr& conditionPtr = conditionParser.getCondition();
 		if (!conditionPtr) {
 			std::cerr << "Failed to parse the condition '" << condition << "'" << std::endl;
-			return;
+			return false;
 		}
 		TreeNodeParser treeNodeParser(_aiRegistry, type);
 		TreeNodePtr newNode = treeNodeParser.getTreeNode(name);
 		if (!newNode) {
 			std::cerr << "Failed to parse the node '" << type << "'" << std::endl;
-			return;
+			return false;
 		}
 		newNode->setCondition(conditionPtr);
-		success = node->addChild(newNode);
+		return node->addChild(newNode);
 	};
-	zone->executeAsync(characterId, func);
+	auto future = zone->executeAsync(zone->getAI(characterId), func);
+	const bool success = future.get();
 	if (success) {
 		broadcastStaticCharacterDetails(zone);
 	}
@@ -231,7 +231,7 @@ void Server::pause(const ClientId& /*clientId*/, bool state) {
 	if (zone == nullptr)
 		return;
 	_pause = state;
-	auto func = [&] (const AIPtr& ai) {
+	auto func = [=] (const AIPtr& ai) {
 		ai->setPause(state);
 	};
 	zone->executeParallel(func);
@@ -285,14 +285,14 @@ void Server::broadcastStaticCharacterDetails(Zone* zone) {
 	if (id == AI_NOTHING_SELECTED)
 		return;
 
-	auto func = [=] (const AIPtr& ai) {
+	static const auto func = [&] (const AIPtr& ai) {
 		std::vector<AIStateNodeStatic> nodeStaticData;
 		const TreeNodePtr& node = ai->getBehaviour();
 		const int32_t nodeId = node->getId();
 		nodeStaticData.push_back(AIStateNodeStatic(nodeId, node->getName(), node->getType(), node->getParameters(), node->getCondition()->getName(), node->getCondition()->getParameters()));
 		addChildren(node, nodeStaticData);
 
-		const AICharacterStaticMessage msgStatic(id, nodeStaticData);
+		const AICharacterStaticMessage msgStatic(ai->getId(), nodeStaticData);
 		_network.broadcast(msgStatic);
 	};
 	if (!zone->executeAsync(id, func)) {
@@ -305,7 +305,7 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 	if (id == AI_NOTHING_SELECTED)
 		return;
 
-	auto func = [=] (const AIPtr& ai) {
+	static const auto func = [&] (const AIPtr& ai) {
 		const TreeNodePtr& node = ai->getBehaviour();
 		const int32_t nodeId = node->getId();
 		const ConditionPtr& condition = node->getCondition();
@@ -320,7 +320,7 @@ void Server::broadcastCharacterDetails(Zone* zone) {
 			aggro.addAggro(AIStateAggroEntry(e.getCharacterId(), e.getAggro()));
 		}
 
-		const AICharacterDetailsMessage msg(id, aggro, root);
+		const AICharacterDetailsMessage msg(ai->getId(), aggro, root);
 		_network.broadcast(msg);
 	};
 	if (!zone->executeAsync(id, func)) {
