@@ -261,7 +261,7 @@ void Server::broadcastState(Zone* zone) {
 		const AIStateWorld b(chr->getId(), chr->getPosition(), chr->getOrientation(), chr->getAttributes());
 		msg.addState(b);
 	};
-	zone->executeParallel(func);
+	zone->execute(func);
 	_network.broadcast(msg);
 }
 
