@@ -15,6 +15,7 @@
 #include <server/ProtocolMessageFactory.h>
 #include <server/ProtocolHandlerRegistry.h>
 #include <QtCore>
+#include <QElapsedTimer>
 #include <vector>
 #include "Version.h"
 
