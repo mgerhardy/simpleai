@@ -22,10 +22,10 @@ MapView::~MapView() {
 MapItem* MapView::createMapItem(const AIStateWorld& state) {
 	auto i = _items.find(state.getId());
 	MapItem* item;
-	if (i != _items.end()) {
-		item = i.value();
-	} else {
+	if (i == _items.end()) {
 		item = new MapItem(nullptr, state, _debugger);
+	} else {
+		item = i.value();
 	}
 	item->setPos((qreal)state.getPosition().x, (qreal)state.getPosition().z);
 	if (_debugger.isSelected(state)) {
@@ -33,7 +33,7 @@ MapItem* MapView::createMapItem(const AIStateWorld& state) {
 	} else {
 		item->setZValue((qreal)state.getPosition().y);
 	}
-	if (i == _items.end())
+	if (i != _items.end())
 		return nullptr;
 	_items[state.getId()] = item;
 	return item;
