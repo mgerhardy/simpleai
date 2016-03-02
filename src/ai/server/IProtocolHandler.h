@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "IProtocolMessage.h"
+#include "common/Types.h"
 
 namespace ai {
 
@@ -20,21 +21,26 @@ public:
 	virtual void execute(const ClientId& clientId, const IProtocolMessage& message) = 0;
 };
 
-class NopHandler: public ai::IProtocolHandler {
+template<class T>
+class ProtocolHandler : public IProtocolHandler {
+public:
+	virtual ~ProtocolHandler ()
+	{
+	}
+
+	void execute (const ClientId& clientId, const IProtocolMessage& message) override {
+		const T *msg = ai_assert_cast<const T*>(&message);
+		execute(clientId, msg);
+	}
+
+	virtual void execute (const ClientId& clientId, const T* message) = 0;
+};
+
+class NopHandler: public IProtocolHandler {
 public:
 	void execute(const ClientId& /*clientId*/, const IProtocolMessage& /*message*/) override {
 	}
 };
-
-#define PROTOCOL_HANDLER(MessageClass) \
-class MessageClass##Handler: public IProtocolHandler { \
-public: \
-	void execute(const ClientId& /*clientId*/, const IProtocolMessage& message) override { \
-		const MessageClass& msg = static_cast<const MessageClass&>(message); \
-		execute##MessageClass(msg); \
-	} \
-	virtual void execute##MessageClass(const MessageClass& msg) = 0; \
-}
 
 typedef std::shared_ptr<IProtocolHandler> ProtocolHandlerPtr;
 

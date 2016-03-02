@@ -42,7 +42,6 @@ set(simpleai_debugger_HEADERS
 	src/AIApplication.h
 	src/AIDebugger.h
 	src/common/Settings.h
-	src/common/Common.h
 	src/Version.h
 )
 

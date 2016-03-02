@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include <cassert>
+#include <iostream>
 
 #ifndef ai_assert
 #define ai_assert(condition, msg) \
@@ -11,6 +12,14 @@
 		assert(condition); \
 	}
 #endif
+
+template<class T, class S>
+inline T ai_assert_cast(const S object) {
+#ifdef __cpp_rtti
+	ai_assert(dynamic_cast<T>(object) == static_cast<T>(object), "Types don't match");
+#endif
+	return static_cast<T>(object);
+}
 
 #define AI_STRINGIFY_INTERNAL(x) #x
 #define AI_STRINGIFY(x) AI_STRINGIFY_INTERNAL(x)
