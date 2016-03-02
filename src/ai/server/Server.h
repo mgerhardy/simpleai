@@ -61,9 +61,9 @@ protected:
 
 	void addChildren(const TreeNodePtr& node, std::vector<AIStateNodeStatic>& out) const;
 	void addChildren(const TreeNodePtr& node, AIStateNode& parent, const AIPtr& ai) const;
-	void broadcastState(Zone* zone);
-	void broadcastCharacterDetails(Zone* zone);
-	void broadcastStaticCharacterDetails(Zone* zone);
+	void broadcastState(const Zone* zone);
+	void broadcastCharacterDetails(const Zone* zone);
+	void broadcastStaticCharacterDetails(const Zone* zone);
 	void broadcastZoneNames();
 	void onConnect(Client* client) override;
 	void onDisconnect(Client* client) override;

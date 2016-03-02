@@ -254,7 +254,7 @@ void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, const AIP
 	}
 }
 
-void Server::broadcastState(Zone* zone) {
+void Server::broadcastState(const Zone* zone) {
 	AIStateMessage msg;
 	auto func = [&] (const AIPtr& ai) {
 		const ICharacterPtr& chr = ai->getCharacter();
@@ -265,7 +265,7 @@ void Server::broadcastState(Zone* zone) {
 	_network.broadcast(msg);
 }
 
-void Server::broadcastStaticCharacterDetails(Zone* zone) {
+void Server::broadcastStaticCharacterDetails(const Zone* zone) {
 	const CharacterId id = _selectedCharacterId;
 	if (id == AI_NOTHING_SELECTED)
 		return;
@@ -285,7 +285,7 @@ void Server::broadcastStaticCharacterDetails(Zone* zone) {
 	}
 }
 
-void Server::broadcastCharacterDetails(Zone* zone) {
+void Server::broadcastCharacterDetails(const Zone* zone) {
 	const CharacterId id = _selectedCharacterId;
 	if (id == AI_NOTHING_SELECTED)
 		return;
