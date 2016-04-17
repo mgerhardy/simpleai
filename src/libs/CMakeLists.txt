@@ -1,3 +1,5 @@
+include_directories(.)
+
 if (SIMPLEAI_LUA)
 	find_package(Lua)
 	if (NOT LUA_FOUND)

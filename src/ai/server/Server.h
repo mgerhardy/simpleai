@@ -54,7 +54,7 @@ protected:
 	std::atomic_bool _pause;
 	// the current active debugging zone
 	std::atomic<Zone*> _zone;
-	ReadWriteLock _lock;
+	ReadWriteLock _lock = {"server"};
 	std::vector<std::string> _names;
 
 	void resetSelection();

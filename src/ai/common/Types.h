@@ -5,12 +5,22 @@
 #include <cassert>
 #include <iostream>
 
+#if !(__GNUC__ || __GNUC__)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#endif
+
 #ifndef ai_assert
-#define ai_assert(condition, msg) \
+#if (__clang_analyzer__)
+#define ai_assert assert
+#else
+#define ai_assert(condition, format, ...) \
 	if ( !(condition) ) { \
-		std::cerr << msg << std::endl; \
+		static char buf[1024]; \
+		std::snprintf(buf, sizeof(buf), format, ##__VA_ARGS__); \
+		std::cerr << __FILE__ << ":" << __LINE__ << "@" << __PRETTY_FUNCTION__ << ": " << buf << std::endl; \
 		assert(condition); \
 	}
+#endif
 #endif
 
 template<class T, class S>

@@ -3,6 +3,10 @@
 #include <thread>
 #include <mutex>
 #include <atomic>
+#if AI_DEBUG_READWRITELOCK > 0
+#include <chrono>
+#include "Types.h"
+#endif
 
 namespace ai {
 
@@ -10,11 +14,22 @@ class ReadWriteLock {
 private:
 	mutable std::atomic_int _readers;
 	mutable std::atomic_bool _lock;
+	const std::string _name;
 public:
-	ReadWriteLock() : _readers(0), _lock(false) {}
+	ReadWriteLock(const std::string& name) : _readers(0), _lock(false), _name(name) {}
 
 	inline void lockRead() const {
-		while (_lock) {}
+#if AI_DEBUG_READWRITELOCK > 0
+		auto start = std::chrono::system_clock::now();
+#endif
+		while (_lock) {
+			std::this_thread::yield();
+#if AI_DEBUG_READWRITELOCK > 0
+			auto end = std::chrono::system_clock::now();
+			std::chrono::duration<long> diff = end-start;
+			ai_assert(diff.count() < AI_DEBUG_READWRITELOCK, "%s is blocked longer than %ims", _name.c_str(), AI_DEBUG_READWRITELOCK);
+#endif
+		}
 		++_readers;
 	}
 
@@ -23,8 +38,25 @@ public:
 	}
 
 	inline void lockWrite() {
-		while (std::atomic_exchange_explicit(&_lock, true, std::memory_order_acquire)) {}
-		while (_readers > 0) {}
+#if AI_DEBUG_READWRITELOCK > 0
+		auto start = std::chrono::system_clock::now();
+#endif
+		while (std::atomic_exchange_explicit(&_lock, true, std::memory_order_acquire)) {
+			std::this_thread::yield();
+#if AI_DEBUG_READWRITELOCK > 0
+			auto end = std::chrono::system_clock::now();
+			std::chrono::duration<long> diff = end-start;
+			ai_assert(diff.count() < AI_DEBUG_READWRITELOCK, "%s is blocked longer than %ims", _name.c_str(), AI_DEBUG_READWRITELOCK);
+#endif
+		}
+		while (_readers > 0) {
+			std::this_thread::yield();
+#if AI_DEBUG_READWRITELOCK > 0
+			auto end = std::chrono::system_clock::now();
+			std::chrono::duration<long> diff = end-start;
+			ai_assert(diff.count() < AI_DEBUG_READWRITELOCK, "%s is blocked longer than %lims", _name.c_str(), LOCK_DURATION);
+#endif
+		}
 	}
 
 	inline void unlockWrite() {

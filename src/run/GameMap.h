@@ -57,7 +57,7 @@ public:
 			std::lock_guard<std::recursive_mutex> lock(_mutex);
 			_entities.insert(std::make_pair(entity->getId(), entity));
 		}
-		ai_assert(_zone.addAI(entity), "Could not add entity to zone with id " + std::to_string(entity->getId()));
+		ai_assert(_zone.addAI(entity), "Could not add entity to zone with id %i", entity->getId());
 		ai::GroupMgr& groupMgr = _zone.getGroupMgr();
 		entity->getCharacter()->setAttribute(ai::attributes::GROUP, std::to_string(groupId));
 		groupMgr.add(groupId, entity);

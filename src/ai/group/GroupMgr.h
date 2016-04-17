@@ -28,7 +28,7 @@ private:
 	typedef GroupMembersSet::iterator GroupMembersSetIter;
 	typedef GroupMembersSet::const_iterator GroupMembersSetConstIter;
 
-	ReadWriteLock _groupLock;
+	ReadWriteLock _groupLock = {"groupmgr-group"};
 	struct Group {
 		AIPtr leader;
 		GroupMembersSet members;
@@ -41,7 +41,7 @@ private:
 	typedef Groups::iterator GroupsIter;
 
 	GroupMembersSet _empty;
-	ReadWriteLock _lock;
+	ReadWriteLock _lock = {"groupmgr"};
 	Groups _groups;
 	GroupMembers _groupMembers;
 

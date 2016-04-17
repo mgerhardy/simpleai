@@ -36,8 +36,8 @@ protected:
 	AIScheduleConstList _scheduledRemove;
 	CharacterIdList _scheduledDestroy;
 	bool _debug;
-	ReadWriteLock _lock;
-	ReadWriteLock _scheduleLock;
+	ReadWriteLock _lock = {"zone"};
+	ReadWriteLock _scheduleLock = {"zone-schedulelock"};
 	ai::GroupMgr _groupManager;
 	mutable ThreadPool _threadPool;
 

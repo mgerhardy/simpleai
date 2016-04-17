@@ -21,7 +21,7 @@ protected:
 	const IAIFactory& _aiFactory;
 	typedef std::map<std::string, TreeNodePtr> TreeMap;
 	TreeMap _treeMap;
-	ReadWriteLock _lock;
+	ReadWriteLock _lock = {"treeloader"};
 private:
 	std::string _error;		/**< make sure to set this member if your own implementation ran into an error. @sa ITreeLoader::getError */
 public:
