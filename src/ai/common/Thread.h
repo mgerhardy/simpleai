@@ -26,7 +26,7 @@ public:
 			std::this_thread::yield();
 #if AI_DEBUG_READWRITELOCK > 0
 			auto end = std::chrono::system_clock::now();
-			std::chrono::duration<long> diff = end-start;
+			std::chrono::duration<double> diff = end - start;
 			ai_assert(diff.count() < AI_DEBUG_READWRITELOCK, "%s is blocked longer than %ims", _name.c_str(), AI_DEBUG_READWRITELOCK);
 #endif
 		}
@@ -45,7 +45,7 @@ public:
 			std::this_thread::yield();
 #if AI_DEBUG_READWRITELOCK > 0
 			auto end = std::chrono::system_clock::now();
-			std::chrono::duration<long> diff = end-start;
+			std::chrono::duration<double> diff = end - start;
 			ai_assert(diff.count() < AI_DEBUG_READWRITELOCK, "%s is blocked longer than %ims", _name.c_str(), AI_DEBUG_READWRITELOCK);
 #endif
 		}
@@ -53,8 +53,8 @@ public:
 			std::this_thread::yield();
 #if AI_DEBUG_READWRITELOCK > 0
 			auto end = std::chrono::system_clock::now();
-			std::chrono::duration<long> diff = end-start;
-			ai_assert(diff.count() < AI_DEBUG_READWRITELOCK, "%s is blocked longer than %lims", _name.c_str(), LOCK_DURATION);
+			std::chrono::duration<double> diff = end - start;
+			ai_assert(diff.count() < AI_DEBUG_READWRITELOCK, "%s is blocked longer than %ims", _name.c_str(), AI_DEBUG_READWRITELOCK);
 #endif
 		}
 	}
