@@ -58,7 +58,7 @@ public:
 	CharacterId getId() const;
 	void setPosition(const glm::vec3& position);
 
-	glm::vec3 getPosition() const;
+	const glm::vec3& getPosition() const;
 	void setOrientation(float orientation);
 	/**
 	 * @return the radians around the y (up) axis
@@ -120,7 +120,7 @@ inline CharacterId ICharacter::getId() const {
 	return _id;
 }
 
-inline glm::vec3 ICharacter::getPosition() const {
+inline const glm::vec3& ICharacter::getPosition() const {
 	return _position;
 }
 
