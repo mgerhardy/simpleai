@@ -8,12 +8,13 @@ namespace ai {
 TreeNodeStatus Steer::doAction(const AIPtr& entity, int64_t deltaMillis) {
 	const ICharacterPtr& chr = entity->getCharacter();
 	const MoveVector& mv = _w.execute(entity, chr->getSpeed());
-	if (mv.getVector().isInfinite())
+	if (isInfinite(mv.getVector())) {
 		return FAILED;
+	}
 
 	const float deltaSeconds = static_cast<float>(deltaMillis) / 1000.0f;
 	chr->setPosition(chr->getPosition() + (mv.getVector() * deltaSeconds));
-	chr->setOrientation(fmodf(chr->getOrientation() + mv.getRotation() * deltaSeconds, M_2PI));
+	chr->setOrientation(fmodf(chr->getOrientation() + mv.getRotation() * deltaSeconds, glm::two_pi<float>()));
 	return FINISHED;
 }
 

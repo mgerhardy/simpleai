@@ -1,10 +1,6 @@
 #pragma once
 
-#include "common/Vector3f.h"
-#include "common/Thread.h"
-#include "common/Types.h"
 #include "AI.h"
-#include <memory>
 
 namespace ai {
 
@@ -42,7 +38,7 @@ const char* const ORIENTATION = "Orientation";
 class ICharacter : public NonCopyable {
 protected:
 	const CharacterId _id;
-	Vector3f _position;
+	glm::vec3 _position;
 	std::atomic<float> _orientation;
 	// m/s
 	std::atomic<float> _speed;
@@ -60,10 +56,9 @@ public:
 	bool operator !=(const ICharacter& character) const;
 
 	CharacterId getId() const;
-	void setPosition(const Vector3f& position);
-	void setPosition(Vector3f&& position);
+	void setPosition(const glm::vec3& position);
 
-	Vector3f getPosition() const;
+	glm::vec3 getPosition() const;
 	void setOrientation(float orientation);
 	/**
 	 * @return the radians around the y (up) axis
@@ -92,14 +87,9 @@ public:
 	}
 };
 
-inline void ICharacter::setPosition(const Vector3f& position) {
-	ai_assert(!position.isInfinite(), "invalid position");
+inline void ICharacter::setPosition(const glm::vec3& position) {
+	ai_assert(!isInfinite(position), "invalid position");
 	_position = position;
-}
-
-inline void ICharacter::setPosition(Vector3f&& position) {
-	ai_assert(!position.isInfinite(), "invalid position");
-	_position = std::move(position);
 }
 
 inline void ICharacter::setOrientation (float orientation) {
@@ -130,7 +120,7 @@ inline CharacterId ICharacter::getId() const {
 	return _id;
 }
 
-inline Vector3f ICharacter::getPosition() const {
+inline glm::vec3 ICharacter::getPosition() const {
 	return _position;
 }
 

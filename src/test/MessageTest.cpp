@@ -1,4 +1,5 @@
 #include "MessageTest.h"
+#include "common/Math.h"
 
 class MessageTest: public TestSuite {
 protected:
@@ -87,7 +88,7 @@ TEST_F(MessageTest, testAIStateMessage) {
 	attributes.insert(std::make_pair<std::string, std::string>("SomethingElse", "SomeValue"));
 
 	ai::AIStateMessage m;
-	ai::AIStateWorld state(1, ai::Vector3f::ZERO, 1.0f, attributes);
+	ai::AIStateWorld state(1, ai::ZERO, 1.0f, attributes);
 	ASSERT_EQ("Test", state.getAttributes().find("Name")->second);
 	ASSERT_EQ("SomeValue", state.getAttributes().find("SomethingElse")->second);
 	m.addState(state);

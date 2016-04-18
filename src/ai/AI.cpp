@@ -12,23 +12,23 @@ AI::AI(const TreeNodePtr& behaviour) :
 AI::~AI() {
 }
 
-Vector3f AI::getGroupPosition(GroupId id) const {
+glm::vec3 AI::getGroupPosition(GroupId id) const {
 	Zone* local = _zone;
 	if (local == nullptr || id < 0)
-		return Vector3f::INFINITE;
+		return INFINITE;
 
 	return local->getGroupMgr().getPosition(id);
 }
 
-Vector3f AI::getGroupLeaderPosition(GroupId id) const {
+glm::vec3 AI::getGroupLeaderPosition(GroupId id) const {
 	Zone* local = _zone;
 	if (local == nullptr)
-		return Vector3f::INFINITE;
+		return INFINITE;
 
 	const AIPtr& groupLeader = local->getGroupMgr().getLeader(id);
 	if (groupLeader)
 		return groupLeader->getCharacter()->getPosition();
-	return Vector3f::INFINITE;
+	return INFINITE;
 }
 
 CharacterId AI::getId() const {

@@ -1,33 +1,35 @@
 #pragma once
 
-#include "common/Vector3f.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/constants.hpp>
 #include <cmath>
 
 namespace ai {
 
 class MoveVector {
 protected:
-	const Vector3f _vec3;
+	const glm::vec3 _vec3;
 	const float _rotation;
 public:
-	MoveVector(const Vector3f& vec3, float rotation) :
+	MoveVector(const glm::vec3& vec3, float rotation) :
 			_vec3(vec3), _rotation(rotation) {
 	}
 
-	MoveVector(const Vector3f& vec3, double rotation) :
+	MoveVector(const glm::vec3& vec3, double rotation) :
 			_vec3(vec3), _rotation(static_cast<float>(rotation)) {
 	}
 
 	inline float getOrientation(float duration) const {
-		const float rotation = _rotation + M_2PI;
-		return fmodf(rotation * duration, M_2PI);
+		const float pi2 = glm::two_pi<float>();
+		const float rotation = _rotation + pi2;
+		return fmodf(rotation * duration, pi2);
 	}
 
-	inline const Vector3f& getVector() const {
+	inline const glm::vec3& getVector() const {
 		return _vec3;
 	}
 
-	inline Vector3f getVector() {
+	inline glm::vec3 getVector() {
 		return _vec3;
 	}
 
@@ -35,11 +37,11 @@ public:
 		return _rotation;
 	}
 
-	inline operator Vector3f() const {
+	inline operator glm::vec3() const {
 		return _vec3;
 	}
 
-	inline operator const Vector3f&() const {
+	inline operator const glm::vec3&() const {
 		return _vec3;
 	}
 
@@ -47,9 +49,5 @@ public:
 		return _rotation;
 	}
 };
-
-inline std::ostream& operator<<(std::ostream& output, const MoveVector& p) {
-	return output << "(" << p.getVector() << ", " << p.getRotation() << ", " << p.getOrientation(1.0f) << ")";
-}
 
 }

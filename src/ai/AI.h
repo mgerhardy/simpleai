@@ -10,6 +10,7 @@
 #include "common/Thread.h"
 #include "common/Types.h"
 #include "common/NonCopyable.h"
+#include "common/Math.h"
 
 namespace ai {
 
@@ -128,16 +129,16 @@ public:
 	bool isDebuggingActive() const;
 
 	/**
-	 * @return The average group position, or @c Vector3f::INFINITE if no such group exists.
+	 * @return The average group position, or @c glm::vec3::INFINITE if no such group exists.
 	 * @note Keep in mind that this is updated with the zone and doesn't change until the @c Zone::update
 	 * was called.
 	 */
-	Vector3f getGroupPosition(GroupId id) const;
+	glm::vec3 getGroupPosition(GroupId id) const;
 	/**
-	 * @return The current position of the group leader or @c Vector3f::INFINITE if no such
+	 * @return The current position of the group leader or @c glm::vec3::INFINITE if no such
 	 * group exists.
 	 */
-	Vector3f getGroupLeaderPosition(GroupId id) const;
+	glm::vec3 getGroupLeaderPosition(GroupId id) const;
 
 	/**
 	 * @brief Get the current behaviour for this ai

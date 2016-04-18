@@ -1,26 +1,51 @@
 #pragma once
 
+#include "Log.h"
 #include <string>
 #include <unordered_map>
 #include <cassert>
 #include <iostream>
+#include <cstdio>
+
+#ifndef ai_log
+#define ai_log(format, ...) ai::Log::info(format, ##__VA_ARGS__)
+#endif
+
+#ifndef ai_log_error
+#define ai_log_error(format, ...) ai::Log::error(format, ##__VA_ARGS__)
+#endif
+
+#ifndef ai_log_warn
+#define ai_log_warn(format, ...) ai::Log::warn(format, ##__VA_ARGS__)
+#endif
+
+#ifndef ai_log_debug
+#define ai_log_debug(format, ...) ai::Log::debug(format, ##__VA_ARGS__)
+#endif
+
+#ifndef ai_log_trace
+#define ai_log_trace(format, ...) ai::Log::trace(format, ##__VA_ARGS__)
+#endif
 
 #if !(__GNUC__ || __GNUC__)
 #define __PRETTY_FUNCTION__ __FUNCSIG__
 #endif
 
 #ifndef ai_assert
-#if (__clang_analyzer__)
-#define ai_assert assert
-#else
-#define ai_assert(condition, format, ...) \
-	if ( !(condition) ) { \
-		static char buf[1024]; \
-		std::snprintf(buf, sizeof(buf), format, ##__VA_ARGS__); \
-		std::cerr << __FILE__ << ":" << __LINE__ << "@" << __PRETTY_FUNCTION__ << ": " << buf << std::endl; \
-		assert(condition); \
-	}
-#endif
+	#ifdef DEBUG
+		#if (__clang_analyzer__)
+			#define ai_assert(condition, format, ...) assert(condition)
+		#else
+			#define ai_assert(condition, format, ...) \
+				if ( !(condition) ) { \
+					ai::Log::error(format, ##__VA_ARGS__); \
+					ai::Log::error("%s:%i", __FILE__, __LINE__); \
+					assert(condition); \
+				}
+		#endif
+	#else
+		#define ai_assert(condition, format, ...)
+	#endif
 #endif
 
 template<class T, class S>

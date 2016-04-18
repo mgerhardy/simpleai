@@ -12,7 +12,6 @@
 #include "common/String.h"
 #include "common/MemoryAllocator.h"
 #include "ICharacter.h"
-#include <cassert>
 
 namespace ai {
 namespace movement {
@@ -41,7 +40,6 @@ public: \
 	} \
 	SteeringName::Factory SteeringName::FACTORY;
 
-
 /**
  * @brief Steering interface
  */
@@ -51,7 +49,7 @@ public:
 	/**
 	 * @brief Calculates the @c MoveVector
 	 *
-	 * @return If the @c MoveVector contains @c Vector3f::INFINITE as vector, the result should not be used
+	 * @return If the @c MoveVector contains @c glm::vec3::INFINITE as vector, the result should not be used
 	 * because there was an error.
 	 */
 	virtual MoveVector execute (const AIPtr& ai, float speed) const = 0;
@@ -64,10 +62,10 @@ public:
  */
 class SelectionSteering : public ISteering {
 protected:
-	Vector3f getSelectionTarget(const AIPtr& entity, std::size_t index) const {
+	glm::vec3 getSelectionTarget(const AIPtr& entity, std::size_t index) const {
 		const FilteredEntities& selection = entity->getFilteredEntities();
 		if (selection.empty() || selection.size() <= index)
-			return Vector3f::INFINITE;
+			return INFINITE;
 		Zone* zone = entity->getZone();
 		const CharacterId characterId = selection[index];
 		const AIPtr& ai = zone->getAI(characterId);

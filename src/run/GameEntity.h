@@ -15,7 +15,7 @@ private:
 	int _damage;
 	int _attackDelay;
 
-	ai::Vector3f getStartPosition() const;
+	glm::vec3 getStartPosition() const;
 
 public:
 	GameEntity(const ai::CharacterId& id, const ai::example::GameMap* map);

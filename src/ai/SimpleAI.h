@@ -44,16 +44,12 @@
  */
 #pragma once
 
-#ifndef AI_DEBUG_READWRITELOCK
-#define AI_DEBUG_READWRITELOCK 0
-#endif
-
 #include "common/Types.h"
 #include "common/MemoryAllocator.h"
 #include "common/String.h"
 #include "common/Math.h"
 #include "common/Random.h"
-#include "common/Vector3f.h"
+#include "common/Log.h"
 #include "common/MoveVector.h"
 #include "common/Random.h"
 #include "common/Thread.h"

@@ -2,7 +2,7 @@
 
 #include "common/Thread.h"
 #include "common/Types.h"
-#include "common/Vector3f.h"
+#include <glm/glm.hpp>
 #include <map>
 #include <memory>
 #include <unordered_map>
@@ -32,7 +32,7 @@ private:
 	struct Group {
 		AIPtr leader;
 		GroupMembersSet members;
-		Vector3f position;
+		glm::vec3 position;
 	};
 
 	typedef std::unordered_multimap<AIPtr, GroupId> GroupMembers;
@@ -93,12 +93,12 @@ public:
 	/**
 	 * @brief Returns the average position of the group
 	 *
-	 * @note If the given group doesn't exist or some other error occurred, this method returns @c Vector3f::INFINITE
+	 * @note If the given group doesn't exist or some other error occurred, this method returns @c glm::vec3::INFINITE
 	 * @note The position of a group is calculated once per @c update() call.
 	 *
 	 * @note This method performs a read lock on the group manager
 	 */
-	Vector3f getPosition(GroupId id) const;
+	glm::vec3 getPosition(GroupId id) const;
 
 	/**
 	 * @return The @c ICharacter object of the leader, or @c nullptr if no such group exists.

@@ -14,7 +14,7 @@ struct WeightedData {
 
 	WeightedData(const SteeringPtr& _steering, float _weight = 1.0f) :
 			steering(_steering), weight(_weight) {
-		assert(weight > 0.0001f);
+		ai_assert(weight > 0.0001f, "Weight is too small");
 	}
 };
 typedef std::vector<WeightedData> WeightedSteerings;
@@ -33,13 +33,14 @@ public:
 
 	MoveVector execute (const AIPtr& ai, float speed) const {
 		float totalWeight = 0.0f;
-		Vector3f vecBlended;
+		glm::vec3 vecBlended;
 		float angularBlended = 0.0f;
 		for (const WeightedData& wd : _steerings) {
 			const float weight = wd.weight;
 			const MoveVector& mv = wd.steering->execute(ai, speed);
-			if (mv.getVector().isInfinite())
+			if (isInfinite(mv.getVector())) {
 				continue;
+			}
 
 			vecBlended += mv.getVector() * weight;
 			angularBlended += mv.getRotation() * weight;
@@ -47,10 +48,10 @@ public:
 		}
 
 		if (totalWeight <= 0.0000001f)
-			return MoveVector(Vector3f::INFINITE, 0.0f);
+			return MoveVector(INFINITE, 0.0f);
 
 		const float scale = 1.0f / totalWeight;
-		return MoveVector(vecBlended * scale, fmodf(angularBlended * scale, M_2PI));
+		return MoveVector(vecBlended * scale, fmodf(angularBlended * scale, glm::two_pi<float>()));
 	}
 
 	virtual std::ostream& print(std::ostream& stream, int level) const override {

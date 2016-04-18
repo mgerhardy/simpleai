@@ -109,72 +109,74 @@ static void runDespawnSpawn(ai::example::GameMap* map) {
 static bool load(const std::string filename) {
 	std::ifstream btStream(filename);
 	if (!btStream) {
-		std::cerr << "could not load " << filename << std::endl;
+		ai_log_error("could not load %s", filename.c_str());
 		return false;
 	}
 
 	std::string str((std::istreambuf_iterator<char>(btStream)), std::istreambuf_iterator<char>());
 	if (!loader.init(str)) {
-		std::cerr << "could not load the tree" << std::endl;
-		std::cerr << loader.getError() << std::endl;
+		ai_log_error("could not load the tree: %s", loader.getError().c_str());
 		return false;
 	}
 	return true;
 }
 
 static void handleInput(const std::string& filename, const std::vector<ai::example::GameMap*>& maps) {
-	std::cout << "hit q to quit or h for help" << std::endl;
+	ai_log("hit q to quit or h for help");
 	for (;;) {
 		std::string c;
 		std::getline(std::cin, c);
 
 		if (c == "q") {
-			std::cout << "quitting" << std::endl;
+			ai_log("quitting");
 			break;
 		} else if (c == "g") {
 			for (ai::example::GameMap* map : maps) {
-				std::cout << map->getName() << std::endl;
+				ai_log("%s", map->getName().c_str());
 				const ai::Zone& zone = map->getZone();
-				std::cout << "groups: " << std::endl;
+				ai_log("groups: ");
 				const ai::GroupMgr& groupMgr = zone.getGroupMgr();
 				for (int groupId = 1; groupId <= 3; ++groupId) {
 					const ai::AIPtr& leader = groupMgr.getLeader(groupId);
-					if (!leader)
+					if (!leader) {
 						continue;
-					std::cout << " \\- group " << groupId << ":" << groupMgr.getPosition(groupId) << " - " << leader->getCharacter()->getPosition() << std::endl;
+					}
+					const glm::vec3& pos = groupMgr.getPosition(groupId);
+					const glm::vec3& leaderPos = leader->getCharacter()->getPosition();
+					ai_log(" \\- group %i: %f:%f:%f - %f:%f:%f\n", groupId, pos.x, pos.y, pos.z, leaderPos.x, leaderPos.y, leaderPos.z);
 				}
 			}
 		} else if (c == "d") {
 			for (ai::example::GameMap* map : maps) {
-				std::cout << map->getName() << std::endl;
+				ai_log("%s", map->getName().c_str());
 				const ai::Zone& zone = map->getZone();
 				int count = 0;
 				auto func = [&] (const ai::AIPtr& ai) {
 					const ai::ICharacterPtr& chr = ai->getCharacter();
 					const ai::GroupMgr& groupMgr = zone.getGroupMgr();
-					std::cout << "id: " << chr->getId() << std::endl;
-					std::cout << " \\- pos: " << chr->getPosition() << std::endl;
-					std::cout << " \\- speed: " << chr->getSpeed() << std::endl;
-					std::cout << " \\- group leader 1: " << (groupMgr.isGroupLeader(1, ai) ? "true" : "false") << std::endl;
-					std::cout << " \\- group leader 2: " << (groupMgr.isGroupLeader(2, ai) ? "true" : "false") << std::endl;
-					std::cout << " \\- group leader 3: " << (groupMgr.isGroupLeader(3, ai) ? "true" : "false") << std::endl;
-					std::cout << " \\- group 1: " << (groupMgr.isInGroup(1, ai) ? "true" : "false") << std::endl;
-					std::cout << " \\- group 2: " << (groupMgr.isInGroup(2, ai) ? "true" : "false") << std::endl;
-					std::cout << " \\- group 3: " << (groupMgr.isInGroup(3, ai) ? "true" : "false") << std::endl;
-					std::cout << " \\- orientation: " << chr->getOrientation() << std::endl;
-					std::cout << " \\- attributes:" << std::endl;
+					ai_log("id: %i", chr->getId());
+					ai_log(" \\- pos: %s", ai::Str::toString(chr->getPosition()).c_str());
+					ai_log(" \\- speed: %f", chr->getSpeed());
+					ai_log(" \\- group leader 1: %s", (groupMgr.isGroupLeader(1, ai) ? "true" : "false"));
+					ai_log(" \\- group leader 2: %s", (groupMgr.isGroupLeader(2, ai) ? "true" : "false"));
+					ai_log(" \\- group leader 3: %s", (groupMgr.isGroupLeader(3, ai) ? "true" : "false"));
+					ai_log(" \\- group 1: %s", (groupMgr.isInGroup(1, ai) ? "true" : "false"));
+					ai_log(" \\- group 2: %s", (groupMgr.isInGroup(2, ai) ? "true" : "false"));
+					ai_log(" \\- group 3: %s", (groupMgr.isInGroup(3, ai) ? "true" : "false"));
+					ai_log(" \\- orientation: %f", chr->getOrientation());
+					ai_log(" \\- attributes:");
 					const ai::CharacterAttributes& attributes = chr->getAttributes();
-					for (ai::CharacterAttributes::const_iterator attribIter = attributes.begin(); attribIter != attributes.end(); ++attribIter) {
-						std::cout << "  \\- " << attribIter->first << ": \"" << attribIter->second << "\"" << std::endl;
+					for (const auto& entry : attributes) {
+						ai_log("  \\- %s: \"%s\"", entry.first.c_str(), entry.second.c_str());
 					}
 					++count;
 				};
 				zone.execute(func);
-				std::cout << " - sum: " << count << " entities" << std::endl;
+				ai_log(" - sum: %i entities", count);
 			}
 		} else if (c == "t") {
 			autospawn = !autospawn;
-			std::cout << "automatic respawn: " << (autospawn ? "true" : "false") << std::endl;
+			ai_log("automatic respawn: %s", (autospawn ? "true" : "false"));
 		} else if (c == "r") {
 			std::vector<std::string> trees;
 			loader.getTrees(trees);
@@ -183,9 +185,9 @@ static void handleInput(const std::string& filename, const std::vector<ai::examp
 				const ai::AIPtr& rnd = map->getRandomEntity();
 				if (rnd) {
 					if (!map->remove(rnd)) {
-						std::cout << "failed to remove " << rnd->getId() << " from map " << map->getName() << std::endl;
+						ai_log("failed to remove %i from map %s", rnd->getId(), map->getName().c_str());
 					} else {
-						std::cout << "removed " << rnd->getId() << " from map " << map->getName() << std::endl;
+						ai_log("removed %i from map %s", rnd->getId(), map->getName().c_str());
 					}
 				}
 
@@ -197,7 +199,7 @@ static void handleInput(const std::string& filename, const std::vector<ai::examp
 				ai->setCharacter(chr);
 				const ai::GroupId groupId = ai::random(1, 3);
 				map->addEntity(ai, groupId);
-				std::cout << "spawned " << ai->getId() << " on map " << map->getName() << std::endl;
+				ai_log("spawned %i from map %s", rnd->getId(), map->getName().c_str());
 			}
 		} else if (c == "reload") {
 			if (!load(filename))
@@ -212,15 +214,15 @@ static void handleInput(const std::string& filename, const std::vector<ai::examp
 			for (ai::example::GameMap* map : maps) {
 				map->getZone().executeParallel(func);
 			}
-			std::cout << "reloaded the behaviour trees" << std::endl;
+			ai_log("reloaded the behaviour trees");
 		} else {
-			std::cout << "q      - quit" << std::endl;
-			std::cout << "name   - change name of the bt to use" << std::endl;
-			std::cout << "r      - respawn" << std::endl;
-			std::cout << "g      - group info" << std::endl;
-			std::cout << "t      - trigger automatic respawn" << std::endl;
-			std::cout << "d      - detail" << std::endl;
-			std::cout << "reload - reload the behaviour tree from file" << std::endl;
+			ai_log("q      - quit");
+			ai_log("name   - change name of the bt to use");
+			ai_log("r      - respawn");
+			ai_log("g      - group info");
+			ai_log("t      - trigger automatic respawn");
+			ai_log("d      - detail");
+			ai_log("reload - reload the behaviour tree from file");
 		}
 	}
 	shutdownThreads = true;
@@ -230,19 +232,18 @@ int main(int argc, char **argv) {
 	char **b = argv;
 	char **e = argv + argc;
 	if (argc <= 1 || optExists(b, e, "-h") || optExists(b, e, "-help") || !optExists(b, e, "-file")) {
-		std::cerr << "usage: simpleai-run -file behaviourtree.lua [options]" << std::endl;
-		std::cerr << "Valid options are (default values are given here):" << std::endl;
-		std::cerr << "-amount 10            - how many entities are spawned on each map" << std::endl;
-		std::cerr << "-maps 4               - how many maps should get spawned" << std::endl;
-		std::cerr << "-autospawn true|false - automatic respawn (despawn random and respawn) of entities" << std::endl;
-		std::cerr << "-seed 1               - use a fixed seed for all the random actions" << std::endl;
-		std::cerr << "-help -h              - show this help screen" << std::endl;
-		std::cerr << std::endl;
-		std::cerr << "Network related options" << std::endl;
-		std::cerr << "-interface 0.0.0.0    - the interface the server will listen on" << std::endl;
-		std::cerr << "-port 12345           - the port of the server to listen on" << std::endl;
+		ai_log_error("usage: simpleai-run -file behaviourtree.lua [options]");
+		ai_log_error("Valid options are (default values are given here):");
+		ai_log_error("-amount 10            - how many entities are spawned on each map");
+		ai_log_error("-maps 4               - how many maps should get spawned");
+		ai_log_error("-autospawn true|false - automatic respawn (despawn random and respawn) of entities");
+		ai_log_error("-seed 1               - use a fixed seed for all the random actions");
+		ai_log_error("-help -h              - show this help screen");
+		ai_log_error("Network related options");
+		ai_log_error("-interface 0.0.0.0    - the interface the server will listen on");
+		ai_log_error("-port 12345           - the port of the server to listen on");
 #ifdef AI_PROFILER
-		std::cerr << "-profilerOutput       - google profiler output file" << std::endl;
+		ai_log_error("-profilerOutput       - google profiler output file");
 #endif
 		return EXIT_FAILURE;
 	}
@@ -269,18 +270,18 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	std::cout << "successfully loaded the behaviour trees" << std::endl;
-	std::cout << "now run this behaviour tree with " << amount << " entities on each map" << std::endl;
-	std::cout << "spawn " << mapAmount << " maps with seed " << seed << std::endl;
-	std::cout << "automatic respawn: " << (autospawn ? "true" : "false") << std::endl;
+	ai_log("successfully loaded the behaviour trees");
+	ai_log("now run this behaviour tree with %i entities on each map", amount);
+	ai_log("spawn %i maps with seed %i", mapAmount, seed);
+	ai_log("automatic respawn: %s", (autospawn ? "true" : "false"));
 
 	ai::Server server(loader, port, interface);
 	if (!server.start()) {
-		std::cerr << "Could not start the server on port " << port << std::endl;
+		ai_log_error("Could not start the server on port %i", port);
 		return EXIT_FAILURE;
 	}
 
-	std::cout << "Started server on " << interface << ":" << port << std::endl;
+	ai_log("Started server on %s:%i", interface.c_str(), port);
 
 	std::vector<ai::example::GameMap*> maps;
 	for (int i = 1; i <= mapAmount; ++i) {

@@ -5,7 +5,7 @@
 namespace ai {
 
 struct AveragePositionFunctor {
-	Vector3f operator()(const Vector3f& result, const AIPtr& ai) {
+	glm::vec3 operator()(const glm::vec3& result, const AIPtr& ai) {
 		return ai->getCharacter()->getPosition() + result;
 	}
 };
@@ -20,10 +20,10 @@ void GroupMgr::update(int64_t) {
 	ScopedReadLock scopedLock(_lock);
 	for (auto i = _groups.begin(); i != _groups.end(); ++i) {
 		Group& group = i->second;
-		Vector3f averagePosition;
+		glm::vec3 averagePosition;
 		{
 			ScopedReadLock lock(_groupLock);
-			averagePosition = std::accumulate(group.members.begin(), group.members.end(), Vector3f(), AveragePositionFunctor());
+			averagePosition = std::accumulate(group.members.begin(), group.members.end(), glm::vec3(), AveragePositionFunctor());
 			averagePosition *= 1.0f / (float) group.members.size();
 		}
 		ScopedWriteLock lock(_groupLock);
@@ -107,11 +107,11 @@ AIPtr GroupMgr::getLeader(GroupId id) const {
 	return i->second.leader;
 }
 
-Vector3f GroupMgr::getPosition(GroupId id) const {
+glm::vec3 GroupMgr::getPosition(GroupId id) const {
 	ScopedReadLock scopedLock(_lock);
 	const GroupsConstIter& i = _groups.find(id);
 	if (i == _groups.end())
-		return Vector3f::INFINITE;
+		return INFINITE;
 
 	ScopedReadLock lock(_groupLock);
 	return i->second.position;

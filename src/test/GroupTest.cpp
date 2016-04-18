@@ -5,8 +5,8 @@ class GroupMgrTest: public TestSuite {
 
 TEST_F(GroupMgrTest, testMassGroupAveragePosition) {
 	const ai::GroupId groupId = 1;
-	const ai::Vector3f pos1(3.0f, 3.0f, 0.0f);
-	const ai::Vector3f pos2(300.0f, 300.0f, 0.0f);
+	const glm::vec3 pos1(3.0f, 3.0f, 0.0f);
+	const glm::vec3 pos2(300.0f, 300.0f, 0.0f);
 	for (int i = 1; i <= 2; ++i) {
 		const ai::CharacterId id = i;
 		ai::AIPtr e(new ai::AI(ai::TreeNodePtr()));
@@ -24,8 +24,8 @@ TEST_F(GroupMgrTest, testMassGroupAveragePosition) {
 		_groupManager.add(groupId, e);
 	}
 	_groupManager.update(0);
-	const ai::Vector3f& avg = _groupManager.getPosition(groupId);
-	const ai::Vector3f pos = pos1 + pos2;
+	const glm::vec3& avg = _groupManager.getPosition(groupId);
+	const glm::vec3 pos = pos1 + pos2;
 
 	ASSERT_EQ(0.5f * pos, avg);
 }
@@ -126,23 +126,23 @@ TEST_F(GroupTest, testGroupLeader) {
 
 TEST_F(GroupTest, testGroupAveragePosition) {
 	const ai::GroupId id = 1;
-	ai::Vector3f avg;
+	glm::vec3 avg;
 	ai::GroupMgr groupMgr;
 	ai::AIPtr entity1(new ai::AI(ai::TreeNodePtr()));
 	ai::ICharacterPtr chr(new ai::ICharacter(id));
 	entity1->setCharacter(chr);
-	chr->setPosition(ai::Vector3f(1.0f, 1.0f, 0.0f));
+	chr->setPosition(glm::vec3(1.0f, 1.0f, 0.0f));
 	ASSERT_TRUE(groupMgr.add(id, entity1));
 	groupMgr.update(0);
 	avg = groupMgr.getPosition(id);
-	ASSERT_EQ(ai::Vector3f(1.0f, 1.0f, 0.0f), avg);
+	ASSERT_EQ(glm::vec3(1.0f, 1.0f, 0.0f), avg);
 	ai::AIPtr entity2(new ai::AI(ai::TreeNodePtr()));
 	entity2->setCharacter(ai::ICharacterPtr(new ai::ICharacter(2)));
-	entity2->getCharacter()->setPosition(ai::Vector3f(3.0f, 3.0f, 0.0f));
+	entity2->getCharacter()->setPosition(glm::vec3(3.0f, 3.0f, 0.0f));
 	ASSERT_TRUE(groupMgr.add(id, entity2));
 	groupMgr.update(0);
 	avg = groupMgr.getPosition(id);
-	ASSERT_EQ(ai::Vector3f(2.0f, 2.0f, 0.0f), avg);
+	ASSERT_EQ(glm::vec3(2.0f, 2.0f, 0.0f), avg);
 }
 
 TEST_F(GroupTest, testGroupMass1000) {

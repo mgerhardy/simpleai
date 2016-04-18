@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include "common/Types.h"
-#include "common/Vector3f.h"
+#include <glm/glm.hpp>
 #include "tree/TreeNode.h"
 
 namespace ai {
@@ -171,21 +171,21 @@ public:
 class AIStateWorld {
 private:
 	ai::CharacterId _id;
-	ai::Vector3f _position;
+	glm::vec3 _position;
 	float _orientation;
 	CharacterAttributes _attributes;
 public:
 	AIStateWorld() : _id(-1), _position(0.0f, 0.0f, 0.0f), _orientation(0.0f) {}
 
-	AIStateWorld(const ai::CharacterId& id, const ai::Vector3f& position, float orientation, const CharacterAttributes& attributes) :
+	AIStateWorld(const ai::CharacterId& id, const glm::vec3& position, float orientation, const CharacterAttributes& attributes) :
 			_id(id), _position(position), _orientation(orientation), _attributes(attributes) {
 	}
 
-	AIStateWorld(const ai::CharacterId& id, const ai::Vector3f& position, float orientation, CharacterAttributes&& attributes) :
+	AIStateWorld(const ai::CharacterId& id, const glm::vec3& position, float orientation, CharacterAttributes&& attributes) :
 			_id(id), _position(position), _orientation(orientation), _attributes(std::move(attributes)) {
 	}
 
-	AIStateWorld(const ai::CharacterId& id, const ai::Vector3f& position, float orientation) :
+	AIStateWorld(const ai::CharacterId& id, const glm::vec3& position, float orientation) :
 			_id(id), _position(position), _orientation(orientation) {
 	}
 
@@ -216,7 +216,7 @@ public:
 	/**
 	 * @return The position in the world
 	 */
-	inline const ai::Vector3f& getPosition() const {
+	inline const glm::vec3& getPosition() const {
 		return _position;
 	}
 

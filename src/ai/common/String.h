@@ -1,5 +1,6 @@
 #pragma once
 
+#include <glm/glm.hpp>
 #include <vector>
 #include <string>
 #include <sstream>
@@ -7,6 +8,12 @@
 
 namespace ai {
 namespace Str {
+
+inline std::string toString(const glm::vec3& pos) {
+	char buf[128];
+	std::snprintf(buf, sizeof(buf), "%f:%f:%f", pos.x, pos.y, pos.z);
+	return buf;
+}
 
 inline bool startsWith(const std::string& string, const std::string& token) {
 	return !string.compare(0, token.size(), token);
@@ -39,14 +46,7 @@ inline void splitString(const std::string& string, std::vector<std::string>& tok
 		pos = string.find_first_of(delimiters, lastPos);
 	}
 }
-}
+
 }
 
-namespace std {
-template<class T>
-std::string to_string(const T& t) {
-	std::ostringstream os;
-	os << t;
-	return os.str();
-}
 }

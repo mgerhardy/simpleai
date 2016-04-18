@@ -10,28 +10,27 @@ namespace movement {
  */
 class TargetSeek: public ISteering {
 protected:
-	Vector3f _target;
+	glm::vec3 _target;
 public:
 	STEERING_FACTORY
 
 	TargetSeek(const std::string& parameters) :
 			ISteering() {
-		_target = Vector3f::parse(parameters);
+		_target = parse(parameters);
 	}
 
 	inline bool isValid () const {
-		return !_target.isInfinite();
+		return !isInfinite(_target);
 	}
 
 	virtual MoveVector execute (const AIPtr& ai, float speed) const override {
-		if (_target.isInfinite())
+		if (!isValid()) {
 			return MoveVector(_target, 0.0f);
-		Vector3f v = _target - ai->getCharacter()->getPosition();
+		}
+		glm::vec3 v = _target - ai->getCharacter()->getPosition();
 		double orientation = 0.0;
-		if (v.squareLength() > 0.0f) {
-			v.normalize();
-			v *= speed;
-			orientation = v.angle();
+		if (glm::length2(v) > 0.0f) {
+			orientation = angle(glm::normalize(v) * speed);
 		}
 		const MoveVector d(v, orientation);
 		return d;
@@ -41,7 +40,7 @@ public:
 		for (int i = 0; i < level; ++i) {
 			stream << '\t';
 		}
-		stream << "TargetSeek(" << _target << ")";
+		stream << "TargetSeek(" << _target.x << "," << _target.y << "," << _target.z << ")";
 		return stream;
 	}
 };

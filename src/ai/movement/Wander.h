@@ -23,7 +23,7 @@ public:
 	}
 
 	MoveVector execute (const AIPtr& ai, float speed) const override {
-		const Vector3f& v = Vector3f::fromRadians(ai->getCharacter()->getOrientation()) * speed;
+		const glm::vec3& v = fromRadians(ai->getCharacter()->getOrientation()) * speed;
 		const MoveVector d(v, ai::randomBinomial() * _rotation);
 		return d;
 	}

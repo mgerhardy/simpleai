@@ -48,7 +48,6 @@ set(SRC
 	conditions/ICondition.cpp
 	conditions/Filter.cpp
 	conditions/False.cpp
-	common/Vector3f.cpp
 	AIRegistry.cpp
 	zone/Zone.cpp
 	movement/Steering.cpp
@@ -110,10 +109,10 @@ list(APPEND simpleai_HEADERS
 	aggro/Entry.h
 	AI.h
 	AIRegistry.h
-	common/Vector3f.h
 	common/IFactoryRegistry.h
 	common/IParser.h
 	common/IPrintable.h
+	common/Log.h
 	common/Math.h
 	common/MemoryAllocator.h
 	common/MoveVector.h

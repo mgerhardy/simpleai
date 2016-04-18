@@ -5,19 +5,19 @@ namespace ai {
 namespace example {
 
 // returns a random start position within the boundaries
-inline ai::Vector3f GameEntity::getStartPosition() const {
+inline glm::vec3 GameEntity::getStartPosition() const {
 	const int size = _map->getSize();
 	const int x = ai::random(-size, size);
 	const float y = 0.0f;
 	const int z = ai::random(-size, size);
-	return ai::Vector3f(static_cast<float>(x), y, static_cast<float>(z));
+	return glm::vec3(static_cast<float>(x), y, static_cast<float>(z));
 }
 
 GameEntity::GameEntity(const ai::CharacterId& id, const ai::example::GameMap* map) :
 		ai::ICharacter(id), _map(map), _hitpoints(100), _damage(5), _attackDelay(500) {
 	// pick some random start position
 	setPosition(getStartPosition());
-	setOrientation(ai::randomf(M_2PI));
+	setOrientation(ai::randomf(glm::two_pi<float>()));
 	setAttribute(ai::attributes::NAME, "Example " + std::to_string(id));
 	setSpeed(50.0f + ai::randomf(10.0f));
 
@@ -29,8 +29,8 @@ GameEntity::GameEntity(const ai::CharacterId& id, const ai::example::GameMap* ma
 void GameEntity::update(int64_t /*deltaTime*/, bool debuggingActive) {
 	// cap position to the map
 	const float sizeF = static_cast<float>(_map->getSize());
-	const Vector3f& currentPos = _position;
-	Vector3f newPos(currentPos);
+	const glm::vec3& currentPos = _position;
+	glm::vec3 newPos(currentPos);
 	if (currentPos.x < -sizeF) {
 		newPos.x = sizeF;
 	} else if (currentPos.x > sizeF) {
@@ -45,7 +45,7 @@ void GameEntity::update(int64_t /*deltaTime*/, bool debuggingActive) {
 
 	// update attributes for debugging
 	if (debuggingActive) {
-		setAttribute(ai::attributes::POSITION, std::to_string(getPosition()));
+		setAttribute(ai::attributes::POSITION, Str::toString(getPosition()));
 		setAttribute("Hitpoints", std::to_string(getHitpoints()));
 		setAttribute("Reloadtime", std::to_string(getAttackDelay()));
 		setAttribute("Damage", std::to_string(getDamage()));
@@ -55,4 +55,5 @@ void GameEntity::update(int64_t /*deltaTime*/, bool debuggingActive) {
 }
 
 }
+
 }

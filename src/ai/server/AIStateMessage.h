@@ -22,7 +22,7 @@ private:
 		const float y = readFloat(in);
 		const float z = readFloat(in);
 		const float orientation = readFloat(in);
-		const ai::Vector3f position(x, y, z);
+		const glm::vec3 position(x, y, z);
 
 		AIStateWorld tree(id, position, orientation);
 		CharacterAttributes& attributes = tree.getAttributes();
@@ -32,7 +32,7 @@ private:
 
 	void writeState (streamContainer& out, const AIStateWorld& state) const {
 		addInt(out, state.getId());
-		const ai::Vector3f& position = state.getPosition();
+		const glm::vec3& position = state.getPosition();
 		addFloat(out, position.x);
 		addFloat(out, position.y);
 		addFloat(out, position.z);

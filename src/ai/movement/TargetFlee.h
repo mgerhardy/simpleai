@@ -10,29 +10,28 @@ namespace movement {
  */
 class TargetFlee: public ISteering {
 protected:
-	Vector3f _target;
+	glm::vec3 _target;
 public:
 	STEERING_FACTORY
 
 	TargetFlee(const std::string& parameters) :
 			ISteering() {
-		_target = Vector3f::parse(parameters);
+		_target = parse(parameters);
 	}
 
 	inline bool isValid () const {
-		return !_target.isInfinite();
+		return !isInfinite(_target);
 	}
 
 	virtual MoveVector execute (const AIPtr& ai, float speed) const override {
-		if (_target.isInfinite())
+		if (!isValid()) {
 			return MoveVector(_target, 0.0f);
-		Vector3f v = ai->getCharacter()->getPosition();
+		}
+		glm::vec3 v = ai->getCharacter()->getPosition();
 		v -= _target;
 		double orientation = 0.0;
-		if (v.squareLength() > 0.0f) {
-			v.normalize();
-			v *= speed;
-			orientation = v.angle();
+		if (glm::length2(v) > 0.0f) {
+			orientation = angle(glm::normalize(v) * speed);
 		}
 
 		const MoveVector d(v, orientation);
@@ -43,7 +42,7 @@ public:
 		for (int i = 0; i < level; ++i) {
 			stream << '\t';
 		}
-		stream << "TargetFlee(" << _target << ")";
+		stream << "TargetFlee(" << _target.x << "," << _target.y << "," << _target.z << ")";
 		return stream;
 	}
 };

@@ -24,15 +24,14 @@ public:
 	}
 
 	virtual MoveVector execute (const AIPtr& ai, float speed) const override {
-		const Vector3f& target = ai->getGroupPosition(_groupId);
-		if (target.isInfinite())
+		const glm::vec3& target = ai->getGroupPosition(_groupId);
+		if (isInfinite(target)) {
 			return MoveVector(target, 0.0f);
-		Vector3f v = target - ai->getCharacter()->getPosition();
+		}
+		glm::vec3 v = target - ai->getCharacter()->getPosition();
 		double orientation = 0.0;
-		if (v.squareLength() > 0.0f) {
-			v.normalize();
-			v *= speed;
-			orientation = v.angle();
+		if (glm::length2(v) > 0.0f) {
+			orientation = angle(glm::normalize(v) * speed);
 		}
 		const MoveVector d(v, orientation);
 		return d;
