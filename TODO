@@ -6,3 +6,4 @@ Zone for ICharacter shared_ptr instead of AI?
 Allow to highlight entities depending on attributes. E.g. make them blue if they are in the group 1
 Use opensteer for movement
 Use glm - remove own vector classes
+Header only
