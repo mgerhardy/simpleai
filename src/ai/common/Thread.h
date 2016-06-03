@@ -12,8 +12,8 @@ namespace ai {
 
 class ReadWriteLock {
 private:
-	mutable std::atomic_int _readers;
-	mutable std::atomic_bool _lock;
+	mutable std::atomic<int> _readers;
+	mutable std::atomic<bool> _lock;
 	const std::string _name;
 	std::thread::id _threadID;
 	int _recursive;
