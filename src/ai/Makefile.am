@@ -4,7 +4,6 @@ libsimpleai_la_SOURCES = \
 	aggro/AggroMgr.cpp \
 	AI.cpp \
 	AIRegistry.cpp \
-	common/Vector3f.cpp \
 	conditions/And.cpp \
 	conditions/ConditionParser.cpp \
 	conditions/False.cpp \
@@ -59,7 +58,6 @@ nobase_library_include_HEADERS = \
 	aggro/Entry.h \
 	AI.h \
 	AIRegistry.h \
-	common/Vector3f.h \
 	common/IFactoryRegistry.h \
 	common/IParser.h \
 	common/IPrintable.h \
