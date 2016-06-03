@@ -78,6 +78,8 @@ int BehaviourTreeModel::rowCount(const QModelIndex &parent) const {
 int BehaviourTreeModel::columnCount(const QModelIndex &parent) const {
 	if (parent.isValid())
 		return item(parent)->columnCount();
+	if (_rootItem == nullptr)
+		return 0;
 	return _rootItem->columnCount();
 }
 
