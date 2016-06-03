@@ -7,4 +7,3 @@ Allow to highlight entities depending on attributes. E.g. make them blue if they
 Use opensteer for movement
 Header only
 Get rid of iostream (IPrintable::print)
-readwrite lock is broken - use std::recursive_mutex
