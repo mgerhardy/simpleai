@@ -6,8 +6,8 @@ DIR=$(dirname $(readlink -f $0))
 
 JOBS=4
 
-export CC=/usr/bin/clang
-export CXX=/usr/bin/clang++
+#export CC=/usr/bin/clang
+#export CXX=/usr/bin/clang++
 
 cd $DIR/..
 mkdir -p simpleai-build-release
