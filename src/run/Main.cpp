@@ -82,6 +82,7 @@ static ai::example::GameMap *createMap(int amount, ai::Server& server, const std
 	}
 
 	map->initializeAggro();
+	ai_log("map created %s (%i npcs)", name.c_str(), amount);
 
 	return map;
 }
