@@ -234,6 +234,7 @@ QWidget *AIDebuggerWidget::createTreePanelWidget() {
 
 	connect(_tree, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showContextMenu(const QPoint &)));
 
+#if 0
 	QHeaderView *header = _tree->header();
 	header->setStretchLastSection(false);
 	header->setSectionResizeMode(COL_NAME, QHeaderView::Stretch);
@@ -241,6 +242,7 @@ QWidget *AIDebuggerWidget::createTreePanelWidget() {
 	header->setSectionResizeMode(COL_CONDITION, QHeaderView::Stretch);
 	header->setSectionResizeMode(COL_STATE, QHeaderView::ResizeToContents);
 	header->setSectionResizeMode(COL_LASTRUN, QHeaderView::ResizeToContents);
+#endif
 
 	QPushButton *toggle = new QPushButton(QIcon(":/images/switch.png"), "", treePanel);
 	toggle->setFlat(true);
