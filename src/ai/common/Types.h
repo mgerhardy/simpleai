@@ -31,18 +31,22 @@
 #define __PRETTY_FUNCTION__ __FUNCSIG__
 #endif
 
+#ifndef ai_assert_always
+	#if (__clang_analyzer__)
+		#define ai_assert_always(condition, format, ...) assert(condition)
+	#else
+		#define ai_assert_always(condition, format, ...) \
+			if ( !(condition) ) { \
+				ai::Log::error(format, ##__VA_ARGS__); \
+				ai::Log::error("%s:%i", __FILE__, __LINE__); \
+				assert(condition); \
+			}
+	#endif
+#endif
+
 #ifndef ai_assert
 	#ifdef DEBUG
-		#if (__clang_analyzer__)
-			#define ai_assert(condition, format, ...) assert(condition)
-		#else
-			#define ai_assert(condition, format, ...) \
-				if ( !(condition) ) { \
-					ai::Log::error(format, ##__VA_ARGS__); \
-					ai::Log::error("%s:%i", __FILE__, __LINE__); \
-					assert(condition); \
-				}
-		#endif
+		#define ai_assert ai_assert_always
 	#else
 		#define ai_assert(condition, format, ...)
 	#endif

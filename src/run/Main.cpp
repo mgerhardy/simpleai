@@ -200,7 +200,7 @@ static void handleInput(const std::string& filename, const std::vector<ai::examp
 				ai->setCharacter(chr);
 				const ai::GroupId groupId = ai::random(1, 3);
 				map->addEntity(ai, groupId);
-				ai_log("spawned %i from map %s", rnd->getId(), map->getName().c_str());
+				ai_log("spawned %i on map %s", rnd->getId(), map->getName().c_str());
 			}
 		} else if (c == "reload") {
 			if (!load(filename))
