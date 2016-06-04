@@ -43,9 +43,7 @@ public:
 			return ai::AIPtr();
 		const int size = static_cast<int>(_entities.size());
 		const int randomIndex = ai::random(0, size - 1);
-		Entities::const_iterator i = _entities.begin();
-		std::advance(i, randomIndex);
-		return i->second;
+		return std::next(_entities.begin(), randomIndex)->second;
 	}
 
 	inline const std::string& getName() const {
