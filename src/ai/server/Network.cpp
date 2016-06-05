@@ -114,8 +114,8 @@ Network::ClientSocketsIter Network::closeClient(ClientSocketsIter& iter) {
 	FD_CLR(clientSocket, &_writeFDSet);
 	closesocket(clientSocket);
 	client.socket = INVALID_SOCKET;
-	for (Listeners::iterator i = _listeners.begin(); i != _listeners.end(); ++i) {
-		(*i)->onDisconnect(&client);
+	for (INetworkListener* listener : _listeners) {
+		listener->onDisconnect(&client);
 	}
 	return _clientSockets.erase(iter);
 }
@@ -142,8 +142,9 @@ bool Network::sendMessage(Client& client) {
 void Network::update(int64_t deltaTime) {
 	_time += deltaTime;
 	if (_time > 5000L) {
-		if (!broadcast(AIPingMessage()))
+		if (!broadcast(AIPingMessage())) {
 			_time = 0L;
+		}
 	}
 	fd_set readFDsOut;
 	fd_set writeFDsOut;
@@ -164,8 +165,8 @@ void Network::update(int64_t deltaTime) {
 			FD_SET(clientSocket, &_readFDSet);
 			const Client c(clientSocket);
 			_clientSockets.push_back(c);
-			for (Listeners::iterator i = _listeners.begin(); i != _listeners.end(); ++i) {
-				(*i)->onConnect(&_clientSockets.back());
+			for (INetworkListener* listener : _listeners) {
+				listener->onConnect(&_clientSockets.back());
 			}
 		}
 	}
@@ -206,16 +207,18 @@ void Network::update(int64_t deltaTime) {
 				continue;
 			}
 			IProtocolHandler* handler = ProtocolHandlerRegistry::get().getHandler(*msg);
-			if (handler)
+			if (handler) {
 				handler->execute(clientId, *msg);
+			}
 		}
 		++i;
 	}
 }
 
 bool Network::broadcast(const IProtocolMessage& msg) {
-	if (_clientSockets.empty())
+	if (_clientSockets.empty()) {
 		return false;
+	}
 	_time = 0L;
 	streamContainer out;
 	msg.serialize(out);
