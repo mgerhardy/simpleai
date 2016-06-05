@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IProtocolHandler.h"
+#include "common/Thread.h"
 #include <string>
 #include <stdint.h>
 #include <list>
@@ -52,6 +53,9 @@ protected:
 
 	typedef std::list<INetworkListener*> Listeners;
 	Listeners _listeners;
+
+	ReadWriteLock _lock;
+
 	bool sendMessage(Client& client);
 public:
 	Network(uint16_t port = 10001, const std::string& hostname = "0.0.0.0");
