@@ -27,6 +27,8 @@
 #include <algorithm>
 #include <cassert>
 #include <memory>
+#include <iterator>
+#include <array>
 
 namespace ai {
 
@@ -122,19 +124,19 @@ Network::ClientSocketsIter Network::closeClient(ClientSocketsIter& iter) {
 
 bool Network::sendMessage(Client& client) {
 	while (!client.out.empty()) {
-		static uint8_t buf[16384];
-		const std::size_t len = std::min(sizeof(buf), client.out.size());
-		for (std::size_t n = 0; n < len; ++n) {
-			buf[n] = client.out.at(n);
-		}
+		static std::array<uint8_t, 16384> buf;
+		const std::size_t len = std::min(buf.size(), client.out.size());
+		std::copy_n(client.out.begin(), len, buf.begin());
 		const SOCKET clientSocket = client.socket;
-		const ssize_t sent = send(clientSocket, buf, len, 0);
+		const ssize_t sent = send(clientSocket, &buf[0], len, 0);
 		if (sent < 0) {
 			return false;
 		}
-		for (ssize_t n = 0; n < sent; ++n) {
-			client.out.pop_front();
+		if (sent == 0) {
+			// better luck next time - but don't block others
+			return true;
 		}
+		client.out.erase(client.out.begin(), std::next(client.out.begin(), sent));
 	}
 	return true;
 }
