@@ -152,9 +152,8 @@ void Network::update(int64_t deltaTime) {
 	memcpy(&writeFDsOut, &_writeFDSet, sizeof(writeFDsOut));
 
 	struct timeval tv;
-	const int timeout = 10;
-	tv.tv_sec = timeout / 1000;
-	tv.tv_usec = 1000 * (timeout % 1000);
+	tv.tv_sec = 0;
+	tv.tv_usec = 0;
 	const int ready = select(FD_SETSIZE, &readFDsOut, &writeFDsOut, nullptr, &tv);
 	if (ready < 0) {
 		return;
