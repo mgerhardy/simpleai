@@ -252,7 +252,7 @@ int main(int argc, char **argv) {
 	int seed = std::stoi(getOptParam(b, e, "-seed", "-1"));
 	const int mapAmount = std::stoi(getOptParam(b, e, "-maps", "4"));
 	const int amount = std::stoi(getOptParam(b, e, "-amount", "10"));
-	const short port = static_cast<short>(std::stoi(getOptParam(b, e, "-port", "12345")));
+	const short port = static_cast<short>(std::stoi(getOptParam(b, e, "-port", "10001")));
 	const std::string& filename = getOptParam(b, e, "-file");
 	const std::string& interface = getOptParam(b, e, "-interface", "0.0.0.0");
 
