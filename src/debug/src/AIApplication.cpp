@@ -27,7 +27,7 @@ AIApplication::AIApplication(int argc, char** argv) :
 
 	_resolver = new AINodeStaticResolver();
 	_debugger = new AIDebugger(*_resolver);
-	_widget = new AIDebuggerWidget(*_debugger, *_resolver);
+	_widget = new AIDebuggerWidget(*_debugger, *_resolver, true);
 
 	_window.setCentralWidget(_widget);
 

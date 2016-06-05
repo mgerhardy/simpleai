@@ -1,3 +1,7 @@
+/**
+ * @file
+ */
+
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QStatusBar>
@@ -23,8 +27,8 @@
 namespace ai {
 namespace debug {
 
-AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger, AINodeStaticResolver& resolver) :
-		QWidget(), _resolver(resolver), _model(debugger, resolver), _debugger(debugger), _proxy(this) {
+AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger, AINodeStaticResolver& resolver, bool standalone) :
+		QWidget(), _resolver(resolver), _model(debugger, resolver), _debugger(debugger), _proxy(this), _standalone(standalone) {
 	createView();
 	createActions();
 
@@ -54,6 +58,7 @@ AIDebuggerWidget::~AIDebuggerWidget() {
 	delete _stateTable;
 	delete _aggroTable;
 	delete _pauseAction;
+	delete _quitAction;
 	delete _resetAction;
 	delete _stepAction;
 	delete _connectAction;
@@ -121,6 +126,9 @@ void AIDebuggerWidget::contributeToToolBar(QToolBar* toolBar) {
 
 void AIDebuggerWidget::contributeToFileMenu(QMenu *fileMenu) {
 	fileMenu->addAction(_connectAction);
+	if (_standalone) {
+		fileMenu->addAction(_quitAction);
+	}
 }
 
 void AIDebuggerWidget::contributeToHelpMenu(QMenu *helpMenu) {
@@ -143,6 +151,9 @@ void AIDebuggerWidget::removeFromToolBar(QToolBar* toolBar) {
 
 void AIDebuggerWidget::removeFromFileMenu(QMenu *fileMenu) {
 	fileMenu->removeAction(_connectAction);
+	if (_standalone) {
+		fileMenu->removeAction(_quitAction);
+	}
 }
 
 void AIDebuggerWidget::removeFromHelpMenu(QMenu *helpMenu) {
@@ -315,6 +326,10 @@ void AIDebuggerWidget::connectToAIServer(const QString& hostname, short port) {
 	}
 }
 
+void AIDebuggerWidget::quitApplication() {
+	QApplication::quit();
+}
+
 void AIDebuggerWidget::connectToAIServer() {
 	ConnectDialog d;
 	const int state = d.run();
@@ -355,6 +370,9 @@ void AIDebuggerWidget::createActions() {
 	_connectAction->setStatusTip(tr("Connect to AI server"));
 	_connectAction->setIcon(QIcon(":/images/connect.png"));
 	connect(_connectAction, SIGNAL(triggered()), this, SLOT(connectToAIServer()));
+
+	_quitAction = new QAction(tr("Quit"), this);
+	connect(_quitAction, SIGNAL(triggered()), this, SLOT(quitApplication()));
 
 	_pauseAction = new QAction(tr("Pause"), this);
 	_pauseAction->setStatusTip(tr("Freeze the ai controlled entities"));

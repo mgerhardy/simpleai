@@ -1,3 +1,7 @@
+/**
+ * @file
+ */
+
 #pragma once
 
 #include <QtGui>
@@ -31,7 +35,11 @@ class AIDebugger;
 class AIDebuggerWidget: public QWidget {
 Q_OBJECT
 public:
-	AIDebuggerWidget(AIDebugger& debugger, AINodeStaticResolver& resolver);
+	/**
+	 * @param[in] standalone If this is @c true, the widget will e.g. contribute a quit action to the file menu.
+	 * If this false, the widget will behave as if it would be part of an already existing appliation.
+	 */
+	AIDebuggerWidget(AIDebugger& debugger, AINodeStaticResolver& resolver, bool standalone);
 	virtual ~AIDebuggerWidget();
 
 	void connectToAIServer(const QString& hostname, short port);
@@ -76,6 +84,7 @@ private slots:
 	void bug();
 	void toggleTreeView();
 	void connectToAIServer();
+	void quitApplication();
 	void requestPause();
 	void requestStep();
 	void requestReset();
@@ -108,6 +117,7 @@ private:
 	AggroTable *_aggroTable;
 	QAction *_connectAction;
 	QAction *_pauseAction;
+	QAction *_quitAction;
 	QAction *_stepAction;
 	QAction *_resetAction;
 	QAction *_aboutAction;
@@ -123,6 +133,7 @@ private:
 	AIDebugger& _debugger;
 	QString _name;
 	CompressorProxy _proxy;
+	bool _standalone;
 };
 
 }
