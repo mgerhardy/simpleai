@@ -149,9 +149,9 @@ QVariant BehaviourTreeModel::headerData(int section, Qt::Orientation orientation
 	return QVariant();
 }
 
-void BehaviourTreeModel::setRootNode(AIStateNode* node) {
+bool BehaviourTreeModel::setRootNode(AIStateNode* node) {
 	if (!_allowUpdate)
-		return;
+		return false;
 	beginResetModel();
 	if (_rootItem) {
 		delete _rootItem;
@@ -161,6 +161,7 @@ void BehaviourTreeModel::setRootNode(AIStateNode* node) {
 		_rootItem = new BehaviourTreeModelItem(node, _resolver);
 	}
 	endResetModel();
+	return true;
 }
 
 }

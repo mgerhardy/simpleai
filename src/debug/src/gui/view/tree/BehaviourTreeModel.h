@@ -37,7 +37,15 @@ public:
 	bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
 	Qt::ItemFlags flags(const QModelIndex &index) const override;
 
-	void setRootNode(AIStateNode* node);
+	bool setRootNode(AIStateNode* node);
+
+	inline bool editMode() const {
+		return !_allowUpdate;
+	}
+
+	inline void abortEditMode() {
+		_allowUpdate = true;
+	}
 
 public slots:
 	bool submit() override;

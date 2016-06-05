@@ -70,15 +70,18 @@ void AIDebuggerWidget::onEntitiesUpdated() {
 }
 
 void AIDebuggerWidget::onSelected() {
+	if (_model.editMode()) {
+		_model.abortEditMode();
+	}
 	const ai::CharacterId& id = _debugger.getSelected();
 	if (id == -1) {
 		_selectedLabel->setText(tr("nothing selected"));
 	} else {
 		_selectedLabel->setText(tr("selected %1").arg(id));
 	}
+	ai_assert_always(_model.setRootNode(const_cast<AIStateNode*>(&_debugger.getNode())), "Could not set root node");
 	_stateTable->updateStateTable();
 	_nodeTree->updateTreeWidget();
-	_model.setRootNode(const_cast<AIStateNode*>(&_debugger.getNode()));
 	_tree->expandAll();
 	_aggroTable->updateAggroTable();
 }
@@ -149,7 +152,7 @@ void AIDebuggerWidget::removeFromHelpMenu(QMenu *helpMenu) {
 }
 
 void AIDebuggerWidget::createView() {
-	QVBoxLayout *layout = new QVBoxLayout;
+	QVBoxLayout *layout = new QVBoxLayout();
 	QSplitter* splitter = new QSplitter(Qt::Orientation::Vertical);
 	splitter->addWidget(createTopWidget());
 	splitter->addWidget(createBottomWidget());
@@ -158,7 +161,7 @@ void AIDebuggerWidget::createView() {
 }
 
 QWidget *AIDebuggerWidget::createTopWidget() {
-	QSplitter *splitter = new QSplitter;
+	QSplitter *splitter = new QSplitter();
 
 	_mapWidget = _debugger.createMapWidget();
 	_mapFrame = new ZoomFrame(_mapWidget);
@@ -265,7 +268,7 @@ QWidget *AIDebuggerWidget::createTreePanelWidget() {
 }
 
 QWidget *AIDebuggerWidget::createBottomWidget() {
-	QSplitter *splitter = new QSplitter;
+	QSplitter *splitter = new QSplitter();
 
 	QWidget* treePanel = createTreePanelWidget();
 	splitter->addWidget(treePanel);
