@@ -57,16 +57,46 @@ protected:
 	ReadWriteLock _lock = {"server"};
 	std::vector<std::string> _names;
 
+	enum EventType {
+		EV_SELECTION,
+		EV_STEP,
+		EV_UPDATESTATICCHRDETAILS,
+		EV_NEWCONNECTION,
+		EV_ZONECHANGE,
+		EV_PAUSE,
+
+		EV_MAX
+	};
+
+	struct Event {
+		union {
+			CharacterId characterId;
+			int64_t stepMillis;
+			Zone* updateStaticCharacterDetails;
+			Client* newClient;
+			bool zoneChanges;
+			bool pauseState;
+		} data;
+		EventType type;
+	};
+	std::vector<Event> _events;
+
 	void resetSelection();
 
 	void addChildren(const TreeNodePtr& node, std::vector<AIStateNodeStatic>& out) const;
 	void addChildren(const TreeNodePtr& node, AIStateNode& parent, const AIPtr& ai) const;
+
+	// only call these from the Server::update method
 	void broadcastState(const Zone* zone);
 	void broadcastCharacterDetails(const Zone* zone);
 	void broadcastStaticCharacterDetails(const Zone* zone);
 	void broadcastZoneNames();
+
 	void onConnect(Client* client) override;
 	void onDisconnect(Client* client) override;
+
+	void handleEvents(Zone* zone, bool pauseState);
+	void enqueueEvent(const Event& event);
 public:
 	Server(AIRegistry& aiRegistry, short port = 10001, const std::string& hostname = "0.0.0.0");
 	virtual ~Server();

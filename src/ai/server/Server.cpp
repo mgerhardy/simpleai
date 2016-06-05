@@ -67,7 +67,10 @@ bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const st
 		parent->replaceChild(nodeId, newNode);
 	}
 
-	broadcastStaticCharacterDetails(zone);
+	Event event;
+	event.type = EV_UPDATESTATICCHRDETAILS;
+	event.data.updateStaticCharacterDetails = zone;
+	enqueueEvent(event);
 	return true;
 }
 
@@ -98,7 +101,10 @@ bool Server::addNode(const CharacterId& characterId, int32_t parentNodeId, const
 	if (!node->addChild(newNode))
 		return false;
 
-	broadcastStaticCharacterDetails(zone);
+	Event event;
+	event.type = EV_UPDATESTATICCHRDETAILS;
+	event.data.updateStaticCharacterDetails = zone;
+	enqueueEvent(event);
 	return true;
 }
 
@@ -118,29 +124,23 @@ bool Server::deleteNode(const CharacterId& characterId, int32_t nodeId) {
 		return false;
 	}
 	parent->replaceChild(nodeId, TreeNodePtr());
-	broadcastStaticCharacterDetails(zone);
+	Event event;
+	event.type = EV_UPDATESTATICCHRDETAILS;
+	event.data.updateStaticCharacterDetails = zone;
+	enqueueEvent(event);
 	return true;
 }
 
+void Server::enqueueEvent(const Event& event) {
+	ScopedWriteLock scopedLock(_lock);
+	_events.push_back(event);
+}
+
 void Server::step(int64_t stepMillis) {
-	Zone* zone = _zone;
-	if (zone == nullptr)
-		return;
-
-	if (!_pause)
-		return;
-
-	auto func = [=] (const AIPtr& ai) {
-		if (!ai->isPause())
-			return;
-		ai->setPause(false);
-		ai->update(stepMillis, true);
-		ai->getBehaviour()->execute(ai, stepMillis);
-		ai->setPause(true);
-	};
-	zone->executeParallel(func);
-	broadcastState(zone);
-	broadcastCharacterDetails(zone);
+	Event event;
+	event.type = EV_STEP;
+	event.data.stepMillis = stepMillis;
+	enqueueEvent(event);
 }
 
 void Server::reset() {
@@ -154,37 +154,17 @@ void Server::reset() {
 }
 
 void Server::select(const ClientId& /*clientId*/, const CharacterId& id) {
-	Zone* zone = _zone;
-	if (zone == nullptr) {
-		resetSelection();
-		return;
-	}
-
-	resetSelection();
-	_selectedCharacterId = id;
-	broadcastStaticCharacterDetails(zone);
-	if (_pause) {
-		broadcastState(zone);
-		broadcastCharacterDetails(zone);
-	}
+	Event event;
+	event.type = EV_SELECTION;
+	event.data.characterId = id;
+	enqueueEvent(event);
 }
 
 void Server::onConnect(Client* client) {
-	_network.sendToClient(client, AIPauseMessage(_pause));
-	std::vector<std::string> names;
-	{
-		ScopedReadLock scopedLock(_lock);
-		for (const Zone* zone : _zones) {
-			names.push_back(zone->getName());
-		}
-	}
-	const AINamesMessage msg(names);
-	_network.sendToClient(client, msg);
-
-	Zone* zone = _zone;
-	if (zone == nullptr)
-		return;
-	broadcastStaticCharacterDetails(zone);
+	Event event;
+	event.type = EV_NEWCONNECTION;
+	event.data.newClient = client;
+	enqueueEvent(event);
 }
 
 void Server::onDisconnect(Client* /*client*/) {
@@ -212,19 +192,10 @@ bool Server::start() {
 }
 
 void Server::pause(const ClientId& /*clientId*/, bool state) {
-	Zone* zone = _zone;
-	if (zone == nullptr)
-		return;
-	_pause = state;
-	auto func = [=] (const AIPtr& ai) {
-		ai->setPause(state);
-	};
-	zone->executeParallel(func);
-	_network.broadcast(AIPauseMessage(state));
-	if (state) {
-		broadcastState(zone);
-		broadcastCharacterDetails(zone);
-	}
+	Event event;
+	event.type = EV_PAUSE;
+	event.data.pauseState = state;
+	enqueueEvent(event);
 }
 
 void Server::addChildren(const TreeNodePtr& node, std::vector<AIStateNodeStatic>& out) const {
@@ -313,16 +284,96 @@ void Server::broadcastCharacterDetails(const Zone* zone) {
 	}
 }
 
+void Server::handleEvents(Zone* zone, bool pauseState) {
+	std::vector<Event> events;
+	{
+		ScopedReadLock scopedLock(_lock);
+		events = std::move(_events);
+		_events.clear();
+	}
+	for (const Event& event : events) {
+		switch (event.type) {
+		case EV_SELECTION:
+			if (zone == nullptr) {
+				resetSelection();
+			} else {
+				_selectedCharacterId = event.data.characterId;
+				broadcastStaticCharacterDetails(zone);
+				if (pauseState) {
+					broadcastState(zone);
+					broadcastCharacterDetails(zone);
+				}
+			}
+			break;
+		case EV_STEP: {
+			const int64_t queuedStepMillis = event.data.stepMillis;
+			auto func = [=] (const AIPtr& ai) {
+				if (!ai->isPause())
+					return;
+				ai->setPause(false);
+				ai->update(queuedStepMillis, true);
+				ai->getBehaviour()->execute(ai, queuedStepMillis);
+				ai->setPause(true);
+			};
+			zone->executeParallel(func);
+			broadcastState(zone);
+			broadcastCharacterDetails(zone);
+			break;
+		}
+		case EV_PAUSE: {
+			_pause = event.data.pauseState;
+			if (zone != nullptr) {
+				auto func = [=] (const AIPtr& ai) {
+					ai->setPause(pauseState);
+				};
+				zone->executeParallel(func);
+				_network.broadcast(AIPauseMessage(pauseState));
+				// send the last time the most recent state until we unpause
+				if (pauseState) {
+					broadcastState(zone);
+					broadcastCharacterDetails(zone);
+				}
+			}
+			break;
+		}
+		case EV_UPDATESTATICCHRDETAILS:
+			broadcastStaticCharacterDetails(event.data.updateStaticCharacterDetails);
+			break;
+		case EV_NEWCONNECTION: {
+			_network.sendToClient(event.data.newClient, AIPauseMessage(pauseState));
+			std::vector<std::string> names;
+			{
+				ScopedReadLock scopedLock(_lock);
+				names = _names;
+			}
+			const AINamesMessage msg(names);
+			_network.sendToClient(event.data.newClient, msg);
+			break;
+		}
+		case EV_ZONECHANGE:
+			broadcastZoneNames();
+			break;
+		case EV_MAX:
+			break;
+		}
+	}
+}
+
 void Server::update(int64_t deltaTime) {
+	// TODO: don't send stuff twice - maintain a bitmask to skip duplicated messages
 	_time += deltaTime;
 	const int clients = _network.getConnectedClients();
 	Zone* zone = _zone;
+	bool pauseState = _pause;
+
+	handleEvents(zone, pauseState);
+
 	if (clients > 0 && zone != nullptr) {
-		if (!_pause) {
+		if (!pauseState) {
 			broadcastState(zone);
 			broadcastCharacterDetails(zone);
 		}
-	} else if (_pause) {
+	} else if (pauseState) {
 		pause(1, false);
 		resetSelection();
 	}
@@ -351,7 +402,12 @@ void Server::setDebug(const std::string& zoneName) {
 }
 
 void Server::broadcastZoneNames() {
-	const AINamesMessage msg(_names);
+	std::vector<std::string> names;
+	{
+		ScopedReadLock scopedLock(_lock);
+		names = _names;
+	}
+	const AINamesMessage msg(names);
 	_network.broadcast(msg);
 }
 
@@ -368,7 +424,10 @@ void Server::addZone(Zone* zone) {
 			_names.push_back(z->getName());
 		}
 	}
-	broadcastZoneNames();
+	Event event;
+	event.type = EV_ZONECHANGE;
+	event.data.zoneChanges = true;
+	enqueueEvent(event);
 }
 
 void Server::removeZone(Zone* zone) {
@@ -387,7 +446,10 @@ void Server::removeZone(Zone* zone) {
 			_names.push_back(z->getName());
 		}
 	}
-	broadcastZoneNames();
+	Event event;
+	event.type = EV_ZONECHANGE;
+	event.data.zoneChanges = true;
+	enqueueEvent(event);
 }
 
 }
