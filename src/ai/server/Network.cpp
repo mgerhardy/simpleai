@@ -123,8 +123,12 @@ Network::ClientSocketsIter Network::closeClient(ClientSocketsIter& iter) {
 }
 
 bool Network::sendMessage(Client& client) {
+	if (client.out.empty()) {
+		return true;
+	}
+
+	std::array<uint8_t, 16384> buf;
 	while (!client.out.empty()) {
-		static std::array<uint8_t, 16384> buf;
 		const std::size_t len = std::min(buf.size(), client.out.size());
 		std::copy_n(client.out.begin(), len, buf.begin());
 		const SOCKET clientSocket = client.socket;
@@ -190,15 +194,13 @@ void Network::update(int64_t deltaTime) {
 		}
 
 		if (FD_ISSET(clientSocket, &readFDsOut)) {
-			static uint8_t buf[16384];
-			const ssize_t len = recv(clientSocket, buf, sizeof(buf), 0);
+			std::array<uint8_t, 16384> buf;
+			const ssize_t len = recv(clientSocket, &buf[0], buf.size(), 0);
 			if (len < 0) {
 				i = closeClient(i);
 				continue;
 			}
-			for (ssize_t n = 0; n < len; ++n) {
-				client.in.push_back(buf[n]);
-			}
+			std::copy_n(buf.begin(), len, std::back_inserter(client.in));
 		}
 
 		ProtocolMessageFactory& factory = ProtocolMessageFactory::get();
