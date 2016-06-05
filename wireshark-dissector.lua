@@ -32,20 +32,29 @@ PROTO[10] = "PROTO_UPDATENODE"
 PROTO[11] = "PROTO_DELETENODE"
 PROTO[12] = "PROTO_ADDNODE"
 
+-- node state id lookup table
+NODESTATE = {}
+NODESTATE[0] = "UNKNOWN"
+NODESTATE[1] = "CANNOTEXECUTE"
+NODESTATE[2] = "RUNNING"
+NODESTATE[3] = "FINISHED"
+NODESTATE[4] = "FAILED"
+NODESTATE[5] = "EXCEPTION"
+
 simpleai = Proto("simpleai", "SimpleAI remote debugger")
 
 local fields = simpleai.fields
 fields.msgsize = ProtoField.uint32("simpleai.msgsize", "Message Size")
 fields.msgid = ProtoField.uint8("simpleai.msgid", "Message Id")
 fields.fieldZoneNamesAmount = ProtoField.uint32("simpleai.zonenames.amount", "Number of zone names")
-fields.fieldZoneNamesName = ProtoField.string("simpleai.zonenames.name", "Zone name")
+fields.fieldZoneNamesName = ProtoField.stringz("simpleai.zonenames.name", "Zone name")
 
 fields.fieldStatesAmount = ProtoField.uint32("simpleai.states.amount", "Number of states")
 fields.fieldStatesId = ProtoField.uint32("simpleai.states.id", "Node id")
 fields.fieldStatesX = ProtoField.float("simpleai.states.x", "X position of the entity")
 fields.fieldStatesY = ProtoField.float("simpleai.states.y", "Y position of the entity")
 fields.fieldStatesZ = ProtoField.float("simpleai.states.z", "Z position of the entity")
-fields.fieldStateOrientation = ProtoField.float("simpleai.states.orientation", "Orientation of the entity")
+fields.fieldStatesOrientation = ProtoField.float("simpleai.states.orientation", "Orientation of the entity")
 fields.fieldStatesAttributesCount = ProtoField.uint16("simpleai.states.attribcount", "Attribute count")
 fields.fieldStatesAttributesKey = ProtoField.stringz("simpleai.states.attribkey", "Key")
 fields.fieldStatesAttributesValue = ProtoField.stringz("simpleai.states.attribvalue", "Value")
@@ -65,8 +74,10 @@ fields.fieldDetailsAggroChrId = ProtoField.uint32("simpleai.details.aggrochrid",
 fields.fieldDetailsAggroAmount = ProtoField.float("simpleai.details.aggroamount", "Aggro amount")
 fields.fieldDetailsNodeId = ProtoField.uint32("simpleai.details.id", "Node id")
 fields.fieldDetailsNodeCondition = ProtoField.stringz("simpleai.details.condition", "Condition")
-fields.fieldDetailsNodeLastRun = ProtoField.int64("simpleai.details.lastrun", "Last run")
-fields.fieldDetailsChildrenCount = ProtoField.int64("simpleai.details.childrencount", "Amount of children")
+fields.fieldDetailsNodeLastRun = ProtoField.uint64("simpleai.details.lastrun", "Last run")
+fields.fieldDetailsNodeActive = ProtoField.bool("simpleai.details.active", "Active")
+fields.fieldDetailsNodeState = ProtoField.bool("simpleai.details.state", "State")
+fields.fieldDetailsChildrenCount = ProtoField.uint16("simpleai.details.childrencount", "Amount of children")
 
 fields.fieldSelectCharacterId = ProtoField.uint32("simpleai.select.chrid", "Character id")
 
@@ -83,81 +94,107 @@ function disPingMessage(buffer, tree)
 end
 
 function disStateMessage(buffer, tree)
-	tree:add(simpleai.fields.fieldStatesAmount, buffer(0, 4))
 	local count = buffer(0, 4):le_uint()
+	tree:add(simpleai.fields.fieldStatesAmount, count)
 	local offset = 4
+	local maintree = tree:add('States')
 	for i = 1, count do
-		tree:add(simpleai.fields.fieldStatesId, buffer(offset, 4))
+		local statesId = buffer(offset, 4):le_uint();
+		local subtree = maintree:add('State ' .. statesId)
+		subtree:add(simpleai.fields.fieldStatesId, statesId)
 		offset = offset + 4
-		tree:add(simpleai.fields.fieldStatesX, buffer(offset, 4))
+		local subtreepos = subtree:add('Position')
+		subtreepos:add(simpleai.fields.fieldStatesX, buffer(offset, 4):float())
 		offset = offset + 4
-		tree:add(simpleai.fields.fieldStatesY, buffer(offset, 4))
+		subtreepos:add(simpleai.fields.fieldStatesY, buffer(offset, 4):float())
 		offset = offset + 4
-		tree:add(simpleai.fields.fieldStatesZ, buffer(offset, 4))
+		subtreepos:add(simpleai.fields.fieldStatesZ, buffer(offset, 4):float())
 		offset = offset + 4
-		tree:add(simpleai.fields.fieldStatesOrientation, buffer(offset, 4))
+		subtree:add(simpleai.fields.fieldStatesOrientation, buffer(offset, 4):float())
 		offset = offset + 4
 		local attributesCount = buffer(offset, 2):le_uint()
-		tree:add(simpleai.fields.fieldStatesAttributesCount, buffer(offset, 2))
+		subtree:add(simpleai.fields.fieldStatesAttributesCount, attributesCount)
 		offset = offset + 2
+		local attribsubtree = subtree:add('Attributes')
 		for i = 1, attributesCount do
-			tree:add(simpleai.fields.fieldStatesAttributesKey, buffer(offset))
-			offset = offset + buffer(offset):stringz():len()
-			tree:add(simpleai.fields.fieldStatesAttributesValue, buffer(offset))
-			offset = offset + buffer(offset):stringz():len()
+			local key = buffer(offset):stringz();
+			attribsubtree:add(simpleai.fields.fieldStatesAttributesKey, key)
+			offset = offset + key:len() + 1
+			local value = buffer(offset):stringz();
+			attribsubtree:add(simpleai.fields.fieldStatesAttributesValue, value)
+			offset = offset + value:len() + 1
 		end
 	end
 end
 
 function disCharacterStaticMessage(buffer, tree)
-	tree:add(simpleai.fields.fieldStaticCharacterId, buffer(0, 4))
+	tree:add(simpleai.fields.fieldStaticCharacterId, buffer(0, 4):le_uint())
 	local count = buffer(4, 4):le_uint()
-	tree:add(simpleai.fields.fieldStaticNodeCount, buffer(4, 4))
+	tree:add(simpleai.fields.fieldStaticNodeCount, count)
 	local offset = 8
+	local mainsubtree = tree:add('Nodes')
 	for i = 1, count do
-		tree:add(simpleai.fields.fieldStaticNodeId, buffer(offset, 4))
+		local nodeId = buffer(offset, 4):le_uint();
+		local subtree = mainsubtree:add('Node ' .. nodeId)
+		subtree:add(simpleai.fields.fieldStaticNodeId, nodeId)
 		offset = offset + 4
-		tree:add(simpleai.fields.fieldStaticNodeName, buffer(offset))
-		offset = offset + buffer(offset):stringz():len()
-		tree:add(simpleai.fields.fieldStaticNodeType, buffer(offset))
-		offset = offset + buffer(offset):stringz():len()
-		tree:add(simpleai.fields.fieldStaticParameters, buffer(offset))
-		offset = offset + buffer(offset):stringz():len()
-		tree:add(simpleai.fields.fieldStaticConditionType, buffer(offset))
-		offset = offset + buffer(offset):stringz():len()
-		tree:add(simpleai.fields.fieldStaticConditionParameters, buffer(offset))
-		offset = offset + buffer(offset):stringz():len()
+		local nodename = buffer(offset):stringz();
+		subtree:add(simpleai.fields.fieldStaticNodeName, nodename)
+		offset = offset + nodename:len() + 1
+		local nodetype = buffer(offset):stringz();
+		subtree:add(simpleai.fields.fieldStaticNodeType, nodetype)
+		offset = offset + nodetype:len() + 1
+		local params = buffer(offset):stringz();
+		subtree:add(simpleai.fields.fieldStaticParameters, params)
+		offset = offset + params:len() + 1
+		local conditiontype = buffer(offset):stringz();
+		subtree:add(simpleai.fields.fieldStaticConditionType, conditiontype)
+		offset = offset + conditiontype:len() + 1
+		local conditionparameters = buffer(offset):stringz();
+		subtree:add(simpleai.fields.fieldStaticConditionParameters, conditionparameters)
+		offset = offset + conditionparameters:len() + 1
 	end
 end
 
 function disCharacterDetailsMessageNode(buffer, tree, offset)
-	tree:add(simpleai.fields.fieldDetailsNodeId, buffer(offset, 4))
+	local initOffset = offset
+	tree:add(simpleai.fields.fieldDetailsNodeId, buffer(offset, 4):le_uint())
 	offset = offset + 4
-	tree:add(simpleai.fields.fieldDetailsNodeCondition, buffer(offset))
-	offset = offset + buffer(offset):stringz():len()
-	tree:add(simpleai.fields.fieldDetailsNodeLastRun, buffer(offset, 8))
-	offset = offset + 8
+	local nodecondition = buffer(offset):stringz()
+	tree:add(simpleai.fields.fieldDetailsNodeCondition, nodecondition)
+	offset = offset + nodecondition:len() + 1
+	tree:add(simpleai.fields.fieldDetailsNodeLastRun, buffer(offset, 8):le_uint64())
+	offset = 8 + offset
+	local nodeState = buffer(offset, 1):le_uint()
+	local nodename = NODESTATE[nodeState];
+	tree:add(simpleai.fields.fieldDetailsNodeState, nodename)
+	offset = offset + 1
+	local nodeisactive = buffer(offset, 1):le_uint()
+	tree:add(simpleai.fields.fieldDetailsNodeActive, nodeisactive)
+	offset = offset + 1
 	local childrenCount = buffer(offset, 2):le_uint()
-	tree:add(simpleai.fields.fieldDetailsChildrenCount, buffer(offset, 2))
+	tree:add(simpleai.fields.fieldDetailsChildrenCount, childrenCount)
 	offset = offset + 2
+	local subtree = tree:add('Children')
 	for i = 1, childrenCount do
-		fields.advance = disCharacterDetailsMessageNode(buffer, tree, offset)
+		local advance = disCharacterDetailsMessageNode(buffer, subtree, offset)
 		offset = offset + advance
 	end
-	return offset
+	return offset - initOffset
 end
 
 function disCharacterDetailsMessage(buffer, tree)
-	tree:add(simpleai.fields.fieldDetailsCharacterId, buffer(0, 4))
+	tree:add(simpleai.fields.fieldDetailsCharacterId, buffer(0, 4):le_uint())
 
 	-- read the aggro
 	local aggroCount = buffer(4, 2):le_uint()
-	tree:add(simpleai.fields.fieldDetailsAggroCount, buffer(4, 2))
+	tree:add(simpleai.fields.fieldDetailsAggroCount, aggroCount)
 	local offset = 6
+	local subtree = tree:add('Aggro')
 	for i = 1, aggroCount do
-		tree:add(simpleai.fields.fieldDetailsAggroChrId, buffer(offset, 4))
+		subtree:add(simpleai.fields.fieldDetailsAggroChrId, buffer(offset, 4):le_uint())
 		offset = offset + 4
-		tree:add(simpleai.fields.fieldDetailsAggroAmount, buffer(offset, 4))
+		subtree:add(simpleai.fields.fieldDetailsAggroAmount, buffer(offset, 4):le_uint())
 		offset = offset + 4
 	end
 
@@ -166,24 +203,26 @@ function disCharacterDetailsMessage(buffer, tree)
 end
 
 function disSelectMessage(buffer, tree)
-	tree:add(simpleai.fields.fieldSelectCharacterId, buffer(0, 4))
+	tree:add(simpleai.fields.fieldSelectCharacterId, buffer(0, 4):le_uint())
 end
 
 function disPauseMessage(buffer, tree)
-	tree:add(simpleai.fields.fieldPauseState, buffer(0, 1))
+	tree:add(simpleai.fields.fieldPauseState, buffer(0, 1):le_uint())
 end
 
 function disChangeMessage(buffer, tree)
-	tree:add(simpleai.fields.fieldChangeName, buffer(0))
+	tree:add(simpleai.fields.fieldChangeName, buffer(0):stringz())
 end
 
 function disNamesMessage(buffer, tree)
-	tree:add(simpleai.fields.fieldZoneNamesAmount, buffer(0, 4))
 	local count = buffer(0, 4):le_uint()
+	tree:add(simpleai.fields.fieldZoneNamesAmount, count)
 	local offset = 4
+	local subtree = tree:add('Zones')
 	for i = 1, count do
-		tree:add(simpleai.fields.fieldZoneNamesName, buffer(offset))
-		offset = offset + buffer(offset):stringz():len()
+		local name = buffer(offset):stringz()
+		subtree:add(simpleai.fields.fieldZoneNamesName, name)
+		offset = offset + name:len() + 1
 	end
 end
 
@@ -192,7 +231,7 @@ function disResetMessage(buffer, tree)
 end
 
 function disStepMessage(buffer, tree)
-	tree:add(simpleai.fields.fieldStepMillis, buffer(0, 8))
+	tree:add(simpleai.fields.fieldStepMillis, buffer(0, 8):le_uint64())
 end
 
 function disUpdateNodeMessage(buffer, tree)
@@ -211,15 +250,15 @@ function disMessage(buffer, pinfo, tree)
 	local name = PROTO[id]
 
 	if name == nil then
-		pinfo.cols.info:append("Type: unknown message type " .. id)
+		pinfo.cols.info:append("Type: unknown message type (" .. id .. ") ")
 		subtree:add_expert_info(PI_MALFORMED, PI_ERROR, "Unknown message type " .. id)
 		return
 	end
 
-	pinfo.cols.info:append("Type: " .. name .. ", Id_ " .. id)
+	pinfo.cols.info:append("Type: " .. name .. " (" .. id .. ") ")
 
 	local treeitemName = subtree:add(simpleai.fields.msgtype, name)
-	treeitemName:set_text("Type: " .. name .. ", Id_ " .. id)
+	treeitemName:set_text("Type: " .. name .. " (" .. id .. ") ")
 
 	local msgBuffer = buffer(1)
 	if id == 0 then
@@ -258,17 +297,17 @@ function simpleai.dissector(buffer, pinfo, tree)
 
 	repeat
 		if buffer:len() - length >= minlen then
-			local msglength = buffer(length, 4):le_uint() + minlen
-			length = length + msglength
+			local msglength = buffer(length, 4):le_uint()
+			length = length + 4 + msglength
 
 			if length > buffer:len() then
 				pinfo.desegment_len = length - buffer:len()
 				return
 			end
 
-
 			pinfo.cols.protocol = simpleai.name
 
+			offset = offset + 4;
 			disMessage(buffer(offset, msglength), pinfo, tree)
 			offset = offset + msglength
 		else
