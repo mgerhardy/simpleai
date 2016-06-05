@@ -183,7 +183,7 @@ void Server::handleEvents(Zone* zone, bool pauseState) {
 	for (Event& event : events) {
 		switch (event.type) {
 		case EV_SELECTION: {
-			if (zone == nullptr) {
+			if (zone == nullptr || event.data.characterId == AI_NOTHING_SELECTED) {
 				resetSelection();
 			} else {
 				_selectedCharacterId = event.data.characterId;
@@ -218,15 +218,16 @@ void Server::handleEvents(Zone* zone, bool pauseState) {
 			break;
 		}
 		case EV_PAUSE: {
-			_pause = event.data.pauseState;
+			const bool newPauseState = event.data.pauseState;
+			_pause = newPauseState;
 			if (zone != nullptr) {
 				auto func = [=] (const AIPtr& ai) {
-					ai->setPause(event.data.pauseState);
+					ai->setPause(newPauseState);
 				};
 				zone->executeParallel(func);
-				_network.broadcast(AIPauseMessage(event.data.pauseState));
+				_network.broadcast(AIPauseMessage(newPauseState));
 				// send the last time the most recent state until we unpause
-				if (event.data.pauseState) {
+				if (newPauseState) {
 					broadcastState(zone);
 					broadcastCharacterDetails(zone);
 				}
@@ -239,8 +240,7 @@ void Server::handleEvents(Zone* zone, bool pauseState) {
 		}
 		case EV_NEWCONNECTION: {
 			_network.sendToClient(event.data.newClient, AIPauseMessage(pauseState));
-			const AINamesMessage msg(_names);
-			_network.sendToClient(event.data.newClient, msg);
+			_network.sendToClient(event.data.newClient, AINamesMessage(_names));
 			break;
 		}
 		case EV_ZONEADD: {
