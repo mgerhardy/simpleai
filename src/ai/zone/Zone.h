@@ -211,15 +211,16 @@ public:
 	template<typename Func>
 	void executeParallel(Func& func) {
 		std::vector<std::future<void> > results;
-		{
-			ScopedReadLock scopedLock(_lock);
-			for (auto i = _ais.begin(); i != _ais.end(); ++i) {
-				const AIPtr& ai = i->second;
-				results.emplace_back(executeAsync(ai, func));
-			}
+		_lock.lockRead();
+		AIMap copy(_ais);
+		_lock.unlockRead();
+		for (auto i = copy.begin(); i != _ais.end(); ++i) {
+			const AIPtr& ai = i->second;
+			results.emplace_back(executeAsync(ai, func));
 		}
-		for (auto && result: results)
+		for (auto && result: results) {
 			result.wait();
+		}
 	}
 
 	/**
@@ -232,15 +233,16 @@ public:
 	template<typename Func>
 	void executeParallel(const Func& func) const {
 		std::vector<std::future<void> > results;
-		{
-			ScopedReadLock scopedLock(_lock);
-			for (auto i = _ais.begin(); i != _ais.end(); ++i) {
-				const AIPtr& ai = i->second;
-				results.emplace_back(executeAsync(ai, func));
-			}
+		_lock.lockRead();
+		AIMap copy(_ais);
+		_lock.unlockRead();
+		for (auto i = copy.begin(); i != copy.end(); ++i) {
+			const AIPtr& ai = i->second;
+			results.emplace_back(executeAsync(ai, func));
 		}
-		for (auto && result: results)
+		for (auto && result: results) {
 			result.wait();
+		}
 	}
 
 	/**
@@ -251,8 +253,10 @@ public:
 	 */
 	template<typename Func>
 	void execute(const Func& func) const {
-		ScopedReadLock scopedLock(_lock);
-		for (auto i = _ais.begin(); i != _ais.end(); ++i) {
+		_lock.lockRead();
+		AIMap copy(_ais);
+		_lock.unlockRead();
+		for (auto i = copy.begin(); i != copy.end(); ++i) {
 			const AIPtr& ai = i->second;
 			func(ai);
 		}
@@ -266,8 +270,10 @@ public:
 	 */
 	template<typename Func>
 	void execute(Func& func) {
-		ScopedReadLock scopedLock(_lock);
-		for (auto i = _ais.begin(); i != _ais.end(); ++i) {
+		_lock.lockRead();
+		AIMap copy(_ais);
+		_lock.unlockRead();
+		for (auto i = copy.begin(); i != copy.end(); ++i) {
 			const AIPtr& ai = i->second;
 			func(ai);
 		}
