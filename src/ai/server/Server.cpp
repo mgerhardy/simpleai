@@ -353,12 +353,12 @@ void Server::handleEvents(Zone* zone, bool pauseState) {
 			_pause = event.data.pauseState;
 			if (zone != nullptr) {
 				auto func = [=] (const AIPtr& ai) {
-					ai->setPause(pauseState);
+					ai->setPause(event.data.pauseState);
 				};
 				zone->executeParallel(func);
-				_network.broadcast(AIPauseMessage(pauseState));
+				_network.broadcast(AIPauseMessage(event.data.pauseState));
 				// send the last time the most recent state until we unpause
-				if (pauseState) {
+				if (event.data.pauseState) {
 					broadcastState(zone);
 					broadcastCharacterDetails(zone);
 				}
