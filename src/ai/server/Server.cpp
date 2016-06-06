@@ -121,6 +121,9 @@ void Server::broadcastStaticCharacterDetails(const Zone* zone) {
 	}
 
 	static const auto func = [&] (const AIPtr& ai) {
+		if (!ai) {
+			return false;
+		}
 		std::vector<AIStateNodeStatic> nodeStaticData;
 		const TreeNodePtr& node = ai->getBehaviour();
 		const int32_t nodeId = node->getId();
@@ -129,8 +132,9 @@ void Server::broadcastStaticCharacterDetails(const Zone* zone) {
 
 		const AICharacterStaticMessage msgStatic(ai->getId(), nodeStaticData);
 		_network.broadcast(msgStatic);
+		return true;
 	};
-	if (!zone->executeAsync(id, func)) {
+	if (!zone->execute(id, func)) {
 		resetSelection();
 	}
 }
@@ -143,6 +147,9 @@ void Server::broadcastCharacterDetails(const Zone* zone) {
 	}
 
 	static const auto func = [&] (const AIPtr& ai) {
+		if (!ai) {
+			return false;
+		}
 		const TreeNodePtr& node = ai->getBehaviour();
 		const int32_t nodeId = node->getId();
 		const ConditionPtr& condition = node->getCondition();
@@ -159,8 +166,9 @@ void Server::broadcastCharacterDetails(const Zone* zone) {
 
 		const AICharacterDetailsMessage msg(ai->getId(), aggro, root);
 		_network.broadcast(msg);
+		return true;
 	};
-	if (!zone->executeAsync(id, func)) {
+	if (!zone->execute(id, func)) {
 		resetSelection();
 	}
 }
