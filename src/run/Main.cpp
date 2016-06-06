@@ -301,6 +301,11 @@ int main(int argc, char **argv) {
 
 		handleInput(filename, maps);
 	}
+
+	for (ai::example::GameMap* map : maps) {
+		delete map;
+	}
+
 #ifdef AI_PROFILER
 	ProfilerStop();
 #endif
