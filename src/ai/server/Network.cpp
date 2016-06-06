@@ -31,7 +31,7 @@
 namespace ai {
 
 Network::Network(uint16_t port, const std::string& hostname) :
-		_port(port), _hostname(hostname), _socketFD(INVALID_SOCKET), _time(0L), _lock("network") {
+		_port(port), _hostname(hostname), _socketFD(INVALID_SOCKET), _time(0L) {
 	FD_ZERO(&_readFDSet);
 	FD_ZERO(&_writeFDSet);
 }
@@ -172,7 +172,6 @@ void Network::update(int64_t deltaTime) {
 	}
 
 	ClientId clientId = 0;
-	ScopedReadLock lock(_lock);
 	for (ClientSocketsIter i = _clientSockets.begin(); i != _clientSockets.end(); ++clientId) {
 		Client& client = *i;
 		const SOCKET clientSocket = client.socket;
@@ -221,7 +220,6 @@ bool Network::broadcast(const IProtocolMessage& msg) {
 	_time = 0L;
 	streamContainer out;
 	msg.serialize(out);
-	ScopedReadLock lock(_lock);
 	for (ClientSocketsIter i = _clientSockets.begin(); i != _clientSockets.end(); ++i) {
 		Client& client = *i;
 		if (client.socket == INVALID_SOCKET) {

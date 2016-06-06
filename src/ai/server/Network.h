@@ -3,7 +3,6 @@
 #include "IProtocolHandler.h"
 #include "common/Thread.h"
 #include <string>
-#include <atomic>
 #include <stdint.h>
 #include <list>
 #ifdef WIN32
@@ -45,7 +44,7 @@ protected:
 	SOCKET _socketFD;
 	fd_set _readFDSet;
 	fd_set _writeFDSet;
-	std::atomic<int64_t> _time;
+	int64_t _time;
 
 	typedef std::list<Client> ClientSockets;
 	typedef ClientSockets::iterator ClientSocketsIter;
@@ -54,8 +53,6 @@ protected:
 
 	typedef std::list<INetworkListener*> Listeners;
 	Listeners _listeners;
-
-	ReadWriteLock _lock;
 
 	bool sendMessage(Client& client);
 public:
