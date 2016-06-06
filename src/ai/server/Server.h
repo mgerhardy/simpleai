@@ -63,7 +63,8 @@ protected:
 		EV_STEP,
 		EV_UPDATESTATICCHRDETAILS,
 		EV_NEWCONNECTION,
-		EV_ZONECHANGE,
+		EV_ZONEADD,
+		EV_ZONEREMOVE,
 		EV_PAUSE,
 		EV_RESET,
 		EV_SETDEBUG,
@@ -77,7 +78,6 @@ protected:
 			int64_t stepMillis;
 			Zone* zone;
 			Client* newClient;
-			bool zoneChanges;
 			bool pauseState;
 		} data;
 		std::string strData = "";

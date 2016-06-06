@@ -371,18 +371,33 @@ void Server::handleEvents(Zone* zone, bool pauseState) {
 		}
 		case EV_NEWCONNECTION: {
 			_network.sendToClient(event.data.newClient, AIPauseMessage(pauseState));
-			std::vector<std::string> names;
-			{
-				ScopedReadLock scopedLock(_lock);
-				names = _names;
-			}
-			const AINamesMessage msg(names);
+			const AINamesMessage msg(_names);
 			_network.sendToClient(event.data.newClient, msg);
 			break;
 		}
-		case EV_ZONECHANGE:
+		case EV_ZONEADD: {
+			if (!_zones.insert(event.data.zone).second) {
+				return;
+			}
+			_names.clear();
+			for (const Zone* z : _zones) {
+				_names.push_back(z->getName());
+			}
 			broadcastZoneNames();
 			break;
+		}
+		case EV_ZONEREMOVE: {
+			_zone.compare_exchange_strong(event.data.zone, nullptr);
+			if (_zones.erase(event.data.zone) != 1) {
+				return;
+			}
+			_names.clear();
+			for (const Zone* z : _zones) {
+				_names.push_back(z->getName());
+			}
+			broadcastZoneNames();
+			break;
+		}
 		case EV_SETDEBUG: {
 			if (_pause) {
 				pause(1, false);
@@ -445,53 +460,21 @@ void Server::setDebug(const std::string& zoneName) {
 }
 
 void Server::broadcastZoneNames() {
-	std::vector<std::string> names;
-	{
-		ScopedReadLock scopedLock(_lock);
-		names = _names;
-	}
-	const AINamesMessage msg(names);
+	const AINamesMessage msg(_names);
 	_network.broadcast(msg);
 }
 
 void Server::addZone(Zone* zone) {
-	{
-		ScopedWriteLock scopedLock(_lock);
-		if (!_zones.insert(zone).second)
-			return;
-	}
-	{
-		ScopedReadLock scopedLock(_lock);
-		_names.clear();
-		for (const Zone* z : _zones) {
-			_names.push_back(z->getName());
-		}
-	}
 	Event event;
-	event.type = EV_ZONECHANGE;
-	event.data.zoneChanges = true;
+	event.type = EV_ZONEADD;
+	event.data.zone = zone;
 	enqueueEvent(event);
 }
 
 void Server::removeZone(Zone* zone) {
-	if (_zone == zone)
-		_zone = nullptr;
-	{
-		ScopedWriteLock scopedLock(_lock);
-		if (_zones.erase(zone) != 1) {
-			return;
-		}
-	}
-	{
-		ScopedReadLock scopedLock(_lock);
-		_names.clear();
-		for (const Zone* z : _zones) {
-			_names.push_back(z->getName());
-		}
-	}
 	Event event;
-	event.type = EV_ZONECHANGE;
-	event.data.zoneChanges = true;
+	event.type = EV_ZONEREMOVE;
+	event.data.zone = zone;
 	enqueueEvent(event);
 }
 
