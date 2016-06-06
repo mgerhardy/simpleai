@@ -72,9 +72,9 @@ static ai::example::GameMap *createMap(int amount, ai::Server& server, const std
 
 	for (int i = 0; i < amount; ++i) {
 		auto randomIter = ai::randomElement(trees.begin(), trees.end());
-		ai::TreeNodePtr root = loader.load(*randomIter);
-		ai::ICharacterPtr e(new ai::example::GameEntity(id++, map));
-		ai::AIPtr ai(new ai::AI(root));
+		const ai::TreeNodePtr& root = loader.load(*randomIter);
+		const ai::ICharacterPtr& e = std::make_shared<ai::example::GameEntity>(id++, map);
+		const ai::AIPtr& ai = std::make_shared<ai::AI>(root);
 		ai->setCharacter(e);
 		const ai::GroupId groupId = ai::random(1, 3);
 		map->addEntity(ai, groupId);
@@ -98,9 +98,9 @@ static void runDespawnSpawn(ai::example::GameMap* map) {
 	std::vector<std::string> trees;
 	loader.getTrees(trees);
 	auto randomIter = ai::randomElement(trees.begin(), trees.end());
-	ai::TreeNodePtr root = loader.load(*randomIter);
-	ai::ICharacterPtr e(new ai::example::GameEntity(id++, map));
-	ai::AIPtr ai(new ai::AI(root));
+	const ai::TreeNodePtr& root = loader.load(*randomIter);
+	const ai::ICharacterPtr& e = std::make_shared<ai::example::GameEntity>(id++, map);
+	const ai::AIPtr& ai = std::make_shared<ai::AI>(root);
 	ai->setCharacter(e);
 	const ai::GroupId groupId = ai::random(1, 3);
 	map->addEntity(ai, groupId);
@@ -193,10 +193,9 @@ static void handleInput(const std::string& filename, const std::vector<ai::examp
 
 				auto randomIter = ai::randomElement(trees.begin(), trees.end());
 				const ai::TreeNodePtr& root = loader.load(*randomIter);
-
-				ai::ICharacterPtr chr(new ai::example::GameEntity(id++, map));
-				ai::AIPtr ai(new ai::AI(root));
-				ai->setCharacter(chr);
+				const ai::ICharacterPtr& e = std::make_shared<ai::example::GameEntity>(id++, map);
+				const ai::AIPtr& ai = std::make_shared<ai::AI>(root);
+				ai->setCharacter(e);
 				const ai::GroupId groupId = ai::random(1, 3);
 				map->addEntity(ai, groupId);
 				ai_log("spawned %i on map %s", rnd->getId(), map->getName().c_str());
@@ -207,8 +206,9 @@ static void handleInput(const std::string& filename, const std::vector<ai::examp
 			auto func = [&] (const ai::AIPtr& ai) {
 				const std::string& name = ai->getBehaviour()->getName();
 				const ai::TreeNodePtr& newRoot = loader.load(name);
-				if (!newRoot)
+				if (!newRoot) {
 					return;
+				}
 				ai->setBehaviour(newRoot);
 			};
 			for (ai::example::GameMap* map : maps) {
