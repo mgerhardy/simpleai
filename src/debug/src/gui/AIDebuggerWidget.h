@@ -84,6 +84,7 @@ private slots:
 	void bug();
 	void toggleTreeView();
 	void connectToAIServer();
+	void disconnectFromAIServer();
 	void quitApplication();
 	void requestPause();
 	void requestStep();
@@ -116,6 +117,7 @@ private:
 	QLineEdit *_entityFilter;
 	AggroTable *_aggroTable;
 	QAction *_connectAction;
+	QAction *_disconnectAction;
 	QAction *_pauseAction;
 	QAction *_quitAction;
 	QAction *_stepAction;

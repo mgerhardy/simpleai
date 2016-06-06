@@ -62,6 +62,7 @@ AIDebuggerWidget::~AIDebuggerWidget() {
 	delete _resetAction;
 	delete _stepAction;
 	delete _connectAction;
+	delete _disconnectAction;
 	delete _aboutAction;
 	delete _documentationAction;
 	delete _bugAction;
@@ -126,6 +127,7 @@ void AIDebuggerWidget::contributeToToolBar(QToolBar* toolBar) {
 
 void AIDebuggerWidget::contributeToFileMenu(QMenu *fileMenu) {
 	fileMenu->addAction(_connectAction);
+	fileMenu->addAction(_disconnectAction);
 	if (_standalone) {
 		fileMenu->addAction(_quitAction);
 	}
@@ -151,6 +153,7 @@ void AIDebuggerWidget::removeFromToolBar(QToolBar* toolBar) {
 
 void AIDebuggerWidget::removeFromFileMenu(QMenu *fileMenu) {
 	fileMenu->removeAction(_connectAction);
+	fileMenu->removeAction(_disconnectAction);
 	if (_standalone) {
 		fileMenu->removeAction(_quitAction);
 	}
@@ -330,6 +333,10 @@ void AIDebuggerWidget::quitApplication() {
 	QApplication::quit();
 }
 
+void AIDebuggerWidget::disconnectFromAIServer() {
+	_debugger.disconnectFromAIServer();
+}
+
 void AIDebuggerWidget::connectToAIServer() {
 	ConnectDialog d;
 	const int state = d.run();
@@ -365,6 +372,12 @@ void AIDebuggerWidget::toggleTreeView() {
 }
 
 void AIDebuggerWidget::createActions() {
+	_disconnectAction = new QAction(tr("Disconnect"), this);
+	_disconnectAction->setShortcuts(QKeySequence::Close);
+	_disconnectAction->setStatusTip(tr("Disconnect from AI server"));
+	_disconnectAction->setIcon(QIcon(":/images/disconnect.png"));
+	connect(_disconnectAction, SIGNAL(triggered()), this, SLOT(disconnectFromAIServer()));
+
 	_connectAction = new QAction(tr("C&onnect"), this);
 	_connectAction->setShortcuts(QKeySequence::Open);
 	_connectAction->setStatusTip(tr("Connect to AI server"));

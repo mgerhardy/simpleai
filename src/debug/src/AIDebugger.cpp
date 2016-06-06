@@ -216,7 +216,8 @@ void AIDebugger::addNode(int32_t parentNodeId, const QVariant& name, const QVari
 }
 
 bool AIDebugger::connectToAIServer(const QString& hostname, short port) {
-	_socket.disconnectFromHost();
+	disconnectFromAIServer();
+	qDebug() << "connect to server: " << hostname << ":" << port;
 	_socket.connectToHost(hostname, port, QAbstractSocket::ReadWrite, QAbstractSocket::AnyIPProtocol);
 	if (_socket.waitForConnected()) {
 		qDebug() << "Connection established " << _socket.state();
@@ -238,6 +239,12 @@ bool AIDebugger::connectToAIServer(const QString& hostname, short port) {
 		break;
 	}
 	return false;
+}
+
+bool AIDebugger::disconnectFromAIServer() {
+	qDebug() << "disconnect from server";
+	_socket.disconnectFromHost();
+	return _socket.waitForDisconnected();
 }
 
 void AIDebugger::onDisconnect() {

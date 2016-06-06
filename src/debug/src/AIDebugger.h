@@ -99,6 +99,7 @@ public:
 	 */
 	int run();
 	bool connectToAIServer(const QString& hostname, short port);
+	bool disconnectFromAIServer();
 
 	bool isSelected(const ai::AIStateWorld& ai) const;
 	const CharacterId& getSelected() const;
