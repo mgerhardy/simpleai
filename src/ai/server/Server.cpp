@@ -71,7 +71,7 @@ bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const st
 
 	Event event;
 	event.type = EV_UPDATESTATICCHRDETAILS;
-	event.data.updateStaticCharacterDetails = zone;
+	event.data.zone = zone;
 	enqueueEvent(event);
 	return true;
 }
@@ -108,7 +108,7 @@ bool Server::addNode(const CharacterId& characterId, int32_t parentNodeId, const
 
 	Event event;
 	event.type = EV_UPDATESTATICCHRDETAILS;
-	event.data.updateStaticCharacterDetails = zone;
+	event.data.zone = zone;
 	enqueueEvent(event);
 	return true;
 }
@@ -133,7 +133,7 @@ bool Server::deleteNode(const CharacterId& characterId, int32_t nodeId) {
 	parent->replaceChild(nodeId, TreeNodePtr());
 	Event event;
 	event.type = EV_UPDATESTATICCHRDETAILS;
-	event.data.updateStaticCharacterDetails = zone;
+	event.data.zone = zone;
 	enqueueEvent(event);
 	return true;
 }
@@ -176,8 +176,9 @@ void Server::onConnect(Client* client) {
 
 void Server::onDisconnect(Client* /*client*/) {
 	Zone* zone = _zone;
-	if (zone == nullptr)
+	if (zone == nullptr) {
 		return;
+	}
 
 	// if there are still connected clients left, don't disable the debug mode for the zone
 	if (_network.getConnectedClients() > 0)
@@ -346,9 +347,10 @@ void Server::handleEvents(Zone* zone, bool pauseState) {
 			}
 			break;
 		}
-		case EV_UPDATESTATICCHRDETAILS:
-			broadcastStaticCharacterDetails(event.data.updateStaticCharacterDetails);
+		case EV_UPDATESTATICCHRDETAILS: {
+			broadcastStaticCharacterDetails(event.data.zone);
 			break;
+		}
 		case EV_NEWCONNECTION: {
 			_network.sendToClient(event.data.newClient, AIPauseMessage(pauseState));
 			std::vector<std::string> names;

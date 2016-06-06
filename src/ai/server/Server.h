@@ -72,7 +72,7 @@ protected:
 		union {
 			CharacterId characterId;
 			int64_t stepMillis;
-			Zone* updateStaticCharacterDetails;
+			Zone* zone;
 			Client* newClient;
 			bool zoneChanges;
 			bool pauseState;
