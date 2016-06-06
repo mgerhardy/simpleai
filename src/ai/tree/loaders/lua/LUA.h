@@ -1,4 +1,7 @@
 #pragma once
+
+#include "common/Types.h"
+
 extern "C" {
 #include <lua.h>
 #include <lauxlib.h>
@@ -6,7 +9,6 @@ extern "C" {
 }
 #include <string>
 #include <map>
-#include <iostream>
 
 namespace {
 const std::string META_PREFIX = "META_";
@@ -81,7 +83,7 @@ public:
 
 	static void returnError (lua_State *L, const std::string& error)
 	{
-		std::cerr << "LUA error: " << error << std::endl;
+		ai_log_error("LUA error: '%s'", error.c_str());
 		luaL_error(L, "%s", error.c_str());
 	}
 

@@ -32,22 +32,24 @@ Server::~Server() {
 
 bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const std::string& name, const std::string& type, const std::string& condition) {
 	Zone* zone = _zone;
-	if (zone == nullptr)
+	if (zone == nullptr) {
 		return false;
+	}
 	const AIPtr& ai = zone->getAI(characterId);
 	const TreeNodePtr& node = ai->getBehaviour()->getId() == nodeId ? ai->getBehaviour() : ai->getBehaviour()->getChild(nodeId);
-	if (!node)
+	if (!node) {
 		return false;
+	}
 	ConditionParser conditionParser(_aiRegistry, condition);
 	const ConditionPtr& conditionPtr = conditionParser.getCondition();
 	if (!conditionPtr) {
-		std::cerr << "Failed to parse the condition '" << condition << "'" << std::endl;
+		ai_log_error("Failed to parse the condition '%s'", condition.c_str());
 		return false;
 	}
 	TreeNodeParser treeNodeParser(_aiRegistry, type);
 	TreeNodePtr newNode = treeNodeParser.getTreeNode(name);
 	if (!newNode) {
-		std::cerr << "Failed to parse the node '" << type << "'" << std::endl;
+		ai_log_error("Failed to parse the node '%s'", type.c_str());
 		return false;
 	}
 	newNode->setCondition(conditionPtr);
@@ -61,7 +63,7 @@ bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const st
 	} else {
 		const TreeNodePtr& parent = root->getParent(root, nodeId);
 		if (!parent) {
-			std::cerr << "No parent for non-root node '" << nodeId << "'" << std::endl;
+			ai_log_error("No parent for non-root node '%i'", nodeId);
 			return false;
 		}
 		parent->replaceChild(nodeId, newNode);
@@ -76,30 +78,33 @@ bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const st
 
 bool Server::addNode(const CharacterId& characterId, int32_t parentNodeId, const std::string& name, const std::string& type, const std::string& condition) {
 	Zone* zone = _zone;
-	if (zone == nullptr)
+	if (zone == nullptr) {
 		return false;
+	}
 	const AIPtr& ai = zone->getAI(characterId);
 	TreeNodePtr node = ai->getBehaviour();
 	if (node->getId() != parentNodeId) {
 		node = node->getChild(parentNodeId);
 	}
-	if (!node)
+	if (!node) {
 		return false;
+	}
 	ConditionParser conditionParser(_aiRegistry, condition);
 	const ConditionPtr& conditionPtr = conditionParser.getCondition();
 	if (!conditionPtr) {
-		std::cerr << "Failed to parse the condition '" << condition << "'" << std::endl;
+		ai_log_error("Failed to parse the condition '%s'", condition.c_str());
 		return false;
 	}
 	TreeNodeParser treeNodeParser(_aiRegistry, type);
 	TreeNodePtr newNode = treeNodeParser.getTreeNode(name);
 	if (!newNode) {
-		std::cerr << "Failed to parse the node '" << type << "'" << std::endl;
+		ai_log_error("Failed to parse the node '%s'", type.c_str());;
 		return false;
 	}
 	newNode->setCondition(conditionPtr);
-	if (!node->addChild(newNode))
+	if (!node->addChild(newNode)) {
 		return false;
+	}
 
 	Event event;
 	event.type = EV_UPDATESTATICCHRDETAILS;
@@ -110,17 +115,19 @@ bool Server::addNode(const CharacterId& characterId, int32_t parentNodeId, const
 
 bool Server::deleteNode(const CharacterId& characterId, int32_t nodeId) {
 	Zone* zone = _zone;
-	if (zone == nullptr)
+	if (zone == nullptr) {
 		return false;
+	}
 	const AIPtr& ai = zone->getAI(characterId);
 	// don't delete the root
 	const TreeNodePtr& root = ai->getBehaviour();
-	if (root->getId() == nodeId)
+	if (root->getId() == nodeId) {
 		return false;
+	}
 
 	const TreeNodePtr& parent = root->getParent(root, nodeId);
 	if (!parent) {
-		std::cerr << "No parent for non-root node '" << nodeId << "'" << std::endl;
+		ai_log_error("No parent for non-root node '%i'", nodeId);
 		return false;
 	}
 	parent->replaceChild(nodeId, TreeNodePtr());
@@ -238,8 +245,9 @@ void Server::broadcastState(const Zone* zone) {
 
 void Server::broadcastStaticCharacterDetails(const Zone* zone) {
 	const CharacterId id = _selectedCharacterId;
-	if (id == AI_NOTHING_SELECTED)
+	if (id == AI_NOTHING_SELECTED) {
 		return;
+	}
 
 	static const auto func = [&] (const AIPtr& ai) {
 		std::vector<AIStateNodeStatic> nodeStaticData;
@@ -258,8 +266,9 @@ void Server::broadcastStaticCharacterDetails(const Zone* zone) {
 
 void Server::broadcastCharacterDetails(const Zone* zone) {
 	const CharacterId id = _selectedCharacterId;
-	if (id == AI_NOTHING_SELECTED)
+	if (id == AI_NOTHING_SELECTED) {
 		return;
+	}
 
 	static const auto func = [&] (const AIPtr& ai) {
 		const TreeNodePtr& node = ai->getBehaviour();
@@ -291,9 +300,9 @@ void Server::handleEvents(Zone* zone, bool pauseState) {
 		events = std::move(_events);
 		_events.clear();
 	}
-	for (const Event& event : events) {
+	for (Event& event : events) {
 		switch (event.type) {
-		case EV_SELECTION:
+		case EV_SELECTION: {
 			if (zone == nullptr) {
 				resetSelection();
 			} else {
@@ -305,6 +314,7 @@ void Server::handleEvents(Zone* zone, bool pauseState) {
 				}
 			}
 			break;
+		}
 		case EV_STEP: {
 			const int64_t queuedStepMillis = event.data.stepMillis;
 			auto func = [=] (const AIPtr& ai) {

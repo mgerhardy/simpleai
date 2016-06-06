@@ -2,7 +2,6 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <sstream>
-#include <iostream>
 
 class StackChecker {
 private:
@@ -21,7 +20,7 @@ public:
 
 namespace {
 int panicCB(lua_State *L) {
-	std::cout << "Lua panic. Error message: " << (lua_isnil(L, -1) ? "" : lua_tostring(L, -1)) << std::endl << std::flush;
+	ai_log_error("Lua panic. Error message: %s", (lua_isnil(L, -1) ? "" : lua_tostring(L, -1)));
 	return 0;
 }
 
@@ -29,14 +28,7 @@ void debugHook(lua_State *L, lua_Debug *ar) {
 	if (!lua_getinfo(L, "Sn", ar))
 		return;
 
-	std::cout << "LUADBG: ";
-	if (ar->namewhat != nullptr)
-		std::cout << ar->namewhat << " ";
-	if (ar->name != nullptr)
-		std::cout << ar->name << " ";
-	std::cout << ar->short_src << " ";
-	std::cout << ar->currentline;
-	std::cout << std::endl << std::flush;
+	ai_log("LUADBG: %s %s %s:%i", (ar->namewhat != nullptr) ? ar->namewhat : "", (ar->name != nullptr) ? ar->name : "", ar->short_src, ar->currentline);
 }
 }
 

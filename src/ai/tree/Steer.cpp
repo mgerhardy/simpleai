@@ -1,7 +1,6 @@
 #include "Steer.h"
 #include "common/Random.h"
 #include "movement/Steering.h"
-#include <iostream>
 
 namespace ai {
 

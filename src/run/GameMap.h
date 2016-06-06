@@ -3,7 +3,6 @@
 #include "GameEntity.h"
 #include <set>
 #include <iterator>
-#include <iostream>
 #include <unordered_map>
 
 namespace ai {

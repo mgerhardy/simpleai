@@ -24,7 +24,7 @@ extern "C" int main (int argc, char **argv)
 
 #if AI_EXCEPTIONS
 	} catch (const std::exception& e) {
-		std::cerr << e.what() << std::endl;
+		ai_log_error("%s", e.what().c_str());
 		return EXIT_FAILURE;
 	}
 #endif
