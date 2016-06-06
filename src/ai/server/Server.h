@@ -107,21 +107,6 @@ public:
 	bool start();
 
 	/**
-	 * @brief Select a particular character (resp. @c AI instance) and send detail
-	 * information to all the connected clients for this entity.
-	 */
-	void select(const ClientId& clientId, const CharacterId& id);
-	/**
-	 * @brief Will pause/unpause the execution of the behaviour trees for all watched @c AI instances.
-	 */
-	void pause(const ClientId& clientId, bool pause);
-
-	/**
-	 * @brief Performs one step of the ai in pause mode
-	 */
-	void step(int64_t stepMillis = 1L);
-
-	/**
 	 * @brief Update the specified node with the given values for the specified character and all the
 	 * other characters that are using the same behaviour tree instance
 	 *
@@ -189,6 +174,23 @@ public:
 	 * @brief Resets the ai states
 	 */
 	void reset();
+
+	/**
+	 * @brief Select a particular character (resp. @c AI instance) and send detail
+	 * information to all the connected clients for this entity.
+	 */
+	void select(const ClientId& clientId, const CharacterId& id);
+
+	/**
+	 * @brief Will pause/unpause the execution of the behaviour trees for all watched @c AI instances.
+	 */
+	void pause(const ClientId& clientId, bool pause);
+
+	/**
+	 * @brief Performs one step of the ai in pause mode
+	 */
+	void step(int64_t stepMillis = 1L);
+
 	/**
 	 * @brief call this to update the server - should get called somewhere from your game tick
 	 */
