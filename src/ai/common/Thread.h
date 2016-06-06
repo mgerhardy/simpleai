@@ -11,26 +11,30 @@ namespace ai {
 class ReadWriteLock {
 private:
 	const std::string _name;
-	mutable std::recursive_mutex _mutex;
+	mutable std::atomic_flag _locked = ATOMIC_FLAG_INIT;
 public:
 	ReadWriteLock(const std::string& name) :
 			_name(name) {
 	}
 
 	inline void lockRead() const {
-		_mutex.lock();
+		while (_locked.test_and_set(std::memory_order_acquire)) {
+			std::this_thread::yield();
+		}
 	}
 
 	inline void unlockRead() const {
-		_mutex.unlock();
+		_locked.clear(std::memory_order_release);
 	}
 
 	inline void lockWrite() {
-		_mutex.lock();
+		while (_locked.test_and_set(std::memory_order_acquire)) {
+			std::this_thread::yield();
+		}
 	}
 
 	inline void unlockWrite() {
-		_mutex.unlock();
+		_locked.clear(std::memory_order_release);
 	}
 };
 
