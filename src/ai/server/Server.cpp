@@ -157,12 +157,13 @@ void Server::step(int64_t stepMillis) {
 
 void Server::reset() {
 	Zone* zone = _zone;
-	if (zone == nullptr)
+	if (zone == nullptr) {
 		return;
-	static auto func = [] (const AIPtr& ai) {
-		ai->getBehaviour()->resetState(ai);
-	};
-	zone->executeParallel(func);
+	}
+	Event event;
+	event.type = EV_RESET;
+	event.data.zone = zone;
+	enqueueEvent(event);
 }
 
 void Server::select(const ClientId& /*clientId*/, const CharacterId& id) {
@@ -338,6 +339,13 @@ void Server::handleEvents(Zone* zone, bool pauseState) {
 			broadcastCharacterDetails(zone);
 			break;
 		}
+		case EV_RESET: {
+			static auto func = [] (const AIPtr& ai) {
+				ai->getBehaviour()->resetState(ai);
+			};
+			event.data.zone->executeParallel(func);
+			break;
+		}
 		case EV_PAUSE: {
 			_pause = event.data.pauseState;
 			if (zone != nullptr) {
@@ -372,6 +380,24 @@ void Server::handleEvents(Zone* zone, bool pauseState) {
 		case EV_ZONECHANGE:
 			broadcastZoneNames();
 			break;
+		case EV_SETDEBUG: {
+			if (_pause) {
+				pause(1, false);
+			}
+
+			_zone = nullptr;
+			resetSelection();
+
+			for (Zone* z : _zones) {
+				const bool debug = z->getName() == event.strData;
+				z->setDebug(debug);
+				if (debug) {
+					_zone = z;
+				}
+			}
+
+			break;
+		}
 		case EV_MAX:
 			break;
 		}
@@ -409,20 +435,10 @@ void Server::resetSelection() {
 }
 
 void Server::setDebug(const std::string& zoneName) {
-	if (_pause) {
-		pause(1, false);
-	}
-
-	_zone = nullptr;
-	resetSelection();
-
-	ScopedReadLock scopedLock(_lock);
-	for (Zone* zone : _zones) {
-		const bool debug = zone->getName() == zoneName;
-		zone->setDebug(debug);
-		if (debug)
-			_zone = zone;
-	}
+	Event event;
+	event.type = EV_SETDEBUG;
+	event.strData = zoneName;
+	enqueueEvent(event);
 }
 
 void Server::broadcastZoneNames() {

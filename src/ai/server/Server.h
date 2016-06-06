@@ -65,6 +65,8 @@ protected:
 		EV_NEWCONNECTION,
 		EV_ZONECHANGE,
 		EV_PAUSE,
+		EV_RESET,
+		EV_SETDEBUG,
 
 		EV_MAX
 	};
@@ -78,6 +80,7 @@ protected:
 			bool zoneChanges;
 			bool pauseState;
 		} data;
+		std::string strData = "";
 		EventType type;
 	};
 	std::vector<Event> _events;
