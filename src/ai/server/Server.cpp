@@ -35,142 +35,9 @@ Server::~Server() {
 	_network.removeListener(this);
 }
 
-bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const std::string& name, const std::string& type, const std::string& condition) {
-	Zone* zone = _zone;
-	if (zone == nullptr) {
-		return false;
-	}
-	const AIPtr& ai = zone->getAI(characterId);
-	const TreeNodePtr& node = ai->getBehaviour()->getId() == nodeId ? ai->getBehaviour() : ai->getBehaviour()->getChild(nodeId);
-	if (!node) {
-		return false;
-	}
-	ConditionParser conditionParser(_aiRegistry, condition);
-	const ConditionPtr& conditionPtr = conditionParser.getCondition();
-	if (!conditionPtr) {
-		ai_log_error("Failed to parse the condition '%s'", condition.c_str());
-		return false;
-	}
-	TreeNodeParser treeNodeParser(_aiRegistry, type);
-	TreeNodePtr newNode = treeNodeParser.getTreeNode(name);
-	if (!newNode) {
-		ai_log_error("Failed to parse the node '%s'", type.c_str());
-		return false;
-	}
-	newNode->setCondition(conditionPtr);
-	for (auto& child : node->getChildren()) {
-		newNode->addChild(child);
-	}
-
-	const TreeNodePtr& root = ai->getBehaviour();
-	if (node == root) {
-		ai->setBehaviour(newNode);
-	} else {
-		const TreeNodePtr& parent = root->getParent(root, nodeId);
-		if (!parent) {
-			ai_log_error("No parent for non-root node '%i'", nodeId);
-			return false;
-		}
-		parent->replaceChild(nodeId, newNode);
-	}
-
-	Event event;
-	event.type = EV_UPDATESTATICCHRDETAILS;
-	event.data.zone = zone;
-	enqueueEvent(event);
-	return true;
-}
-
-bool Server::addNode(const CharacterId& characterId, int32_t parentNodeId, const std::string& name, const std::string& type, const std::string& condition) {
-	Zone* zone = _zone;
-	if (zone == nullptr) {
-		return false;
-	}
-	const AIPtr& ai = zone->getAI(characterId);
-	TreeNodePtr node = ai->getBehaviour();
-	if (node->getId() != parentNodeId) {
-		node = node->getChild(parentNodeId);
-	}
-	if (!node) {
-		return false;
-	}
-	ConditionParser conditionParser(_aiRegistry, condition);
-	const ConditionPtr& conditionPtr = conditionParser.getCondition();
-	if (!conditionPtr) {
-		ai_log_error("Failed to parse the condition '%s'", condition.c_str());
-		return false;
-	}
-	TreeNodeParser treeNodeParser(_aiRegistry, type);
-	TreeNodePtr newNode = treeNodeParser.getTreeNode(name);
-	if (!newNode) {
-		ai_log_error("Failed to parse the node '%s'", type.c_str());;
-		return false;
-	}
-	newNode->setCondition(conditionPtr);
-	if (!node->addChild(newNode)) {
-		return false;
-	}
-
-	Event event;
-	event.type = EV_UPDATESTATICCHRDETAILS;
-	event.data.zone = zone;
-	enqueueEvent(event);
-	return true;
-}
-
-bool Server::deleteNode(const CharacterId& characterId, int32_t nodeId) {
-	Zone* zone = _zone;
-	if (zone == nullptr) {
-		return false;
-	}
-	const AIPtr& ai = zone->getAI(characterId);
-	// don't delete the root
-	const TreeNodePtr& root = ai->getBehaviour();
-	if (root->getId() == nodeId) {
-		return false;
-	}
-
-	const TreeNodePtr& parent = root->getParent(root, nodeId);
-	if (!parent) {
-		ai_log_error("No parent for non-root node '%i'", nodeId);
-		return false;
-	}
-	parent->replaceChild(nodeId, TreeNodePtr());
-	Event event;
-	event.type = EV_UPDATESTATICCHRDETAILS;
-	event.data.zone = zone;
-	enqueueEvent(event);
-	return true;
-}
-
 void Server::enqueueEvent(const Event& event) {
 	ScopedWriteLock scopedLock(_lock);
 	_events.push_back(event);
-}
-
-void Server::step(int64_t stepMillis) {
-	Event event;
-	event.type = EV_STEP;
-	event.data.stepMillis = stepMillis;
-	enqueueEvent(event);
-}
-
-void Server::reset() {
-	Zone* zone = _zone;
-	if (zone == nullptr) {
-		return;
-	}
-	Event event;
-	event.type = EV_RESET;
-	event.data.zone = zone;
-	enqueueEvent(event);
-}
-
-void Server::select(const ClientId& /*clientId*/, const CharacterId& id) {
-	Event event;
-	event.type = EV_SELECTION;
-	event.data.characterId = id;
-	enqueueEvent(event);
 }
 
 void Server::onConnect(Client* client) {
@@ -206,13 +73,6 @@ void Server::onDisconnect(Client* /*client*/) {
 
 bool Server::start() {
 	return _network.start();
-}
-
-void Server::pause(const ClientId& /*clientId*/, bool state) {
-	Event event;
-	event.type = EV_PAUSE;
-	event.data.pauseState = state;
-	enqueueEvent(event);
 }
 
 void Server::addChildren(const TreeNodePtr& node, std::vector<AIStateNodeStatic>& out) const {
@@ -425,8 +285,172 @@ void Server::handleEvents(Zone* zone, bool pauseState) {
 	}
 }
 
+void Server::resetSelection() {
+	_selectedCharacterId = AI_NOTHING_SELECTED;
+}
+
+bool Server::updateNode(const CharacterId& characterId, int32_t nodeId, const std::string& name, const std::string& type, const std::string& condition) {
+	Zone* zone = _zone;
+	if (zone == nullptr) {
+		return false;
+	}
+	const AIPtr& ai = zone->getAI(characterId);
+	const TreeNodePtr& node = ai->getBehaviour()->getId() == nodeId ? ai->getBehaviour() : ai->getBehaviour()->getChild(nodeId);
+	if (!node) {
+		return false;
+	}
+	ConditionParser conditionParser(_aiRegistry, condition);
+	const ConditionPtr& conditionPtr = conditionParser.getCondition();
+	if (!conditionPtr) {
+		ai_log_error("Failed to parse the condition '%s'", condition.c_str());
+		return false;
+	}
+	TreeNodeParser treeNodeParser(_aiRegistry, type);
+	TreeNodePtr newNode = treeNodeParser.getTreeNode(name);
+	if (!newNode) {
+		ai_log_error("Failed to parse the node '%s'", type.c_str());
+		return false;
+	}
+	newNode->setCondition(conditionPtr);
+	for (auto& child : node->getChildren()) {
+		newNode->addChild(child);
+	}
+
+	const TreeNodePtr& root = ai->getBehaviour();
+	if (node == root) {
+		ai->setBehaviour(newNode);
+	} else {
+		const TreeNodePtr& parent = root->getParent(root, nodeId);
+		if (!parent) {
+			ai_log_error("No parent for non-root node '%i'", nodeId);
+			return false;
+		}
+		parent->replaceChild(nodeId, newNode);
+	}
+
+	Event event;
+	event.type = EV_UPDATESTATICCHRDETAILS;
+	event.data.zone = zone;
+	enqueueEvent(event);
+	return true;
+}
+
+bool Server::addNode(const CharacterId& characterId, int32_t parentNodeId, const std::string& name, const std::string& type, const std::string& condition) {
+	Zone* zone = _zone;
+	if (zone == nullptr) {
+		return false;
+	}
+	const AIPtr& ai = zone->getAI(characterId);
+	TreeNodePtr node = ai->getBehaviour();
+	if (node->getId() != parentNodeId) {
+		node = node->getChild(parentNodeId);
+	}
+	if (!node) {
+		return false;
+	}
+	ConditionParser conditionParser(_aiRegistry, condition);
+	const ConditionPtr& conditionPtr = conditionParser.getCondition();
+	if (!conditionPtr) {
+		ai_log_error("Failed to parse the condition '%s'", condition.c_str());
+		return false;
+	}
+	TreeNodeParser treeNodeParser(_aiRegistry, type);
+	TreeNodePtr newNode = treeNodeParser.getTreeNode(name);
+	if (!newNode) {
+		ai_log_error("Failed to parse the node '%s'", type.c_str());;
+		return false;
+	}
+	newNode->setCondition(conditionPtr);
+	if (!node->addChild(newNode)) {
+		return false;
+	}
+
+	Event event;
+	event.type = EV_UPDATESTATICCHRDETAILS;
+	event.data.zone = zone;
+	enqueueEvent(event);
+	return true;
+}
+
+bool Server::deleteNode(const CharacterId& characterId, int32_t nodeId) {
+	Zone* zone = _zone;
+	if (zone == nullptr) {
+		return false;
+	}
+	const AIPtr& ai = zone->getAI(characterId);
+	// don't delete the root
+	const TreeNodePtr& root = ai->getBehaviour();
+	if (root->getId() == nodeId) {
+		return false;
+	}
+
+	const TreeNodePtr& parent = root->getParent(root, nodeId);
+	if (!parent) {
+		ai_log_error("No parent for non-root node '%i'", nodeId);
+		return false;
+	}
+	parent->replaceChild(nodeId, TreeNodePtr());
+	Event event;
+	event.type = EV_UPDATESTATICCHRDETAILS;
+	event.data.zone = zone;
+	enqueueEvent(event);
+	return true;
+}
+
+void Server::addZone(Zone* zone) {
+	Event event;
+	event.type = EV_ZONEADD;
+	event.data.zone = zone;
+	enqueueEvent(event);
+}
+
+void Server::removeZone(Zone* zone) {
+	Event event;
+	event.type = EV_ZONEREMOVE;
+	event.data.zone = zone;
+	enqueueEvent(event);
+}
+
+void Server::setDebug(const std::string& zoneName) {
+	Event event;
+	event.type = EV_SETDEBUG;
+	event.strData = zoneName;
+	enqueueEvent(event);
+}
+
+void Server::reset() {
+	Zone* zone = _zone;
+	if (zone == nullptr) {
+		return;
+	}
+	Event event;
+	event.type = EV_RESET;
+	event.data.zone = zone;
+	enqueueEvent(event);
+}
+
+void Server::select(const ClientId& /*clientId*/, const CharacterId& id) {
+	Event event;
+	event.type = EV_SELECTION;
+	event.data.characterId = id;
+	enqueueEvent(event);
+}
+
+void Server::pause(const ClientId& /*clientId*/, bool state) {
+	Event event;
+	event.type = EV_PAUSE;
+	event.data.pauseState = state;
+	enqueueEvent(event);
+}
+
+void Server::step(int64_t stepMillis) {
+	Event event;
+	event.type = EV_STEP;
+	event.data.stepMillis = stepMillis;
+	enqueueEvent(event);
+}
+
 void Server::update(int64_t deltaTime) {
-	// TODO: don't send stuff twice - maintain a bitmask to skip duplicated messages
 	_time += deltaTime;
 	const int clients = _network.getConnectedClients();
 	Zone* zone = _zone;
@@ -449,31 +473,6 @@ void Server::update(int64_t deltaTime) {
 		resetSelection();
 	}
 	_network.update(deltaTime);
-}
-
-void Server::resetSelection() {
-	_selectedCharacterId = AI_NOTHING_SELECTED;
-}
-
-void Server::setDebug(const std::string& zoneName) {
-	Event event;
-	event.type = EV_SETDEBUG;
-	event.strData = zoneName;
-	enqueueEvent(event);
-}
-
-void Server::addZone(Zone* zone) {
-	Event event;
-	event.type = EV_ZONEADD;
-	event.data.zone = zone;
-	enqueueEvent(event);
-}
-
-void Server::removeZone(Zone* zone) {
-	Event event;
-	event.type = EV_ZONEREMOVE;
-	event.data.zone = zone;
-	enqueueEvent(event);
 }
 
 }
