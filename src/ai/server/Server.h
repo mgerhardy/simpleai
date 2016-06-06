@@ -94,7 +94,6 @@ protected:
 	void broadcastState(const Zone* zone);
 	void broadcastCharacterDetails(const Zone* zone);
 	void broadcastStaticCharacterDetails(const Zone* zone);
-	void broadcastZoneNames();
 
 	void onConnect(Client* client) override;
 	void onDisconnect(Client* client) override;

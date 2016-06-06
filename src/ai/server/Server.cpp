@@ -383,7 +383,7 @@ void Server::handleEvents(Zone* zone, bool pauseState) {
 			for (const Zone* z : _zones) {
 				_names.push_back(z->getName());
 			}
-			broadcastZoneNames();
+			_network.broadcast(AINamesMessage(_names));
 			break;
 		}
 		case EV_ZONEREMOVE: {
@@ -395,22 +395,25 @@ void Server::handleEvents(Zone* zone, bool pauseState) {
 			for (const Zone* z : _zones) {
 				_names.push_back(z->getName());
 			}
-			broadcastZoneNames();
+			_network.broadcast(AINamesMessage(_names));
 			break;
 		}
 		case EV_SETDEBUG: {
 			if (_pause) {
-				pause(1, false);
+				pause(0, false);
 			}
 
-			_zone = nullptr;
+			Zone* nullzone = nullptr;
+			_zone = nullzone;
 			resetSelection();
 
 			for (Zone* z : _zones) {
 				const bool debug = z->getName() == event.strData;
-				z->setDebug(debug);
-				if (debug) {
-					_zone = z;
+				if (!debug) {
+					continue;
+				}
+				if (_zone.compare_exchange_strong(nullzone, z)) {
+					z->setDebug(debug);
 				}
 			}
 
@@ -457,11 +460,6 @@ void Server::setDebug(const std::string& zoneName) {
 	event.type = EV_SETDEBUG;
 	event.strData = zoneName;
 	enqueueEvent(event);
-}
-
-void Server::broadcastZoneNames() {
-	const AINamesMessage msg(_names);
-	_network.broadcast(msg);
 }
 
 void Server::addZone(Zone* zone) {
