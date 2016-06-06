@@ -178,6 +178,7 @@ bool AIDebugger::writeMessage(const IProtocolMessage& msg) {
 	}
 	// now write everything to the socket
 	_socket.write(temp);
+	_socket.flush();
 	return true;
 }
 
