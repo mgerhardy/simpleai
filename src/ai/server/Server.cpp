@@ -187,18 +187,21 @@ void Server::onDisconnect(Client* /*client*/) {
 	}
 
 	// if there are still connected clients left, don't disable the debug mode for the zone
-	if (_network.getConnectedClients() > 0)
+	if (_network.getConnectedClients() > 0) {
 		return;
-
-	// restore the zone state if no player is left for debugging
-	const bool pauseState = _pause;
-	if (pauseState) {
-		pause(0, false);
 	}
 
 	zone->setDebug(false);
-	_zone = nullptr;
-	resetSelection();
+	if (_zone.compare_exchange_strong(zone, nullptr)) {
+		// restore the zone state if no player is left for debugging
+		const bool pauseState = _pause;
+		if (pauseState) {
+			pause(0, false);
+		}
+
+		// only if noone else already started a new debug session
+		resetSelection();
+	}
 }
 
 bool Server::start() {
