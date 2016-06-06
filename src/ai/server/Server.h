@@ -30,7 +30,7 @@ class AIStateNodeStatic;
  * clients. If someone selected a particular @c AI instance by sending @c AISelectMessage to the server, it
  * will also broadcast an @c AICharacterDetailsMessage to all connected clients.
  *
- * You can only debug one Zone at the same time.
+ * You can only debug one Zone at the same time. The debugging session is shared between all connected clients.
  */
 class Server: public INetworkListener {
 protected:
