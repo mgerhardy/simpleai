@@ -109,7 +109,7 @@ AIDebugger::AIDebugger(AINodeStaticResolver& resolver) :
 }
 
 AIDebugger::~AIDebugger() {
-	_socket.close();
+	disconnectFromAIServer();
 	delete _stateHandler;
 	delete _characterHandler;
 	delete _characterStaticHandler;
@@ -244,7 +244,9 @@ bool AIDebugger::connectToAIServer(const QString& hostname, short port) {
 bool AIDebugger::disconnectFromAIServer() {
 	qDebug() << "disconnect from server";
 	_socket.disconnectFromHost();
-	return _socket.waitForDisconnected();
+	_socket.waitForDisconnected();
+	_socket.close();
+	return true;
 }
 
 void AIDebugger::onDisconnect() {
