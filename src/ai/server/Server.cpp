@@ -10,6 +10,11 @@
 
 namespace ai {
 
+namespace {
+const int SV_BROADCAST_CHRDETAILS = 1 << 0;
+const int SV_BROADCAST_STATE      = 1 << 1;
+}
+
 Server::Server(AIRegistry& aiRegistry, short port, const std::string& hostname) :
 		_aiRegistry(aiRegistry), _network(port, hostname), _selectedCharacterId(AI_NOTHING_SELECTED), _time(0L), _selectHandler(*this), _pauseHandler(*this), _resetHandler(*this), _stepHandler(*this), _changeHandler(
 				*this), _addNodeHandler(*this), _deleteNodeHandler(*this), _updateNodeHandler(*this), _pause(false), _zone(nullptr) {
@@ -234,6 +239,7 @@ void Server::addChildren(const TreeNodePtr& node, AIStateNode& parent, const AIP
 }
 
 void Server::broadcastState(const Zone* zone) {
+	_broadcastMask |= SV_BROADCAST_STATE;
 	AIStateMessage msg;
 	auto func = [&] (const AIPtr& ai) {
 		const ICharacterPtr& chr = ai->getCharacter();
@@ -266,6 +272,7 @@ void Server::broadcastStaticCharacterDetails(const Zone* zone) {
 }
 
 void Server::broadcastCharacterDetails(const Zone* zone) {
+	_broadcastMask |= SV_BROADCAST_CHRDETAILS;
 	const CharacterId id = _selectedCharacterId;
 	if (id == AI_NOTHING_SELECTED) {
 		return;
@@ -377,13 +384,18 @@ void Server::update(int64_t deltaTime) {
 	const int clients = _network.getConnectedClients();
 	Zone* zone = _zone;
 	bool pauseState = _pause;
+	_broadcastMask = 0u;
 
 	handleEvents(zone, pauseState);
 
 	if (clients > 0 && zone != nullptr) {
 		if (!pauseState) {
-			broadcastState(zone);
-			broadcastCharacterDetails(zone);
+			if ((_broadcastMask & SV_BROADCAST_STATE) == 0) {
+				broadcastState(zone);
+			}
+			if ((_broadcastMask & SV_BROADCAST_CHRDETAILS) == 0) {
+				broadcastCharacterDetails(zone);
+			}
 		}
 	} else if (pauseState) {
 		pause(1, false);

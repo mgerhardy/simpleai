@@ -56,6 +56,7 @@ protected:
 	std::atomic<Zone*> _zone;
 	ReadWriteLock _lock = {"server"};
 	std::vector<std::string> _names;
+	uint32_t _broadcastMask = 0u;
 
 	enum EventType {
 		EV_SELECTION,
