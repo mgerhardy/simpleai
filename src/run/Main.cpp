@@ -143,7 +143,7 @@ static void handleInput(const std::string& filename, const std::vector<ai::examp
 					}
 					const glm::vec3& pos = groupMgr.getPosition(groupId);
 					const glm::vec3& leaderPos = leader->getCharacter()->getPosition();
-					ai_log(" \\- group %i: %f:%f:%f - %f:%f:%f\n", groupId, pos.x, pos.y, pos.z, leaderPos.x, leaderPos.y, leaderPos.z);
+					ai_log(" \\- group %i: %f:%f:%f - %f:%f:%f", groupId, pos.x, pos.y, pos.z, leaderPos.x, leaderPos.y, leaderPos.z);
 				}
 			}
 		} else if (c == "d") {
