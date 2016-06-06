@@ -49,7 +49,7 @@ private:
 	std::thread _thread;
 
 public:
-	ThreadScheduler() : _stop(false) {
+	ThreadScheduler() : _stop(false), _notEmpty(false) {
 		_thread = std::thread([this] {
 			for (;;) {
 				if (this->_stop) {
