@@ -253,8 +253,8 @@ int main(int argc, char **argv) {
 	const int mapAmount = std::stoi(getOptParam(b, e, "-maps", "4"));
 	const int amount = std::stoi(getOptParam(b, e, "-amount", "10"));
 	const short port = static_cast<short>(std::stoi(getOptParam(b, e, "-port", "12345")));
-	const std::string filename = getOptParam(b, e, "-file");
-	const std::string interface = getOptParam(b, e, "-interface", "0.0.0.0");
+	const std::string& filename = getOptParam(b, e, "-file");
+	const std::string& interface = getOptParam(b, e, "-interface", "0.0.0.0");
 
 #ifdef AI_PROFILER
 	const std::string profilerOutput = getOptParam(b, e, "-profilerOutput", "simpleai-run.prof");
