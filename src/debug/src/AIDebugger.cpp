@@ -289,7 +289,7 @@ void AIDebugger::readTcpData() {
 			ai::IProtocolMessage* msg = mf.create(_stream);
 			if (!msg) {
 				qDebug() << "unknown server message - disconnecting";
-				_socket.disconnectFromHost();
+				disconnectFromAIServer();
 				break;
 			}
 			ai::ProtocolHandlerRegistry& r = ai::ProtocolHandlerRegistry::get();
@@ -298,7 +298,7 @@ void AIDebugger::readTcpData() {
 				handler->execute(1, *msg);
 			} else {
 				qDebug() << "no handler for " << msg->getId();
-				_socket.disconnectFromHost();
+				disconnectFromAIServer();
 				break;
 			}
 		}
