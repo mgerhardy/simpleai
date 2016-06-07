@@ -7,7 +7,7 @@ namespace ai {
 namespace debug {
 
 ZoomFrame::ZoomFrame(QGraphicsView* graphicsView, QWidget* parent) :
-		QFrame(parent), _zoomWidget(nullptr), _graphicsView(graphicsView) {
+		QFrame(parent), _zoomWidget(new ZoomWidget(*graphicsView)), _graphicsView(graphicsView) {
 	setFrameStyle(Sunken | StyledPanel);
 	_graphicsView->setRenderHint(QPainter::Antialiasing, false);
 	_graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
@@ -15,11 +15,10 @@ ZoomFrame::ZoomFrame(QGraphicsView* graphicsView, QWidget* parent) :
 	_graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 	_graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
 	_graphicsView->setCacheMode(QGraphicsView::CacheBackground);
-	_zoomWidget = new ZoomWidget(*_graphicsView);
 
 	setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
 
-	QHBoxLayout* topLayout = new QHBoxLayout;
+	QHBoxLayout* topLayout = new QHBoxLayout();
 	topLayout->addWidget(_graphicsView);
 	topLayout->addWidget(_zoomWidget);
 	setLayout(topLayout);
