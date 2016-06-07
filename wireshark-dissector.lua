@@ -167,6 +167,9 @@ function disCharacterDetailsMessageNode(buffer, tree, offset)
 	offset = 8 + offset
 	local nodeState = buffer(offset, 1):le_uint()
 	local nodename = NODESTATE[nodeState];
+	if nodename == nil then
+		nodename = 'Unknown state (' .. nodeState .. ')'
+	end
 	tree:add(simpleai.fields.fieldDetailsNodeState, nodename)
 	offset = offset + 1
 	local nodeisactive = buffer(offset, 1):le_uint()
