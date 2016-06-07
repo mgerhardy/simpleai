@@ -30,6 +30,7 @@ abstract class ProtocolMessage {
 		return _id;
 	}
 
+	// DataInput must be little endian
 	protected String readString( DataInput in ) throws IOException {
 		ByteArrayOutputStream s = new ByteArrayOutputStream();
 		for ( ;; ) {
@@ -47,5 +48,6 @@ abstract class ProtocolMessage {
 		out.write( '\0' );
 	}
 
+	// DataOutput must be little endian
 	public abstract void serialize( DataOutput out ) throws IOException;
 }
