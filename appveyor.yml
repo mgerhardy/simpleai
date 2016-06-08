@@ -1,0 +1,44 @@
+version: '{build}'
+
+configuration: Release
+
+platform:
+  - x86
+  - x64
+
+environment:
+  matrix:
+    - compiler: msvc-12
+    - compiler: msvc-14
+
+branches:
+  only:
+  - master
+
+clone_depth: 10
+
+install:
+  - for /f "tokens=1-2 delims=-" %%a in ("%compiler%") do (@set "compiler_version=%%b")
+
+before_build:
+  - if "%compiler_version%"=="12" if "%platform%"=="x86" (set "generator=Visual Studio 12 2013")
+  - if "%compiler_version%"=="12" if "%platform%"=="x64" (set "generator=Visual Studio 12 2013 Win64")
+  - if "%compiler_version%"=="14" if "%platform%"=="x86" (set "generator=Visual Studio 14 2015")
+  - if "%compiler_version%"=="14" if "%platform%"=="x64" (set "generator=Visual Studio 14 2015 Win64")
+  - cmake -DTOOLS=OFF -G "$env:generator"
+
+build:
+  parallel: true
+  project: simpleai.sln
+
+artifacts:
+  - name: Debugger
+    path: simpleai-debugger.exe
+  - name: Runner
+    path: simpleai-run.exe
+
+test_script:
+  - cmd: simpleai-tests --gtest_output=xml:tests.xml
+
+on_finish:
+  - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\tests.xml))
