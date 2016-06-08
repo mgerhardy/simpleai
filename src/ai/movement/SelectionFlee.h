@@ -10,7 +10,7 @@ namespace movement {
  */
 class SelectionFlee: public SelectionSteering {
 public:
-	STEERING_FACTORY
+	STEERING_FACTORY(SelectionFlee)
 
 	SelectionFlee(const std::string&) :
 			SelectionSteering() {

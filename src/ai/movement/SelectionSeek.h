@@ -10,7 +10,7 @@ namespace movement {
  */
 class SelectionSeek: public SelectionSteering {
 public:
-	STEERING_FACTORY
+	STEERING_FACTORY(SelectionSeek)
 
 	SelectionSeek(const std::string&) :
 			SelectionSteering() {

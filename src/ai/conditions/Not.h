@@ -16,21 +16,32 @@ protected:
 	}
 
 public:
+	CONDITION_FACTORY_NO_IMPL(Not)
+
 	Not(const ConditionPtr& condition) :
 			ICondition("Not", ""), _condition(condition) {
 	}
 	virtual ~Not() {
 	}
 
-	CONDITION_FACTORY
+	bool evaluate(const AIPtr& entity) override {
+		return !_condition->evaluate(entity);
+	}
 
-	bool evaluate(const AIPtr& entity) override;
-
-	std::ostream& print(std::ostream& stream, int level) const override;
+	std::ostream& print(std::ostream& stream, int level) const override {
+		ICondition::print(stream, level);
+		stream << "(";
+		_condition->print(stream, level);
+		stream << ")";
+		return stream;
+	}
 };
 
-inline bool Not::evaluate(const AIPtr& entity) {
-	return !_condition->evaluate(entity);
+inline ConditionPtr Not::Factory::create(const ConditionFactoryContext *ctx) const {
+	if (ctx->conditions.size() != 1) {
+		return ConditionPtr();
+	}
+	return std::make_shared<Not>(ctx->conditions.front());
 }
 
 }

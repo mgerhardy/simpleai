@@ -1,4 +1,5 @@
 #include "StateTable.h"
+#include "AIDebugger.h"
 #include <QHeaderView>
 
 namespace ai {

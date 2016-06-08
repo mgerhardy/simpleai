@@ -1,6 +1,6 @@
 #include "NodeTreeView.h"
 #include "AINodeStaticResolver.h"
-#include <AI.h>
+#include "AIDebugger.h"
 
 namespace {
 const int horizontalSpacing = 40;

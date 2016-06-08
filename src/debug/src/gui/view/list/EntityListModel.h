@@ -2,11 +2,12 @@
 
 #include <QAbstractTableModel>
 #include <QTableView>
-
-#include "AIDebugger.h"
+#include <SimpleAI.h>
 
 namespace ai {
 namespace debug {
+
+class AIDebugger;
 
 class EntityListModel: public QAbstractTableModel {
 Q_OBJECT

@@ -4,7 +4,7 @@
 #include "ProtocolHandlerRegistry.h"
 #include "ProtocolMessageFactory.h"
 #ifdef WIN32
-#define cleanup() WSACleanup()
+#define network_cleanup() WSACleanup()
 #else
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -20,7 +20,7 @@
 #include <signal.h>
 #define closesocket close
 #define INVALID_SOCKET  -1
-#define cleanup()
+#define network_cleanup()
 #endif
 #include <string.h>
 #include <deque>
@@ -32,18 +32,18 @@
 
 namespace ai {
 
-Network::Network(uint16_t port, const std::string& hostname) :
+inline Network::Network(uint16_t port, const std::string& hostname) :
 		_port(port), _hostname(hostname), _socketFD(INVALID_SOCKET), _time(0L) {
 	FD_ZERO(&_readFDSet);
 	FD_ZERO(&_writeFDSet);
 }
 
-Network::~Network() {
+inline Network::~Network() {
 	closesocket(_socketFD);
-	cleanup();
+	network_cleanup();
 }
 
-bool Network::start() {
+inline bool Network::start() {
 #ifdef WIN32
 	WSADATA wsaData;
 	const int wsaResult = WSAStartup(MAKEWORD(2,2), &wsaData);
@@ -59,7 +59,7 @@ bool Network::start() {
 
 	_socketFD = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (_socketFD == INVALID_SOCKET) {
-		cleanup();
+		network_cleanup();
 		return false;
 	}
 	struct sockaddr_in sin;
@@ -80,7 +80,7 @@ bool Network::start() {
 
 	if (bind(_socketFD, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
 		// Handle the error.
-		cleanup();
+		network_cleanup();
 		FD_CLR(_socketFD, &_readFDSet);
 		FD_CLR(_socketFD, &_writeFDSet);
 		closesocket(_socketFD);
@@ -90,7 +90,7 @@ bool Network::start() {
 
 	if (listen(_socketFD, 5) < 0) {
 		// Handle the error.
-		cleanup();
+		network_cleanup();
 		closesocket(_socketFD);
 		_socketFD = INVALID_SOCKET;
 		return false;
@@ -109,7 +109,7 @@ bool Network::start() {
 	return true;
 }
 
-Network::ClientSocketsIter Network::closeClient(ClientSocketsIter& iter) {
+inline Network::ClientSocketsIter Network::closeClient(ClientSocketsIter& iter) {
 	Client& client = *iter;
 	const SOCKET clientSocket = client.socket;
 	FD_CLR(clientSocket, &_readFDSet);
@@ -122,7 +122,7 @@ Network::ClientSocketsIter Network::closeClient(ClientSocketsIter& iter) {
 	return _clientSockets.erase(iter);
 }
 
-bool Network::sendMessage(Client& client) {
+inline bool Network::sendMessage(Client& client) {
 	if (client.out.empty()) {
 		return true;
 	}
@@ -145,7 +145,7 @@ bool Network::sendMessage(Client& client) {
 	return true;
 }
 
-void Network::update(int64_t deltaTime) {
+inline void Network::update(int64_t deltaTime) {
 	_time += deltaTime;
 	if (_time > 5000L) {
 		if (!broadcast(AIPingMessage())) {
@@ -219,7 +219,7 @@ void Network::update(int64_t deltaTime) {
 	}
 }
 
-bool Network::broadcast(const IProtocolMessage& msg) {
+inline bool Network::broadcast(const IProtocolMessage& msg) {
 	if (_clientSockets.empty()) {
 		return false;
 	}
@@ -241,7 +241,7 @@ bool Network::broadcast(const IProtocolMessage& msg) {
 	return true;
 }
 
-bool Network::sendToClient(Client* client, const IProtocolMessage& msg) {
+inline bool Network::sendToClient(Client* client, const IProtocolMessage& msg) {
 	assert(client != nullptr);
 	if (client->socket == INVALID_SOCKET) {
 		return false;
@@ -255,5 +255,11 @@ bool Network::sendToClient(Client* client, const IProtocolMessage& msg) {
 	FD_SET(client->socket, &_writeFDSet);
 	return true;
 }
+
+#undef network_cleanup
+#undef INVALID_SOCKET
+#ifndef WIN32
+#undef closesocket
+#endif
 
 }

@@ -12,7 +12,7 @@ class GroupFlee: public ISteering {
 protected:
 	GroupId _groupId;
 public:
-	STEERING_FACTORY
+	STEERING_FACTORY(GroupFlee)
 
 	GroupFlee(const std::string& parameters) :
 			ISteering() {
@@ -24,7 +24,11 @@ public:
 	}
 
 	virtual MoveVector execute (const AIPtr& ai, float speed) const override {
-		const glm::vec3& target = ai->getGroupPosition(_groupId);
+		const Zone* zone = ai->getZone();
+		if (zone == nullptr) {
+			return MoveVector(INFINITE, 0.0f);
+		}
+		const glm::vec3& target = zone->getGroupMgr().getPosition(_groupId);
 		if (isInfinite(target)) {
 			return MoveVector(target, 0.0f);
 		}

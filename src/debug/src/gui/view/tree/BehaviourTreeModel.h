@@ -2,9 +2,11 @@
 
 #include "AINodeStaticResolver.h"
 #include <QAbstractItemModel>
-#include <server/AIStubTypes.h>
 
 namespace ai {
+
+class AIStateNode;
+
 namespace debug {
 
 class AIDebugger;

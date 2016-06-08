@@ -1,7 +1,6 @@
 #pragma once
 
-#include <AI.h>
-#include <server/AIStubTypes.h>
+#include <SimpleAI.h>
 #include <QGraphicsScene>
 #include "IGraphicsView.h"
 

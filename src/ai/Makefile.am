@@ -1,62 +1,14 @@
 lib_LTLIBRARIES = libsimpleai.la
 
 libsimpleai_la_SOURCES = \
-	aggro/AggroMgr.cpp \
-	AI.cpp \
-	AIRegistry.cpp \
-	conditions/And.cpp \
-	conditions/ConditionParser.cpp \
-	conditions/False.cpp \
-	conditions/Filter.cpp \
-	conditions/HasEnemies.cpp \
-	conditions/ICondition.cpp \
-	conditions/IsCloseToGroup.cpp \
-	conditions/IsGroupLeader.cpp \
-	conditions/IsInGroup.cpp \
-	conditions/Not.cpp \
-	conditions/Or.cpp \
-	conditions/True.cpp \
-	filter/SelectEmpty.cpp \
-	filter/SelectGroupLeader.cpp \
-	filter/SelectGroupMembers.cpp \
-	filter/SelectHighestAggro.cpp \
-	filter/SelectZone.cpp \
-	movement/Steering.cpp \
-	group/GroupMgr.cpp \
-	server/AddNodeHandler.cpp \
-	server/UpdateNodeHandler.cpp \
-	server/DeleteNodeHandler.cpp \
-	server/ChangeHandler.cpp \
-	server/Network.cpp \
-	server/PauseHandler.cpp \
-	server/ProtocolMessageFactory.cpp \
-	server/ResetHandler.cpp \
-	server/SelectHandler.cpp \
-	server/Server.cpp \
-	server/StepHandler.cpp \
-	zone/Zone.cpp \
-	tree/Fail.cpp \
-	tree/Limit.cpp \
-	tree/Idle.cpp \
-	tree/Invert.cpp \
-	tree/ITask.cpp \
-	tree/ITimedNode.cpp \
-	tree/Parallel.cpp \
-	tree/Print.cpp \
-	tree/PrioritySelector.cpp \
-	tree/ProbabilitySelector.cpp \
-	tree/RandomSelector.cpp \
-	tree/Sequence.cpp \
-	tree/Steer.cpp \
-	tree/Succeed.cpp \
-	tree/TreeNode.cpp \
-	tree/TreeNodeParser.cpp
+	SimpleAI.cpp
 
 library_includedir = $(includedir)/simpleai
 nobase_library_include_HEADERS = \
 	aggro/AggroMgr.h \
 	aggro/Entry.h \
 	AI.h \
+	AIFactories.h \
 	AIRegistry.h \
 	common/IFactoryRegistry.h \
 	common/IParser.h \
@@ -91,6 +43,7 @@ nobase_library_include_HEADERS = \
 	filter/SelectZone.h \
 	IAIFactory.h \
 	ICharacter.h \
+	group/GroupId.h \
 	group/GroupMgr.h \
 	movement/SelectionSeek.h \
 	movement/GroupFlee.h \
@@ -118,12 +71,14 @@ nobase_library_include_HEADERS = \
 	server/IProtocolHandler.h \
 	server/IProtocolMessage.h \
 	server/Network.h \
+	server/NetworkImpl.h \
 	server/PauseHandler.h \
 	server/ProtocolHandlerRegistry.h \
 	server/ProtocolMessageFactory.h \
 	server/ResetHandler.h \
 	server/SelectHandler.h \
 	server/Server.h \
+	server/ServerImpl.h \
 	server/StepHandler.h \
 	server/UpdateNodeHandler.h \
 	zone/Zone.h \
@@ -145,28 +100,16 @@ nobase_library_include_HEADERS = \
 	tree/Steer.h \
 	tree/Succeed.h \
 	tree/TreeNode.h \
+	tree/TreeNodeImpl.h \
 	tree/TreeNodeParser.h
 
 if AI_ENABLE_LUA
-libsimpleai_la_SOURCES += \
-	tree/loaders/lua/LUA.cpp \
-	tree/loaders/lua/LUANode.cpp \
-	tree/loaders/lua/LUATree.cpp \
-	tree/loaders/lua/LUATreeLoader.cpp
-
 nobase_library_include_HEADERS += \
-	tree/loaders/lua/LUACondition.h \
-	tree/loaders/lua/LUAFunctions.h \
 	tree/loaders/lua/LUA.h \
-	tree/loaders/lua/LUANode.h \
-	tree/loaders/lua/LUATree.h \
 	tree/loaders/lua/LUATreeLoader.h
 endif
 
 if AI_ENABLE_XML
-libsimpleai_la_SOURCES += \
-	tree/loaders/xml/XMLTreeLoader.cpp
-
 nobase_library_include_HEADERS += \
 	tree/loaders/xml/XMLTreeLoader.h
 endif

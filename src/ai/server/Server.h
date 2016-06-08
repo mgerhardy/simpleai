@@ -5,19 +5,31 @@
 #include <unordered_set>
 #include "Network.h"
 #include "zone/Zone.h"
-#include "SelectHandler.h"
-#include "PauseHandler.h"
-#include "ResetHandler.h"
-#include "StepHandler.h"
-#include "ChangeHandler.h"
-#include "AddNodeHandler.h"
-#include "DeleteNodeHandler.h"
-#include "UpdateNodeHandler.h"
+#include "AIRegistry.h"
+#include "AIStateMessage.h"
+#include "AINamesMessage.h"
+#include "AIStubTypes.h"
+#include "AICharacterDetailsMessage.h"
+#include "AICharacterStaticMessage.h"
+#include "ProtocolHandlerRegistry.h"
+#include "conditions/ConditionParser.h"
+#include "tree/TreeNodeParser.h"
+#include "tree/TreeNodeImpl.h"
 
 namespace ai {
 
 class AIStateNode;
 class AIStateNodeStatic;
+
+class SelectHandler;
+class PauseHandler;
+class ResetHandler;
+class StepHandler;
+class ChangeHandler;
+class AddNodeHandler;
+class DeleteNodeHandler;
+class UpdateNodeHandler;
+class NopHandler;
 
 /**
  * @brief The server can serialize the state of the AI and broadcast it to all connected clients.
@@ -42,14 +54,14 @@ protected:
 	Network _network;
 	CharacterId _selectedCharacterId;
 	int64_t _time;
-	SelectHandler _selectHandler;
-	PauseHandler _pauseHandler;
-	ResetHandler _resetHandler;
-	StepHandler _stepHandler;
-	ChangeHandler _changeHandler;
-	AddNodeHandler _addNodeHandler;
-	DeleteNodeHandler _deleteNodeHandler;
-	UpdateNodeHandler _updateNodeHandler;
+	SelectHandler *_selectHandler;
+	PauseHandler *_pauseHandler;
+	ResetHandler *_resetHandler;
+	StepHandler *_stepHandler;
+	ChangeHandler *_changeHandler;
+	AddNodeHandler *_addNodeHandler;
+	DeleteNodeHandler *_deleteNodeHandler;
+	UpdateNodeHandler *_updateNodeHandler;
 	NopHandler _nopHandler;
 	std::atomic_bool _pause;
 	// the current active debugging zone

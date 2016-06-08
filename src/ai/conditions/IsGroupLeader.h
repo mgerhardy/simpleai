@@ -3,6 +3,7 @@
 #include "ICondition.h"
 #include "common/String.h"
 #include "group/GroupMgr.h"
+#include "zone/Zone.h"
 
 namespace ai {
 
@@ -14,20 +15,28 @@ namespace ai {
 class IsGroupLeader: public ICondition {
 private:
 	GroupId _groupId;
+public:
+	CONDITION_FACTORY(IsGroupLeader)
 
 	IsGroupLeader(const std::string& parameters) :
 		ICondition("IsGroupLeader", parameters) {
-		if (_parameters.empty())
+		if (_parameters.empty()) {
 			_groupId = -1;
-		else
+		} else {
 			_groupId = std::stoi(_parameters);
+		}
 	}
-public:
+
 	virtual ~IsGroupLeader() {
 	}
-	CONDITION_FACTORY
 
-	bool evaluate(const AIPtr& entity) override;
+	bool evaluate(const AIPtr& entity) override {
+		if (_groupId == -1) {
+			return false;
+		}
+		const GroupMgr& mgr = entity->getZone()->getGroupMgr();
+		return mgr.isGroupLeader(_groupId, entity);
+	}
 };
 
 }

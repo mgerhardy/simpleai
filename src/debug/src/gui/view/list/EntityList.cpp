@@ -1,4 +1,5 @@
 #include "EntityList.h"
+#include "AIDebugger.h"
 #include <QHeaderView>
 
 namespace ai {

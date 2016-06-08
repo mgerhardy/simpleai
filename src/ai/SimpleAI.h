@@ -39,6 +39,7 @@
  * #include <tree/loaders/lua/LUATreeLoader.h>
  * #include <tree/loaders/xml/XMLTreeLoader.h>
  * @endcode
+ * or define SIMPLEAI_INCLUDE_LUA and/or SIMPLEAI_INCLUDE_XML
  *
  * SimpleAI uses a right handed coordinate system.
  */
@@ -58,6 +59,7 @@
 #include "common/ExecutionTime.h"
 
 #include "AI.h"
+#include "AIFactories.h"
 #include "AIRegistry.h"
 #include "ICharacter.h"
 
@@ -71,11 +73,13 @@
 #include "tree/Sequence.h"
 #include "tree/Steer.h"
 #include "tree/TreeNode.h"
+#include "tree/TreeNodeImpl.h"
 #include "tree/ITask.h"
 #include "tree/ITimedNode.h"
 #include "tree/TreeNodeParser.h"
 #include "tree/loaders/ITreeLoader.h"
 
+#include "group/GroupId.h"
 #include "group/GroupMgr.h"
 
 #include "movement/SelectionSeek.h"
@@ -88,7 +92,9 @@
 #include "movement/WeightedSteering.h"
 
 #include "server/Network.h"
+#include "server/NetworkImpl.h"
 #include "server/Server.h"
+#include "server/ServerImpl.h"
 #include "server/IProtocolHandler.h"
 #include "server/ProtocolHandlerRegistry.h"
 #include "server/ProtocolMessageFactory.h"
@@ -123,3 +129,11 @@
 #include "filter/SelectGroupMembers.h"
 #include "filter/SelectHighestAggro.h"
 #include "filter/SelectZone.h"
+
+#ifdef SIMPLEAI_INCLUDE_LUA
+#include "tree/loaders/lua/LUATreeLoader.h"
+#endif
+
+#ifdef SIMPLEAI_INCLUDE_XML
+#include "tree/loaders/xml/XMLTreeLoader.h"
+#endif

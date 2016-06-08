@@ -3,11 +3,12 @@
 #include <QTableView>
 #include <QSortFilterProxyModel>
 
-#include "AIDebugger.h"
 #include "StateTableModel.h"
 
 namespace ai {
 namespace debug {
+
+class AIDebugger;
 
 /**
  * @brief Shows a key value pair of values for the selected entity

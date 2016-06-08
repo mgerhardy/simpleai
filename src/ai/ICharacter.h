@@ -1,6 +1,10 @@
 #pragma once
 
-#include "AI.h"
+#include "common/NonCopyable.h"
+#include "common/Math.h"
+#include "common/Types.h"
+#include <atomic>
+#include <memory>
 
 namespace ai {
 

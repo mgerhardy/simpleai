@@ -4,13 +4,12 @@
 #include <QGraphicsScene>
 
 #include "NodeTreeItem.h"
-#include "AIDebugger.h"
-#include <AI.h>
 
 namespace ai {
 namespace debug {
 
 class AINodeStaticResolver;
+class AIDebugger;
 
 /**
  * @brief Shows the behaviour tree for the current selected entity

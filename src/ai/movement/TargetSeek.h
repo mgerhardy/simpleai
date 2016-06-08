@@ -12,7 +12,7 @@ class TargetSeek: public ISteering {
 protected:
 	glm::vec3 _target;
 public:
-	STEERING_FACTORY
+	STEERING_FACTORY(TargetSeek)
 
 	TargetSeek(const std::string& parameters) :
 			ISteering() {

@@ -2,56 +2,7 @@ include(CheckFunctionExists)
 include(CheckLibraryExists)
 
 set(SRC
-	group/GroupMgr.cpp
-	AI.cpp
-	server/AddNodeHandler.cpp
-	server/UpdateNodeHandler.cpp
-	server/DeleteNodeHandler.cpp
-	server/ResetHandler.cpp
-	server/StepHandler.cpp
-	server/SelectHandler.cpp
-	server/ProtocolMessageFactory.cpp
-	server/Server.cpp
-	server/PauseHandler.cpp
-	server/Network.cpp
-	server/ChangeHandler.cpp
-	filter/SelectZone.cpp
-	filter/SelectHighestAggro.cpp
-	filter/SelectEmpty.cpp
-	filter/SelectGroupMembers.cpp
-	filter/SelectGroupLeader.cpp
-	tree/Fail.cpp
-	tree/Limit.cpp
-	tree/Sequence.cpp
-	tree/Invert.cpp
-	tree/Succeed.cpp
-	tree/TreeNode.cpp
-	tree/Parallel.cpp
-	tree/TreeNodeParser.cpp
-	tree/Print.cpp
-	tree/Steer.cpp
-	tree/Idle.cpp
-	tree/RandomSelector.cpp
-	tree/PrioritySelector.cpp
-	tree/ITask.cpp
-	tree/ProbabilitySelector.cpp
-	tree/ITimedNode.cpp
-	conditions/And.cpp
-	conditions/ConditionParser.cpp
-	conditions/Not.cpp
-	conditions/Or.cpp
-	conditions/True.cpp
-	conditions/IsInGroup.cpp
-	conditions/HasEnemies.cpp
-	conditions/IsCloseToGroup.cpp
-	conditions/IsGroupLeader.cpp
-	conditions/ICondition.cpp
-	conditions/Filter.cpp
-	conditions/False.cpp
-	AIRegistry.cpp
-	zone/Zone.cpp
-	movement/Steering.cpp
-	aggro/AggroMgr.cpp
+	SimpleAI.cpp
 )
 
 if (SIMPLEAI_LUA)
@@ -59,17 +10,9 @@ if (SIMPLEAI_LUA)
 	find_package(Lua)
 	if (NOT LUA_FOUND)
 		message(STATUS "Use embedded lua")
-		include_directories(${SIMPLEAI_SOURCE_DIR}/src/libs/lua/)
+		set(LUA_INCLUDE_DIR ${SIMPLEAI_SOURCE_DIR}/src/libs/lua/)
 		list(APPEND DEPS lua)
-	else()
-		include_directories(${LUA_INCLUDE_DIR})
 	endif()
-	list(APPEND SRC
-		tree/loaders/lua/LUANode.cpp
-		tree/loaders/lua/LUA.cpp
-		tree/loaders/lua/LUATreeLoader.cpp
-		tree/loaders/lua/LUATree.cpp
-	)
 else()
 	message(STATUS "Build lib without lua support")
 	file(GLOB LUA_REMOVE tree/loaders/lua/*)
@@ -77,10 +20,9 @@ else()
 endif()
 
 if (SIMPLEAI_XML)
-	message(STATUS "Build lib with XML support")
-	include_directories(${SIMPLEAI_SOURCE_DIR}/src/libs/tinyxml2/)
+	message(STATUS "Build lib with XML support")#
+	set(XML_INCLUDE_DIR ${SIMPLEAI_SOURCE_DIR}/src/libs/tinyxml2/)
 	list(APPEND DEPS tinyxml2)
-	list(APPEND SRC tree/loaders/xml/XMLTreeLoader.cpp)
 else()
 	message(STATUS "Build lib without XML support")
 	file(GLOB XML_REMOVE tree/loaders/xml/*)
@@ -103,11 +45,18 @@ elseif (${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
 	endif()
 endif()
 target_link_libraries(simpleai ${DEPS} ${LUA_LIBRARIES})
+if (LUA_INCLUDE_DIR)
+	target_include_directories(simpleai PUBLIC ${LUA_INCLUDE_DIR})
+endif()
+if (XML_INCLUDE_DIR)
+	target_include_directories(simpleai ${XML_INCLUDE_DIR})
+endif()
 
 list(APPEND simpleai_HEADERS
 	aggro/AggroMgr.h
 	aggro/Entry.h
 	AI.h
+	AIFactories.h
 	AIRegistry.h
 	common/IFactoryRegistry.h
 	common/IParser.h
@@ -143,6 +92,7 @@ list(APPEND simpleai_HEADERS
 	filter/SelectZone.h
 	IAIFactory.h
 	ICharacter.h
+	group/GroupId.h
 	group/GroupMgr.h
 	movement/SelectionSeek.h
 	movement/GroupFlee.h
@@ -170,12 +120,14 @@ list(APPEND simpleai_HEADERS
 	server/IProtocolHandler.h
 	server/IProtocolMessage.h
 	server/Network.h
+	server/NetworkImpl.h
 	server/PauseHandler.h
 	server/ProtocolHandlerRegistry.h
 	server/ProtocolMessageFactory.h
 	server/ResetHandler.h
 	server/SelectHandler.h
 	server/Server.h
+	server/ServerImpl.h
 	server/StepHandler.h
 	server/UpdateNodeHandler.h
 	zone/Zone.h
@@ -197,16 +149,13 @@ list(APPEND simpleai_HEADERS
 	tree/Steer.h
 	tree/Succeed.h
 	tree/TreeNode.h
+	tree/TreeNodeImpl.h
 	tree/TreeNodeParser.h
 )
 
 if (SIMPLEAI_LUA)
 	list(APPEND simpleai_HEADERS
-		tree/loaders/lua/LUACondition.h
-		tree/loaders/lua/LUAFunctions.h
 		tree/loaders/lua/LUA.h
-		tree/loaders/lua/LUANode.h
-		tree/loaders/lua/LUATree.h
 		tree/loaders/lua/LUATreeLoader.h
 	)
 endif()

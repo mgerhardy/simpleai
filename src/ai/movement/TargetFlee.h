@@ -12,7 +12,7 @@ class TargetFlee: public ISteering {
 protected:
 	glm::vec3 _target;
 public:
-	STEERING_FACTORY
+	STEERING_FACTORY(TargetFlee)
 
 	TargetFlee(const std::string& parameters) :
 			ISteering() {

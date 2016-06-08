@@ -16,7 +16,7 @@ class Wander: public ISteering {
 protected:
 	const float _rotation;
 public:
-	STEERING_FACTORY
+	STEERING_FACTORY(Wander)
 
 	Wander(const std::string& parameter) :
 			ISteering(), _rotation(parameter.empty() ? ai::toRadians(10.0f) : Str::strToFloat(parameter)) {

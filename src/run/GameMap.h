@@ -88,11 +88,14 @@ public:
 		ai::ScopedReadLock lock(_lock);
 		// TODO: remove me once we have an attack
 		Entities::iterator i = _entities.begin();
-		if (i == _entities.end())
+		if (i == _entities.end()) {
 			return;
+		}
 		const ai::AIPtr& firstEntity = i->second;
+		AggroMgr& mgr = firstEntity->getAggroMgr();
 		for (++i; i != _entities.end(); ++i) {
-			ai::Entry* e = firstEntity->getAggroMgr().addAggro(i->second, 1000.0f + static_cast<float>(rand() % 1000));
+			const ai::AIPtr& entity = i->second;
+			ai::Entry* e = mgr.addAggro(entity->getId(), 1000.0f + static_cast<float>(rand() % 1000));
 			e->setReduceByValue(1.0f + static_cast<float>(rand() % 3));
 		}
 	}
