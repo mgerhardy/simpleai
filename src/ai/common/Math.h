@@ -1,8 +1,11 @@
 #pragma once
 
-#define GLM_FORCE_RADIANS
-#define GLM_SWIZZLE
+#include "Types.h"
 
+#define GLM_FORCE_RADIANS
+//#define GLM_SWIZZLE
+
+DISABLE_WARNING(shadow,shadow,0)
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
 #include <glm/gtx/compatibility.hpp>
@@ -10,6 +13,7 @@
 #include <limits>
 #include <cmath>
 #include "String.h"
+ENABLE_WARNING(shadow,shadow,0)
 
 namespace ai {
 

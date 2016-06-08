@@ -2,8 +2,8 @@
 
 #include <vector>
 #include <string>
+#include "common/Math.h"
 #include "common/Types.h"
-#include <glm/glm.hpp>
 #include "tree/TreeNode.h"
 
 namespace ai {

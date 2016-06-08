@@ -1,8 +1,6 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <glm/gtc/constants.hpp>
-#include <cmath>
+#include "Math.h"
 
 namespace ai {
 
