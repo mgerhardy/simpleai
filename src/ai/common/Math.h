@@ -10,10 +10,9 @@ DISABLE_WARNING(shadow,shadow,0)
 #include <glm/gtc/constants.hpp>
 #include <glm/gtx/compatibility.hpp>
 #include <glm/gtx/norm.hpp>
+ENABLE_WARNING(shadow,shadow,0)
 #include <limits>
 #include <cmath>
-#include "String.h"
-ENABLE_WARNING(shadow,shadow,0)
 
 namespace ai {
 
