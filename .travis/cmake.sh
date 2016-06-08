@@ -7,6 +7,7 @@ clang --version
 gcc --version
 cmake --version
 lsb_release -a
+pkg-config --version
 
 if [ -z "$BUILD_MODE" ]; then
 	BUILD_MODE=Debug

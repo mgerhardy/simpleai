@@ -7,6 +7,7 @@ clang --version
 gcc --version
 cmake --version
 lsb_release -a
+pkg-config --version
 
 DEBUG="yes"
 if [ "$BUILD_MODE" == "Release" ]; then
