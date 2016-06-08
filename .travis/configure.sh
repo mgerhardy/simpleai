@@ -13,7 +13,7 @@ if [ "$BUILD_MODE" == "Release" ]; then
 	DEBUG="no"
 fi
 
-CONFIGURE_PARAM=--enable-debug=$DEBUG --prefix=.
+CONFIGURE_PARAM="--enable-debug=$DEBUG --prefix=."
 
 if [ "$BUILD_TYPE" == "automake" ]; then
 	./autogen.sh

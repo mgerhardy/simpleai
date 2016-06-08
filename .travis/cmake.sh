@@ -8,6 +8,10 @@ gcc --version
 cmake --version
 lsb_release -a
 
+if [ -z "$BUILD_MODE" ]; then
+	BUILD_MODE=Debug
+fi
+
 if [ "$BUILD_TYPE" == "cmake" ]; then
 	mkdir simpleai-build
 	cd simpleai-build
