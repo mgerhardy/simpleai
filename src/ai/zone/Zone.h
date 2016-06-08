@@ -131,8 +131,9 @@ public:
 	inline AIPtr getAI(CharacterId id) const {
 		ScopedReadLock scopedLock(_lock);
 		auto i = _ais.find(id);
-		if (i == _ais.end())
+		if (i == _ais.end()) {
 			return AIPtr();
+		}
 		const AIPtr& ai = i->second;
 		return ai;
 	}
@@ -223,7 +224,7 @@ public:
 			const AIPtr& ai = i->second;
 			results.emplace_back(executeAsync(ai, func));
 		}
-		for (auto && result: results) {
+		for (auto & result: results) {
 			result.wait();
 		}
 	}
@@ -245,7 +246,7 @@ public:
 			const AIPtr& ai = i->second;
 			results.emplace_back(executeAsync(ai, func));
 		}
-		for (auto && result: results) {
+		for (auto & result: results) {
 			result.wait();
 		}
 	}
