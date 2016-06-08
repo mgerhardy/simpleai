@@ -239,7 +239,6 @@ noinst_HEADERS = \
 	detail/func_trigonometric_simd.inl \
 	detail/func_trigonometric.hpp \
 	detail/type_mat4x4_simd.inl \
-	detail/dummy.cpp \
 	detail/type_mat4x3.hpp \
 	detail/func_packing.hpp \
 	detail/type_vec4.inl \

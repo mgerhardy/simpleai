@@ -126,6 +126,8 @@ if AI_ENABLE_XML
 AM_CPPFLAGS += -I$(top_builddir)/src/libs/tinyxml2
 endif
 
+AM_CPPFLAGS += -I$(top_builddir)/src/libs/glm
+
 libsimpleai_la_CXXFLAGS = @PTHREAD_CFLAGS@ $(AM_CXXFLAGS) -Wall -pedantic -Wextra -Wabi -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-declarations -Wmissing-format-attribute -Wno-long-long -Woverloaded-virtual -Wpacked -Wredundant-decls -Wshadow -Wsign-promo -Wno-sign-compare
 
 libsimpleai_la_LDFLAGS = -no-undefined -release @VERSION@
