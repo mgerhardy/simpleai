@@ -60,6 +60,7 @@ inline void Server::onConnect(Client* client) {
 }
 
 inline void Server::onDisconnect(Client* /*client*/) {
+	ai_log("remote debugger disconnect (%i)", _network.getConnectedClients());
 	Zone* zone = _zone;
 	if (zone == nullptr) {
 		return;
@@ -253,6 +254,7 @@ inline void Server::handleEvents(Zone* zone, bool pauseState) {
 		case EV_NEWCONNECTION: {
 			_network.sendToClient(event.data.newClient, AIPauseMessage(pauseState));
 			_network.sendToClient(event.data.newClient, AINamesMessage(_names));
+			ai_log("new remote debugger connection (%i)", _network.getConnectedClients());
 			break;
 		}
 		case EV_ZONEADD: {
