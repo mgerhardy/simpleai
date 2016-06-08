@@ -36,14 +36,7 @@ addons:
     branch_pattern: coverity_scan
 
 before_install:
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update -q
-  - sudo apt-get install lua5.2 liblua5.2-dev qt5-default qtbase5-dev gcc-5 g++-5 -y
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 50
-  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 50
-
-install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-5"; fi
+  - source .travis/setup.sh
 
 script:
   - .travis/configure.sh
