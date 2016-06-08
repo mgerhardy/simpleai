@@ -186,7 +186,7 @@ public:
 		return s.str();
 	}
 
-	std::ostream& print(std::ostream& stream, int level) const override {
+	std::ostream& print(std::ostream& stream, int /*level*/) const override {
 		stream << _name;
 		if (!_parameters.empty()) {
 			stream << "(\"";

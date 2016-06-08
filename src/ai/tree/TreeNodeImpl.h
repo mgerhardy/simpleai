@@ -56,7 +56,7 @@ inline void TreeNode::resetState(const AIPtr& entity) {
 }
 
 inline void TreeNode::getRunningChildren(const AIPtr& /*entity*/, std::vector<bool>& active) const {
-	const int size = _children.size();
+	const int size = (int)_children.size();
 	for (int i = 0; i < size; ++i) {
 		active.push_back(false);
 	}
@@ -207,7 +207,7 @@ inline TreeNodePtr TreeNode::getParent(const TreeNodePtr& self, int id) const {
 	return TreeNodePtr();
 }
 
-inline TreeNodeStatus TreeNode::execute(const AIPtr& entity, int64_t deltaMillis) {
+inline TreeNodeStatus TreeNode::execute(const AIPtr& entity, int64_t /*deltaMillis*/) {
 	if (!_condition->evaluate(entity)) {
 		return state(entity, CANNOTEXECUTE);
 	}
