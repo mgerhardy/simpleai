@@ -23,7 +23,7 @@ typedef WeightedSteerings::const_iterator WeightedSteeringsIter;
 /**
  * @brief This class allows you to weight several steering methods and get a blended @c MoveVector out of it.
  */
-class WeightedSteering : public IPrintable {
+class WeightedSteering {
 private:
 	WeightedSteerings _steerings;
 public:
@@ -52,14 +52,6 @@ public:
 
 		const float scale = 1.0f / totalWeight;
 		return MoveVector(vecBlended * scale, fmodf(angularBlended * scale, glm::two_pi<float>()));
-	}
-
-	virtual std::ostream& print(std::ostream& stream, int level) const override {
-		for (const WeightedData& wd : _steerings) {
-			wd.steering->print(stream, level + 1);
-			stream << " weight: " << wd.weight << std::endl;
-		}
-		return stream;
 	}
 };
 

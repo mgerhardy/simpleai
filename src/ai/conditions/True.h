@@ -12,11 +12,6 @@ public:
 	CONDITION_CLASS_SINGLETON(True)
 
 	bool evaluate(const AIPtr& entity) override;
-
-	std::ostream& print(std::ostream& stream, int /*level*/) const override {
-		stream << _name;
-		return stream;
-	}
 };
 
 inline bool True::evaluate(const AIPtr& /* entity */) {

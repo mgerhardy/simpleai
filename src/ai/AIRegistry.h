@@ -10,7 +10,6 @@
 #include "tree/Limit.h"
 #include "tree/Invert.h"
 #include "tree/Idle.h"
-#include "tree/Print.h"
 #include "tree/Parallel.h"
 #include "tree/PrioritySelector.h"
 #include "tree/ProbabilitySelector.h"
@@ -66,7 +65,6 @@ protected:
 			R_GET(ProbabilitySelector);
 			R_GET(RandomSelector);
 			R_GET(Sequence);
-			R_GET(Print);
 			R_GET(Idle);
 		}
 	};

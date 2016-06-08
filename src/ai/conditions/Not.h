@@ -27,14 +27,6 @@ public:
 	bool evaluate(const AIPtr& entity) override {
 		return !_condition->evaluate(entity);
 	}
-
-	std::ostream& print(std::ostream& stream, int level) const override {
-		ICondition::print(stream, level);
-		stream << "(";
-		_condition->print(stream, level);
-		stream << ")";
-		return stream;
-	}
 };
 
 inline ConditionPtr Not::Factory::create(const ConditionFactoryContext *ctx) const {

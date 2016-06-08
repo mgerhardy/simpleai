@@ -123,35 +123,6 @@ inline TreeNodeStatus TreeNode::getLastStatus(const AIPtr& entity) const {
 	return i->second;
 }
 
-inline std::ostream& TreeNode::print(std::ostream& stream, int level) const {
-	for (int i = 0; i < level; ++i) {
-		stream << '\t';
-	}
-	if (_condition) {
-		stream << "if (";
-		_condition->print(stream, level);
-		stream << ") => ";
-	}
-	stream << _name;
-	stream << "(";
-	if (!_parameters.empty()) {
-		stream << "\"" << _parameters << "\"";
-	}
-	stream << ")";
-	if (!_children.empty()) {
-		stream << " {" << std::endl;
-		for (auto& child : _children) {
-			child->print(stream, level + 1);
-			stream << std::endl;
-		}
-		for (int i = 0; i < level; ++i) {
-			stream << '\t';
-		}
-		stream << "}";
-	}
-	return stream;
-}
-
 inline TreeNodePtr TreeNode::getChild(int id) const {
 	for (auto& child : _children) {
 		if (child->getId() == id) {

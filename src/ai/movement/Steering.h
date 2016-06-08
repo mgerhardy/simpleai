@@ -44,7 +44,7 @@ public: \
 /**
  * @brief Steering interface
  */
-class ISteering : public MemObject, public IPrintable {
+class ISteering : public MemObject {
 public:
 	virtual ~ISteering() {}
 	/**
@@ -54,8 +54,6 @@ public:
 	 * because there was an error.
 	 */
 	virtual MoveVector execute (const AIPtr& ai, float speed) const = 0;
-
-	virtual std::ostream& print(std::ostream& output, int level) const = 0;
 };
 
 /**

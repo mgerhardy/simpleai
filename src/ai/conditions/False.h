@@ -14,11 +14,6 @@ public:
 	bool evaluate(const AIPtr& /*entity*/) override {
 		return false;
 	}
-
-	std::ostream& print(std::ostream& stream, int /*level*/) const override {
-		stream << _name;
-		return stream;
-	}
 };
 
 }

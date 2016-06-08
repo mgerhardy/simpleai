@@ -5,7 +5,6 @@
 #include <memory>
 #include <algorithm>
 #include "common/MemoryAllocator.h"
-#include "common/IPrintable.h"
 #include "common/Types.h"
 #include "conditions/ICondition.h"
 #include "conditions/True.h"
@@ -74,7 +73,7 @@ enum TreeNodeStatus {
  * be reused for multiple @c AI instances. Always use the @c AI or @c ICharacter
  * to store your state!
  */
-class TreeNode : public IPrintable, public MemObject {
+class TreeNode : public MemObject {
 protected:
 	static int getNextId() {
 		static int _nextId;
@@ -177,8 +176,6 @@ public:
 	 * @return An empty @c TreeNodePtr if not found, or the parent is the root node of the behaviour tree
 	 */
 	TreeNodePtr getParent(const TreeNodePtr& self, int id) const;
-
-	virtual std::ostream& print(std::ostream& stream, int level) const override;
 };
 
 }

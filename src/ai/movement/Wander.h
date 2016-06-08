@@ -27,14 +27,6 @@ public:
 		const MoveVector d(v, ai::randomBinomial() * _rotation);
 		return d;
 	}
-
-	std::ostream& print(std::ostream& stream, int level) const override {
-		for (int i = 0; i < level; ++i) {
-			stream << '\t';
-		}
-		stream << "Wander(" << _rotation << ")";
-		return stream;
-	}
 };
 
 }

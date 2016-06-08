@@ -20,7 +20,6 @@ public:
 	}
 
 	CONDITION_FACTORY_NO_IMPL(Or)
-	CONDITION_PRINT_SUBCONDITIONS_PRINT
 
 	bool evaluate(const AIPtr& entity) override {
 		for (ConditionsIter i = _conditions.begin(); i != _conditions.end(); ++i) {

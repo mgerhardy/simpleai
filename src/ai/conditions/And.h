@@ -20,7 +20,6 @@ public:
 	}
 
 	CONDITION_FACTORY_NO_IMPL(And)
-	CONDITION_PRINT_SUBCONDITIONS_PRINT
 
 	bool evaluate(const AIPtr& entity) override {
 		for (ConditionsIter i = _conditions.begin(); i != _conditions.end(); ++i) {
@@ -33,11 +32,11 @@ public:
 	}
 };
 
-	inline ConditionPtr And::Factory::create(const ConditionFactoryContext *ctx) const {
-		if (ctx->conditions.size() < 2) {
-			return ConditionPtr();
-		}
-		return std::make_shared<And>(ctx->conditions);
+inline ConditionPtr And::Factory::create(const ConditionFactoryContext *ctx) const {
+	if (ctx->conditions.size() < 2) {
+		return ConditionPtr();
 	}
+	return std::make_shared<And>(ctx->conditions);
+}
 
 }

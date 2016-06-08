@@ -13,7 +13,6 @@
 #include <memory>
 
 #include "common/MemoryAllocator.h"
-#include "common/IPrintable.h"
 
 #include "AIFactories.h"
 
@@ -98,21 +97,6 @@ public: \
 		s << ")"; \
 	}
 
-#define CONDITION_PRINT_SUBCONDITIONS_PRINT \
-	std::ostream& print(std::ostream& stream, int level) const override { \
-		ICondition::print(stream, level); \
-		stream << "("; \
-		for (ConditionsConstIter i = _conditions.begin(); i != _conditions.end(); ++i) { \
-			(*i)->print(stream, level); \
-			++i; \
-			if (i != _conditions.end()) { \
-				stream << ","; \
-			} \
-		} \
-		stream << ")"; \
-		return stream; \
-	}
-
 class ICondition;
 typedef std::shared_ptr<ICondition> ConditionPtr;
 typedef std::vector<ConditionPtr> Conditions;
@@ -123,7 +107,7 @@ typedef Conditions::const_iterator ConditionsConstIter;
  * @brief A condition can be placed on a @c TreeNode to decide which node is going to get executed. In general they are stateless.
  * If they are not, it should explicitly get noted.
  */
-class ICondition : public IPrintable, public MemObject {
+class ICondition : public MemObject {
 protected:
 	static int getNextId() {
 		static int _nextId = 0;
@@ -184,16 +168,6 @@ public:
 		s << (evaluate(entity) ? "1" : "0");
 		s << "]";
 		return s.str();
-	}
-
-	std::ostream& print(std::ostream& stream, int /*level*/) const override {
-		stream << _name;
-		if (!_parameters.empty()) {
-			stream << "(\"";
-			stream << _parameters;
-			stream << "\")";
-		}
-		return stream;
 	}
 };
 
