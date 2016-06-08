@@ -263,7 +263,7 @@ noinst_LTLIBRARIES = libglm.la
 
 libglm_la_SOURCES = detail/glm.cpp
 
-libglm_la_CFLAGS =
+libglm_la_CPPFLAGS = -I..
 
 libglm_la_LDFLAGS =
 

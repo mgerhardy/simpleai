@@ -62,10 +62,10 @@ liblua_la_SOURCES = \
 	lvm.c \
 	lzio.c
 
-liblua_la_CXXFLAGS =
+liblua_la_CFLAGS = -I.
 
 if !AI_EXCEPTIONS
-liblua_la_CXXFLAGS += -DLUA_USE_LONGJMP
+liblua_la_CFLAGS += -DLUA_USE_LONGJMP
 endif
 
 liblua_la_LDFLAGS =
