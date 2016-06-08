@@ -38,7 +38,7 @@ addons:
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -q
-  - sudo apt-get install lua5.2 liblua5.2-dev qt5-default qtbase5-dev -y
+  - sudo apt-get install lua5.2 liblua5.2-dev libglm-dev qt5-default qtbase5-dev -y
 
 script:
   - .travis/configure.sh
