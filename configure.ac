@@ -88,6 +88,9 @@ if test "x$enable_lua" = "xyes" ; then
 else
 	AC_SUBST([AI_ENABLE_LUA],0)
 fi
+
+EXTERNAL_DEPENDENCIES="glm $EXTERNAL_DEPENDENCIES"
+
 AM_CONDITIONAL(AI_ENABLE_LUA,test "x$enable_lua" = "xyes")
 AC_MSG_RESULT([$enable_lua])
 
@@ -154,6 +157,7 @@ AC_OUTPUT(
 	src/test/Makefile
 	src/libs/Makefile
 	src/libs/lua/Makefile
+	src/libs/glm/Makefile
 	src/libs/tinyxml2/Makefile
 	docs/Makefile
 	libsimpleai.pc
