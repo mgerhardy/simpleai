@@ -22,6 +22,8 @@ env:
   matrix:
    - BUILD_TYPE=cmake
    - BUILD_TYPE=automake
+   - BUILD_MODE=Release
+   - BUILD_MODE=Debug
 
 addons:
   coverity_scan:
@@ -32,63 +34,15 @@ addons:
     build_command_prepend: "cmake ."
     build_command: "make -j 4"
     branch_pattern: coverity_scan
-  apt:
-    packages:
-    - g++-5
-    - gcc-5
-    - clang
-    - make
-    - cmake
-    - autoconf
-    - automake
-    - libtool
-    - build-essential
-    - lua5.1
-    - liblua5.2-dev
-    - libgtest-dev
-    sources:
-    - ubuntu-toolchain-r-test
+
+before_install:
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update -q
+  - sudo apt-get install lua5.2 liblua5.2-dev -y
 
 script:
-  - gcc --version
-  - clang --version
-  - cmake --version
-  - ls /usr/bin
-  - "if [ $BUILD_TYPE == automake ]; then \
-       ./autogen.sh
-       ./configure --prefix=$PWD --enable-tests=yes
-       make
-       make install
-       ./src/test/simpleai-tests
-       make dist-clean
-       ./configure --enable-tests=yes --enable-run=yes
-       make
-       make dist-clean
-       ./configure --enable-tests=yes
-       make
-       make dist-clean
-       ./configure --enable-run=yes
-       make
-       make dist-clean
-       ./configure --enable-lua=no
-       make
-       make dist-clean
-       ./configure --enable-lua=no --enable-tests=yes
-       make
-       make dist-clean
-       ./configure --enable-debug --enable-gprof
-       make
-       make dist-clean
-       cd src/debug
-       qmake
-       make
-     fi"
-  - "if [ $BUILD_TYPE == cmake ]; then \
-       mkdir simpleai-build
-       cd simpleai-build
-       cmake -DSIMPLEAI_DEBUGGER=ON -DCMAKE_BUILD_TYPE=Release -G"Eclipse CDT4 - Unix Makefiles" ..
-       make
-     fi"
+  - .travis/configure.sh
+  - .travis/cmake.sh
 
 notifications:
   email: true
