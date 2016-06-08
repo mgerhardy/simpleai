@@ -7,23 +7,23 @@
 #include <cstdio>
 
 #ifndef ai_log
-#define ai_log(format, ...) ai::Log::info(format, ##__VA_ARGS__)
+#define ai_log(...) ai::Log::info(__VA_ARGS__)
 #endif
 
 #ifndef ai_log_error
-#define ai_log_error(format, ...) ai::Log::error(format, ##__VA_ARGS__)
+#define ai_log_error(...) ai::Log::error(__VA_ARGS__)
 #endif
 
 #ifndef ai_log_warn
-#define ai_log_warn(format, ...) ai::Log::warn(format, ##__VA_ARGS__)
+#define ai_log_warn(...) ai::Log::warn(__VA_ARGS__)
 #endif
 
 #ifndef ai_log_debug
-#define ai_log_debug(format, ...) ai::Log::debug(format, ##__VA_ARGS__)
+#define ai_log_debug(...) ai::Log::debug(__VA_ARGS__)
 #endif
 
 #ifndef ai_log_trace
-#define ai_log_trace(format, ...) ai::Log::trace(format, ##__VA_ARGS__)
+#define ai_log_trace(...) ai::Log::trace(__VA_ARGS__)
 #endif
 
 #if !(__GNUC__ || __GNUC__)
@@ -32,11 +32,11 @@
 
 #ifndef ai_assert_always
 	#if (__clang_analyzer__)
-		#define ai_assert_always(condition, format, ...) assert(condition)
+		#define ai_assert_always(condition, ...) assert(condition)
 	#else
-		#define ai_assert_always(condition, format, ...) \
+		#define ai_assert_always(condition, ...) \
 			if ( !(condition) ) { \
-				ai::Log::error(format, ##__VA_ARGS__); \
+				ai::Log::error(__VA_ARGS__); \
 				ai::Log::error("%s:%i", __FILE__, __LINE__); \
 				assert(condition); \
 			}
@@ -47,7 +47,7 @@
 	#ifdef DEBUG
 		#define ai_assert ai_assert_always
 	#else
-		#define ai_assert(condition, format, ...)
+		#define ai_assert(condition, ...)
 	#endif
 #endif
 
