@@ -20,10 +20,10 @@ env:
    #   via the "travis encrypt" command using the project repo's public key
    - secure: "MOmSGUmQlEBdArqZgzvPq6Rc3fN/jqpHXgFqczCRZre8QOcokdzbkuhib5BntajR73y11gqzmPFFZ9sr+m3xEt7phM/PtxDcsZmtzy8gF5vLpY2HOvdN9rakp6uM2WSmWFv9T+Ebj3Ihd+yob5e4Tnszm4tJoJMCHO0JNW/thaU="
   matrix:
-   - BUILD_TYPE=cmake
-   - BUILD_TYPE=automake
-   - BUILD_MODE=Release
-   - BUILD_MODE=Debug
+   - BUILD_TYPE=cmake     BUILD_MODE=Release
+   - BUILD_TYPE=automake  BUILD_MODE=Debug
+   - BUILD_TYPE=cmake     BUILD_MODE=Debug
+   - BUILD_TYPE=automake  BUILD_MODE=Release
 
 addons:
   coverity_scan:
