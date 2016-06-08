@@ -12,7 +12,7 @@ class SelectionSeek: public SelectionSteering {
 public:
 	STEERING_FACTORY(SelectionSeek)
 
-	SelectionSeek(const std::string&) :
+	explicit SelectionSeek(const std::string&) :
 			SelectionSteering() {
 	}
 

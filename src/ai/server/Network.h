@@ -19,7 +19,7 @@ namespace ai {
 class IProtocolMessage;
 
 struct Client {
-	Client(SOCKET _socket) :
+	explicit Client(SOCKET _socket) :
 			socket(_socket), finished(false), in(), out() {
 	}
 	SOCKET socket;

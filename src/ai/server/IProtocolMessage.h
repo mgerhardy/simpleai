@@ -140,7 +140,7 @@ public:
 	static std::string readString(streamContainer& in);
 
 public:
-	IProtocolMessage(const ProtocolId& id) :
+	explicit IProtocolMessage(const ProtocolId& id) :
 			_id(id) {
 	}
 

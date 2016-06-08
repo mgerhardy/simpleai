@@ -27,7 +27,7 @@ class WeightedSteering : public IPrintable {
 private:
 	WeightedSteerings _steerings;
 public:
-	WeightedSteering(const WeightedSteerings& steerings) :
+	explicit WeightedSteering(const WeightedSteerings& steerings) :
 			_steerings(steerings) {
 	}
 

@@ -12,7 +12,7 @@ namespace ai {
  * @brief Macro to simplify the condition creation. Just give the class name of the condition as parameter.
  */
 #define FILTER_CLASS(FilterName) \
-	FilterName(const std::string& parameters = "") : \
+	explicit FilterName(const std::string& parameters = "") : \
 		IFilter(#FilterName, parameters) { \
 	} \
 public: \

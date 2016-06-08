@@ -66,7 +66,7 @@ private:
 	}
 
 public:
-	XMLTreeLoader(const IAIFactory& aiFactory) :
+	explicit XMLTreeLoader(const IAIFactory& aiFactory) :
 			ITreeLoader(aiFactory) {
 	}
 

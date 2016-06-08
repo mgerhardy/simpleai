@@ -11,7 +11,7 @@ class AddNodeHandler: public ai::IProtocolHandler {
 private:
 	Server& _server;
 public:
-	AddNodeHandler(Server& server) : _server(server) {
+	explicit AddNodeHandler(Server& server) : _server(server) {
 	}
 
 	void execute(const ClientId& clientId, const IProtocolMessage& message) override {

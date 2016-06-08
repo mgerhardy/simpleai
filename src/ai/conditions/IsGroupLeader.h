@@ -18,7 +18,7 @@ private:
 public:
 	CONDITION_FACTORY(IsGroupLeader)
 
-	IsGroupLeader(const std::string& parameters) :
+	explicit IsGroupLeader(const std::string& parameters) :
 		ICondition("IsGroupLeader", parameters) {
 		if (_parameters.empty()) {
 			_groupId = -1;

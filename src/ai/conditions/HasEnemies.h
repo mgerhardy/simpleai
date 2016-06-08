@@ -20,7 +20,7 @@ protected:
 public:
 	CONDITION_FACTORY(HasEnemies)
 
-	HasEnemies(const std::string& parameters) :
+	explicit HasEnemies(const std::string& parameters) :
 			ICondition("HasEnemies", parameters) {
 		if (_parameters.empty()) {
 			_enemyCount = -1;

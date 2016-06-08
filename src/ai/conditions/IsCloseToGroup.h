@@ -20,7 +20,7 @@ private:
 public:
 	CONDITION_FACTORY(IsCloseToGroup)
 
-	IsCloseToGroup(const std::string& parameters) :
+	explicit IsCloseToGroup(const std::string& parameters) :
 		ICondition("IsCloseToGroup", parameters) {
 		std::vector<std::string> tokens;
 		Str::splitString(_parameters, tokens, ",");

@@ -26,7 +26,7 @@ typedef std::shared_ptr<AI> AIPtr;
  * @brief Macro to simplify the condition creation. Just give the class name of the condition as parameter.
  */
 #define CONDITION_CLASS(ConditionName) \
-	ConditionName(const std::string& parameters = "") : \
+	explicit ConditionName(const std::string& parameters = "") : \
 		ICondition(#ConditionName, parameters) { \
 	} \
 public: \

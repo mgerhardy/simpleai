@@ -12,7 +12,7 @@ class SelectionFlee: public SelectionSteering {
 public:
 	STEERING_FACTORY(SelectionFlee)
 
-	SelectionFlee(const std::string&) :
+	explicit SelectionFlee(const std::string&) :
 			SelectionSteering() {
 	}
 

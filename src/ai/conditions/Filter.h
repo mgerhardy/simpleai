@@ -49,7 +49,7 @@ protected:
 public:
 	CONDITION_FACTORY_NO_IMPL(Filter)
 
-	Filter (const Filters& filters) :
+	explicit Filter (const Filters& filters) :
 			ICondition(FILTER_NAME, ""), _filters(filters) {
 	}
 

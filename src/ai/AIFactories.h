@@ -31,7 +31,7 @@ struct SteerNodeFactoryContext {
 struct FilterFactoryContext {
 	// Parameters for the filter - can get hand over to the ctor in your factory implementation.
 	std::string parameters;
-	FilterFactoryContext(const std::string& _parameters) :
+	explicit FilterFactoryContext(const std::string& _parameters) :
 		parameters(_parameters) {
 	}
 };
@@ -39,7 +39,7 @@ struct FilterFactoryContext {
 struct SteeringFactoryContext {
 	// Parameters for the steering class - can get hand over to the ctor in your factory implementation.
 	std::string parameters;
-	SteeringFactoryContext(const std::string& _parameters) :
+	explicit SteeringFactoryContext(const std::string& _parameters) :
 		parameters(_parameters) {
 	}
 };
@@ -52,7 +52,7 @@ struct ConditionFactoryContext {
 	// The filter condition also has filters
 	Filters filters;
 	bool filter;
-	ConditionFactoryContext(const std::string& _parameters) :
+	explicit ConditionFactoryContext(const std::string& _parameters) :
 		parameters(_parameters), filter(false) {
 	}
 };

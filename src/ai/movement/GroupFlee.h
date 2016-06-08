@@ -14,7 +14,7 @@ protected:
 public:
 	STEERING_FACTORY(GroupFlee)
 
-	GroupFlee(const std::string& parameters) :
+	explicit GroupFlee(const std::string& parameters) :
 			ISteering() {
 		_groupId = ::atoi(parameters.c_str());
 	}

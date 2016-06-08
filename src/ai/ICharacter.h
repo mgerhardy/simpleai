@@ -49,7 +49,7 @@ protected:
 	CharacterAttributes _attributes;
 
 public:
-	ICharacter(CharacterId id) :
+	explicit ICharacter(CharacterId id) :
 			_id(id), _orientation(0.0f), _speed(0.0f) {
 	}
 

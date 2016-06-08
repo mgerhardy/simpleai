@@ -36,7 +36,7 @@ private:
 	lua_State *_state;
 	const int _startStackDepth;
 public:
-	StackChecker (lua_State *state) :
+	explicit StackChecker (lua_State *state) :
 			_state(state), _startStackDepth(lua_gettop(_state))
 	{
 	}
@@ -77,7 +77,7 @@ private:
 	std::string _error;
 
 public:
-	LUA (bool debug = false) {
+	explicit LUA (bool debug = false) {
 		_state = luaL_newstate();
 
 		luaL_openlibs(_state);

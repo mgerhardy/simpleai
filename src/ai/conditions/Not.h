@@ -18,7 +18,7 @@ protected:
 public:
 	CONDITION_FACTORY_NO_IMPL(Not)
 
-	Not(const ConditionPtr& condition) :
+	explicit Not(const ConditionPtr& condition) :
 			ICondition("Not", ""), _condition(condition) {
 	}
 	virtual ~Not() {

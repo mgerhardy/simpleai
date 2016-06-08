@@ -12,7 +12,7 @@ class PauseHandler: public ai::IProtocolHandler {
 private:
 	Server& _server;
 public:
-	PauseHandler(Server& server) : _server(server) {
+	explicit PauseHandler(Server& server) : _server(server) {
 	}
 
 	void execute(const ClientId& clientId, const IProtocolMessage& message) override {

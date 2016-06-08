@@ -14,7 +14,7 @@ protected:
 public:
 	FILTER_FACTORY(SelectGroupMembers)
 
-	SelectGroupMembers(const std::string& parameters = "") :
+	explicit SelectGroupMembers(const std::string& parameters = "") :
 		IFilter("SelectGroupMembers", parameters) {
 		if (_parameters.empty()) {
 			_groupId = -1;

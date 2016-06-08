@@ -42,7 +42,7 @@ class ScopedReadLock {
 private:
 	const ReadWriteLock& _lock;
 public:
-	ScopedReadLock(const ReadWriteLock& lock) : _lock(lock) {
+	explicit ScopedReadLock(const ReadWriteLock& lock) : _lock(lock) {
 		_lock.lockRead();
 	}
 	~ScopedReadLock() {
@@ -54,7 +54,7 @@ class ScopedWriteLock {
 private:
 	ReadWriteLock& _lock;
 public:
-	ScopedWriteLock(ReadWriteLock& lock) : _lock(lock) {
+	explicit ScopedWriteLock(ReadWriteLock& lock) : _lock(lock) {
 		_lock.lockWrite();
 	}
 	~ScopedWriteLock() {

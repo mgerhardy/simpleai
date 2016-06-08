@@ -89,7 +89,7 @@ public:
 	/**
 	 * @param behaviour The behaviour tree node that is applied to this ai entity
 	 */
-	AI(const TreeNodePtr& behaviour) :
+	explicit AI(const TreeNodePtr& behaviour) :
 			_behaviour(behaviour), _pause(false), _debuggingActive(false), _time(0L), _zone(nullptr), _reset(false) {
 	}
 	virtual ~AI() {

@@ -72,7 +72,8 @@ inline SteeringPtr TreeNodeParser::getSteering (const std::string& nodeName) {
 		steerType = nodeName;
 	}
 
-	return _aiFactory.createSteering(steerType, parameters);
+	const SteeringFactoryContext ctx(parameters);
+	return _aiFactory.createSteering(steerType, ctx);
 }
 
 inline TreeNodePtr TreeNodeParser::getTreeNode(const std::string& name) {

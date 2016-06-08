@@ -14,7 +14,7 @@ protected:
 public:
 	STEERING_FACTORY(GroupSeek)
 
-	GroupSeek(const std::string& parameters) :
+	explicit GroupSeek(const std::string& parameters) :
 			ISteering() {
 		_groupId = ::atoi(parameters.c_str());
 	}

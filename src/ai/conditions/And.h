@@ -13,7 +13,7 @@ protected:
 	CONDITION_PRINT_SUBCONDITIONS_GETCONDITIONNAMEWITHVALUE
 
 public:
-	And(const Conditions& conditions) :
+	explicit And(const Conditions& conditions) :
 			ICondition("And", ""), _conditions(conditions) {
 	}
 	virtual ~And() {

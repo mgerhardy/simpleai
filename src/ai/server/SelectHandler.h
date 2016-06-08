@@ -10,7 +10,7 @@ class SelectHandler: public ai::IProtocolHandler {
 private:
 	Server& _server;
 public:
-	SelectHandler(Server& server) : _server(server) {
+	explicit SelectHandler(Server& server) : _server(server) {
 	}
 
 	void execute(const ClientId& clientId, const IProtocolMessage& message) override {

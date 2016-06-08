@@ -24,7 +24,7 @@ protected:
 	private:
 		const CharacterId& _id;
 	public:
-		CharacterIdPredicate(const CharacterId& id) :
+		explicit CharacterIdPredicate(const CharacterId& id) :
 			_id(id) {
 		}
 
@@ -81,7 +81,7 @@ protected:
 		_dirty = false;
 	}
 public:
-	AggroMgr(std::size_t expectedEntrySize = 0u) :
+	explicit AggroMgr(std::size_t expectedEntrySize = 0u) :
 		_dirty(false) {
 		if (expectedEntrySize > 0) {
 			_entries.reserve(expectedEntrySize);
