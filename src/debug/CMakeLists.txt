@@ -14,6 +14,7 @@ find_package(Qt5Network REQUIRED)
 find_package(Qt5Gui REQUIRED)
 
 set(simpleai_debugger_HEADERS
+	src/gui/action/Action.h
 	src/gui/action/AddAction.h
 	src/gui/action/DeleteAction.h
 	src/gui/AICompressorProxy.h

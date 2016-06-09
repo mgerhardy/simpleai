@@ -1,5 +1,4 @@
-#include <QAction>
-#include <QModelIndex>
+#include "Action.h"
 #include "AddDialog.h"
 
 namespace ai {
@@ -7,7 +6,7 @@ namespace debug {
 
 class BehaviourTreeModelItem;
 
-class AddAction: public QAction {
+class AddAction: public Action {
 Q_OBJECT
 private:
 	int _parentId;
@@ -20,8 +19,7 @@ private slots:
 	}
 public:
 	AddAction(int parentId, QObject* parent) :
-			QAction(parent), _parentId(parentId) {
-		setText(tr("Add node"));
+			Action(tr("Add node"), parent), _parentId(parentId) {
 		connect(this, SIGNAL(triggered()), this, SLOT(onTriggered()));
 	}
 signals:
