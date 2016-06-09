@@ -25,7 +25,6 @@ class StateTable;
 class EntityList;
 class AggroTable;
 class NodeTreeView;
-class ZoomFrame;
 class MapView;
 class AIDebugger;
 
@@ -118,9 +117,7 @@ private:
 	QLabel *createLabel(const QString &text) const;
 
 	NodeTreeView *_nodeTree;
-	ZoomFrame *_nodeTreeFrame;
 	StateTable *_stateTable;
-	ZoomFrame *_mapFrame;
 	MapView *_mapWidget;
 	EntityList *_entityList;
 	QLineEdit *_entityFilter;

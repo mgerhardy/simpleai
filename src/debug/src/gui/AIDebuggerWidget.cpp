@@ -19,7 +19,6 @@
 #include "EntityList.h"
 #include "AggroTable.h"
 #include "MapView.h"
-#include "ZoomFrame.h"
 #include "NodeTreeView.h"
 #include "AddAction.h"
 #include "DeleteAction.h"
@@ -51,8 +50,6 @@ AIDebuggerWidget::AIDebuggerWidget(AIDebugger& debugger, AINodeStaticResolver& r
 
 AIDebuggerWidget::~AIDebuggerWidget() {
 	delete _nodeTree;
-	delete _nodeTreeFrame;
-	delete _mapFrame;
 	delete _entityList;
 	delete _statusBarLabel;
 	delete _selectedLabel;
@@ -188,7 +185,6 @@ QWidget *AIDebuggerWidget::createTopWidget() {
 	QSplitter *splitter = new QSplitter();
 
 	_mapWidget = _debugger.createMapWidget();
-	_mapFrame = new ZoomFrame(_mapWidget);
 
 	_entityFilter = new QLineEdit();
 	_entityList = new EntityList(_debugger, _entityFilter);
@@ -197,7 +193,7 @@ QWidget *AIDebuggerWidget::createTopWidget() {
 	_namesComboBox->setInsertPolicy(QComboBox::InsertAlphabetically);
 	_namesComboBox->addItem(tr("None"));
 
-	splitter->addWidget(_mapFrame);
+	splitter->addWidget(_mapWidget);
 
 	QVBoxLayout *vbox = new QVBoxLayout();
 	vbox->setMargin(0);
@@ -243,22 +239,18 @@ void AIDebuggerWidget::showContextMenu(const QPoint &pos) {
 
 QWidget *AIDebuggerWidget::createTreePanelWidget() {
 	QWidget* treePanel = new QWidget();
-	treePanel->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
+	treePanel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	_nodeTree = new NodeTreeView(_debugger, _resolver);
-	_nodeTreeFrame = new ZoomFrame(_nodeTree, treePanel);
-	_nodeTreeFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	_nodeTreeFrame->setVisible(false);
-	_aggroTable = new AggroTable(_debugger);
-	_stateTable = new StateTable(_debugger);
+	_nodeTree->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	_nodeTree->setVisible(false);
 
-	_tree = new QTreeView(treePanel);
+	_tree = new QTreeView();
 	_tree->setUniformRowHeights(true);
 	_tree->setAlternatingRowColors(true);
 	_tree->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	_tree->setModel(&_model);
 	_tree->setContextMenuPolicy(Qt::CustomContextMenu);
-
 	connect(_tree, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showContextMenu(const QPoint &)));
 
 	QHeaderView *header = _tree->header();
@@ -269,7 +261,7 @@ QWidget *AIDebuggerWidget::createTreePanelWidget() {
 	header->setSectionResizeMode(COL_LASTRUN, QHeaderView::ResizeToContents);
 #endif
 
-	QPushButton *toggle = new QPushButton(QIcon(":/images/switch.png"), "", treePanel);
+	QPushButton *toggle = new QPushButton(QIcon(":/images/switch.png"), "");
 	toggle->setFlat(true);
 	toggle->setCheckable(true);
 	toggle->setFixedSize(16, 16);
@@ -280,17 +272,18 @@ QWidget *AIDebuggerWidget::createTreePanelWidget() {
 	QGridLayout *treeLayout = new QGridLayout();
 	treeLayout->setColumnStretch(0, 10);
 	treeLayout->setRowStretch(0, 10);
-	treeLayout->addWidget(_nodeTreeFrame, 0, 0);
+	treeLayout->addWidget(_nodeTree, 0, 0);
 	treeLayout->addWidget(_tree, 0, 0);
 	treeLayout->addWidget(toggle, 0, 0, Qt::AlignRight | Qt::AlignTop);
-
 	treePanel->setLayout(treeLayout);
-	treePanel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	return treePanel;
 }
 
 QWidget *AIDebuggerWidget::createBottomWidget() {
 	QSplitter *splitter = new QSplitter();
+
+	_aggroTable = new AggroTable(_debugger);
+	_stateTable = new StateTable(_debugger);
 
 	QWidget* treePanel = createTreePanelWidget();
 	splitter->addWidget(treePanel);
@@ -377,11 +370,11 @@ void AIDebuggerWidget::bug() {
 }
 
 void AIDebuggerWidget::toggleTreeView() {
-	if (_nodeTreeFrame->isVisible()) {
-		_nodeTreeFrame->setVisible(false);
+	if (_nodeTree->isVisible()) {
+		_nodeTree->setVisible(false);
 		_tree->setVisible(true);
 	} else {
-		_nodeTreeFrame->setVisible(true);
+		_nodeTree->setVisible(true);
 		_tree->setVisible(false);
 	}
 }

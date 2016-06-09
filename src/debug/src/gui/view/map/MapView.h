@@ -3,6 +3,8 @@
 #include <SimpleAI.h>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QWheelEvent>
+#include <QTimeLine>
 
 namespace ai {
 namespace debug {
@@ -22,9 +24,17 @@ protected:
 	QGraphicsScene _scene;
 	AIDebugger& _debugger;
 	QHash<ai::CharacterId, MapItem*> _items;
+	int _numScheduledScalings = 0;
+
+private slots:
+	void scalingTime(qreal x);
+	void animFinished();
+
 public:
 	MapView(AIDebugger& debugger);
 	virtual ~MapView();
+
+	void wheelEvent(QWheelEvent * event) override;
 
 	virtual void updateMapView();
 

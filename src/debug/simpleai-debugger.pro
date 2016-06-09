@@ -43,8 +43,6 @@ HEADERS += \
            src/gui/view/state/StateTableModel.h \
            src/gui/view/aggro/AggroTable.h \
            src/gui/view/aggro/AggroTableModel.h \
-           src/gui/widget/ZoomFrame.h \
-           src/gui/widget/ZoomWidget.h \
            src/gui/widget/IComboBox.h
 
 SOURCES += \
@@ -70,8 +68,6 @@ SOURCES += \
            src/gui/view/state/StateTableModel.cpp \
            src/gui/view/aggro/AggroTable.cpp \
            src/gui/view/aggro/AggroTableModel.cpp \
-           src/gui/widget/ZoomFrame.cpp \
-           src/gui/widget/ZoomWidget.cpp \
            src/gui/widget/IComboBox.cpp
 
 RESOURCES += data/resources.qrc

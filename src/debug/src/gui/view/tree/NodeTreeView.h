@@ -2,7 +2,8 @@
 
 #include <QGraphicsView>
 #include <QGraphicsScene>
-
+#include <QWheelEvent>
+#include <QTimeLine>
 #include "NodeTreeItem.h"
 
 namespace ai {
@@ -22,9 +23,17 @@ private:
 	AINodeStaticResolver& _resolver;
 
 	NodeTreeItem* buildTreeItems(const AIStateNode& node, NodeTreeItem* parent);
+	int _numScheduledScalings = 0;
+
+private slots:
+	void scalingTime(qreal x);
+	void animFinished();
+
 public:
 	NodeTreeView(AIDebugger& debugger, AINodeStaticResolver& resolver, QWidget* parent = nullptr);
 	virtual ~NodeTreeView();
+
+	void wheelEvent(QWheelEvent * event) override;
 
 	void updateTreeWidget();
 };
