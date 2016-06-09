@@ -26,6 +26,8 @@ HEADERS += \
            src/gui/dialog/AddDialog.h \
            src/gui/dialog/ConnectDialog.h \
            src/gui/dialog/IDialog.h \
+           src/gui/dialog/SettingsDialog.h \
+           src/gui/action/Action.h \
            src/gui/action/AddAction.h \
            src/gui/action/DeleteAction.h \
            src/gui/view/list/EntityList.h \
@@ -43,8 +45,7 @@ HEADERS += \
            src/gui/view/aggro/AggroTableModel.h \
            src/gui/widget/ZoomFrame.h \
            src/gui/widget/ZoomWidget.h \
-           src/gui/widget/IComboBox.h \
-           src/gui/widget/IGraphicsView.h
+           src/gui/widget/IComboBox.h
 
 SOURCES += \
            src/Main.cpp \
@@ -55,6 +56,7 @@ SOURCES += \
            src/gui/dialog/AddDialog.cpp \
            src/gui/dialog/ConnectDialog.cpp \
            src/gui/dialog/IDialog.cpp \
+           src/gui/dialog/SettingsDialog.cpp \
            src/gui/view/list/EntityList.cpp \
            src/gui/view/list/EntityListModel.cpp \
            src/gui/view/map/MapView.cpp \
@@ -70,8 +72,7 @@ SOURCES += \
            src/gui/view/aggro/AggroTableModel.cpp \
            src/gui/widget/ZoomFrame.cpp \
            src/gui/widget/ZoomWidget.cpp \
-           src/gui/widget/IComboBox.cpp \
-           src/gui/widget/IGraphicsView.cpp
+           src/gui/widget/IComboBox.cpp
 
 RESOURCES += data/resources.qrc
 FORMS +=

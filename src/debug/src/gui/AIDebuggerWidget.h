@@ -60,6 +60,10 @@ public:
 	 * @brief Call this with an existing @c QToolbar to add addition ai debugger entries to it
 	 */
 	void contributeToHelpMenu(QMenu *helpMenu);
+	/**
+	 * @brief Call this with an existing @c QToolbar to add addition ai debugger entries to it
+	 */
+	void contributeToSettingsMenu(QMenu *settingsMenu);
 
 	/**
 	 * @brief If you let the ai debugger contribute to the status bar, call if to remove the contribution
@@ -77,11 +81,16 @@ public:
 	 * @brief If you let the ai debugger contribute to the help menu, call if to remove the contribution
 	 */
 	void removeFromHelpMenu(QMenu *helpMenu);
+	/**
+	 * @brief If you let the ai debugger contribute to the settings menu, call if to remove the contribution
+	 */
+	void removeFromSettingsMenu(QMenu *settingsMenu);
 
 private slots:
 	void about();
 	void documentation();
 	void bug();
+	void settings();
 	void toggleTreeView();
 	void connectToAIServer();
 	void disconnectFromAIServer();
@@ -125,6 +134,7 @@ private:
 	QAction *_aboutAction;
 	QAction *_documentationAction;
 	QAction *_bugAction;
+	QAction *_settingsAction;
 	QLabel *_statusBarLabel;
 	QLabel *_selectedLabel;
 	QComboBox *_namesComboBox;

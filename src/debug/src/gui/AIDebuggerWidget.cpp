@@ -23,6 +23,7 @@
 #include "NodeTreeView.h"
 #include "AddAction.h"
 #include "DeleteAction.h"
+#include "SettingsDialog.h"
 
 namespace ai {
 namespace debug {
@@ -66,6 +67,7 @@ AIDebuggerWidget::~AIDebuggerWidget() {
 	delete _aboutAction;
 	delete _documentationAction;
 	delete _bugAction;
+	delete _settingsAction;
 	delete _namesComboBox;
 	delete _tree;
 }
@@ -137,6 +139,14 @@ void AIDebuggerWidget::contributeToHelpMenu(QMenu *helpMenu) {
 	helpMenu->addAction(_documentationAction);
 	helpMenu->addAction(_bugAction);
 	helpMenu->addAction(_aboutAction);
+}
+
+void AIDebuggerWidget::contributeToSettingsMenu(QMenu *settingsMenu) {
+	settingsMenu->addAction(_settingsAction);
+}
+
+void AIDebuggerWidget::removeFromSettingsMenu(QMenu *settingsMenu) {
+	settingsMenu->removeAction(_settingsAction);
 }
 
 void AIDebuggerWidget::removeFromStatusBar(QStatusBar* statusBar) {
@@ -357,6 +367,11 @@ void AIDebuggerWidget::documentation() {
 	QDesktopServices::openUrl(QUrl("https://github.com/mgerhardy/simpleai/wiki"));
 }
 
+void AIDebuggerWidget::settings() {
+	SettingsDialog d;
+	d.run();
+}
+
 void AIDebuggerWidget::bug() {
 	QDesktopServices::openUrl(QUrl("https://github.com/mgerhardy/simpleai/issues"));
 }
@@ -416,6 +431,11 @@ void AIDebuggerWidget::createActions() {
 	_bugAction->setStatusTip(tr("Report a bug"));
 	_bugAction->setIcon(QIcon(":/images/bug.png"));
 	connect(_bugAction, SIGNAL(triggered()), this, SLOT(bug()));
+
+	_settingsAction = new QAction(tr("Settings"), this);
+	_settingsAction->setStatusTip(tr("Settings"));
+	_settingsAction->setIcon(QIcon(":/images/settings.png"));
+	connect(_settingsAction, SIGNAL(triggered()), this, SLOT(settings()));
 }
 
 QLabel *AIDebuggerWidget::createLabel(const QString &text) const {

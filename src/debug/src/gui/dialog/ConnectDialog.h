@@ -15,7 +15,7 @@ private:
 	QString _hostname;
 	short _port;
 public:
-	ConnectDialog(const QString& defaultHostname = "0.0.0.0", short defaultPort = 12345);
+	ConnectDialog(const QString& defaultHostname = "0.0.0.0", short defaultPort = 10001);
 	virtual ~ConnectDialog();
 
 	virtual void onApply() override;

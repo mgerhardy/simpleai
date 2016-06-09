@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IGraphicsView.h"
+#include <QGraphicsView>
 #include <QGraphicsScene>
 
 #include "NodeTreeItem.h"
@@ -14,7 +14,7 @@ class AIDebugger;
 /**
  * @brief Shows the behaviour tree for the current selected entity
  */
-class NodeTreeView: public IGraphicsView {
+class NodeTreeView: public QGraphicsView {
 Q_OBJECT
 private:
 	AIDebugger& _debugger;

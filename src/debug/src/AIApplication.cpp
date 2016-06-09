@@ -18,8 +18,9 @@ AIApplication::AIApplication(int argc, char** argv) :
 #ifdef Q_WS_X11
 	QApplication::setGraphicsSystem(QLatin1String("raster"));
 #endif
+	setOrganizationName("simpleai");
 	setOrganizationDomain("simpleai");
-	setApplicationName("simpleai");
+	setApplicationName("simpleai-debugger");
 	setApplicationVersion(VERSION);
 #ifdef Q_WS_MAC
 	a.setAttribute(Qt::AA_DontShowIconsInMenus);
@@ -41,6 +42,7 @@ AIApplication::AIApplication(int argc, char** argv) :
 	QMenu* menuBar = _window.menuBar()->addMenu(tr("&File"));
 	_widget->contributeToFileMenu(menuBar);
 	_widget->contributeToHelpMenu(_window.menuBar()->addMenu(tr("&Help")));
+	_widget->contributeToSettingsMenu(_window.menuBar()->addMenu(tr("Settings")));
 	_window.showMaximized();
 	_window.show();
 

@@ -1,12 +1,13 @@
 #include "MapView.h"
 #include "AIDebugger.h"
 #include "MapItem.h"
+#include "Settings.h"
 
 namespace ai {
 namespace debug {
 
 MapView::MapView(AIDebugger& debugger) :
-		IGraphicsView(true, true), _debugger(debugger) {
+		QGraphicsView(), _debugger(debugger) {
 	_scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 	setCacheMode(QGraphicsView::CacheBackground);
@@ -33,11 +34,42 @@ MapItem* MapView::createMapItem(const AIStateWorld& state) {
 	} else {
 		item->setZValue((qreal)state.getPosition().y);
 	}
-	if (i != _items.end())
+	if (i != _items.end()) {
 		return item;
+	}
 	_scene.addItem(item);
 	_items[state.getId()] = item;
 	return item;
+}
+
+void MapView::drawBackground(QPainter* painter, const QRectF& rect) {
+	QGraphicsView::drawBackground(painter, rect);
+	const QColor& color = Settings::getBackgroundColor();
+	painter->fillRect(rect, QBrush(color));
+
+	if (Settings::getGrid()) {
+		const QColor& gridColor = Settings::getGridColor();
+		QPen linePen(gridColor, 1, Qt::SolidLine, Qt::SquareCap, Qt::BevelJoin);
+		linePen.setCosmetic(true);
+		painter->setPen(linePen);
+
+		const int gridInterval = Settings::getGridInterval();
+		const qreal left = static_cast<int>(rect.left())
+				- (static_cast<int>(rect.left()) % gridInterval);
+		const qreal top = static_cast<int>(rect.top())
+				- (static_cast<int>(rect.top()) % gridInterval);
+
+		QVarLengthArray<QLineF, 100> linesX;
+		for (qreal x = left; x < rect.right(); x += gridInterval)
+			linesX.append(QLineF(x, rect.top(), x, rect.bottom()));
+
+		QVarLengthArray<QLineF, 100> linesY;
+		for (qreal y = top; y < rect.bottom(); y += gridInterval)
+			linesY.append(QLineF(rect.left(), y, rect.right(), y));
+
+		painter->drawLines(linesX.data(), linesX.size());
+		painter->drawLines(linesY.data(), linesY.size());
+	}
 }
 
 void MapView::updateMapView() {
