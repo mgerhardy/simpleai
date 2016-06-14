@@ -18,6 +18,7 @@ NodeTreeView::NodeTreeView(AIDebugger& debugger, AINodeStaticResolver& resolver,
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 	setCacheMode(QGraphicsView::CacheBackground);
 	setRenderHint(QPainter::Antialiasing, false);
+	setDragMode(ScrollHandDrag);
 	setScene(&_scene);
 }
 

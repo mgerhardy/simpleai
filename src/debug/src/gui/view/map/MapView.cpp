@@ -12,6 +12,7 @@ MapView::MapView(AIDebugger& debugger) :
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 	setCacheMode(QGraphicsView::CacheBackground);
 	setRenderHint(QPainter::Antialiasing, false);
+	setDragMode(ScrollHandDrag);
 	setInteractive(true);
 	setScene(&_scene);
 }
