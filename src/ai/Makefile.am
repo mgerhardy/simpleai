@@ -12,7 +12,6 @@ nobase_library_include_HEADERS = \
 	AIRegistry.h \
 	common/IFactoryRegistry.h \
 	common/IParser.h \
-	common/IPrintable.h \
 	common/Math.h \
 	common/MemoryAllocator.h \
 	common/MoveVector.h \
@@ -91,7 +90,6 @@ nobase_library_include_HEADERS = \
 	tree/ITimedNode.h \
 	tree/loaders/ITreeLoader.h \
 	tree/Parallel.h \
-	tree/Print.h \
 	tree/PrioritySelector.h \
 	tree/ProbabilitySelector.h \
 	tree/RandomSelector.h \
