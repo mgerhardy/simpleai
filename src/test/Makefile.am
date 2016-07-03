@@ -36,8 +36,6 @@ tests_SOURCES += \
 	XMLTreeLoaderTest.cpp
 endif
 
-AM_CPPFLAGS += -I$(top_builddir)/src/libs
-
-tests_CPPFLAGS = @PTHREAD_CFLAGS@ -I$(top_srcdir)/src/ai -I$(top_builddir)/src/ai -I$(top_builddir)/src/test/gtest/include -I$(top_builddir)/src/test/gtest
+tests_CPPFLAGS = @PTHREAD_CFLAGS@ -I$(top_builddir)/src/libs -I$(top_srcdir)/src/ai -I$(top_builddir)/src/ai -I$(top_builddir)/src/test/gtest/include -I$(top_builddir)/src/test/gtest
 tests_LDFLAGS = @PTHREAD_LIBS@
 tests_LDADD = ../ai/libsimpleai.la @MATH_LIBS@
