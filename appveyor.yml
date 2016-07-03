@@ -3,7 +3,6 @@ version: '{build}'
 configuration: Release
 
 platform:
-  - x86
   - x64
 
 environment:
@@ -20,15 +19,13 @@ branches:
 clone_depth: 10
 
 before_build:
-  - cmd: cmake -DTOOLS=OFF -G "%generator%"
+  - cmd: cmake -G "%generator%"
 
 build:
   parallel: true
   project: simpleai.sln
 
 artifacts:
-  - name: Debugger
-    path: simpleai-debugger.exe
   - name: Runner
     path: simpleai-run.exe
 
