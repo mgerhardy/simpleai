@@ -25,13 +25,13 @@ tests_SOURCES = \
 	gtest/src/gtest-typed-test.cc
 
 if AI_ENABLE_LUA
-AM_CPPFLAGS += -I$(top_builddir)/src/libs/lua
+AM_CPPFLAGS += -I$(top_srcdir)/src/libs/lua
 tests_SOURCES += \
 	LUATreeLoaderTest.cpp
 endif
 
 if AI_ENABLE_XML
-AM_CPPFLAGS += -I$(top_builddir)/src/libs/tinyxml2
+AM_CPPFLAGS += -I$(top_srcdir)/src/libs/tinyxml2
 tests_SOURCES += \
 	XMLTreeLoaderTest.cpp
 endif
