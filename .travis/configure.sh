@@ -22,25 +22,25 @@ if [ "$BUILD_TYPE" == "automake" ]; then
 	make
 	make install
 	./src/test/simpleai-tests
-	make dist-clean
+	make distclean
 	./configure $CONFIGURE_PARAM --enable-tests=yes --enable-run=yes
 	make
-	make dist-clean
+	make distclean
 	./configure $CONFIGURE_PARAM --enable-tests=yes
 	make
-	make dist-clean
+	make distclean
 	./configure $CONFIGURE_PARAM --enable-run=yes
 	make
-	make dist-clean
+	make distclean
 	./configure $CONFIGURE_PARAM --enable-lua=no
 	make
-	make dist-clean
+	make distclean
 	./configure $CONFIGURE_PARAM --enable-lua=no --enable-tests=yes
 	make
-	make dist-clean
+	make distclean
 	./configure $CONFIGURE_PARAM --enable-gprof
 	make
-	make dist-clean
+	make distclean
 	cd src/debug
 	qmake
 	make
