@@ -3,6 +3,28 @@
 #include <SimpleAI.h>
 #include "TestEntity.h"
 #include <sstream>
+#include <iostream>
+
+namespace glm {
+
+inline void PrintTo(const vec2& v, ::std::ostream* os) {
+	*os << "glm::vec2(" << v.x << ":" << v.y << ")";
+}
+
+inline void PrintTo(const vec3& v, ::std::ostream* os) {
+	*os << "glm::vec3(" << v.x << ":" << v.y << ":" << v.z << ")";
+}
+
+inline void PrintTo(const vec4& v, ::std::ostream* os) {
+	*os << "glm::vec4(" << v.x << ":" << v.y << ":" << v.z << ":" << v.w << ")";
+}
+
+}
+
+inline bool operator==(const glm::vec3 &vecA, const glm::vec3 &vecB) {
+	static const double epsilion = 0.0001;
+	return fabs(vecA[0] - vecB[0]) < epsilion && fabs(vecA[1] - vecB[1]) < epsilion && fabs(vecA[2] - vecB[2]) < epsilion;
+}
 
 class TestSuite: public ::testing::Test {
 protected:
