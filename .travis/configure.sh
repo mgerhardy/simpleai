@@ -42,6 +42,6 @@ if [ "$BUILD_TYPE" == "automake" ]; then
 	make
 	make distclean
 	cd src/debug
-	qmake
+	CXXFLAGS=-I../ai qmake
 	make
 fi
