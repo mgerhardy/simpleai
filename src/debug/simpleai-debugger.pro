@@ -13,13 +13,15 @@ INCLUDEPATH += . src src/gui src/gui/dialog src/gui/widget src/gui/view/map src/
 CONFIG += qt debug_and_release
 
 QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += $$(CXXFLAGS)
+QMAKE_CFLAGS   += $$(CFLAGS)
+QMAKE_LFLAGS   += $$(LDFLAGS)
 
 # Input
 HEADERS += \
            src/AIApplication.h \
            src/AIDebugger.h \
            src/common/Settings.h \
-           src/common/Common.h \
            src/gui/AIDebuggerWidget.h \
            src/gui/AICompressorProxy.h \
            src/gui/AINodeStaticResolver.h \
@@ -72,12 +74,23 @@ SOURCES += \
 
 RESOURCES += data/resources.qrc
 FORMS +=
-TRANSLATIONS +=
+TRANSLATIONS += data/simpleai_de_DE.ts
 
+!isEmpty(TRANSLATIONS) {
+isEmpty(QMAKE_LRELEASE) {
 win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\lrelease.exe
-unix:QMAKE_LRELEASE = lrelease
+else:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
+}
+isEmpty(TS_DIR):TS_DIR = Translations
 
-system($$QMAKE_LRELEASE data/simpleai_de_DE.ts data/simpleai_de_DE.qm)
+TSQM.name = lrelease ${QMAKE_FILE_IN}
+TSQM.input = TRANSLATIONS
+TSQM.output = $$TS_DIR/${QMAKE_FILE_BASE}.qm
+TSQM.commands = $$QMAKE_LRELEASE ${QMAKE_FILE_IN}
+TSQM.CONFIG = no_link
+QMAKE_EXTRA_COMPILERS += TSQM
+PRE_TARGETDEPS += compiler_TSQM_make_all
+} else:message(No translation files in project)
 
 QMAKE_RESOURCE_FLAGS += -threshold 0 -compress 9
 
