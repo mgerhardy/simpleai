@@ -1,7 +1,7 @@
 LIBS += -lsimpleai
 INCLUDEPATH += /usr/include/simpleai
 INCLUDEPATH += /usr/local/include/simpleai
-INCLUDEPATH += ../ai/simpleai
+INCLUDEPATH += ../ai
 
 TEMPLATE = app
 TARGET = simpleai-debugger
@@ -74,7 +74,8 @@ SOURCES += \
 
 RESOURCES += data/resources.qrc
 FORMS +=
-TRANSLATIONS += data/simpleai_de_DE.ts
+#TRANSLATIONS += data/simpleai_de_DE.ts
+TRANSLATIONS +=
 
 !isEmpty(TRANSLATIONS) {
 isEmpty(QMAKE_LRELEASE) {
