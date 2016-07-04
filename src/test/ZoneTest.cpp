@@ -40,5 +40,5 @@ TEST_F(ZoneTest, testMassAdd1000000) {
 		ASSERT_TRUE(zone.addAI(ai)) << "Could not add ai to the zone";
 	}
 	zone.update(0l);
-	ASSERT_EQ(n, zone.size());
+	ASSERT_EQ(n, (int)zone.size());
 }

@@ -242,7 +242,7 @@ public:
 	 * @brief this will initialize the loader once with all the defined behaviours from the given lua string.
 	 */
 	bool init(const std::string& luaString) {
-		setError("");
+		resetError();
 		_treeMap.clear();
 
 		LUA lua;
@@ -266,14 +266,14 @@ public:
 		lua.reg("AI", funcs);
 
 		if (!lua.load(luaString)) {
-			setError(lua.getError());
+			setError("%s", lua.getError().c_str());
 			return false;
 		}
 
 		// loads all the trees
 		lua.newGlobalData<LUATreeLoader>("Loader", this);
 		if (!lua.execute("init")) {
-			setError(lua.getError());
+			setError("%s", lua.getError().c_str());
 			return false;
 		}
 
