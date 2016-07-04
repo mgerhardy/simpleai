@@ -3,5 +3,19 @@
 class GeneralTest: public TestSuite {
 };
 
-TEST_F(GeneralTest, testFoo) {
+TEST_F(GeneralTest, testMathParseVec3) {
+	const glm::vec3 v1 = ai::parse("0:0:0");
+	EXPECT_FLOAT_EQ(0.0f, v1.x);
+	EXPECT_FLOAT_EQ(0.0f, v1.y);
+	EXPECT_FLOAT_EQ(0.0f, v1.z);
+
+	const glm::vec3 v2 = ai::parse("100:0:0");
+	EXPECT_FLOAT_EQ(100.0f, v2.x);
+	EXPECT_FLOAT_EQ(0.0f, v2.y);
+	EXPECT_FLOAT_EQ(0.0f, v2.z);
+
+	const glm::vec3 v3 = ai::parse("100:-100:42");
+	EXPECT_FLOAT_EQ(100.0f, v3.x);
+	EXPECT_FLOAT_EQ(-100.0f, v3.y);
+	EXPECT_FLOAT_EQ(42.0f, v3.z);
 }
