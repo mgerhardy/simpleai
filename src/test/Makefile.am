@@ -1,9 +1,9 @@
 bin_PROGRAMS = \
-	tests
+	simpleai-tests
 
 AM_CPPFLAGS =
 
-tests_SOURCES = \
+simpleai_tests_SOURCES = \
 	AggroTest.cpp \
 	GeneralTest.cpp \
 	GroupTest.cpp \
@@ -25,16 +25,15 @@ tests_SOURCES = \
 	gtest/src/gtest-typed-test.cc
 
 if AI_ENABLE_LUA
-AM_CPPFLAGS +=
-tests_SOURCES += \
+simpleai_tests_SOURCES += \
 	LUATreeLoaderTest.cpp
 endif
 
 if AI_ENABLE_XML
-tests_SOURCES += \
+simpleai_tests_SOURCES += \
 	XMLTreeLoaderTest.cpp
 endif
 
-tests_CPPFLAGS = @PTHREAD_CFLAGS@ -I$(top_srcdir)/src/libs -I$(top_srcdir)/src/libs/lua -I$(top_srcdir)/src/libs/tinyxml2 -I$(top_srcdir)/src/ai -I$(top_builddir)/src/ai -I$(top_builddir)/src/test/gtest/include -I$(top_builddir)/src/test/gtest
-tests_LDFLAGS = @PTHREAD_LIBS@
-tests_LDADD = ../ai/libsimpleai.la @MATH_LIBS@
+simpleai_tests_CPPFLAGS = @PTHREAD_CFLAGS@ -I$(top_srcdir)/src/libs -I$(top_srcdir)/src/libs/lua -I$(top_srcdir)/src/libs/tinyxml2 -I$(top_srcdir)/src/ai -I$(top_builddir)/src/ai -I$(top_builddir)/src/test/gtest/include -I$(top_builddir)/src/test/gtest
+simpleai_tests_LDFLAGS = @PTHREAD_LIBS@
+simpleai_tests_LDADD = ../ai/libsimpleai.la @MATH_LIBS@
