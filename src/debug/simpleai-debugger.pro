@@ -1,7 +1,7 @@
 LIBS += -lsimpleai
 INCLUDEPATH += /usr/include/simpleai
 INCLUDEPATH += /usr/local/include/simpleai
-INCLUDEPATH += ../ai
+INCLUDEPATH += ../ai ../libs ../libs/lua ../libs/tinyxml2
 
 TEMPLATE = app
 TARGET = simpleai-debugger
