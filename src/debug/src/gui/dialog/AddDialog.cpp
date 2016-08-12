@@ -1,3 +1,6 @@
+/**
+ * @file
+ */
 #include "AddDialog.h"
 #include <QGridLayout>
 #include <QLabel>

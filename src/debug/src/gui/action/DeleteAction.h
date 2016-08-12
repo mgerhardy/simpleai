@@ -1,3 +1,6 @@
+/**
+ * @file
+ */
 #include "Action.h"
 #include "AddDialog.h"
 

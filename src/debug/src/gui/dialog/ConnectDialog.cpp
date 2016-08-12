@@ -1,3 +1,6 @@
+/**
+ * @file
+ */
 #include "ConnectDialog.h"
 #include <QSettings>
 #include "Settings.h"

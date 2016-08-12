@@ -1,3 +1,6 @@
+/**
+ * @file
+ */
 #include "AggroTableModel.h"
 #include <QColor>
 

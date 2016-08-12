@@ -1,3 +1,6 @@
+/**
+ * @file
+ */
 #include "EntityList.h"
 #include "AIDebugger.h"
 #include <QHeaderView>

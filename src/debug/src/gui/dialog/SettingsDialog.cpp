@@ -1,3 +1,6 @@
+/**
+ * @file
+ */
 #include "SettingsDialog.h"
 #include "Settings.h"
 #include <QColorDialog>

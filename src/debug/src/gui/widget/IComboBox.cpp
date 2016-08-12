@@ -1,3 +1,6 @@
+/**
+ * @file
+ */
 #include "IComboBox.h"
 
 #include <QEvent>
