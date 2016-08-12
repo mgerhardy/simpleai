@@ -255,7 +255,7 @@ QWidget *AIDebuggerWidget::createTreePanelWidget() {
 
 	QHeaderView *header = _tree->header();
 	header->setStretchLastSection(false);
-	header->setSectionResizeMode(QHeaderView::Stretch);
+	header->setSectionResizeMode(QHeaderView::Interactive);
 #if 0
 	header->setSectionResizeMode(COL_STATE, QHeaderView::ResizeToContents);
 	header->setSectionResizeMode(COL_LASTRUN, QHeaderView::ResizeToContents);
