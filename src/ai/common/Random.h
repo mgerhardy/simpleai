@@ -3,11 +3,12 @@
 #include <chrono>
 #include <random>
 #include <stdlib.h>
+#include "common/Thread.h"
 
 namespace ai {
 
 inline std::default_random_engine& randomEngine() {
-	thread_local static std::default_random_engine engine;
+	THREAD_LOCAL std::default_random_engine engine;
 	return engine;
 }
 
