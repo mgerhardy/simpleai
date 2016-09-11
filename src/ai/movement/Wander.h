@@ -19,7 +19,7 @@ public:
 	STEERING_FACTORY(Wander)
 
 	explicit Wander(const std::string& parameter) :
-			ISteering(), _rotation(Str::strToFloat(parameter)) {
+			ISteering(), _rotation(parameter.empty() ? ai::toRadians(10.0f) : Str::strToFloat(parameter)) {
 	}
 
 	MoveVector execute (const AIPtr& ai, float speed) const override {
