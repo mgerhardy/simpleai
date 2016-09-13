@@ -31,6 +31,9 @@
 /**
  * @file
  *
+ * @defgroup AI
+ * @{
+ *
  * Main header file that you should include when you use SimpleAI.
  *
  * If you also want to use the default loaders for your behaviour trees, you can
@@ -138,3 +141,7 @@
 #ifdef SIMPLEAI_INCLUDE_XML
 #include "tree/loaders/xml/XMLTreeLoader.h"
 #endif
+
+/**
+ * @}
+ */
