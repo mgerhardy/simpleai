@@ -7,6 +7,7 @@
 namespace ai {
 namespace debug {
 
+// TODO: select entity on doubleclick
 AggroTable::AggroTable(AIDebugger& debugger) :
 		QTableView(), _model(debugger, this) {
 	_proxyModel.setSourceModel(&_model);
