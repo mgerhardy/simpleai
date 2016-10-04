@@ -33,6 +33,30 @@ public: \
 		return FACTORY; \
 	}
 
+#define FILTER_ACTION_CLASS(FilterName) \
+	explicit FilterName(const std::string& parameters, const Filters& filters) : \
+		IFilter(#FilterName, parameters), _filters(filters) { \
+		ai_assert(_filters.size() > 1, #FilterName " must contain at least two sub filters"); \
+	} \
+protected: \
+	const Filters _filters; \
+public: \
+	virtual ~FilterName() { \
+	}
+
+#define FILTER_ACTION_FACTORY(FilterName) \
+public: \
+	class Factory: public IFilterFactory { \
+	public: \
+		FilterPtr create (const FilterFactoryContext *ctx) const override { \
+			return std::make_shared<FilterName>(ctx->parameters, ctx->filters); \
+		} \
+	}; \
+	static const Factory& getFactory() { \
+		static Factory FACTORY; \
+		return FACTORY; \
+	}
+
 #define FILTER_FACTORY_SINGLETON \
 public: \
 	class Factory: public IFilterFactory { \

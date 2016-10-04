@@ -89,6 +89,7 @@ list(APPEND simpleai_HEADERS
 	filter/SelectGroupMembers.h
 	filter/SelectHighestAggro.h
 	filter/SelectZone.h
+	filter/Union.h
 	IAIFactory.h
 	ICharacter.h
 	group/GroupId.h

@@ -133,6 +133,10 @@
 #include "filter/SelectGroupMembers.h"
 #include "filter/SelectHighestAggro.h"
 #include "filter/SelectZone.h"
+#include "filter/Union.h"
+#include "filter/Intersection.h"
+#include "filter/Last.h"
+#include "filter/First.h"
 
 #ifdef SIMPLEAI_INCLUDE_LUA
 #include "tree/loaders/lua/LUATreeLoader.h"

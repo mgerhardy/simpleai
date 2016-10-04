@@ -33,6 +33,10 @@
 #include "filter/SelectGroupLeader.h"
 #include "filter/SelectGroupMembers.h"
 #include "filter/SelectZone.h"
+#include "filter/Union.h"
+#include "filter/Intersection.h"
+#include "filter/Last.h"
+#include "filter/First.h"
 #include "movement/SelectionSeek.h"
 #include "movement/SelectionFlee.h"
 #include "movement/GroupFlee.h"
@@ -103,6 +107,10 @@ protected:
 			R_GET(SelectGroupMembers);
 			R_GET(SelectHighestAggro);
 			R_GET(SelectZone);
+			R_GET(Union);
+			R_GET(Intersection);
+			R_GET(Last);
+			R_GET(First);
 		}
 	};
 

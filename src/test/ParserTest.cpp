@@ -136,6 +136,18 @@ TEST_F(ParserTest, testFilterInAnd) {
 	ASSERT_NE(nullptr, c.get()) << parser.getError();
 }
 
+TEST_F(ParserTest, testInnerFiltersUnion) {
+	ai::ConditionParser parser(_registry, "Filter(Union(SelectEmpty,SelectHighestAggro))");
+	const ai::ConditionPtr& c = parser.getCondition();
+	ASSERT_NE(nullptr, c.get()) << parser.getError();
+}
+
+TEST_F(ParserTest, testInnerFiltersIntersection) {
+	ai::ConditionParser parser(_registry, "Filter(Intersection(SelectEmpty,SelectHighestAggro,SelectZone))");
+	const ai::ConditionPtr& c = parser.getCondition();
+	ASSERT_NE(nullptr, c.get()) << parser.getError();
+}
+
 TEST_F(ParserTest, testMultipleFilterInAnd) {
 	ai::ConditionParser parser(_registry, "And(Filter(SelectEmpty,SelectHighestAggro),True,And(Filter(SelectEmpty,SelectHighestAggro),True))");
 	const ai::ConditionPtr& c = parser.getCondition();
