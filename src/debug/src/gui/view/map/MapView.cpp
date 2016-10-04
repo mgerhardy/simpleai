@@ -9,7 +9,6 @@
 namespace ai {
 namespace debug {
 
-// TODO: zooming doesn't work reliable
 MapView::MapView(AIDebugger& debugger) :
 		QGraphicsView(), _debugger(debugger) {
 	_scene.setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -31,15 +30,13 @@ void MapView::scalingTime(qreal x) {
 }
 
 void MapView::wheelEvent(QWheelEvent * event) {
-	int numDegrees = event->delta() / 8;
-	int numSteps = numDegrees / 15;
+	const int numDegrees = event->delta() / 8;
+	const int numSteps = numDegrees / 15;
 	_numScheduledScalings += numSteps;
-	if (_numScheduledScalings * numSteps < 0) {
-		_numScheduledScalings = numSteps;
-	}
 
 	QTimeLine *anim = new QTimeLine(350, this);
 	anim->setUpdateInterval(20);
+	anim->setProperty("numsteps", QVariant::fromValue(numSteps));
 
 	connect(anim, SIGNAL(valueChanged(qreal)), SLOT(scalingTime(qreal)));
 	connect(anim, SIGNAL(finished()), SLOT(animFinished()));
@@ -47,11 +44,8 @@ void MapView::wheelEvent(QWheelEvent * event) {
 }
 
 void MapView::animFinished() {
-	if (_numScheduledScalings > 0) {
-		--_numScheduledScalings;
-	} else {
-		++_numScheduledScalings;
-	}
+	const int reduce = sender()->property("numsteps").toInt();
+	_numScheduledScalings -= reduce;
 	sender()->~QObject();
 }
 
