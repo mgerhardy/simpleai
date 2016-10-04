@@ -90,6 +90,7 @@ include_directories(
 qt5_add_resources(simpleai_debugger_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/data/resources.qrc)
 add_executable(simpleai-debugger ${simpleai_debugger_SOURCES} ${simpleai_debugger_RESOURCES} ${simpleai_debugger_HEADERS})
 qt5_use_modules(simpleai-debugger Widgets Gui Network)
+target_link_libraries(simpleai-debugger simpleai)
 if (NOT MSVC)
 	set_target_properties(simpleai-debugger PROPERTIES COMPILE_FLAGS "-Wno-inconsistent-missing-override")
 endif()

@@ -1,4 +1,4 @@
-LIBS +=
+LIBS += -lsimpleai
 INCLUDEPATH += /usr/include/simpleai
 INCLUDEPATH += /usr/local/include/simpleai
 INCLUDEPATH += ../ai ../libs ../libs/lua ../libs/tinyxml2
