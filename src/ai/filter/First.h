@@ -8,8 +8,13 @@ namespace ai {
  * @brief This filter will just preserve the first entry of other filters
  */
 class First: public IFilter {
+protected:
+	Filters _filters;
 public:
-	FILTER_ACTION_CLASS(First)
+	First(const std::string& parameters, const Filters& filters) :
+		IFilter("First", parameters), _filters(filters) {
+		ai_assert(filters.size() == 1, "First must have one child");
+	}
 	FILTER_ACTION_FACTORY(First)
 
 	void filter (const AIPtr& entity) override;
