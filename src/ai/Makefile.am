@@ -42,6 +42,9 @@ nobase_library_include_HEADERS = \
 	filter/SelectZone.h \
 	filter/Union.h \
 	filter/Intersection.h \
+	filter/First.h \
+	filter/Last.h \
+	filter/Random.h \
 	IAIFactory.h \
 	ICharacter.h \
 	group/GroupId.h \
