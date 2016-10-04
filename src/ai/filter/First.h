@@ -17,8 +17,14 @@ public:
 
 inline void First::filter (const AIPtr& entity) {
 	FilteredEntities& filtered = getFilteredEntities(entity);
-	FilteredEntities::value_type value = filtered.front();
+	const FilteredEntities copy = filtered;
 	filtered.clear();
+	_filters.front()->filter(entity);
+	const auto& value = getFilteredEntities(entity).front();
+	filtered.clear();
+	for (auto& e : copy) {
+		filtered.push_back(e);
+	}
 	filtered.push_back(value);
 }
 

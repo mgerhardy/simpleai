@@ -137,6 +137,7 @@
 #include "filter/Intersection.h"
 #include "filter/Last.h"
 #include "filter/First.h"
+#include "filter/Random.h"
 
 #ifdef SIMPLEAI_INCLUDE_LUA
 #include "tree/loaders/lua/LUATreeLoader.h"

@@ -37,6 +37,7 @@
 #include "filter/Intersection.h"
 #include "filter/Last.h"
 #include "filter/First.h"
+#include "filter/Random.h"
 #include "movement/SelectionSeek.h"
 #include "movement/SelectionFlee.h"
 #include "movement/GroupFlee.h"
@@ -111,6 +112,7 @@ protected:
 			R_GET(Intersection);
 			R_GET(Last);
 			R_GET(First);
+			R_GET(Random);
 		}
 	};
 

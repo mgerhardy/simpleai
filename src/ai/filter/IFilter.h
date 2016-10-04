@@ -34,7 +34,7 @@ public: \
 	}
 
 #define FILTER_ACTION_CLASS(FilterName) \
-	explicit FilterName(const std::string& parameters, const Filters& filters) : \
+	FilterName(const std::string& parameters, const Filters& filters) : \
 		IFilter(#FilterName, parameters), _filters(filters) { \
 		ai_assert(_filters.size() > 1, #FilterName " must contain at least two sub filters"); \
 	} \
