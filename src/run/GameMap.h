@@ -58,6 +58,13 @@ public:
 		ai::GroupMgr& groupMgr = _zone.getGroupMgr();
 		entity->getCharacter()->setAttribute(ai::attributes::GROUP, std::to_string(groupId));
 		groupMgr.add(groupId, entity);
+		AggroMgr& aggroMgr = entity->getAggroMgr();
+		for (auto i : _entities) {
+			const float rndAggro = ai::randomf(1000.0f);
+			const float reductionVal = ai::randomf(2.0f);
+			ai::Entry* e = aggroMgr.addAggro(i.second->getId(), 1000.0f + rndAggro);
+			e->setReduceByValue(1.0f + reductionVal);
+		}
 	}
 
 	inline bool remove(const ai::CharacterId& id) {
@@ -82,22 +89,6 @@ public:
 
 	inline int getSize() const {
 		return _size;
-	}
-
-	void initializeAggro() {
-		ai::ScopedReadLock lock(_lock);
-		// TODO: remove me once we have an attack
-		Entities::iterator i = _entities.begin();
-		if (i == _entities.end()) {
-			return;
-		}
-		const ai::AIPtr& firstEntity = i->second;
-		AggroMgr& mgr = firstEntity->getAggroMgr();
-		for (++i; i != _entities.end(); ++i) {
-			const ai::AIPtr& entity = i->second;
-			ai::Entry* e = mgr.addAggro(entity->getId(), 1000.0f + static_cast<float>(rand() % 1000));
-			e->setReduceByValue(1.0f + static_cast<float>(rand() % 3));
-		}
 	}
 };
 
