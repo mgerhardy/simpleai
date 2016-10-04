@@ -22,7 +22,8 @@ noinst_HEADERS = \
 	lualib.h \
 	lundump.h \
 	lvm.h \
-	lzio.h
+	lzio.h \
+	lprefix.h
 
 noinst_LTLIBRARIES = \
 	liblua.la
@@ -60,7 +61,8 @@ liblua_la_SOURCES = \
 	lua.c \
 	lundump.c \
 	lvm.c \
-	lzio.c
+	lzio.c \
+	lutf8lib.c
 
 liblua_la_CFLAGS = -I.
 
