@@ -49,7 +49,7 @@ if (LUA_INCLUDE_DIR)
 	target_include_directories(simpleai PUBLIC ${LUA_INCLUDE_DIR})
 endif()
 if (XML_INCLUDE_DIR)
-	target_include_directories(simpleai ${XML_INCLUDE_DIR})
+	target_include_directories(simpleai PUBLIC ${XML_INCLUDE_DIR})
 endif()
 
 list(APPEND simpleai_HEADERS
