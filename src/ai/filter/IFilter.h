@@ -1,5 +1,35 @@
+/**
+ * @file
+ */
 #pragma once
 
+/**
+ * @file
+ * @defgroup Filter
+ * @{
+ * In combination with the `Filter` condition `IFilter` provides a quite flexible way to provide
+ * generic behaviour tree tasks. You can e.g. just create one `ITask` implementation that deals with
+ * e.g. attacking. The target is just picked from the selection. If you encapsulate this with a
+ * condition like (lua):
+ * @code
+ * someNode:addNode("AttackTarget", "attack"):setCondition("Filter(SelectGroupLeader{1})")
+ * @endcode
+ * You would only attack the group leader of group 1 if it was found. You can provide your own
+ * filters like: _SelectAllInRange_, _SelectWithAttribute_ or whatever you like to filter selections
+ * and forward them to tasks.
+ *
+ * There are some filters that accept subfilters - like _Union_, _Intersection_, _Last_, _First_ and
+ * _Random_. _Last_, _First_ and _Random_ accept one sub filter as parameter, _Union_ and _Intersection_
+ * accept at least two śub filters.
+ * @code
+ * someNode:addNode("AttackTarget", "attack"):setCondition("Filter(First(SelectZone))")
+ * @endcode
+ *
+ * _Random_ also accepts a parameter for how many items should be randomly preserved:
+ * @code
+ * someNode:addNode("AttackTarget", "attack"):setCondition("Filter(Random{1}(SelectZone))")
+ * @endcode
+ */
 #include <list>
 #include <vector>
 #include "ICharacter.h"
@@ -134,3 +164,7 @@ public:
 };
 
 }
+
+/**
+ * @}
+ */

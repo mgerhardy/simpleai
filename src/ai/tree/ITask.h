@@ -1,3 +1,6 @@
+/**
+ * @file
+ */
 #pragma once
 
 #include "tree/TreeNode.h"
@@ -10,6 +13,9 @@ namespace ai {
 			ITask(name, parameters, condition)
 #define TASK_CLASS_DTOR(TaskName) virtual ~TaskName()
 
+/**
+ * @brief Macro to simplify the task creation. Just give the class name as parameter.
+ */
 #define TASK_CLASS(TaskName) \
 	TASK_CLASS_CTOR(TaskName) {}\
 	TASK_CLASS_DTOR(TaskName) {}

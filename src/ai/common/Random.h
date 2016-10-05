@@ -1,10 +1,15 @@
+/**
+ * @file
+ */
 #pragma once
 
 /**
  * @file
- * @ingroup AI
  * @defgroup Random
  * @{
+ * Everything that uses randomness in SimpleAI should use these helper methods.
+ * You can query random values in a thread safe way and can modify the seed - which
+ * really might ease debugging at some points.
  */
 
 #include <chrono>

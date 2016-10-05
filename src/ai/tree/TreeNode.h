@@ -1,3 +1,6 @@
+/**
+ * @file
+ */
 #pragma once
 
 #include <vector>
@@ -42,6 +45,9 @@ enum TreeNodeStatus {
 	MAX_TREENODESTATUS
 };
 
+/**
+ * @brief A node factory macro to ease and unify the registration at AIRegistry.
+ */
 #define NODE_FACTORY(NodeName) \
 	class Factory: public ITreeNodeFactory { \
 	public: \
@@ -54,6 +60,9 @@ enum TreeNodeStatus {
 		return FACTORY; \
 	}
 
+/**
+ * @brief A node class macro that also defines a factory.
+ */
 #define NODE_CLASS(NodeName) \
 	NodeName(const std::string& name, const std::string& parameters, const ConditionPtr& condition) : \
 		TreeNode(name, parameters, condition) { \
@@ -80,6 +89,9 @@ protected:
 		const int nextId = _nextId++;
 		return nextId;
 	}
+	/**
+	 * @brief Every node has an id to identify it. It's unique per type.
+	 */
 	int _id;
 	TreeNodes _children;
 	std::string _name;

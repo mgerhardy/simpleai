@@ -138,11 +138,12 @@ if (SIMPLEAI_TEST)
 	add_subdirectory(src/test)
 endif()
 
-find_program(DOXYGEN "doxygen")
-if (DOXYGEN)
-	message(STATUS "doxygen found")
-else()
-	message(STATUS "doxygen not found")
-endif()
-
-# TODO execute doxygen
+find_package(Doxygen)
+if (DOXYGEN_FOUND)
+	set(top_srcdir ${CMAKE_CURRENT_SOURCE_DIR})
+	configure_file(${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
+	add_custom_target(doc ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+		COMMENT "Generating API documentation with Doxygen" VERBATIM
+	)
+endif(DOXYGEN_FOUND)

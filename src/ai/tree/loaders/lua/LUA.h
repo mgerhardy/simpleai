@@ -1,6 +1,11 @@
+/**
+ * @file
+ */
 #pragma once
 
 #include "common/Types.h"
+
+namespace ai {
 
 #include <lua.hpp>
 #include <string>
@@ -492,4 +497,6 @@ inline bool LUA::getNextKeyValue ()
 inline void LUA::getGlobal (const std::string& name)
 {
 	lua_getglobal(_state, name.c_str());
+}
+
 }
