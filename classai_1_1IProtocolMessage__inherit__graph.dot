@@ -1,0 +1,29 @@
+digraph "ai::IProtocolMessage"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="ai::IProtocolMessage",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="ai::AIAddNodeMessage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classai_1_1AIAddNodeMessage.html",tooltip="Message for the remote debugging interface. "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="ai::AIChangeMessage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classai_1_1AIChangeMessage.html",tooltip="Message for the remote debugging interface. "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="ai::AICharacterDetailsMessage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classai_1_1AICharacterDetailsMessage.html",tooltip="Message for the remote debugging interface. "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="ai::AICharacterStaticMessage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classai_1_1AICharacterStaticMessage.html"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="ai::AIDeleteNodeMessage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classai_1_1AIDeleteNodeMessage.html",tooltip="Message for the remote debugging interface. "];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="ai::AINamesMessage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classai_1_1AINamesMessage.html",tooltip="Message for the remote debugging interface. "];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="ai::AIPauseMessage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classai_1_1AIPauseMessage.html",tooltip="Message for the remote debugging interface. "];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="ai::AISelectMessage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classai_1_1AISelectMessage.html",tooltip="Message for the remote debugging interface. "];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="ai::AIStateMessage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classai_1_1AIStateMessage.html",tooltip="Message for the remote debugging interface. "];
+  Node1 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="ai::AIStepMessage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classai_1_1AIStepMessage.html",tooltip="Perform one step if the ai controlled entities are in paused mode. "];
+  Node1 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="ai::AIUpdateNodeMessage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classai_1_1AIUpdateNodeMessage.html",tooltip="Message for the remote debugging interface. "];
+}

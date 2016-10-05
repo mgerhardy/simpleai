@@ -1,0 +1,10 @@
+digraph "/home/mgerhardy/dev/simpleai/src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_68267d1309a1af8e8297ef4c3efbcdba {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_68267d1309a1af8e8297ef4c3efbcdba.html"];
+    dir_68267d1309a1af8e8297ef4c3efbcdba [shape=plaintext label="src"];
+    dir_128a93aeeff33a8423f079f46929dbb3 [shape=box label="ai" color="red" fillcolor="white" style="filled" URL="dir_128a93aeeff33a8423f079f46929dbb3.html"];
+  }
+}

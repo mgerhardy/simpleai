@@ -1,0 +1,21 @@
+digraph "/home/mgerhardy/dev/simpleai/src/ai/tree/loaders" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_ed52edb1cd1708cebbaeaa3a408829b9 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="tree" fontname="Helvetica", fontsize="10", URL="dir_ed52edb1cd1708cebbaeaa3a408829b9.html"]
+  subgraph clusterdir_04280633bbaa39fbe350c8eb2fc19a56 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_04280633bbaa39fbe350c8eb2fc19a56.html"];
+    dir_04280633bbaa39fbe350c8eb2fc19a56 [shape=plaintext label="loaders"];
+    dir_fb532bd5e497eb869f41cf121f2f4ade [shape=box label="lua" color="black" fillcolor="white" style="filled" URL="dir_fb532bd5e497eb869f41cf121f2f4ade.html"];
+    dir_2ddfbbf7198f99a801439dd6bd0760f8 [shape=box label="xml" color="black" fillcolor="white" style="filled" URL="dir_2ddfbbf7198f99a801439dd6bd0760f8.html"];
+  }
+  }
+  dir_26279f5c56f5918cb81f4f13d1df92ff [shape=box label="conditions" URL="dir_26279f5c56f5918cb81f4f13d1df92ff.html"];
+  dir_4c8624fe756ae3c7de80e838bac4bfdf [shape=box label="common" URL="dir_4c8624fe756ae3c7de80e838bac4bfdf.html"];
+  dir_26279f5c56f5918cb81f4f13d1df92ff->dir_4c8624fe756ae3c7de80e838bac4bfdf [headlabel="7", labeldistance=1.5 headhref="dir_000005_000003.html"];
+  dir_04280633bbaa39fbe350c8eb2fc19a56->dir_4c8624fe756ae3c7de80e838bac4bfdf [headlabel="2", labeldistance=1.5 headhref="dir_000010_000003.html"];
+  dir_2ddfbbf7198f99a801439dd6bd0760f8->dir_26279f5c56f5918cb81f4f13d1df92ff [headlabel="1", labeldistance=1.5 headhref="dir_000012_000005.html"];
+  dir_fb532bd5e497eb869f41cf121f2f4ade->dir_26279f5c56f5918cb81f4f13d1df92ff [headlabel="1", labeldistance=1.5 headhref="dir_000011_000005.html"];
+  dir_fb532bd5e497eb869f41cf121f2f4ade->dir_4c8624fe756ae3c7de80e838bac4bfdf [headlabel="1", labeldistance=1.5 headhref="dir_000011_000003.html"];
+}
