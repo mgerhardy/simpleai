@@ -1,3 +1,4 @@
 <map id="Aggro" name="Aggro">
-<area shape="rect" id="node2" href="$group__Random.html" title="Random" alt="" coords="121,7,191,33"/>
+<area shape="rect" id="node2" href="$group__Random.html" title="Random" alt="" coords="121,5,191,32"/>
+<area shape="rect" id="node3" href="$group__LUA.html" title="LUA" alt="" coords="132,56,180,83"/>
 </map>
