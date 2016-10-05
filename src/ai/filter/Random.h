@@ -1,9 +1,7 @@
 #pragma once
 
 #include "filter/IFilter.h"
-#include <random>
-#include <algorithm>
-#include <iterator>
+#include "common/Random.h"
 
 namespace ai {
 
@@ -14,11 +12,9 @@ class Random: public IFilter {
 protected:
 	Filters _filters;
 	int _n;
-	std::random_device _rd;
-	std::mt19937 _g;
 public:
 	Random(const std::string& parameters, const Filters& filters) :
-		IFilter("Random", parameters), _filters(filters), _g(_rd()) {
+		IFilter("Random", parameters), _filters(filters) {
 		ai_assert(filters.size() == 1, "Random must have one child");
 		_n = std::stoi(parameters);
 	}
@@ -34,7 +30,7 @@ inline void Random::filter (const AIPtr& entity) {
 	filtered.clear();
 	_filters.front()->filter(entity);
 	FilteredEntities rndFiltered = getFilteredEntities(entity);
-	std::shuffle(rndFiltered.begin(), rndFiltered.end(), _g);
+	ai::shuffle(rndFiltered.begin(), rndFiltered.end());
 	rndFiltered.resize(_n);
 	for (auto& e : copy) {
 		filtered.push_back(e);
