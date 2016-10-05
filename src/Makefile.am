@@ -1,1 +1,0 @@
-SUBDIRS = libs ai @MODULES@
