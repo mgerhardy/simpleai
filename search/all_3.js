@@ -5,6 +5,8 @@ var searchData=
   ['characteridpredicate',['CharacterIdPredicate',['../classai_1_1AggroMgr_1_1CharacterIdPredicate.html',1,'ai::AggroMgr']]],
   ['cleanuplist',['cleanupList',['../classai_1_1AggroMgr.html#ae6ce9bd77362f4d69152a61ada648c2c',1,'ai::AggroMgr']]],
   ['client',['Client',['../structai_1_1Client.html',1,'ai']]],
+  ['complement',['Complement',['../classai_1_1Complement.html',1,'ai']]],
+  ['complement_2eh',['Complement.h',['../Complement_8h.html',1,'']]],
   ['condition_5fclass',['CONDITION_CLASS',['../ICondition_8h.html#a52a75a637987f9804e2c814c4e4dd398',1,'ICondition.h']]],
   ['condition_5fclass_5fsingleton',['CONDITION_CLASS_SINGLETON',['../ICondition_8h.html#a1ee5814dced7e6ad353520c36eaaacfb',1,'ICondition.h']]],
   ['condition_5ffactory',['CONDITION_FACTORY',['../ICondition_8h.html#a8421b2a7870a3f33182c9780b7a35ac2',1,'ICondition.h']]],

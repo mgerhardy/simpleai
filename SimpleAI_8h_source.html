@@ -90,106 +90,109 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <a href="SimpleAI_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="preprocessor">#pragma once</span></div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Types_8h.html">common/Types.h</a>&quot;</span></div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="MemoryAllocator_8h.html">common/MemoryAllocator.h</a>&quot;</span></div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="String_8h.html">common/String.h</a>&quot;</span></div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Math_8h.html">common/Math.h</a>&quot;</span></div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="common_2Random_8h.html">common/Random.h</a>&quot;</span></div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Log_8h.html">common/Log.h</a>&quot;</span></div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="MoveVector_8h.html">common/MoveVector.h</a>&quot;</span></div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Types_8h.html">common/Types.h</a>&quot;</span></div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="MemoryAllocator_8h.html">common/MemoryAllocator.h</a>&quot;</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="String_8h.html">common/String.h</a>&quot;</span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Math_8h.html">common/Math.h</a>&quot;</span></div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="common_2Random_8h.html">common/Random.h</a>&quot;</span></div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Thread_8h.html">common/Thread.h</a>&quot;</span></div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="preprocessor">#include &quot;common/ThreadPool.h&quot;</span></div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ThreadScheduler_8h.html">common/ThreadScheduler.h</a>&quot;</span></div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor">#include &quot;common/ExecutionTime.h&quot;</span></div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AI_8h.html">AI.h</a>&quot;</span></div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIFactories_8h.html">AIFactories.h</a>&quot;</span></div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIRegistry_8h.html">AIRegistry.h</a>&quot;</span></div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ICharacter_8h.html">ICharacter.h</a>&quot;</span></div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Fail_8h.html">tree/Fail.h</a>&quot;</span></div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Limit_8h.html">tree/Limit.h</a>&quot;</span></div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Idle_8h.html">tree/Idle.h</a>&quot;</span></div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Invert_8h.html">tree/Invert.h</a>&quot;</span></div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Parallel_8h.html">tree/Parallel.h</a>&quot;</span></div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="PrioritySelector_8h.html">tree/PrioritySelector.h</a>&quot;</span></div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Selector_8h.html">tree/Selector.h</a>&quot;</span></div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Sequence_8h.html">tree/Sequence.h</a>&quot;</span></div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Steer_8h.html">tree/Steer.h</a>&quot;</span></div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="TreeNode_8h.html">tree/TreeNode.h</a>&quot;</span></div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="TreeNodeImpl_8h.html">tree/TreeNodeImpl.h</a>&quot;</span></div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ITask_8h.html">tree/ITask.h</a>&quot;</span></div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ITimedNode_8h.html">tree/ITimedNode.h</a>&quot;</span></div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="TreeNodeParser_8h.html">tree/TreeNodeParser.h</a>&quot;</span></div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ITreeLoader_8h.html">tree/loaders/ITreeLoader.h</a>&quot;</span></div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="GroupId_8h.html">group/GroupId.h</a>&quot;</span></div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="GroupMgr_8h.html">group/GroupMgr.h</a>&quot;</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Log_8h.html">common/Log.h</a>&quot;</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="MoveVector_8h.html">common/MoveVector.h</a>&quot;</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="common_2Random_8h.html">common/Random.h</a>&quot;</span></div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Thread_8h.html">common/Thread.h</a>&quot;</span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="preprocessor">#include &quot;common/ThreadPool.h&quot;</span></div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ThreadScheduler_8h.html">common/ThreadScheduler.h</a>&quot;</span></div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="preprocessor">#include &quot;common/ExecutionTime.h&quot;</span></div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AI_8h.html">AI.h</a>&quot;</span></div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIFactories_8h.html">AIFactories.h</a>&quot;</span></div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIRegistry_8h.html">AIRegistry.h</a>&quot;</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ICharacter_8h.html">ICharacter.h</a>&quot;</span></div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Fail_8h.html">tree/Fail.h</a>&quot;</span></div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Limit_8h.html">tree/Limit.h</a>&quot;</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Idle_8h.html">tree/Idle.h</a>&quot;</span></div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Invert_8h.html">tree/Invert.h</a>&quot;</span></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Parallel_8h.html">tree/Parallel.h</a>&quot;</span></div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="PrioritySelector_8h.html">tree/PrioritySelector.h</a>&quot;</span></div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Selector_8h.html">tree/Selector.h</a>&quot;</span></div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Sequence_8h.html">tree/Sequence.h</a>&quot;</span></div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Steer_8h.html">tree/Steer.h</a>&quot;</span></div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="TreeNode_8h.html">tree/TreeNode.h</a>&quot;</span></div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="TreeNodeImpl_8h.html">tree/TreeNodeImpl.h</a>&quot;</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ITask_8h.html">tree/ITask.h</a>&quot;</span></div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ITimedNode_8h.html">tree/ITimedNode.h</a>&quot;</span></div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="TreeNodeParser_8h.html">tree/TreeNodeParser.h</a>&quot;</span></div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ITreeLoader_8h.html">tree/loaders/ITreeLoader.h</a>&quot;</span></div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SelectionSeek_8h.html">movement/SelectionSeek.h</a>&quot;</span></div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="GroupFlee_8h.html">movement/GroupFlee.h</a>&quot;</span></div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="GroupSeek_8h.html">movement/GroupSeek.h</a>&quot;</span></div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Steering_8h.html">movement/Steering.h</a>&quot;</span></div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="TargetFlee_8h.html">movement/TargetFlee.h</a>&quot;</span></div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="TargetSeek_8h.html">movement/TargetSeek.h</a>&quot;</span></div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Wander_8h.html">movement/Wander.h</a>&quot;</span></div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="WeightedSteering_8h.html">movement/WeightedSteering.h</a>&quot;</span></div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Network_8h.html">server/Network.h</a>&quot;</span></div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="NetworkImpl_8h.html">server/NetworkImpl.h</a>&quot;</span></div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Server_8h.html">server/Server.h</a>&quot;</span></div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ServerImpl_8h.html">server/ServerImpl.h</a>&quot;</span></div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="IProtocolHandler_8h.html">server/IProtocolHandler.h</a>&quot;</span></div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ProtocolHandlerRegistry_8h.html">server/ProtocolHandlerRegistry.h</a>&quot;</span></div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ProtocolMessageFactory_8h.html">server/ProtocolMessageFactory.h</a>&quot;</span></div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AICharacterDetailsMessage_8h.html">server/AICharacterDetailsMessage.h</a>&quot;</span></div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AICharacterStaticMessage_8h.html">server/AICharacterStaticMessage.h</a>&quot;</span></div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIPauseMessage_8h.html">server/AIPauseMessage.h</a>&quot;</span></div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIStepMessage_8h.html">server/AIStepMessage.h</a>&quot;</span></div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AISelectMessage_8h.html">server/AISelectMessage.h</a>&quot;</span></div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIStateMessage_8h.html">server/AIStateMessage.h</a>&quot;</span></div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AINamesMessage_8h.html">server/AINamesMessage.h</a>&quot;</span></div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIChangeMessage_8h.html">server/AIChangeMessage.h</a>&quot;</span></div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIAddNodeMessage_8h.html">server/AIAddNodeMessage.h</a>&quot;</span></div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIDeleteNodeMessage_8h.html">server/AIDeleteNodeMessage.h</a>&quot;</span></div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIUpdateNodeMessage_8h.html">server/AIUpdateNodeMessage.h</a>&quot;</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Zone_8h.html">zone/Zone.h</a>&quot;</span></div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="And_8h.html">conditions/And.h</a>&quot;</span></div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ICondition_8h.html">conditions/ICondition.h</a>&quot;</span></div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ConditionParser_8h.html">conditions/ConditionParser.h</a>&quot;</span></div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="False_8h.html">conditions/False.h</a>&quot;</span></div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="HasEnemies_8h.html">conditions/HasEnemies.h</a>&quot;</span></div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="IsGroupLeader_8h.html">conditions/IsGroupLeader.h</a>&quot;</span></div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="IsInGroup_8h.html">conditions/IsInGroup.h</a>&quot;</span></div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Not_8h.html">conditions/Not.h</a>&quot;</span></div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Or_8h.html">conditions/Or.h</a>&quot;</span></div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="True_8h.html">conditions/True.h</a>&quot;</span></div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="IFilter_8h.html">filter/IFilter.h</a>&quot;</span></div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SelectEmpty_8h.html">filter/SelectEmpty.h</a>&quot;</span></div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SelectGroupLeader_8h.html">filter/SelectGroupLeader.h</a>&quot;</span></div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SelectGroupMembers_8h.html">filter/SelectGroupMembers.h</a>&quot;</span></div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SelectHighestAggro_8h.html">filter/SelectHighestAggro.h</a>&quot;</span></div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SelectZone_8h.html">filter/SelectZone.h</a>&quot;</span></div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Union_8h.html">filter/Union.h</a>&quot;</span></div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Intersection_8h.html">filter/Intersection.h</a>&quot;</span></div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Last_8h.html">filter/Last.h</a>&quot;</span></div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="First_8h.html">filter/First.h</a>&quot;</span></div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="filter_2Random_8h.html">filter/Random.h</a>&quot;</span></div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="preprocessor">#ifdef SIMPLEAI_INCLUDE_LUA</span></div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="LUATreeLoader_8h.html">tree/loaders/lua/LUATreeLoader.h</a>&quot;</span></div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="preprocessor">#ifdef SIMPLEAI_INCLUDE_XML</span></div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="XMLTreeLoader_8h.html">tree/loaders/xml/XMLTreeLoader.h</a>&quot;</span></div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="GroupId_8h.html">group/GroupId.h</a>&quot;</span></div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="GroupMgr_8h.html">group/GroupMgr.h</a>&quot;</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SelectionSeek_8h.html">movement/SelectionSeek.h</a>&quot;</span></div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="GroupFlee_8h.html">movement/GroupFlee.h</a>&quot;</span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="GroupSeek_8h.html">movement/GroupSeek.h</a>&quot;</span></div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Steering_8h.html">movement/Steering.h</a>&quot;</span></div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="TargetFlee_8h.html">movement/TargetFlee.h</a>&quot;</span></div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="TargetSeek_8h.html">movement/TargetSeek.h</a>&quot;</span></div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Wander_8h.html">movement/Wander.h</a>&quot;</span></div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="WeightedSteering_8h.html">movement/WeightedSteering.h</a>&quot;</span></div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Network_8h.html">server/Network.h</a>&quot;</span></div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="NetworkImpl_8h.html">server/NetworkImpl.h</a>&quot;</span></div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Server_8h.html">server/Server.h</a>&quot;</span></div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ServerImpl_8h.html">server/ServerImpl.h</a>&quot;</span></div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="IProtocolHandler_8h.html">server/IProtocolHandler.h</a>&quot;</span></div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ProtocolHandlerRegistry_8h.html">server/ProtocolHandlerRegistry.h</a>&quot;</span></div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ProtocolMessageFactory_8h.html">server/ProtocolMessageFactory.h</a>&quot;</span></div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AICharacterDetailsMessage_8h.html">server/AICharacterDetailsMessage.h</a>&quot;</span></div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AICharacterStaticMessage_8h.html">server/AICharacterStaticMessage.h</a>&quot;</span></div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIPauseMessage_8h.html">server/AIPauseMessage.h</a>&quot;</span></div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIStepMessage_8h.html">server/AIStepMessage.h</a>&quot;</span></div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AISelectMessage_8h.html">server/AISelectMessage.h</a>&quot;</span></div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIStateMessage_8h.html">server/AIStateMessage.h</a>&quot;</span></div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AINamesMessage_8h.html">server/AINamesMessage.h</a>&quot;</span></div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIChangeMessage_8h.html">server/AIChangeMessage.h</a>&quot;</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIAddNodeMessage_8h.html">server/AIAddNodeMessage.h</a>&quot;</span></div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIDeleteNodeMessage_8h.html">server/AIDeleteNodeMessage.h</a>&quot;</span></div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="AIUpdateNodeMessage_8h.html">server/AIUpdateNodeMessage.h</a>&quot;</span></div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Zone_8h.html">zone/Zone.h</a>&quot;</span></div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="And_8h.html">conditions/And.h</a>&quot;</span></div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ICondition_8h.html">conditions/ICondition.h</a>&quot;</span></div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ConditionParser_8h.html">conditions/ConditionParser.h</a>&quot;</span></div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="False_8h.html">conditions/False.h</a>&quot;</span></div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="HasEnemies_8h.html">conditions/HasEnemies.h</a>&quot;</span></div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="IsGroupLeader_8h.html">conditions/IsGroupLeader.h</a>&quot;</span></div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="IsInGroup_8h.html">conditions/IsInGroup.h</a>&quot;</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Not_8h.html">conditions/Not.h</a>&quot;</span></div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Or_8h.html">conditions/Or.h</a>&quot;</span></div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="True_8h.html">conditions/True.h</a>&quot;</span></div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="IFilter_8h.html">filter/IFilter.h</a>&quot;</span></div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SelectEmpty_8h.html">filter/SelectEmpty.h</a>&quot;</span></div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SelectGroupLeader_8h.html">filter/SelectGroupLeader.h</a>&quot;</span></div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SelectGroupMembers_8h.html">filter/SelectGroupMembers.h</a>&quot;</span></div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SelectHighestAggro_8h.html">filter/SelectHighestAggro.h</a>&quot;</span></div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SelectZone_8h.html">filter/SelectZone.h</a>&quot;</span></div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Union_8h.html">filter/Union.h</a>&quot;</span></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Intersection_8h.html">filter/Intersection.h</a>&quot;</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Last_8h.html">filter/Last.h</a>&quot;</span></div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="First_8h.html">filter/First.h</a>&quot;</span></div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="filter_2Random_8h.html">filter/Random.h</a>&quot;</span></div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Difference_8h.html">filter/Difference.h</a>&quot;</span></div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Complement_8h.html">filter/Complement.h</a>&quot;</span></div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SelectAll_8h.html">filter/SelectAll.h</a>&quot;</span></div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="preprocessor">#ifdef SIMPLEAI_INCLUDE_LUA</span></div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="LUATreeLoader_8h.html">tree/loaders/lua/LUATreeLoader.h</a>&quot;</span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;<span class="preprocessor">#ifdef SIMPLEAI_INCLUDE_XML</span></div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="XMLTreeLoader_8h.html">tree/loaders/xml/XMLTreeLoader.h</a>&quot;</span></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="preprocessor"></span></div>
 <div class="ttc" id="Sequence_8h_html"><div class="ttname"><a href="Sequence_8h.html">Sequence.h</a></div></div>
 <div class="ttc" id="LUATreeLoader_8h_html"><div class="ttname"><a href="LUATreeLoader_8h.html">LUATreeLoader.h</a></div></div>
 <div class="ttc" id="TreeNodeImpl_8h_html"><div class="ttname"><a href="TreeNodeImpl_8h.html">TreeNodeImpl.h</a></div></div>
@@ -233,6 +236,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="PrioritySelector_8h_html"><div class="ttname"><a href="PrioritySelector_8h.html">PrioritySelector.h</a></div></div>
 <div class="ttc" id="AIUpdateNodeMessage_8h_html"><div class="ttname"><a href="AIUpdateNodeMessage_8h.html">AIUpdateNodeMessage.h</a></div></div>
 <div class="ttc" id="TargetFlee_8h_html"><div class="ttname"><a href="TargetFlee_8h.html">TargetFlee.h</a></div></div>
+<div class="ttc" id="Complement_8h_html"><div class="ttname"><a href="Complement_8h.html">Complement.h</a></div></div>
 <div class="ttc" id="GroupMgr_8h_html"><div class="ttname"><a href="GroupMgr_8h.html">GroupMgr.h</a></div></div>
 <div class="ttc" id="Fail_8h_html"><div class="ttname"><a href="Fail_8h.html">Fail.h</a></div></div>
 <div class="ttc" id="AIStepMessage_8h_html"><div class="ttname"><a href="AIStepMessage_8h.html">AIStepMessage.h</a></div></div>
@@ -255,9 +259,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="Intersection_8h_html"><div class="ttname"><a href="Intersection_8h.html">Intersection.h</a></div></div>
 <div class="ttc" id="Last_8h_html"><div class="ttname"><a href="Last_8h.html">Last.h</a></div></div>
 <div class="ttc" id="True_8h_html"><div class="ttname"><a href="True_8h.html">True.h</a></div></div>
+<div class="ttc" id="Difference_8h_html"><div class="ttname"><a href="Difference_8h.html">Difference.h</a></div></div>
 <div class="ttc" id="TargetSeek_8h_html"><div class="ttname"><a href="TargetSeek_8h.html">TargetSeek.h</a></div></div>
 <div class="ttc" id="Limit_8h_html"><div class="ttname"><a href="Limit_8h.html">Limit.h</a></div></div>
 <div class="ttc" id="AINamesMessage_8h_html"><div class="ttname"><a href="AINamesMessage_8h.html">AINamesMessage.h</a></div></div>
+<div class="ttc" id="SelectAll_8h_html"><div class="ttname"><a href="SelectAll_8h.html">SelectAll.h</a></div></div>
 <div class="ttc" id="AIDeleteNodeMessage_8h_html"><div class="ttname"><a href="AIDeleteNodeMessage_8h.html">AIDeleteNodeMessage.h</a></div></div>
 <div class="ttc" id="Wander_8h_html"><div class="ttname"><a href="Wander_8h.html">Wander.h</a></div></div>
 <div class="ttc" id="GroupFlee_8h_html"><div class="ttname"><a href="GroupFlee_8h.html">GroupFlee.h</a></div></div>

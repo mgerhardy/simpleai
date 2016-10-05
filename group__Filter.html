@@ -75,14 +75,47 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#files">Files</a>  </div>
   <div class="headertitle">
 <div class="title">Filter</div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>In combination with the <code>Filter</code> condition <code>IFilter</code> provides a quite flexible way to provide generic behaviour tree tasks. You can e.g. just create one <code>ITask</code> implementation that deals with e.g. attacking. The target is just picked from the selection. If you encapsulate this with a condition like (lua): </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
+Files</h2></td></tr>
+<tr class="memitem:Complement_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Complement_8h.html">Complement.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:Difference_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Difference_8h.html">Difference.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:First_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="First_8h.html">First.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:Intersection_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Intersection_8h.html">Intersection.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:Last_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Last_8h.html">Last.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:filter_2Random_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="filter_2Random_8h.html">Random.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:SelectAll_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SelectAll_8h.html">SelectAll.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:SelectEmpty_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SelectEmpty_8h.html">SelectEmpty.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:SelectGroupLeader_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SelectGroupLeader_8h.html">SelectGroupLeader.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:SelectGroupMembers_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SelectGroupMembers_8h.html">SelectGroupMembers.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:SelectHighestAggro_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SelectHighestAggro_8h.html">SelectHighestAggro.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:SelectZone_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SelectZone_8h.html">SelectZone.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:Union_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Union_8h.html">Union.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>In combination with the <code>Filter</code> condition <code>IFilter</code> provides a quite flexible way to provide generic behaviour tree tasks. You can just create one <a class="el" href="classai_1_1ITask.html">ITask</a> implementation that deals with e.g. attacking. The target is just picked from the selection. If you encapsulate this with a condition like (lua): </p>
 <div class="fragment"><div class="line">someNode:addNode(<span class="stringliteral">&quot;AttackTarget&quot;</span>, <span class="stringliteral">&quot;attack&quot;</span>):setCondition(<span class="stringliteral">&quot;Filter(SelectGroupLeader{1})&quot;</span>)</div>
 </div><!-- fragment --><p> You would only attack the group leader of group 1 if it was found. You can provide your own filters like: <em>SelectAllInRange</em>, <em>SelectWithAttribute</em> or whatever you like to filter selections and forward them to tasks.</p>
-<p>There are some filters that accept subfilters - like <em>Union</em>, <em>Intersection</em>, <em>Last</em>, <em>First</em> and <em>Random</em>. <em>Last</em>, <em>First</em> and <em>Random</em> accept one sub filter as parameter, <em>Union</em> and <em>Intersection</em> accept at least two śub filters. </p>
+<p>There are some filters that accept subfilters - like <em>Union</em>, <em>Intersection</em>, <em>Last</em>, <em>First</em>, <em>Difference</em>, <em>Complement</em> and <em>Random</em>. <em>Last</em>, <em>First</em> and <em>Random</em> accept one sub filter as parameter, <em>Union</em> and <em>Intersection</em> accept at least two śub filters. </p>
 <div class="fragment"><div class="line">someNode:addNode(<span class="stringliteral">&quot;AttackTarget&quot;</span>, <span class="stringliteral">&quot;attack&quot;</span>):setCondition(<span class="stringliteral">&quot;Filter(First(SelectZone))&quot;</span>)</div>
 </div><!-- fragment --><p><em>Random</em> also accepts a parameter for how many items should be randomly preserved: </p>
 <div class="fragment"><div class="line">someNode:addNode(<span class="stringliteral">&quot;AttackTarget&quot;</span>, <span class="stringliteral">&quot;attack&quot;</span>):setCondition(<span class="stringliteral">&quot;Filter(Random{1}(SelectZone))&quot;</span>)</div>
