@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/mgerhardy/simpleai.svg?branch=master)](https://travis-ci.org/mgerhardy/simpleai)
 [![Build status](https://ci.appveyor.com/api/projects/status/lo1co9g9xfxft4ui?svg=true)](https://ci.appveyor.com/project/mgerhardy/simpleai)
 
-See the [Wiki](https://github.com/mgerhardy/simpleai/wiki) for a detailed description.
+See the [doxygen documentation](http://mgerhardy.github.io/simpleai/) for a detailed description.
 
 "External" dependencies are lua and tinyxml2 (both are included and can be disabled).
 

@@ -21,7 +21,7 @@ if [ "$BUILD_TYPE" == "doxygen" ]; then
 	cd ${GH_PAGES_PATH}
 	git rm -rf *
 	cd -
-	cp ${HTML_PATH}/* ${GH_PAGES_PATH}
+	cp -r ${HTML_PATH}/* ${GH_PAGES_PATH}
 	cd ${GH_PAGES_PATH}
 	git add .
 	git config user.name "${COMMIT_USER}"
