@@ -1,5 +1,7 @@
 /**
  * @file
+ * @addtogroup LUA
+ * @{
  */
 #pragma once
 
@@ -500,3 +502,7 @@ inline void LUA::getGlobal (const std::string& name)
 }
 
 }
+
+/**
+ * @}
+ */
