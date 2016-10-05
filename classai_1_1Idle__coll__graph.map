@@ -1,0 +1,5 @@
+<map id="ai::Idle" name="ai::Idle">
+<area shape="rect" id="node2" href="$classai_1_1ITimedNode.html" title="A timed node is a TreeNode that is executed until a given time (millis) is elapsed. " alt="" coords="5,155,115,181"/>
+<area shape="rect" id="node3" href="$classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. " alt="" coords="11,80,108,107"/>
+<area shape="rect" id="node4" href="$classai_1_1__MemObject.html" title="MemObject" alt="" coords="15,5,104,32"/>
+</map>

@@ -1,0 +1,3 @@
+<map id="ai::INetworkListener" name="ai::INetworkListener">
+<area shape="rect" id="node2" href="$classai_1_1Server.html" title="The server can serialize the state of the AI and broadcast it to all connected clients. " alt="" coords="35,80,113,107"/>
+</map>

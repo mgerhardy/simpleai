@@ -1,0 +1,6 @@
+<map id="ai::movement::SelectionSteering" name="ai::movement::SelectionSteering">
+<area shape="rect" id="node4" href="$classai_1_1movement_1_1SelectionFlee.html" title="Flees the current IFilter selection from the given ICharacter. " alt="" coords="5,229,192,256"/>
+<area shape="rect" id="node5" href="$classai_1_1movement_1_1SelectionSeek.html" title="Seeks the current IFilter selection from the given ICharacter. " alt="" coords="217,229,409,256"/>
+<area shape="rect" id="node2" href="$classai_1_1movement_1_1ISteering.html" title="Steering interface. " alt="" coords="125,80,285,107"/>
+<area shape="rect" id="node3" href="$classai_1_1__MemObject.html" title="MemObject" alt="" coords="161,5,249,32"/>
+</map>

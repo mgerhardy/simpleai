@@ -1,0 +1,4 @@
+<map id="ai::ITreeLoader" name="ai::ITreeLoader">
+<area shape="rect" id="node2" href="$classai_1_1LUATreeLoader.html" title="Implementation of ITreeLoader that gets its data from a lua script. " alt="" coords="5,80,135,107"/>
+<area shape="rect" id="node3" href="$classai_1_1XMLTreeLoader.html" title="Implementation of ITreeLoader that gets its data from a xml file. " alt="" coords="161,80,292,107"/>
+</map>

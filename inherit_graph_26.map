@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classai_1_1ITreeLoader.html" title="This class must be extended to load behaviour trees. The contract here is that the parsing only happe..." alt="" coords="5,31,115,57"/>
+<area shape="rect" id="node2" href="$classai_1_1LUATreeLoader.html" title="Implementation of ITreeLoader that gets its data from a lua script. " alt="" coords="164,5,295,32"/>
+<area shape="rect" id="node3" href="$classai_1_1XMLTreeLoader.html" title="Implementation of ITreeLoader that gets its data from a xml file. " alt="" coords="163,56,295,83"/>
+</map>

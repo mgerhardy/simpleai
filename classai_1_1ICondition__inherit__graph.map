@@ -1,0 +1,13 @@
+<map id="ai::ICondition" name="ai::ICondition">
+<area shape="rect" id="node3" href="$classai_1_1And.html" title="This condition will logically and all contained conditions. " alt="" coords="327,5,390,32"/>
+<area shape="rect" id="node4" href="$classai_1_1False.html" title="This condition just always evaluates to false. " alt="" coords="323,56,395,83"/>
+<area shape="rect" id="node5" href="$classai_1_1Filter.html" title="The filter condition executes some selection filters (IFilter) and evaluates to true if the resulting..." alt="" coords="324,107,393,133"/>
+<area shape="rect" id="node6" href="$classai_1_1HasEnemies.html" title="This condition checks whether there are enemies. " alt="" coords="301,157,416,184"/>
+<area shape="rect" id="node7" href="$classai_1_1IsCloseToGroup.html" title="Checks whether the controlled AI is close to a particular group. " alt="" coords="291,208,426,235"/>
+<area shape="rect" id="node8" href="$classai_1_1IsGroupLeader.html" title="Evaluates to true if you are the first member in a particular group. " alt="" coords="296,259,421,285"/>
+<area shape="rect" id="node9" href="$classai_1_1IsInGroup.html" title="Checks whether the AI is in any or in a particular group. " alt="" coords="310,309,407,336"/>
+<area shape="rect" id="node10" href="$classai_1_1Not.html" title="This condition will just swap the result of the contained condition. " alt="" coords="328,360,389,387"/>
+<area shape="rect" id="node11" href="$classai_1_1Or.html" title="This condition will logically or all contained conditions. " alt="" coords="331,411,386,437"/>
+<area shape="rect" id="node12" href="$classai_1_1True.html" title="This condition just always evaluates to true. " alt="" coords="325,461,392,488"/>
+<area shape="rect" id="node2" href="$classai_1_1__MemObject.html" title="MemObject" alt="" coords="6,233,95,260"/>
+</map>

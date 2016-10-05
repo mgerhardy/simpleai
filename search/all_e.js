@@ -9,7 +9,6 @@ var searchData=
   ['priorityselector_2eh',['PrioritySelector.h',['../PrioritySelector_8h.html',1,'']]],
   ['probabilityselector',['ProbabilitySelector',['../classai_1_1ProbabilitySelector.html',1,'ai']]],
   ['probabilityselector_2eh',['ProbabilitySelector.h',['../ProbabilitySelector_8h.html',1,'']]],
-  ['proto_5fmsg',['PROTO_MSG',['../IProtocolMessage_8h.html#afa4c8a54f3c505d11311267f3b15a2a5',1,'ai::PROTO_MSG(AIResetMessage, PROTO_RESET)'],['../IProtocolMessage_8h.html#a645ade8bb667ad9f3391337083254377',1,'ai::PROTO_MSG(AIPingMessage, PROTO_PING)']]],
   ['protocolhandler',['ProtocolHandler',['../classai_1_1ProtocolHandler.html',1,'ai']]],
   ['protocolhandlernopdeleter',['ProtocolHandlerNopDeleter',['../structai_1_1ProtocolHandlerNopDeleter.html',1,'ai']]],
   ['protocolhandlerregistry',['ProtocolHandlerRegistry',['../classai_1_1ProtocolHandlerRegistry.html',1,'ai']]],

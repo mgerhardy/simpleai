@@ -1,0 +1,5 @@
+<map id="ai::PrioritySelector" name="ai::PrioritySelector">
+<area shape="rect" id="node2" href="$classai_1_1Selector.html" title="Base class for all type of TreeNode selectors. " alt="" coords="25,155,113,181"/>
+<area shape="rect" id="node3" href="$classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. " alt="" coords="21,80,117,107"/>
+<area shape="rect" id="node4" href="$classai_1_1__MemObject.html" title="MemObject" alt="" coords="25,5,113,32"/>
+</map>

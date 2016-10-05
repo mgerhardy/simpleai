@@ -1,0 +1,4 @@
+<map id="ai::HasEnemies" name="ai::HasEnemies">
+<area shape="rect" id="node2" href="$classai_1_1ICondition.html" title="A condition can be placed on a TreeNode to decide which node is going to get executed. In general they are stateless. If they are not, it should explicitly get noted. " alt="" coords="13,80,112,107"/>
+<area shape="rect" id="node3" href="$classai_1_1__MemObject.html" title="MemObject" alt="" coords="18,5,107,32"/>
+</map>

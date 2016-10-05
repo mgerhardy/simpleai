@@ -17,7 +17,6 @@ var searchData=
   ['treenodeimpl_2eh',['TreeNodeImpl.h',['../TreeNodeImpl_8h.html',1,'']]],
   ['treenodeparser',['TreeNodeParser',['../classai_1_1TreeNodeParser.html',1,'ai']]],
   ['treenodeparser_2eh',['TreeNodeParser.h',['../TreeNodeParser_8h.html',1,'']]],
-  ['treenodestatus',['TreeNodeStatus',['../TreeNode_8h.html#a7065df97e2e4b1686a6b449c04628a7d',1,'ai']]],
   ['true',['True',['../classai_1_1True.html',1,'ai']]],
   ['true_2eh',['True.h',['../True_8h.html',1,'']]],
   ['types_2eh',['Types.h',['../Types_8h.html',1,'']]]

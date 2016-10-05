@@ -1,0 +1,4 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classai_1_1INetworkListener.html" title="ai::INetworkListener" alt="" coords="5,5,144,32"/>
+<area shape="rect" id="node2" href="$classai_1_1Server.html" title="The server can serialize the state of the AI and broadcast it to all connected clients. " alt="" coords="193,5,271,32"/>
+</map>

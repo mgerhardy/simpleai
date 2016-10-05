@@ -1,0 +1,21 @@
+<map id="/home/travis/build/mgerhardy/simpleai/src/ai/server/AIStubTypes.h" name="/home/travis/build/mgerhardy/simpleai/src/ai/server/AIStubTypes.h">
+<area shape="rect" id="node2" href="$AIAddNodeMessage_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/AIAddNodeMessage.h" alt="" coords="1608,237,1841,293"/>
+<area shape="rect" id="node8" href="$AICharacterDetailsMessage_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/AICharacterDetails\lMessage.h" alt="" coords="1537,110,1750,181"/>
+<area shape="rect" id="node9" href="$Server_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/Server.h" alt="" coords="1221,237,1371,293"/>
+<area shape="rect" id="node17" href="$AICharacterStaticMessage_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/AICharacterStatic\lMessage.h" alt="" coords="2325,110,2531,181"/>
+<area shape="rect" id="node18" href="$AIDeleteNodeMessage_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/AIDeleteNode\lMessage.h" alt="" coords="1866,230,2050,301"/>
+<area shape="rect" id="node19" href="$AIStateMessage_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/AIStateMessage.h" alt="" coords="2009,117,2218,173"/>
+<area shape="rect" id="node20" href="$AIUpdateNodeMessage_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/AIUpdateNode\lMessage.h" alt="" coords="2176,230,2363,301"/>
+<area shape="rect" id="node3" href="$AddNodeHandler_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/AddNodeHandler.h" alt="" coords="1740,357,1951,413"/>
+<area shape="rect" id="node5" href="$SimpleAI_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/SimpleAI.h" alt="" coords="1995,573,2134,629"/>
+<area shape="rect" id="node6" href="$ProtocolMessageFactory_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/ProtocolMessage\lFactory.h" alt="" coords="2077,350,2279,421"/>
+<area shape="rect" id="node4" href="$ServerImpl_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/ServerImpl.h" alt="" coords="863,469,1039,525"/>
+<area shape="rect" id="node7" href="$NetworkImpl_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/NetworkImpl.h" alt="" coords="2127,469,2314,525"/>
+<area shape="rect" id="node10" href="$ChangeHandler_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/ChangeHandler.h" alt="" coords="738,357,941,413"/>
+<area shape="rect" id="node11" href="$DeleteNodeHandler_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/DeleteNodeHandler.h" alt="" coords="1183,357,1410,413"/>
+<area shape="rect" id="node12" href="$PauseHandler_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/PauseHandler.h" alt="" coords="965,357,1159,413"/>
+<area shape="rect" id="node13" href="$ResetHandler_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/ResetHandler.h" alt="" coords="40,357,233,413"/>
+<area shape="rect" id="node14" href="$SelectHandler_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/SelectHandler.h" alt="" coords="258,357,453,413"/>
+<area shape="rect" id="node15" href="$StepHandler_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/StepHandler.h" alt="" coords="477,357,662,413"/>
+<area shape="rect" id="node16" href="$UpdateNodeHandler_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/UpdateNodeHandler.h" alt="" coords="1435,357,1665,413"/>
+</map>

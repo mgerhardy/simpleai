@@ -1,0 +1,13 @@
+<map id="ai::IProtocolMessage" name="ai::IProtocolMessage">
+<area shape="rect" id="node2" href="$classai_1_1AIAddNodeMessage.html" title="Message for the remote debugging interface. " alt="" coords="223,5,383,32"/>
+<area shape="rect" id="node3" href="$classai_1_1AIChangeMessage.html" title="Message for the remote debugging interface. " alt="" coords="227,56,378,83"/>
+<area shape="rect" id="node4" href="$classai_1_1AICharacterDetailsMessage.html" title="Message for the remote debugging interface. " alt="" coords="201,107,405,133"/>
+<area shape="rect" id="node5" href="$classai_1_1AICharacterStaticMessage.html" title="ai::AICharacterStaticMessage" alt="" coords="204,157,401,184"/>
+<area shape="rect" id="node6" href="$classai_1_1AIDeleteNodeMessage.html" title="Message for the remote debugging interface. " alt="" coords="215,208,390,235"/>
+<area shape="rect" id="node7" href="$classai_1_1AINamesMessage.html" title="Message for the remote debugging interface. " alt="" coords="229,259,377,285"/>
+<area shape="rect" id="node8" href="$classai_1_1AIPauseMessage.html" title="Message for the remote debugging interface. " alt="" coords="231,309,374,336"/>
+<area shape="rect" id="node9" href="$classai_1_1AISelectMessage.html" title="Message for the remote debugging interface. " alt="" coords="231,360,374,387"/>
+<area shape="rect" id="node10" href="$classai_1_1AIStateMessage.html" title="Message for the remote debugging interface. " alt="" coords="234,411,371,437"/>
+<area shape="rect" id="node11" href="$classai_1_1AIStepMessage.html" title="Perform one step if the ai controlled entities are in paused mode. " alt="" coords="236,461,369,488"/>
+<area shape="rect" id="node12" href="$classai_1_1AIUpdateNodeMessage.html" title="Message for the remote debugging interface. " alt="" coords="213,512,392,539"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="ai::Steer" name="ai::Steer">
+<area shape="rect" id="node2" href="$classai_1_1ITask.html" title="A node for your real actions in the behaviour tree. " alt="" coords="17,160,89,187"/>
+<area shape="rect" id="node3" href="$classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. " alt="" coords="5,83,101,109"/>
+<area shape="rect" id="node4" href="$classai_1_1__MemObject.html" title="MemObject" alt="" coords="9,5,97,32"/>
+<area shape="rect" id="node5" href="$classai_1_1movement_1_1WeightedSteering.html" title="This class allows you to weight several steering methods and get a blended MoveVector out of it..." alt="" coords="114,160,325,187"/>
+</map>

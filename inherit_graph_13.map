@@ -1,0 +1,12 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$classai_1_1First.html" title="This filter will just preserve the first entry of other filters. " alt="" coords="160,5,227,32"/>
+<area shape="rect" id="node3" href="$classai_1_1Intersection.html" title="This filter performs an intersection between several filter results. " alt="" coords="139,56,247,83"/>
+<area shape="rect" id="node4" href="$classai_1_1Last.html" title="This filter will just preserve the last entry of other filters. " alt="" coords="161,107,226,133"/>
+<area shape="rect" id="node5" href="$classai_1_1Random.html" title="This filter will preserve only a few random entries. " alt="" coords="149,157,238,184"/>
+<area shape="rect" id="node6" href="$classai_1_1SelectEmpty.html" title="This filter just clears the selection. " alt="" coords="136,208,251,235"/>
+<area shape="rect" id="node7" href="$classai_1_1SelectGroupLeader.html" title="This filter will pick the group leader of the specified group. " alt="" coords="118,259,269,285"/>
+<area shape="rect" id="node8" href="$classai_1_1SelectGroupMembers.html" title="This filter will pick the entities from the groups the given AI instance is in. " alt="" coords="110,309,277,336"/>
+<area shape="rect" id="node9" href="$classai_1_1SelectHighestAggro.html" title="This filter will pick the entity with the highest aggro value. " alt="" coords="115,360,271,387"/>
+<area shape="rect" id="node10" href="$classai_1_1SelectZone.html" title="This filter will pick the entities from the zone of the given entity. " alt="" coords="140,411,247,437"/>
+<area shape="rect" id="node11" href="$classai_1_1Union.html" title="This filter merges several other filter results. " alt="" coords="156,461,231,488"/>
+</map>

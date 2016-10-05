@@ -1,0 +1,34 @@
+<map id="/home/travis/build/mgerhardy/simpleai/src/ai/server/UpdateNodeHandler.h" name="/home/travis/build/mgerhardy/simpleai/src/ai/server/UpdateNodeHandler.h">
+<area shape="rect" id="node2" href="$IProtocolHandler_8h.html" title="IProtocolHandler.h" alt="" coords="1901,259,2030,285"/>
+<area shape="rect" id="node15" href="$AIUpdateNodeMessage_8h.html" title="AIUpdateNodeMessage.h" alt="" coords="44,259,216,285"/>
+<area shape="rect" id="node32" href="$Server_8h.html" title="Server.h" alt="" coords="1064,109,1134,136"/>
+<area shape="rect" id="node4" href="$IProtocolMessage_8h.html" title="IProtocolMessage.h" alt="" coords="185,333,324,360"/>
+<area shape="rect" id="node10" href="$Types_8h.html" title="common/Types.h" alt="" coords="2312,781,2434,808"/>
+<area shape="rect" id="node11" href="$Log_8h.html" title="Log.h" alt="" coords="2346,856,2400,883"/>
+<area shape="rect" id="node16" href="$AIStubTypes_8h.html" title="AIStubTypes.h" alt="" coords="558,333,668,360"/>
+<area shape="rect" id="node18" href="$Math_8h.html" title="common/Math.h" alt="" coords="2538,707,2653,733"/>
+<area shape="rect" id="node19" href="$TreeNode_8h.html" title="tree/TreeNode.h" alt="" coords="1050,408,1165,435"/>
+<area shape="rect" id="node21" href="$MemoryAllocator_8h.html" title="common/MemoryAllocator.h" alt="" coords="1266,632,1450,659"/>
+<area shape="rect" id="node22" href="$ICondition_8h.html" title="Condition related stuff. " alt="" coords="1162,557,1316,584"/>
+<area shape="rect" id="node31" href="$True_8h.html" title="conditions/True.h" alt="" coords="1197,483,1320,509"/>
+<area shape="rect" id="node23" href="$Thread_8h.html" title="common/Thread.h" alt="" coords="2060,632,2186,659"/>
+<area shape="rect" id="node27" href="$AIFactories_8h.html" title="AIFactories.h" alt="" coords="971,632,1070,659"/>
+<area shape="rect" id="node28" href="$IAIFactory_8h.html" title="IAIFactory.h" alt="" coords="996,707,1090,733"/>
+<area shape="rect" id="node30" href="$IFactoryRegistry_8h.html" title="common/IFactoryRegistry.h" alt="" coords="1470,707,1654,733"/>
+<area shape="rect" id="node34" href="$Network_8h.html" title="Network.h" alt="" coords="1649,184,1730,211"/>
+<area shape="rect" id="node36" href="$Zone_8h.html" title="zone/Zone.h" alt="" coords="2270,483,2364,509"/>
+<area shape="rect" id="node41" href="$AIRegistry_8h.html" title="AIRegistry.h" alt="" coords="1220,259,1314,285"/>
+<area shape="rect" id="node43" href="$AIStateMessage_8h.html" title="AIStateMessage.h" alt="" coords="292,259,421,285"/>
+<area shape="rect" id="node44" href="$AINamesMessage_8h.html" title="AINamesMessage.h" alt="" coords="406,184,546,211"/>
+<area shape="rect" id="node45" href="$AICharacterDetailsMessage_8h.html" title="AICharacterDetailsMessage.h" alt="" coords="497,259,694,285"/>
+<area shape="rect" id="node46" href="$AICharacterStaticMessage_8h.html" title="AICharacterStaticMessage.h" alt="" coords="719,259,909,285"/>
+<area shape="rect" id="node47" href="$ProtocolHandlerRegistry_8h.html" title="ProtocolHandlerRegistry.h" alt="" coords="1756,184,1930,211"/>
+<area shape="rect" id="node48" href="$ConditionParser_8h.html" title="conditions/ConditionParser.h" alt="" coords="1188,184,1377,211"/>
+<area shape="rect" id="node49" href="$TreeNodeParser_8h.html" title="tree/TreeNodeParser.h" alt="" coords="742,333,896,360"/>
+<area shape="rect" id="node50" href="$TreeNodeImpl_8h.html" title="tree/TreeNodeImpl.h" alt="" coords="921,333,1061,360"/>
+<area shape="rect" id="node37" href="$ICharacter_8h.html" title="ICharacter.h" alt="" coords="2415,632,2509,659"/>
+<area shape="rect" id="node38" href="$GroupMgr_8h.html" title="group/GroupMgr.h" alt="" coords="2475,557,2601,584"/>
+<area shape="rect" id="node39" href="$ThreadPool_8h_source.html" title="common/ThreadPool.h" alt="" coords="1883,632,2036,659"/>
+<area shape="rect" id="node40" href="$ExecutionTime_8h_source.html" title="common/ExecutionTime.h" alt="" coords="1952,557,2126,584"/>
+<area shape="rect" id="node42" href="$Fail_8h.html" title="tree/Fail.h" alt="" coords="1340,333,1418,360"/>
+</map>

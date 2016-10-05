@@ -1,0 +1,3 @@
+<map id="ai::AIChangeMessage" name="ai::AIChangeMessage">
+<area shape="rect" id="node2" href="$classai_1_1IProtocolMessage.html" title="A protocol message is used for the serialization of the ai states for remote debugging. " alt="" coords="7,5,152,32"/>
+</map>
