@@ -44,6 +44,9 @@ nobase_library_include_HEADERS = \
 	filter/Intersection.h \
 	filter/First.h \
 	filter/Last.h \
+	filter/Difference.h \
+	filter/Complement.h \
+	filter/SelectAll.h \
 	filter/Random.h \
 	IAIFactory.h \
 	ICharacter.h \

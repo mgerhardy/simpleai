@@ -18,6 +18,9 @@ class TreeNode;
 typedef std::shared_ptr<TreeNode> TreeNodePtr;
 typedef std::vector<TreeNodePtr> TreeNodes;
 
+/**
+ * @brief Execution states of a TreeNode::execute() call
+ */
 enum TreeNodeStatus {
 	UNKNOWN,
 	/**
@@ -162,6 +165,11 @@ public:
 	int64_t getLastExecMillis(const AIPtr& ai) const;
 	TreeNodeStatus getLastStatus(const AIPtr& ai) const;
 
+	/**
+	 * @param entity The entity to execute the TreeNode for
+	 * @param deltaMillis The delta since the last execution
+	 * @return TreeNodeStatus
+	 */
 	virtual TreeNodeStatus execute(const AIPtr& entity, int64_t deltaMillis);
 
 	/**
@@ -185,7 +193,7 @@ public:
 	 * @param[in] self The pointer to the root node that is returned if one of the direct children need their parent
 	 * @param[in] id The child node id
 	 *
-	 * @return An empty @c TreeNodePtr if not found, or the parent is the root node of the behaviour tree
+	 * @return An empty TreeNodePtr if not found, or the parent is the root node of the behaviour tree
 	 */
 	TreeNodePtr getParent(const TreeNodePtr& self, int id) const;
 };

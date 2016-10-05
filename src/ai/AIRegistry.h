@@ -41,6 +41,9 @@
 #include "filter/Last.h"
 #include "filter/First.h"
 #include "filter/Random.h"
+#include "filter/Difference.h"
+#include "filter/Complement.h"
+#include "filter/SelectAll.h"
 #include "movement/SelectionSeek.h"
 #include "movement/SelectionFlee.h"
 #include "movement/GroupFlee.h"
@@ -57,7 +60,7 @@ namespace ai {
 #define R_MOVE(Name) registerFactory(#Name, movement::Name::getFactory());
 
 /**
- * @brief The place to register your @c TreeNode and @c ICondition factories at
+ * @brief The place to register your @ai{TreeNode} and @ai{ICondition} factories at
  */
 class AIRegistry: public IAIFactory {
 protected:
@@ -116,6 +119,9 @@ protected:
 			R_GET(Last);
 			R_GET(First);
 			R_GET(Random);
+			R_GET(Difference);
+			R_GET(Complement);
+			R_GET(SelectAll);
 		}
 	};
 

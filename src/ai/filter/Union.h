@@ -1,5 +1,7 @@
 /**
  * @file
+ * @ingroup Filter
+ * @image html union.png
  */
 #pragma once
 

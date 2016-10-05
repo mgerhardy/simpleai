@@ -58,10 +58,13 @@
  *   * @ai{Steer}
  *   * @ai{Succeed}
  * * Filter
+ *   * @ai{Complement}
+ *   * @ai{Difference}
  *   * @ai{First} - only put the first entry of a filter to the list
  *   * @ai{Intersection} - intersection between several filter results
  *   * @ai{Last} - only put the last entry of a filter to the list
  *   * @ai{Random} - only preserve n random entries of the sub filters
+ *   * @ai{SelectAll} - this filter is a nop - it will just use the already filtered entities
  *   * @ai{SelectEmpty} - clears the selection
  *   * @ai{SelectGroupLeader}
  *   * @ai{SelectGroupMembers} - select all the group members of a specified group
@@ -156,7 +159,7 @@
  *
  * @section debugging Remote Debugging
  *
- * \image html aidebugger.png
+ * @image html aidebugger.png
  *
  * The remote debugger can also render your custom map widget which allows
  * you to show the characters in their "natural" environment instead of on
@@ -316,6 +319,9 @@
 #include "filter/Last.h"
 #include "filter/First.h"
 #include "filter/Random.h"
+#include "filter/Difference.h"
+#include "filter/Complement.h"
+#include "filter/SelectAll.h"
 
 #ifdef SIMPLEAI_INCLUDE_LUA
 #include "tree/loaders/lua/LUATreeLoader.h"

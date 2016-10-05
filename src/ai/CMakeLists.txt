@@ -94,6 +94,9 @@ list(APPEND simpleai_HEADERS
 	filter/First.h
 	filter/Last.h
 	filter/Random.h
+	filter/Difference.h
+	filter/Complement.h
+	filter/SelectAll.h
 	IAIFactory.h
 	ICharacter.h
 	group/GroupId.h

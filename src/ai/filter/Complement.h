@@ -1,7 +1,7 @@
 /**
  * @file
  * @ingroup Filter
- * @image html intersection.png
+ * @image html complement.png
  */
 #pragma once
 
@@ -11,17 +11,18 @@
 namespace ai {
 
 /**
- * @brief This filter performs an intersection between several filter results
+ * @brief This filter performs a complement operation on already filtered entities with the results given by
+ * the child filters.
  */
-class Intersection: public IFilter {
+class Complement: public IFilter {
 public:
-	FILTER_ACTION_CLASS(Intersection)
-	FILTER_ACTION_FACTORY(Intersection)
+	FILTER_ACTION_CLASS(Complement)
+	FILTER_ACTION_FACTORY(Complement)
 
 	void filter (const AIPtr& entity) override;
 };
 
-inline void Intersection::filter (const AIPtr& entity) {
+inline void Complement::filter (const AIPtr& entity) {
 	FilteredEntities& filtered = getFilteredEntities(entity);
 	// create a copy
 	const FilteredEntities alreadyFiltered = filtered;
@@ -40,7 +41,7 @@ inline void Intersection::filter (const AIPtr& entity) {
 	}
 
 	FilteredEntities result(max);
-	std::set_intersection(
+	std::set_difference(
 			filteredArray[0].begin(), filteredArray[0].end(),
 			filteredArray[1].begin(), filteredArray[1].end(),
 			std::back_inserter(result));
@@ -49,7 +50,7 @@ inline void Intersection::filter (const AIPtr& entity) {
 		FilteredEntities buffer(max);
 		for (size_t i = 2; i < filteredArray.size(); ++i) {
 			buffer.clear();
-			std::set_intersection(
+			std::set_difference(
 					result.begin(), result.end(),
 					filteredArray[i].begin(), filteredArray[i].end(),
 					std::back_inserter(buffer));

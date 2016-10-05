@@ -1,5 +1,6 @@
 /**
  * @file
+ * @ingroup Filter
  */
 #pragma once
 
