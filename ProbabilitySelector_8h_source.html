@@ -122,8 +122,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="TreeNode_8h.html#aafb7648de47362ff1c6d6922b266bd88">NODE_FACTORY</a>(<a class="code" href="classai_1_1ProbabilitySelector.html">ProbabilitySelector</a>)</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    TreeNodeStatus execute(<span class="keyword">const</span> AIPtr&amp; entity, int64_t deltaMillis)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordflow">if</span> (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classai_1_1ProbabilitySelector.html#a1723d53896b2588f79c7a044d4854bd3">   42</a></span>&#160;    TreeNodeStatus <a class="code" href="classai_1_1ProbabilitySelector.html#a1723d53896b2588f79c7a044d4854bd3">execute</a>(const AIPtr&amp; entity, int64_t deltaMillis)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">Selector::execute</a>(entity, deltaMillis) == CANNOTEXECUTE)</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keywordflow">return</span> CANNOTEXECUTE;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordtype">int</span> index = getSelectorState(entity);</div>
@@ -159,10 +159,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
 <div class="ttc" id="Selector_8h_html"><div class="ttname"><a href="Selector_8h.html">Selector.h</a></div></div>
 <div class="ttc" id="common_2Random_8h_html"><div class="ttname"><a href="common_2Random_8h.html">Random.h</a></div></div>
+<div class="ttc" id="classai_1_1TreeNode_html_ae64bf701493943cb29488aa93a552a09"><div class="ttname"><a href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">ai::TreeNode::execute</a></div><div class="ttdeci">virtual TreeNodeStatus execute(const AIPtr &amp;entity, int64_t deltaMillis)</div><div class="ttdef"><b>Definition:</b> TreeNodeImpl.h:184</div></div>
 <div class="ttc" id="classai_1_1Selector_html"><div class="ttname"><a href="classai_1_1Selector.html">ai::Selector</a></div><div class="ttdoc">Base class for all type of TreeNode selectors. </div><div class="ttdef"><b>Definition:</b> Selector.h:25</div></div>
 <div class="ttc" id="classai_1_1ProbabilitySelector_html"><div class="ttname"><a href="classai_1_1ProbabilitySelector.html">ai::ProbabilitySelector</a></div><div class="ttdoc">This node executes one of the attached children randomly based on the given weights. The node is executed until it is no longer in the running state. </div><div class="ttdef"><b>Definition:</b> ProbabilitySelector.h:20</div></div>
 <div class="ttc" id="AI_8h_html"><div class="ttname"><a href="AI_8h.html">AI.h</a></div></div>
-<div class="ttc" id="TreeNode_8h_html_aafb7648de47362ff1c6d6922b266bd88"><div class="ttname"><a href="TreeNode_8h.html#aafb7648de47362ff1c6d6922b266bd88">NODE_FACTORY</a></div><div class="ttdeci">#define NODE_FACTORY(NodeName)</div><div class="ttdoc">A node factory macro to ease and unify the registration at AIRegistry. </div><div class="ttdef"><b>Definition:</b> TreeNode.h:51</div></div>
+<div class="ttc" id="TreeNode_8h_html_aafb7648de47362ff1c6d6922b266bd88"><div class="ttname"><a href="TreeNode_8h.html#aafb7648de47362ff1c6d6922b266bd88">NODE_FACTORY</a></div><div class="ttdeci">#define NODE_FACTORY(NodeName)</div><div class="ttdoc">A node factory macro to ease and unify the registration at AIRegistry. </div><div class="ttdef"><b>Definition:</b> TreeNode.h:54</div></div>
+<div class="ttc" id="classai_1_1ProbabilitySelector_html_a1723d53896b2588f79c7a044d4854bd3"><div class="ttname"><a href="classai_1_1ProbabilitySelector.html#a1723d53896b2588f79c7a044d4854bd3">ai::ProbabilitySelector::execute</a></div><div class="ttdeci">TreeNodeStatus execute(const AIPtr &amp;entity, int64_t deltaMillis) override</div><div class="ttdef"><b>Definition:</b> ProbabilitySelector.h:42</div></div>
 <div class="ttc" id="String_8h_html"><div class="ttname"><a href="String_8h.html">String.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

@@ -101,8 +101,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    SELECTOR_CLASS(<a class="code" href="classai_1_1Sequence.html">Sequence</a>)</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    TreeNodeStatus execute(<span class="keyword">const</span> AIPtr&amp; entity, int64_t deltaMillis)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordflow">if</span> (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classai_1_1Sequence.html#a309e7fe65ef12277aa798056097642ff">   23</a></span>&#160;    TreeNodeStatus <a class="code" href="classai_1_1Sequence.html#a309e7fe65ef12277aa798056097642ff">execute</a>(const AIPtr&amp; entity, int64_t deltaMillis)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">Selector::execute</a>(entity, deltaMillis) == CANNOTEXECUTE)</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <span class="keywordflow">return</span> CANNOTEXECUTE;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        TreeNodeStatus result = FINISHED;</div>
@@ -140,11 +140,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
 <div class="ttc" id="Selector_8h_html"><div class="ttname"><a href="Selector_8h.html">Selector.h</a></div></div>
+<div class="ttc" id="classai_1_1TreeNode_html_ae64bf701493943cb29488aa93a552a09"><div class="ttname"><a href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">ai::TreeNode::execute</a></div><div class="ttdeci">virtual TreeNodeStatus execute(const AIPtr &amp;entity, int64_t deltaMillis)</div><div class="ttdef"><b>Definition:</b> TreeNodeImpl.h:184</div></div>
 <div class="ttc" id="classai_1_1Selector_html"><div class="ttname"><a href="classai_1_1Selector.html">ai::Selector</a></div><div class="ttdoc">Base class for all type of TreeNode selectors. </div><div class="ttdef"><b>Definition:</b> Selector.h:25</div></div>
 <div class="ttc" id="AI_8h_html"><div class="ttname"><a href="AI_8h.html">AI.h</a></div></div>
 <div class="ttc" id="classai_1_1Sequence_html_aefbde0a9a9788130ddcee3a7bbf2db26"><div class="ttname"><a href="classai_1_1Sequence.html#aefbde0a9a9788130ddcee3a7bbf2db26">ai::Sequence::resetState</a></div><div class="ttdeci">void resetState(const AIPtr &amp;entity) override</div><div class="ttdoc">Reset the states in the node and also in the entity. </div><div class="ttdef"><b>Definition:</b> Sequence.h:54</div></div>
 <div class="ttc" id="classai_1_1Sequence_html"><div class="ttname"><a href="classai_1_1Sequence.html">ai::Sequence</a></div><div class="ttdoc">The sequence continues to execute their children until one of the children returned a state that is n...</div><div class="ttdef"><b>Definition:</b> Sequence.h:19</div></div>
 <div class="ttc" id="classai_1_1TreeNode_html_a215d5a4c3da6a717f0305e24ecd14f01"><div class="ttname"><a href="classai_1_1TreeNode.html#a215d5a4c3da6a717f0305e24ecd14f01">ai::TreeNode::resetState</a></div><div class="ttdeci">virtual void resetState(const AIPtr &amp;entity)</div><div class="ttdoc">Reset the states in the node and also in the entity. </div><div class="ttdef"><b>Definition:</b> TreeNodeImpl.h:55</div></div>
+<div class="ttc" id="classai_1_1Sequence_html_a309e7fe65ef12277aa798056097642ff"><div class="ttname"><a href="classai_1_1Sequence.html#a309e7fe65ef12277aa798056097642ff">ai::Sequence::execute</a></div><div class="ttdeci">TreeNodeStatus execute(const AIPtr &amp;entity, int64_t deltaMillis) override</div><div class="ttdef"><b>Definition:</b> Sequence.h:23</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

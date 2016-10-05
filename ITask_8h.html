@@ -119,10 +119,12 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ac945ada1763b1889343897fea5c855cf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TASK_CLASS_CTOR</b>(TaskName)</td></tr>
+<tr class="memitem:ac945ada1763b1889343897fea5c855cf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ITask_8h.html#ac945ada1763b1889343897fea5c855cf">TASK_CLASS_CTOR</a>(TaskName)</td></tr>
+<tr class="memdesc:ac945ada1763b1889343897fea5c855cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for the constructor of a task. Just give the class name as parameter.  <a href="#ac945ada1763b1889343897fea5c855cf">More...</a><br/></td></tr>
 <tr class="separator:ac945ada1763b1889343897fea5c855cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1abf5bbe8bfc33d017b8220cfe38fd7f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1abf5bbe8bfc33d017b8220cfe38fd7f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TASK_CLASS_DTOR</b>(TaskName)&#160;&#160;&#160;virtual ~TaskName()</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ITask_8h.html#a1abf5bbe8bfc33d017b8220cfe38fd7f">TASK_CLASS_DTOR</a>(TaskName)&#160;&#160;&#160;virtual ~TaskName()</td></tr>
+<tr class="memdesc:a1abf5bbe8bfc33d017b8220cfe38fd7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for the destructor of a task. Just give the class name as parameter. <br/></td></tr>
 <tr class="separator:a1abf5bbe8bfc33d017b8220cfe38fd7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9aa046e682385fef3305111c5b555966"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ITask_8h.html#a9aa046e682385fef3305111c5b555966">TASK_CLASS</a>(TaskName)</td></tr>
 <tr class="memdesc:a9aa046e682385fef3305111c5b555966"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to simplify the task creation. Just give the class name as parameter.  <a href="#a9aa046e682385fef3305111c5b555966">More...</a><br/></td></tr>
@@ -142,8 +144,10 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">TASK_CLASS_CTOR(TaskName) {}\</div>
-<div class="line">    TASK_CLASS_DTOR(TaskName) {}</div>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="ITask_8h.html#ac945ada1763b1889343897fea5c855cf">TASK_CLASS_CTOR</a>(TaskName) {}<a class="code" href="ITask_8h.html#a1abf5bbe8bfc33d017b8220cfe38fd7f">\</a></div>
+<div class="line"><a class="code" href="ITask_8h.html#a1abf5bbe8bfc33d017b8220cfe38fd7f">	TASK_CLASS_DTOR</a>(TaskName) {}</div>
+<div class="ttc" id="ITask_8h_html_ac945ada1763b1889343897fea5c855cf"><div class="ttname"><a href="ITask_8h.html#ac945ada1763b1889343897fea5c855cf">TASK_CLASS_CTOR</a></div><div class="ttdeci">#define TASK_CLASS_CTOR(TaskName)</div><div class="ttdoc">Macro for the constructor of a task. Just give the class name as parameter. </div><div class="ttdef"><b>Definition:</b> ITask.h:14</div></div>
+<div class="ttc" id="ITask_8h_html_a1abf5bbe8bfc33d017b8220cfe38fd7f"><div class="ttname"><a href="ITask_8h.html#a1abf5bbe8bfc33d017b8220cfe38fd7f">TASK_CLASS_DTOR</a></div><div class="ttdeci">#define TASK_CLASS_DTOR(TaskName)</div><div class="ttdoc">Macro for the destructor of a task. Just give the class name as parameter. </div><div class="ttdef"><b>Definition:</b> ITask.h:20</div></div>
 </div><!-- fragment -->
 <p>Macro to simplify the task creation. Just give the class name as parameter. </p>
 
@@ -165,6 +169,8 @@ Macros</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">TaskName(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> std::string&amp; parameters, <span class="keyword">const</span> ConditionPtr&amp; condition) : \</div>
 <div class="line">            ITask(name, parameters, condition)</div>
 </div><!-- fragment -->
+<p>Macro for the constructor of a task. Just give the class name as parameter. </p>
+
 </div>
 </div>
 </div><!-- contents -->

@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>A decorator node with only one child attached. The result of the attached child is only taken into account if it returned <code>TreeNodeStatus::RUNNING</code> - in every other case this decorator will return <code>TreeNodeStatus::FINISHED</code>.  
+<p>A decorator node with only one child attached. The result of the attached child is only taken into account if it returned <code>TreeNodeStatus::RUNNING</code> - in every other case this decorator will return TreeNodeStatus::FINISHED.  
  <a href="classai_1_1Succeed.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Succeed_8h_source.html">Succeed.h</a>&gt;</code></p>
@@ -116,8 +116,7 @@ Collaboration diagram for ai::Succeed:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4e823f89cb63321c7ac2fb72a7bc4390"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4e823f89cb63321c7ac2fb72a7bc4390"></a>
-TreeNodeStatus&#160;</td><td class="memItemRight" valign="bottom"><b>execute</b> (const AIPtr &amp;entity, int64_t deltaMillis) override</td></tr>
+<tr class="memitem:a4e823f89cb63321c7ac2fb72a7bc4390"><td class="memItemLeft" align="right" valign="top">TreeNodeStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1Succeed.html#a4e823f89cb63321c7ac2fb72a7bc4390">execute</a> (const AIPtr &amp;entity, int64_t deltaMillis) override</td></tr>
 <tr class="separator:a4e823f89cb63321c7ac2fb72a7bc4390"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classai_1_1TreeNode"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classai_1_1TreeNode')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classai_1_1TreeNode.html">ai::TreeNode</a></td></tr>
 <tr class="memitem:a7762b2b3b9b3cd4887835a567d962824 inherit pub_methods_classai_1_1TreeNode"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1TreeNode.html#a7762b2b3b9b3cd4887835a567d962824">TreeNode</a> (const std::string &amp;name, const std::string &amp;parameters, const ConditionPtr &amp;condition)</td></tr>
@@ -157,7 +156,7 @@ TreeNodes &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getChildre
 <tr class="separator:a3011d95d0232e63442b8abd258d55fb4 inherit pub_methods_classai_1_1TreeNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a484b1a17885751fd9dac1851f35197f0 inherit pub_methods_classai_1_1TreeNode"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a484b1a17885751fd9dac1851f35197f0"></a>
 int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1TreeNode.html#a484b1a17885751fd9dac1851f35197f0">getLastExecMillis</a> (const AIPtr &amp;ai) const </td></tr>
-<tr class="memdesc:a484b1a17885751fd9dac1851f35197f0 inherit pub_methods_classai_1_1TreeNode"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the time in milliseconds when this node was last run. This is only updated if <code>#execute()</code> was called. <br/></td></tr>
+<tr class="memdesc:a484b1a17885751fd9dac1851f35197f0 inherit pub_methods_classai_1_1TreeNode"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the time in milliseconds when this node was last run. This is only updated if <code><a class="el" href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">execute()</a></code> was called. <br/></td></tr>
 <tr class="separator:a484b1a17885751fd9dac1851f35197f0 inherit pub_methods_classai_1_1TreeNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acab5a8af1144d32667485ff9e46fc398 inherit pub_methods_classai_1_1TreeNode"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acab5a8af1144d32667485ff9e46fc398"></a>
 TreeNodeStatus&#160;</td><td class="memItemRight" valign="bottom"><b>getLastStatus</b> (const AIPtr &amp;ai) const </td></tr>
@@ -248,8 +247,53 @@ ConditionPtr&#160;</td><td class="memItemRight" valign="bottom"><b>_condition</b
 <tr class="separator:a44043080422154a6588cd49b7d0afe46 inherit pro_attribs_classai_1_1TreeNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A decorator node with only one child attached. The result of the attached child is only taken into account if it returned <code>TreeNodeStatus::RUNNING</code> - in every other case this decorator will return <code>TreeNodeStatus::FINISHED</code>. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>A decorator node with only one child attached. The result of the attached child is only taken into account if it returned <code>TreeNodeStatus::RUNNING</code> - in every other case this decorator will return TreeNodeStatus::FINISHED. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a4e823f89cb63321c7ac2fb72a7bc4390"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TreeNodeStatus ai::Succeed::execute </td>
+          <td>(</td>
+          <td class="paramtype">const AIPtr &amp;&#160;</td>
+          <td class="paramname"><em>entity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int64_t&#160;</td>
+          <td class="paramname"><em>deltaMillis</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">entity</td><td>The entity to execute the <a class="el" href="classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. ">TreeNode</a> for </td></tr>
+    <tr><td class="paramname">deltaMillis</td><td>The delta since the last execution </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>TreeNodeStatus </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">ai::TreeNode</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>/home/travis/build/mgerhardy/simpleai/src/ai/tree/<a class="el" href="Succeed_8h_source.html">Succeed.h</a></li>
 </ul>
 </div><!-- contents -->

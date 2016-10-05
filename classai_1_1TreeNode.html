@@ -156,13 +156,12 @@ TreeNodes &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getChildre
 <tr class="separator:a3011d95d0232e63442b8abd258d55fb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a484b1a17885751fd9dac1851f35197f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a484b1a17885751fd9dac1851f35197f0"></a>
 int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1TreeNode.html#a484b1a17885751fd9dac1851f35197f0">getLastExecMillis</a> (const AIPtr &amp;ai) const </td></tr>
-<tr class="memdesc:a484b1a17885751fd9dac1851f35197f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the time in milliseconds when this node was last run. This is only updated if <code>#execute()</code> was called. <br/></td></tr>
+<tr class="memdesc:a484b1a17885751fd9dac1851f35197f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the time in milliseconds when this node was last run. This is only updated if <code><a class="el" href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">execute()</a></code> was called. <br/></td></tr>
 <tr class="separator:a484b1a17885751fd9dac1851f35197f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acab5a8af1144d32667485ff9e46fc398"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acab5a8af1144d32667485ff9e46fc398"></a>
 TreeNodeStatus&#160;</td><td class="memItemRight" valign="bottom"><b>getLastStatus</b> (const AIPtr &amp;ai) const </td></tr>
 <tr class="separator:acab5a8af1144d32667485ff9e46fc398"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae64bf701493943cb29488aa93a552a09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae64bf701493943cb29488aa93a552a09"></a>
-virtual TreeNodeStatus&#160;</td><td class="memItemRight" valign="bottom"><b>execute</b> (const AIPtr &amp;entity, int64_t deltaMillis)</td></tr>
+<tr class="memitem:ae64bf701493943cb29488aa93a552a09"><td class="memItemLeft" align="right" valign="top">virtual TreeNodeStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">execute</a> (const AIPtr &amp;entity, int64_t deltaMillis)</td></tr>
 <tr class="separator:ae64bf701493943cb29488aa93a552a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a215d5a4c3da6a717f0305e24ecd14f01"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a215d5a4c3da6a717f0305e24ecd14f01"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1TreeNode.html#a215d5a4c3da6a717f0305e24ecd14f01">resetState</a> (const AIPtr &amp;entity)</td></tr>
@@ -254,7 +253,7 @@ ConditionPtr&#160;</td><td class="memItemRight" valign="bottom"><b>_condition</b
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The base class for all behaviour tree actions. </p>
-<p><code>TreeNode::execute</code> is triggered with each <code>AI::update</code>. Also the attached <code><a class="el" href="classai_1_1ICondition.html" title="A condition can be placed on a TreeNode to decide which node is going to get executed. In general they are stateless. If they are not, it should explicitly get noted. ">ICondition</a></code> is evaluated here. States are stored on the connected <code>AI</code> instance. Don't store states on tree nodes, because they can be reused for multiple <code>AI</code> instances. Always use the <code>AI</code> or <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the ai controlled entity class. ">ICharacter</a></code> to store your state! </p>
+<p><code><a class="el" href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">TreeNode::execute</a></code> is triggered with each <code>AI::update</code>. Also the attached <code><a class="el" href="classai_1_1ICondition.html" title="A condition can be placed on a TreeNode to decide which node is going to get executed. In general they are stateless. If they are not, it should explicitly get noted. ">ICondition</a></code> is evaluated here. States are stored on the connected <code>AI</code> instance. Don't store states on tree nodes, because they can be reused for multiple <code>AI</code> instances. Always use the <code>AI</code> or <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the ai controlled entity class. ">ICharacter</a></code> to store your state! </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a7762b2b3b9b3cd4887835a567d962824"></a>
 <div class="memitem">
@@ -305,6 +304,50 @@ ConditionPtr&#160;</td><td class="memItemRight" valign="bottom"><b>_condition</b
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ae64bf701493943cb29488aa93a552a09"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TreeNodeStatus ai::TreeNode::execute </td>
+          <td>(</td>
+          <td class="paramtype">const AIPtr &amp;&#160;</td>
+          <td class="paramname"><em>entity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int64_t&#160;</td>
+          <td class="paramname"><em>deltaMillis</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">entity</td><td>The entity to execute the <a class="el" href="classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. ">TreeNode</a> for </td></tr>
+    <tr><td class="paramname">deltaMillis</td><td>The delta since the last execution </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>TreeNodeStatus </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classai_1_1ProbabilitySelector.html#a1723d53896b2588f79c7a044d4854bd3">ai::ProbabilitySelector</a>, <a class="el" href="classai_1_1ITimedNode.html#ada6b0c9102cfdd0f8077a242b1d8ae49">ai::ITimedNode</a>, <a class="el" href="classai_1_1ITask.html#a0fcaac3cbbc00985b89f76fb18b42dea">ai::ITask</a>, <a class="el" href="classai_1_1Limit.html#a3ecfcd414fb841fa9960949c1ecf3b9a">ai::Limit</a>, <a class="el" href="classai_1_1Parallel.html#aeb018954050c30e28fff71c6871b95b3">ai::Parallel</a>, <a class="el" href="classai_1_1Sequence.html#a309e7fe65ef12277aa798056097642ff">ai::Sequence</a>, <a class="el" href="classai_1_1Invert.html#a939d075dcd53f2fc17f94bfe690be8cb">ai::Invert</a>, <a class="el" href="classai_1_1RandomSelector.html#aa65d5a4b9efd8dbe622f9ce487d96cf8">ai::RandomSelector</a>, <a class="el" href="classai_1_1PrioritySelector.html#aa3bd1c17d8d040451b7d947224d7b18a">ai::PrioritySelector</a>, <a class="el" href="classai_1_1Fail.html#aaa656105cea6f0337d1b2bfae5092b72">ai::Fail</a>, and <a class="el" href="classai_1_1Succeed.html#a4e823f89cb63321c7ac2fb72a7bc4390">ai::Succeed</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a7edf3abbb248b86e510315e7061fdf53"></a>
 <div class="memitem">
 <div class="memproto">
@@ -371,7 +414,7 @@ ConditionPtr&#160;</td><td class="memItemRight" valign="bottom"><b>_condition</b
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An empty <code>TreeNodePtr</code> if not found, or the parent is the root node of the behaviour tree </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An empty TreeNodePtr if not found, or the parent is the root node of the behaviour tree </dd></dl>
 
 </div>
 </div>

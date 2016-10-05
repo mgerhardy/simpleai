@@ -101,8 +101,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    SELECTOR_CLASS(<a class="code" href="classai_1_1PrioritySelector.html">PrioritySelector</a>)</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    TreeNodeStatus execute(<span class="keyword">const</span> AIPtr&amp; entity, int64_t deltaMillis)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keywordflow">if</span> (Selector::execute(entity, deltaMillis) == CANNOTEXECUTE)</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classai_1_1PrioritySelector.html#aa3bd1c17d8d040451b7d947224d7b18a">   21</a></span>&#160;    TreeNodeStatus <a class="code" href="classai_1_1PrioritySelector.html#aa3bd1c17d8d040451b7d947224d7b18a">execute</a>(const AIPtr&amp; entity, int64_t deltaMillis)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">Selector::execute</a>(entity, deltaMillis) == CANNOTEXECUTE)</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <span class="keywordflow">return</span> CANNOTEXECUTE;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordtype">int</span> index = getSelectorState(entity);</div>
@@ -140,9 +140,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
 <div class="ttc" id="Selector_8h_html"><div class="ttname"><a href="Selector_8h.html">Selector.h</a></div></div>
+<div class="ttc" id="classai_1_1TreeNode_html_ae64bf701493943cb29488aa93a552a09"><div class="ttname"><a href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">ai::TreeNode::execute</a></div><div class="ttdeci">virtual TreeNodeStatus execute(const AIPtr &amp;entity, int64_t deltaMillis)</div><div class="ttdef"><b>Definition:</b> TreeNodeImpl.h:184</div></div>
 <div class="ttc" id="classai_1_1PrioritySelector_html"><div class="ttname"><a href="classai_1_1PrioritySelector.html">ai::PrioritySelector</a></div><div class="ttdoc">This node tries to execute all the attached children until one succeeds. This composite only fails if...</div><div class="ttdef"><b>Definition:</b> PrioritySelector.h:17</div></div>
 <div class="ttc" id="classai_1_1Selector_html"><div class="ttname"><a href="classai_1_1Selector.html">ai::Selector</a></div><div class="ttdoc">Base class for all type of TreeNode selectors. </div><div class="ttdef"><b>Definition:</b> Selector.h:25</div></div>
 <div class="ttc" id="AI_8h_html"><div class="ttname"><a href="AI_8h.html">AI.h</a></div></div>
+<div class="ttc" id="classai_1_1PrioritySelector_html_aa3bd1c17d8d040451b7d947224d7b18a"><div class="ttname"><a href="classai_1_1PrioritySelector.html#aa3bd1c17d8d040451b7d947224d7b18a">ai::PrioritySelector::execute</a></div><div class="ttdeci">TreeNodeStatus execute(const AIPtr &amp;entity, int64_t deltaMillis) override</div><div class="ttdef"><b>Definition:</b> PrioritySelector.h:21</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

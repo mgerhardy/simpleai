@@ -5,6 +5,8 @@ var searchData=
   ['targetseek',['TargetSeek',['../classai_1_1movement_1_1TargetSeek.html',1,'ai::movement']]],
   ['targetseek_2eh',['TargetSeek.h',['../TargetSeek_8h.html',1,'']]],
   ['task_5fclass',['TASK_CLASS',['../ITask_8h.html#a9aa046e682385fef3305111c5b555966',1,'ITask.h']]],
+  ['task_5fclass_5fctor',['TASK_CLASS_CTOR',['../ITask_8h.html#ac945ada1763b1889343897fea5c855cf',1,'ITask.h']]],
+  ['task_5fclass_5fdtor',['TASK_CLASS_DTOR',['../ITask_8h.html#a1abf5bbe8bfc33d017b8220cfe38fd7f',1,'ITask.h']]],
   ['thread_2eh',['Thread.h',['../Thread_8h.html',1,'']]],
   ['threadpool',['ThreadPool',['../classai_1_1ThreadPool.html',1,'ai']]],
   ['threadscheduler',['ThreadScheduler',['../classai_1_1ThreadScheduler.html',1,'ai']]],
