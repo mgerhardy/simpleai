@@ -111,7 +111,9 @@ nobase_library_include_HEADERS = \
 
 if AI_ENABLE_LUA
 nobase_library_include_HEADERS += \
-	tree/loaders/lua/LUA.h \
+	common/LUA.h \
+	LUAAIRegistry.h \
+	tree/LUATreeNode.h \
 	tree/loaders/lua/LUATreeLoader.h
 endif
 

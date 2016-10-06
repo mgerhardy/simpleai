@@ -1,5 +1,4 @@
 #include "MessageTest.h"
-#include "common/Math.h"
 
 class MessageTest: public TestSuite {
 protected:

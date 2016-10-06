@@ -16,6 +16,7 @@ set(SRC
 	TestEntity.h
 	TestShared.cpp TestShared.h
 	ThreadTest.cpp ThreadTest.h
+	XMLTreeLoaderTest.cpp XMLTreeLoaderTest.h
 	ZoneTest.cpp ZoneTest.h
 
 	gtest/src/gtest.cc
@@ -27,14 +28,19 @@ set(SRC
 	gtest/src/gtest-typed-test.cc
 )
 
+set(SIMPLEAI_TESTS_DEFINITIONS)
 if (SIMPLEAI_LUA)
+	list(APPEND SIMPLEAI_TESTS_DEFINITIONS AI_INCLUDE_LUA)
 	list(APPEND SRC LUATreeLoaderTest.cpp LUATreeLoaderTest.h)
+	list(APPEND SRC LUAAIRegistryTest.cpp LUAAIRegistryTest.h)
 endif()
 
-if (SIMPLEAI_XML)
-	list(APPEND SRC XMLTreeLoaderTest.cpp XMLTreeLoaderTest.h)
-endif()
+list(APPEND SIMPLEAI_TESTS_DEFINITIONS AI_INCLUDE_XML)
 
 add_executable(simpleai-tests ${SRC})
-target_link_libraries(simpleai-tests simpleai)
+if (SIMPLEAI_TESTS_DEFINITIONS)
+	target_compile_definitions(simpleai-tests PRIVATE ${SIMPLEAI_TESTS_DEFINITIONS})
+endif()
+target_include_directories(simpleai-tests PUBLIC ${SIMPLEAI_SOURCE_DIR}/src/libs/tinyxml2/)
+target_link_libraries(simpleai-tests simpleai tinyxml2)
 add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})

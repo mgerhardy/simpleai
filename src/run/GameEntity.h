@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef AI_INCLUDE_LUA
+#error "simpleai-run needs lua"
+#endif
 #include <SimpleAI.h>
 #include <list>
 
