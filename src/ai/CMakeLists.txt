@@ -161,7 +161,9 @@ list(APPEND simpleai_HEADERS
 
 if (SIMPLEAI_LUA)
 	list(APPEND simpleai_HEADERS
-		tree/loaders/lua/LUA.h
+		common/LUA.h
+		LUAAIRegistry.h
+		tree/LUATreeNode.h
 		tree/loaders/lua/LUATreeLoader.h
 	)
 endif()

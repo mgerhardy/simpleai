@@ -7,9 +7,7 @@ if (SIMPLEAI_LUA)
 	endif()
 endif()
 
-if (SIMPLEAI_XML)
-	add_subdirectory(tinyxml2)
-endif()
+add_subdirectory(tinyxml2)
 
 find_package(GLM)
 if (NOT GLM_FOUND)

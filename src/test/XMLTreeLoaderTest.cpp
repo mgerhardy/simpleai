@@ -1,6 +1,4 @@
 #include "XMLTreeLoaderTest.h"
-#include <SimpleAI.h>
-#include <tree/loaders/xml/XMLTreeLoader.h>
 
 namespace {
 const char *TREE = "<?xml version=\"1.0\" standalone=\"no\" ?>"
@@ -20,25 +18,43 @@ const char *TREE = "<?xml version=\"1.0\" standalone=\"no\" ?>"
 }
 
 class XMLTreeLoaderTest: public TestSuite {
+protected:
+	ai::AIRegistry _registry;
+	ai::XMLTreeLoader _loader;
+
+public:
+	XMLTreeLoaderTest() :
+			_loader(_registry) {
+	}
+
+	void SetUp() override {
+		TestSuite::SetUp();
+		ASSERT_TRUE(_loader.init(TREE)) << _loader.getError();
+	}
+
+	void TearDown() override {
+		TestSuite::TearDown();
+		_loader.shutdown();
+	}
 };
 
-TEST_F(XMLTreeLoaderTest, testLoad) {
-	ai::AIRegistry registry;
-	ai::XMLTreeLoader loader(registry);
-	ASSERT_TRUE(loader.init(TREE)) << loader.getError();
-	const ai::TreeNodePtr& tree = loader.load("example1");
-	ASSERT_NE(nullptr, tree.get()) << "Could not find the espected behaviour";
-	ASSERT_EQ("root1", tree->getName()) << "unexpected root node name";
-	const ai::TreeNodes& children = tree->getChildren();
+TEST_F(XMLTreeLoaderTest, testLoadExample1) {
+	const ai::TreeNodePtr& node = _loader.load("example1");
+	ASSERT_NE(nullptr, node.get()) << "Could not find the espected behaviour";
+	ASSERT_EQ("root1", node->getName()) << "unexpected root node name";
+	const ai::TreeNodes& children = node->getChildren();
 	const int childrenAmount = children.size();
 	ASSERT_EQ(1, childrenAmount) << "expected amount of children";
 	ASSERT_EQ("idle1", children[0]->getName()) << "unexpected child node name";
 	ASSERT_NE(nullptr, children[0]->getCondition()) << "condition not parsed";
 	ASSERT_EQ("HasEnemies", children[0]->getCondition()->getName()) << "unexpected condition name";
-	const ai::TreeNodePtr& example2 = loader.load("example2");
-	ASSERT_NE(nullptr, example2.get()) << "Could not find the espected behaviour";
-	ASSERT_EQ("root2", example2->getName()) << "unexpected root node name";
-	const ai::TreeNodes& children2 = example2->getChildren();
-	const int childrenAmount2 = children2.size();
-	ASSERT_EQ(2, childrenAmount2) << "expected amount of children";
+}
+
+TEST_F(XMLTreeLoaderTest, testLoadExample2) {
+	const ai::TreeNodePtr& node = _loader.load("example2");
+	ASSERT_NE(nullptr, node.get()) << "Could not find the espected behaviour";
+	ASSERT_EQ("root2", node->getName()) << "unexpected root node name";
+	const ai::TreeNodes& children = node->getChildren();
+	const int childrenAmount = children.size();
+	ASSERT_EQ(2, childrenAmount) << "expected amount of children";
 }

@@ -2,14 +2,11 @@
 #include <fstream>
 #include <streambuf>
 #include <cstdlib>
-#include <SimpleAI.h>
 #include <iostream>
-#include <tree/loaders/lua/LUATreeLoader.h>
-#include "GameEntity.h"
-#include "GameMap.h"
 #include <chrono>
 #include <algorithm>
 #include <atomic>
+#include "GameMap.h"
 
 #ifdef AI_PROFILER
 #include <google/profiler.h>
