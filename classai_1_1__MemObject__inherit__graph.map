@@ -1,7 +1,7 @@
 <map id="ai::_MemObject&lt; AllocatorClass &gt;" name="ai::_MemObject&lt; AllocatorClass &gt;">
 <area shape="rect" id="node2" href="$classai_1_1ICondition.html" title="A condition can be placed on a TreeNode to decide which node is going to get executed. In general they are stateless. If they are not, it should explicitly get noted. " alt="" coords="251,251,423,293"/>
 <area shape="rect" id="node13" href="$classai_1_1movement_1_1ISteering.html" title="Steering interface. " alt="" coords="239,631,436,673"/>
-<area shape="rect" id="node22" href="$classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. " alt="" coords="233,935,442,977"/>
+<area shape="rect" id="node22" href="$classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. " alt="" coords="233,961,442,1002"/>
 <area shape="rect" id="node3" href="$classai_1_1And.html" title="This condition will logically and all contained conditions. " alt="" coords="565,5,627,32"/>
 <area shape="rect" id="node4" href="$classai_1_1False.html" title="This condition just always evaluates to false. " alt="" coords="560,56,632,83"/>
 <area shape="rect" id="node5" href="$classai_1_1Filter.html" title="The filter condition executes some selection filters (IFilter) and evaluates to true if the resulting..." alt="" coords="561,107,631,133"/>
@@ -25,13 +25,14 @@
 <area shape="rect" id="node25" href="$classai_1_1ITask.html" title="A node for your real actions in the behaviour tree. " alt="" coords="559,917,633,944"/>
 <area shape="rect" id="node27" href="$classai_1_1ITimedNode.html" title="A timed node is a TreeNode that is executed until a given time (millis) is elapsed. " alt="" coords="541,968,651,995"/>
 <area shape="rect" id="node29" href="$classai_1_1Limit.html" title="A decorator node which limits the execution of the attached child to a specified amount of runs..." alt="" coords="562,1019,630,1045"/>
-<area shape="rect" id="node30" href="$classai_1_1Selector.html" title="Base class for all type of TreeNode selectors. " alt="" coords="552,1069,640,1096"/>
-<area shape="rect" id="node36" href="$classai_1_1Succeed.html" title="A decorator node with only one child attached. The result of the attached child is only taken into ac..." alt="" coords="551,1120,641,1147"/>
+<area shape="rect" id="node30" href="$classai_1_1LUATreeNode.html" title="ai::LUATreeNode" alt="" coords="535,1069,657,1096"/>
+<area shape="rect" id="node31" href="$classai_1_1Selector.html" title="Base class for all type of TreeNode selectors. " alt="" coords="552,1120,640,1147"/>
+<area shape="rect" id="node37" href="$classai_1_1Succeed.html" title="A decorator node with only one child attached. The result of the attached child is only taken into ac..." alt="" coords="551,1171,641,1197"/>
 <area shape="rect" id="node26" href="$classai_1_1Steer.html" title="ai::Steer" alt="" coords="811,917,882,944"/>
 <area shape="rect" id="node28" href="$classai_1_1Idle.html" title="ITimedNode that is just idling until the given time is elapsed. " alt="" coords="816,968,877,995"/>
-<area shape="rect" id="node31" href="$classai_1_1Parallel.html" title="Executes all the connected children in the order they were added (no matter what the TreeNodeStatus o..." alt="" coords="805,1019,888,1045"/>
-<area shape="rect" id="node32" href="$classai_1_1PrioritySelector.html" title="This node tries to execute all the attached children until one succeeds. This composite only fails if..." alt="" coords="782,1069,911,1096"/>
-<area shape="rect" id="node33" href="$classai_1_1ProbabilitySelector.html" title="This node executes one of the attached children randomly based on the given weights. The node is executed until it is no longer in the running state. " alt="" coords="772,1120,921,1147"/>
-<area shape="rect" id="node34" href="$classai_1_1RandomSelector.html" title="This node executes all the attached children in random order. This composite only fails if all childr..." alt="" coords="778,1171,915,1197"/>
-<area shape="rect" id="node35" href="$classai_1_1Sequence.html" title="The sequence continues to execute their children until one of the children returned a state that is n..." alt="" coords="797,1221,896,1248"/>
+<area shape="rect" id="node32" href="$classai_1_1Parallel.html" title="Executes all the connected children in the order they were added (no matter what the TreeNodeStatus o..." alt="" coords="805,1019,888,1045"/>
+<area shape="rect" id="node33" href="$classai_1_1PrioritySelector.html" title="This node tries to execute all the attached children until one succeeds. This composite only fails if..." alt="" coords="782,1069,911,1096"/>
+<area shape="rect" id="node34" href="$classai_1_1ProbabilitySelector.html" title="This node executes one of the attached children randomly based on the given weights. The node is executed until it is no longer in the running state. " alt="" coords="772,1120,921,1147"/>
+<area shape="rect" id="node35" href="$classai_1_1RandomSelector.html" title="This node executes all the attached children in random order. This composite only fails if all childr..." alt="" coords="778,1171,915,1197"/>
+<area shape="rect" id="node36" href="$classai_1_1Sequence.html" title="The sequence continues to execute their children until one of the children returned a state that is n..." alt="" coords="797,1221,896,1248"/>
 </map>

@@ -38,7 +38,6 @@ var searchData=
   ['setposition',['setPosition',['../classai_1_1ICharacter.html#af0e2e6b6fa44a21186e586b9985bfb70',1,'ai::ICharacter']]],
   ['setspeed',['setSpeed',['../classai_1_1ICharacter.html#a9c3491dca6191340e87889e8ef52080b',1,'ai::ICharacter']]],
   ['simpleai_2eh',['SimpleAI.h',['../SimpleAI_8h.html',1,'']]],
-  ['stackchecker',['StackChecker',['../classai_1_1StackChecker.html',1,'ai']]],
   ['start',['start',['../classai_1_1Server.html#a27ec6e71818b161350a99ef4bd7a43b7',1,'ai::Server']]],
   ['steer',['Steer',['../classai_1_1Steer.html',1,'ai']]],
   ['steer_2eh',['Steer.h',['../Steer_8h.html',1,'']]],

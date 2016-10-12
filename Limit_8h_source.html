@@ -115,7 +115,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
 <div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classai_1_1Limit.html#a3ecfcd414fb841fa9960949c1ecf3b9a">   34</a></span>&#160;    TreeNodeStatus <a class="code" href="classai_1_1Limit.html#a3ecfcd414fb841fa9960949c1ecf3b9a">execute</a>(<span class="keyword">const</span> AIPtr&amp; entity, int64_t deltaMillis)<span class="keyword"> override </span>{</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordflow">if</span> (_children.size() != 1) {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            ai_assert(<span class="keyword">false</span>, <span class="stringliteral">&quot;Limit can not have more than one child&quot;</span>);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <a class="code" href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a>(<span class="keyword">false</span>, <span class="stringliteral">&quot;Limit can not have more than one child&quot;</span>);</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        }</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">TreeNode::execute</a>(entity, deltaMillis) == CANNOTEXECUTE) {</div>
@@ -138,6 +138,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;};</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
+<div class="ttc" id="Types_8h_html_adb3840229c4143eb2b8e2fe2d4ee8163"><div class="ttname"><a href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a></div><div class="ttdeci">#define ai_assert(condition,...)</div><div class="ttdoc">Provide your own assert - this is only executed in DEBUG mode. </div><div class="ttdef"><b>Definition:</b> Types.h:75</div></div>
 <div class="ttc" id="Types_8h_html"><div class="ttname"><a href="Types_8h.html">Types.h</a></div></div>
 <div class="ttc" id="classai_1_1TreeNode_html_a7762b2b3b9b3cd4887835a567d962824"><div class="ttname"><a href="classai_1_1TreeNode.html#a7762b2b3b9b3cd4887835a567d962824">ai::TreeNode::TreeNode</a></div><div class="ttdeci">TreeNode(const std::string &amp;name, const std::string &amp;parameters, const ConditionPtr &amp;condition)</div><div class="ttdef"><b>Definition:</b> TreeNode.h:121</div></div>
 <div class="ttc" id="classai_1_1Limit_html"><div class="ttname"><a href="classai_1_1Limit.html">ai::Limit</a></div><div class="ttdoc">A decorator node which limits the execution of the attached child to a specified amount of runs...</div><div class="ttdef"><b>Definition:</b> Limit.h:18</div></div>

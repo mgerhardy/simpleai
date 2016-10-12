@@ -1,10 +1,11 @@
 <map id="/home/travis/build/mgerhardy/simpleai/src/ai/filter/SelectEmpty.h" name="/home/travis/build/mgerhardy/simpleai/src/ai/filter/SelectEmpty.h">
-<area shape="rect" id="node2" href="$AIRegistry_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/AIRegistry.h" alt="" coords="1155,109,1293,165"/>
-<area shape="rect" id="node3" href="$ConditionParser_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/conditions/Condition\lParser.h" alt="" coords="1058,214,1237,285"/>
-<area shape="rect" id="node4" href="$Server_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/Server.h" alt="" coords="883,341,1033,397"/>
+<area shape="rect" id="node2" href="$AIRegistry_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/AIRegistry.h" alt="" coords="1473,109,1612,165"/>
+<area shape="rect" id="node3" href="$ConditionParser_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/conditions/Condition\lParser.h" alt="" coords="1301,214,1480,285"/>
+<area shape="rect" id="node4" href="$Server_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/Server.h" alt="" coords="993,341,1143,397"/>
 <area shape="rect" id="node7" href="$SimpleAI_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/SimpleAI.h" alt="" coords="1599,661,1737,717"/>
-<area shape="rect" id="node14" href="$LUATreeLoader_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/tree/loaders\l/lua/LUATreeLoader.h" alt="" coords="1237,334,1385,405"/>
-<area shape="rect" id="node15" href="$XMLTreeLoader_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/tree/loaders\l/xml/XMLTreeLoader.h" alt="" coords="1059,334,1212,405"/>
+<area shape="rect" id="node14" href="$LUATreeLoader_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/tree/loaders\l/lua/LUATreeLoader.h" alt="" coords="1468,334,1616,405"/>
+<area shape="rect" id="node16" href="$LUAAIRegistry_8h_source.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/LUAAIRegistry.h" alt="" coords="1757,221,1917,277"/>
+<area shape="rect" id="node15" href="$XMLTreeLoader_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/tree/loaders\l/xml/XMLTreeLoader.h" alt="" coords="1289,334,1443,405"/>
 <area shape="rect" id="node5" href="$ChangeHandler_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/ChangeHandler.h" alt="" coords="5,453,208,509"/>
 <area shape="rect" id="node6" href="$ServerImpl_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/ServerImpl.h" alt="" coords="761,557,937,613"/>
 <area shape="rect" id="node8" href="$DeleteNodeHandler_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/DeleteNodeHandler.h" alt="" coords="283,453,509,509"/>

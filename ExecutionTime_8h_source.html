@@ -138,7 +138,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">auto</span> t1 = std::chrono::high_resolution_clock::now();</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">float</span> millis = (float) std::chrono::duration_cast&lt;std::chrono::microseconds&gt;(t1 - t0).count() / 1000.0f;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    ai_log(<span class="stringliteral">&quot;ElapsedTime: %s, cnt: %i - %0.3fmsec&quot;</span>, header.c_str(), count, millis);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="Types_8h.html#a972ad5c272bfbd0af82fdc644919f005">ai_log</a>(<span class="stringliteral">&quot;ElapsedTime: %s, cnt: %i - %0.3fmsec&quot;</span>, header.c_str(), count, millis);</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">template</span>&lt;const <span class="keywordtype">int</span> count, <span class="keyword">typename</span> BlockBody&gt;</div>
@@ -152,6 +152,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    std::string basename { path + std::string(path).find_last_of(<span class="stringliteral">&quot;\\/&quot;</span>) + 1 };</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    time_elapsed_impl_core&lt;count&gt;(body, basename + <span class="stringliteral">&quot; at L.&quot;</span> + std::to_string(lno));</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
+<div class="ttc" id="Types_8h_html_a972ad5c272bfbd0af82fdc644919f005"><div class="ttname"><a href="Types_8h.html#a972ad5c272bfbd0af82fdc644919f005">ai_log</a></div><div class="ttdeci">#define ai_log(...)</div><div class="ttdoc">Logging macro to provide your own loggers. </div><div class="ttdef"><b>Definition:</b> Types.h:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -1,4 +1,5 @@
-<map id="/home/travis/build/mgerhardy/simpleai/src/ai/tree/loaders/lua/LUA.h" name="/home/travis/build/mgerhardy/simpleai/src/ai/tree/loaders/lua/LUA.h">
-<area shape="rect" id="node2" href="$Types_8h.html" title="common/Types.h" alt="" coords="183,125,305,152"/>
-<area shape="rect" id="node3" href="$Log_8h.html" title="Log.h" alt="" coords="86,200,140,227"/>
+<map id="/home/travis/build/mgerhardy/simpleai/src/ai/common/LUA.h" name="/home/travis/build/mgerhardy/simpleai/src/ai/common/LUA.h">
+<area shape="rect" id="node2" href="$Types_8h.html" title="common/Types.h" alt="" coords="183,109,305,136"/>
+<area shape="rect" id="node10" href="$NonCopyable_8h.html" title="common/NonCopyable.h" alt="" coords="429,109,595,136"/>
+<area shape="rect" id="node3" href="$Log_8h.html" title="Log.h" alt="" coords="86,184,140,211"/>
 </map>

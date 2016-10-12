@@ -142,7 +142,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    std::vsnprintf(buf, <span class="keyword">sizeof</span>(buf), msg, args);</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    va_end(args);</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">if</span> (buf[0] != <span class="charliteral">&#39;\0&#39;</span>) {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        ai::Log::debug(<span class="stringliteral">&quot;%s&quot;</span>, buf);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="Types_8h.html#af243f74139afd922c824ae3166af02b6">ai_log_debug</a>(<span class="stringliteral">&quot;%s&quot;</span>, buf);</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    _error = buf;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
@@ -155,6 +155,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
 <div class="ttc" id="Log_8h_html"><div class="ttname"><a href="Log_8h.html">Log.h</a></div></div>
 <div class="ttc" id="classai_1_1IParser_html"><div class="ttname"><a href="classai_1_1IParser.html">ai::IParser</a></div><div class="ttdef"><b>Definition:</b> IParser.h:14</div></div>
+<div class="ttc" id="Types_8h_html_af243f74139afd922c824ae3166af02b6"><div class="ttname"><a href="Types_8h.html#af243f74139afd922c824ae3166af02b6">ai_log_debug</a></div><div class="ttdeci">#define ai_log_debug(...)</div><div class="ttdoc">Logging macro to provide your own loggers. </div><div class="ttdef"><b>Definition:</b> Types.h:37</div></div>
 <div class="ttc" id="String_8h_html"><div class="ttname"><a href="String_8h.html">String.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

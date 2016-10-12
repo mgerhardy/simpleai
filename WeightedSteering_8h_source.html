@@ -103,7 +103,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="structai_1_1movement_1_1WeightedData.html">WeightedData</a>(<span class="keyword">const</span> SteeringPtr&amp; _steering, <span class="keywordtype">float</span> _weight = 1.0f) :</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            steering(_steering), weight(_weight) {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        ai_assert(weight &gt; 0.0001f, <span class="stringliteral">&quot;Weight is too small&quot;</span>);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <a class="code" href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a>(weight &gt; 0.0001f, <span class="stringliteral">&quot;Weight is too small&quot;</span>);</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    }</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;};</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">typedef</span> std::vector&lt;WeightedData&gt; WeightedSteerings;</div>
@@ -144,6 +144,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
+<div class="ttc" id="Types_8h_html_adb3840229c4143eb2b8e2fe2d4ee8163"><div class="ttname"><a href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a></div><div class="ttdeci">#define ai_assert(condition,...)</div><div class="ttdoc">Provide your own assert - this is only executed in DEBUG mode. </div><div class="ttdef"><b>Definition:</b> Types.h:75</div></div>
 <div class="ttc" id="classai_1_1MoveVector_html"><div class="ttname"><a href="classai_1_1MoveVector.html">ai::MoveVector</a></div><div class="ttdef"><b>Definition:</b> MoveVector.h:10</div></div>
 <div class="ttc" id="Steering_8h_html"><div class="ttname"><a href="Steering_8h.html">Steering.h</a></div><div class="ttdoc">Defines some basic movement algorithms like Wandering, Seeking and Fleeing. </div></div>
 <div class="ttc" id="classai_1_1movement_1_1WeightedSteering_html"><div class="ttname"><a href="classai_1_1movement_1_1WeightedSteering.html">ai::movement::WeightedSteering</a></div><div class="ttdoc">This class allows you to weight several steering methods and get a blended MoveVector out of it...</div><div class="ttdef"><b>Definition:</b> WeightedSteering.h:29</div></div>

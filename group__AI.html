@@ -83,7 +83,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>If you also want to use the default loaders for your behaviour trees, you can include the following loader header files in your code: </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="LUATreeLoader_8h.html">tree/loaders/lua/LUATreeLoader.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="XMLTreeLoader_8h.html">tree/loaders/xml/XMLTreeLoader.h</a>&gt;</span></div>
-</div><!-- fragment --><p> or define SIMPLEAI_INCLUDE_LUA and/or SIMPLEAI_INCLUDE_XML</p>
+</div><!-- fragment --><p> or define AI_INCLUDE_LUA and/or AI_INCLUDE_XML</p>
+<p>You can control how to allocate memory by defining your own allocator class via <code>AI_ALLOCATOR_CLASS</code> </p>
 <p>SimpleAI uses a left handed coordinate system with y pointing upwards (meaning, if you are using a 2d game, only handle x and z). </p>
 </div><!-- contents -->
 <!-- start footer part -->

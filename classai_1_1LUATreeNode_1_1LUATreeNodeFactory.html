@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>SimpleAI: ai::StackChecker Class Reference</title>
+<title>SimpleAI: ai::LUATreeNode::LUATreeNodeFactory Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -83,26 +83,46 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>ai</b></li><li class="navelem"><a class="el" href="classai_1_1StackChecker.html">StackChecker</a></li>  </ul>
+<li class="navelem"><b>ai</b></li><li class="navelem"><a class="el" href="classai_1_1LUATreeNode.html">LUATreeNode</a></li><li class="navelem"><a class="el" href="classai_1_1LUATreeNode_1_1LUATreeNodeFactory.html">LUATreeNodeFactory</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classai_1_1StackChecker-members.html">List of all members</a>  </div>
+<a href="classai_1_1LUATreeNode_1_1LUATreeNodeFactory-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">ai::StackChecker Class Reference</div>  </div>
+<div class="title">ai::LUATreeNode::LUATreeNodeFactory Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="dynheader">
+Inheritance diagram for ai::LUATreeNode::LUATreeNodeFactory:</div>
+<div class="dyncontent">
+<div class="center"><img src="classai_1_1LUATreeNode_1_1LUATreeNodeFactory__inherit__graph.png" border="0" usemap="#ai_1_1LUATreeNode_1_1LUATreeNodeFactory_inherit__map" alt="Inheritance graph"/></div>
+<map name="ai_1_1LUATreeNode_1_1LUATreeNodeFactory_inherit__map" id="ai_1_1LUATreeNode_1_1LUATreeNodeFactory_inherit__map">
+<area shape="rect" id="node2" href="classai_1_1ITreeNodeFactory.html" title="This factory will create tree nodes. It uses the TreeNodeFactoryContext to collect all the needed dat..." alt="" coords="25,96,169,123"/><area shape="rect" id="node3" href="classai_1_1IFactory.html" title="ai::IFactory\&lt; TreeNode,\l TreeNodeFactoryContext \&gt;" alt="" coords="5,6,189,47"/></map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
+Collaboration diagram for ai::LUATreeNode::LUATreeNodeFactory:</div>
+<div class="dyncontent">
+<div class="center"><img src="classai_1_1LUATreeNode_1_1LUATreeNodeFactory__coll__graph.png" border="0" usemap="#ai_1_1LUATreeNode_1_1LUATreeNodeFactory_coll__map" alt="Collaboration graph"/></div>
+<map name="ai_1_1LUATreeNode_1_1LUATreeNodeFactory_coll__map" id="ai_1_1LUATreeNode_1_1LUATreeNodeFactory_coll__map">
+<area shape="rect" id="node2" href="classai_1_1ITreeNodeFactory.html" title="This factory will create tree nodes. It uses the TreeNodeFactoryContext to collect all the needed dat..." alt="" coords="25,96,169,123"/><area shape="rect" id="node3" href="classai_1_1IFactory.html" title="ai::IFactory\&lt; TreeNode,\l TreeNodeFactoryContext \&gt;" alt="" coords="5,6,189,47"/></map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aaa67aa28001b3bba69103ff4af787bbe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa67aa28001b3bba69103ff4af787bbe"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>StackChecker</b> (lua_State *state)</td></tr>
-<tr class="separator:aaa67aa28001b3bba69103ff4af787bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ee0e7f7541e674522056901eeb366bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ee0e7f7541e674522056901eeb366bf"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>LUATreeNodeFactory</b> (lua_State *s, const std::string &amp;type)</td></tr>
+<tr class="separator:a7ee0e7f7541e674522056901eeb366bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55c4d990c02eb7e8c2344fd69ffb74df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55c4d990c02eb7e8c2344fd69ffb74df"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const </td></tr>
+<tr class="separator:a55c4d990c02eb7e8c2344fd69ffb74df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afddf66687d6693faa41302145a36724a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afddf66687d6693faa41302145a36724a"></a>
+TreeNodePtr&#160;</td><td class="memItemRight" valign="bottom"><b>create</b> (const <a class="el" href="structai_1_1TreeNodeFactoryContext.html">TreeNodeFactoryContext</a> *ctx) const override</td></tr>
+<tr class="separator:afddf66687d6693faa41302145a36724a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/travis/build/mgerhardy/simpleai/src/ai/tree/loaders/lua/<a class="el" href="LUA_8h_source.html">LUA.h</a></li>
+<li>/home/travis/build/mgerhardy/simpleai/src/ai/tree/<a class="el" href="LUATreeNode_8h_source.html">LUATreeNode.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
