@@ -102,6 +102,12 @@ protected:
 		return 0;
 	}
 
+	static int luaAiId(lua_State* s) {
+		const AI* ai = luaGetAIContext(s, 1);
+		lua_pushinteger(s, ai->getId());
+		return 1;
+	}
+
 	static int luaAiToString(lua_State* s) {
 		const AI* ai = luaGetAIContext(s, 1);
 		TreeNodePtr treeNode = ai->getBehaviour();
@@ -339,7 +345,8 @@ public:
 		lua_setglobal(_s, "Registry");
 
 		luaL_Reg aiFuncs[] = {
-			// TODO: make this extensible from outside
+			// TODO: aggromgr, zone, filtered entities, character
+			{"id", luaAiId},
 			{"__tostring", luaAiToString},
 			{"__gc", luaAiGC},
 			{nullptr, nullptr}
