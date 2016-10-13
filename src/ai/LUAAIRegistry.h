@@ -6,6 +6,7 @@
 #include "AIRegistry.h"
 #include "tree/LUATreeNode.h"
 #include "conditions/LUACondition.h"
+#include "filter/LUAFilter.h"
 
 namespace ai {
 
@@ -31,9 +32,14 @@ protected:
 	typedef std::shared_ptr<LuaConditionFactory> LUAConditionFactoryPtr;
 	typedef std::map<std::string, LUAConditionFactoryPtr> ConditionFactoryMap;
 
+	using LuaFilterFactory = LUAFilter::LUAFilterFactory;
+	typedef std::shared_ptr<LuaFilterFactory> LUAFilterFactoryPtr;
+	typedef std::map<std::string, LUAFilterFactoryPtr> FilterFactoryMap;
+
 	ReadWriteLock _lock{"luaregistry"};
 	TreeNodeFactoryMap _treeNodeFactories;
 	ConditionFactoryMap _conditionFactories;
+	FilterFactoryMap _filterFactories;
 
 	static LUAAIRegistry* luaGetContext(lua_State * s) {
 		lua_getglobal(s, "Registry");
@@ -48,6 +54,10 @@ protected:
 
 	static LuaConditionFactory* luaGetConditionFactoryContext(lua_State * s, int n) {
 		return *(LuaConditionFactory **) lua_touserdata(s, n);
+	}
+
+	static LuaFilterFactory* luaGetFilterFactoryContext(lua_State * s, int n) {
+		return *(LuaFilterFactory **) lua_touserdata(s, n);
 	}
 
 	static AI* luaGetAIContext(lua_State * s, int n) {
@@ -206,8 +216,60 @@ protected:
 		return 1;
 	}
 
+	static int luaFilterEmptyFilter(lua_State* s) {
+		const LuaFilterFactory* factory = luaGetFilterFactoryContext(s, 1);
+		return luaL_error(s, "There is no filter function set for filter: %s", factory->type().c_str());
+	}
+
+	static int luaFilterToString(lua_State* s) {
+		const LuaFilterFactory* factory = luaGetFilterFactoryContext(s, 1);
+		lua_pushfstring(s, "filter: %s", factory->type().c_str());
+		return 1;
+	}
+
+	static const luaL_Reg* filterFuncs() {
+		static const luaL_Reg nodes[] = {
+			{"filter", luaFilterEmptyFilter},
+			{"__tostring", luaFilterToString},
+			{"__newindex", luaNewIndex},
+			{nullptr, nullptr}
+		};
+		return nodes;
+	}
+
 	static int luaCreateFilter(lua_State* s) {
-		return 0;
+		LUAAIRegistry* r = luaGetContext(s);
+		const std::string type = luaL_checkstring(s, -1);
+		const LUAFilterFactoryPtr& factory = std::make_shared<LuaFilterFactory>(s, type);
+		const bool inserted = r->registerFilterFactory(type, *factory);
+		if (!inserted) {
+			luaL_error(s, "filter %s is already registered", type.c_str());
+			return 0;
+		}
+
+		LuaFilterFactory ** udata = (LuaFilterFactory**) lua_newuserdata(s, sizeof(LuaFilterFactory*));
+		// make global
+		const std::string name = "__meta_filter_" + type;
+		lua_setfield(s, LUA_REGISTRYINDEX, name.c_str());
+		// put back onto stack
+		lua_getfield(s, LUA_REGISTRYINDEX, name.c_str());
+
+		// setup meta table - create a new one manually, otherwise we aren't
+		// able to override the execute function on a per node base. Also
+		// this 'metatable' must not be in the global registry.
+		*udata = factory.get();
+		lua_createtable(s, 0, 2);
+		lua_pushvalue(s, -1);
+		lua_setfield(s, -2, "__index");
+		lua_pushstring(s, "filter");
+		lua_setfield(s, -2, "__name");
+		luaL_setfuncs(s, filterFuncs(), 0);
+		lua_setmetatable(s, -2);
+
+		ScopedWriteLock scopedLock(r->_lock);
+		r->_filterFactories.emplace(type, factory);
+
+		return 1;
 	}
 
 	static int luaCreateSteering(lua_State* s) {
@@ -290,6 +352,7 @@ public:
 			ScopedWriteLock scopedLock(_lock);
 			_treeNodeFactories.clear();
 			_conditionFactories.clear();
+			_filterFactories.clear();
 		}
 		if (_s != nullptr) {
 			lua_close(_s);

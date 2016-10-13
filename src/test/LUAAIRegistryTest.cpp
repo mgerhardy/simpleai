@@ -26,6 +26,9 @@ static const char *LUANODE = ""
 	"function luaconditiontestfalse:evaluate(ai)\n"
 	"	return false\n"
 	"end\n"
+	"local luafiltertest = REGISTRY.createFilter(\"LuaFilterTest\")\n"
+	"function luafiltertest:filter(ai)\n"
+	"end\n"
 	;
 }
 
@@ -35,6 +38,7 @@ protected:
 	const ai::CharacterId _id = 1;
 	ai::ICharacterPtr _chr = std::make_shared<TestEntity>(_id);
 	const ai::ConditionFactoryContext ctxCondition = ai::ConditionFactoryContext("");
+	const ai::FilterFactoryContext ctxFilter = ai::FilterFactoryContext("");
 
 	void SetUp() override {
 		TestSuite::SetUp();
@@ -45,6 +49,16 @@ protected:
 	void TearDown() override {
 		TestSuite::TearDown();
 		_registry.shutdown();
+	}
+
+	void testFilter(const char* filterName) {
+		SCOPED_TRACE(filterName);
+		const ai::FilterPtr& filter = _registry.createFilter(filterName, ctxFilter);
+		ASSERT_TRUE((bool)filter) << "Could not create lua provided filter";
+		const ai::AIPtr& ai = std::make_shared<ai::AI>(ai::TreeNodePtr());
+		ai->setCharacter(_chr);
+		filter->filter(ai);
+		ASSERT_EQ(1, filter.use_count()) << "Someone is still referencing the LUAFilter";
 	}
 
 	void testCondition(const char* conditionName, bool expectedReturnValue) {
@@ -96,4 +110,8 @@ TEST_F(LUAAIRegistryTest, testConditionEvaluationTrue) {
 
 TEST_F(LUAAIRegistryTest, testConditionEvaluationFalse) {
 	testCondition("LuaTestFalse", false);
+}
+
+TEST_F(LUAAIRegistryTest, testFilterEmpty) {
+	testFilter("LuaFilterTest");
 }
