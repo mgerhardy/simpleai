@@ -115,7 +115,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA condition: userdata for %s doesn&#39;t have a metatable assigned&quot;</span>, _name.c_str());</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="keywordflow">return</span> TreeNodeStatus::EXCEPTION;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        }</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="comment">// get execute() method</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="comment">// get evaluate() method</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        lua_getfield(_s, -1, <span class="stringliteral">&quot;evaluate&quot;</span>);</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordflow">if</span> (!lua_isfunction(_s, -1)) {</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA condition: metatable for %s doesn&#39;t have the evaluate() function assigned&quot;</span>, _name.c_str());</div>
