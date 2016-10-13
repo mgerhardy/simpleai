@@ -7,6 +7,7 @@
 #include "tree/LUATreeNode.h"
 #include "conditions/LUACondition.h"
 #include "filter/LUAFilter.h"
+#include "movement/LUASteering.h"
 
 namespace ai {
 
@@ -36,10 +37,15 @@ protected:
 	typedef std::shared_ptr<LuaFilterFactory> LUAFilterFactoryPtr;
 	typedef std::map<std::string, LUAFilterFactoryPtr> FilterFactoryMap;
 
+	using LuaSteeringFactory = movement::LUASteering::LUASteeringFactory;
+	typedef std::shared_ptr<LuaSteeringFactory> LUASteeringFactoryPtr;
+	typedef std::map<std::string, LUASteeringFactoryPtr> SteeringFactoryMap;
+
 	ReadWriteLock _lock{"luaregistry"};
 	TreeNodeFactoryMap _treeNodeFactories;
 	ConditionFactoryMap _conditionFactories;
 	FilterFactoryMap _filterFactories;
+	SteeringFactoryMap _steeringFactories;
 
 	static LUAAIRegistry* luaGetContext(lua_State * s) {
 		lua_getglobal(s, "Registry");
@@ -58,6 +64,10 @@ protected:
 
 	static LuaFilterFactory* luaGetFilterFactoryContext(lua_State * s, int n) {
 		return *(LuaFilterFactory **) lua_touserdata(s, n);
+	}
+
+	static LuaSteeringFactory* luaGetSteeringFactoryContext(lua_State * s, int n) {
+		return *(LuaSteeringFactory **) lua_touserdata(s, n);
 	}
 
 	static AI* luaGetAIContext(lua_State * s, int n) {
@@ -242,8 +252,44 @@ protected:
 		return 1;
 	}
 
+	static int luaSteeringEmptyExecute(lua_State* s) {
+		const LuaSteeringFactory* factory = luaGetSteeringFactoryContext(s, 1);
+		return luaL_error(s, "There is no execute() function set for steering: %s", factory->type().c_str());
+	}
+
+	static int luaSteeringToString(lua_State* s) {
+		const LuaSteeringFactory* factory = luaGetSteeringFactoryContext(s, 1);
+		lua_pushfstring(s, "steering: %s", factory->type().c_str());
+		return 1;
+	}
+
+	static const luaL_Reg* steeringFuncs() {
+		static const luaL_Reg nodes[] = {
+			{"filter", luaSteeringEmptyExecute},
+			{"__tostring", luaSteeringToString},
+			{"__newindex", luaNewIndex},
+			{nullptr, nullptr}
+		};
+		return nodes;
+	}
+
 	static int luaCreateSteering(lua_State* s) {
-		return 0;
+		LUAAIRegistry* r = luaGetContext(s);
+		const std::string type = luaL_checkstring(s, -1);
+		const LUASteeringFactoryPtr& factory = std::make_shared<LuaSteeringFactory>(s, type);
+		const bool inserted = r->registerSteeringFactory(type, *factory);
+		if (!inserted) {
+			return luaL_error(s, "steering %s is already registered", type.c_str());
+		}
+
+		LuaSteeringFactory ** udata = (LuaSteeringFactory**) lua_newuserdata(s, sizeof(LuaSteeringFactory*));
+		*udata = factory.get();
+		setupMetatable(s, type, steeringFuncs(), "steering");
+
+		ScopedWriteLock scopedLock(r->_lock);
+		r->_steeringFactories.emplace(type, factory);
+
+		return 1;
 	}
 public:
 	LUAAIRegistry() {
@@ -323,6 +369,7 @@ public:
 			_treeNodeFactories.clear();
 			_conditionFactories.clear();
 			_filterFactories.clear();
+			_steeringFactories.clear();
 		}
 		if (_s != nullptr) {
 			lua_close(_s);

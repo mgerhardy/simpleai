@@ -29,6 +29,10 @@ static const char *LUANODE = ""
 	"local luafiltertest = REGISTRY.createFilter(\"LuaFilterTest\")\n"
 	"function luafiltertest:filter(ai)\n"
 	"end\n"
+	"local luasteeringtest = REGISTRY.createSteering(\"LuaSteeringTest\")\n"
+	"function luasteeringtest:execute(ai, speed)\n"
+	"	return 0.0, 1.0, 0.0, 0.6\n"
+	"end\n"
 	;
 }
 
@@ -39,6 +43,7 @@ protected:
 	ai::ICharacterPtr _chr = std::make_shared<TestEntity>(_id);
 	const ai::ConditionFactoryContext ctxCondition = ai::ConditionFactoryContext("");
 	const ai::FilterFactoryContext ctxFilter = ai::FilterFactoryContext("");
+	const ai::SteeringFactoryContext ctxSteering = ai::SteeringFactoryContext("");
 
 	void SetUp() override {
 		TestSuite::SetUp();
@@ -49,6 +54,18 @@ protected:
 	void TearDown() override {
 		TestSuite::TearDown();
 		_registry.shutdown();
+	}
+
+	void testSteering(const char* steeringName, int n = 1) {
+		SCOPED_TRACE(steeringName);
+		const ai::SteeringPtr& steering = _registry.createSteering(steeringName, ctxSteering);
+		ASSERT_TRUE((bool)steering) << "Could not create lua provided steering";
+		const ai::AIPtr& ai = std::make_shared<ai::AI>(ai::TreeNodePtr());
+		ai->setCharacter(_chr);
+		for (int i = 0; i < n; ++i) {
+			steering->execute(ai, 1.0f);
+		}
+		ASSERT_EQ(1, steering.use_count()) << "Someone is still referencing the LUASteering";
 	}
 
 	void testFilter(const char* filterName, int n = 1) {
@@ -132,4 +149,8 @@ TEST_F(LUAAIRegistryTest, testFilterEmpty) {
 
 TEST_F(LUAAIRegistryTest, testFilter_100) {
 	testFilter("LuaFilterTest", 100);
+}
+
+TEST_F(LUAAIRegistryTest, testSteeringEmpty) {
+	testSteering("LuaSteeringTest");
 }
