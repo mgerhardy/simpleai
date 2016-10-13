@@ -131,8 +131,7 @@ protected:
 		const LUATreeNodeFactoryPtr& factory = std::make_shared<LuaNodeFactory>(s, type);
 		const bool inserted = r->registerNodeFactory(type, *factory);
 		if (!inserted) {
-			luaL_error(s, "tree node %s is already registered", type.c_str());
-			return 0;
+			return luaL_error(s, "tree node %s is already registered", type.c_str());
 		}
 
 		LuaNodeFactory ** udata = (LuaNodeFactory**) lua_newuserdata(s, sizeof(LuaNodeFactory*));
@@ -187,8 +186,7 @@ protected:
 		const LUAConditionFactoryPtr& factory = std::make_shared<LuaConditionFactory>(s, type);
 		const bool inserted = r->registerConditionFactory(type, *factory);
 		if (!inserted) {
-			luaL_error(s, "condition %s is already registered", type.c_str());
-			return 0;
+			return luaL_error(s, "condition %s is already registered", type.c_str());
 		}
 
 		LuaConditionFactory ** udata = (LuaConditionFactory**) lua_newuserdata(s, sizeof(LuaConditionFactory*));
@@ -243,8 +241,7 @@ protected:
 		const LUAFilterFactoryPtr& factory = std::make_shared<LuaFilterFactory>(s, type);
 		const bool inserted = r->registerFilterFactory(type, *factory);
 		if (!inserted) {
-			luaL_error(s, "filter %s is already registered", type.c_str());
-			return 0;
+			return luaL_error(s, "filter %s is already registered", type.c_str());
 		}
 
 		LuaFilterFactory ** udata = (LuaFilterFactory**) lua_newuserdata(s, sizeof(LuaFilterFactory*));
