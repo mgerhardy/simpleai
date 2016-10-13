@@ -103,6 +103,25 @@ protected:
 		return 1;
 	}
 
+	static void setupMetatable(lua_State* s, const std::string& type, const luaL_Reg *funcs, const std::string& name) {
+		const std::string& metaFull = "__meta_" + name + "_" + type;
+		// make global
+		lua_setfield(s, LUA_REGISTRYINDEX, metaFull.c_str());
+		// put back onto stack
+		lua_getfield(s, LUA_REGISTRYINDEX, metaFull.c_str());
+
+		// setup meta table - create a new one manually, otherwise we aren't
+		// able to override the particular function on a per instance base. Also
+		// this 'metatable' must not be in the global registry.
+		lua_createtable(s, 0, 2);
+		lua_pushvalue(s, -1);
+		lua_setfield(s, -2, "__index");
+		lua_pushstring(s, name.c_str());
+		lua_setfield(s, -2, "__name");
+		luaL_setfuncs(s, funcs, 0);
+		lua_setmetatable(s, -2);
+	}
+
 	static const luaL_Reg* nodeFuncs() {
 		static const luaL_Reg nodes[] = {
 			{"execute", luaNodeEmptyExecute},
@@ -135,24 +154,8 @@ protected:
 		}
 
 		LuaNodeFactory ** udata = (LuaNodeFactory**) lua_newuserdata(s, sizeof(LuaNodeFactory*));
-		// make global
-		const std::string name = "__meta_node_" + type;
-		lua_setfield(s, LUA_REGISTRYINDEX, name.c_str());
-		// put back onto stack
-		lua_getfield(s, LUA_REGISTRYINDEX, name.c_str());
-
-		// setup meta table - create a new one manually, otherwise we aren't
-		// able to override the execute function on a per node base. Also
-		// this 'metatable' must not be in the global registry.
 		*udata = factory.get();
-		lua_createtable(s, 0, 2);
-		lua_pushvalue(s, -1);
-		lua_setfield(s, -2, "__index");
-		lua_pushstring(s, "node");
-		lua_setfield(s, -2, "__name");
-		luaL_setfuncs(s, nodeFuncs(), 0);
-		lua_setmetatable(s, -2);
-
+		setupMetatable(s, type, nodeFuncs(), "node");
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_treeNodeFactories.emplace(type, factory);
 
@@ -190,23 +193,8 @@ protected:
 		}
 
 		LuaConditionFactory ** udata = (LuaConditionFactory**) lua_newuserdata(s, sizeof(LuaConditionFactory*));
-		// make global
-		const std::string name = "__meta_condition_" + type;
-		lua_setfield(s, LUA_REGISTRYINDEX, name.c_str());
-		// put back onto stack
-		lua_getfield(s, LUA_REGISTRYINDEX, name.c_str());
-
-		// setup meta table - create a new one manually, otherwise we aren't
-		// able to override the execute function on a per node base. Also
-		// this 'metatable' must not be in the global registry.
 		*udata = factory.get();
-		lua_createtable(s, 0, 2);
-		lua_pushvalue(s, -1);
-		lua_setfield(s, -2, "__index");
-		lua_pushstring(s, "condition");
-		lua_setfield(s, -2, "__name");
-		luaL_setfuncs(s, conditionFuncs(), 0);
-		lua_setmetatable(s, -2);
+		setupMetatable(s, type, conditionFuncs(), "condition");
 
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_conditionFactories.emplace(type, factory);
@@ -245,23 +233,8 @@ protected:
 		}
 
 		LuaFilterFactory ** udata = (LuaFilterFactory**) lua_newuserdata(s, sizeof(LuaFilterFactory*));
-		// make global
-		const std::string name = "__meta_filter_" + type;
-		lua_setfield(s, LUA_REGISTRYINDEX, name.c_str());
-		// put back onto stack
-		lua_getfield(s, LUA_REGISTRYINDEX, name.c_str());
-
-		// setup meta table - create a new one manually, otherwise we aren't
-		// able to override the execute function on a per node base. Also
-		// this 'metatable' must not be in the global registry.
 		*udata = factory.get();
-		lua_createtable(s, 0, 2);
-		lua_pushvalue(s, -1);
-		lua_setfield(s, -2, "__index");
-		lua_pushstring(s, "filter");
-		lua_setfield(s, -2, "__name");
-		luaL_setfuncs(s, filterFuncs(), 0);
-		lua_setmetatable(s, -2);
+		setupMetatable(s, type, filterFuncs(), "filter");
 
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_filterFactories.emplace(type, factory);
