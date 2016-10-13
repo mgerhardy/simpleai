@@ -8,5 +8,6 @@ var searchData=
   ['ai_5flog_5fdebug',['ai_log_debug',['../Types_8h.html#af243f74139afd922c824ae3166af02b6',1,'Types.h']]],
   ['ai_5flog_5ferror',['ai_log_error',['../Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063',1,'Types.h']]],
   ['ai_5flog_5ftrace',['ai_log_trace',['../Types_8h.html#a72a24d8ece9683d088500cece1938d12',1,'Types.h']]],
-  ['ai_5flog_5fwarn',['ai_log_warn',['../Types_8h.html#a8a5418f66452a6130754f2313896da1c',1,'Types.h']]]
+  ['ai_5flog_5fwarn',['ai_log_warn',['../Types_8h.html#a8a5418f66452a6130754f2313896da1c',1,'Types.h']]],
+  ['ai_5flua_5fsantity',['AI_LUA_SANTITY',['../Types_8h.html#a5b6b45a8aaaa3f7570d23577ebc63324',1,'Types.h']]]
 ];

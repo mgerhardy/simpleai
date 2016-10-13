@@ -109,7 +109,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="comment">// get userdata of the behaviour tree node</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">const</span> std::string name = <span class="stringliteral">&quot;__meta_node_&quot;</span> + _type;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        lua_getfield(_s, LUA_REGISTRYINDEX, name.c_str());</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#ifdef AI_LUA_SANTITY</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#if AI_LUA_SANTITY &gt; 0</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (lua_isnil(_s, -1)) {</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA node: could not find lua userdata for %s&quot;</span>, name.c_str());</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            <span class="keywordflow">return</span> TreeNodeStatus::EXCEPTION;</div>
@@ -117,7 +117,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor"></span>        <span class="comment">// get metatable</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        lua_getmetatable(_s, -1);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#ifdef AI_LUA_SANTITY</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#if AI_LUA_SANTITY &gt; 0</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (!lua_istable(_s, -1)) {</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA node: userdata for %s doesn&#39;t have a metatable assigned&quot;</span>, name.c_str());</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keywordflow">return</span> TreeNodeStatus::EXCEPTION;</div>
@@ -136,7 +136,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="comment">// first parameter is ai</span></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        AI ** udata = (AI **) lua_newuserdata(_s, <span class="keyword">sizeof</span>(AI *));</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        luaL_getmetatable(_s, luaAIMetaName());</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#ifdef AI_LUA_SANTITY</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#if AI_LUA_SANTITY &gt; 0</span></div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (!lua_istable(_s, -1)) {</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA node: metatable for %s doesn&#39;t exist&quot;</span>, luaAIMetaName());</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keywordflow">return</span> TreeNodeStatus::EXCEPTION;</div>
@@ -148,7 +148,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="comment">// second parameter is dt</span></div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        lua_pushinteger(_s, deltaMillis);</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#ifdef AI_LUA_SANTITY</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#if AI_LUA_SANTITY &gt; 0</span></div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (!lua_isfunction(_s, -4)) {</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA node: expected to find a function on stack -4&quot;</span>);</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordflow">return</span> TreeNodeStatus::EXCEPTION;</div>
