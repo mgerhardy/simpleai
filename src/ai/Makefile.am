@@ -116,6 +116,7 @@ nobase_library_include_HEADERS += \
 	tree/LUATreeNode.h \
 	conditions/LUACondition.h \
 	filter/LUAFilter.h \
+	movement/LUASteering.h \
 	tree/loaders/lua/LUATreeLoader.h
 endif
 

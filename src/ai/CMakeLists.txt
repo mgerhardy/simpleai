@@ -165,6 +165,7 @@ if (SIMPLEAI_LUA)
 		LUAAIRegistry.h
 		conditions/LUACondition.h
 		filter/LUAFilter.h
+		movement/LUASteering.h
 		tree/LUATreeNode.h
 		tree/loaders/lua/LUATreeLoader.h
 	)
