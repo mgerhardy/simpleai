@@ -125,78 +125,86 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    }</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classai_1_1ITreeLoader.html">ITreeLoader</a>() {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classai_1_1IAIFactory.html">IAIFactory</a>&amp; getAIFactory()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">return</span> _aiFactory;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    }</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classai_1_1ITreeLoader.html#a24005b108a6f49865c22fef25991793f">   52</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classai_1_1ITreeLoader.html#a24005b108a6f49865c22fef25991793f">getTrees</a>(std::vector&lt;std::string&gt;&amp; trees)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <a class="code" href="classai_1_1ScopedReadLock.html">ScopedReadLock</a> scopedLock(_lock);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        trees.reserve(_treeMap.size());</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordflow">for</span> (TreeMap::const_iterator it = _treeMap.begin(); it != _treeMap.end(); ++it) {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            trees.push_back(it-&gt;first);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="classai_1_1ITreeLoader.html#a061699a432db75612e99d3b7e4c4ff18">   69</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1ITreeLoader.html#a061699a432db75612e99d3b7e4c4ff18">addTree</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> TreeNodePtr&amp; root) {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordflow">if</span> (!root) {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        }</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        {</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <a class="code" href="classai_1_1ScopedReadLock.html">ScopedReadLock</a> scopedLock(_lock);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            TreeMap::const_iterator i = _treeMap.find(name);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keywordflow">if</span> (i != _treeMap.end()) {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <a class="code" href="classai_1_1ScopedWriteLock.html">ScopedWriteLock</a> scopedLock(_lock);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            _treeMap.insert(std::make_pair(name, root));</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    }</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="classai_1_1ITreeLoader.html#a4be204a94bab15c16bcd25c854837003">   90</a></span>&#160;    TreeNodePtr <a class="code" href="classai_1_1ITreeLoader.html#a4be204a94bab15c16bcd25c854837003">load</a>(<span class="keyword">const</span> std::string &amp;name) {</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <a class="code" href="classai_1_1ScopedReadLock.html">ScopedReadLock</a> scopedLock(_lock);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        TreeMap::const_iterator i = _treeMap.find(name);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordflow">if</span> (i != _treeMap.end())</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            <span class="keywordflow">return</span> i-&gt;second;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keywordflow">return</span> TreeNodePtr();</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    }</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">void</span> setError(<span class="keyword">const</span> <span class="keywordtype">char</span>* msg, ...) __attribute__((format(printf, 2, 3)));</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="classai_1_1ITreeLoader.html#a6b90df12ec4ab0b80ac426257287bca1">  103</a></span>&#160;    inline std::<span class="keywordtype">string</span> <a class="code" href="classai_1_1ITreeLoader.html#a6b90df12ec4ab0b80ac426257287bca1">getError</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordflow">return</span> _error;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    }</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;};</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        _error = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        _treeMap.clear();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> shutdown() {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="classai_1_1ScopedWriteLock.html">ScopedWriteLock</a> scopedLock(_lock);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        _error = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        _treeMap.clear();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classai_1_1IAIFactory.html">IAIFactory</a>&amp; getAIFactory()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">return</span> _aiFactory;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classai_1_1ITreeLoader.html#a24005b108a6f49865c22fef25991793f">   60</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classai_1_1ITreeLoader.html#a24005b108a6f49865c22fef25991793f">getTrees</a>(std::vector&lt;std::string&gt;&amp; trees)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <a class="code" href="classai_1_1ScopedReadLock.html">ScopedReadLock</a> scopedLock(_lock);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        trees.reserve(_treeMap.size());</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">for</span> (TreeMap::const_iterator it = _treeMap.begin(); it != _treeMap.end(); ++it) {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            trees.push_back(it-&gt;first);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        }</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classai_1_1ITreeLoader.html#a061699a432db75612e99d3b7e4c4ff18">   77</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1ITreeLoader.html#a061699a432db75612e99d3b7e4c4ff18">addTree</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> TreeNodePtr&amp; root) {</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordflow">if</span> (!root) {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        }</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        {</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <a class="code" href="classai_1_1ScopedReadLock.html">ScopedReadLock</a> scopedLock(_lock);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            TreeMap::const_iterator i = _treeMap.find(name);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="keywordflow">if</span> (i != _treeMap.end()) {</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            }</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        }</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        {</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            <a class="code" href="classai_1_1ScopedWriteLock.html">ScopedWriteLock</a> scopedLock(_lock);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            _treeMap.insert(std::make_pair(name, root));</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        }</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="classai_1_1ITreeLoader.html#a4be204a94bab15c16bcd25c854837003">   98</a></span>&#160;    TreeNodePtr <a class="code" href="classai_1_1ITreeLoader.html#a4be204a94bab15c16bcd25c854837003">load</a>(<span class="keyword">const</span> std::string &amp;name) {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <a class="code" href="classai_1_1ScopedReadLock.html">ScopedReadLock</a> scopedLock(_lock);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        TreeMap::const_iterator i = _treeMap.find(name);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">if</span> (i != _treeMap.end())</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <span class="keywordflow">return</span> i-&gt;second;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordflow">return</span> TreeNodePtr();</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    }</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordtype">void</span> setError(<span class="keyword">const</span> <span class="keywordtype">char</span>* msg, ...) __attribute__((format(printf, 2, 3)));</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> ITreeLoader::setError(<span class="keyword">const</span> <span class="keywordtype">char</span>* msg, ...) {</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    va_list args;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    va_start(args, msg);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keywordtype">char</span> buf[1024];</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    std::vsnprintf(buf, <span class="keyword">sizeof</span>(buf), msg, args);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    va_end(args);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordflow">if</span> (buf[0] != <span class="charliteral">&#39;\0&#39;</span>) {</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <a class="code" href="Types_8h.html#af243f74139afd922c824ae3166af02b6">ai_log_debug</a>(<span class="stringliteral">&quot;%s&quot;</span>, buf);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    ScopedWriteLock scopedLock(_lock);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    _error = buf;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
-<div class="ttc" id="classai_1_1ITreeLoader_html_a6b90df12ec4ab0b80ac426257287bca1"><div class="ttname"><a href="classai_1_1ITreeLoader.html#a6b90df12ec4ab0b80ac426257287bca1">ai::ITreeLoader::getError</a></div><div class="ttdeci">void std::string getError() const </div><div class="ttdoc">Gives access to the last error state of the ITreeLoader. </div><div class="ttdef"><b>Definition:</b> ITreeLoader.h:103</div></div>
+<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="classai_1_1ITreeLoader.html#a6b90df12ec4ab0b80ac426257287bca1">  111</a></span>&#160;    inline std::<span class="keywordtype">string</span> <a class="code" href="classai_1_1ITreeLoader.html#a6b90df12ec4ab0b80ac426257287bca1">getError</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keywordflow">return</span> _error;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    }</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;};</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> ITreeLoader::setError(<span class="keyword">const</span> <span class="keywordtype">char</span>* msg, ...) {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    va_list args;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    va_start(args, msg);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordtype">char</span> buf[1024];</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    std::vsnprintf(buf, <span class="keyword">sizeof</span>(buf), msg, args);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    va_end(args);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keywordflow">if</span> (buf[0] != <span class="charliteral">&#39;\0&#39;</span>) {</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <a class="code" href="Types_8h.html#af243f74139afd922c824ae3166af02b6">ai_log_debug</a>(<span class="stringliteral">&quot;%s&quot;</span>, buf);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    }</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    ScopedWriteLock scopedLock(_lock);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    _error = buf;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;}</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}</div>
+<div class="ttc" id="classai_1_1ITreeLoader_html_a6b90df12ec4ab0b80ac426257287bca1"><div class="ttname"><a href="classai_1_1ITreeLoader.html#a6b90df12ec4ab0b80ac426257287bca1">ai::ITreeLoader::getError</a></div><div class="ttdeci">void std::string getError() const </div><div class="ttdoc">Gives access to the last error state of the ITreeLoader. </div><div class="ttdef"><b>Definition:</b> ITreeLoader.h:111</div></div>
 <div class="ttc" id="Thread_8h_html"><div class="ttname"><a href="Thread_8h.html">Thread.h</a></div></div>
-<div class="ttc" id="classai_1_1ITreeLoader_html_a061699a432db75612e99d3b7e4c4ff18"><div class="ttname"><a href="classai_1_1ITreeLoader.html#a061699a432db75612e99d3b7e4c4ff18">ai::ITreeLoader::addTree</a></div><div class="ttdeci">bool addTree(const std::string &amp;name, const TreeNodePtr &amp;root)</div><div class="ttdoc">Register a new TreeNode as behaviour tree with the specified name. </div><div class="ttdef"><b>Definition:</b> ITreeLoader.h:69</div></div>
+<div class="ttc" id="classai_1_1ITreeLoader_html_a061699a432db75612e99d3b7e4c4ff18"><div class="ttname"><a href="classai_1_1ITreeLoader.html#a061699a432db75612e99d3b7e4c4ff18">ai::ITreeLoader::addTree</a></div><div class="ttdeci">bool addTree(const std::string &amp;name, const TreeNodePtr &amp;root)</div><div class="ttdoc">Register a new TreeNode as behaviour tree with the specified name. </div><div class="ttdef"><b>Definition:</b> ITreeLoader.h:77</div></div>
 <div class="ttc" id="Types_8h_html_af243f74139afd922c824ae3166af02b6"><div class="ttname"><a href="Types_8h.html#af243f74139afd922c824ae3166af02b6">ai_log_debug</a></div><div class="ttdeci">#define ai_log_debug(...)</div><div class="ttdoc">Logging macro to provide your own loggers. </div><div class="ttdef"><b>Definition:</b> Types.h:37</div></div>
 <div class="ttc" id="classai_1_1IAIFactory_html"><div class="ttname"><a href="classai_1_1IAIFactory.html">ai::IAIFactory</a></div><div class="ttdef"><b>Definition:</b> IAIFactory.h:39</div></div>
 <div class="ttc" id="classai_1_1ScopedReadLock_html"><div class="ttname"><a href="classai_1_1ScopedReadLock.html">ai::ScopedReadLock</a></div><div class="ttdef"><b>Definition:</b> Thread.h:44</div></div>
 <div class="ttc" id="classai_1_1ITreeLoader_html"><div class="ttname"><a href="classai_1_1ITreeLoader.html">ai::ITreeLoader</a></div><div class="ttdoc">This class must be extended to load behaviour trees. The contract here is that the parsing only happe...</div><div class="ttdef"><b>Definition:</b> ITreeLoader.h:24</div></div>
-<div class="ttc" id="classai_1_1ITreeLoader_html_a24005b108a6f49865c22fef25991793f"><div class="ttname"><a href="classai_1_1ITreeLoader.html#a24005b108a6f49865c22fef25991793f">ai::ITreeLoader::getTrees</a></div><div class="ttdeci">void getTrees(std::vector&lt; std::string &gt; &amp;trees) const </div><div class="ttdoc">Fill the given vector with the loaded behaviour tree names. </div><div class="ttdef"><b>Definition:</b> ITreeLoader.h:52</div></div>
+<div class="ttc" id="classai_1_1ITreeLoader_html_a24005b108a6f49865c22fef25991793f"><div class="ttname"><a href="classai_1_1ITreeLoader.html#a24005b108a6f49865c22fef25991793f">ai::ITreeLoader::getTrees</a></div><div class="ttdeci">void getTrees(std::vector&lt; std::string &gt; &amp;trees) const </div><div class="ttdoc">Fill the given vector with the loaded behaviour tree names. </div><div class="ttdef"><b>Definition:</b> ITreeLoader.h:60</div></div>
 <div class="ttc" id="classai_1_1ScopedWriteLock_html"><div class="ttname"><a href="classai_1_1ScopedWriteLock.html">ai::ScopedWriteLock</a></div><div class="ttdef"><b>Definition:</b> Thread.h:56</div></div>
 <div class="ttc" id="classai_1_1ReadWriteLock_html"><div class="ttname"><a href="classai_1_1ReadWriteLock.html">ai::ReadWriteLock</a></div><div class="ttdef"><b>Definition:</b> Thread.h:14</div></div>
-<div class="ttc" id="classai_1_1ITreeLoader_html_a4be204a94bab15c16bcd25c854837003"><div class="ttname"><a href="classai_1_1ITreeLoader.html#a4be204a94bab15c16bcd25c854837003">ai::ITreeLoader::load</a></div><div class="ttdeci">TreeNodePtr load(const std::string &amp;name)</div><div class="ttdoc">Loads on particular behaviour tree. </div><div class="ttdef"><b>Definition:</b> ITreeLoader.h:90</div></div>
+<div class="ttc" id="classai_1_1ITreeLoader_html_a4be204a94bab15c16bcd25c854837003"><div class="ttname"><a href="classai_1_1ITreeLoader.html#a4be204a94bab15c16bcd25c854837003">ai::ITreeLoader::load</a></div><div class="ttdeci">TreeNodePtr load(const std::string &amp;name)</div><div class="ttdoc">Loads on particular behaviour tree. </div><div class="ttdef"><b>Definition:</b> ITreeLoader.h:98</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

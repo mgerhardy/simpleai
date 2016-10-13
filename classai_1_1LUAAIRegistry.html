@@ -114,6 +114,12 @@ Collaboration diagram for ai::LUAAIRegistry:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a50c35e3b11aecd406f39d04c60323d6b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50c35e3b11aecd406f39d04c60323d6b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> ()</td></tr>
+<tr class="separator:a50c35e3b11aecd406f39d04c60323d6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f9d18703e8d447fb2bd872862f956f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9f9d18703e8d447fb2bd872862f956f7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>shutdown</b> ()</td></tr>
+<tr class="separator:a9f9d18703e8d447fb2bd872862f956f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae29c12766a7bef821bac2d98abc705d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae29c12766a7bef821bac2d98abc705d4"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>evaluate</b> (const std::string &amp;str)</td></tr>
 <tr class="separator:ae29c12766a7bef821bac2d98abc705d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -210,6 +216,9 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaNodeToString
 <tr class="memitem:ad18ae10971216b0f9c87a5f014c3b761"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad18ae10971216b0f9c87a5f014c3b761"></a>
 static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaNodeNewIndex</b> (lua_State *s)</td></tr>
 <tr class="separator:ad18ae10971216b0f9c87a5f014c3b761"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4230246e0ddfddea84615a5d7e542d0c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4230246e0ddfddea84615a5d7e542d0c"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAiGC</b> (lua_State *s)</td></tr>
+<tr class="separator:a4230246e0ddfddea84615a5d7e542d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81e87f8f9054373bb3172efaac6b50ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81e87f8f9054373bb3172efaac6b50ba"></a>
 static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAiToString</b> (lua_State *s)</td></tr>
 <tr class="separator:a81e87f8f9054373bb3172efaac6b50ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -223,7 +232,7 @@ static const luaL_Reg *&#160;</td><td class="memItemRight" valign="bottom"><b>no
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a8e9bd5f59de0b8900e7f1bf0da54df7f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e9bd5f59de0b8900e7f1bf0da54df7f"></a>
-lua_State *&#160;</td><td class="memItemRight" valign="bottom"><b>_s</b></td></tr>
+lua_State *&#160;</td><td class="memItemRight" valign="bottom"><b>_s</b> = nullptr</td></tr>
 <tr class="separator:a8e9bd5f59de0b8900e7f1bf0da54df7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classai_1_1AIRegistry"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classai_1_1AIRegistry')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classai_1_1AIRegistry.html">ai::AIRegistry</a></td></tr>
 <tr class="memitem:a4c2b14fc28e460d956a65ec7556e865f inherit pro_attribs_classai_1_1AIRegistry"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c2b14fc28e460d956a65ec7556e865f"></a>

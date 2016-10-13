@@ -319,9 +319,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <a class="code" href="classai_1_1LUATreeLoader.html">LUATreeLoader</a>(<span class="keyword">const</span> <a class="code" href="classai_1_1IAIFactory.html">IAIFactory</a>&amp; aiFactory) :</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;            <a class="code" href="classai_1_1ITreeLoader.html">ITreeLoader</a>(aiFactory) {</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    }</div>
-<div class="line"><a name="l00271"></a><span class="lineno"><a class="line" href="classai_1_1LUATreeLoader.html#a9ee782aaf75228932bd225901b2dd778">  271</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1LUATreeLoader.html#a9ee782aaf75228932bd225901b2dd778">init</a>(<span class="keyword">const</span> std::string&amp; luaString) {</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        resetError();</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        _treeMap.clear();</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;</div>
+<div class="line"><a name="l00272"></a><span class="lineno"><a class="line" href="classai_1_1LUATreeLoader.html#a9ee782aaf75228932bd225901b2dd778">  272</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1LUATreeLoader.html#a9ee782aaf75228932bd225901b2dd778">init</a>(<span class="keyword">const</span> std::string&amp; luaString) {</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        shutdown();</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;</div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        <a class="code" href="classai_1_1lua_1_1LUA.html">lua::LUA</a> lua;</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        luaL_Reg createTree = { <span class="stringliteral">&quot;createTree&quot;</span>, luaMain_CreateTree };</div>
@@ -355,33 +355,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        }</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        <span class="keywordflow">if</span> (_treeMap.empty()) {</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;            setError(<span class="stringliteral">&quot;No behaviour trees specified&quot;</span>);</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        }</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    }</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;};</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;}</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        <span class="keywordtype">bool</span> empty;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        {</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;            <a class="code" href="classai_1_1ScopedReadLock.html">ScopedReadLock</a> scopedLock(_lock);</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;            empty = _treeMap.empty();</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        }</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        <span class="keywordflow">if</span> (empty) {</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;            setError(<span class="stringliteral">&quot;No behaviour trees specified&quot;</span>);</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        }</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    }</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;};</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;}</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;</div>
 <div class="ttc" id="TreeNodeImpl_8h_html"><div class="ttname"><a href="TreeNodeImpl_8h.html">TreeNodeImpl.h</a></div></div>
 <div class="ttc" id="classai_1_1LUATreeLoader_html"><div class="ttname"><a href="classai_1_1LUATreeLoader.html">ai::LUATreeLoader</a></div><div class="ttdoc">Implementation of ITreeLoader that gets its data from a lua script. </div><div class="ttdef"><b>Definition:</b> LUATreeLoader.h:50</div></div>
 <div class="ttc" id="classai_1_1TreeNodeParser_html"><div class="ttname"><a href="classai_1_1TreeNodeParser.html">ai::TreeNodeParser</a></div><div class="ttdoc">Transforms the string representation of a TreeNode with all its parameters into a TreeNode instance...</div><div class="ttdef"><b>Definition:</b> TreeNodeParser.h:22</div></div>
 <div class="ttc" id="structai_1_1TreeNodeFactoryContext_html"><div class="ttname"><a href="structai_1_1TreeNodeFactoryContext.html">ai::TreeNodeFactoryContext</a></div><div class="ttdoc">Context for ITreeNodeFactory. </div><div class="ttdef"><b>Definition:</b> AIFactories.h:15</div></div>
-<div class="ttc" id="classai_1_1ITreeLoader_html_a6b90df12ec4ab0b80ac426257287bca1"><div class="ttname"><a href="classai_1_1ITreeLoader.html#a6b90df12ec4ab0b80ac426257287bca1">ai::ITreeLoader::getError</a></div><div class="ttdeci">void std::string getError() const </div><div class="ttdoc">Gives access to the last error state of the ITreeLoader. </div><div class="ttdef"><b>Definition:</b> ITreeLoader.h:103</div></div>
+<div class="ttc" id="classai_1_1ITreeLoader_html_a6b90df12ec4ab0b80ac426257287bca1"><div class="ttname"><a href="classai_1_1ITreeLoader.html#a6b90df12ec4ab0b80ac426257287bca1">ai::ITreeLoader::getError</a></div><div class="ttdeci">void std::string getError() const </div><div class="ttdoc">Gives access to the last error state of the ITreeLoader. </div><div class="ttdef"><b>Definition:</b> ITreeLoader.h:111</div></div>
 <div class="ttc" id="classai_1_1lua_1_1LUA_html_a151f6f93809384c007a1434a81be16b9"><div class="ttname"><a href="classai_1_1lua_1_1LUA.html#a151f6f93809384c007a1434a81be16b9">ai::lua::LUA::execute</a></div><div class="ttdeci">bool execute(const std::string &amp;function, int returnValues=0)</div><div class="ttdef"><b>Definition:</b> LUA.h:171</div></div>
 <div class="ttc" id="classai_1_1lua_1_1LUAType_html"><div class="ttname"><a href="classai_1_1lua_1_1LUAType.html">ai::lua::LUAType</a></div><div class="ttdef"><b>Definition:</b> LUA.h:32</div></div>
 <div class="ttc" id="classai_1_1lua_1_1LUA_html"><div class="ttname"><a href="classai_1_1lua_1_1LUA.html">ai::lua::LUA</a></div><div class="ttdef"><b>Definition:</b> LUA.h:66</div></div>
 <div class="ttc" id="ITreeLoader_8h_html"><div class="ttname"><a href="ITreeLoader_8h.html">ITreeLoader.h</a></div></div>
 <div class="ttc" id="ConditionParser_8h_html"><div class="ttname"><a href="ConditionParser_8h.html">ConditionParser.h</a></div></div>
 <div class="ttc" id="classai_1_1IAIFactory_html"><div class="ttname"><a href="classai_1_1IAIFactory.html">ai::IAIFactory</a></div><div class="ttdef"><b>Definition:</b> IAIFactory.h:39</div></div>
+<div class="ttc" id="classai_1_1ScopedReadLock_html"><div class="ttname"><a href="classai_1_1ScopedReadLock.html">ai::ScopedReadLock</a></div><div class="ttdef"><b>Definition:</b> Thread.h:44</div></div>
 <div class="ttc" id="classai_1_1ITreeLoader_html"><div class="ttname"><a href="classai_1_1ITreeLoader.html">ai::ITreeLoader</a></div><div class="ttdoc">This class must be extended to load behaviour trees. The contract here is that the parsing only happe...</div><div class="ttdef"><b>Definition:</b> ITreeLoader.h:24</div></div>
 <div class="ttc" id="LUA_8h_html"><div class="ttname"><a href="LUA_8h.html">LUA.h</a></div></div>
 <div class="ttc" id="classai_1_1ConditionParser_html"><div class="ttname"><a href="classai_1_1ConditionParser.html">ai::ConditionParser</a></div><div class="ttdoc">Transforms the string representation of a condition with all its sub conditions and parameters into a...</div><div class="ttdef"><b>Definition:</b> ConditionParser.h:22</div></div>
 <div class="ttc" id="TreeNodeParser_8h_html"><div class="ttname"><a href="TreeNodeParser_8h.html">TreeNodeParser.h</a></div></div>
 <div class="ttc" id="AIRegistry_8h_html"><div class="ttname"><a href="AIRegistry_8h.html">AIRegistry.h</a></div></div>
-<div class="ttc" id="classai_1_1LUATreeLoader_html_a9ee782aaf75228932bd225901b2dd778"><div class="ttname"><a href="classai_1_1LUATreeLoader.html#a9ee782aaf75228932bd225901b2dd778">ai::LUATreeLoader::init</a></div><div class="ttdeci">bool init(const std::string &amp;luaString)</div><div class="ttdoc">this will initialize the loader once with all the defined behaviours from the given lua string...</div><div class="ttdef"><b>Definition:</b> LUATreeLoader.h:271</div></div>
+<div class="ttc" id="classai_1_1LUATreeLoader_html_a9ee782aaf75228932bd225901b2dd778"><div class="ttname"><a href="classai_1_1LUATreeLoader.html#a9ee782aaf75228932bd225901b2dd778">ai::LUATreeLoader::init</a></div><div class="ttdeci">bool init(const std::string &amp;luaString)</div><div class="ttdoc">this will initialize the loader once with all the defined behaviours from the given lua string...</div><div class="ttdef"><b>Definition:</b> LUATreeLoader.h:272</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
