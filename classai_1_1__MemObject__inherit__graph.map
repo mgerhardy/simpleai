@@ -1,7 +1,7 @@
 <map id="ai::_MemObject&lt; AllocatorClass &gt;" name="ai::_MemObject&lt; AllocatorClass &gt;">
 <area shape="rect" id="node2" href="$classai_1_1ICondition.html" title="A condition can be placed on a TreeNode to decide which node is going to get executed. In general they are stateless. If they are not, it should explicitly get noted. " alt="" coords="251,277,423,318"/>
-<area shape="rect" id="node14" href="$classai_1_1movement_1_1ISteering.html" title="Steering interface. " alt="" coords="239,682,436,723"/>
-<area shape="rect" id="node23" href="$classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. " alt="" coords="233,1011,442,1053"/>
+<area shape="rect" id="node14" href="$classai_1_1movement_1_1ISteering.html" title="Steering interface. " alt="" coords="239,707,436,749"/>
+<area shape="rect" id="node24" href="$classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. " alt="" coords="233,1062,442,1103"/>
 <area shape="rect" id="node3" href="$classai_1_1And.html" title="This condition will logically and all contained conditions. " alt="" coords="565,5,627,32"/>
 <area shape="rect" id="node4" href="$classai_1_1False.html" title="This condition just always evaluates to false. " alt="" coords="560,56,632,83"/>
 <area shape="rect" id="node5" href="$classai_1_1Filter.html" title="The filter condition executes some selection filters (IFilter) and evaluates to true if the resulting..." alt="" coords="561,107,631,133"/>
@@ -15,25 +15,26 @@
 <area shape="rect" id="node13" href="$classai_1_1True.html" title="This condition just always evaluates to true. " alt="" coords="563,512,629,539"/>
 <area shape="rect" id="node15" href="$classai_1_1movement_1_1GroupFlee.html" title="Flees from a particular group. " alt="" coords="511,563,681,589"/>
 <area shape="rect" id="node16" href="$classai_1_1movement_1_1GroupSeek.html" title="Seeks a particular group. " alt="" coords="509,613,683,640"/>
-<area shape="rect" id="node17" href="$classai_1_1movement_1_1SelectionSteering.html" title="IFilter steering interface " alt="" coords="491,664,701,691"/>
-<area shape="rect" id="node20" href="$classai_1_1movement_1_1TargetFlee.html" title="Flees from a particular target. " alt="" coords="511,715,681,741"/>
-<area shape="rect" id="node21" href="$classai_1_1movement_1_1TargetSeek.html" title="Seeks a particular target. " alt="" coords="508,765,684,792"/>
-<area shape="rect" id="node22" href="$classai_1_1movement_1_1Wander.html" title="Moves forward in the direction the character is currently facing into. " alt="" coords="519,816,673,843"/>
-<area shape="rect" id="node18" href="$classai_1_1movement_1_1SelectionFlee.html" title="Flees the current IFilter selection from the given ICharacter. " alt="" coords="753,639,941,665"/>
-<area shape="rect" id="node19" href="$classai_1_1movement_1_1SelectionSeek.html" title="Seeks the current IFilter selection from the given ICharacter. " alt="" coords="750,689,943,716"/>
-<area shape="rect" id="node24" href="$classai_1_1Fail.html" title="A decorator node with only one child attached. The result of the attached child is only taken into ac..." alt="" coords="565,867,627,893"/>
-<area shape="rect" id="node25" href="$classai_1_1Invert.html" title="A node with only one child attached. The result of the attached child is inverted. " alt="" coords="559,917,633,944"/>
-<area shape="rect" id="node26" href="$classai_1_1ITask.html" title="A node for your real actions in the behaviour tree. " alt="" coords="559,968,633,995"/>
-<area shape="rect" id="node28" href="$classai_1_1ITimedNode.html" title="A timed node is a TreeNode that is executed until a given time (millis) is elapsed. " alt="" coords="541,1019,651,1045"/>
-<area shape="rect" id="node30" href="$classai_1_1Limit.html" title="A decorator node which limits the execution of the attached child to a specified amount of runs..." alt="" coords="562,1069,630,1096"/>
-<area shape="rect" id="node31" href="$classai_1_1LUATreeNode.html" title="ai::LUATreeNode" alt="" coords="535,1120,657,1147"/>
-<area shape="rect" id="node32" href="$classai_1_1Selector.html" title="Base class for all type of TreeNode selectors. " alt="" coords="552,1171,640,1197"/>
-<area shape="rect" id="node38" href="$classai_1_1Succeed.html" title="A decorator node with only one child attached. The result of the attached child is only taken into ac..." alt="" coords="551,1221,641,1248"/>
-<area shape="rect" id="node27" href="$classai_1_1Steer.html" title="ai::Steer" alt="" coords="811,968,882,995"/>
-<area shape="rect" id="node29" href="$classai_1_1Idle.html" title="ITimedNode that is just idling until the given time is elapsed. " alt="" coords="816,1019,877,1045"/>
-<area shape="rect" id="node33" href="$classai_1_1Parallel.html" title="Executes all the connected children in the order they were added (no matter what the TreeNodeStatus o..." alt="" coords="805,1069,888,1096"/>
-<area shape="rect" id="node34" href="$classai_1_1PrioritySelector.html" title="This node tries to execute all the attached children until one succeeds. This composite only fails if..." alt="" coords="782,1120,911,1147"/>
-<area shape="rect" id="node35" href="$classai_1_1ProbabilitySelector.html" title="This node executes one of the attached children randomly based on the given weights. The node is executed until it is no longer in the running state. " alt="" coords="772,1171,921,1197"/>
-<area shape="rect" id="node36" href="$classai_1_1RandomSelector.html" title="This node executes all the attached children in random order. This composite only fails if all childr..." alt="" coords="778,1221,915,1248"/>
-<area shape="rect" id="node37" href="$classai_1_1Sequence.html" title="The sequence continues to execute their children until one of the children returned a state that is n..." alt="" coords="797,1272,896,1299"/>
+<area shape="rect" id="node17" href="$classai_1_1movement_1_1LUASteering.html" title="ai::movement::LUASteering" alt="" coords="505,664,687,691"/>
+<area shape="rect" id="node18" href="$classai_1_1movement_1_1SelectionSteering.html" title="IFilter steering interface " alt="" coords="491,715,701,741"/>
+<area shape="rect" id="node21" href="$classai_1_1movement_1_1TargetFlee.html" title="Flees from a particular target. " alt="" coords="511,765,681,792"/>
+<area shape="rect" id="node22" href="$classai_1_1movement_1_1TargetSeek.html" title="Seeks a particular target. " alt="" coords="508,816,684,843"/>
+<area shape="rect" id="node23" href="$classai_1_1movement_1_1Wander.html" title="Moves forward in the direction the character is currently facing into. " alt="" coords="519,867,673,893"/>
+<area shape="rect" id="node19" href="$classai_1_1movement_1_1SelectionFlee.html" title="Flees the current IFilter selection from the given ICharacter. " alt="" coords="753,689,941,716"/>
+<area shape="rect" id="node20" href="$classai_1_1movement_1_1SelectionSeek.html" title="Seeks the current IFilter selection from the given ICharacter. " alt="" coords="750,740,943,767"/>
+<area shape="rect" id="node25" href="$classai_1_1Fail.html" title="A decorator node with only one child attached. The result of the attached child is only taken into ac..." alt="" coords="565,917,627,944"/>
+<area shape="rect" id="node26" href="$classai_1_1Invert.html" title="A node with only one child attached. The result of the attached child is inverted. " alt="" coords="559,968,633,995"/>
+<area shape="rect" id="node27" href="$classai_1_1ITask.html" title="A node for your real actions in the behaviour tree. " alt="" coords="559,1019,633,1045"/>
+<area shape="rect" id="node29" href="$classai_1_1ITimedNode.html" title="A timed node is a TreeNode that is executed until a given time (millis) is elapsed. " alt="" coords="541,1069,651,1096"/>
+<area shape="rect" id="node31" href="$classai_1_1Limit.html" title="A decorator node which limits the execution of the attached child to a specified amount of runs..." alt="" coords="562,1120,630,1147"/>
+<area shape="rect" id="node32" href="$classai_1_1LUATreeNode.html" title="ai::LUATreeNode" alt="" coords="535,1171,657,1197"/>
+<area shape="rect" id="node33" href="$classai_1_1Selector.html" title="Base class for all type of TreeNode selectors. " alt="" coords="552,1221,640,1248"/>
+<area shape="rect" id="node39" href="$classai_1_1Succeed.html" title="A decorator node with only one child attached. The result of the attached child is only taken into ac..." alt="" coords="551,1272,641,1299"/>
+<area shape="rect" id="node28" href="$classai_1_1Steer.html" title="ai::Steer" alt="" coords="811,1019,882,1045"/>
+<area shape="rect" id="node30" href="$classai_1_1Idle.html" title="ITimedNode that is just idling until the given time is elapsed. " alt="" coords="816,1069,877,1096"/>
+<area shape="rect" id="node34" href="$classai_1_1Parallel.html" title="Executes all the connected children in the order they were added (no matter what the TreeNodeStatus o..." alt="" coords="805,1120,888,1147"/>
+<area shape="rect" id="node35" href="$classai_1_1PrioritySelector.html" title="This node tries to execute all the attached children until one succeeds. This composite only fails if..." alt="" coords="782,1171,911,1197"/>
+<area shape="rect" id="node36" href="$classai_1_1ProbabilitySelector.html" title="This node executes one of the attached children randomly based on the given weights. The node is executed until it is no longer in the running state. " alt="" coords="772,1221,921,1248"/>
+<area shape="rect" id="node37" href="$classai_1_1RandomSelector.html" title="This node executes all the attached children in random order. This composite only fails if all childr..." alt="" coords="778,1272,915,1299"/>
+<area shape="rect" id="node38" href="$classai_1_1Sequence.html" title="The sequence continues to execute their children until one of the children returned a state that is n..." alt="" coords="797,1323,896,1349"/>
 </map>

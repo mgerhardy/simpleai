@@ -1,3 +1,4 @@
 <map id="ai::ISteeringFactory" name="ai::ISteeringFactory">
+<area shape="rect" id="node3" href="$classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory.html" title="ai::movement::LUASteering\l::LUASteeringFactory" alt="" coords="5,185,187,226"/>
 <area shape="rect" id="node2" href="$classai_1_1IFactory.html" title="ai::IFactory\&lt; movement\l::ISteering, SteeringFactory\lContext \&gt;" alt="" coords="5,5,187,61"/>
 </map>
