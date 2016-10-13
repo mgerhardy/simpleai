@@ -4,7 +4,7 @@ namespace {
 static const char *LUANODE = ""
 	"local luatest = REGISTRY.createNode(\"LuaTest\")\n"
 	"function luatest:execute(ai, deltaMillis)\n"
-	"	print(\"LuaTest node execute called with parameters: ai=[\"..tostring(ai)..\"], deltaMillis=[\"..tostring(deltaMillis)..\"]\")\n"
+	"	--print(\"LuaTest node execute called with parameters: ai=[\"..tostring(ai)..\"], deltaMillis=[\"..tostring(deltaMillis)..\"]\")\n"
 	"	return FINISHED\n"
 	"end\n"
 	"local luatest2 = REGISTRY.createNode(\"LuaTest2\")\n"
