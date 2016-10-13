@@ -406,7 +406,7 @@ public:
 		lua_setglobal(_s, "Registry");
 
 		luaL_Reg aiFuncs[] = {
-			// TODO: aggromgr, zone, filtered entities, character
+			// TODO: aggromgr, zone, filtered entities, character, random
 			{"id", luaAiId},
 			{"__tostring", luaAiToString},
 			{"__gc", luaAiGC},
