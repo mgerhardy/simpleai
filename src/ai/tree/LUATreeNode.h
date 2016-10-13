@@ -21,26 +21,27 @@ protected:
 
 	TreeNodeStatus runLUA(const AIPtr& entity, int64_t deltaMillis) {
 		// get userdata of the behaviour tree node
-		lua_getfield(_s, LUA_REGISTRYINDEX, _type.c_str());
+		const std::string name = "__meta_node_" + _type;
+		lua_getfield(_s, LUA_REGISTRYINDEX, name.c_str());
 		if (lua_isnil(_s, -1)) {
-			ai_log_error("LUA node: could not find lua userdata for %s", _type.c_str());
+			ai_log_error("LUA node: could not find lua userdata for %s", name.c_str());
 			return TreeNodeStatus::EXCEPTION;
 		}
 		// get metatable
 		lua_getmetatable(_s, -1);
 		if (!lua_istable(_s, -1)) {
-			ai_log_error("LUA node: userdata for %s doesn't have a metatable assigned", _type.c_str());
+			ai_log_error("LUA node: userdata for %s doesn't have a metatable assigned", name.c_str());
 			return TreeNodeStatus::EXCEPTION;
 		}
 		// get execute() method
 		lua_getfield(_s, -1, "execute");
 		if (!lua_isfunction(_s, -1)) {
-			ai_log_error("LUA node: metatable for %s doesn't have the execute() function assigned", _type.c_str());
+			ai_log_error("LUA node: metatable for %s doesn't have the execute() function assigned", name.c_str());
 			return TreeNodeStatus::EXCEPTION;
 		}
 
 		// push self onto the stack
-		lua_getfield(_s, LUA_REGISTRYINDEX, _type.c_str());
+		lua_getfield(_s, LUA_REGISTRYINDEX, name.c_str());
 
 		// first parameter is ai
 		AI ** udata = (AI **) lua_newuserdata(_s, sizeof(AI *));
@@ -126,6 +127,7 @@ public:
 			return state(entity, runLUA(entity, deltaMillis));
 #if AI_EXCEPTIONS
 		} catch (...) {
+			ai_log_error("Exception while running lua tree node")
 			return state(entity, EXCEPTION);
 		}
 #endif

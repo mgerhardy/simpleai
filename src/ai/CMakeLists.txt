@@ -163,6 +163,7 @@ if (SIMPLEAI_LUA)
 	list(APPEND simpleai_HEADERS
 		common/LUA.h
 		LUAAIRegistry.h
+		conditions/LUACondition.h
 		tree/LUATreeNode.h
 		tree/loaders/lua/LUATreeLoader.h
 	)

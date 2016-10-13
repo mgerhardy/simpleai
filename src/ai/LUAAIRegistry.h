@@ -5,6 +5,7 @@
 
 #include "AIRegistry.h"
 #include "tree/LUATreeNode.h"
+#include "conditions/LUACondition.h"
 
 namespace ai {
 
@@ -24,12 +25,15 @@ protected:
 
 	using LuaNodeFactory = LUATreeNode::LUATreeNodeFactory;
 	typedef std::shared_ptr<LuaNodeFactory> LUATreeNodeFactoryPtr;
-	typedef std::map<std::string, LUATreeNodeFactoryPtr> FactoryMap;
+	typedef std::map<std::string, LUATreeNodeFactoryPtr> TreeNodeFactoryMap;
 
-	static FactoryMap& getFactories() {
-		static FactoryMap _factories;
-		return _factories;
-	}
+	using LuaConditionFactory = LUACondition::LUAConditionFactory;
+	typedef std::shared_ptr<LuaConditionFactory> LUAConditionFactoryPtr;
+	typedef std::map<std::string, LUAConditionFactoryPtr> ConditionFactoryMap;
+
+	ReadWriteLock _lock{"luaregistry"};
+	TreeNodeFactoryMap _treeNodeFactories;
+	ConditionFactoryMap _conditionFactories;
 
 	static LUAAIRegistry* luaGetContext(lua_State * s) {
 		lua_getglobal(s, "Registry");
@@ -38,8 +42,12 @@ protected:
 		return data;
 	}
 
-	static LuaNodeFactory* luaGetFactoryContext(lua_State * s, int n) {
+	static LuaNodeFactory* luaGetNodeFactoryContext(lua_State * s, int n) {
 		return *(LuaNodeFactory **) lua_touserdata(s, n);
+	}
+
+	static LuaConditionFactory* luaGetConditionFactoryContext(lua_State * s, int n) {
+		return *(LuaConditionFactory **) lua_touserdata(s, n);
 	}
 
 	static AI* luaGetAIContext(lua_State * s, int n) {
@@ -47,12 +55,12 @@ protected:
 	}
 
 	static int luaNodeEmptyExecute(lua_State* s) {
-		const LuaNodeFactory* factory = luaGetFactoryContext(s, 1);
+		const LuaNodeFactory* factory = luaGetNodeFactoryContext(s, 1);
 		return luaL_error(s, "There is no execute function set for node: %s", factory->type().c_str());
 	}
 
 	static int luaNodeToString(lua_State* s) {
-		const LuaNodeFactory* factory = luaGetFactoryContext(s, 1);
+		const LuaNodeFactory* factory = luaGetNodeFactoryContext(s, 1);
 		lua_pushfstring(s, "node: %s", factory->type().c_str());
 		return 1;
 	}
@@ -113,15 +121,16 @@ protected:
 		const LUATreeNodeFactoryPtr& factory = std::make_shared<LuaNodeFactory>(s, type);
 		const bool inserted = r->registerNodeFactory(type, *factory);
 		if (!inserted) {
-			luaL_error(s, "%s is already registered", type.c_str());
+			luaL_error(s, "tree node %s is already registered", type.c_str());
 			return 0;
 		}
 
 		LuaNodeFactory ** udata = (LuaNodeFactory**) lua_newuserdata(s, sizeof(LuaNodeFactory*));
 		// make global
-		lua_setfield(s, LUA_REGISTRYINDEX, type.c_str());
+		const std::string name = "__meta_node_" + type;
+		lua_setfield(s, LUA_REGISTRYINDEX, name.c_str());
 		// put back onto stack
-		lua_getfield(s, LUA_REGISTRYINDEX, type.c_str());
+		lua_getfield(s, LUA_REGISTRYINDEX, name.c_str());
 
 		// setup meta table - create a new one manually, otherwise we aren't
 		// able to override the execute function on a per node base. Also
@@ -135,12 +144,75 @@ protected:
 		luaL_setfuncs(s, nodeFuncs(), 0);
 		lua_setmetatable(s, -2);
 
-		// TODO: locking
-		getFactories().emplace(type, factory);
+		ScopedWriteLock scopedLock(r->_lock);
+		r->_treeNodeFactories.emplace(type, factory);
 
 		return 1;
 	}
 
+	static int luaConditionEmptyEvaluate(lua_State* s) {
+		const LuaConditionFactory* factory = luaGetConditionFactoryContext(s, 1);
+		return luaL_error(s, "There is no evaluate function set for condition: %s", factory->type().c_str());
+	}
+
+	static int luaConditionToString(lua_State* s) {
+		const LuaConditionFactory* factory = luaGetConditionFactoryContext(s, 1);
+		lua_pushfstring(s, "condition: %s", factory->type().c_str());
+		return 1;
+	}
+
+	static const luaL_Reg* conditionFuncs() {
+		static const luaL_Reg nodes[] = {
+			{"evaluate", luaConditionEmptyEvaluate},
+			{"__tostring", luaConditionToString},
+			{"__newindex", luaNewIndex},
+			{nullptr, nullptr}
+		};
+		return nodes;
+	}
+
+	static int luaCreateCondition(lua_State* s) {
+		LUAAIRegistry* r = luaGetContext(s);
+		const std::string type = luaL_checkstring(s, -1);
+		const LUAConditionFactoryPtr& factory = std::make_shared<LuaConditionFactory>(s, type);
+		const bool inserted = r->registerConditionFactory(type, *factory);
+		if (!inserted) {
+			luaL_error(s, "condition %s is already registered", type.c_str());
+			return 0;
+		}
+
+		LuaConditionFactory ** udata = (LuaConditionFactory**) lua_newuserdata(s, sizeof(LuaConditionFactory*));
+		// make global
+		const std::string name = "__meta_condition_" + type;
+		lua_setfield(s, LUA_REGISTRYINDEX, name.c_str());
+		// put back onto stack
+		lua_getfield(s, LUA_REGISTRYINDEX, name.c_str());
+
+		// setup meta table - create a new one manually, otherwise we aren't
+		// able to override the execute function on a per node base. Also
+		// this 'metatable' must not be in the global registry.
+		*udata = factory.get();
+		lua_createtable(s, 0, 2);
+		lua_pushvalue(s, -1);
+		lua_setfield(s, -2, "__index");
+		lua_pushstring(s, "condition");
+		lua_setfield(s, -2, "__name");
+		luaL_setfuncs(s, conditionFuncs(), 0);
+		lua_setmetatable(s, -2);
+
+		ScopedWriteLock scopedLock(r->_lock);
+		r->_conditionFactories.emplace(type, factory);
+
+		return 1;
+	}
+
+	static int luaCreateFilter(lua_State* s) {
+		return 0;
+	}
+
+	static int luaCreateSteering(lua_State* s) {
+		return 0;
+	}
 public:
 	LUAAIRegistry() {
 		init();
@@ -171,6 +243,9 @@ public:
 
 		luaL_Reg registryFuncs[] = {
 			{"createNode", luaCreateNode},
+			{"createCondition", luaCreateCondition},
+			{"createFilter", luaCreateFilter},
+			{"createSteering", luaCreateSteering},
 			{nullptr, nullptr}
 		};
 
@@ -182,12 +257,6 @@ public:
 
 		lua_pushlightuserdata(_s, this);
 		lua_setglobal(_s, "Registry");
-
-		luaL_newmetatable(_s, "node");
-		// assign the metatable to __index
-		lua_pushvalue(_s, -1);
-		lua_setfield(_s, -2, "__index");
-		luaL_setfuncs(_s, nodeFuncs(), 0);
 
 		luaL_Reg aiFuncs[] = {
 			// TODO: make this extensible from outside
@@ -217,7 +286,11 @@ public:
 	 * @see init()
 	 */
 	void shutdown() {
-		getFactories().clear();
+		{
+			ScopedWriteLock scopedLock(_lock);
+			_treeNodeFactories.clear();
+			_conditionFactories.clear();
+		}
 		if (_s != nullptr) {
 			lua_close(_s);
 			_s = nullptr;
