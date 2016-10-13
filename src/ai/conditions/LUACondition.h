@@ -19,16 +19,20 @@ protected:
 		// get userdata of the condition
 		const std::string name = "__meta_condition_" + _name;
 		lua_getfield(_s, LUA_REGISTRYINDEX, name.c_str());
+#ifdef AI_LUA_SANTITY
 		if (lua_isnil(_s, -1)) {
 			ai_log_error("LUA condition: could not find lua userdata for %s", _name.c_str());
 			return false;
 		}
+#endif
 		// get metatable
 		lua_getmetatable(_s, -1);
+#ifdef AI_LUA_SANTITY
 		if (!lua_istable(_s, -1)) {
 			ai_log_error("LUA condition: userdata for %s doesn't have a metatable assigned", _name.c_str());
 			return false;
 		}
+#endif
 		// get evaluate() method
 		lua_getfield(_s, -1, "evaluate");
 		if (!lua_isfunction(_s, -1)) {
@@ -42,13 +46,15 @@ protected:
 		// first parameter is ai
 		AI ** udata = (AI **) lua_newuserdata(_s, sizeof(AI *));
 		luaL_getmetatable(_s, LUATreeNode::luaAIMetaName());
+#ifdef AI_LUA_SANTITY
 		if (!lua_istable(_s, -1)) {
 			ai_log_error("LUA condition: metatable for %s doesn't exist", LUATreeNode::luaAIMetaName());
 			return false;
 		}
+#endif
 		lua_setmetatable(_s, -2);
 		*udata = entity.get();
-
+#ifdef AI_LUA_SANTITY
 		if (!lua_isfunction(_s, -3)) {
 			ai_log_error("LUA condition: expected to find a function on stack -3");
 			return false;
@@ -61,6 +67,7 @@ protected:
 			ai_log_error("LUA condition: second parameter should be the ai");
 			return false;
 		}
+#endif
 		const int error = lua_pcall(_s, 2, 1, 0);
 		if (error) {
 			ai_log_error("LUA condition script: %s", lua_isstring(_s, -1) ? lua_tostring(_s, -1) : "Unknown Error");
