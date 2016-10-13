@@ -176,6 +176,8 @@ protected:
 		lua_setfield(s, -2, "__index");
 		lua_pushstring(s, name.c_str());
 		lua_setfield(s, -2, "__name");
+		lua_pushstring(s, type.c_str());
+		lua_setfield(s, -2, "type");
 		luaL_setfuncs(s, funcs, 0);
 		lua_setmetatable(s, -2);
 	}
