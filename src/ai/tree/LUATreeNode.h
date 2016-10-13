@@ -23,16 +23,20 @@ protected:
 		// get userdata of the behaviour tree node
 		const std::string name = "__meta_node_" + _type;
 		lua_getfield(_s, LUA_REGISTRYINDEX, name.c_str());
+#ifdef AI_LUA_SANTITY
 		if (lua_isnil(_s, -1)) {
 			ai_log_error("LUA node: could not find lua userdata for %s", name.c_str());
 			return TreeNodeStatus::EXCEPTION;
 		}
+#endif
 		// get metatable
 		lua_getmetatable(_s, -1);
+#ifdef AI_LUA_SANTITY
 		if (!lua_istable(_s, -1)) {
 			ai_log_error("LUA node: userdata for %s doesn't have a metatable assigned", name.c_str());
 			return TreeNodeStatus::EXCEPTION;
 		}
+#endif
 		// get execute() method
 		lua_getfield(_s, -1, "execute");
 		if (!lua_isfunction(_s, -1)) {
@@ -46,16 +50,19 @@ protected:
 		// first parameter is ai
 		AI ** udata = (AI **) lua_newuserdata(_s, sizeof(AI *));
 		luaL_getmetatable(_s, luaAIMetaName());
+#ifdef AI_LUA_SANTITY
 		if (!lua_istable(_s, -1)) {
 			ai_log_error("LUA node: metatable for %s doesn't exist", luaAIMetaName());
 			return TreeNodeStatus::EXCEPTION;
 		}
+#endif
 		lua_setmetatable(_s, -2);
 		*udata = entity.get();
 
 		// second parameter is dt
 		lua_pushinteger(_s, deltaMillis);
 
+#ifdef AI_LUA_SANTITY
 		if (!lua_isfunction(_s, -4)) {
 			ai_log_error("LUA node: expected to find a function on stack -4");
 			return TreeNodeStatus::EXCEPTION;
@@ -72,6 +79,7 @@ protected:
 			ai_log_error("LUA node: first parameter should be the delta millis");
 			return TreeNodeStatus::EXCEPTION;
 		}
+#endif
 		const int error = lua_pcall(_s, 3, 1, 0);
 		if (error) {
 			ai_log_error("LUA node script: %s", lua_isstring(_s, -1) ? lua_tostring(_s, -1) : "Unknown Error");
