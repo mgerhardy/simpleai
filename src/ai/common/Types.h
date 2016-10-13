@@ -99,6 +99,13 @@ inline T ai_assert_cast(const S object) {
 #define AI_EXCEPTIONS 0
 #endif
 
+/**
+ * @brief Enable lua sanity checks by default
+ */
+#ifndef AI_LUA_SANTITY
+#define AI_LUA_SANTITY 1
+#endif
+
 #ifdef _WIN32
 #	ifdef SIMPLEAI_EXPORT
 #		define SIMPLEAI_LIB __declspec(dllexport)

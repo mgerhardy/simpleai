@@ -19,7 +19,7 @@ protected:
 		// get userdata of the filter
 		const std::string name = "__meta_filter_" + _name;
 		lua_getfield(_s, LUA_REGISTRYINDEX, name.c_str());
-#ifdef AI_LUA_SANTITY
+#if AI_LUA_SANTITY > 0
 		if (lua_isnil(_s, -1)) {
 			ai_log_error("LUA filter: could not find lua userdata for %s", _name.c_str());
 			return;
@@ -27,7 +27,7 @@ protected:
 #endif
 		// get metatable
 		lua_getmetatable(_s, -1);
-#ifdef AI_LUA_SANTITY
+#if AI_LUA_SANTITY > 0
 		if (!lua_istable(_s, -1)) {
 			ai_log_error("LUA filter: userdata for %s doesn't have a metatable assigned", _name.c_str());
 			return;
@@ -46,7 +46,7 @@ protected:
 		// first parameter is ai
 		AI ** udata = (AI **) lua_newuserdata(_s, sizeof(AI *));
 		luaL_getmetatable(_s, LUATreeNode::luaAIMetaName());
-#ifdef AI_LUA_SANTITY
+#if AI_LUA_SANTITY > 0
 		if (!lua_istable(_s, -1)) {
 			ai_log_error("LUA filter: metatable for %s doesn't exist", LUATreeNode::luaAIMetaName());
 			return;
@@ -55,7 +55,7 @@ protected:
 		lua_setmetatable(_s, -2);
 		*udata = entity.get();
 
-#ifdef AI_LUA_SANTITY
+#if AI_LUA_SANTITY > 0
 		if (!lua_isfunction(_s, -3)) {
 			ai_log_error("LUA filter: expected to find a function on stack -3");
 			return;
