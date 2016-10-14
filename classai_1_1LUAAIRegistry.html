@@ -89,7 +89,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-types">Protected Types</a> &#124;
 <a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
@@ -126,6 +125,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0ad8e9ba008c69a849bf04a2facb44f6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1LUAAIRegistry.html#a0ad8e9ba008c69a849bf04a2facb44f6">pushAIMetatable</a> ()</td></tr>
 <tr class="memdesc:a0ad8e9ba008c69a849bf04a2facb44f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pushes the AI metatable onto the stack. This allows anyone to modify it to provide own functions and data that is applied to the <code>ai</code> parameters of the lua functions.  <a href="#a0ad8e9ba008c69a849bf04a2facb44f6">More...</a><br/></td></tr>
 <tr class="separator:a0ad8e9ba008c69a849bf04a2facb44f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb47582572f578d95383a0da9b98e18e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb47582572f578d95383a0da9b98e18e"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1LUAAIRegistry.html#abb47582572f578d95383a0da9b98e18e">pushCharacterMetatable</a> ()</td></tr>
+<tr class="memdesc:abb47582572f578d95383a0da9b98e18e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pushes the character metatable onto the stack. This allows anyone to modify it to provide own functions and data that is applied to the <code>ai:character()</code> value. <br/></td></tr>
+<tr class="separator:abb47582572f578d95383a0da9b98e18e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50c35e3b11aecd406f39d04c60323d6b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1LUAAIRegistry.html#a50c35e3b11aecd406f39d04c60323d6b">init</a> ()</td></tr>
 <tr class="separator:a50c35e3b11aecd406f39d04c60323d6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f9d18703e8d447fb2bd872862f956f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1LUAAIRegistry.html#a9f9d18703e8d447fb2bd872862f956f7">shutdown</a> ()</td></tr>
@@ -187,11 +190,6 @@ ConditionPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 SteeringPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1AIRegistry.html#a3a889fd304f6f22d18a9364230064a59">createSteering</a> (const std::string &amp;type, const <a class="el" href="structai_1_1SteeringFactoryContext.html">SteeringFactoryContext</a> &amp;ctx) const override</td></tr>
 <tr class="memdesc:a3a889fd304f6f22d18a9364230064a59 inherit pub_methods_classai_1_1AIRegistry"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <code>ISteering</code> for the given <code>type</code>. The <code>type</code> must be registered in the <code><a class="el" href="classai_1_1AIRegistry.html" title="The place to register your TreeNode and ICondition factories at. ">AIRegistry</a></code> for this to work. <br/></td></tr>
 <tr class="separator:a3a889fd304f6f22d18a9364230064a59 inherit pub_methods_classai_1_1AIRegistry"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ab08badc03a284b325b8c74971572669b"><td class="memItemLeft" align="right" valign="top">static AI *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1LUAAIRegistry.html#ab08badc03a284b325b8c74971572669b">luaGetAIContext</a> (lua_State *s, int n)</td></tr>
-<tr class="separator:ab08badc03a284b325b8c74971572669b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-types"></a>
 Protected Types</h2></td></tr>
@@ -266,12 +264,51 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaNodeToString
 <tr class="memitem:a52a9424e31a9fff7d87f81321c63128a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52a9424e31a9fff7d87f81321c63128a"></a>
 static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaNewIndex</b> (lua_State *s)</td></tr>
 <tr class="separator:a52a9424e31a9fff7d87f81321c63128a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6557ed908756acd961452f9cfcb3d49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6557ed908756acd961452f9cfcb3d49"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaZoneGC</b> (lua_State *s)</td></tr>
+<tr class="separator:ae6557ed908756acd961452f9cfcb3d49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aac9f3dcdb815d91d1d963d56d900c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7aac9f3dcdb815d91d1d963d56d900c3"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaZoneToString</b> (lua_State *s)</td></tr>
+<tr class="separator:a7aac9f3dcdb815d91d1d963d56d900c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6db9ff3e2d02703757a5b8497d68acec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6db9ff3e2d02703757a5b8497d68acec"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaZoneSize</b> (lua_State *s)</td></tr>
+<tr class="separator:a6db9ff3e2d02703757a5b8497d68acec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbc216163b132c3216c38d16e4385853"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afbc216163b132c3216c38d16e4385853"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAggroMgrGC</b> (lua_State *s)</td></tr>
+<tr class="separator:afbc216163b132c3216c38d16e4385853"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fcf0174661a165277ef4385abc96581"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5fcf0174661a165277ef4385abc96581"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAggroMgrAddAggro</b> (lua_State *s)</td></tr>
+<tr class="separator:a5fcf0174661a165277ef4385abc96581"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a418e758530bac456788f4f51c6373b80"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a418e758530bac456788f4f51c6373b80"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAggroMgrToString</b> (lua_State *s)</td></tr>
+<tr class="separator:a418e758530bac456788f4f51c6373b80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c5a3abc2e2107781c4c0c77900a7823"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9c5a3abc2e2107781c4c0c77900a7823"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaCharacterGC</b> (lua_State *s)</td></tr>
+<tr class="separator:a9c5a3abc2e2107781c4c0c77900a7823"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a275d68eb591c5d47d13801dfd3df15bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a275d68eb591c5d47d13801dfd3df15bd"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaCharacterToString</b> (lua_State *s)</td></tr>
+<tr class="separator:a275d68eb591c5d47d13801dfd3df15bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4230246e0ddfddea84615a5d7e542d0c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4230246e0ddfddea84615a5d7e542d0c"></a>
 static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAiGC</b> (lua_State *s)</td></tr>
 <tr class="separator:a4230246e0ddfddea84615a5d7e542d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a077d5829779d2eca83804ad43271bd2d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a077d5829779d2eca83804ad43271bd2d"></a>
 static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAiId</b> (lua_State *s)</td></tr>
 <tr class="separator:a077d5829779d2eca83804ad43271bd2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63dbc284c70122c2c24d1b58ce03e682"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63dbc284c70122c2c24d1b58ce03e682"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAiTime</b> (lua_State *s)</td></tr>
+<tr class="separator:a63dbc284c70122c2c24d1b58ce03e682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff36061659032a469d1cfdacd5721065"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff36061659032a469d1cfdacd5721065"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAiGetZone</b> (lua_State *s)</td></tr>
+<tr class="separator:aff36061659032a469d1cfdacd5721065"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f83d4ffc5770347dcf5b59d2065fd0e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f83d4ffc5770347dcf5b59d2065fd0e"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAiGetAggroMgr</b> (lua_State *s)</td></tr>
+<tr class="separator:a7f83d4ffc5770347dcf5b59d2065fd0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7597b89e3d2bf667ae7d44aa945cd35e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7597b89e3d2bf667ae7d44aa945cd35e"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAiGetCharacter</b> (lua_State *s)</td></tr>
+<tr class="separator:a7597b89e3d2bf667ae7d44aa945cd35e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c5a85f295b00a26fe38247ce81a2084"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c5a85f295b00a26fe38247ce81a2084"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAiHasZone</b> (lua_State *s)</td></tr>
+<tr class="separator:a3c5a85f295b00a26fe38247ce81a2084"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81e87f8f9054373bb3172efaac6b50ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81e87f8f9054373bb3172efaac6b50ba"></a>
 static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAiToString</b> (lua_State *s)</td></tr>
 <tr class="separator:a81e87f8f9054373bb3172efaac6b50ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -519,41 +556,6 @@ SteeringFactoryMap&#160;</td><td class="memItemRight" valign="bottom"><b>_steeri
 
 </div>
 </div>
-<a class="anchor" id="ab08badc03a284b325b8c74971572669b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static AI* ai::LUAAIRegistry::luaGetAIContext </td>
-          <td>(</td>
-          <td class="paramtype">lua_State *&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>n</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classai_1_1LUAAIRegistry.html#a0ad8e9ba008c69a849bf04a2facb44f6" title="Pushes the AI metatable onto the stack. This allows anyone to modify it to provide own functions and ...">pushAIMetatable()</a> </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a0ad8e9ba008c69a849bf04a2facb44f6"></a>
 <div class="memitem">
 <div class="memproto">
@@ -576,7 +578,7 @@ SteeringFactoryMap&#160;</td><td class="memItemRight" valign="bottom"><b>_steeri
 </div><div class="memdoc">
 
 <p>Pushes the AI metatable onto the stack. This allows anyone to modify it to provide own functions and data that is applied to the <code>ai</code> parameters of the lua functions. </p>
-<dl class="section note"><dt>Note</dt><dd><a class="el" href="classai_1_1LUAAIRegistry.html#ab08badc03a284b325b8c74971572669b">luaGetAIContext()</a> can be used in your lua c callbacks to get access to the AI pointer:<div class="fragment"><div class="line"><span class="keyword">const</span> AI* ai = <a class="code" href="classai_1_1LUAAIRegistry.html#ab08badc03a284b325b8c74971572669b">LUAAIRegistry::luaGetAIContext</a>(s, 1); </div>
+<dl class="section note"><dt>Note</dt><dd>lua_ctxai() can be used in your lua c callbacks to get access to the AI pointer:<div class="fragment"><div class="line"><span class="keyword">const</span> AI* ai = lua_ctxai(s, 1); </div>
 </div><!-- fragment --> </dd></dl>
 
 </div>

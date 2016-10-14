@@ -15,5 +15,6 @@ var searchData=
   ['protocolhandlerregistry_2eh',['ProtocolHandlerRegistry.h',['../ProtocolHandlerRegistry_8h.html',1,'']]],
   ['protocolmessagefactory',['ProtocolMessageFactory',['../classai_1_1ProtocolMessageFactory.html',1,'ai']]],
   ['protocolmessagefactory_2eh',['ProtocolMessageFactory.h',['../ProtocolMessageFactory_8h.html',1,'']]],
-  ['pushaimetatable',['pushAIMetatable',['../classai_1_1LUAAIRegistry.html#a0ad8e9ba008c69a849bf04a2facb44f6',1,'ai::LUAAIRegistry']]]
+  ['pushaimetatable',['pushAIMetatable',['../classai_1_1LUAAIRegistry.html#a0ad8e9ba008c69a849bf04a2facb44f6',1,'ai::LUAAIRegistry']]],
+  ['pushcharactermetatable',['pushCharacterMetatable',['../classai_1_1LUAAIRegistry.html#abb47582572f578d95383a0da9b98e18e',1,'ai::LUAAIRegistry']]]
 ];
