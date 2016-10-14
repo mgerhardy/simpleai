@@ -159,6 +159,8 @@ public:
 		return *static_cast<CharacterType*>(_character.get());
 	}
 
+	int64_t getTime() const;
+
 	CharacterId getId() const;
 
 	/**
@@ -236,6 +238,10 @@ inline Zone* AI::getZone() const {
 
 inline bool AI::hasZone() const {
 	return _zone != nullptr;
+}
+
+inline int64_t AI::getTime() const {
+	return _time;
 }
 
 inline CharacterId AI::getId() const {

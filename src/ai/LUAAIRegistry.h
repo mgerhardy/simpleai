@@ -5,6 +5,7 @@
 #pragma once
 
 #include "AIRegistry.h"
+#include "LUAFunctions.h"
 #include "tree/LUATreeNode.h"
 #include "conditions/LUACondition.h"
 #include "filter/LUAFilter.h"
@@ -66,14 +67,6 @@ namespace ai {
  * This metatable is applied to all @ai{AI} pointers that are forwarded to the lua functions.
  */
 class LUAAIRegistry : public AIRegistry {
-public:
-	/**
-	 * @see pushAIMetatable()
-	 */
-	static AI* luaGetAIContext(lua_State * s, int n) {
-		return *(AI **) luaL_checkudata(s, n, LUATreeNode::luaAIMetaName());
-	}
-
 protected:
 	lua_State* _s = nullptr;
 
@@ -146,18 +139,88 @@ protected:
 		return 0;
 	}
 
+	static int luaZoneGC(lua_State* s) {
+		return 0;
+	}
+
+	static int luaZoneToString(lua_State* s) {
+		const Zone* zone = lua_ctxzone(s, 1);
+		lua_pushfstring(s, "zone: %s", zone->getName().c_str());
+		return 1;
+	}
+
+	static int luaZoneSize(lua_State* s) {
+		const Zone* zone = lua_ctxzone(s, 1);
+		lua_pushinteger(s, zone->size());
+		return 1;
+	}
+
+	static int luaAggroMgrGC(lua_State* s) {
+		return 0;
+	}
+
+	static int luaAggroMgrAddAggro(lua_State* s) {
+		AggroMgr* aggroMgr = lua_ctxaggromgr(s, 1);
+		const int chrId = luaL_checkinteger(s, 2);
+		const float amount = luaL_checknumber(s, 3);
+		aggroMgr->addAggro((CharacterId)chrId, amount);
+		return 0;
+	}
+
+	static int luaAggroMgrToString(lua_State* s) {
+		lua_pushliteral(s, "aggroMgr");
+		return 1;
+	}
+
+	static int luaCharacterGC(lua_State* s) {
+		return 0;
+	}
+
+	static int luaCharacterToString(lua_State* s) {
+		ICharacter* character = lua_ctxcharacter(s, 1);
+		lua_pushfstring(s, "Character: %d", (lua_Integer)character->getId());
+		return 1;
+	}
+
 	static int luaAiGC(lua_State* s) {
 		return 0;
 	}
 
 	static int luaAiId(lua_State* s) {
-		const AI* ai = luaGetAIContext(s, 1);
+		const AI* ai = lua_ctxai(s, 1);
 		lua_pushinteger(s, ai->getId());
 		return 1;
 	}
 
+	static int luaAiTime(lua_State* s) {
+		const AI* ai = lua_ctxai(s, 1);
+		lua_pushinteger(s, ai->getTime());
+		return 1;
+	}
+
+	static int luaAiGetZone(lua_State* s) {
+		const AI* ai = lua_ctxai(s, 1);
+		return lua_pushzone(s, ai->getZone());
+	}
+
+	static int luaAiGetAggroMgr(lua_State* s) {
+		AI* ai = lua_ctxai(s, 1);
+		return lua_pushaggromgr(s, &ai->getAggroMgr());
+	}
+
+	static int luaAiGetCharacter(lua_State* s) {
+		const AI* ai = lua_ctxai(s, 1);
+		return lua_pushcharacter(s, ai->getCharacter().get());
+	}
+
+	static int luaAiHasZone(lua_State* s) {
+		const AI* ai = lua_ctxai(s, 1);
+		lua_pushboolean(s, ai->hasZone() ? 1 : 0);
+		return 1;
+	}
+
 	static int luaAiToString(lua_State* s) {
-		const AI* ai = luaGetAIContext(s, 1);
+		const AI* ai = lua_ctxai(s, 1);
 		TreeNodePtr treeNode = ai->getBehaviour();
 		if (treeNode) {
 			lua_pushfstring(s, "ai: %s", treeNode->getName().c_str());
@@ -224,7 +287,6 @@ protected:
 		setupMetatable(s, type, nodeFuncs(), "node");
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_treeNodeFactories.emplace(type, factory);
-
 		return 1;
 	}
 
@@ -364,12 +426,21 @@ public:
 	 * @brief Pushes the AI metatable onto the stack. This allows anyone to modify it
 	 * to provide own functions and data that is applied to the @c ai parameters of the
 	 * lua functions.
-	 * @note luaGetAIContext() can be used in your lua c callbacks to get access to the
-	 * @ai{AI} pointer: @code const AI* ai = LUAAIRegistry::luaGetAIContext(s, 1); @endcode
+	 * @note lua_ctxai() can be used in your lua c callbacks to get access to the
+	 * @ai{AI} pointer: @code const AI* ai = lua_ctxai(s, 1); @endcode
 	 */
 	int pushAIMetatable() {
 		ai_assert(_s != nullptr, "LUA state is not yet initialized");
-		return luaL_getmetatable(_s, LUATreeNode::luaAIMetaName());
+		return luaL_getmetatable(_s, lua_metaai());
+	}
+
+	/**
+	 * @brief Pushes the character metatable onto the stack. This allows anyone to modify it
+	 * to provide own functions and data that is applied to the @c ai:character() value
+	 */
+	int pushCharacterMetatable() {
+		ai_assert(_s != nullptr, "LUA state is not yet initialized");
+		return luaL_getmetatable(_s, lua_metacharacter());
 	}
 
 	/**
@@ -406,18 +477,61 @@ public:
 		lua_setglobal(_s, "Registry");
 
 		luaL_Reg aiFuncs[] = {
-			// TODO: aggromgr, zone, filtered entities, character, random
+			// TODO: filtered entities, character, random
 			{"id", luaAiId},
+			{"time", luaAiTime},
+			{"hasZone", luaAiHasZone},
+			{"zone", luaAiGetZone},
+			{"character", luaAiGetCharacter},
+			{"aggroMgr", luaAiGetAggroMgr},
 			{"__tostring", luaAiToString},
 			{"__gc", luaAiGC},
 			{nullptr, nullptr}
 		};
 
-		luaL_newmetatable(_s, LUATreeNode::luaAIMetaName());
+		luaL_newmetatable(_s, lua_metaai());
 		// assign the metatable to __index
 		lua_pushvalue(_s, -1);
 		lua_setfield(_s, -2, "__index");
 		luaL_setfuncs(_s, aiFuncs, 0);
+
+		luaL_Reg zoneFuncs[] = {
+			{"size", luaZoneSize},
+			{"__tostring", luaZoneToString},
+			{"__gc", luaZoneGC},
+			{nullptr, nullptr}
+		};
+
+		luaL_newmetatable(_s, lua_metazone());
+		// assign the metatable to __index
+		lua_pushvalue(_s, -1);
+		lua_setfield(_s, -2, "__index");
+		luaL_setfuncs(_s, zoneFuncs, 0);
+
+		luaL_Reg aggroMgrFuncs[] = {
+			{"addAggro", luaAggroMgrAddAggro},
+			{"__tostring", luaAggroMgrToString},
+			{"__gc", luaAggroMgrGC},
+			{nullptr, nullptr}
+		};
+
+		luaL_newmetatable(_s, lua_metaaggromgr());
+		// assign the metatable to __index
+		lua_pushvalue(_s, -1);
+		lua_setfield(_s, -2, "__index");
+		luaL_setfuncs(_s, aggroMgrFuncs, 0);
+
+		luaL_Reg characterFuncs[] = {
+			{"__tostring", luaCharacterToString},
+			{"__gc", luaCharacterGC},
+			{nullptr, nullptr}
+		};
+
+		luaL_newmetatable(_s, lua_metacharacter());
+		// assign the metatable to __index
+		lua_pushvalue(_s, -1);
+		lua_setfield(_s, -2, "__index");
+		luaL_setfuncs(_s, characterFuncs, 0);
 
 		const char* script = ""
 			"UNKNOWN, CANNOTEXECUTE, RUNNING, FINISHED, FAILED, EXCEPTION = 0, 1, 2, 3, 4, 5\n";

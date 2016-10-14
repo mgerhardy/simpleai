@@ -6,7 +6,7 @@
 #pragma once
 
 #include "ICondition.h"
-#include "common/LUA.h"
+#include "LUAFunctions.h"
 
 namespace ai {
 
@@ -46,16 +46,10 @@ protected:
 		lua_getfield(_s, LUA_REGISTRYINDEX, name.c_str());
 
 		// first parameter is ai
-		AI ** udata = (AI **) lua_newuserdata(_s, sizeof(AI *));
-		luaL_getmetatable(_s, LUATreeNode::luaAIMetaName());
-#if AI_LUA_SANTITY > 0
-		if (!lua_istable(_s, -1)) {
-			ai_log_error("LUA condition: metatable for %s doesn't exist", LUATreeNode::luaAIMetaName());
+		if (lua_pushai(_s, entity.get()) == 0) {
 			return false;
 		}
-#endif
-		lua_setmetatable(_s, -2);
-		*udata = entity.get();
+
 #if AI_LUA_SANTITY > 0
 		if (!lua_isfunction(_s, -3)) {
 			ai_log_error("LUA condition: expected to find a function on stack -3");

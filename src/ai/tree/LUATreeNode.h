@@ -5,7 +5,7 @@
 #pragma once
 
 #include "tree/TreeNode.h"
-#include "common/LUA.h"
+#include "LUAFunctions.h"
 
 namespace ai {
 
@@ -13,10 +13,6 @@ namespace ai {
  * @see @ai{LUAAIRegistry}
  */
 class LUATreeNode : public TreeNode {
-public:
-	static inline const char *luaAIMetaName() {
-		return "__meta_ai";
-	}
 protected:
 	lua_State* _s;
 
@@ -49,16 +45,9 @@ protected:
 		lua_getfield(_s, LUA_REGISTRYINDEX, name.c_str());
 
 		// first parameter is ai
-		AI ** udata = (AI **) lua_newuserdata(_s, sizeof(AI *));
-		luaL_getmetatable(_s, luaAIMetaName());
-#if AI_LUA_SANTITY > 0
-		if (!lua_istable(_s, -1)) {
-			ai_log_error("LUA node: metatable for %s doesn't exist", luaAIMetaName());
+		if (lua_pushai(_s, entity.get()) == 0) {
 			return TreeNodeStatus::EXCEPTION;
 		}
-#endif
-		lua_setmetatable(_s, -2);
-		*udata = entity.get();
 
 		// second parameter is dt
 		lua_pushinteger(_s, deltaMillis);
