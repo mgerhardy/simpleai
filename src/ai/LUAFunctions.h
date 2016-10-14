@@ -30,6 +30,13 @@ static inline T* lua_getaiudata(lua_State* s, int n, const char *name) {
 }
 
 template<class T>
+static inline T* lua_ainewuserdata(lua_State* s, T* ptr) {
+	T ** udata = (T**) lua_newuserdata(s, sizeof(T*));
+	*udata = ptr;
+	return ptr;
+}
+
+template<class T>
 static inline int lua_pushaiudata(lua_State* s, T* ptr, const char *name) {
 	T ** udata = (T **) lua_newuserdata(s, sizeof(T *));
 	luaL_getmetatable(s, name);

@@ -251,16 +251,6 @@ protected:
 		lua_setmetatable(s, -2);
 	}
 
-	static const luaL_Reg* nodeFuncs() {
-		static const luaL_Reg nodes[] = {
-			{"execute", luaNodeEmptyExecute},
-			{"__tostring", luaNodeToString},
-			{"__newindex", luaNewIndex},
-			{nullptr, nullptr}
-		};
-		return nodes;
-	}
-
 	/**
 	 * @brief Create a new lua @ai{TreeNode}
 	 *
@@ -282,9 +272,14 @@ protected:
 			return luaL_error(s, "tree node %s is already registered", type.c_str());
 		}
 
-		LuaNodeFactory ** udata = (LuaNodeFactory**) lua_newuserdata(s, sizeof(LuaNodeFactory*));
-		*udata = factory.get();
-		setupMetatable(s, type, nodeFuncs(), "node");
+		lua_ainewuserdata<LuaNodeFactory>(s, factory.get());
+		const luaL_Reg nodes[] = {
+			{"execute", luaNodeEmptyExecute},
+			{"__tostring", luaNodeToString},
+			{"__newindex", luaNewIndex},
+			{nullptr, nullptr}
+		};
+		setupMetatable(s, type, nodes, "node");
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_treeNodeFactories.emplace(type, factory);
 		return 1;
@@ -301,16 +296,6 @@ protected:
 		return 1;
 	}
 
-	static const luaL_Reg* conditionFuncs() {
-		static const luaL_Reg nodes[] = {
-			{"evaluate", luaConditionEmptyEvaluate},
-			{"__tostring", luaConditionToString},
-			{"__newindex", luaNewIndex},
-			{nullptr, nullptr}
-		};
-		return nodes;
-	}
-
 	static int luaCreateCondition(lua_State* s) {
 		LUAAIRegistry* r = luaGetContext(s);
 		const std::string type = luaL_checkstring(s, -1);
@@ -320,13 +305,17 @@ protected:
 			return luaL_error(s, "condition %s is already registered", type.c_str());
 		}
 
-		LuaConditionFactory ** udata = (LuaConditionFactory**) lua_newuserdata(s, sizeof(LuaConditionFactory*));
-		*udata = factory.get();
-		setupMetatable(s, type, conditionFuncs(), "condition");
+		lua_ainewuserdata<LuaConditionFactory>(s, factory.get());
+		const luaL_Reg nodes[] = {
+			{"evaluate", luaConditionEmptyEvaluate},
+			{"__tostring", luaConditionToString},
+			{"__newindex", luaNewIndex},
+			{nullptr, nullptr}
+		};
+		setupMetatable(s, type, nodes, "condition");
 
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_conditionFactories.emplace(type, factory);
-
 		return 1;
 	}
 
@@ -341,16 +330,6 @@ protected:
 		return 1;
 	}
 
-	static const luaL_Reg* filterFuncs() {
-		static const luaL_Reg nodes[] = {
-			{"filter", luaFilterEmptyFilter},
-			{"__tostring", luaFilterToString},
-			{"__newindex", luaNewIndex},
-			{nullptr, nullptr}
-		};
-		return nodes;
-	}
-
 	static int luaCreateFilter(lua_State* s) {
 		LUAAIRegistry* r = luaGetContext(s);
 		const std::string type = luaL_checkstring(s, -1);
@@ -360,13 +339,17 @@ protected:
 			return luaL_error(s, "filter %s is already registered", type.c_str());
 		}
 
-		LuaFilterFactory ** udata = (LuaFilterFactory**) lua_newuserdata(s, sizeof(LuaFilterFactory*));
-		*udata = factory.get();
-		setupMetatable(s, type, filterFuncs(), "filter");
+		lua_ainewuserdata<LuaFilterFactory>(s, factory.get());
+		const luaL_Reg nodes[] = {
+			{"filter", luaFilterEmptyFilter},
+			{"__tostring", luaFilterToString},
+			{"__newindex", luaNewIndex},
+			{nullptr, nullptr}
+		};
+		setupMetatable(s, type, nodes, "filter");
 
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_filterFactories.emplace(type, factory);
-
 		return 1;
 	}
 
@@ -381,16 +364,6 @@ protected:
 		return 1;
 	}
 
-	static const luaL_Reg* steeringFuncs() {
-		static const luaL_Reg nodes[] = {
-			{"filter", luaSteeringEmptyExecute},
-			{"__tostring", luaSteeringToString},
-			{"__newindex", luaNewIndex},
-			{nullptr, nullptr}
-		};
-		return nodes;
-	}
-
 	static int luaCreateSteering(lua_State* s) {
 		LUAAIRegistry* r = luaGetContext(s);
 		const std::string type = luaL_checkstring(s, -1);
@@ -402,11 +375,16 @@ protected:
 
 		LuaSteeringFactory ** udata = (LuaSteeringFactory**) lua_newuserdata(s, sizeof(LuaSteeringFactory*));
 		*udata = factory.get();
-		setupMetatable(s, type, steeringFuncs(), "steering");
+		const luaL_Reg nodes[] = {
+			{"filter", luaSteeringEmptyExecute},
+			{"__tostring", luaSteeringToString},
+			{"__newindex", luaNewIndex},
+			{nullptr, nullptr}
+		};
+		setupMetatable(s, type, nodes, "steering");
 
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_steeringFactories.emplace(type, factory);
-
 		return 1;
 	}
 
