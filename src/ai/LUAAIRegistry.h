@@ -477,7 +477,7 @@ public:
 		lua_setglobal(_s, "Registry");
 
 		luaL_Reg aiFuncs[] = {
-			// TODO: filtered entities, character, random
+			// TODO: filtered entities, random
 			{"id", luaAiId},
 			{"time", luaAiTime},
 			{"hasZone", luaAiHasZone},
