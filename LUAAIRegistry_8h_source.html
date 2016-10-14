@@ -286,318 +286,295 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        lua_setmetatable(s, -2);</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    }</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg* nodeFuncs() {</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg nodes[] = {</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;            {<span class="stringliteral">&quot;execute&quot;</span>, luaNodeEmptyExecute},</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaNodeToString},</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;            {<span class="stringliteral">&quot;__newindex&quot;</span>, luaNewIndex},</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        };</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        <span class="keywordflow">return</span> nodes;</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    }</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
-<div class="line"><a name="l00276"></a><span class="lineno"><a class="line" href="classai_1_1LUAAIRegistry.html#a996ede764442f7cc9b4a1987d9c63a67">  276</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="classai_1_1LUAAIRegistry.html#a996ede764442f7cc9b4a1987d9c63a67">luaCreateNode</a>(lua_State* s) {</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        <a class="code" href="classai_1_1LUAAIRegistry.html">LUAAIRegistry</a>* r = luaGetContext(s);</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        <span class="keyword">const</span> std::string type = luaL_checkstring(s, -1);</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        <span class="keyword">const</span> LUATreeNodeFactoryPtr&amp; factory = std::make_shared&lt;LuaNodeFactory&gt;(s, type);</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">bool</span> inserted = r-&gt;<a class="code" href="classai_1_1AIRegistry.html#aa91c90830efcaf5306fc287c6f2898a7">registerNodeFactory</a>(type, *factory);</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        <span class="keywordflow">if</span> (!inserted) {</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;            <span class="keywordflow">return</span> luaL_error(s, <span class="stringliteral">&quot;tree node %s is already registered&quot;</span>, type.c_str());</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        }</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        <a class="code" href="classai_1_1LUATreeNode_1_1LUATreeNodeFactory.html">LuaNodeFactory</a> ** udata = (<a class="code" href="classai_1_1LUATreeNode_1_1LUATreeNodeFactory.html">LuaNodeFactory</a>**) lua_newuserdata(s, <span class="keyword">sizeof</span>(<a class="code" href="classai_1_1LUATreeNode_1_1LUATreeNodeFactory.html">LuaNodeFactory</a>*));</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        *udata = factory.get();</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        setupMetatable(s, type, nodeFuncs(), <span class="stringliteral">&quot;node&quot;</span>);</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        <a class="code" href="classai_1_1ScopedWriteLock.html">ScopedWriteLock</a> scopedLock(r-&gt;_lock);</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        r-&gt;_treeNodeFactories.emplace(type, factory);</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00266"></a><span class="lineno"><a class="line" href="classai_1_1LUAAIRegistry.html#a996ede764442f7cc9b4a1987d9c63a67">  266</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="classai_1_1LUAAIRegistry.html#a996ede764442f7cc9b4a1987d9c63a67">luaCreateNode</a>(lua_State* s) {</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <a class="code" href="classai_1_1LUAAIRegistry.html">LUAAIRegistry</a>* r = luaGetContext(s);</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        <span class="keyword">const</span> std::string type = luaL_checkstring(s, -1);</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        <span class="keyword">const</span> LUATreeNodeFactoryPtr&amp; factory = std::make_shared&lt;LuaNodeFactory&gt;(s, type);</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">bool</span> inserted = r-&gt;<a class="code" href="classai_1_1AIRegistry.html#aa91c90830efcaf5306fc287c6f2898a7">registerNodeFactory</a>(type, *factory);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        <span class="keywordflow">if</span> (!inserted) {</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;            <span class="keywordflow">return</span> luaL_error(s, <span class="stringliteral">&quot;tree node %s is already registered&quot;</span>, type.c_str());</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        }</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        lua_ainewuserdata&lt;LuaNodeFactory&gt;(s, factory.get());</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        <span class="keyword">const</span> luaL_Reg nodes[] = {</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;            {<span class="stringliteral">&quot;execute&quot;</span>, luaNodeEmptyExecute},</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaNodeToString},</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;            {<span class="stringliteral">&quot;__newindex&quot;</span>, luaNewIndex},</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        };</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        setupMetatable(s, type, nodes, <span class="stringliteral">&quot;node&quot;</span>);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        <a class="code" href="classai_1_1ScopedWriteLock.html">ScopedWriteLock</a> scopedLock(r-&gt;_lock);</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        r-&gt;_treeNodeFactories.emplace(type, factory);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    }</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaConditionEmptyEvaluate(lua_State* s) {</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        <span class="keyword">const</span> LuaConditionFactory* factory = luaGetConditionFactoryContext(s, 1);</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keywordflow">return</span> luaL_error(s, <span class="stringliteral">&quot;There is no evaluate function set for condition: %s&quot;</span>, factory-&gt;type().c_str());</div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    }</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaConditionEmptyEvaluate(lua_State* s) {</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaConditionToString(lua_State* s) {</div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        <span class="keyword">const</span> LuaConditionFactory* factory = luaGetConditionFactoryContext(s, 1);</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        <span class="keywordflow">return</span> luaL_error(s, <span class="stringliteral">&quot;There is no evaluate function set for condition: %s&quot;</span>, factory-&gt;type().c_str());</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    }</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaConditionToString(lua_State* s) {</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        <span class="keyword">const</span> LuaConditionFactory* factory = luaGetConditionFactoryContext(s, 1);</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        lua_pushfstring(s, <span class="stringliteral">&quot;condition: %s&quot;</span>, factory-&gt;type().c_str());</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    }</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg* conditionFuncs() {</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg nodes[] = {</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;            {<span class="stringliteral">&quot;evaluate&quot;</span>, luaConditionEmptyEvaluate},</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaConditionToString},</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;            {<span class="stringliteral">&quot;__newindex&quot;</span>, luaNewIndex},</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        };</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        <span class="keywordflow">return</span> nodes;</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    }</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaCreateCondition(lua_State* s) {</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        LUAAIRegistry* r = luaGetContext(s);</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        <span class="keyword">const</span> std::string type = luaL_checkstring(s, -1);</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        <span class="keyword">const</span> LUAConditionFactoryPtr&amp; factory = std::make_shared&lt;LuaConditionFactory&gt;(s, type);</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">bool</span> inserted = r-&gt;registerConditionFactory(type, *factory);</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        <span class="keywordflow">if</span> (!inserted) {</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;            <span class="keywordflow">return</span> luaL_error(s, <span class="stringliteral">&quot;condition %s is already registered&quot;</span>, type.c_str());</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        }</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        LuaConditionFactory ** udata = (LuaConditionFactory**) lua_newuserdata(s, <span class="keyword">sizeof</span>(LuaConditionFactory*));</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;        *udata = factory.get();</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;        setupMetatable(s, type, conditionFuncs(), <span class="stringliteral">&quot;condition&quot;</span>);</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        lua_pushfstring(s, <span class="stringliteral">&quot;condition: %s&quot;</span>, factory-&gt;type().c_str());</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    }</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaCreateCondition(lua_State* s) {</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        LUAAIRegistry* r = luaGetContext(s);</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        <span class="keyword">const</span> std::string type = luaL_checkstring(s, -1);</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        <span class="keyword">const</span> LUAConditionFactoryPtr&amp; factory = std::make_shared&lt;LuaConditionFactory&gt;(s, type);</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">bool</span> inserted = r-&gt;registerConditionFactory(type, *factory);</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        <span class="keywordflow">if</span> (!inserted) {</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;            <span class="keywordflow">return</span> luaL_error(s, <span class="stringliteral">&quot;condition %s is already registered&quot;</span>, type.c_str());</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        }</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        lua_ainewuserdata&lt;LuaConditionFactory&gt;(s, factory.get());</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;        <span class="keyword">const</span> luaL_Reg nodes[] = {</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;            {<span class="stringliteral">&quot;evaluate&quot;</span>, luaConditionEmptyEvaluate},</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaConditionToString},</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;            {<span class="stringliteral">&quot;__newindex&quot;</span>, luaNewIndex},</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;        };</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        setupMetatable(s, type, nodes, <span class="stringliteral">&quot;condition&quot;</span>);</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        ScopedWriteLock scopedLock(r-&gt;_lock);</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        r-&gt;_conditionFactories.emplace(type, factory);</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    }</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaFilterEmptyFilter(lua_State* s) {</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        <span class="keyword">const</span> LuaFilterFactory* factory = luaGetFilterFactoryContext(s, 1);</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;        <span class="keywordflow">return</span> luaL_error(s, <span class="stringliteral">&quot;There is no filter function set for filter: %s&quot;</span>, factory-&gt;type().c_str());</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    }</div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;        ScopedWriteLock scopedLock(r-&gt;_lock);</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        r-&gt;_conditionFactories.emplace(type, factory);</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaFilterToString(lua_State* s) {</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        <span class="keyword">const</span> LuaFilterFactory* factory = luaGetFilterFactoryContext(s, 1);</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;        lua_pushfstring(s, <span class="stringliteral">&quot;filter: %s&quot;</span>, factory-&gt;type().c_str());</div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    }</div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaFilterEmptyFilter(lua_State* s) {</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;        <span class="keyword">const</span> LuaFilterFactory* factory = luaGetFilterFactoryContext(s, 1);</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;        <span class="keywordflow">return</span> luaL_error(s, <span class="stringliteral">&quot;There is no filter function set for filter: %s&quot;</span>, factory-&gt;type().c_str());</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    }</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaFilterToString(lua_State* s) {</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;        <span class="keyword">const</span> LuaFilterFactory* factory = luaGetFilterFactoryContext(s, 1);</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;        lua_pushfstring(s, <span class="stringliteral">&quot;filter: %s&quot;</span>, factory-&gt;type().c_str());</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;        <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    }</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg* filterFuncs() {</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg nodes[] = {</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;            {<span class="stringliteral">&quot;filter&quot;</span>, luaFilterEmptyFilter},</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaFilterToString},</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;            {<span class="stringliteral">&quot;__newindex&quot;</span>, luaNewIndex},</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;        };</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        <span class="keywordflow">return</span> nodes;</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    }</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaCreateFilter(lua_State* s) {</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;        LUAAIRegistry* r = luaGetContext(s);</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;        <span class="keyword">const</span> std::string type = luaL_checkstring(s, -1);</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;        <span class="keyword">const</span> LUAFilterFactoryPtr&amp; factory = std::make_shared&lt;LuaFilterFactory&gt;(s, type);</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">bool</span> inserted = r-&gt;registerFilterFactory(type, *factory);</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;        <span class="keywordflow">if</span> (!inserted) {</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;            <span class="keywordflow">return</span> luaL_error(s, <span class="stringliteral">&quot;filter %s is already registered&quot;</span>, type.c_str());</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;        }</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;        LuaFilterFactory ** udata = (LuaFilterFactory**) lua_newuserdata(s, <span class="keyword">sizeof</span>(LuaFilterFactory*));</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;        *udata = factory.get();</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        setupMetatable(s, type, filterFuncs(), <span class="stringliteral">&quot;filter&quot;</span>);</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaCreateFilter(lua_State* s) {</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;        LUAAIRegistry* r = luaGetContext(s);</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;        <span class="keyword">const</span> std::string type = luaL_checkstring(s, -1);</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        <span class="keyword">const</span> LUAFilterFactoryPtr&amp; factory = std::make_shared&lt;LuaFilterFactory&gt;(s, type);</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">bool</span> inserted = r-&gt;registerFilterFactory(type, *factory);</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;        <span class="keywordflow">if</span> (!inserted) {</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;            <span class="keywordflow">return</span> luaL_error(s, <span class="stringliteral">&quot;filter %s is already registered&quot;</span>, type.c_str());</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;        }</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;        lua_ainewuserdata&lt;LuaFilterFactory&gt;(s, factory.get());</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;        <span class="keyword">const</span> luaL_Reg nodes[] = {</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;            {<span class="stringliteral">&quot;filter&quot;</span>, luaFilterEmptyFilter},</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaFilterToString},</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;            {<span class="stringliteral">&quot;__newindex&quot;</span>, luaNewIndex},</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;        };</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;        setupMetatable(s, type, nodes, <span class="stringliteral">&quot;filter&quot;</span>);</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        ScopedWriteLock scopedLock(r-&gt;_lock);</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        r-&gt;_filterFactories.emplace(type, factory);</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    }</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaSteeringEmptyExecute(lua_State* s) {</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;        <span class="keyword">const</span> LuaSteeringFactory* factory = luaGetSteeringFactoryContext(s, 1);</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;        <span class="keywordflow">return</span> luaL_error(s, <span class="stringliteral">&quot;There is no execute() function set for steering: %s&quot;</span>, factory-&gt;type().c_str());</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    }</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaSteeringToString(lua_State* s) {</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;        <span class="keyword">const</span> LuaSteeringFactory* factory = luaGetSteeringFactoryContext(s, 1);</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;        lua_pushfstring(s, <span class="stringliteral">&quot;steering: %s&quot;</span>, factory-&gt;type().c_str());</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;        <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    }</div>
 <div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;        ScopedWriteLock scopedLock(r-&gt;_lock);</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;        r-&gt;_filterFactories.emplace(type, factory);</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;        <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    }</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaSteeringEmptyExecute(lua_State* s) {</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;        <span class="keyword">const</span> LuaSteeringFactory* factory = luaGetSteeringFactoryContext(s, 1);</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;        <span class="keywordflow">return</span> luaL_error(s, <span class="stringliteral">&quot;There is no execute() function set for steering: %s&quot;</span>, factory-&gt;type().c_str());</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    }</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaSteeringToString(lua_State* s) {</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;        <span class="keyword">const</span> LuaSteeringFactory* factory = luaGetSteeringFactoryContext(s, 1);</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;        lua_pushfstring(s, <span class="stringliteral">&quot;steering: %s&quot;</span>, factory-&gt;type().c_str());</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;        <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    }</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg* steeringFuncs() {</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> luaL_Reg nodes[] = {</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;            {<span class="stringliteral">&quot;filter&quot;</span>, luaSteeringEmptyExecute},</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaSteeringToString},</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;            {<span class="stringliteral">&quot;__newindex&quot;</span>, luaNewIndex},</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;        };</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;        <span class="keywordflow">return</span> nodes;</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    }</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaCreateSteering(lua_State* s) {</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;        LUAAIRegistry* r = luaGetContext(s);</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;        <span class="keyword">const</span> std::string type = luaL_checkstring(s, -1);</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;        <span class="keyword">const</span> LUASteeringFactoryPtr&amp; factory = std::make_shared&lt;LuaSteeringFactory&gt;(s, type);</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">bool</span> inserted = r-&gt;registerSteeringFactory(type, *factory);</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;        <span class="keywordflow">if</span> (!inserted) {</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;            <span class="keywordflow">return</span> luaL_error(s, <span class="stringliteral">&quot;steering %s is already registered&quot;</span>, type.c_str());</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;        }</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;        LuaSteeringFactory ** udata = (LuaSteeringFactory**) lua_newuserdata(s, <span class="keyword">sizeof</span>(LuaSteeringFactory*));</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;        *udata = factory.get();</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;        setupMetatable(s, type, steeringFuncs(), <span class="stringliteral">&quot;steering&quot;</span>);</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;        ScopedWriteLock scopedLock(r-&gt;_lock);</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;        r-&gt;_steeringFactories.emplace(type, factory);</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> luaCreateSteering(lua_State* s) {</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;        LUAAIRegistry* r = luaGetContext(s);</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;        <span class="keyword">const</span> std::string type = luaL_checkstring(s, -1);</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;        <span class="keyword">const</span> LUASteeringFactoryPtr&amp; factory = std::make_shared&lt;LuaSteeringFactory&gt;(s, type);</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">bool</span> inserted = r-&gt;registerSteeringFactory(type, *factory);</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;        <span class="keywordflow">if</span> (!inserted) {</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;            <span class="keywordflow">return</span> luaL_error(s, <span class="stringliteral">&quot;steering %s is already registered&quot;</span>, type.c_str());</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;        }</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;        lua_ainewuserdata&lt;LuaSteeringFactory&gt;(s, factory.get());</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;        <span class="keyword">const</span> luaL_Reg nodes[] = {</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;            {<span class="stringliteral">&quot;filter&quot;</span>, luaSteeringEmptyExecute},</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaSteeringToString},</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;            {<span class="stringliteral">&quot;__newindex&quot;</span>, luaNewIndex},</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;        };</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;        setupMetatable(s, type, nodes, <span class="stringliteral">&quot;steering&quot;</span>);</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;        ScopedWriteLock scopedLock(r-&gt;_lock);</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;        r-&gt;_steeringFactories.emplace(type, factory);</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;        <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    }</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    <span class="keywordtype">void</span> registerFuncs(luaL_Reg* funcs, <span class="keyword">const</span> <span class="keywordtype">char</span> *name) {</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;        luaL_newmetatable(_s, name);</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;        <span class="comment">// assign the metatable to __index</span></div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;        lua_pushvalue(_s, -1);</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;        lua_setfield(_s, -2, <span class="stringliteral">&quot;__index&quot;</span>);</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;        luaL_setfuncs(_s, funcs, 0);</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    }</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    LUAAIRegistry() {</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;        <a class="code" href="classai_1_1LUAAIRegistry.html#a50c35e3b11aecd406f39d04c60323d6b">init</a>();</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    }</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;</div>
+<div class="line"><a name="l00406"></a><span class="lineno"><a class="line" href="classai_1_1LUAAIRegistry.html#a0497ee987d071e19804695dde52cf05e">  406</a></span>&#160;    lua_State* <a class="code" href="classai_1_1LUAAIRegistry.html#a0497ee987d071e19804695dde52cf05e">getLuaState</a>() {</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;        <span class="keywordflow">return</span> _s;</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    }</div>
 <div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;        <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    }</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    <span class="keywordtype">void</span> registerFuncs(luaL_Reg* funcs, <span class="keyword">const</span> <span class="keywordtype">char</span> *name) {</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;        luaL_newmetatable(_s, name);</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;        <span class="comment">// assign the metatable to __index</span></div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;        lua_pushvalue(_s, -1);</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;        lua_setfield(_s, -2, <span class="stringliteral">&quot;__index&quot;</span>);</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;        luaL_setfuncs(_s, funcs, 0);</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;    }</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    LUAAIRegistry() {</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;        <a class="code" href="classai_1_1LUAAIRegistry.html#a50c35e3b11aecd406f39d04c60323d6b">init</a>();</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    }</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;</div>
-<div class="line"><a name="l00429"></a><span class="lineno"><a class="line" href="classai_1_1LUAAIRegistry.html#a0497ee987d071e19804695dde52cf05e">  429</a></span>&#160;    lua_State* <a class="code" href="classai_1_1LUAAIRegistry.html#a0497ee987d071e19804695dde52cf05e">getLuaState</a>() {</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;        <span class="keywordflow">return</span> _s;</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    }</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;</div>
-<div class="line"><a name="l00440"></a><span class="lineno"><a class="line" href="classai_1_1LUAAIRegistry.html#a0ad8e9ba008c69a849bf04a2facb44f6">  440</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classai_1_1LUAAIRegistry.html#a0ad8e9ba008c69a849bf04a2facb44f6">pushAIMetatable</a>() {</div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;        <a class="code" href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a>(_s != <span class="keyword">nullptr</span>, <span class="stringliteral">&quot;LUA state is not yet initialized&quot;</span>);</div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;        <span class="keywordflow">return</span> luaL_getmetatable(_s, lua_metaai());</div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;    }</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;</div>
-<div class="line"><a name="l00449"></a><span class="lineno"><a class="line" href="classai_1_1LUAAIRegistry.html#abb47582572f578d95383a0da9b98e18e">  449</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classai_1_1LUAAIRegistry.html#abb47582572f578d95383a0da9b98e18e">pushCharacterMetatable</a>() {</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;        <a class="code" href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a>(_s != <span class="keyword">nullptr</span>, <span class="stringliteral">&quot;LUA state is not yet initialized&quot;</span>);</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;        <span class="keywordflow">return</span> luaL_getmetatable(_s, lua_metacharacter());</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;    }</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;</div>
-<div class="line"><a name="l00457"></a><span class="lineno"><a class="line" href="classai_1_1LUAAIRegistry.html#a50c35e3b11aecd406f39d04c60323d6b">  457</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1LUAAIRegistry.html#a50c35e3b11aecd406f39d04c60323d6b">init</a>() {</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;        <span class="keywordflow">if</span> (_s != <span class="keyword">nullptr</span>) {</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;        }</div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;        _s = luaL_newstate();</div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;        lua_atpanic(_s, [] (lua_State* L) {</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;Lua panic. Error message: %s&quot;</span>, (lua_isnil(L, -1) ? <span class="stringliteral">&quot;&quot;</span> : lua_tostring(L, -1)));</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;            <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;        });</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;        lua_gc(_s, LUA_GCSTOP, 0);</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;        luaL_openlibs(_s);</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;        luaL_Reg registryFuncs[] = {</div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;            {<span class="stringliteral">&quot;createNode&quot;</span>, <a class="code" href="classai_1_1LUAAIRegistry.html#a996ede764442f7cc9b4a1987d9c63a67">luaCreateNode</a>},</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;            {<span class="stringliteral">&quot;createCondition&quot;</span>, luaCreateCondition},</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;            {<span class="stringliteral">&quot;createFilter&quot;</span>, luaCreateFilter},</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;            {<span class="stringliteral">&quot;createSteering&quot;</span>, luaCreateSteering},</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;        };</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;        registerFuncs(registryFuncs, <span class="stringliteral">&quot;META_REGISTRY&quot;</span>);</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;        lua_setglobal(_s, <span class="stringliteral">&quot;REGISTRY&quot;</span>);</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;        lua_pushlightuserdata(_s, <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;        lua_setglobal(_s, <span class="stringliteral">&quot;Registry&quot;</span>);</div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;</div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;        luaL_Reg aiFuncs[] = {</div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;            <span class="comment">// TODO: filtered entities, random</span></div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;            {<span class="stringliteral">&quot;id&quot;</span>, luaAiId},</div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;            {<span class="stringliteral">&quot;time&quot;</span>, luaAiTime},</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;            {<span class="stringliteral">&quot;hasZone&quot;</span>, luaAiHasZone},</div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;            {<span class="stringliteral">&quot;zone&quot;</span>, luaAiGetZone},</div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;            {<span class="stringliteral">&quot;character&quot;</span>, luaAiGetCharacter},</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;            {<span class="stringliteral">&quot;aggroMgr&quot;</span>, luaAiGetAggroMgr},</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaAiToString},</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;            {<span class="stringliteral">&quot;__gc&quot;</span>, luaAiGC},</div>
+<div class="line"><a name="l00417"></a><span class="lineno"><a class="line" href="classai_1_1LUAAIRegistry.html#a0ad8e9ba008c69a849bf04a2facb44f6">  417</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classai_1_1LUAAIRegistry.html#a0ad8e9ba008c69a849bf04a2facb44f6">pushAIMetatable</a>() {</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;        <a class="code" href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a>(_s != <span class="keyword">nullptr</span>, <span class="stringliteral">&quot;LUA state is not yet initialized&quot;</span>);</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;        <span class="keywordflow">return</span> luaL_getmetatable(_s, lua_metaai());</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    }</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;</div>
+<div class="line"><a name="l00426"></a><span class="lineno"><a class="line" href="classai_1_1LUAAIRegistry.html#abb47582572f578d95383a0da9b98e18e">  426</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classai_1_1LUAAIRegistry.html#abb47582572f578d95383a0da9b98e18e">pushCharacterMetatable</a>() {</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;        <a class="code" href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a>(_s != <span class="keyword">nullptr</span>, <span class="stringliteral">&quot;LUA state is not yet initialized&quot;</span>);</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;        <span class="keywordflow">return</span> luaL_getmetatable(_s, lua_metacharacter());</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;    }</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;</div>
+<div class="line"><a name="l00434"></a><span class="lineno"><a class="line" href="classai_1_1LUAAIRegistry.html#a50c35e3b11aecd406f39d04c60323d6b">  434</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1LUAAIRegistry.html#a50c35e3b11aecd406f39d04c60323d6b">init</a>() {</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;        <span class="keywordflow">if</span> (_s != <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;        }</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;        _s = luaL_newstate();</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;        lua_atpanic(_s, [] (lua_State* L) {</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;Lua panic. Error message: %s&quot;</span>, (lua_isnil(L, -1) ? <span class="stringliteral">&quot;&quot;</span> : lua_tostring(L, -1)));</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;            <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;        });</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;        lua_gc(_s, LUA_GCSTOP, 0);</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;        luaL_openlibs(_s);</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;        luaL_Reg registryFuncs[] = {</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;            {<span class="stringliteral">&quot;createNode&quot;</span>, <a class="code" href="classai_1_1LUAAIRegistry.html#a996ede764442f7cc9b4a1987d9c63a67">luaCreateNode</a>},</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;            {<span class="stringliteral">&quot;createCondition&quot;</span>, luaCreateCondition},</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;            {<span class="stringliteral">&quot;createFilter&quot;</span>, luaCreateFilter},</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;            {<span class="stringliteral">&quot;createSteering&quot;</span>, luaCreateSteering},</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;        };</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;        registerFuncs(registryFuncs, <span class="stringliteral">&quot;META_REGISTRY&quot;</span>);</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;        lua_setglobal(_s, <span class="stringliteral">&quot;REGISTRY&quot;</span>);</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;        lua_pushlightuserdata(_s, <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;        lua_setglobal(_s, <span class="stringliteral">&quot;Registry&quot;</span>);</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;        luaL_Reg aiFuncs[] = {</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;            <span class="comment">// TODO: filtered entities, random</span></div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;            {<span class="stringliteral">&quot;id&quot;</span>, luaAiId},</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;            {<span class="stringliteral">&quot;time&quot;</span>, luaAiTime},</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;            {<span class="stringliteral">&quot;hasZone&quot;</span>, luaAiHasZone},</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;            {<span class="stringliteral">&quot;zone&quot;</span>, luaAiGetZone},</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;            {<span class="stringliteral">&quot;character&quot;</span>, luaAiGetCharacter},</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;            {<span class="stringliteral">&quot;aggroMgr&quot;</span>, luaAiGetAggroMgr},</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaAiToString},</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;            {<span class="stringliteral">&quot;__gc&quot;</span>, luaAiGC},</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;        };</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;        registerFuncs(aiFuncs, lua_metaai());</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;        luaL_Reg zoneFuncs[] = {</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;            {<span class="stringliteral">&quot;size&quot;</span>, luaZoneSize},</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaZoneToString},</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;            {<span class="stringliteral">&quot;__gc&quot;</span>, luaZoneGC},</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;        };</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;        registerFuncs(zoneFuncs, lua_metazone());</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;        luaL_Reg aggroMgrFuncs[] = {</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;            {<span class="stringliteral">&quot;addAggro&quot;</span>, luaAggroMgrAddAggro},</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaAggroMgrToString},</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;            {<span class="stringliteral">&quot;__gc&quot;</span>, luaAggroMgrGC},</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;        };</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;        registerFuncs(aggroMgrFuncs, lua_metaaggromgr());</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;        luaL_Reg characterFuncs[] = {</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaCharacterToString},</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;            {<span class="stringliteral">&quot;__gc&quot;</span>, luaCharacterGC},</div>
 <div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
 <div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;        };</div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;        registerFuncs(aiFuncs, lua_metaai());</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;        registerFuncs(characterFuncs, lua_metacharacter());</div>
 <div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;        luaL_Reg zoneFuncs[] = {</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;            {<span class="stringliteral">&quot;size&quot;</span>, luaZoneSize},</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaZoneToString},</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;            {<span class="stringliteral">&quot;__gc&quot;</span>, luaZoneGC},</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;        };</div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;        registerFuncs(zoneFuncs, lua_metazone());</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;        luaL_Reg aggroMgrFuncs[] = {</div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;            {<span class="stringliteral">&quot;addAggro&quot;</span>, luaAggroMgrAddAggro},</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaAggroMgrToString},</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;            {<span class="stringliteral">&quot;__gc&quot;</span>, luaAggroMgrGC},</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;        };</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;        registerFuncs(aggroMgrFuncs, lua_metaaggromgr());</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;        luaL_Reg characterFuncs[] = {</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaCharacterToString},</div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;            {<span class="stringliteral">&quot;__gc&quot;</span>, luaCharacterGC},</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;            {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;        };</div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;        registerFuncs(characterFuncs, lua_metacharacter());</div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* script = <span class="stringliteral">&quot;&quot;</span></div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;            <span class="stringliteral">&quot;UNKNOWN, CANNOTEXECUTE, RUNNING, FINISHED, FAILED, EXCEPTION = 0, 1, 2, 3, 4, 5\n&quot;</span>;</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;        <span class="keywordflow">if</span> (luaL_loadbufferx(_s, script, strlen(script), <span class="stringliteral">&quot;&quot;</span>, <span class="keyword">nullptr</span>) || lua_pcall(_s, 0, 0, 0)) {</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;%s&quot;</span>, lua_tostring(_s, -1));</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;            lua_pop(_s, 1);</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;        }</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;    }</div>
-<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;</div>
-<div class="line"><a name="l00534"></a><span class="lineno"><a class="line" href="classai_1_1LUAAIRegistry.html#a9f9d18703e8d447fb2bd872862f956f7">  534</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classai_1_1LUAAIRegistry.html#a9f9d18703e8d447fb2bd872862f956f7">shutdown</a>() {</div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;        {</div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;            <a class="code" href="classai_1_1ScopedWriteLock.html">ScopedWriteLock</a> scopedLock(_lock);</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;            _treeNodeFactories.clear();</div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;            _conditionFactories.clear();</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;            _filterFactories.clear();</div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;            _steeringFactories.clear();</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;        }</div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;        <span class="keywordflow">if</span> (_s != <span class="keyword">nullptr</span>) {</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;            lua_close(_s);</div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;            _s = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;        }</div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;    }</div>
-<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;</div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;    ~<a class="code" href="classai_1_1LUAAIRegistry.html">LUAAIRegistry</a>() {</div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;        <a class="code" href="classai_1_1LUAAIRegistry.html#a9f9d18703e8d447fb2bd872862f956f7">shutdown</a>();</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* script = <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;            <span class="stringliteral">&quot;UNKNOWN, CANNOTEXECUTE, RUNNING, FINISHED, FAILED, EXCEPTION = 0, 1, 2, 3, 4, 5\n&quot;</span>;</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;        <span class="keywordflow">if</span> (luaL_loadbufferx(_s, script, strlen(script), <span class="stringliteral">&quot;&quot;</span>, <span class="keyword">nullptr</span>) || lua_pcall(_s, 0, 0, 0)) {</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;%s&quot;</span>, lua_tostring(_s, -1));</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;            lua_pop(_s, 1);</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;        }</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;    }</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;</div>
+<div class="line"><a name="l00511"></a><span class="lineno"><a class="line" href="classai_1_1LUAAIRegistry.html#a9f9d18703e8d447fb2bd872862f956f7">  511</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classai_1_1LUAAIRegistry.html#a9f9d18703e8d447fb2bd872862f956f7">shutdown</a>() {</div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;        {</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;            <a class="code" href="classai_1_1ScopedWriteLock.html">ScopedWriteLock</a> scopedLock(_lock);</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;            _treeNodeFactories.clear();</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;            _conditionFactories.clear();</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;            _filterFactories.clear();</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;            _steeringFactories.clear();</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;        }</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;        <span class="keywordflow">if</span> (_s != <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;            lua_close(_s);</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;            _s = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;        }</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;    }</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;    ~<a class="code" href="classai_1_1LUAAIRegistry.html">LUAAIRegistry</a>() {</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;        <a class="code" href="classai_1_1LUAAIRegistry.html#a9f9d18703e8d447fb2bd872862f956f7">shutdown</a>();</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;    }</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">bool</span> evaluate(<span class="keyword">const</span> std::string&amp; str) {</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;        <span class="keywordflow">return</span> evaluate(str.c_str(), str.length());</div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;    }</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;</div>
+<div class="line"><a name="l00539"></a><span class="lineno"><a class="line" href="classai_1_1LUAAIRegistry.html#a372137d91c6d9630c9a83201fbb4ea30">  539</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1LUAAIRegistry.html#a372137d91c6d9630c9a83201fbb4ea30">evaluate</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* luaBuffer, <span class="keywordtype">size_t</span> size) {</div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;        <span class="keywordflow">if</span> (_s == <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;            <a class="code" href="Types_8h.html#af243f74139afd922c824ae3166af02b6">ai_log_debug</a>(<span class="stringliteral">&quot;LUA state is not yet initialized&quot;</span>);</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;        }</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;        <span class="keywordflow">if</span> (luaL_loadbufferx(_s, luaBuffer, size, <span class="stringliteral">&quot;&quot;</span>, <span class="keyword">nullptr</span>) || lua_pcall(_s, 0, 0, 0)) {</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;%s&quot;</span>, lua_tostring(_s, -1));</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;            lua_pop(_s, 1);</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;        }</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;    }</div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;</div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">bool</span> evaluate(<span class="keyword">const</span> std::string&amp; str) {</div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;        <span class="keywordflow">return</span> evaluate(str.c_str(), str.length());</div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;    }</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;</div>
-<div class="line"><a name="l00562"></a><span class="lineno"><a class="line" href="classai_1_1LUAAIRegistry.html#a372137d91c6d9630c9a83201fbb4ea30">  562</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1LUAAIRegistry.html#a372137d91c6d9630c9a83201fbb4ea30">evaluate</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* luaBuffer, <span class="keywordtype">size_t</span> size) {</div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;        <span class="keywordflow">if</span> (_s == <span class="keyword">nullptr</span>) {</div>
-<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;            <a class="code" href="Types_8h.html#af243f74139afd922c824ae3166af02b6">ai_log_debug</a>(<span class="stringliteral">&quot;LUA state is not yet initialized&quot;</span>);</div>
-<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;        }</div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;        <span class="keywordflow">if</span> (luaL_loadbufferx(_s, luaBuffer, size, <span class="stringliteral">&quot;&quot;</span>, <span class="keyword">nullptr</span>) || lua_pcall(_s, 0, 0, 0)) {</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;%s&quot;</span>, lua_tostring(_s, -1));</div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;            lua_pop(_s, 1);</div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;        }</div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;    }</div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;};</div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;</div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;}</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;};</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;</div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;}</div>
 <div class="ttc" id="Types_8h_html_adb3840229c4143eb2b8e2fe2d4ee8163"><div class="ttname"><a href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a></div><div class="ttdeci">#define ai_assert(condition,...)</div><div class="ttdoc">Provide your own assert - this is only executed in DEBUG mode. </div><div class="ttdef"><b>Definition:</b> Types.h:75</div></div>
 <div class="ttc" id="classai_1_1AggroMgr_html"><div class="ttname"><a href="classai_1_1AggroMgr.html">ai::AggroMgr</a></div><div class="ttdoc">Manages the aggro values for one AI instance. There are several ways to degrade the aggro values...</div><div class="ttdef"><b>Definition:</b> AggroMgr.h:21</div></div>
 <div class="ttc" id="classai_1_1LUACondition_1_1LUAConditionFactory_html"><div class="ttname"><a href="classai_1_1LUACondition_1_1LUAConditionFactory.html">ai::LUACondition::LUAConditionFactory</a></div><div class="ttdef"><b>Definition:</b> LUACondition.h:86</div></div>
-<div class="ttc" id="classai_1_1LUAAIRegistry_html_a9f9d18703e8d447fb2bd872862f956f7"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#a9f9d18703e8d447fb2bd872862f956f7">ai::LUAAIRegistry::shutdown</a></div><div class="ttdeci">void shutdown()</div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:534</div></div>
+<div class="ttc" id="classai_1_1LUAAIRegistry_html_a9f9d18703e8d447fb2bd872862f956f7"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#a9f9d18703e8d447fb2bd872862f956f7">ai::LUAAIRegistry::shutdown</a></div><div class="ttdeci">void shutdown()</div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:511</div></div>
 <div class="ttc" id="Types_8h_html_ad28c4d09dbf2e7bb44aa8ffd3c83e063"><div class="ttname"><a href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a></div><div class="ttdeci">#define ai_log_error(...)</div><div class="ttdoc">Logging macro to provide your own loggers. </div><div class="ttdef"><b>Definition:</b> Types.h:23</div></div>
 <div class="ttc" id="classai_1_1LUATreeNode_1_1LUATreeNodeFactory_html"><div class="ttname"><a href="classai_1_1LUATreeNode_1_1LUATreeNodeFactory.html">ai::LUATreeNode::LUATreeNodeFactory</a></div><div class="ttdef"><b>Definition:</b> LUATreeNode.h:91</div></div>
 <div class="ttc" id="LUAFilter_8h_html"><div class="ttname"><a href="LUAFilter_8h.html">LUAFilter.h</a></div></div>
 <div class="ttc" id="classai_1_1AIRegistry_html"><div class="ttname"><a href="classai_1_1AIRegistry.html">ai::AIRegistry</a></div><div class="ttdoc">The place to register your TreeNode and ICondition factories at. </div><div class="ttdef"><b>Definition:</b> AIRegistry.h:64</div></div>
-<div class="ttc" id="classai_1_1LUAAIRegistry_html_abb47582572f578d95383a0da9b98e18e"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#abb47582572f578d95383a0da9b98e18e">ai::LUAAIRegistry::pushCharacterMetatable</a></div><div class="ttdeci">int pushCharacterMetatable()</div><div class="ttdoc">Pushes the character metatable onto the stack. This allows anyone to modify it to provide own functio...</div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:449</div></div>
+<div class="ttc" id="classai_1_1LUAAIRegistry_html_abb47582572f578d95383a0da9b98e18e"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#abb47582572f578d95383a0da9b98e18e">ai::LUAAIRegistry::pushCharacterMetatable</a></div><div class="ttdeci">int pushCharacterMetatable()</div><div class="ttdoc">Pushes the character metatable onto the stack. This allows anyone to modify it to provide own functio...</div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:426</div></div>
 <div class="ttc" id="classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory_html"><div class="ttname"><a href="classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory.html">ai::movement::LUASteering::LUASteeringFactory</a></div><div class="ttdef"><b>Definition:</b> LUASteering.h:95</div></div>
 <div class="ttc" id="LUATreeNode_8h_html"><div class="ttname"><a href="LUATreeNode_8h.html">LUATreeNode.h</a></div></div>
-<div class="ttc" id="classai_1_1LUAAIRegistry_html_a0ad8e9ba008c69a849bf04a2facb44f6"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#a0ad8e9ba008c69a849bf04a2facb44f6">ai::LUAAIRegistry::pushAIMetatable</a></div><div class="ttdeci">int pushAIMetatable()</div><div class="ttdoc">Pushes the AI metatable onto the stack. This allows anyone to modify it to provide own functions and ...</div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:440</div></div>
-<div class="ttc" id="classai_1_1LUAAIRegistry_html_a996ede764442f7cc9b4a1987d9c63a67"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#a996ede764442f7cc9b4a1987d9c63a67">ai::LUAAIRegistry::luaCreateNode</a></div><div class="ttdeci">static int luaCreateNode(lua_State *s)</div><div class="ttdoc">Create a new lua TreeNode. </div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:276</div></div>
+<div class="ttc" id="classai_1_1LUAAIRegistry_html_a0ad8e9ba008c69a849bf04a2facb44f6"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#a0ad8e9ba008c69a849bf04a2facb44f6">ai::LUAAIRegistry::pushAIMetatable</a></div><div class="ttdeci">int pushAIMetatable()</div><div class="ttdoc">Pushes the AI metatable onto the stack. This allows anyone to modify it to provide own functions and ...</div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:417</div></div>
+<div class="ttc" id="classai_1_1LUAAIRegistry_html_a996ede764442f7cc9b4a1987d9c63a67"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#a996ede764442f7cc9b4a1987d9c63a67">ai::LUAAIRegistry::luaCreateNode</a></div><div class="ttdeci">static int luaCreateNode(lua_State *s)</div><div class="ttdoc">Create a new lua TreeNode. </div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:266</div></div>
 <div class="ttc" id="classai_1_1AggroMgr_html_ac28f09de193cc84fdaa02abd5ff2a287"><div class="ttname"><a href="classai_1_1AggroMgr.html#ac28f09de193cc84fdaa02abd5ff2a287">ai::AggroMgr::addAggro</a></div><div class="ttdeci">EntryPtr addAggro(CharacterId id, float amount)</div><div class="ttdoc">will increase the aggro </div><div class="ttdef"><b>Definition:</b> AggroMgr.h:148</div></div>
 <div class="ttc" id="classai_1_1LUAAIRegistry_html"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html">ai::LUAAIRegistry</a></div><div class="ttdoc">Allows you to register lua TreeNodes, Conditions, Filters and ISteerings. </div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:69</div></div>
 <div class="ttc" id="classai_1_1ICharacter_html"><div class="ttname"><a href="classai_1_1ICharacter.html">ai::ICharacter</a></div><div class="ttdoc">Class that should be extended by the AI controlled entity class. </div><div class="ttdef"><b>Definition:</b> ICharacter.h:45</div></div>
 <div class="ttc" id="LUACondition_8h_html"><div class="ttname"><a href="LUACondition_8h.html">LUACondition.h</a></div></div>
 <div class="ttc" id="Types_8h_html_af243f74139afd922c824ae3166af02b6"><div class="ttname"><a href="Types_8h.html#af243f74139afd922c824ae3166af02b6">ai_log_debug</a></div><div class="ttdeci">#define ai_log_debug(...)</div><div class="ttdoc">Logging macro to provide your own loggers. </div><div class="ttdef"><b>Definition:</b> Types.h:37</div></div>
-<div class="ttc" id="classai_1_1LUAAIRegistry_html_a0497ee987d071e19804695dde52cf05e"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#a0497ee987d071e19804695dde52cf05e">ai::LUAAIRegistry::getLuaState</a></div><div class="ttdeci">lua_State * getLuaState()</div><div class="ttdoc">Access to the lua state. </div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:429</div></div>
+<div class="ttc" id="classai_1_1LUAAIRegistry_html_a0497ee987d071e19804695dde52cf05e"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#a0497ee987d071e19804695dde52cf05e">ai::LUAAIRegistry::getLuaState</a></div><div class="ttdeci">lua_State * getLuaState()</div><div class="ttdoc">Access to the lua state. </div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:406</div></div>
 <div class="ttc" id="LUAFunctions_8h_html"><div class="ttname"><a href="LUAFunctions_8h.html">LUAFunctions.h</a></div></div>
 <div class="ttc" id="classai_1_1AIRegistry_html_aa91c90830efcaf5306fc287c6f2898a7"><div class="ttname"><a href="classai_1_1AIRegistry.html#aa91c90830efcaf5306fc287c6f2898a7">ai::AIRegistry::registerNodeFactory</a></div><div class="ttdeci">bool registerNodeFactory(const std::string &amp;type, const ITreeNodeFactory &amp;factory)</div><div class="ttdoc">Registers a tree node factory of the given type. </div><div class="ttdef"><b>Definition:</b> AIRegistry.h:221</div></div>
 <div class="ttc" id="classai_1_1LUAFilter_1_1LUAFilterFactory_html"><div class="ttname"><a href="classai_1_1LUAFilter_1_1LUAFilterFactory.html">ai::LUAFilter::LUAFilterFactory</a></div><div class="ttdef"><b>Definition:</b> LUAFilter.h:76</div></div>
 <div class="ttc" id="classai_1_1ScopedWriteLock_html"><div class="ttname"><a href="classai_1_1ScopedWriteLock.html">ai::ScopedWriteLock</a></div><div class="ttdef"><b>Definition:</b> Thread.h:56</div></div>
-<div class="ttc" id="classai_1_1LUAAIRegistry_html_a372137d91c6d9630c9a83201fbb4ea30"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#a372137d91c6d9630c9a83201fbb4ea30">ai::LUAAIRegistry::evaluate</a></div><div class="ttdeci">bool evaluate(const char *luaBuffer, size_t size)</div><div class="ttdoc">Load your lua scripts into the lua state of the registry. This can be called multiple times to e...</div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:562</div></div>
+<div class="ttc" id="classai_1_1LUAAIRegistry_html_a372137d91c6d9630c9a83201fbb4ea30"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#a372137d91c6d9630c9a83201fbb4ea30">ai::LUAAIRegistry::evaluate</a></div><div class="ttdeci">bool evaluate(const char *luaBuffer, size_t size)</div><div class="ttdoc">Load your lua scripts into the lua state of the registry. This can be called multiple times to e...</div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:539</div></div>
 <div class="ttc" id="LUASteering_8h_html"><div class="ttname"><a href="LUASteering_8h.html">LUASteering.h</a></div></div>
 <div class="ttc" id="classai_1_1ReadWriteLock_html"><div class="ttname"><a href="classai_1_1ReadWriteLock.html">ai::ReadWriteLock</a></div><div class="ttdef"><b>Definition:</b> Thread.h:14</div></div>
 <div class="ttc" id="AIRegistry_8h_html"><div class="ttname"><a href="AIRegistry_8h.html">AIRegistry.h</a></div></div>
-<div class="ttc" id="classai_1_1LUAAIRegistry_html_a50c35e3b11aecd406f39d04c60323d6b"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#a50c35e3b11aecd406f39d04c60323d6b">ai::LUAAIRegistry::init</a></div><div class="ttdeci">bool init()</div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:457</div></div>
+<div class="ttc" id="classai_1_1LUAAIRegistry_html_a50c35e3b11aecd406f39d04c60323d6b"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#a50c35e3b11aecd406f39d04c60323d6b">ai::LUAAIRegistry::init</a></div><div class="ttdeci">bool init()</div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:434</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
