@@ -409,6 +409,14 @@ protected:
 
 		return 1;
 	}
+
+	void registerFuncs(luaL_Reg* funcs, const char *name) {
+		luaL_newmetatable(_s, name);
+		// assign the metatable to __index
+		lua_pushvalue(_s, -1);
+		lua_setfield(_s, -2, "__index");
+		luaL_setfuncs(_s, funcs, 0);
+	}
 public:
 	LUAAIRegistry() {
 		init();
@@ -466,11 +474,7 @@ public:
 			{"createSteering", luaCreateSteering},
 			{nullptr, nullptr}
 		};
-
-		luaL_newmetatable(_s, "META_REGISTRY");
-		lua_pushvalue(_s, -1);
-		lua_setfield(_s, -2, "__index");
-		luaL_setfuncs(_s, registryFuncs, 0);
+		registerFuncs(registryFuncs, "META_REGISTRY");
 		lua_setglobal(_s, "REGISTRY");
 
 		lua_pushlightuserdata(_s, this);
@@ -488,12 +492,7 @@ public:
 			{"__gc", luaAiGC},
 			{nullptr, nullptr}
 		};
-
-		luaL_newmetatable(_s, lua_metaai());
-		// assign the metatable to __index
-		lua_pushvalue(_s, -1);
-		lua_setfield(_s, -2, "__index");
-		luaL_setfuncs(_s, aiFuncs, 0);
+		registerFuncs(aiFuncs, lua_metaai());
 
 		luaL_Reg zoneFuncs[] = {
 			{"size", luaZoneSize},
@@ -501,12 +500,7 @@ public:
 			{"__gc", luaZoneGC},
 			{nullptr, nullptr}
 		};
-
-		luaL_newmetatable(_s, lua_metazone());
-		// assign the metatable to __index
-		lua_pushvalue(_s, -1);
-		lua_setfield(_s, -2, "__index");
-		luaL_setfuncs(_s, zoneFuncs, 0);
+		registerFuncs(zoneFuncs, lua_metazone());
 
 		luaL_Reg aggroMgrFuncs[] = {
 			{"addAggro", luaAggroMgrAddAggro},
@@ -514,24 +508,14 @@ public:
 			{"__gc", luaAggroMgrGC},
 			{nullptr, nullptr}
 		};
-
-		luaL_newmetatable(_s, lua_metaaggromgr());
-		// assign the metatable to __index
-		lua_pushvalue(_s, -1);
-		lua_setfield(_s, -2, "__index");
-		luaL_setfuncs(_s, aggroMgrFuncs, 0);
+		registerFuncs(aggroMgrFuncs, lua_metaaggromgr());
 
 		luaL_Reg characterFuncs[] = {
 			{"__tostring", luaCharacterToString},
 			{"__gc", luaCharacterGC},
 			{nullptr, nullptr}
 		};
-
-		luaL_newmetatable(_s, lua_metacharacter());
-		// assign the metatable to __index
-		lua_pushvalue(_s, -1);
-		lua_setfield(_s, -2, "__index");
-		luaL_setfuncs(_s, characterFuncs, 0);
+		registerFuncs(characterFuncs, lua_metacharacter());
 
 		const char* script = ""
 			"UNKNOWN, CANNOTEXECUTE, RUNNING, FINISHED, FAILED, EXCEPTION = 0, 1, 2, 3, 4, 5\n";
