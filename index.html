@@ -204,16 +204,16 @@ Running it:</h1>
 <h1><a class="anchor" id="using"></a>
 Using it:</h1>
 <ul>
-<li>Make sure your game character extends <a class="el" href="classai_1_1ICharacter.html">ICharacter</a> or includes it as component.</li>
+<li>Make sure your character extends <a class="el" href="classai_1_1ICharacter.html">ICharacter</a> or includes it as component.</li>
 <li>Implement your behaviour tree loader by extending the class ITreeloader.</li>
-<li>Extend the AIDebugger to deliver your own MapView that renders the map of your game.</li>
-<li>Add your own condition, filter and task factories to the <a class="el" href="classai_1_1AIRegistry.html">AIRegistry</a>.</li>
-<li>Assign attributes to your game characters that should be shown in the debuggers live view.</li>
+<li>Extend the AIDebugger to deliver your own MapView that renders the map of your application.</li>
+<li>Add your own condition, filter and task factories to the <a class="el" href="classai_1_1AIRegistry.html">AIRegistry</a> or via <a class="el" href="classai_1_1LUAAIRegistry.html">LUAAIRegistry</a>.</li>
+<li>Assign attributes to your characters that should be shown in the debuggers live view.</li>
 </ul>
-<p>As the name states, it should be easy to use and to integrate into your game. You have the ability to create new customized actions, override existing ones with your own implementations and so on.</p>
-<p>To integrate the AI into your game, your game entity class should implement or include the <a class="el" href="classai_1_1ICharacter.html">ICharacter</a> interface. You only have to call the <a class="el" href="classai_1_1ICharacter.html#aeb7d0c33745a9444cdf5604f14254c3c">ICharacter::update()</a> method to get the AI and the character updated. You can view the included <code>simpleai-run</code> tool for getting an idea on how to do this.</p>
-<p>Once this step is done, you can go on with creating new actions for your game. All you have to do for this is to extend <a class="el" href="classai_1_1ITask.html">ITask</a>. The entity instance given to the <a class="el" href="classai_1_1ITask.html#aa5d29aca24485d8a55432805dc26121c">ITask::doAction()</a> method contains the <a class="el" href="classai_1_1ICharacter.html">ICharacter</a> that you bound to your application entity.</p>
-<p>After implementing these actions, all you have to do in order to use them with e.g. the existing <a class="el" href="classai_1_1LUATreeLoader.html">LUATreeLoader</a> is to add them to the registry. Just call <a class="el" href="classai_1_1AIRegistry.html#aa91c90830efcaf5306fc287c6f2898a7">AIRegistry::registerNodeFactory()</a> on your <a class="el" href="classai_1_1AIRegistry.html">AIRegistry</a> instance and you are ready to write LUA scripts with it. Again, as a reference, just check out the example code.</p>
+<p>As the name states, it should be easy to use and to integrate into your application. You have the ability to create new customized actions, override existing ones with your own implementations and so on.</p>
+<p>To integrate the AI into your application, your entity class should implement or include the <a class="el" href="classai_1_1ICharacter.html">ICharacter</a> interface. You only have to call the <a class="el" href="classai_1_1ICharacter.html#aeb7d0c33745a9444cdf5604f14254c3c">ICharacter::update()</a> method to get the AI and the character updated. You can view the included <code>simpleai-run</code> tool for getting an idea on how to do this.</p>
+<p>Once this step is done, you can go on with creating new actions for your application. All you have to do for this is to extend <a class="el" href="classai_1_1ITask.html">ITask</a>. The entity instance given to the <a class="el" href="classai_1_1ITask.html#aa5d29aca24485d8a55432805dc26121c">ITask::doAction()</a> method contains the <a class="el" href="classai_1_1ICharacter.html">ICharacter</a> that you bound to your application entity.</p>
+<p>After implementing these actions, all you have to do in order to use them with e.g. the existing <a class="el" href="classai_1_1LUATreeLoader.html">LUATreeLoader</a> is to add them to the registry. Just call <a class="el" href="classai_1_1AIRegistry.html#aa91c90830efcaf5306fc287c6f2898a7">AIRegistry::registerNodeFactory()</a> on your <a class="el" href="classai_1_1AIRegistry.html">AIRegistry</a> instance and you are ready to write LUA scripts with it. Again, as a reference, just check out the example code. You can also create nodes, conditions, filter and steering methods via LUA directly. See <a class="el" href="classai_1_1LUAAIRegistry.html">LUAAIRegistry</a> for more information about this.</p>
 <p>Note the usage of a few macros that makes your life easier:</p>
 <ul>
 <li><a class="el" href="ITask_8h.html#a9aa046e682385fef3305111c5b555966">TASK_CLASS</a></li>
@@ -234,7 +234,7 @@ Remote Debugging</h1>
 <div class="image">
 <img src="aidebugger.png" alt="aidebugger.png"/>
 </div>
-<p>The remote debugger can also render your custom map widget which allows you to show the characters in their "natural" environment instead of on a boring plane. You can choose which entities should be available for remote debugging. The included <code>Server</code> class handles the serialization of the entities. You can create one instance of a server per game map you have. Once you add an entity to the server, it gets automatically serialized and is broadcasted to all connected clients. If no client is connected, nothing is serialized and thus the remote debugging has almost no performance influence.</p>
+<p>The remote debugger can also render your custom map widget which allows you to show the characters in their "natural" environment instead of on a boring plane. You can choose which entities should be available for remote debugging. The included <code>Server</code> class handles the serialization of the entities. You can create one instance of a server per application map you have. Once you add an entity to the server, it gets automatically serialized and is broadcasted to all connected clients. If no client is connected, nothing is serialized and thus the remote debugging has almost no performance influence.</p>
 <p>The remote debugging can only be active for one <code>Zone</code>. So every other zone is also not affected by the debugging overhead. Usually you would split a zone by logical units, like one map is one zone. But you can also split them up into logical units like boss ai, supporter ai, ... and so on.</p>
 <p>Features so far:</p>
 <ul>

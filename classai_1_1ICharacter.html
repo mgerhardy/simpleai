@@ -96,7 +96,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Class that should be extended by the ai controlled entity class.  
+<p>Class that should be extended by the AI controlled entity class.  
  <a href="classai_1_1ICharacter.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="ICharacter_8h_source.html">ICharacter.h</a>&gt;</code></p>
@@ -151,7 +151,7 @@ const CharacterAttributes &amp;&#160;</td><td class="memItemRight" valign="botto
 <tr class="memdesc:a50a743213633c3cda7407847d874e514"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the debugger attributes. <br/></td></tr>
 <tr class="separator:a50a743213633c3cda7407847d874e514"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb7d0c33745a9444cdf5604f14254c3c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1ICharacter.html#aeb7d0c33745a9444cdf5604f14254c3c">update</a> (int64_t dt, bool debuggingActive)</td></tr>
-<tr class="memdesc:aeb7d0c33745a9444cdf5604f14254c3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">override this method to let your own <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the ai controlled entity class. ">ICharacter</a></code> implementation tick with the <code>Zone::update</code>  <a href="#aeb7d0c33745a9444cdf5604f14254c3c">More...</a><br/></td></tr>
+<tr class="memdesc:aeb7d0c33745a9444cdf5604f14254c3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">override this method to let your own <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the AI controlled entity class. ">ICharacter</a></code> implementation tick with the <code>Zone::update</code>  <a href="#aeb7d0c33745a9444cdf5604f14254c3c">More...</a><br/></td></tr>
 <tr class="separator:aeb7d0c33745a9444cdf5604f14254c3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
@@ -173,10 +173,10 @@ CharacterAttributes&#160;</td><td class="memItemRight" valign="bottom"><b>_attri
 <tr class="separator:a1c2ee0f80456d3261e41ddfd6ac608cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class that should be extended by the ai controlled entity class. </p>
-<p>It uses a <code>CharacterId</code> to identify the character in the game. The <code>AI</code> class has a reference to its controlled <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the ai controlled entity class. ">ICharacter</a></code> instance.</p>
-<dl class="section note"><dt>Note</dt><dd>Update the values of the <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the ai controlled entity class. ">ICharacter</a></code> class only in in the <code><a class="el" href="classai_1_1ICharacter.html#aeb7d0c33745a9444cdf5604f14254c3c" title="override this method to let your own ICharacter implementation tick with the Zone::update ...">ICharacter::update</a></code> method or from within the <code>Zone</code> callbacks. Otherwise you will run into race conditions if you run with multiple threads.</dd></dl>
-<p>You often need access to your world your character is living in. You need access to this data to resolve the <code>CharacterId's</code> in the <code>IFilter</code> implementations, to interact with other entities that are not SimpleAI controlled and so on. You can use the provided <code>character_cast</code> function in your <code><a class="el" href="classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. ">TreeNode</a></code>, <code>IFilter</code> or @¢ <a class="el" href="classai_1_1ICondition.html" title="A condition can be placed on a TreeNode to decide which node is going to get executed. In general they are stateless. If they are not, it should explicitly get noted. ">ICondition</a> implementations. </p>
+<div class="textblock"><p>Class that should be extended by the AI controlled entity class. </p>
+<p>It uses a CharacterId to identify the character in the game. The AI class has a reference to its controlled <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the AI controlled entity class. ">ICharacter</a></code> instance.</p>
+<dl class="section note"><dt>Note</dt><dd>Update the values of the <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the AI controlled entity class. ">ICharacter</a></code> class only in in the <a class="el" href="classai_1_1ICharacter.html#aeb7d0c33745a9444cdf5604f14254c3c">ICharacter::update()</a> method or from within the Zone callbacks. Otherwise you will run into race conditions if you run with multiple threads.</dd></dl>
+<p>You often need access to your world your character is living in. You need access to this data to resolve the CharacterId's in the IFilter implementations, to interact with other entities that are not SimpleAI controlled and so on. You can use the provided character_cast function in your <a class="el" href="classai_1_1TreeNode.html">TreeNode</a>, IFilter or <a class="el" href="classai_1_1ICondition.html">ICondition</a> implementations. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a673db029f937c710d3f582cf00ceb46f"></a>
 <div class="memitem">
@@ -375,7 +375,7 @@ CharacterAttributes&#160;</td><td class="memItemRight" valign="bottom"><b>_attri
 </table>
 </div><div class="memdoc">
 
-<p>override this method to let your own <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the ai controlled entity class. ">ICharacter</a></code> implementation tick with the <code>Zone::update</code> </p>
+<p>override this method to let your own <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the AI controlled entity class. ">ICharacter</a></code> implementation tick with the <code>Zone::update</code> </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">dt</td><td>the time delta in millis since the last update was executed </td></tr>

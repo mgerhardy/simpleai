@@ -123,7 +123,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1ICondition.html">ai::ICondition</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A condition can be placed on a <code><a class="el" href="classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. ">TreeNode</a></code> to decide which node is going to get executed. In general they are stateless. If they are not, it should explicitly get noted.  <a href="classai_1_1ICondition.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A condition can be placed on a <a class="el" href="classai_1_1TreeNode.html">TreeNode</a> to decide which node is going to get executed. In general they are stateless. If they are not, it should explicitly get noted.  <a href="classai_1_1ICondition.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -135,10 +135,10 @@ Macros</h2></td></tr>
 <tr class="memdesc:ae203ad42d47cc7c60a5fb2666a6745e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">A condition factory macro to ease and unify the registration at AIRegistry. You still have to implement the Factory::create method.  <a href="#ae203ad42d47cc7c60a5fb2666a6745e2">More...</a><br/></td></tr>
 <tr class="separator:ae203ad42d47cc7c60a5fb2666a6745e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8421b2a7870a3f33182c9780b7a35ac2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ICondition_8h.html#a8421b2a7870a3f33182c9780b7a35ac2">CONDITION_FACTORY</a>(ConditionName)</td></tr>
-<tr class="memdesc:a8421b2a7870a3f33182c9780b7a35ac2"><td class="mdescLeft">&#160;</td><td class="mdescRight">A condition factory macro to ease and unify the registration at AIRegistry.  <a href="#a8421b2a7870a3f33182c9780b7a35ac2">More...</a><br/></td></tr>
+<tr class="memdesc:a8421b2a7870a3f33182c9780b7a35ac2"><td class="mdescLeft">&#160;</td><td class="mdescRight">A condition factory macro to ease and unify the registration at <a class="el" href="classai_1_1AIRegistry.html">AIRegistry</a>.  <a href="#a8421b2a7870a3f33182c9780b7a35ac2">More...</a><br/></td></tr>
 <tr class="separator:a8421b2a7870a3f33182c9780b7a35ac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d470244e0afaa69642bb08db6cd86ee"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ICondition_8h.html#a1d470244e0afaa69642bb08db6cd86ee">CONDITION_FACTORY_SINGLETON</a></td></tr>
-<tr class="memdesc:a1d470244e0afaa69642bb08db6cd86ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">A condition factory singleton macro to ease and unify the registration at AIRegistry. Nothing from the given context is taken, if you need this, use the instance based factory, not the singleton based.  <a href="#a1d470244e0afaa69642bb08db6cd86ee">More...</a><br/></td></tr>
+<tr class="memdesc:a1d470244e0afaa69642bb08db6cd86ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">A condition factory singleton macro to ease and unify the registration at <a class="el" href="classai_1_1AIRegistry.html">AIRegistry</a>. Nothing from the given context is taken, if you need this, use the instance based factory, not the singleton based.  <a href="#a1d470244e0afaa69642bb08db6cd86ee">More...</a><br/></td></tr>
 <tr class="separator:a1d470244e0afaa69642bb08db6cd86ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ee5814dced7e6ad353520c36eaaacfb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ICondition_8h.html#a1ee5814dced7e6ad353520c36eaaacfb">CONDITION_CLASS_SINGLETON</a>(ConditionName)</td></tr>
 <tr class="memdesc:a1ee5814dced7e6ad353520c36eaaacfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to create a singleton conditions for very easy conditions without a state.  <a href="#a1ee5814dced7e6ad353520c36eaaacfb">More...</a><br/></td></tr>
@@ -167,7 +167,6 @@ typedef Conditions::const_iterator&#160;</td><td class="memItemRight" valign="bo
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Condition related stuff. </p>
-<dl class="section see"><dt>See Also</dt><dd>ICondition </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a52a75a637987f9804e2c814c4e4dd398"></a>
 <div class="memitem">
@@ -216,8 +215,8 @@ typedef Conditions::const_iterator&#160;</td><td class="memItemRight" valign="bo
 <div class="line">        return _instance; \</div>
 <div class="line">    } <a class="code" href="ICondition_8h.html#a1d470244e0afaa69642bb08db6cd86ee">\</a></div>
 <div class="line"><a class="code" href="ICondition_8h.html#a1d470244e0afaa69642bb08db6cd86ee">	CONDITION_FACTORY_SINGLETON</a></div>
-<div class="ttc" id="ICondition_8h_html_a52a75a637987f9804e2c814c4e4dd398"><div class="ttname"><a href="ICondition_8h.html#a52a75a637987f9804e2c814c4e4dd398">CONDITION_CLASS</a></div><div class="ttdeci">#define CONDITION_CLASS(ConditionName)</div><div class="ttdoc">Macro to simplify the condition creation. Just give the class name of the condition as parameter...</div><div class="ttdef"><b>Definition:</b> ICondition.h:28</div></div>
-<div class="ttc" id="ICondition_8h_html_a1d470244e0afaa69642bb08db6cd86ee"><div class="ttname"><a href="ICondition_8h.html#a1d470244e0afaa69642bb08db6cd86ee">CONDITION_FACTORY_SINGLETON</a></div><div class="ttdeci">#define CONDITION_FACTORY_SINGLETON</div><div class="ttdoc">A condition factory singleton macro to ease and unify the registration at AIRegistry. Nothing from the given context is taken, if you need this, use the instance based factory, not the singleton based. </div><div class="ttdef"><b>Definition:</b> ICondition.h:72</div></div>
+<div class="ttc" id="ICondition_8h_html_a52a75a637987f9804e2c814c4e4dd398"><div class="ttname"><a href="ICondition_8h.html#a52a75a637987f9804e2c814c4e4dd398">CONDITION_CLASS</a></div><div class="ttdeci">#define CONDITION_CLASS(ConditionName)</div><div class="ttdoc">Macro to simplify the condition creation. Just give the class name of the condition as parameter...</div><div class="ttdef"><b>Definition:</b> ICondition.h:29</div></div>
+<div class="ttc" id="ICondition_8h_html_a1d470244e0afaa69642bb08db6cd86ee"><div class="ttname"><a href="ICondition_8h.html#a1d470244e0afaa69642bb08db6cd86ee">CONDITION_FACTORY_SINGLETON</a></div><div class="ttdeci">#define CONDITION_FACTORY_SINGLETON</div><div class="ttdoc">A condition factory singleton macro to ease and unify the registration at AIRegistry. Nothing from the given context is taken, if you need this, use the instance based factory, not the singleton based. </div><div class="ttdef"><b>Definition:</b> ICondition.h:73</div></div>
 </div><!-- fragment -->
 <p>Macro to create a singleton conditions for very easy conditions without a state. </p>
 
@@ -248,7 +247,7 @@ typedef Conditions::const_iterator&#160;</td><td class="memItemRight" valign="bo
 <div class="line">        return FACTORY; \</div>
 <div class="line">    }</div>
 </div><!-- fragment -->
-<p>A condition factory macro to ease and unify the registration at AIRegistry. </p>
+<p>A condition factory macro to ease and unify the registration at <a class="el" href="classai_1_1AIRegistry.html">AIRegistry</a>. </p>
 
 </div>
 </div>
@@ -299,7 +298,7 @@ typedef Conditions::const_iterator&#160;</td><td class="memItemRight" valign="bo
 <div class="line">        return FACTORY; \</div>
 <div class="line">    }</div>
 </div><!-- fragment -->
-<p>A condition factory singleton macro to ease and unify the registration at AIRegistry. Nothing from the given context is taken, if you need this, use the instance based factory, not the singleton based. </p>
+<p>A condition factory singleton macro to ease and unify the registration at <a class="el" href="classai_1_1AIRegistry.html">AIRegistry</a>. Nothing from the given context is taken, if you need this, use the instance based factory, not the singleton based. </p>
 
 </div>
 </div>

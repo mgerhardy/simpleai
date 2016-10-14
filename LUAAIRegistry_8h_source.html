@@ -412,7 +412,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;        lua_setglobal(_s, <span class="stringliteral">&quot;Registry&quot;</span>);</div>
 <div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;</div>
 <div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;        luaL_Reg aiFuncs[] = {</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;            <span class="comment">// TODO: aggromgr, zone, filtered entities, character</span></div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;            <span class="comment">// TODO: aggromgr, zone, filtered entities, character, random</span></div>
 <div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;            {<span class="stringliteral">&quot;id&quot;</span>, luaAiId},</div>
 <div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;            {<span class="stringliteral">&quot;__tostring&quot;</span>, luaAiToString},</div>
 <div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;            {<span class="stringliteral">&quot;__gc&quot;</span>, luaAiGC},</div>
@@ -474,7 +474,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;</div>
 <div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;}</div>
 <div class="ttc" id="Types_8h_html_adb3840229c4143eb2b8e2fe2d4ee8163"><div class="ttname"><a href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a></div><div class="ttdeci">#define ai_assert(condition,...)</div><div class="ttdoc">Provide your own assert - this is only executed in DEBUG mode. </div><div class="ttdef"><b>Definition:</b> Types.h:75</div></div>
-<div class="ttc" id="classai_1_1LUACondition_1_1LUAConditionFactory_html"><div class="ttname"><a href="classai_1_1LUACondition_1_1LUAConditionFactory.html">ai::LUACondition::LUAConditionFactory</a></div><div class="ttdef"><b>Definition:</b> LUACondition.h:91</div></div>
+<div class="ttc" id="classai_1_1LUACondition_1_1LUAConditionFactory_html"><div class="ttname"><a href="classai_1_1LUACondition_1_1LUAConditionFactory.html">ai::LUACondition::LUAConditionFactory</a></div><div class="ttdef"><b>Definition:</b> LUACondition.h:92</div></div>
 <div class="ttc" id="classai_1_1LUAAIRegistry_html_ab08badc03a284b325b8c74971572669b"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#ab08badc03a284b325b8c74971572669b">ai::LUAAIRegistry::luaGetAIContext</a></div><div class="ttdeci">static AI * luaGetAIContext(lua_State *s, int n)</div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:73</div></div>
 <div class="ttc" id="classai_1_1LUAAIRegistry_html_a9f9d18703e8d447fb2bd872862f956f7"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html#a9f9d18703e8d447fb2bd872862f956f7">ai::LUAAIRegistry::shutdown</a></div><div class="ttdeci">void shutdown()</div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:436</div></div>
 <div class="ttc" id="Types_8h_html_ad28c4d09dbf2e7bb44aa8ffd3c83e063"><div class="ttname"><a href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a></div><div class="ttdeci">#define ai_log_error(...)</div><div class="ttdoc">Logging macro to provide your own loggers. </div><div class="ttdef"><b>Definition:</b> Types.h:23</div></div>

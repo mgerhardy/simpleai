@@ -1,5 +1,5 @@
 <map id="ai::NonCopyable" name="ai::NonCopyable">
-<area shape="rect" id="node2" href="$classai_1_1ICharacter.html" title="Class that should be extended by the ai controlled entity class. " alt="" coords="243,5,344,32"/>
+<area shape="rect" id="node2" href="$classai_1_1ICharacter.html" title="Class that should be extended by the AI controlled entity class. " alt="" coords="243,5,344,32"/>
 <area shape="rect" id="node3" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; KEY, TYPE, CTX \&gt;" alt="" coords="218,57,369,98"/>
 <area shape="rect" id="node4" href="$classai_1_1lua_1_1LUA.html" title="ai::lua::LUA" alt="" coords="248,123,339,149"/>
 <area shape="rect" id="node5" href="$classai_1_1ProtocolMessageFactory.html" title="ai::ProtocolMessageFactory" alt="" coords="201,173,386,200"/>

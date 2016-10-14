@@ -1,4 +1,5 @@
 <map id="Random" name="Random">
-<area shape="rect" id="node1" href="$group__Aggro.html" title="Aggro" alt="" coords="136,5,192,32"/>
-<area shape="rect" id="node3" href="$group__LUA.html" title="LUA" alt="" coords="140,56,188,83"/>
+<area shape="rect" id="node1" href="$group__Aggro.html" title="Aggro" alt="" coords="147,5,203,32"/>
+<area shape="rect" id="node2" href="$group__Condition.html" title="Condition" alt="" coords="136,56,213,83"/>
+<area shape="rect" id="node4" href="$group__LUA.html" title="LUA" alt="" coords="151,107,199,133"/>
 </map>

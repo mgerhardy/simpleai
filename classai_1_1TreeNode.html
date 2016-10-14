@@ -133,7 +133,7 @@ const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a cl
 <tr class="memdesc:afc6396b3d9a2b90378e3a16a5d0dbb95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the raw parameters for this node. <br/></td></tr>
 <tr class="separator:afc6396b3d9a2b90378e3a16a5d0dbb95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a379e429b60d79e258dbefbaf4d12fe77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1TreeNode.html#a379e429b60d79e258dbefbaf4d12fe77">setName</a> (const std::string &amp;name)</td></tr>
-<tr class="memdesc:a379e429b60d79e258dbefbaf4d12fe77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the custom name of this <code>ITreeNode</code>.  <a href="#a379e429b60d79e258dbefbaf4d12fe77">More...</a><br/></td></tr>
+<tr class="memdesc:a379e429b60d79e258dbefbaf4d12fe77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the custom name of this <code><a class="el" href="classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. ">TreeNode</a></code>.  <a href="#a379e429b60d79e258dbefbaf4d12fe77">More...</a><br/></td></tr>
 <tr class="separator:a379e429b60d79e258dbefbaf4d12fe77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8b1c506ca23b08285d891fa4a1b1e25"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8b1c506ca23b08285d891fa4a1b1e25"></a>
 const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1TreeNode.html#af8b1c506ca23b08285d891fa4a1b1e25">getType</a> () const </td></tr>
@@ -253,7 +253,7 @@ ConditionPtr&#160;</td><td class="memItemRight" valign="bottom"><b>_condition</b
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The base class for all behaviour tree actions. </p>
-<p><code><a class="el" href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">TreeNode::execute</a></code> is triggered with each <code>AI::update</code>. Also the attached <code><a class="el" href="classai_1_1ICondition.html" title="A condition can be placed on a TreeNode to decide which node is going to get executed. In general they are stateless. If they are not, it should explicitly get noted. ">ICondition</a></code> is evaluated here. States are stored on the connected <code>AI</code> instance. Don't store states on tree nodes, because they can be reused for multiple <code>AI</code> instances. Always use the <code>AI</code> or <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the ai controlled entity class. ">ICharacter</a></code> to store your state! </p>
+<p><code><a class="el" href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">TreeNode::execute</a></code> is triggered with each <code>AI::update</code>. Also the attached <code><a class="el" href="classai_1_1ICondition.html" title="A condition can be placed on a TreeNode to decide which node is going to get executed. In general they are stateless. If they are not, it should explicitly get noted. ">ICondition</a></code> is evaluated here. States are stored on the connected <code>AI</code> instance. Don't store states on tree nodes, because they can be reused for multiple <code>AI</code> instances. Always use the <code>AI</code> or <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the AI controlled entity class. ">ICharacter</a></code> to store your state! </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a7762b2b3b9b3cd4887835a567d962824"></a>
 <div class="memitem">
@@ -528,7 +528,7 @@ ConditionPtr&#160;</td><td class="memItemRight" valign="bottom"><b>_condition</b
 </table>
 </div><div class="memdoc">
 
-<p>Updates the custom name of this <code>ITreeNode</code>. </p>
+<p>Updates the custom name of this <code><a class="el" href="classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. ">TreeNode</a></code>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>The name to set - empty strings are ignored here </td></tr>

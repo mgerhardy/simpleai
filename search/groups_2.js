@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lua',['LUA',['../group__LUA.html',1,'']]]
+  ['filter',['Filter',['../group__Filter.html',1,'']]]
 ];
