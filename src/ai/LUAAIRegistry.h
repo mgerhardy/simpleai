@@ -373,8 +373,7 @@ protected:
 			return luaL_error(s, "steering %s is already registered", type.c_str());
 		}
 
-		LuaSteeringFactory ** udata = (LuaSteeringFactory**) lua_newuserdata(s, sizeof(LuaSteeringFactory*));
-		*udata = factory.get();
+		lua_ainewuserdata<LuaSteeringFactory>(s, factory.get());
 		const luaL_Reg nodes[] = {
 			{"filter", luaSteeringEmptyExecute},
 			{"__tostring", luaSteeringToString},
