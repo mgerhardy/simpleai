@@ -1,5 +1,6 @@
 /**
  * @file
+ * @ingroup LUA
  */
 #pragma once
 
@@ -14,7 +15,7 @@ namespace ai {
 class LUATreeNode : public TreeNode {
 public:
 	static inline const char *luaAIMetaName() {
-		return "entity";
+		return "__meta_ai";
 	}
 protected:
 	lua_State* _s;

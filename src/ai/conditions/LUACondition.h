@@ -1,5 +1,6 @@
 /**
  * @file
+ * @ingroup LUA
  */
 #pragma once
 

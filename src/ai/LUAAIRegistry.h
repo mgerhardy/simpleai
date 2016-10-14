@@ -1,5 +1,6 @@
 /**
  * @file
+ * @ingroup LUA
  */
 #pragma once
 
@@ -12,16 +13,67 @@
 namespace ai {
 
 /**
- * @brief Allows you to register lua @ai{TreeNode}s, @ai{Conditions} and so on.
+ * @brief Allows you to register lua @ai{TreeNode}s, @ai{Conditions}, @ai{Filter}s and @ai{ISteering}s.
  *
  * @see @ai{LUATreeNode}
  *
  * @par TreeNode
  * @code
- *
+ * local luanode = REGISTRY.createNode("SomeName")
+ * function luanode:execute(ai, deltaMillis)
+ *   print("Node execute called with parameters: ai=["..tostring(ai).."], deltaMillis=["..tostring(deltaMillis).."]")
+ *   return FINISHED
+ * end
  * @encode
+ * The @ai{TreeNodeStatus} states are put into the global space. They are: @c UNKNOWN, @c CANNOTEXECUTE,
+ * @c RUNNING, @c FINISHED, @c FAILED and @c EXCEPTION
+ *
+ * Use @c SomeName later on in your behaviour trees to use this @ai{ITreeNode}
+ *
+ * @par Conditions
+ * @code
+ * local luacondition = REGISTRY.createCondition("SomeName")
+ * function luacondition:evaluate(ai)
+ *   --print("Condition evaluate called with parameter: ai=["..tostring(ai).."]")
+ *   return true
+ * end
+ * @encode
+ *
+ * Use @c SomeName later on in your behaviour trees to use this @ai{ICondition}
+ *
+ * @par IFilter
+ * @code
+ * local luafilter = REGISTRY.createFilter("SomeName")
+ * function luafilter:filter(ai)
+ * end
+ * @endcode
+ *
+ * Use @c SomeName later on in your behaviour trees to use this @ai{ICondition}
+ *
+ * @par ISteering
+ * @code
+ * local luasteering = REGISTRY.createSteering("SomeName")
+ * function luasteering:execute(ai, speed)
+ *   -- return MoveVector
+ *   return 0.0, 1.0, 0.0, 0.6
+ * end
+ * @endcode
+ *
+ * Use @c SomeName later on in your behaviour trees to use this @ai{ICondition}
+ *
+ * @par AI metatable
+ * There is a metatable that you can modify by calling @ai{LUAAIRegistry::pushAIMetatable()}.
+ * This metatable is applied to all @ai{AI} pointers that are forwarded to the lua functions.
  */
 class LUAAIRegistry : public AIRegistry {
+public:
+	/**
+	 * @see pushAIMetatable()
+	 */
+	static AI* luaGetAIContext(lua_State * s, int n) {
+		return *(AI **) luaL_checkudata(s, n, LUATreeNode::luaAIMetaName());
+	}
+
 protected:
 	lua_State* _s = nullptr;
 
@@ -68,10 +120,6 @@ protected:
 
 	static LuaSteeringFactory* luaGetSteeringFactoryContext(lua_State * s, int n) {
 		return *(LuaSteeringFactory **) lua_touserdata(s, n);
-	}
-
-	static AI* luaGetAIContext(lua_State * s, int n) {
-		return *(AI **) luaL_checkudata(s, n, LUATreeNode::luaAIMetaName());
 	}
 
 	static int luaNodeEmptyExecute(lua_State* s) {
@@ -298,9 +346,22 @@ public:
 
 	/**
 	 * @brief Access to the lua state.
+	 * @see pushAIMetatable()
 	 */
 	lua_State* getLuaState() {
 		return _s;
+	}
+
+	/**
+	 * @brief Pushes the AI metatable onto the stack. This allows anyone to modify it
+	 * to provide own functions and data that is applied to the @c ai parameters of the
+	 * lua functions.
+	 * @note luaGetAIContext() can be used in your lua c callbacks to get access to the
+	 * @ai{AI} pointer: @code const AI* ai = LUAAIRegistry::luaGetAIContext(s, 1); @endcode
+	 */
+	int pushAIMetatable() {
+		ai_assert(_s != nullptr, "LUA state is not yet initialized");
+		return luaL_getmetatable(_s, LUATreeNode::luaAIMetaName());
 	}
 
 	/**
@@ -393,6 +454,7 @@ public:
 	 */
 	bool evaluate(const char* luaBuffer, size_t size) {
 		if (_s == nullptr) {
+			ai_log_debug("LUA state is not yet initialized");
 			return false;
 		}
 		if (luaL_loadbufferx(_s, luaBuffer, size, "", nullptr) || lua_pcall(_s, 0, 0, 0)) {

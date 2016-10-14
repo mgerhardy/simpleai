@@ -1,5 +1,7 @@
 /**
  * @file
+ * @ingroup LUA
+ * @ingroup Filter
  */
 #pragma once
 

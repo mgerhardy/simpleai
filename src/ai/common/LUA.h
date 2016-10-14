@@ -1,7 +1,6 @@
 /**
  * @file
- * @addtogroup LUA
- * @{
+ * @ingroup LUA
  */
 #pragma once
 
@@ -14,10 +13,6 @@
 #include <lua.hpp>
 #include <string>
 #include <map>
-#include <assert.h>
-#include <stdlib.h>
-#include <sstream>
-#include <memory>
 
 namespace ai {
 
@@ -187,7 +182,3 @@ public:
 }
 
 }
-
-/**
- * @}
- */
