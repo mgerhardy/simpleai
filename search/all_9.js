@@ -25,7 +25,7 @@ var searchData=
   ['ifilter_2eh',['IFilter.h',['../IFilter_8h.html',1,'']]],
   ['ifilterfactory',['IFilterFactory',['../classai_1_1IFilterFactory.html',1,'ai']]],
   ['inetworklistener',['INetworkListener',['../classai_1_1INetworkListener.html',1,'ai']]],
-  ['init',['init',['../classai_1_1LUATreeLoader.html#a9ee782aaf75228932bd225901b2dd778',1,'ai::LUATreeLoader::init()'],['../classai_1_1XMLTreeLoader.html#a5da1f19bcff69e1828dadb13a354ae35',1,'ai::XMLTreeLoader::init()']]],
+  ['init',['init',['../classai_1_1LUAAIRegistry.html#a50c35e3b11aecd406f39d04c60323d6b',1,'ai::LUAAIRegistry::init()'],['../classai_1_1LUATreeLoader.html#a9ee782aaf75228932bd225901b2dd778',1,'ai::LUATreeLoader::init()'],['../classai_1_1XMLTreeLoader.html#a5da1f19bcff69e1828dadb13a354ae35',1,'ai::XMLTreeLoader::init()']]],
   ['intersection',['Intersection',['../classai_1_1Intersection.html',1,'ai']]],
   ['intersection_2eh',['Intersection.h',['../Intersection_8h.html',1,'']]],
   ['invert',['Invert',['../classai_1_1Invert.html',1,'ai']]],

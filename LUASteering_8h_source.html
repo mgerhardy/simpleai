@@ -90,155 +90,155 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <a href="LUASteering_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#pragma once</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Steering_8h.html">Steering.h</a>&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="LUA_8h.html">common/LUA.h</a>&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>ai {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>movement {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classai_1_1movement_1_1LUASteering.html">   15</a></span>&#160;<span class="keyword">class </span><a class="code" href="classai_1_1movement_1_1LUASteering.html">LUASteering</a> : <span class="keyword">public</span> <a class="code" href="classai_1_1movement_1_1ISteering.html">ISteering</a> {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *luaAIMetaName() {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;entity&quot;</span>;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    }</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">mutable</span> lua_State* _s;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    std::string _type;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <a class="code" href="classai_1_1MoveVector.html">MoveVector</a> executeLUA(<span class="keyword">const</span> AIPtr&amp; entity, <span class="keywordtype">float</span> speed)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="comment">// get userdata of the behaviour tree steering</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">const</span> std::string name = <span class="stringliteral">&quot;__meta_steering_&quot;</span> + _type;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        lua_getfield(_s, LUA_REGISTRYINDEX, name.c_str());</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#if AI_LUA_SANTITY &gt; 0</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (lua_isnil(_s, -1)) {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: could not find lua userdata for %s&quot;</span>, name.c_str());</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        }</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor"></span>        <span class="comment">// get metatable</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        lua_getmetatable(_s, -1);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#if AI_LUA_SANTITY &gt; 0</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (!lua_istable(_s, -1)) {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: userdata for %s doesn&#39;t have a metatable assigned&quot;</span>, name.c_str());</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        }</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor"></span>        <span class="comment">// get execute() method</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        lua_getfield(_s, -1, <span class="stringliteral">&quot;execute&quot;</span>);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordflow">if</span> (!lua_isfunction(_s, -1)) {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: metatable for %s doesn&#39;t have the execute() function assigned&quot;</span>, name.c_str());</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        }</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="comment">// push self onto the stack</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        lua_getfield(_s, LUA_REGISTRYINDEX, name.c_str());</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="comment">// first parameter is ai</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        AI ** udata = (AI **) lua_newuserdata(_s, <span class="keyword">sizeof</span>(AI *));</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        luaL_getmetatable(_s, luaAIMetaName());</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#if AI_LUA_SANTITY &gt; 0</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (!lua_istable(_s, -1)) {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: metatable for %s doesn&#39;t exist&quot;</span>, luaAIMetaName());</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor"></span>        lua_setmetatable(_s, -2);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        *udata = entity.get();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="comment">// second parameter is speed</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        lua_pushnumber(_s, speed);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#if AI_LUA_SANTITY &gt; 0</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (!lua_isfunction(_s, -4)) {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: expected to find a function on stack -4&quot;</span>);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        }</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">if</span> (!lua_isuserdata(_s, -3)) {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: expected to find the userdata on -3&quot;</span>);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordflow">if</span> (!lua_isuserdata(_s, -2)) {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: second parameter should be the ai&quot;</span>);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keywordflow">if</span> (!lua_isnumber(_s, -1)) {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: first parameter should be the speed&quot;</span>);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor"></span>        <span class="keyword">const</span> <span class="keywordtype">int</span> error = lua_pcall(_s, 3, 4, 0);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordflow">if</span> (error) {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering script: %s&quot;</span>, lua_isstring(_s, -1) ? lua_tostring(_s, -1) : <span class="stringliteral">&quot;Unknown Error&quot;</span>);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <span class="comment">// reset stack</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            lua_pop(_s, lua_gettop(_s));</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="comment">// we get four values back, the direction vector and the</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">float</span> x = luaL_checknumber(_s, -1);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">float</span> y = luaL_checknumber(_s, -2);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">float</span> z = luaL_checknumber(_s, -3);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">float</span> rotation = luaL_checknumber(_s, -4);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="comment">// reset stack</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        lua_pop(_s, lua_gettop(_s));</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(glm::vec3(x, y, z), rotation);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory.html">  104</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory.html">LUASteeringFactory</a> : <span class="keyword">public</span> <a class="code" href="classai_1_1ISteeringFactory.html">ISteeringFactory</a> {</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        lua_State* _s;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        std::string _type;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <a class="code" href="classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory.html">LUASteeringFactory</a>(lua_State* s, <span class="keyword">const</span> std::string&amp; type) :</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;                _s(s), _type(type) {</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        }</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keyword">inline</span> <span class="keyword">const</span> std::string&amp; type()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keywordflow">return</span> _type;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        }</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        SteeringPtr create(<span class="keyword">const</span> <a class="code" href="structai_1_1SteeringFactoryContext.html">SteeringFactoryContext</a>* ctx)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            <span class="keywordflow">return</span> std::make_shared&lt;LUASteering&gt;(_s, _type);</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        }</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    };</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <a class="code" href="classai_1_1movement_1_1LUASteering.html">LUASteering</a>(lua_State* s, <span class="keyword">const</span> std::string&amp; type) :</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            <a class="code" href="classai_1_1movement_1_1ISteering.html">ISteering</a>(), _s(s) {</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        _type = type;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    }</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    ~<a class="code" href="classai_1_1movement_1_1LUASteering.html">LUASteering</a>() {</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    }</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
-<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="classai_1_1movement_1_1LUASteering.html#abdd8cf519b1bc81fad92693b5db8ae70">  130</a></span>&#160;    <a class="code" href="classai_1_1MoveVector.html">MoveVector</a> <a class="code" href="classai_1_1movement_1_1LUASteering.html#abdd8cf519b1bc81fad92693b5db8ae70">execute</a>(<span class="keyword">const</span> AIPtr&amp; entity, <span class="keywordtype">float</span> speed)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">#if AI_EXCEPTIONS</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">try</span> {</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="preprocessor"></span>            <span class="keywordflow">return</span> executeLUA(entity, speed);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="preprocessor">#if AI_EXCEPTIONS</span></div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="preprocessor"></span>        } <span class="keywordflow">catch</span> (...) {</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;Exception while running lua steering&quot;</span>)</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        }</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="preprocessor"></span>    }</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;};</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;}</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Steering_8h.html">Steering.h</a>&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="LUA_8h.html">common/LUA.h</a>&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>ai {</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span>movement {</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classai_1_1movement_1_1LUASteering.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="classai_1_1movement_1_1LUASteering.html">LUASteering</a> : <span class="keyword">public</span> <a class="code" href="classai_1_1movement_1_1ISteering.html">ISteering</a> {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *luaAIMetaName() {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;entity&quot;</span>;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    }</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">mutable</span> lua_State* _s;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    std::string _type;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="classai_1_1MoveVector.html">MoveVector</a> executeLUA(<span class="keyword">const</span> AIPtr&amp; entity, <span class="keywordtype">float</span> speed)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="comment">// get userdata of the behaviour tree steering</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">const</span> std::string name = <span class="stringliteral">&quot;__meta_steering_&quot;</span> + _type;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        lua_getfield(_s, LUA_REGISTRYINDEX, name.c_str());</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#if AI_LUA_SANTITY &gt; 0</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (lua_isnil(_s, -1)) {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: could not find lua userdata for %s&quot;</span>, name.c_str());</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor"></span>        <span class="comment">// get metatable</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        lua_getmetatable(_s, -1);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#if AI_LUA_SANTITY &gt; 0</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (!lua_istable(_s, -1)) {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: userdata for %s doesn&#39;t have a metatable assigned&quot;</span>, name.c_str());</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        }</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor"></span>        <span class="comment">// get execute() method</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        lua_getfield(_s, -1, <span class="stringliteral">&quot;execute&quot;</span>);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordflow">if</span> (!lua_isfunction(_s, -1)) {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: metatable for %s doesn&#39;t have the execute() function assigned&quot;</span>, name.c_str());</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        }</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="comment">// push self onto the stack</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        lua_getfield(_s, LUA_REGISTRYINDEX, name.c_str());</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="comment">// first parameter is ai</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        AI ** udata = (AI **) lua_newuserdata(_s, <span class="keyword">sizeof</span>(AI *));</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        luaL_getmetatable(_s, luaAIMetaName());</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#if AI_LUA_SANTITY &gt; 0</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (!lua_istable(_s, -1)) {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: metatable for %s doesn&#39;t exist&quot;</span>, luaAIMetaName());</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        }</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor"></span>        lua_setmetatable(_s, -2);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        *udata = entity.get();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="comment">// second parameter is speed</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        lua_pushnumber(_s, speed);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#if AI_LUA_SANTITY &gt; 0</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">if</span> (!lua_isfunction(_s, -4)) {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: expected to find a function on stack -4&quot;</span>);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">if</span> (!lua_isuserdata(_s, -3)) {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: expected to find the userdata on -3&quot;</span>);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordflow">if</span> (!lua_isuserdata(_s, -2)) {</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: second parameter should be the ai&quot;</span>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        }</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">if</span> (!lua_isnumber(_s, -1)) {</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering: first parameter should be the speed&quot;</span>);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        }</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor"></span>        <span class="keyword">const</span> <span class="keywordtype">int</span> error = lua_pcall(_s, 3, 4, 0);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">if</span> (error) {</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA steering script: %s&quot;</span>, lua_isstring(_s, -1) ? lua_tostring(_s, -1) : <span class="stringliteral">&quot;Unknown Error&quot;</span>);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            <span class="comment">// reset stack</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            lua_pop(_s, lua_gettop(_s));</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        }</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="comment">// we get four values back, the direction vector and the</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">float</span> x = luaL_checknumber(_s, -1);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">float</span> y = luaL_checknumber(_s, -2);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">float</span> z = luaL_checknumber(_s, -3);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">float</span> rotation = luaL_checknumber(_s, -4);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="comment">// reset stack</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        lua_pop(_s, lua_gettop(_s));</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(glm::vec3(x, y, z), rotation);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory.html">  105</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory.html">LUASteeringFactory</a> : <span class="keyword">public</span> <a class="code" href="classai_1_1ISteeringFactory.html">ISteeringFactory</a> {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        lua_State* _s;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        std::string _type;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <a class="code" href="classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory.html">LUASteeringFactory</a>(lua_State* s, <span class="keyword">const</span> std::string&amp; type) :</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;                _s(s), _type(type) {</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        }</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keyword">inline</span> <span class="keyword">const</span> std::string&amp; type()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            <span class="keywordflow">return</span> _type;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        SteeringPtr create(<span class="keyword">const</span> <a class="code" href="structai_1_1SteeringFactoryContext.html">SteeringFactoryContext</a>* ctx)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            <span class="keywordflow">return</span> std::make_shared&lt;LUASteering&gt;(_s, _type);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        }</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    };</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <a class="code" href="classai_1_1movement_1_1LUASteering.html">LUASteering</a>(lua_State* s, <span class="keyword">const</span> std::string&amp; type) :</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            <a class="code" href="classai_1_1movement_1_1ISteering.html">ISteering</a>(), _s(s) {</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        _type = type;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    }</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    ~<a class="code" href="classai_1_1movement_1_1LUASteering.html">LUASteering</a>() {</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    }</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="classai_1_1movement_1_1LUASteering.html#abdd8cf519b1bc81fad92693b5db8ae70">  131</a></span>&#160;    <a class="code" href="classai_1_1MoveVector.html">MoveVector</a> <a class="code" href="classai_1_1movement_1_1LUASteering.html#abdd8cf519b1bc81fad92693b5db8ae70">execute</a>(<span class="keyword">const</span> AIPtr&amp; entity, <span class="keywordtype">float</span> speed)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor">#if AI_EXCEPTIONS</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor"></span>        <span class="keywordflow">try</span> {</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="preprocessor"></span>            <span class="keywordflow">return</span> executeLUA(entity, speed);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="preprocessor">#if AI_EXCEPTIONS</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="preprocessor"></span>        } <span class="keywordflow">catch</span> (...) {</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;Exception while running lua steering&quot;</span>)</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classai_1_1MoveVector.html">MoveVector</a>(INFINITE, 0.0f);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        }</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="preprocessor"></span>    }</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;};</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;}</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;}</div>
 <div class="ttc" id="Types_8h_html_ad28c4d09dbf2e7bb44aa8ffd3c83e063"><div class="ttname"><a href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a></div><div class="ttdeci">#define ai_log_error(...)</div><div class="ttdoc">Logging macro to provide your own loggers. </div><div class="ttdef"><b>Definition:</b> Types.h:23</div></div>
 <div class="ttc" id="classai_1_1MoveVector_html"><div class="ttname"><a href="classai_1_1MoveVector.html">ai::MoveVector</a></div><div class="ttdef"><b>Definition:</b> MoveVector.h:10</div></div>
-<div class="ttc" id="classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory_html"><div class="ttname"><a href="classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory.html">ai::movement::LUASteering::LUASteeringFactory</a></div><div class="ttdef"><b>Definition:</b> LUASteering.h:104</div></div>
+<div class="ttc" id="classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory_html"><div class="ttname"><a href="classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory.html">ai::movement::LUASteering::LUASteeringFactory</a></div><div class="ttdef"><b>Definition:</b> LUASteering.h:105</div></div>
 <div class="ttc" id="Steering_8h_html"><div class="ttname"><a href="Steering_8h.html">Steering.h</a></div><div class="ttdoc">Defines some basic movement algorithms like Wandering, Seeking and Fleeing. </div></div>
 <div class="ttc" id="structai_1_1SteeringFactoryContext_html"><div class="ttname"><a href="structai_1_1SteeringFactoryContext.html">ai::SteeringFactoryContext</a></div><div class="ttdef"><b>Definition:</b> AIFactories.h:43</div></div>
-<div class="ttc" id="classai_1_1movement_1_1LUASteering_html_abdd8cf519b1bc81fad92693b5db8ae70"><div class="ttname"><a href="classai_1_1movement_1_1LUASteering.html#abdd8cf519b1bc81fad92693b5db8ae70">ai::movement::LUASteering::execute</a></div><div class="ttdeci">MoveVector execute(const AIPtr &amp;entity, float speed) const override</div><div class="ttdoc">Calculates the MoveVector. </div><div class="ttdef"><b>Definition:</b> LUASteering.h:130</div></div>
+<div class="ttc" id="classai_1_1movement_1_1LUASteering_html_abdd8cf519b1bc81fad92693b5db8ae70"><div class="ttname"><a href="classai_1_1movement_1_1LUASteering.html#abdd8cf519b1bc81fad92693b5db8ae70">ai::movement::LUASteering::execute</a></div><div class="ttdeci">MoveVector execute(const AIPtr &amp;entity, float speed) const override</div><div class="ttdoc">Calculates the MoveVector. </div><div class="ttdef"><b>Definition:</b> LUASteering.h:131</div></div>
 <div class="ttc" id="classai_1_1movement_1_1ISteering_html"><div class="ttname"><a href="classai_1_1movement_1_1ISteering.html">ai::movement::ISteering</a></div><div class="ttdoc">Steering interface. </div><div class="ttdef"><b>Definition:</b> Steering.h:47</div></div>
 <div class="ttc" id="LUA_8h_html"><div class="ttname"><a href="LUA_8h.html">LUA.h</a></div></div>
 <div class="ttc" id="classai_1_1ISteeringFactory_html"><div class="ttname"><a href="classai_1_1ISteeringFactory.html">ai::ISteeringFactory</a></div><div class="ttdef"><b>Definition:</b> AIFactories.h:75</div></div>
-<div class="ttc" id="classai_1_1movement_1_1LUASteering_html"><div class="ttname"><a href="classai_1_1movement_1_1LUASteering.html">ai::movement::LUASteering</a></div><div class="ttdef"><b>Definition:</b> LUASteering.h:15</div></div>
+<div class="ttc" id="classai_1_1movement_1_1LUASteering_html"><div class="ttname"><a href="classai_1_1movement_1_1LUASteering.html">ai::movement::LUASteering</a></div><div class="ttdef"><b>Definition:</b> LUASteering.h:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
