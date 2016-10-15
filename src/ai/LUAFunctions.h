@@ -20,6 +20,10 @@ static inline const char* lua_metaaggromgr() {
 	return "__meta_aggromgr";
 }
 
+static inline const char* lua_metagroupmgr() {
+	return "__meta_groupmgr";
+}
+
 static inline const char* lua_metacharacter() {
 	return "__meta_character";
 }
@@ -107,6 +111,10 @@ static AggroMgr* lua_ctxaggromgr(lua_State * s, int n) {
 	return lua_getaiudata<AggroMgr>(s, n, lua_metaaggromgr());
 }
 
+static GroupMgr* lua_ctxgroupmgr(lua_State * s, int n) {
+	return lua_getaiudata<GroupMgr>(s, n, lua_metagroupmgr());
+}
+
 static ICharacter* lua_ctxcharacter(lua_State * s, int n) {
 	return lua_getaiudata<ICharacter>(s, n, lua_metacharacter());
 }
@@ -121,6 +129,10 @@ static int lua_pushzone(lua_State* s, Zone* zone) {
 
 static int lua_pushaggromgr(lua_State* s, AggroMgr* aggroMgr) {
 	return lua_pushaiudata<AggroMgr>(s, aggroMgr, lua_metaaggromgr());
+}
+
+static int lua_pushgroupmgr(lua_State* s, GroupMgr* groupMgr) {
+	return lua_pushaiudata<GroupMgr>(s, groupMgr, lua_metagroupmgr());
 }
 
 static int lua_pushcharacter(lua_State* s, ICharacter* character) {
@@ -143,6 +155,23 @@ static int lua_pushvec(lua_State* s, const glm::vec3& v) {
 	lua_setmetatable(s, -2);
 	*vec = v;
 	return 1;
+}
+
+static int lua_groupmgrposition(lua_State* s) {
+	const GroupMgr* groupMgr = lua_ctxgroupmgr(s, 1);
+	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
+	return lua_pushvec(s, groupMgr->getPosition(groupId));
+}
+
+static int lua_groupmgrtostring(lua_State* s) {
+	const GroupMgr* groupMgr = lua_ctxgroupmgr(s, 1);
+	lua_pushfstring(s, "groupmgr: %p", groupMgr);
+	return 1;
+}
+
+static int lua_zonegroupmgr(lua_State* s) {
+	Zone* zone = lua_ctxzone(s, 1);
+	return lua_pushgroupmgr(s, &zone->getGroupMgr());
 }
 
 static int lua_zonetostring(lua_State* s) {
@@ -284,6 +313,20 @@ static int lua_aiid(lua_State* s) {
 static int lua_aitime(lua_State* s) {
 	const AI* ai = lua_ctxai(s, 1);
 	lua_pushinteger(s, ai->getTime());
+	return 1;
+}
+
+static int lua_aifilteredentities(lua_State* s) {
+	const AI* ai = lua_ctxai(s, 1);
+	const FilteredEntities& filteredEntities = ai->getFilteredEntities();
+	lua_newtable(s);
+	const int top = lua_gettop(s);
+	int i = 0;
+	for (auto it = filteredEntities.begin(); it != filteredEntities.end(); ++it) {
+		lua_pushinteger(s, i++);
+		lua_pushinteger(s, *it);
+		lua_settable(s, top);
+	}
 	return 1;
 }
 

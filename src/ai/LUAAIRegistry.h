@@ -397,11 +397,11 @@ public:
 
 	virtual void registerAIFunc() {
 		const luaL_Reg funcs[] = {
-			// TODO: filtered entities
 			{"id", lua_aiid},
 			{"time", lua_aitime},
 			{"hasZone", lua_aihaszone},
 			{"zone", lua_aigetzone},
+			{"filteredEntities", lua_aifilteredentities},
 			{"character", lua_aigetcharacter},
 			{"aggroMgr", lua_aigetaggromgr},
 			{"__tostring", lua_aitostring},
@@ -431,6 +431,7 @@ public:
 	virtual void registerZoneFunc() {
 		const luaL_Reg funcs[] = {
 			{"size", lua_zonesize},
+			{"groupMgr", lua_zonegroupmgr},
 			{"__tostring", lua_zonetostring},
 			{nullptr, nullptr}
 		};
@@ -464,6 +465,15 @@ public:
 			{nullptr, nullptr}
 		};
 		registerFuncs(funcs, lua_metaaggromgr());
+	}
+
+	virtual void registerGroupMgrFunc() {
+		const luaL_Reg funcs[] = {
+			{"position", lua_groupmgrposition},
+			{"__tostring", lua_groupmgrtostring},
+			{nullptr, nullptr}
+		};
+		registerFuncs(funcs, lua_metagroupmgr());
 	}
 };
 
