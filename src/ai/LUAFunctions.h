@@ -157,6 +157,30 @@ static int lua_zonesize(lua_State* s) {
 	return 1;
 }
 
+static int lua_aggromgrhighestentry(lua_State* s) {
+	AggroMgr* aggroMgr = lua_ctxaggromgr(s, 1);
+	EntryPtr entry = aggroMgr->getHighestEntry();
+	if (entry == nullptr) {
+		return 0;
+	}
+	lua_pushinteger(s, entry->getCharacterId());
+	lua_pushnumber(s, entry->getAggro());
+	return 2;
+}
+
+static int lua_aggromgrentries(lua_State* s) {
+	AggroMgr* aggroMgr = lua_ctxaggromgr(s, 1);
+	const AggroMgr::Entries& entries = aggroMgr->getEntries();
+	lua_newtable(s);
+	const int top = lua_gettop(s);
+	for (auto it = entries.begin(); it != entries.end(); ++it) {
+		lua_pushinteger(s, it->getCharacterId());
+		lua_pushnumber(s, it->getAggro());
+		lua_settable(s, top);
+	}
+	return 1;
+}
+
 static int lua_aggromgraddaggro(lua_State* s) {
 	AggroMgr* aggroMgr = lua_ctxaggromgr(s, 1);
 	const int chrId = luaL_checkinteger(s, 2);

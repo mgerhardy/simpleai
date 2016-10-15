@@ -458,6 +458,8 @@ public:
 	virtual void registerAggroMgrFunc() {
 		const luaL_Reg funcs[] = {
 			{"addAggro", lua_aggromgraddaggro},
+			{"highestEntry", lua_aggromgrhighestentry},
+			{"entries", lua_aggromgrentries},
 			{"__tostring", lua_aggromgrtostring},
 			{nullptr, nullptr}
 		};
