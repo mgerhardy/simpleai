@@ -163,6 +163,18 @@ static int lua_groupmgrposition(lua_State* s) {
 	return lua_pushvec(s, groupMgr->getPosition(groupId));
 }
 
+static int lua_groupmgrleader(lua_State* s) {
+	const GroupMgr* groupMgr = lua_ctxgroupmgr(s, 1);
+	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
+	const AIPtr& ai = groupMgr->getLeader(groupId);
+	if (!ai) {
+		lua_pushnil(s);
+	} else {
+		lua_pushai(s, ai.get());
+	}
+	return 1;
+}
+
 static int lua_groupmgrtostring(lua_State* s) {
 	const GroupMgr* groupMgr = lua_ctxgroupmgr(s, 1);
 	lua_pushfstring(s, "groupmgr: %p", groupMgr);

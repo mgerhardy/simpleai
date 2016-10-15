@@ -430,6 +430,7 @@ public:
 
 	virtual void registerZoneFunc() {
 		const luaL_Reg funcs[] = {
+			// TODO: finish this - lots of stuff is missing here
 			{"size", lua_zonesize},
 			{"groupMgr", lua_zonegroupmgr},
 			{"__tostring", lua_zonetostring},
@@ -469,7 +470,9 @@ public:
 
 	virtual void registerGroupMgrFunc() {
 		const luaL_Reg funcs[] = {
+			// TODO: finish this - lots of stuff is missing here
 			{"position", lua_groupmgrposition},
+			{"leader", lua_groupmgrleader},
 			{"__tostring", lua_groupmgrtostring},
 			{nullptr, nullptr}
 		};
