@@ -1,28 +1,27 @@
 <map id="/home/travis/build/mgerhardy/simpleai/src/ai/server/ProtocolMessageFactory.h" name="/home/travis/build/mgerhardy/simpleai/src/ai/server/ProtocolMessageFactory.h">
-<area shape="rect" id="node2" href="$NonCopyable_8h.html" title="common/NonCopyable.h" alt="" coords="327,648,493,675"/>
-<area shape="rect" id="node3" href="$IProtocolMessage_8h.html" title="IProtocolMessage.h" alt="" coords="1833,200,1972,227"/>
-<area shape="rect" id="node9" href="$AIStateMessage_8h.html" title="AIStateMessage.h" alt="" coords="635,125,764,152"/>
-<area shape="rect" id="node40" href="$AICharacterDetailsMessage_8h.html" title="AICharacterDetailsMessage.h" alt="" coords="789,125,987,152"/>
-<area shape="rect" id="node41" href="$AICharacterStaticMessage_8h.html" title="AICharacterStaticMessage.h" alt="" coords="419,125,609,152"/>
-<area shape="rect" id="node42" href="$AIPauseMessage_8h.html" title="AIPauseMessage.h" alt="" coords="1940,125,2075,152"/>
-<area shape="rect" id="node43" href="$AISelectMessage_8h.html" title="AISelectMessage.h" alt="" coords="1011,125,1145,152"/>
-<area shape="rect" id="node45" href="$AINamesMessage_8h.html" title="AINamesMessage.h" alt="" coords="2100,125,2240,152"/>
-<area shape="rect" id="node46" href="$AIChangeMessage_8h.html" title="AIChangeMessage.h" alt="" coords="2265,125,2409,152"/>
-<area shape="rect" id="node47" href="$AIStepMessage_8h.html" title="AIStepMessage.h" alt="" coords="1738,125,1864,152"/>
-<area shape="rect" id="node48" href="$AIUpdateNodeMessage_8h.html" title="AIUpdateNodeMessage.h" alt="" coords="1171,125,1343,152"/>
-<area shape="rect" id="node49" href="$AIAddNodeMessage_8h.html" title="AIAddNodeMessage.h" alt="" coords="1367,125,1520,152"/>
-<area shape="rect" id="node50" href="$AIDeleteNodeMessage_8h.html" title="AIDeleteNodeMessage.h" alt="" coords="1545,125,1713,152"/>
-<area shape="rect" id="node10" href="$AIStubTypes_8h.html" title="AIStubTypes.h" alt="" coords="1203,200,1312,227"/>
-<area shape="rect" id="node12" href="$Math_8h.html" title="common/Math.h" alt="" coords="1483,573,1599,600"/>
-<area shape="rect" id="node13" href="$Types_8h.html" title="Types.h" alt="" coords="852,648,921,675"/>
-<area shape="rect" id="node26" href="$TreeNode_8h.html" title="tree/TreeNode.h" alt="" coords="1129,275,1244,301"/>
-<area shape="rect" id="node14" href="$Log_8h.html" title="Log.h" alt="" coords="891,723,945,749"/>
-<area shape="rect" id="node27" href="$MemoryAllocator_8h.html" title="common/MemoryAllocator.h" alt="" coords="1070,499,1255,525"/>
-<area shape="rect" id="node29" href="$ICondition_8h.html" title="Condition related stuff. " alt="" coords="955,424,1108,451"/>
-<area shape="rect" id="node38" href="$True_8h.html" title="conditions/True.h" alt="" coords="976,349,1099,376"/>
-<area shape="rect" id="node31" href="$Thread_8h.html" title="common/Thread.h" alt="" coords="867,499,993,525"/>
-<area shape="rect" id="node35" href="$AIFactories_8h.html" title="AIFactories.h" alt="" coords="743,499,843,525"/>
-<area shape="rect" id="node36" href="$IAIFactory_8h.html" title="IAIFactory.h" alt="" coords="449,573,543,600"/>
-<area shape="rect" id="node37" href="$IFactoryRegistry_8h.html" title="common/IFactoryRegistry.h" alt="" coords="619,573,803,600"/>
-<area shape="rect" id="node44" href="$ICharacter_8h.html" title="ICharacter.h" alt="" coords="530,499,624,525"/>
+<area shape="rect" id="node2" href="$NonCopyable_8h.html" title="common/NonCopyable.h" alt="" coords="5,499,171,525"/>
+<area shape="rect" id="node3" href="$IProtocolMessage_8h.html" title="IProtocolMessage.h" alt="" coords="575,200,713,227"/>
+<area shape="rect" id="node9" href="$AIStateMessage_8h.html" title="AIStateMessage.h" alt="" coords="1509,125,1639,152"/>
+<area shape="rect" id="node40" href="$AICharacterDetailsMessage_8h.html" title="AICharacterDetailsMessage.h" alt="" coords="1664,125,1861,152"/>
+<area shape="rect" id="node41" href="$AICharacterStaticMessage_8h.html" title="AICharacterStaticMessage.h" alt="" coords="1886,125,2076,152"/>
+<area shape="rect" id="node42" href="$AIPauseMessage_8h.html" title="AIPauseMessage.h" alt="" coords="87,125,221,152"/>
+<area shape="rect" id="node43" href="$AISelectMessage_8h.html" title="AISelectMessage.h" alt="" coords="783,125,917,152"/>
+<area shape="rect" id="node45" href="$AINamesMessage_8h.html" title="AINamesMessage.h" alt="" coords="247,125,387,152"/>
+<area shape="rect" id="node46" href="$AIChangeMessage_8h.html" title="AIChangeMessage.h" alt="" coords="412,125,556,152"/>
+<area shape="rect" id="node47" href="$AIStepMessage_8h.html" title="AIStepMessage.h" alt="" coords="581,125,707,152"/>
+<area shape="rect" id="node48" href="$AIUpdateNodeMessage_8h.html" title="AIUpdateNodeMessage.h" alt="" coords="943,125,1115,152"/>
+<area shape="rect" id="node49" href="$AIAddNodeMessage_8h.html" title="AIAddNodeMessage.h" alt="" coords="1139,125,1292,152"/>
+<area shape="rect" id="node50" href="$AIDeleteNodeMessage_8h.html" title="AIDeleteNodeMessage.h" alt="" coords="1317,125,1485,152"/>
+<area shape="rect" id="node10" href="$AIStubTypes_8h.html" title="AIStubTypes.h" alt="" coords="1520,200,1629,227"/>
+<area shape="rect" id="node12" href="$Math_8h.html" title="common/Math.h" alt="" coords="791,499,907,525"/>
+<area shape="rect" id="node13" href="$Types_8h.html" title="Types.h" alt="" coords="1287,573,1356,600"/>
+<area shape="rect" id="node27" href="$TreeNode_8h.html" title="tree/TreeNode.h" alt="" coords="1517,275,1632,301"/>
+<area shape="rect" id="node14" href="$Log_8h.html" title="Log.h" alt="" coords="1294,648,1348,675"/>
+<area shape="rect" id="node28" href="$MemoryAllocator_8h.html" title="common/MemoryAllocator.h" alt="" coords="1351,499,1536,525"/>
+<area shape="rect" id="node30" href="$ICondition_8h.html" title="Condition related stuff. " alt="" coords="1751,424,1904,451"/>
+<area shape="rect" id="node38" href="$True_8h.html" title="conditions/True.h" alt="" coords="1711,349,1833,376"/>
+<area shape="rect" id="node32" href="$Thread_8h.html" title="common/Thread.h" alt="" coords="1613,499,1739,525"/>
+<area shape="rect" id="node36" href="$AIFactories_8h.html" title="AIFactories.h" alt="" coords="1959,499,2059,525"/>
+<area shape="rect" id="node37" href="$IAIFactory_8h.html" title="IAIFactory.h" alt="" coords="1893,573,1987,600"/>
+<area shape="rect" id="node44" href="$ICharacter_8h.html" title="ICharacter.h" alt="" coords="802,424,896,451"/>
 </map>
