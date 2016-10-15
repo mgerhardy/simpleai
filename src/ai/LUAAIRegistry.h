@@ -419,11 +419,10 @@ public:
 			{"__unm", lua_vecnegate},
 			{"__len", lua_veclen},
 			{"__eq", lua_veceq},
-			{"x", lua_vecx},
-			{"y", lua_vecy},
-			{"z", lua_vecz},
-			{"dot", lua_vecdot},
 			{"__tostring", lua_vectostring},
+			{"__index", lua_vecindex},
+			{"__newindex", lua_vecnewindex},
+			{"dot", lua_vecdot},
 			{nullptr, nullptr}
 		};
 		registerFuncs(funcs, lua_metavec());
@@ -440,7 +439,6 @@ public:
 
 	virtual void registerCharacterFunc() {
 		const luaL_Reg funcs[] = {
-			// TODO: position (vec3)
 			{"id", lua_characterid},
 			{"position", lua_characterposition},
 			{"setPosition", lua_charactersetposition},
@@ -450,6 +448,7 @@ public:
 			{"setOrientation", lua_charactersetorientation},
 			{"setAttribute", lua_charactersetattribute},
 			{"attributes", lua_characterattributes},
+			{"__eq", lua_charactereq},
 			{"__tostring", lua_charactertostring},
 			{nullptr, nullptr}
 		};

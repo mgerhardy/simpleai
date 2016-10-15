@@ -65,7 +65,11 @@ static int lua_ainewindex(lua_State* s) {
 template<class T>
 static inline T* lua_getaiudata(lua_State* s, int n, const char *name) {
 	T* data = *(T **) luaL_checkudata(s, n, name);
-	luaL_argcheck(s, data != nullptr, n, "userdata must not be null");
+	if (data == nullptr) {
+		std::string error(name);
+		error.append(" userdata must not be null");
+		luaL_argcheck(s, data != nullptr, n, error.c_str());
+	}
 	return data;
 }
 
@@ -80,10 +84,12 @@ template<class T>
 static inline int lua_pushaiudata(lua_State* s, T* ptr, const char *name) {
 	T ** udata = (T **) lua_newuserdata(s, sizeof(T *));
 	luaL_getmetatable(s, name);
+#if AI_LUA_SANTITY
 	if (!lua_istable(s, -1)) {
 		ai_log_error("LUA: metatable for %s doesn't exist", name);
 		return 0;
 	}
+#endif
 	lua_setmetatable(s, -2);
 	*udata = ptr;
 	return 1;
@@ -105,8 +111,8 @@ static ICharacter* lua_ctxcharacter(lua_State * s, int n) {
 	return lua_getaiudata<ICharacter>(s, n, lua_metacharacter());
 }
 
-static glm::vec3& lua_ctxvec(lua_State * s, int n) {
-	return *lua_getaiudata<glm::vec3>(s, n, lua_metavec());
+static glm::vec3* lua_ctxvec(lua_State * s, int n) {
+	return lua_getaiudata<glm::vec3>(s, n, lua_metavec());
 }
 
 static int lua_pushzone(lua_State* s, Zone* zone) {
@@ -128,6 +134,12 @@ static int lua_pushai(lua_State* s, AI* ai) {
 static int lua_pushvec(lua_State* s, const glm::vec3& v) {
 	glm::vec3* vec = (glm::vec3*)lua_newuserdata(s, sizeof(glm::vec3));
 	luaL_getmetatable(s, lua_metavec());
+#if AI_LUA_SANTITY
+	if (!lua_istable(s, -1)) {
+		ai_log_error("LUA: metatable for %s doesn't exist", lua_metavec());
+		return 0;
+	}
+#endif
 	lua_setmetatable(s, -2);
 	*vec = v;
 	return 1;
@@ -150,7 +162,7 @@ static int lua_aggromgraddaggro(lua_State* s) {
 	const int chrId = luaL_checkinteger(s, 2);
 	const float amount = luaL_checknumber(s, 3);
 	aggroMgr->addAggro((CharacterId)chrId, amount);
-	return 0;
+	return 1;
 }
 
 static int lua_aggromgrtostring(lua_State* s) {
@@ -166,14 +178,13 @@ static int lua_characterid(lua_State* s) {
 
 static int lua_characterposition(lua_State* s) {
 	const ICharacter* chr = lua_ctxcharacter(s, 1);
-	lua_pushvec(s, chr->getPosition());
-	return 1;
+	return lua_pushvec(s, chr->getPosition());
 }
 
 static int lua_charactersetposition(lua_State* s) {
 	ICharacter* chr = lua_ctxcharacter(s, 1);
-	const glm::vec3& v = lua_ctxvec(s, 2);
-	chr->setPosition(v);
+	const glm::vec3* v = lua_ctxvec(s, 2);
+	chr->setPosition(*v);
 	return 0;
 }
 
@@ -201,6 +212,14 @@ static int lua_charactersetorientation(lua_State* s) {
 	const float value = luaL_checknumber(s, 2);
 	chr->setOrientation(value);
 	return 0;
+}
+
+static int lua_charactereq(lua_State* s) {
+	const ICharacter* a = lua_ctxcharacter(s, 1);
+	const ICharacter* b = lua_ctxcharacter(s, 2);
+	const bool e = *a == *b;
+	lua_pushboolean(s, e);
+	return 1;
 }
 
 static int lua_characterattributes(lua_State* s) {
@@ -277,79 +296,116 @@ static int lua_aitostring(lua_State* s) {
 }
 
 static int lua_vecadd(lua_State* s) {
-	const glm::vec3& a = lua_ctxvec(s, 1);
-	const glm::vec3& b = lua_ctxvec(s, 2);
-	const glm::vec3& c = a + b;
-	lua_pushvec(s, c);
-	return 1;
-}
-
-static int lua_vecx(lua_State* s) {
-	const glm::vec3& a = lua_ctxvec(s, 1);
-	lua_pushnumber(s, a.x);
-	return 1;
-}
-
-static int lua_vecy(lua_State* s) {
-	const glm::vec3& a = lua_ctxvec(s, 1);
-	lua_pushnumber(s, a.y);
-	return 1;
-}
-
-static int lua_vecz(lua_State* s) {
-	const glm::vec3& a = lua_ctxvec(s, 1);
-	lua_pushnumber(s, a.z);
-	return 1;
+	const glm::vec3* a = lua_ctxvec(s, 1);
+	const glm::vec3* b = lua_ctxvec(s, 2);
+	const glm::vec3& c = *a + *b;
+	return lua_pushvec(s, c);
 }
 
 static int lua_vecdot(lua_State* s) {
-	const glm::vec3& a = lua_ctxvec(s, 1);
-	const glm::vec3& b = lua_ctxvec(s, 2);
-	const float c = glm::dot(a, b);
+	const glm::vec3* a = lua_ctxvec(s, 1);
+	const glm::vec3* b = lua_ctxvec(s, 2);
+	const float c = glm::dot(*a, *b);
 	lua_pushnumber(s, c);
 	return 1;
 }
 
 static int lua_vecdiv(lua_State* s) {
-	const glm::vec3& a = lua_ctxvec(s, 1);
-	const glm::vec3& b = lua_ctxvec(s, 2);
-	const glm::vec3& c = a / b;
+	const glm::vec3* a = lua_ctxvec(s, 1);
+	const glm::vec3* b = lua_ctxvec(s, 2);
+	const glm::vec3& c = *a / *b;
 	lua_pushvec(s, c);
 	return 1;
 }
 
 static int lua_veclen(lua_State* s) {
-	const glm::vec3& a = lua_ctxvec(s, 1);
-	const float c = glm::length(a);
+	const glm::vec3* a = lua_ctxvec(s, 1);
+	const float c = glm::length(*a);
 	lua_pushnumber(s, c);
 	return 1;
 }
 
 static int lua_veceq(lua_State* s) {
-	const glm::vec3& a = lua_ctxvec(s, 1);
-	const glm::vec3& b = lua_ctxvec(s, 2);
-	const bool e = glm::all(glm::epsilonEqual(a, b, 0.0001f));
+	const glm::vec3* a = lua_ctxvec(s, 1);
+	const glm::vec3* b = lua_ctxvec(s, 2);
+	const bool e = glm::all(glm::epsilonEqual(*a, *b, 0.0001f));
 	lua_pushboolean(s, e);
 	return 1;
 }
 
 static int lua_vecsub(lua_State* s) {
-	const glm::vec3& a = lua_ctxvec(s, 1);
-	const glm::vec3& b = lua_ctxvec(s, 2);
-	const glm::vec3& c = a - b;
+	const glm::vec3* a = lua_ctxvec(s, 1);
+	const glm::vec3* b = lua_ctxvec(s, 2);
+	const glm::vec3& c = *a - *b;
 	lua_pushvec(s, c);
 	return 1;
 }
 
 static int lua_vecnegate(lua_State* s) {
-	const glm::vec3& a = lua_ctxvec(s, 1);
-	lua_pushvec(s, -a);
+	const glm::vec3* a = lua_ctxvec(s, 1);
+	lua_pushvec(s, -(*a));
 	return 1;
 }
 
 static int lua_vectostring(lua_State* s) {
-	const glm::vec3& a = lua_ctxvec(s, 1);
-	lua_pushfstring(s, "vec: %f:%f:%f", a.x, a.y, a.z);
+	const glm::vec3* a = lua_ctxvec(s, 1);
+	lua_pushfstring(s, "vec: %f:%f:%f", a->x, a->y, a->z);
+	return 1;
+}
+
+static int lua_vecindex(lua_State * s) {
+	const glm::vec3* v = lua_ctxvec(s, 1);
+	const char* i = luaL_checkstring(s, 2);
+
+	switch (*i) {
+	case '0':
+	case 'x':
+	case 'r':
+		lua_pushnumber(s, v->x);
+		break;
+	case '1':
+	case 'y':
+	case 'g':
+		lua_pushnumber(s, v->y);
+		break;
+	case '2':
+	case 'z':
+	case 'b':
+		lua_pushnumber(s, v->z);
+		break;
+	default:
+		lua_pushnil(s);
+		break;
+	}
+
+	return 1;
+}
+
+static int lua_vecnewindex(lua_State * s) {
+	glm::vec3* v = lua_ctxvec(s, 1);
+	const char *i = luaL_checkstring(s, 2);
+	const float t = luaL_checknumber(s, 3);
+
+	switch (*i) {
+	case '0':
+	case 'x':
+	case 'r':
+		v->x = t;
+		break;
+	case '1':
+	case 'y':
+	case 'g':
+		v->y = t;
+		break;
+	case '2':
+	case 'z':
+	case 'b':
+		v->z = t;
+		break;
+	default:
+		break;
+	}
+
 	return 1;
 }
 
