@@ -126,131 +126,6 @@ protected:
 		return 1;
 	}
 
-	static int luaNewIndex(lua_State* s) {
-		// -3 is userdata
-		lua_getmetatable(s, -3);
-		// -3 is now the field string
-		const char *field = luaL_checkstring(s, -3);
-		// push -2 to -1 (the value)
-		lua_pushvalue(s, -2);
-		// set the value into the field
-		lua_setfield(s, -2, field);
-		lua_pop(s, 1);
-		return 0;
-	}
-
-	static int luaZoneGC(lua_State* s) {
-		return 0;
-	}
-
-	static int luaZoneToString(lua_State* s) {
-		const Zone* zone = lua_ctxzone(s, 1);
-		lua_pushfstring(s, "zone: %s", zone->getName().c_str());
-		return 1;
-	}
-
-	static int luaZoneSize(lua_State* s) {
-		const Zone* zone = lua_ctxzone(s, 1);
-		lua_pushinteger(s, zone->size());
-		return 1;
-	}
-
-	static int luaAggroMgrGC(lua_State* s) {
-		return 0;
-	}
-
-	static int luaAggroMgrAddAggro(lua_State* s) {
-		AggroMgr* aggroMgr = lua_ctxaggromgr(s, 1);
-		const int chrId = luaL_checkinteger(s, 2);
-		const float amount = luaL_checknumber(s, 3);
-		aggroMgr->addAggro((CharacterId)chrId, amount);
-		return 0;
-	}
-
-	static int luaAggroMgrToString(lua_State* s) {
-		lua_pushliteral(s, "aggroMgr");
-		return 1;
-	}
-
-	static int luaCharacterGC(lua_State* s) {
-		return 0;
-	}
-
-	static int luaCharacterToString(lua_State* s) {
-		ICharacter* character = lua_ctxcharacter(s, 1);
-		lua_pushfstring(s, "Character: %d", (lua_Integer)character->getId());
-		return 1;
-	}
-
-	static int luaAiGC(lua_State* s) {
-		return 0;
-	}
-
-	static int luaAiId(lua_State* s) {
-		const AI* ai = lua_ctxai(s, 1);
-		lua_pushinteger(s, ai->getId());
-		return 1;
-	}
-
-	static int luaAiTime(lua_State* s) {
-		const AI* ai = lua_ctxai(s, 1);
-		lua_pushinteger(s, ai->getTime());
-		return 1;
-	}
-
-	static int luaAiGetZone(lua_State* s) {
-		const AI* ai = lua_ctxai(s, 1);
-		return lua_pushzone(s, ai->getZone());
-	}
-
-	static int luaAiGetAggroMgr(lua_State* s) {
-		AI* ai = lua_ctxai(s, 1);
-		return lua_pushaggromgr(s, &ai->getAggroMgr());
-	}
-
-	static int luaAiGetCharacter(lua_State* s) {
-		const AI* ai = lua_ctxai(s, 1);
-		return lua_pushcharacter(s, ai->getCharacter().get());
-	}
-
-	static int luaAiHasZone(lua_State* s) {
-		const AI* ai = lua_ctxai(s, 1);
-		lua_pushboolean(s, ai->hasZone() ? 1 : 0);
-		return 1;
-	}
-
-	static int luaAiToString(lua_State* s) {
-		const AI* ai = lua_ctxai(s, 1);
-		TreeNodePtr treeNode = ai->getBehaviour();
-		if (treeNode) {
-			lua_pushfstring(s, "ai: %s", treeNode->getName().c_str());
-		} else {
-			lua_pushstring(s, "ai: no behaviour tree set");
-		}
-		return 1;
-	}
-
-	static void setupMetatable(lua_State* s, const std::string& type, const luaL_Reg *funcs, const std::string& name) {
-		const std::string& metaFull = "__meta_" + name + "_" + type;
-		// make global
-		lua_setfield(s, LUA_REGISTRYINDEX, metaFull.c_str());
-		// put back onto stack
-		lua_getfield(s, LUA_REGISTRYINDEX, metaFull.c_str());
-
-		// setup meta table - create a new one manually, otherwise we aren't
-		// able to override the particular function on a per instance base. Also
-		// this 'metatable' must not be in the global registry.
-		lua_createtable(s, 0, 2);
-		lua_pushvalue(s, -1);
-		lua_setfield(s, -2, "__index");
-		lua_pushstring(s, name.c_str());
-		lua_setfield(s, -2, "__name");
-		lua_pushstring(s, type.c_str());
-		lua_setfield(s, -2, "type");
-		luaL_setfuncs(s, funcs, 0);
-		lua_setmetatable(s, -2);
-	}
-
 	/**
 	 * @brief Create a new lua @ai{TreeNode}
 	 *
@@ -276,10 +151,10 @@ protected:
 		const luaL_Reg nodes[] = {
 			{"execute", luaNodeEmptyExecute},
 			{"__tostring", luaNodeToString},
-			{"__newindex", luaNewIndex},
+			{"__newindex", lua_ainewindex},
 			{nullptr, nullptr}
 		};
-		setupMetatable(s, type, nodes, "node");
+		lua_aisetupmetatable(s, type, nodes, "node");
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_treeNodeFactories.emplace(type, factory);
 		return 1;
@@ -309,10 +184,10 @@ protected:
 		const luaL_Reg nodes[] = {
 			{"evaluate", luaConditionEmptyEvaluate},
 			{"__tostring", luaConditionToString},
-			{"__newindex", luaNewIndex},
+			{"__newindex", lua_ainewindex},
 			{nullptr, nullptr}
 		};
-		setupMetatable(s, type, nodes, "condition");
+		lua_aisetupmetatable(s, type, nodes, "condition");
 
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_conditionFactories.emplace(type, factory);
@@ -343,10 +218,10 @@ protected:
 		const luaL_Reg nodes[] = {
 			{"filter", luaFilterEmptyFilter},
 			{"__tostring", luaFilterToString},
-			{"__newindex", luaNewIndex},
+			{"__newindex", lua_ainewindex},
 			{nullptr, nullptr}
 		};
-		setupMetatable(s, type, nodes, "filter");
+		lua_aisetupmetatable(s, type, nodes, "filter");
 
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_filterFactories.emplace(type, factory);
@@ -377,10 +252,10 @@ protected:
 		const luaL_Reg nodes[] = {
 			{"filter", luaSteeringEmptyExecute},
 			{"__tostring", luaSteeringToString},
-			{"__newindex", luaNewIndex},
+			{"__newindex", lua_ainewindex},
 			{nullptr, nullptr}
 		};
-		setupMetatable(s, type, nodes, "steering");
+		lua_aisetupmetatable(s, type, nodes, "steering");
 
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_steeringFactories.emplace(type, factory);
@@ -459,37 +334,33 @@ public:
 
 		luaL_Reg aiFuncs[] = {
 			// TODO: filtered entities, random
-			{"id", luaAiId},
-			{"time", luaAiTime},
-			{"hasZone", luaAiHasZone},
-			{"zone", luaAiGetZone},
-			{"character", luaAiGetCharacter},
-			{"aggroMgr", luaAiGetAggroMgr},
-			{"__tostring", luaAiToString},
-			{"__gc", luaAiGC},
+			{"id", lua_aiid},
+			{"time", lua_aitime},
+			{"hasZone", lua_aihaszone},
+			{"zone", lua_aigetzone},
+			{"character", lua_aigetcharacter},
+			{"aggroMgr", lua_aigetaggromgr},
+			{"__tostring", lua_aitostring},
 			{nullptr, nullptr}
 		};
 		registerFuncs(aiFuncs, lua_metaai());
 
 		luaL_Reg zoneFuncs[] = {
-			{"size", luaZoneSize},
-			{"__tostring", luaZoneToString},
-			{"__gc", luaZoneGC},
+			{"size", lua_zonesize},
+			{"__tostring", lua_zonetostring},
 			{nullptr, nullptr}
 		};
 		registerFuncs(zoneFuncs, lua_metazone());
 
 		luaL_Reg aggroMgrFuncs[] = {
-			{"addAggro", luaAggroMgrAddAggro},
-			{"__tostring", luaAggroMgrToString},
-			{"__gc", luaAggroMgrGC},
+			{"addAggro", lua_aggromgraddaggro},
+			{"__tostring", lua_aggromgrtostring},
 			{nullptr, nullptr}
 		};
 		registerFuncs(aggroMgrFuncs, lua_metaaggromgr());
 
 		luaL_Reg characterFuncs[] = {
-			{"__tostring", luaCharacterToString},
-			{"__gc", luaCharacterGC},
+			{"__tostring", lua_charactertostring},
 			{nullptr, nullptr}
 		};
 		registerFuncs(characterFuncs, lua_metacharacter());

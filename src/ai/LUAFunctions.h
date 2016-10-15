@@ -24,6 +24,40 @@ static inline const char* lua_metacharacter() {
 	return "__meta_character";
 }
 
+static void lua_aisetupmetatable(lua_State* s, const std::string& type, const luaL_Reg *funcs, const std::string& name) {
+	const std::string& metaFull = "__meta_" + name + "_" + type;
+	// make global
+	lua_setfield(s, LUA_REGISTRYINDEX, metaFull.c_str());
+	// put back onto stack
+	lua_getfield(s, LUA_REGISTRYINDEX, metaFull.c_str());
+
+	// setup meta table - create a new one manually, otherwise we aren't
+	// able to override the particular function on a per instance base. Also
+	// this 'metatable' must not be in the global registry.
+	lua_createtable(s, 0, 2);
+	lua_pushvalue(s, -1);
+	lua_setfield(s, -2, "__index");
+	lua_pushstring(s, name.c_str());
+	lua_setfield(s, -2, "__name");
+	lua_pushstring(s, type.c_str());
+	lua_setfield(s, -2, "type");
+	luaL_setfuncs(s, funcs, 0);
+	lua_setmetatable(s, -2);
+}
+
+static int lua_ainewindex(lua_State* s) {
+	// -3 is userdata
+	lua_getmetatable(s, -3);
+	// -3 is now the field string
+	const char *field = luaL_checkstring(s, -3);
+	// push -2 to -1 (the value)
+	lua_pushvalue(s, -2);
+	// set the value into the field
+	lua_setfield(s, -2, field);
+	lua_pop(s, 1);
+	return 0;
+}
+
 template<class T>
 static inline T* lua_getaiudata(lua_State* s, int n, const char *name) {
 	return *(T **) luaL_checkudata(s, n, name);
@@ -82,6 +116,81 @@ static int lua_pushcharacter(lua_State* s, ICharacter* character) {
 
 static int lua_pushai(lua_State* s, AI* ai) {
 	return lua_pushaiudata<AI>(s, ai, lua_metaai());
+}
+
+static int lua_zonetostring(lua_State* s) {
+	const Zone* zone = lua_ctxzone(s, 1);
+	lua_pushfstring(s, "zone: %s", zone->getName().c_str());
+	return 1;
+}
+
+static int lua_zonesize(lua_State* s) {
+	const Zone* zone = lua_ctxzone(s, 1);
+	lua_pushinteger(s, zone->size());
+	return 1;
+}
+
+static int lua_aggromgraddaggro(lua_State* s) {
+	AggroMgr* aggroMgr = lua_ctxaggromgr(s, 1);
+	const int chrId = luaL_checkinteger(s, 2);
+	const float amount = luaL_checknumber(s, 3);
+	aggroMgr->addAggro((CharacterId)chrId, amount);
+	return 0;
+}
+
+static int lua_aggromgrtostring(lua_State* s) {
+	lua_pushliteral(s, "aggroMgr");
+	return 1;
+}
+
+static int lua_charactertostring(lua_State* s) {
+	ICharacter* character = lua_ctxcharacter(s, 1);
+	lua_pushfstring(s, "Character: %d", (lua_Integer)character->getId());
+	return 1;
+}
+
+static int lua_aiid(lua_State* s) {
+	const AI* ai = lua_ctxai(s, 1);
+	lua_pushinteger(s, ai->getId());
+	return 1;
+}
+
+static int lua_aitime(lua_State* s) {
+	const AI* ai = lua_ctxai(s, 1);
+	lua_pushinteger(s, ai->getTime());
+	return 1;
+}
+
+static int lua_aigetzone(lua_State* s) {
+	const AI* ai = lua_ctxai(s, 1);
+	return lua_pushzone(s, ai->getZone());
+}
+
+static int lua_aigetaggromgr(lua_State* s) {
+	AI* ai = lua_ctxai(s, 1);
+	return lua_pushaggromgr(s, &ai->getAggroMgr());
+}
+
+static int lua_aigetcharacter(lua_State* s) {
+	const AI* ai = lua_ctxai(s, 1);
+	return lua_pushcharacter(s, ai->getCharacter().get());
+}
+
+static int lua_aihaszone(lua_State* s) {
+	const AI* ai = lua_ctxai(s, 1);
+	lua_pushboolean(s, ai->hasZone() ? 1 : 0);
+	return 1;
+}
+
+static int lua_aitostring(lua_State* s) {
+	const AI* ai = lua_ctxai(s, 1);
+	TreeNodePtr treeNode = ai->getBehaviour();
+	if (treeNode) {
+		lua_pushfstring(s, "ai: %s", treeNode->getName().c_str());
+	} else {
+		lua_pushstring(s, "ai: no behaviour tree set");
+	}
+	return 1;
 }
 
 }
