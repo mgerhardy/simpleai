@@ -143,6 +143,63 @@ static int lua_aggromgrtostring(lua_State* s) {
 	return 1;
 }
 
+static int lua_characterid(lua_State* s) {
+	const ICharacter* chr = lua_ctxcharacter(s, 1);
+	lua_pushinteger(s, chr->getId());
+	return 1;
+}
+
+static int lua_characterspeed(lua_State* s) {
+	const ICharacter* chr = lua_ctxcharacter(s, 1);
+	lua_pushnumber(s, chr->getSpeed());
+	return 1;
+}
+
+static int lua_characterorientation(lua_State* s) {
+	const ICharacter* chr = lua_ctxcharacter(s, 1);
+	lua_pushnumber(s, chr->getOrientation());
+	return 1;
+}
+
+static int lua_charactersetspeed(lua_State* s) {
+	ICharacter* chr = lua_ctxcharacter(s, 1);
+	const float value = luaL_checknumber(s, 2);
+	chr->setSpeed(value);
+	return 0;
+}
+
+static int lua_charactersetorientation(lua_State* s) {
+	ICharacter* chr = lua_ctxcharacter(s, 1);
+	const float value = luaL_checknumber(s, 2);
+	chr->setOrientation(value);
+	return 0;
+}
+
+static int lua_characterattributes(lua_State* s) {
+	const ICharacter* chr = lua_ctxcharacter(s, 1);
+	const CharacterAttributes& attributes = chr->getAttributes();
+
+	lua_newtable(s);
+	const int top = lua_gettop(s);
+
+	for (auto it = attributes.begin(); it != attributes.end(); ++it) {
+		const std::string& key = it->first;
+		const std::string& value = it->second;
+		lua_pushlstring(s, key.c_str(), key.size());
+		lua_pushlstring(s, value.c_str(), value.size());
+		lua_settable(s, top);
+	}
+	return 1;
+}
+
+static int lua_charactersetattribute(lua_State* s) {
+	ICharacter* chr = lua_ctxcharacter(s, 1);
+	const char* key = luaL_checkstring(s, 2);
+	const char* value = luaL_checkstring(s, 3);
+	chr->setAttribute(key, value);
+	return 0;
+}
+
 static int lua_charactertostring(lua_State* s) {
 	ICharacter* character = lua_ctxcharacter(s, 1);
 	lua_pushfstring(s, "Character: %d", (lua_Integer)character->getId());

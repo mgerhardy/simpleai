@@ -329,41 +329,15 @@ public:
 		registerFuncs(registryFuncs, "META_REGISTRY");
 		lua_setglobal(_s, "REGISTRY");
 
+		// TODO: random, vec3
+
 		lua_pushlightuserdata(_s, this);
 		lua_setglobal(_s, "Registry");
 
-		luaL_Reg aiFuncs[] = {
-			// TODO: filtered entities, random
-			{"id", lua_aiid},
-			{"time", lua_aitime},
-			{"hasZone", lua_aihaszone},
-			{"zone", lua_aigetzone},
-			{"character", lua_aigetcharacter},
-			{"aggroMgr", lua_aigetaggromgr},
-			{"__tostring", lua_aitostring},
-			{nullptr, nullptr}
-		};
-		registerFuncs(aiFuncs, lua_metaai());
-
-		luaL_Reg zoneFuncs[] = {
-			{"size", lua_zonesize},
-			{"__tostring", lua_zonetostring},
-			{nullptr, nullptr}
-		};
-		registerFuncs(zoneFuncs, lua_metazone());
-
-		luaL_Reg aggroMgrFuncs[] = {
-			{"addAggro", lua_aggromgraddaggro},
-			{"__tostring", lua_aggromgrtostring},
-			{nullptr, nullptr}
-		};
-		registerFuncs(aggroMgrFuncs, lua_metaaggromgr());
-
-		luaL_Reg characterFuncs[] = {
-			{"__tostring", lua_charactertostring},
-			{nullptr, nullptr}
-		};
-		registerFuncs(characterFuncs, lua_metacharacter());
+		registerAIFunc();
+		registerZoneFunc();
+		registerAggroMgrFunc();
+		registerCharacterFunc();
 
 		const char* script = ""
 			"UNKNOWN, CANNOTEXECUTE, RUNNING, FINISHED, FAILED, EXCEPTION = 0, 1, 2, 3, 4, 5\n";
@@ -418,6 +392,55 @@ public:
 			return false;
 		}
 		return true;
+	}
+
+	virtual void registerAIFunc() {
+		luaL_Reg aiFuncs[] = {
+			// TODO: filtered entities
+			{"id", lua_aiid},
+			{"time", lua_aitime},
+			{"hasZone", lua_aihaszone},
+			{"zone", lua_aigetzone},
+			{"character", lua_aigetcharacter},
+			{"aggroMgr", lua_aigetaggromgr},
+			{"__tostring", lua_aitostring},
+			{nullptr, nullptr}
+		};
+		registerFuncs(aiFuncs, lua_metaai());
+	}
+
+	virtual void registerZoneFunc() {
+		luaL_Reg zoneFuncs[] = {
+			{"size", lua_zonesize},
+			{"__tostring", lua_zonetostring},
+			{nullptr, nullptr}
+		};
+		registerFuncs(zoneFuncs, lua_metazone());
+	}
+
+	virtual void registerCharacterFunc() {
+		luaL_Reg characterFuncs[] = {
+			// TODO: position (vec3)
+			{"id", lua_characterid},
+			{"speed", lua_characterspeed},
+			{"setSpeed", lua_charactersetspeed},
+			{"orientation", lua_characterorientation},
+			{"setOrientation", lua_charactersetorientation},
+			{"setAttribute", lua_charactersetattribute},
+			{"attributes", lua_characterattributes},
+			{"__tostring", lua_charactertostring},
+			{nullptr, nullptr}
+		};
+		registerFuncs(characterFuncs, lua_metacharacter());
+	}
+
+	virtual void registerAggroMgrFunc() {
+		luaL_Reg aggroMgrFuncs[] = {
+			{"addAggro", lua_aggromgraddaggro},
+			{"__tostring", lua_aggromgrtostring},
+			{nullptr, nullptr}
+		};
+		registerFuncs(aggroMgrFuncs, lua_metaaggromgr());
 	}
 };
 
