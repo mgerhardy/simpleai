@@ -42,7 +42,7 @@ const char* const ORIENTATION = "Orientation";
  * other entities that are not SimpleAI controlled and so on. You can use the provided
  * @ai{character_cast} function in your @ai{TreeNode}, @ai{IFilter} or @ai{ICondition} implementations.
  */
-class ICharacter : public NonCopyable {
+class ICharacter : public NonCopyable, public std::enable_shared_from_this<ICharacter> {
 protected:
 	const CharacterId _id;
 	glm::vec3 _position;
@@ -115,6 +115,14 @@ public:
 	virtual void update(int64_t dt, bool debuggingActive) {
 		(void)dt;
 		(void)debuggingActive;
+	}
+
+	/**
+	 * If the object is currently maintained by a shared_ptr, you can get a shared_ptr from a raw pointer
+	 * instance that shares the state with the already existing shared_ptrs around.
+	 */
+	inline std::shared_ptr<ICharacter> ptr() {
+		return shared_from_this();
 	}
 };
 

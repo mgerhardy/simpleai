@@ -163,6 +163,57 @@ static int lua_groupmgrposition(lua_State* s) {
 	return lua_pushvec(s, groupMgr->getPosition(groupId));
 }
 
+static int lua_groupmgradd(lua_State* s) {
+	GroupMgr* groupMgr = lua_ctxgroupmgr(s, 1);
+	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
+	AI* ai = lua_ctxai(s, 3);
+	const bool state = groupMgr->add(groupId, ai->ptr());
+	lua_pushboolean(s, state);
+	return 1;
+}
+
+static int lua_groupmgrremove(lua_State* s) {
+	GroupMgr* groupMgr = lua_ctxgroupmgr(s, 1);
+	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
+	AI* ai = lua_ctxai(s, 3);
+	const bool state = groupMgr->remove(groupId, ai->ptr());
+	lua_pushboolean(s, state);
+	return 1;
+}
+
+static int lua_groupmgrisleader(lua_State* s) {
+	const GroupMgr* groupMgr = lua_ctxgroupmgr(s, 1);
+	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
+	AI* ai = lua_ctxai(s, 3);
+	const bool state = groupMgr->isGroupLeader(groupId, ai->ptr());
+	lua_pushboolean(s, state);
+	return 1;
+}
+
+static int lua_groupmgrisingroup(lua_State* s) {
+	const GroupMgr* groupMgr = lua_ctxgroupmgr(s, 1);
+	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
+	AI* ai = lua_ctxai(s, 3);
+	const bool state = groupMgr->isInGroup(groupId, ai->ptr());
+	lua_pushboolean(s, state);
+	return 1;
+}
+
+static int lua_groupmgrisinanygroup(lua_State* s) {
+	const GroupMgr* groupMgr = lua_ctxgroupmgr(s, 1);
+	AI* ai = lua_ctxai(s, 2);
+	const bool state = groupMgr->isInAnyGroup(ai->ptr());
+	lua_pushboolean(s, state);
+	return 1;
+}
+
+static int lua_groupmgrsize(lua_State* s) {
+	const GroupMgr* groupMgr = lua_ctxgroupmgr(s, 1);
+	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
+	lua_pushinteger(s, groupMgr->getGroupSize(groupId));
+	return 1;
+}
+
 static int lua_groupmgrleader(lua_State* s) {
 	const GroupMgr* groupMgr = lua_ctxgroupmgr(s, 1);
 	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);

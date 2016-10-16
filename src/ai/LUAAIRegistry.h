@@ -470,7 +470,12 @@ public:
 
 	virtual void registerGroupMgrFunc() {
 		const luaL_Reg funcs[] = {
-			// TODO: finish this - lots of stuff is missing here
+			{"add", lua_groupmgradd},
+			{"remove", lua_groupmgrremove},
+			{"isLeader", lua_groupmgrisleader},
+			{"isInGroup", lua_groupmgrisingroup},
+			{"isInAnyGroup", lua_groupmgrisinanygroup},
+			{"size", lua_groupmgrsize},
 			{"position", lua_groupmgrposition},
 			{"leader", lua_groupmgrleader},
 			{"__tostring", lua_groupmgrtostring},
