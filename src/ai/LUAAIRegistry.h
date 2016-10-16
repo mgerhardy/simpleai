@@ -432,6 +432,8 @@ public:
 		const luaL_Reg funcs[] = {
 			// TODO: finish this - lots of stuff is missing here
 			{"size", lua_zonesize},
+			{"name", lua_zonename},
+			{"ai", lua_zoneai},
 			{"groupMgr", lua_zonegroupmgr},
 			{"__tostring", lua_zonetostring},
 			{nullptr, nullptr}

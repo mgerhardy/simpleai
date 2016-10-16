@@ -243,6 +243,24 @@ static int lua_zonetostring(lua_State* s) {
 	return 1;
 }
 
+static int lua_zonename(lua_State* s) {
+	const Zone* zone = lua_ctxzone(s, 1);
+	lua_pushstring(s, zone->getName().c_str());
+	return 1;
+}
+
+static int lua_zoneai(lua_State* s) {
+	Zone* zone = lua_ctxzone(s, 1);
+	const CharacterId id = (CharacterId)luaL_checkinteger(s, 2);
+	const AIPtr& ai = zone->getAI(id);
+	if (!ai) {
+		lua_pushnil(s);
+	} else {
+		lua_pushai(s, ai.get());
+	}
+	return 1;
+}
+
 static int lua_zonesize(lua_State* s) {
 	const Zone* zone = lua_ctxzone(s, 1);
 	lua_pushinteger(s, zone->size());
