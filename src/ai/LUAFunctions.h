@@ -259,10 +259,12 @@ static int lua_aggromgrhighestentry(lua_State* s) {
 	AggroMgr* aggroMgr = lua_ctxaggromgr(s, 1);
 	EntryPtr entry = aggroMgr->getHighestEntry();
 	if (entry == nullptr) {
-		return 0;
+		lua_pushnil(s);
+		lua_pushnil(s);
+	} else {
+		lua_pushinteger(s, entry->getCharacterId());
+		lua_pushnumber(s, entry->getAggro());
 	}
-	lua_pushinteger(s, entry->getCharacterId());
-	lua_pushnumber(s, entry->getAggro());
 	return 2;
 }
 
@@ -281,9 +283,10 @@ static int lua_aggromgrentries(lua_State* s) {
 
 static int lua_aggromgraddaggro(lua_State* s) {
 	AggroMgr* aggroMgr = lua_ctxaggromgr(s, 1);
-	const int chrId = luaL_checkinteger(s, 2);
+	const CharacterId chrId = (CharacterId)luaL_checkinteger(s, 2);
 	const float amount = luaL_checknumber(s, 3);
-	aggroMgr->addAggro((CharacterId)chrId, amount);
+	const EntryPtr& entry = aggroMgr->addAggro(chrId, amount);
+	lua_pushnumber(s, entry->getAggro());
 	return 1;
 }
 
