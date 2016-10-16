@@ -2,6 +2,7 @@
 
 namespace {
 static const char *LUANODE = ""
+	// TODO: add the other lua bindings to this test
 	"local luatest = REGISTRY.createNode(\"LuaTest\")\n"
 	"function luatest:execute(ai, deltaMillis)\n"
 	"	--print(\"LuaTest node execute called with parameters: ai=[\"..tostring(ai)..\"], deltaMillis=[\"..tostring(deltaMillis)..\"]\")\n"
@@ -20,9 +21,9 @@ static const char *LUANODE = ""
 	"	end\n"
 	"	print(\"attributes: \" .. tostring(chr:attributes()))\n"
 	"	print(\"position: \" .. tostring(pos))\n"
-	"	print(\"position x: \" .. pos:x())\n"
-	"	print(\"position y: \" .. pos:y())\n"
-	"	print(\"position z: \" .. pos:z())\n"
+	"	print(\"position x: \" .. pos.x)\n"
+	"	print(\"position y: \" .. pos.y)\n"
+	"	print(\"position z: \" .. pos.z)\n"
 	"	print(\"character: \" .. tostring(chr))\n"
 	"	print(\"aggromgr: \" .. tostring(aggroMgr))\n"
 	"	--]]\n"

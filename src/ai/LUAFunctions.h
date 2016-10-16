@@ -67,14 +67,14 @@ static int lua_ainewindex(lua_State* s) {
 }
 
 template<class T>
-static inline T* lua_getaiudata(lua_State* s, int n, const char *name) {
-	T* data = *(T **) luaL_checkudata(s, n, name);
-	if (data == nullptr) {
+static inline T lua_getaiudata(lua_State* s, int n, const char *name) {
+	void* dataVoid = luaL_checkudata(s, n, name);
+	if (dataVoid == nullptr) {
 		std::string error(name);
 		error.append(" userdata must not be null");
-		luaL_argcheck(s, data != nullptr, n, error.c_str());
+		luaL_argcheck(s, dataVoid != nullptr, n, error.c_str());
 	}
-	return data;
+	return (T) dataVoid;
 }
 
 template<class T>
@@ -98,27 +98,27 @@ static inline int lua_pushaiudata(lua_State* s, const T& data, const char *name)
 }
 
 static AI* lua_ctxai(lua_State * s, int n) {
-	return lua_getaiudata<AI>(s, n, lua_metaai());
+	return *(AI**)lua_getaiudata<AI*>(s, n, lua_metaai());
 }
 
 static Zone* lua_ctxzone(lua_State * s, int n) {
-	return lua_getaiudata<Zone>(s, n, lua_metazone());
+	return *(Zone**)lua_getaiudata<Zone*>(s, n, lua_metazone());
 }
 
 static AggroMgr* lua_ctxaggromgr(lua_State * s, int n) {
-	return lua_getaiudata<AggroMgr>(s, n, lua_metaaggromgr());
+	return *(AggroMgr**)lua_getaiudata<AggroMgr*>(s, n, lua_metaaggromgr());
 }
 
 static GroupMgr* lua_ctxgroupmgr(lua_State * s, int n) {
-	return lua_getaiudata<GroupMgr>(s, n, lua_metagroupmgr());
+	return *(GroupMgr**)lua_getaiudata<GroupMgr*>(s, n, lua_metagroupmgr());
 }
 
 static ICharacter* lua_ctxcharacter(lua_State * s, int n) {
-	return lua_getaiudata<ICharacter>(s, n, lua_metacharacter());
+	return *(ICharacter**)lua_getaiudata<ICharacter*>(s, n, lua_metacharacter());
 }
 
 static glm::vec3* lua_ctxvec(lua_State * s, int n) {
-	return lua_getaiudata<glm::vec3>(s, n, lua_metavec());
+	return lua_getaiudata<glm::vec3*>(s, n, lua_metavec());
 }
 
 static int lua_pushzone(lua_State* s, Zone* zone) {
