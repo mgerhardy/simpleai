@@ -85,8 +85,8 @@ static inline T* lua_ainewuserdata(lua_State* s, T* ptr) {
 }
 
 template<class T>
-static inline int lua_pushaiudata(lua_State* s, T* ptr, const char *name) {
-	T ** udata = (T **) lua_newuserdata(s, sizeof(T *));
+static inline int lua_pushaiudata(lua_State* s, const T& data, const char *name) {
+	T* udata = (T*) lua_newuserdata(s, sizeof(T));
 	luaL_getmetatable(s, name);
 #if AI_LUA_SANTITY
 	if (!lua_istable(s, -1)) {
@@ -95,7 +95,7 @@ static inline int lua_pushaiudata(lua_State* s, T* ptr, const char *name) {
 	}
 #endif
 	lua_setmetatable(s, -2);
-	*udata = ptr;
+	*udata = data;
 	return 1;
 }
 
@@ -124,37 +124,27 @@ static glm::vec3* lua_ctxvec(lua_State * s, int n) {
 }
 
 static int lua_pushzone(lua_State* s, Zone* zone) {
-	return lua_pushaiudata<Zone>(s, zone, lua_metazone());
+	return lua_pushaiudata<Zone*>(s, zone, lua_metazone());
 }
 
 static int lua_pushaggromgr(lua_State* s, AggroMgr* aggroMgr) {
-	return lua_pushaiudata<AggroMgr>(s, aggroMgr, lua_metaaggromgr());
+	return lua_pushaiudata<AggroMgr*>(s, aggroMgr, lua_metaaggromgr());
 }
 
 static int lua_pushgroupmgr(lua_State* s, GroupMgr* groupMgr) {
-	return lua_pushaiudata<GroupMgr>(s, groupMgr, lua_metagroupmgr());
+	return lua_pushaiudata<GroupMgr*>(s, groupMgr, lua_metagroupmgr());
 }
 
 static int lua_pushcharacter(lua_State* s, ICharacter* character) {
-	return lua_pushaiudata<ICharacter>(s, character, lua_metacharacter());
+	return lua_pushaiudata<ICharacter*>(s, character, lua_metacharacter());
 }
 
 static int lua_pushai(lua_State* s, AI* ai) {
-	return lua_pushaiudata<AI>(s, ai, lua_metaai());
+	return lua_pushaiudata<AI*>(s, ai, lua_metaai());
 }
 
 static int lua_pushvec(lua_State* s, const glm::vec3& v) {
-	glm::vec3* vec = (glm::vec3*)lua_newuserdata(s, sizeof(glm::vec3));
-	luaL_getmetatable(s, lua_metavec());
-#if AI_LUA_SANTITY
-	if (!lua_istable(s, -1)) {
-		ai_log_error("LUA: metatable for %s doesn't exist", lua_metavec());
-		return 0;
-	}
-#endif
-	lua_setmetatable(s, -2);
-	*vec = v;
-	return 1;
+	return lua_pushaiudata<glm::vec3>(s, v, lua_metavec());
 }
 
 static int lua_groupmgrposition(lua_State* s) {
