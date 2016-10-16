@@ -78,15 +78,14 @@ static inline T* lua_getaiudata(lua_State* s, int n, const char *name) {
 }
 
 template<class T>
-static inline T* lua_ainewuserdata(lua_State* s, T* ptr) {
-	T ** udata = (T**) lua_newuserdata(s, sizeof(T*));
-	*udata = ptr;
-	return ptr;
+static inline void lua_ainewuserdata(lua_State* s, const T& data) {
+	T* udata = (T*) lua_newuserdata(s, sizeof(T));
+	*udata = data;
 }
 
 template<class T>
 static inline int lua_pushaiudata(lua_State* s, const T& data, const char *name) {
-	T* udata = (T*) lua_newuserdata(s, sizeof(T));
+	lua_ainewuserdata<T>(s, data);
 	luaL_getmetatable(s, name);
 #if AI_LUA_SANTITY
 	if (!lua_istable(s, -1)) {
@@ -95,7 +94,6 @@ static inline int lua_pushaiudata(lua_State* s, const T& data, const char *name)
 	}
 #endif
 	lua_setmetatable(s, -2);
-	*udata = data;
 	return 1;
 }
 

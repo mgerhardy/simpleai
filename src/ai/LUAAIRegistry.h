@@ -147,7 +147,7 @@ protected:
 			return luaL_error(s, "tree node %s is already registered", type.c_str());
 		}
 
-		lua_ainewuserdata<LuaNodeFactory>(s, factory.get());
+		lua_ainewuserdata<LuaNodeFactory*>(s, factory.get());
 		const luaL_Reg nodes[] = {
 			{"execute", luaNodeEmptyExecute},
 			{"__tostring", luaNodeToString},
@@ -180,7 +180,7 @@ protected:
 			return luaL_error(s, "condition %s is already registered", type.c_str());
 		}
 
-		lua_ainewuserdata<LuaConditionFactory>(s, factory.get());
+		lua_ainewuserdata<LuaConditionFactory*>(s, factory.get());
 		const luaL_Reg nodes[] = {
 			{"evaluate", luaConditionEmptyEvaluate},
 			{"__tostring", luaConditionToString},
@@ -214,7 +214,7 @@ protected:
 			return luaL_error(s, "filter %s is already registered", type.c_str());
 		}
 
-		lua_ainewuserdata<LuaFilterFactory>(s, factory.get());
+		lua_ainewuserdata<LuaFilterFactory*>(s, factory.get());
 		const luaL_Reg nodes[] = {
 			{"filter", luaFilterEmptyFilter},
 			{"__tostring", luaFilterToString},
@@ -248,7 +248,7 @@ protected:
 			return luaL_error(s, "steering %s is already registered", type.c_str());
 		}
 
-		lua_ainewuserdata<LuaSteeringFactory>(s, factory.get());
+		lua_ainewuserdata<LuaSteeringFactory*>(s, factory.get());
 		const luaL_Reg nodes[] = {
 			{"filter", luaSteeringEmptyExecute},
 			{"__tostring", luaSteeringToString},
