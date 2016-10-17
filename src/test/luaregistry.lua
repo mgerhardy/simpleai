@@ -109,7 +109,7 @@ A condition that always returns true
 --]]
 local luaconditiontesttrue = REGISTRY.createCondition("LuaTestTrue")
 function luaconditiontesttrue:evaluate(ai)
-	return true
+	return ai:id() <= 9000
 end
 
 --[[
@@ -117,14 +117,19 @@ A condition that always returns false
 --]]
 local luaconditiontestfalse = REGISTRY.createCondition("LuaTestFalse")
 function luaconditiontestfalse:evaluate(ai)
-	return false
+	return ai:id() > 9000
 end
 
 --[[
-An empty filter to test the filter creation
+A filter to test the filter creation
 --]]
 local luafiltertest = REGISTRY.createFilter("LuaFilterTest")
 function luafiltertest:filter(ai)
+	ai:addFilteredEntity(42)
+	ai:addFilteredEntity(1337)
+	ai:addFilteredEntity(101)
+	local ents = ai:filteredEntities()
+	ai:setFilteredEntities(ents)
 end
 
 --[[

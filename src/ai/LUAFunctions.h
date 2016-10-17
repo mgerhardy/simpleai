@@ -397,16 +397,17 @@ static int lua_aiaddfilteredentity(lua_State* s) {
 
 static int lua_aisetfilteredentities(lua_State* s) {
 	AI* ai = lua_ctxai(s, 1);
-	luaL_argcheck(s, lua_istable(s, 2), 2, "No table given");
+	luaL_checktype(s, 2, LUA_TTABLE);
 
+	// TODO: take the order into account
 	FilteredEntities v;
 	lua_pushnil(s);
-	const int index = lua_gettop(s);
-	while (lua_next(s, index)) {
+	while (lua_next(s, 2)) {
 		const CharacterId id = (CharacterId)lua_tointeger(s, -1);
 		v.push_back(id);
 		lua_pop(s, 1);
 	}
+
 	ai->setFilteredEntities(v);
 	return 0;
 }
@@ -418,7 +419,7 @@ static int lua_aifilteredentities(lua_State* s) {
 	const int top = lua_gettop(s);
 	int i = 0;
 	for (auto it = filteredEntities.begin(); it != filteredEntities.end(); ++it) {
-		lua_pushinteger(s, i++);
+		lua_pushinteger(s, ++i);
 		lua_pushinteger(s, *it);
 		lua_settable(s, top);
 	}

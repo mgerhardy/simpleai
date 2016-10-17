@@ -56,6 +56,7 @@ protected:
 		ai->setCharacter(_chr);
 		for (int i = 0; i < n; ++i) {
 			filter->filter(ai);
+			ai->setFilteredEntities(ai::FilteredEntities());
 		}
 		ASSERT_EQ(1, filter.use_count()) << "Someone is still referencing the LUAFilter";
 	}
