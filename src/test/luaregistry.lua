@@ -73,6 +73,8 @@ function luatest:execute(ai, deltaMillis)
 		return FAILED
 	end
 	chr:setAttribute("Key", "Value")
+	chr:setAttribute("Key2", "Value2")
+	chr:setAttribute("Attribute", "1.0")
 	if chr:attributes()["Key"] ~= "Value" then
 		print("error: expected attribute for 'Key' is 'Value' - but found was " .. chr:attributes()["Key"])
 		return FAILED
@@ -102,7 +104,7 @@ function luatest:execute(ai, deltaMillis)
 		return FAILED
 	end
 	-- doesn't belong here, but into the filters...
-	---[[
+	--[[
 	print("id (ai): " .. ai:id())
 	print("id (chr - should be the same as ai): " .. chr:id())
 	print("filtered entities:")
