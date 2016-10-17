@@ -8,10 +8,34 @@ static const char *LUANODE = ""
 	"	--print(\"LuaTest node execute called with parameters: ai=[\"..tostring(ai)..\"], deltaMillis=[\"..tostring(deltaMillis)..\"]\")\n"
 	"	local chr = ai:character()\n"
 	"	local pos = chr:position()\n"
-	"	pos.x = 1.0\n"
+	"	pos.x = pos.x + 1.0\n"
+	"	pos.y = 0.5\n"
+	"	pos.z = 1.5\n"
+	"	if pos.r ~= 1.0 then\n"
+	"		print(\"error: pos.r/x should be 1.0\")\n"
+	"		return FAILED\n"
+	"	end\n"
 	"	local zone = ai:zone()\n"
 	"	if zone == nil then\n"
 	"		print(\"error: ai has no zone assigned\")\n"
+	"		return FAILED\n"
+	"	end\n"
+	"	local groupMgr = zone:groupMgr()\n"
+	"	local state = groupMgr:add(1, ai)\n"
+	"	if not state then\n"
+	"		print(\"error: could not add ai to group 1\")\n"
+	"		return FAILED\n"
+	"	end\n"
+	"	if not groupMgr:isLeader(1, ai) then\n"
+	"		print(\"error: ai should lead group 1\")\n"
+	"		return FAILED\n"
+	"	end\n"
+	"	if not groupMgr:isInGroup(1, ai) then\n"
+	"		print(\"error: ai should be in group 1\")\n"
+	"		return FAILED\n"
+	"	end\n"
+	"	if not groupMgr:isInAnyGroup(ai) then\n"
+	"		print(\"error: ai should be in a group\")\n"
 	"		return FAILED\n"
 	"	end\n"
 	"	local aiFromZone = zone:ai(chr:id())\n"
@@ -20,6 +44,9 @@ static const char *LUANODE = ""
 	"		return FAILED\n"
 	"	end\n"
 	"	local aggroMgr = ai:aggroMgr()\n"
+	"	aggroMgr:addAggro(3, 0.3)\n"
+	"	aggroMgr:addAggro(4, 0.4)\n"
+	"	aggroMgr:addAggro(5, 0.5)\n"
 	"	local aggroVal = aggroMgr:addAggro(2, 1.0)\n"
 	"	if aggroVal ~= 1.0 then\n"
 	"		print(\"error: expected aggroVal was 1.0 - but found was \" .. aggroVal)\n"
@@ -157,13 +184,17 @@ protected:
 		const ai::AIPtr& ai = std::make_shared<ai::AI>(node);
 		ai->setCharacter(_chr);
 		ASSERT_TRUE(zone.addAI(ai));
+		ai->setPause(true);
 		zone.update(1l);
+		ai->setPause(false);
 		for (int i = 0; i < n; ++i) {
 			const ai::TreeNodeStatus executionStatus = node->execute(ai, 1L);
 			ASSERT_EQ(status, executionStatus) << "Lua script returned an unexpected TreeNodeStatus value";
 		}
 		ASSERT_TRUE(zone.removeAI(ai));
+		ai->setPause(true);
 		zone.update(1l);
+		ai->setPause(false);
 		ai->setBehaviour(ai::TreeNodePtr());
 		ASSERT_EQ(1, node.use_count()) << "Someone is still referencing the LUATreeNode";
 		ASSERT_EQ(1, ai.use_count()) << "Someone is still referencing the AI instance";
