@@ -183,6 +183,10 @@ public:
 	 */
 	const FilteredEntities& getFilteredEntities() const;
 
+	void setFilteredEntities(const FilteredEntities& filteredEntities);
+
+	void addFilteredEntity(CharacterId id);
+
 	/**
 	 * If the object is currently maintained by a shared_ptr, you can get a shared_ptr from a raw pointer
 	 * instance that shares the state with the already existing shared_ptrs around.
@@ -230,6 +234,14 @@ inline const AggroMgr& AI::getAggroMgr() const {
 
 inline const FilteredEntities& AI::getFilteredEntities() const {
 	return _filteredEntities;
+}
+
+inline void AI::setFilteredEntities(const FilteredEntities& filteredEntities) {
+	_filteredEntities = filteredEntities;
+}
+
+inline void AI::addFilteredEntity(CharacterId id) {
+	_filteredEntities.push_back(id);
 }
 
 inline bool AI::isDebuggingActive() const {
