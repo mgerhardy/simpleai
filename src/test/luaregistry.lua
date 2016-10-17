@@ -1,4 +1,7 @@
--- TODO: add the other lua bindings to this test
+
+--[[
+LuaTest is our BFG - call every possible ai, chr, zone, group and aggromgr function in here and validate it.
+--]]
 local luatest = REGISTRY.createNode("LuaTest")
 function luatest:execute(ai, deltaMillis)
 	--print("LuaTest node execute called with parameters: ai=["..tostring(ai).."], deltaMillis=["..tostring(deltaMillis).."]")
@@ -82,28 +85,51 @@ function luatest:execute(ai, deltaMillis)
 	--]]
 	return FINISHED
 end
+
+--[[
+LuaTest2 will just return a different tree node state
+--]]
 local luatest2 = REGISTRY.createNode("LuaTest2")
 function luatest2:execute(ai, deltaMillis)
 	--print("LuaTest2 node execute called with parameters: ai=["..tostring(ai).."], deltaMillis=["..tostring(deltaMillis).."]")
 	return RUNNING
 end
--- ensure we have a name clash here
+
+--[[
+ensure we have a name clash here with a node
+--]]
 local luaconditiontest = REGISTRY.createCondition("LuaTest")
 function luaconditiontest:evaluate(ai)
 	--print("LuaTest condition evaluate called with parameter: ai=["..tostring(ai).."]")
 	return true
 end
+
+--[[
+A condition that always returns true
+--]]
 local luaconditiontesttrue = REGISTRY.createCondition("LuaTestTrue")
 function luaconditiontesttrue:evaluate(ai)
 	return true
 end
+
+--[[
+A condition that always returns false
+--]]
 local luaconditiontestfalse = REGISTRY.createCondition("LuaTestFalse")
 function luaconditiontestfalse:evaluate(ai)
 	return false
 end
+
+--[[
+An empty filter to test the filter creation
+--]]
 local luafiltertest = REGISTRY.createFilter("LuaFilterTest")
 function luafiltertest:filter(ai)
 end
+
+--[[
+An empty steering node to test the filter creation
+--]]
 local luasteeringtest = REGISTRY.createSteering("LuaSteeringTest")
 function luasteeringtest:execute(ai, speed)
 	return 0.0, 1.0, 0.0, 0.6

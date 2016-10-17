@@ -402,6 +402,7 @@ public:
 			{"time", lua_aitime},
 			{"hasZone", lua_aihaszone},
 			{"zone", lua_aigetzone},
+			// TODO: expose the selectedEntities not only for reading - filters need them to be writable
 			{"filteredEntities", lua_aifilteredentities},
 			{"character", lua_aigetcharacter},
 			{"aggroMgr", lua_aigetaggromgr},
