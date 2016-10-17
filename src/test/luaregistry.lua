@@ -1,4 +1,15 @@
 
+function printtable(t)
+	a = {}
+	for n in pairs(t) do
+		table.insert(a, n)
+	end
+	table.sort(a)
+	for i,n in ipairs(a) do
+		print(n, t[n])
+	end
+end
+
 --[[
 LuaTest is our BFG - call every possible ai, chr, zone, group and aggromgr function in here and validate it.
 --]]
@@ -66,20 +77,45 @@ function luatest:execute(ai, deltaMillis)
 		print("error: expected attribute for 'Key' is 'Value' - but found was " .. chr:attributes()["Key"])
 		return FAILED
 	end
+	local execute = function (ai)
+		--print("zone execution for ai: " .. ai:id());
+	end
+	zone:execute(execute)
 	local filteredEntities = ai:filteredEntities()
+	local newFilteredEntities = {2, 3, 4, 5}
+	ai:setFilteredEntities(newFilteredEntities)
+	filteredEntities = ai:filteredEntities()
+	if filteredEntities[1] ~= 2 then
+		print("error: unexpected value at index 1" .. filteredEntities[1])
+		return FAILED
+	end
+	if filteredEntities[2] ~= 3 then
+		print("error: unexpected value at index 2" .. filteredEntities[2])
+		return FAILED
+	end
+	if filteredEntities[3] ~= 4 then
+		print("error: unexpected value at index 3" .. filteredEntities[3])
+		return FAILED
+	end
+	if filteredEntities[4] ~= 5 then
+		print("error: unexpected value at index 4" .. filteredEntities[4])
+		return FAILED
+	end
 	-- doesn't belong here, but into the filters...
-	ai:addFilteredEntity
-	--[[
+	---[[
 	print("id (ai): " .. ai:id())
-	print("id (chr - shoulbe the same as ai): " .. chr:id())
-	print("filtered entities: " .. filteredEntities)
+	print("id (chr - should be the same as ai): " .. chr:id())
+	print("filtered entities:")
+	printtable(filteredEntities)
 	print("time: " .. ai:time())
 	print("haszone: " .. tostring(ai:hasZone()))
 	if ai:hasZone() then
 		print("zone: " .. tostring(ai:zone()))
 	end
-	print("aggroentries: " .. tostring(entries))
-	print("attributes: " .. tostring(chr:attributes()))
+	print("aggroentries:")
+	printtable(entries)
+	print("attributes:")
+	printtable(chr:attributes())
 	print("position: " .. tostring(pos))
 	print("position x: " .. pos.x)
 	print("position y: " .. pos.y)

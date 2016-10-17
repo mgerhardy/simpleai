@@ -427,6 +427,7 @@ public:
 			{"size", lua_zonesize},
 			{"name", lua_zonename},
 			{"ai", lua_zoneai},
+			{"execute", lua_zoneexecute},
 			{"groupMgr", lua_zonegroupmgr},
 			{"__tostring", lua_zonetostring},
 			{nullptr, nullptr}

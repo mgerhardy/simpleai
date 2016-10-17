@@ -248,6 +248,23 @@ static int lua_groupmgrtostring(lua_State* s) {
 	return 1;
 }
 
+static int lua_zoneexecute(lua_State* s) {
+	Zone* zone = lua_ctxzone(s, 1);
+	luaL_checktype(s, 2, LUA_TFUNCTION);
+	const int topIndex = lua_gettop(s);
+	zone->execute([=] (const AIPtr& ai) {
+		if (lua_pushai(s, ai.get()) <= 0) {
+			return;
+		}
+		lua_pcall(s, 1, 0, 0);
+		const int stackDelta = lua_gettop(s) - topIndex;
+		if (stackDelta > 0) {
+			lua_pop(s, stackDelta);
+		}
+	});
+	return 0;
+}
+
 static int lua_zonegroupmgr(lua_State* s) {
 	Zone* zone = lua_ctxzone(s, 1);
 	return lua_pushgroupmgr(s, &zone->getGroupMgr());
@@ -427,15 +444,14 @@ static int lua_aisetfilteredentities(lua_State* s) {
 	AI* ai = lua_ctxai(s, 1);
 	luaL_checktype(s, 2, LUA_TTABLE);
 
-	// TODO: take the order into account
-	FilteredEntities v;
-	lua_pushnil(s);
-	while (lua_next(s, 2)) {
-		const CharacterId id = (CharacterId)lua_tointeger(s, -1);
-		v.push_back(id);
-		lua_pop(s, 1);
+	const int n = lua_rawlen(s, 2);
+	FilteredEntities v(n);
+	for (int i = 1; i <= n; ++i) {
+		lua_rawgeti(s, 2, i);
+		const int top = lua_gettop(s);
+		const CharacterId id = (CharacterId)luaL_checknumber(s, top);
+		v[i - 1] = id;
 	}
-
 	ai->setFilteredEntities(v);
 	return 0;
 }
