@@ -33,8 +33,9 @@ protected:
 
 	std::string printAggroList(ai::AggroMgr& aggroMgr) const {
 		const ai::AggroMgr::Entries& e = aggroMgr.getEntries();
-		if (e.empty())
+		if (e.empty()) {
 			return "empty";
+		}
 
 		std::stringstream s;
 		for (ai::AggroMgr::Entries::const_iterator i = e.begin(); i != e.end(); ++i) {

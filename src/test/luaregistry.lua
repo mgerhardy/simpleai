@@ -1,0 +1,111 @@
+-- TODO: add the other lua bindings to this test
+local luatest = REGISTRY.createNode("LuaTest")
+function luatest:execute(ai, deltaMillis)
+	--print("LuaTest node execute called with parameters: ai=["..tostring(ai).."], deltaMillis=["..tostring(deltaMillis).."]")
+	local chr = ai:character()
+	local pos = chr:position()
+	pos.x = pos.x + 1.0
+	pos.y = 0.5
+	pos.z = 1.5
+	if pos.r ~= 1.0 then
+		print("error: pos.r/x should be 1.0")
+		return FAILED
+	end
+	local zone = ai:zone()
+	if zone == nil then
+		print("error: ai has no zone assigned")
+		return FAILED
+	end
+	local groupMgr = zone:groupMgr()
+	local state = groupMgr:add(1, ai)
+	if not state then
+		print("error: could not add ai to group 1")
+		return FAILED
+	end
+	if not groupMgr:isLeader(1, ai) then
+		print("error: ai should lead group 1")
+		return FAILED
+	end
+	if not groupMgr:isInGroup(1, ai) then
+		print("error: ai should be in group 1")
+		return FAILED
+	end
+	if not groupMgr:isInAnyGroup(ai) then
+		print("error: ai should be in a group")
+		return FAILED
+	end
+	local aiFromZone = zone:ai(chr:id())
+	if aiFromZone == nil then
+		print("error: could not get ai from zone with id " .. chr:id())
+		return FAILED
+	end
+	local aggroMgr = ai:aggroMgr()
+	aggroMgr:addAggro(3, 0.3)
+	aggroMgr:addAggro(4, 0.4)
+	aggroMgr:addAggro(5, 0.5)
+	local aggroVal = aggroMgr:addAggro(2, 1.0)
+	if aggroVal ~= 1.0 then
+		print("error: expected aggroVal was 1.0 - but found was " .. aggroVal)
+		return FAILED
+	end
+	local entries = aggroMgr:entries()
+	id, val = aggroMgr:highestEntry()
+	if id ~= 2 then
+		print("error: expected id was 2 - but found was " .. id)
+		return FAILED
+	end
+	if val ~= aggroVal then
+		print("error: expected value was " .. aggroVal .. " - but found was " .. val)
+		return FAILED
+	end
+	chr:setAttribute("Key", "Value")
+	if chr:attributes()["Key"] ~= "Value" then
+		print("error: expected attribute for 'Key' is 'Value' - but found was " .. chr:attributes()["Key"])
+		return FAILED
+	end
+	--[[
+	print("id: " .. ai:id())
+	print("id: " .. chr:id())
+	print("time: " .. ai:time())
+	print("haszone: " .. tostring(ai:hasZone()))
+	if ai:hasZone() then
+		print("zone: " .. tostring(ai:zone()))
+	end
+	print("aggroentries: " .. tostring(entries))
+	print("attributes: " .. tostring(chr:attributes()))
+	print("position: " .. tostring(pos))
+	print("position x: " .. pos.x)
+	print("position y: " .. pos.y)
+	print("position z: " .. pos.z)
+	print("character: " .. tostring(chr))
+	print("aggromgr: " .. tostring(aggroMgr))
+	--]]
+	return FINISHED
+end
+local luatest2 = REGISTRY.createNode("LuaTest2")
+function luatest2:execute(ai, deltaMillis)
+	--print("LuaTest2 node execute called with parameters: ai=["..tostring(ai).."], deltaMillis=["..tostring(deltaMillis).."]")
+	return RUNNING
+end
+-- ensure we have a name clash here
+local luaconditiontest = REGISTRY.createCondition("LuaTest")
+function luaconditiontest:evaluate(ai)
+	--print("LuaTest condition evaluate called with parameter: ai=["..tostring(ai).."]")
+	return true
+end
+local luaconditiontesttrue = REGISTRY.createCondition("LuaTestTrue")
+function luaconditiontesttrue:evaluate(ai)
+	return true
+end
+local luaconditiontestfalse = REGISTRY.createCondition("LuaTestFalse")
+function luaconditiontestfalse:evaluate(ai)
+	return false
+end
+local luafiltertest = REGISTRY.createFilter("LuaFilterTest")
+function luafiltertest:filter(ai)
+end
+local luasteeringtest = REGISTRY.createSteering("LuaSteeringTest")
+function luasteeringtest:execute(ai, speed)
+	return 0.0, 1.0, 0.0, 0.6
+end
+

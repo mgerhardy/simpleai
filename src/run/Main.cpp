@@ -110,7 +110,10 @@ static bool load(const std::string filename) {
 		return false;
 	}
 
-	std::string str((std::istreambuf_iterator<char>(btStream)), std::istreambuf_iterator<char>());
+	std::stringstream buffer;
+	buffer << btStream.rdbuf();
+	const std::string& str = buffer.str();
+
 	if (!loader.init(str)) {
 		ai_log_error("could not load the tree: %s", loader.getError().c_str());
 		return false;

@@ -44,3 +44,5 @@ endif()
 target_include_directories(simpleai-tests PUBLIC ${SIMPLEAI_SOURCE_DIR}/src/libs/tinyxml2/)
 target_link_libraries(simpleai-tests simpleai tinyxml2)
 add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
+
+check_lua_files(simpleai-run behaviours.lua)
