@@ -63,6 +63,10 @@ protected:
 	 */
 	mutable FilteredEntities _filteredEntities;
 
+	void setFilteredEntities(const FilteredEntities& filteredEntities);
+
+	void addFilteredEntity(CharacterId id);
+
 	/**
 	 * Often @c Selector states must be stored to continue in the next step at a particular
 	 * position in the behaviour tree. This map is doing exactly this.
@@ -183,10 +187,6 @@ public:
 	 * @note If you call this from outside of the behaviour tree tick, you will run into race conditions.
 	 */
 	const FilteredEntities& getFilteredEntities() const;
-
-	void setFilteredEntities(const FilteredEntities& filteredEntities);
-
-	void addFilteredEntity(CharacterId id);
 
 	/**
 	 * If the object is currently maintained by a shared_ptr, you can get a shared_ptr from a raw pointer

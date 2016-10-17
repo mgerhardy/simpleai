@@ -264,6 +264,29 @@ public:
 		init();
 	}
 
+	static int lua_aisetfilteredentities(lua_State* s) {
+		AI* ai = lua_ctxai(s, 1);
+		luaL_checktype(s, 2, LUA_TTABLE);
+
+		const int n = lua_rawlen(s, 2);
+		FilteredEntities v(n);
+		for (int i = 1; i <= n; ++i) {
+			lua_rawgeti(s, 2, i);
+			const int top = lua_gettop(s);
+			const CharacterId id = (CharacterId)luaL_checknumber(s, top);
+			v[i - 1] = id;
+		}
+		ai->setFilteredEntities(v);
+		return 0;
+	}
+
+	static int lua_aiaddfilteredentity(lua_State* s) {
+		AI* ai = lua_ctxai(s, 1);
+		const CharacterId id = (CharacterId)luaL_checkinteger(s, 2);
+		ai->addFilteredEntity(id);
+		return 0;
+	}
+
 	/**
 	 * @brief Access to the lua state.
 	 * @see pushAIMetatable()
