@@ -20,6 +20,10 @@ static inline const char* lua_metaaggromgr() {
 	return "__meta_aggromgr";
 }
 
+static inline const char* lua_metaregistry() {
+	return "__meta_registry";
+}
+
 static inline const char* lua_metagroupmgr() {
 	return "__meta_groupmgr";
 }
@@ -30,6 +34,14 @@ static inline const char* lua_metacharacter() {
 
 static inline const char* lua_metavec() {
 	return "__meta_vec";
+}
+
+static void lua_airegisterfuncs(lua_State* s, const luaL_Reg* funcs, const char *name) {
+	luaL_newmetatable(s, name);
+	// assign the metatable to __index
+	lua_pushvalue(s, -1);
+	lua_setfield(s, -2, "__index");
+	luaL_setfuncs(s, funcs, 0);
 }
 
 static void lua_aisetupmetatable(lua_State* s, const std::string& type, const luaL_Reg *funcs, const std::string& name) {
@@ -83,6 +95,11 @@ static inline void lua_ainewuserdata(lua_State* s, const T& data) {
 	*udata = data;
 }
 
+static void lua_aiglobalpointer(lua_State* s, void* pointer, const char *name) {
+	lua_pushlightuserdata(s, pointer);
+	lua_setglobal(s, name);
+}
+
 template<class T>
 static inline int lua_pushaiudata(lua_State* s, const T& data, const char *name) {
 	lua_ainewuserdata<T>(s, data);
@@ -97,27 +114,38 @@ static inline int lua_pushaiudata(lua_State* s, const T& data, const char *name)
 	return 1;
 }
 
-static AI* lua_ctxai(lua_State * s, int n) {
+static AI* lua_ctxai(lua_State *s, int n) {
 	return *(AI**)lua_getaiudata<AI*>(s, n, lua_metaai());
 }
 
-static Zone* lua_ctxzone(lua_State * s, int n) {
+template<class T>
+static T* lua_aigetlightuserdata(lua_State *s, const char *name) {
+	lua_getglobal(s, name);
+	if (lua_isnil(s, -1)) {
+		return nullptr;
+	}
+	T* data = (T*) lua_touserdata(s, -1);
+	lua_pop(s, 1);
+	return data;
+}
+
+static Zone* lua_ctxzone(lua_State *s, int n) {
 	return *(Zone**)lua_getaiudata<Zone*>(s, n, lua_metazone());
 }
 
-static AggroMgr* lua_ctxaggromgr(lua_State * s, int n) {
+static AggroMgr* lua_ctxaggromgr(lua_State *s, int n) {
 	return *(AggroMgr**)lua_getaiudata<AggroMgr*>(s, n, lua_metaaggromgr());
 }
 
-static GroupMgr* lua_ctxgroupmgr(lua_State * s, int n) {
+static GroupMgr* lua_ctxgroupmgr(lua_State *s, int n) {
 	return *(GroupMgr**)lua_getaiudata<GroupMgr*>(s, n, lua_metagroupmgr());
 }
 
-static ICharacter* lua_ctxcharacter(lua_State * s, int n) {
+static ICharacter* lua_ctxcharacter(lua_State *s, int n) {
 	return *(ICharacter**)lua_getaiudata<ICharacter*>(s, n, lua_metacharacter());
 }
 
-static glm::vec3* lua_ctxvec(lua_State * s, int n) {
+static glm::vec3* lua_ctxvec(lua_State *s, int n) {
 	return lua_getaiudata<glm::vec3*>(s, n, lua_metavec());
 }
 
@@ -516,7 +544,7 @@ static int lua_vectostring(lua_State* s) {
 	return 1;
 }
 
-static int lua_vecindex(lua_State * s) {
+static int lua_vecindex(lua_State *s) {
 	const glm::vec3* v = lua_ctxvec(s, 1);
 	const char* i = luaL_checkstring(s, 2);
 
@@ -544,7 +572,7 @@ static int lua_vecindex(lua_State * s) {
 	return 1;
 }
 
-static int lua_vecnewindex(lua_State * s) {
+static int lua_vecnewindex(lua_State *s) {
 	glm::vec3* v = lua_ctxvec(s, 1);
 	const char *i = luaL_checkstring(s, 2);
 	const float t = luaL_checknumber(s, 3);

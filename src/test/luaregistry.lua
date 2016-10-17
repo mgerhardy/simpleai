@@ -66,9 +66,13 @@ function luatest:execute(ai, deltaMillis)
 		print("error: expected attribute for 'Key' is 'Value' - but found was " .. chr:attributes()["Key"])
 		return FAILED
 	end
+	local filteredEntities = ai:filteredEntities()
+	-- doesn't belong here, but into the filters...
+	ai:addFilteredEntity
 	--[[
-	print("id: " .. ai:id())
-	print("id: " .. chr:id())
+	print("id (ai): " .. ai:id())
+	print("id (chr - shoulbe the same as ai): " .. chr:id())
+	print("filtered entities: " .. filteredEntities)
 	print("time: " .. ai:time())
 	print("haszone: " .. tostring(ai:hasZone()))
 	if ai:hasZone() then

@@ -40,6 +40,7 @@ typedef std::vector<CharacterId> FilteredEntities;
  */
 class AI : public NonCopyable, public std::enable_shared_from_this<AI> {
 	friend class TreeNode;
+	friend class LUAAIRegistry;
 	friend class IFilter;
 	friend class Filter;
 	friend class Server;

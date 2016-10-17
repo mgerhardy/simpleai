@@ -93,10 +93,7 @@ protected:
 	SteeringFactoryMap _steeringFactories;
 
 	static LUAAIRegistry* luaGetContext(lua_State * s) {
-		lua_getglobal(s, "Registry");
-		LUAAIRegistry* data = (LUAAIRegistry*) lua_touserdata(s, -1);
-		lua_pop(s, 1);
-		return data;
+		return lua_aigetlightuserdata<LUAAIRegistry>(s, lua_metaregistry());
 	}
 
 	static LuaNodeFactory* luaGetNodeFactoryContext(lua_State * s, int n) {
@@ -262,13 +259,6 @@ protected:
 		return 1;
 	}
 
-	void registerFuncs(const luaL_Reg* funcs, const char *name) {
-		luaL_newmetatable(_s, name);
-		// assign the metatable to __index
-		lua_pushvalue(_s, -1);
-		lua_setfield(_s, -2, "__index");
-		luaL_setfuncs(_s, funcs, 0);
-	}
 public:
 	LUAAIRegistry() {
 		init();
@@ -326,13 +316,12 @@ public:
 			{"createSteering", luaCreateSteering},
 			{nullptr, nullptr}
 		};
-		registerFuncs(registryFuncs, "META_REGISTRY");
+		lua_airegisterfuncs(_s, registryFuncs, "META_REGISTRY");
 		lua_setglobal(_s, "REGISTRY");
 
-		// TODO: random, vec3
+		// TODO: random
 
-		lua_pushlightuserdata(_s, this);
-		lua_setglobal(_s, "Registry");
+		lua_aiglobalpointer(_s, this, lua_metaregistry());
 
 		registerAIFunc();
 		registerZoneFunc();
@@ -410,7 +399,7 @@ public:
 			{"__tostring", lua_aitostring},
 			{nullptr, nullptr}
 		};
-		registerFuncs(funcs, lua_metaai());
+		lua_airegisterfuncs(_s, funcs, lua_metaai());
 	}
 
 	virtual void registerVecFunc() {
@@ -428,7 +417,7 @@ public:
 			{"dot", lua_vecdot},
 			{nullptr, nullptr}
 		};
-		registerFuncs(funcs, lua_metavec());
+		lua_airegisterfuncs(_s, funcs, lua_metavec());
 	}
 
 	virtual void registerZoneFunc() {
@@ -441,7 +430,7 @@ public:
 			{"__tostring", lua_zonetostring},
 			{nullptr, nullptr}
 		};
-		registerFuncs(funcs, lua_metazone());
+		lua_airegisterfuncs(_s, funcs, lua_metazone());
 	}
 
 	virtual void registerCharacterFunc() {
@@ -459,7 +448,7 @@ public:
 			{"__tostring", lua_charactertostring},
 			{nullptr, nullptr}
 		};
-		registerFuncs(funcs, lua_metacharacter());
+		lua_airegisterfuncs(_s, funcs, lua_metacharacter());
 	}
 
 	virtual void registerAggroMgrFunc() {
@@ -470,7 +459,7 @@ public:
 			{"__tostring", lua_aggromgrtostring},
 			{nullptr, nullptr}
 		};
-		registerFuncs(funcs, lua_metaaggromgr());
+		lua_airegisterfuncs(_s, funcs, lua_metaaggromgr());
 	}
 
 	virtual void registerGroupMgrFunc() {
@@ -486,7 +475,7 @@ public:
 			{"__tostring", lua_groupmgrtostring},
 			{nullptr, nullptr}
 		};
-		registerFuncs(funcs, lua_metagroupmgr());
+		lua_airegisterfuncs(_s, funcs, lua_metagroupmgr());
 	}
 };
 
