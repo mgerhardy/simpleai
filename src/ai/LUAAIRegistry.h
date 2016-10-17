@@ -397,6 +397,7 @@ public:
 			{"character", lua_aigetcharacter},
 			{"aggroMgr", lua_aigetaggromgr},
 			{"__tostring", lua_aitostring},
+			{"__eq", lua_aieq},
 			{nullptr, nullptr}
 		};
 		lua_airegisterfuncs(_s, funcs, lua_metaai());

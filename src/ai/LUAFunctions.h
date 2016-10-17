@@ -475,6 +475,14 @@ static int lua_aihaszone(lua_State* s) {
 	return 1;
 }
 
+static int lua_aieq(lua_State* s) {
+	const AI* a = lua_ctxai(s, 1);
+	const AI* b = lua_ctxai(s, 2);
+	const bool e = a->getId() == b->getId();
+	lua_pushboolean(s, e);
+	return 1;
+}
+
 static int lua_aitostring(lua_State* s) {
 	const AI* ai = lua_ctxai(s, 1);
 	TreeNodePtr treeNode = ai->getBehaviour();
