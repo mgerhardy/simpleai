@@ -1,5 +1,5 @@
-/**
- * @file
+/***
+ * @file LUAFunctions.h
  * @ingroup LUA
  */
 #pragma once
@@ -171,6 +171,10 @@ static glm::vec3* luaAI_tovec(lua_State *s, int n) {
 }
 
 static int luaAI_pushzone(lua_State* s, Zone* zone) {
+	if (zone == nullptr) {
+		lua_pushnil(s);
+		return 1;
+	}
 	return luaAI_pushudata<Zone*>(s, zone, luaAI_metazone());
 }
 
@@ -387,17 +391,32 @@ static int luaAI_aggromgrtostring(lua_State* s) {
 	return 1;
 }
 
+/***
+ * The character id
+ * @return the id of a character (Integer)
+ * @function character:id
+ */
 static int luaAI_characterid(lua_State* s) {
 	const luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
 	lua_pushinteger(s, chr->character->getId());
 	return 1;
 }
 
+/***
+ * Get the position of the character
+ * @return position of the character (Vec)
+ * @function character:position
+ */
 static int luaAI_characterposition(lua_State* s) {
 	const luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
 	return luaAI_pushvec(s, chr->character->getPosition());
 }
 
+/***
+ * Set the position of the character
+ * @param position (Vec)
+ * @function character:setPosition
+ */
 static int luaAI_charactersetposition(lua_State* s) {
 	luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
 	const glm::vec3* v = luaAI_tovec(s, 2);
@@ -405,18 +424,33 @@ static int luaAI_charactersetposition(lua_State* s) {
 	return 0;
 }
 
+/***
+ * Get the speed of the character
+ * @return speed value of the character (Number)
+ * @function character:speed
+ */
 static int luaAI_characterspeed(lua_State* s) {
 	const luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
 	lua_pushnumber(s, chr->character->getSpeed());
 	return 1;
 }
 
+/***
+ * Get the orientation of the character
+ * @return orientation value of the character (Number)
+ * @function character:orientation
+ */
 static int luaAI_characterorientation(lua_State* s) {
 	const luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
 	lua_pushnumber(s, chr->character->getOrientation());
 	return 1;
 }
 
+/***
+ * Set the speed for a character
+ * @param speed (Number)
+ * @function character:setSpeed
+ */
 static int luaAI_charactersetspeed(lua_State* s) {
 	luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
 	const float value = luaL_checknumber(s, 2);
@@ -424,6 +458,11 @@ static int luaAI_charactersetspeed(lua_State* s) {
 	return 0;
 }
 
+/***
+ * Set the orientation for a character
+ * @param orientation (Number)
+ * @function character:setOrientation
+ */
 static int luaAI_charactersetorientation(lua_State* s) {
 	luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
 	const float value = luaL_checknumber(s, 2);
@@ -431,6 +470,11 @@ static int luaAI_charactersetorientation(lua_State* s) {
 	return 0;
 }
 
+/***
+ * Equal check for a character
+ * @return boolean
+ * @function character:__eq
+ */
 static int luaAI_charactereq(lua_State* s) {
 	const luaAI_ICharacter* a = luaAI_tocharacter(s, 1);
 	const luaAI_ICharacter* b = luaAI_tocharacter(s, 2);
@@ -439,12 +483,22 @@ static int luaAI_charactereq(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Garbage collector callback for a character
+ * @return Garbage collector for a character
+ * @function character:__gc
+ */
 static int luaAI_charactergc(lua_State* s) {
 	luaAI_ICharacter* chr = luaAI_tocharacter(s, -1);
 	chr->character = ICharacterPtr();
 	return 0;
 }
 
+/***
+ * Pushes the table of character (debugger) attributes onto the stack
+ * @return Table with the key/value pair of the character attributes
+ * @function character:attributes
+ */
 static int luaAI_characterattributes(lua_State* s) {
 	const luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
 	const CharacterAttributes& attributes = chr->character->getAttributes();
@@ -460,6 +514,12 @@ static int luaAI_characterattributes(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Set a debugger attribute to the character
+ * @param key The key of the attribute (String)
+ * @param value The value of the attribute (String)
+ * @function character:setAttribute
+ */
 static int luaAI_charactersetattribute(lua_State* s) {
 	luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
 	const char* key = luaL_checkstring(s, 2);
@@ -474,18 +534,33 @@ static int luaAI_charactertostring(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Get the character id
+ * @return integer with the character id
+ * @function ai:id
+ */
 static int luaAI_aiid(lua_State* s) {
 	const luaAI_AI* ai = luaAI_toai(s, 1);
 	lua_pushinteger(s, ai->ai->getId());
 	return 1;
 }
 
+/***
+ * Get the active lifetime of the ai
+ * @return integer with the active lifetime of the ai
+ * @function ai:time
+ */
 static int luaAI_aitime(lua_State* s) {
 	const luaAI_AI* ai = luaAI_toai(s, 1);
 	lua_pushinteger(s, ai->ai->getTime());
 	return 1;
 }
 
+/***
+ * Get the filtered entities of the ai
+ * @return table with key/value (index, characterid) pairs of the filtered entities
+ * @function ai:filteredEntities
+ */
 static int luaAI_aifilteredentities(lua_State* s) {
 	const luaAI_AI* ai = luaAI_toai(s, 1);
 	const FilteredEntities& filteredEntities = ai->ai->getFilteredEntities();
@@ -500,27 +575,52 @@ static int luaAI_aifilteredentities(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Get the zone of the ai
+ * @return the zone where the ai is active in or nil
+ * @function ai:zone
+ */
 static int luaAI_aigetzone(lua_State* s) {
 	const luaAI_AI* ai = luaAI_toai(s, 1);
 	return luaAI_pushzone(s, ai->ai->getZone());
 }
 
+/***
+ * Get the aggro mgr of the ai
+ * @return the aggro manager of the ai
+ * @function ai:aggroMGr
+ */
 static int luaAI_aigetaggromgr(lua_State* s) {
 	luaAI_AI* ai = luaAI_toai(s, 1);
 	return luaAI_pushaggromgr(s, &ai->ai->getAggroMgr());
 }
 
+/***
+ * Get the character of the ai
+ * @return the character of the ai
+ * @function ai:character
+ */
 static int luaAI_aigetcharacter(lua_State* s) {
 	const luaAI_AI* ai = luaAI_toai(s, 1);
 	return luaAI_pushcharacter(s, ai->ai->getCharacter());
 }
 
+/***
+ * Check whether the ai has a zone
+ * @return true if the ai has a zone, false otherwise
+ * @function ai:hasZone
+ */
 static int luaAI_aihaszone(lua_State* s) {
 	const luaAI_AI* ai = luaAI_toai(s, 1);
 	lua_pushboolean(s, ai->ai->hasZone() ? 1 : 0);
 	return 1;
 }
 
+/***
+ * Equality for two ai instances
+ * @return true if the two given ai's are equal
+ * @function ai:__eq
+ */
 static int luaAI_aieq(lua_State* s) {
 	const luaAI_AI* a = luaAI_toai(s, 1);
 	const luaAI_AI* b = luaAI_toai(s, 2);

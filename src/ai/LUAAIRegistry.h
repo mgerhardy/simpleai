@@ -1,5 +1,5 @@
-/**
- * @file
+/***
+ * @file LUAAIRegistry.h
  * @ingroup LUA
  */
 #pragma once
@@ -92,26 +92,52 @@ protected:
 	FilterFactoryMap _filterFactories;
 	SteeringFactoryMap _steeringFactories;
 
+	/***
+	 * Gives you access the the light userdata for the LUAAIRegistry.
+	 * @return the registry userdata
+	 */
 	static LUAAIRegistry* luaAI_toregistry(lua_State * s) {
 		return luaAI_getlightuserdata<LUAAIRegistry>(s, luaAI_metaregistry());
 	}
 
+	/***
+	 * Gives you access the the userdata for the LuaNodeFactory instance you are operating on.
+	 * @return the node factory userdata
+	 */
 	static LuaNodeFactory* luaAI_tonodefactory(lua_State * s, int n) {
 		return *(LuaNodeFactory **) lua_touserdata(s, n);
 	}
 
+	/***
+	 * Gives you access the the userdata for the LuaConditionFactory instance you are operating on.
+	 * @return the condition factory userdata
+	 */
 	static LuaConditionFactory* luaAI_toconditionfactory(lua_State * s, int n) {
 		return *(LuaConditionFactory **) lua_touserdata(s, n);
 	}
 
+	/***
+	 * Gives you access the the userdata for the LuaFilterFactory instance you are operating on.
+	 * @return the filter factory userdata
+	 */
 	static LuaFilterFactory* luaGetFilterFactoryContext(lua_State * s, int n) {
 		return *(LuaFilterFactory **) lua_touserdata(s, n);
 	}
 
+	/***
+	 * Gives you access the the userdata for the LuaSteeringFactory instance you are operating on.
+	 * @return the steering factory userdata
+	 */
 	static LuaSteeringFactory* luaAI_tosteeringfactory(lua_State * s, int n) {
 		return *(LuaSteeringFactory **) lua_touserdata(s, n);
 	}
 
+	/***
+	 * Empty (default) execute() function that just throws an error.
+	 * @param ai The ai to execute the tree node on
+	 * @param deltaMillis Milliseconds since last execution
+	 * @return throws error because execute() function wasn't overridden
+	 */
 	static int luaAI_nodeemptyexecute(lua_State* s) {
 		const LuaNodeFactory* factory = luaAI_tonodefactory(s, 1);
 		return luaL_error(s, "There is no execute function set for node: %s", factory->type().c_str());
@@ -123,7 +149,7 @@ protected:
 		return 1;
 	}
 
-	/**
+	/***
 	 * @brief Create a new lua @ai{TreeNode}
 	 *
 	 * @par lua parameters: #1 name of the node
@@ -157,6 +183,11 @@ protected:
 		return 1;
 	}
 
+	/***
+	 * Empty (default) evaluate() function that just throws an error.
+	 * @param ai The ai to execute the condition node on
+	 * @return throws error because evaluate() function wasn't overridden
+	 */
 	static int luaAI_conditionemptyevaluate(lua_State* s) {
 		const LuaConditionFactory* factory = luaAI_toconditionfactory(s, 1);
 		return luaL_error(s, "There is no evaluate function set for condition: %s", factory->type().c_str());
@@ -168,6 +199,10 @@ protected:
 		return 1;
 	}
 
+	/***
+	 * @param type The string that identifies the name that is used to register the condition under
+	 * @return userdata with a metatable for conditions
+	 */
 	static int luaAI_createcondition(lua_State* s) {
 		LUAAIRegistry* r = luaAI_toregistry(s);
 		const std::string type = luaL_checkstring(s, -1);
@@ -190,6 +225,11 @@ protected:
 		return 1;
 	}
 
+	/***
+	 * Empty (default) filter() function that just throws an error.
+	 * @param ai The ai to execute the filter for
+	 * @return throws error because filter() function wasn't overridden
+	 */
 	static int luaAI_filteremptyfilter(lua_State* s) {
 		const LuaFilterFactory* factory = luaGetFilterFactoryContext(s, 1);
 		return luaL_error(s, "There is no filter function set for filter: %s", factory->type().c_str());
