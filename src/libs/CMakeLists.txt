@@ -1,7 +1,7 @@
 include_directories(.)
 
 if (SIMPLEAI_LUA)
-	find_package(Lua)
+	find_package(Lua 5.3)
 	if (NOT LUA_FOUND)
 		add_subdirectory(lua)
 	endif()

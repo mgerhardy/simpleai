@@ -100,7 +100,7 @@ else()
 endif()
 
 macro(check_lua_files TARGET FILES)
-	find_program(LUAC_EXECUTABLE NAMES luac)
+	find_program(LUAC_EXECUTABLE NAMES luac luac5.3)
 	if (LUAC_EXECUTABLE)
 		message(STATUS "${LUAC_EXECUTABLE} found")
 		foreach(_FILE ${FILES})
