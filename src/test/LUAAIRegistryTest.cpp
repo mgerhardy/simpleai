@@ -46,6 +46,8 @@ protected:
 			steering->execute(ai, 1.0f);
 		}
 		ASSERT_EQ(1, steering.use_count()) << "Someone is still referencing the LUASteering";
+		lua_gc(_registry.getLuaState(), LUA_GCCOLLECT, 0);
+		ASSERT_EQ(1, ai.use_count()) << "Someone is still referencing the AI instance";
 	}
 
 	void testFilter(const char* filterName, int n = 1) {
@@ -58,6 +60,8 @@ protected:
 			filter->filter(ai);
 		}
 		ASSERT_EQ(1, filter.use_count()) << "Someone is still referencing the LUAFilter";
+		lua_gc(_registry.getLuaState(), LUA_GCCOLLECT, 0);
+		ASSERT_EQ(1, ai.use_count()) << "Someone is still referencing the AI instance";
 	}
 
 	void testCondition(const char* conditionName, bool expectedReturnValue, int n = 1) {
@@ -70,6 +74,8 @@ protected:
 			ASSERT_EQ(expectedReturnValue, condition->evaluate(ai));
 		}
 		ASSERT_EQ(1, condition.use_count()) << "Someone is still referencing the LUACondition";
+		lua_gc(_registry.getLuaState(), LUA_GCCOLLECT, 0);
+		ASSERT_EQ(1, ai.use_count()) << "Someone is still referencing the AI instance";
 	}
 
 	void testNode(const char* nodeName, ai::TreeNodeStatus status, int n = 1) {
@@ -98,6 +104,7 @@ protected:
 		ai->setPause(false);
 		ai->setBehaviour(ai::TreeNodePtr());
 		ASSERT_EQ(1, node.use_count()) << "Someone is still referencing the LUATreeNode";
+		lua_gc(_registry.getLuaState(), LUA_GCCOLLECT, 0);
 		ASSERT_EQ(1, ai.use_count()) << "Someone is still referencing the AI instance";
 	}
 };

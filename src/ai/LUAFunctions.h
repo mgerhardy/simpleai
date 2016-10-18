@@ -8,6 +8,14 @@
 
 namespace ai {
 
+struct luaAI_AI {
+	AIPtr ai;
+};
+
+struct luaAI_ICharacter {
+	ICharacterPtr character;
+};
+
 static inline const char *luaAI_metaai() {
 	return "__meta_ai";
 }
@@ -90,9 +98,10 @@ static inline T luaAI_getudata(lua_State* s, int n, const char *name) {
 }
 
 template<class T>
-static inline void luaAI_newuserdata(lua_State* s, const T& data) {
+static inline T* luaAI_newuserdata(lua_State* s, const T& data) {
 	T* udata = (T*) lua_newuserdata(s, sizeof(T));
 	*udata = data;
+	return udata;
 }
 
 static void luaAI_globalpointer(lua_State* s, void* pointer, const char *name) {
@@ -100,9 +109,7 @@ static void luaAI_globalpointer(lua_State* s, void* pointer, const char *name) {
 	lua_setglobal(s, name);
 }
 
-template<class T>
-static inline int luaAI_pushudata(lua_State* s, const T& data, const char *name) {
-	luaAI_newuserdata<T>(s, data);
+static int luaAI_assignmetatable(lua_State* s, const char *name) {
 	luaL_getmetatable(s, name);
 #if AI_LUA_SANTITY
 	if (!lua_istable(s, -1)) {
@@ -112,6 +119,12 @@ static inline int luaAI_pushudata(lua_State* s, const T& data, const char *name)
 #endif
 	lua_setmetatable(s, -2);
 	return 1;
+}
+
+template<class T>
+static inline int luaAI_pushudata(lua_State* s, const T& data, const char *name) {
+	luaAI_newuserdata<T>(s, data);
+	return luaAI_assignmetatable(s, name);
 }
 
 template<class T>
@@ -125,8 +138,20 @@ static T* luaAI_getlightuserdata(lua_State *s, const char *name) {
 	return data;
 }
 
-static AI* luaAI_toai(lua_State *s, int n) {
-	return *(AI**)luaAI_getudata<AI*>(s, n, luaAI_metaai());
+static luaAI_AI* luaAI_toai(lua_State *s, int n) {
+	luaAI_AI* ai = luaAI_getudata<luaAI_AI*>(s, n, luaAI_metaai());
+	if (!ai->ai) {
+		luaL_error(s, "AI is already destroyed");
+	}
+	return ai;
+}
+
+static luaAI_ICharacter* luaAI_tocharacter(lua_State *s, int n) {
+	luaAI_ICharacter* chr = luaAI_getudata<luaAI_ICharacter*>(s, n, luaAI_metacharacter());
+	if (!chr->character) {
+		luaL_error(s, "ICharacter is already destroyed");
+	}
+	return chr;
 }
 
 static Zone* luaAI_tozone(lua_State *s, int n) {
@@ -139,10 +164,6 @@ static AggroMgr* luaAI_toaggromgr(lua_State *s, int n) {
 
 static GroupMgr* luaAI_togroupmgr(lua_State *s, int n) {
 	return *(GroupMgr**)luaAI_getudata<GroupMgr*>(s, n, luaAI_metagroupmgr());
-}
-
-static ICharacter* luaAI_tocharacter(lua_State *s, int n) {
-	return *(ICharacter**)luaAI_getudata<ICharacter*>(s, n, luaAI_metacharacter());
 }
 
 static glm::vec3* luaAI_tovec(lua_State *s, int n) {
@@ -161,12 +182,18 @@ static int luaAI_pushgroupmgr(lua_State* s, GroupMgr* groupMgr) {
 	return luaAI_pushudata<GroupMgr*>(s, groupMgr, luaAI_metagroupmgr());
 }
 
-static int luaAI_pushcharacter(lua_State* s, ICharacter* character) {
-	return luaAI_pushudata<ICharacter*>(s, character, luaAI_metacharacter());
+static int luaAI_pushcharacter(lua_State* s, const ICharacterPtr& character) {
+	luaAI_ICharacter* raw = (luaAI_ICharacter*) lua_newuserdata(s, sizeof(luaAI_ICharacter));
+	luaAI_ICharacter* udata = new (raw)luaAI_ICharacter();
+	udata->character = character;
+	return luaAI_assignmetatable(s, luaAI_metacharacter());
 }
 
-static int luaAI_pushai(lua_State* s, AI* ai) {
-	return luaAI_pushudata<AI*>(s, ai, luaAI_metaai());
+static int luaAI_pushai(lua_State* s, const AIPtr& ai) {
+	luaAI_AI* raw = (luaAI_AI*) lua_newuserdata(s, sizeof(luaAI_AI));
+	luaAI_AI* udata = new (raw)luaAI_AI();
+	udata->ai = ai;
+	return luaAI_assignmetatable(s, luaAI_metaai());
 }
 
 static int luaAI_pushvec(lua_State* s, const glm::vec3& v) {
@@ -182,8 +209,8 @@ static int luaAI_groupmgrposition(lua_State* s) {
 static int luaAI_groupmgradd(lua_State* s) {
 	GroupMgr* groupMgr = luaAI_togroupmgr(s, 1);
 	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
-	AI* ai = luaAI_toai(s, 3);
-	const bool state = groupMgr->add(groupId, ai->ptr());
+	luaAI_AI* ai = luaAI_toai(s, 3);
+	const bool state = groupMgr->add(groupId, ai->ai);
 	lua_pushboolean(s, state);
 	return 1;
 }
@@ -191,8 +218,8 @@ static int luaAI_groupmgradd(lua_State* s) {
 static int luaAI_groupmgrremove(lua_State* s) {
 	GroupMgr* groupMgr = luaAI_togroupmgr(s, 1);
 	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
-	AI* ai = luaAI_toai(s, 3);
-	const bool state = groupMgr->remove(groupId, ai->ptr());
+	luaAI_AI* ai = luaAI_toai(s, 3);
+	const bool state = groupMgr->remove(groupId, ai->ai);
 	lua_pushboolean(s, state);
 	return 1;
 }
@@ -200,8 +227,8 @@ static int luaAI_groupmgrremove(lua_State* s) {
 static int luaAI_groupmgrisleader(lua_State* s) {
 	const GroupMgr* groupMgr = luaAI_togroupmgr(s, 1);
 	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
-	AI* ai = luaAI_toai(s, 3);
-	const bool state = groupMgr->isGroupLeader(groupId, ai->ptr());
+	luaAI_AI* ai = luaAI_toai(s, 3);
+	const bool state = groupMgr->isGroupLeader(groupId, ai->ai);
 	lua_pushboolean(s, state);
 	return 1;
 }
@@ -209,16 +236,16 @@ static int luaAI_groupmgrisleader(lua_State* s) {
 static int luaAI_groupmgrisingroup(lua_State* s) {
 	const GroupMgr* groupMgr = luaAI_togroupmgr(s, 1);
 	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
-	AI* ai = luaAI_toai(s, 3);
-	const bool state = groupMgr->isInGroup(groupId, ai->ptr());
+	luaAI_AI* ai = luaAI_toai(s, 3);
+	const bool state = groupMgr->isInGroup(groupId, ai->ai);
 	lua_pushboolean(s, state);
 	return 1;
 }
 
 static int luaAI_groupmgrisinanygroup(lua_State* s) {
 	const GroupMgr* groupMgr = luaAI_togroupmgr(s, 1);
-	AI* ai = luaAI_toai(s, 2);
-	const bool state = groupMgr->isInAnyGroup(ai->ptr());
+	luaAI_AI* ai = luaAI_toai(s, 2);
+	const bool state = groupMgr->isInAnyGroup(ai->ai);
 	lua_pushboolean(s, state);
 	return 1;
 }
@@ -237,7 +264,7 @@ static int luaAI_groupmgrleader(lua_State* s) {
 	if (!ai) {
 		lua_pushnil(s);
 	} else {
-		luaAI_pushai(s, ai.get());
+		luaAI_pushai(s, ai);
 	}
 	return 1;
 }
@@ -253,7 +280,7 @@ static int luaAI_zoneexecute(lua_State* s) {
 	luaL_checktype(s, 2, LUA_TFUNCTION);
 	const int topIndex = lua_gettop(s);
 	zone->execute([=] (const AIPtr& ai) {
-		if (luaAI_pushai(s, ai.get()) <= 0) {
+		if (luaAI_pushai(s, ai) <= 0) {
 			return;
 		}
 		lua_pcall(s, 1, 0, 0);
@@ -289,7 +316,7 @@ static int luaAI_zoneai(lua_State* s) {
 	if (!ai) {
 		lua_pushnil(s);
 	} else {
-		luaAI_pushai(s, ai.get());
+		luaAI_pushai(s, ai);
 	}
 	return 1;
 }
@@ -341,60 +368,66 @@ static int luaAI_aggromgrtostring(lua_State* s) {
 }
 
 static int luaAI_characterid(lua_State* s) {
-	const ICharacter* chr = luaAI_tocharacter(s, 1);
-	lua_pushinteger(s, chr->getId());
+	const luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
+	lua_pushinteger(s, chr->character->getId());
 	return 1;
 }
 
 static int luaAI_characterposition(lua_State* s) {
-	const ICharacter* chr = luaAI_tocharacter(s, 1);
-	return luaAI_pushvec(s, chr->getPosition());
+	const luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
+	return luaAI_pushvec(s, chr->character->getPosition());
 }
 
 static int luaAI_charactersetposition(lua_State* s) {
-	ICharacter* chr = luaAI_tocharacter(s, 1);
+	luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
 	const glm::vec3* v = luaAI_tovec(s, 2);
-	chr->setPosition(*v);
+	chr->character->setPosition(*v);
 	return 0;
 }
 
 static int luaAI_characterspeed(lua_State* s) {
-	const ICharacter* chr = luaAI_tocharacter(s, 1);
-	lua_pushnumber(s, chr->getSpeed());
+	const luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
+	lua_pushnumber(s, chr->character->getSpeed());
 	return 1;
 }
 
 static int luaAI_characterorientation(lua_State* s) {
-	const ICharacter* chr = luaAI_tocharacter(s, 1);
-	lua_pushnumber(s, chr->getOrientation());
+	const luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
+	lua_pushnumber(s, chr->character->getOrientation());
 	return 1;
 }
 
 static int luaAI_charactersetspeed(lua_State* s) {
-	ICharacter* chr = luaAI_tocharacter(s, 1);
+	luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
 	const float value = luaL_checknumber(s, 2);
-	chr->setSpeed(value);
+	chr->character->setSpeed(value);
 	return 0;
 }
 
 static int luaAI_charactersetorientation(lua_State* s) {
-	ICharacter* chr = luaAI_tocharacter(s, 1);
+	luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
 	const float value = luaL_checknumber(s, 2);
-	chr->setOrientation(value);
+	chr->character->setOrientation(value);
 	return 0;
 }
 
 static int luaAI_charactereq(lua_State* s) {
-	const ICharacter* a = luaAI_tocharacter(s, 1);
-	const ICharacter* b = luaAI_tocharacter(s, 2);
-	const bool e = *a == *b;
+	const luaAI_ICharacter* a = luaAI_tocharacter(s, 1);
+	const luaAI_ICharacter* b = luaAI_tocharacter(s, 2);
+	const bool e = *a->character == *b->character;
 	lua_pushboolean(s, e);
 	return 1;
 }
 
+static int luaAI_charactergc(lua_State* s) {
+	luaAI_ICharacter* chr = luaAI_tocharacter(s, -1);
+	chr->character = ICharacterPtr();
+	return 0;
+}
+
 static int luaAI_characterattributes(lua_State* s) {
-	const ICharacter* chr = luaAI_tocharacter(s, 1);
-	const CharacterAttributes& attributes = chr->getAttributes();
+	const luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
+	const CharacterAttributes& attributes = chr->character->getAttributes();
 	lua_newtable(s);
 	const int top = lua_gettop(s);
 	for (auto it = attributes.begin(); it != attributes.end(); ++it) {
@@ -408,34 +441,34 @@ static int luaAI_characterattributes(lua_State* s) {
 }
 
 static int luaAI_charactersetattribute(lua_State* s) {
-	ICharacter* chr = luaAI_tocharacter(s, 1);
+	luaAI_ICharacter* chr = luaAI_tocharacter(s, 1);
 	const char* key = luaL_checkstring(s, 2);
 	const char* value = luaL_checkstring(s, 3);
-	chr->setAttribute(key, value);
+	chr->character->setAttribute(key, value);
 	return 0;
 }
 
 static int luaAI_charactertostring(lua_State* s) {
-	ICharacter* character = luaAI_tocharacter(s, 1);
-	lua_pushfstring(s, "Character: %d", (lua_Integer)character->getId());
+	luaAI_ICharacter* character = luaAI_tocharacter(s, 1);
+	lua_pushfstring(s, "Character: %d", (lua_Integer)character->character->getId());
 	return 1;
 }
 
 static int luaAI_aiid(lua_State* s) {
-	const AI* ai = luaAI_toai(s, 1);
-	lua_pushinteger(s, ai->getId());
+	const luaAI_AI* ai = luaAI_toai(s, 1);
+	lua_pushinteger(s, ai->ai->getId());
 	return 1;
 }
 
 static int luaAI_aitime(lua_State* s) {
-	const AI* ai = luaAI_toai(s, 1);
-	lua_pushinteger(s, ai->getTime());
+	const luaAI_AI* ai = luaAI_toai(s, 1);
+	lua_pushinteger(s, ai->ai->getTime());
 	return 1;
 }
 
 static int luaAI_aifilteredentities(lua_State* s) {
-	const AI* ai = luaAI_toai(s, 1);
-	const FilteredEntities& filteredEntities = ai->getFilteredEntities();
+	const luaAI_AI* ai = luaAI_toai(s, 1);
+	const FilteredEntities& filteredEntities = ai->ai->getFilteredEntities();
 	lua_newtable(s);
 	const int top = lua_gettop(s);
 	int i = 0;
@@ -448,37 +481,43 @@ static int luaAI_aifilteredentities(lua_State* s) {
 }
 
 static int luaAI_aigetzone(lua_State* s) {
-	const AI* ai = luaAI_toai(s, 1);
-	return luaAI_pushzone(s, ai->getZone());
+	const luaAI_AI* ai = luaAI_toai(s, 1);
+	return luaAI_pushzone(s, ai->ai->getZone());
 }
 
 static int luaAI_aigetaggromgr(lua_State* s) {
-	AI* ai = luaAI_toai(s, 1);
-	return luaAI_pushaggromgr(s, &ai->getAggroMgr());
+	luaAI_AI* ai = luaAI_toai(s, 1);
+	return luaAI_pushaggromgr(s, &ai->ai->getAggroMgr());
 }
 
 static int luaAI_aigetcharacter(lua_State* s) {
-	const AI* ai = luaAI_toai(s, 1);
-	return luaAI_pushcharacter(s, ai->getCharacter().get());
+	const luaAI_AI* ai = luaAI_toai(s, 1);
+	return luaAI_pushcharacter(s, ai->ai->getCharacter());
 }
 
 static int luaAI_aihaszone(lua_State* s) {
-	const AI* ai = luaAI_toai(s, 1);
-	lua_pushboolean(s, ai->hasZone() ? 1 : 0);
+	const luaAI_AI* ai = luaAI_toai(s, 1);
+	lua_pushboolean(s, ai->ai->hasZone() ? 1 : 0);
 	return 1;
 }
 
 static int luaAI_aieq(lua_State* s) {
-	const AI* a = luaAI_toai(s, 1);
-	const AI* b = luaAI_toai(s, 2);
-	const bool e = a->getId() == b->getId();
+	const luaAI_AI* a = luaAI_toai(s, 1);
+	const luaAI_AI* b = luaAI_toai(s, 2);
+	const bool e = a->ai->getId() == b->ai->getId();
 	lua_pushboolean(s, e);
 	return 1;
 }
 
+static int luaAI_aigc(lua_State* s) {
+	luaAI_AI* ai = luaAI_toai(s, -1);
+	ai->ai = AIPtr();
+	return 0;
+}
+
 static int luaAI_aitostring(lua_State* s) {
-	const AI* ai = luaAI_toai(s, 1);
-	TreeNodePtr treeNode = ai->getBehaviour();
+	const luaAI_AI* ai = luaAI_toai(s, 1);
+	TreeNodePtr treeNode = ai->ai->getBehaviour();
 	if (treeNode) {
 		lua_pushfstring(s, "ai: %s", treeNode->getName().c_str());
 	} else {

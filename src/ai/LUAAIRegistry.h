@@ -274,6 +274,7 @@ public:
 		{"character", luaAI_aigetcharacter},
 		{"aggroMgr", luaAI_aigetaggromgr},
 		{"__tostring", luaAI_aitostring},
+		{"__gc", luaAI_aigc},
 		{"__eq", luaAI_aieq},
 		{nullptr, nullptr}
 	};
@@ -311,6 +312,7 @@ public:
 		{"setAttribute", luaAI_charactersetattribute},
 		{"attributes", luaAI_characterattributes},
 		{"__eq", luaAI_charactereq},
+		{"__gc", luaAI_charactergc},
 		{"__tostring", luaAI_charactertostring},
 		{nullptr, nullptr}
 	};
@@ -342,7 +344,7 @@ public:
 	};
 
 	static int luaAI_aisetfilteredentities(lua_State* s) {
-		AI* ai = luaAI_toai(s, 1);
+		luaAI_AI* ai = luaAI_toai(s, 1);
 		luaL_checktype(s, 2, LUA_TTABLE);
 
 		const int n = lua_rawlen(s, 2);
@@ -352,15 +354,16 @@ public:
 			const int top = lua_gettop(s);
 			const CharacterId id = (CharacterId)luaL_checknumber(s, top);
 			v[i - 1] = id;
+			lua_pop(s, 1);
 		}
-		ai->setFilteredEntities(v);
+		ai->ai->setFilteredEntities(v);
 		return 0;
 	}
 
 	static int luaAI_aiaddfilteredentity(lua_State* s) {
-		AI* ai = luaAI_toai(s, 1);
+		luaAI_AI* ai = luaAI_toai(s, 1);
 		const CharacterId id = (CharacterId)luaL_checkinteger(s, 2);
-		ai->addFilteredEntity(id);
+		ai->ai->addFilteredEntity(id);
 		return 0;
 	}
 
