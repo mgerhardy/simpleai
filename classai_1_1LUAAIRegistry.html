@@ -289,8 +289,8 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_nodeempty
 <tr class="memitem:aa6f5df6cc7d10a8260fe2a8d967f09ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6f5df6cc7d10a8260fe2a8d967f09ee"></a>
 static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_nodetostring</b> (lua_State *s)</td></tr>
 <tr class="separator:aa6f5df6cc7d10a8260fe2a8d967f09ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20fa73fb35d2ea301c46e90c6389dcfb"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1LUAAIRegistry.html#a20fa73fb35d2ea301c46e90c6389dcfb">luaAI_createnode</a> (lua_State *s)</td></tr>
-<tr class="memdesc:a20fa73fb35d2ea301c46e90c6389dcfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new lua <a class="el" href="classai_1_1TreeNode.html">TreeNode</a>.  <a href="#a20fa73fb35d2ea301c46e90c6389dcfb">More...</a><br/></td></tr>
+<tr class="memitem:a20fa73fb35d2ea301c46e90c6389dcfb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a20fa73fb35d2ea301c46e90c6389dcfb"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_createnode</b> (lua_State *s)</td></tr>
 <tr class="separator:a20fa73fb35d2ea301c46e90c6389dcfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3068771c63d866254da6bce407669870"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3068771c63d866254da6bce407669870"></a>
 static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_conditionemptyevaluate</b> (lua_State *s)</td></tr>
@@ -486,38 +486,6 @@ SteeringFactoryMap&#160;</td><td class="memItemRight" valign="bottom"><b>_steeri
 
 </div>
 </div>
-<a class="anchor" id="a20fa73fb35d2ea301c46e90c6389dcfb"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static int ai::LUAAIRegistry::luaAI_createnode </td>
-          <td>(</td>
-          <td class="paramtype">lua_State *&#160;</td>
-          <td class="paramname"><em>s</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Create a new lua <a class="el" href="classai_1_1TreeNode.html">TreeNode</a>. </p>
-<dl class="section user"><dt>lua parameters: #1 name of the node</dt><dd></dd></dl>
-<dl class="section note"><dt>Note</dt><dd>you have to specify an <code>execute</code> method that accepts two parameters in your lua code. E.g. do it like this: <div class="fragment"><div class="line">  local luatest = REGISTRY.createNode(\<span class="stringliteral">&quot;LuaTest\&quot;)</span></div>
-<div class="line"><span class="stringliteral">&quot;</span> <span class="keyword">function</span> luatest:execute(ai, deltaMillis)</div>
-<div class="line"><span class="stringliteral">&quot;    return FAILED\n&quot;</span></div>
-<div class="line"><span class="stringliteral">&quot; end</span></div>
-</div><!-- fragment --> </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a0ad8e9ba008c69a849bf04a2facb44f6"></a>
 <div class="memitem">
 <div class="memproto">
@@ -680,7 +648,7 @@ SteeringFactoryMap&#160;</td><td class="memItemRight" valign="bottom"><b>_steeri
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= {</div>
-<div class="line">        {<span class="stringliteral">&quot;createNode&quot;</span>, <a class="code" href="classai_1_1LUAAIRegistry.html#a20fa73fb35d2ea301c46e90c6389dcfb">luaAI_createnode</a>},</div>
+<div class="line">        {<span class="stringliteral">&quot;createNode&quot;</span>, luaAI_createnode},</div>
 <div class="line">        {<span class="stringliteral">&quot;createCondition&quot;</span>, luaAI_createcondition},</div>
 <div class="line">        {<span class="stringliteral">&quot;createFilter&quot;</span>, luaAI_createfilter},</div>
 <div class="line">        {<span class="stringliteral">&quot;createSteering&quot;</span>, luaAI_createsteering},</div>

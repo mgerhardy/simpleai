@@ -25,7 +25,7 @@
 <area shape="rect" id="node31" href="$Steering_8h.html" title="Defines some basic movement algorithms like Wandering, Seeking and Fleeing. " alt="" coords="1346,317,1533,373"/>
 <area shape="rect" id="node6" href="$ConditionParser_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/conditions/Condition\lParser.h" alt="" coords="2239,630,2418,701"/>
 <area shape="rect" id="node17" href="$LUATreeLoader_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/tree/loaders\l/lua/LUATreeLoader.h" alt="" coords="2126,750,2274,821"/>
-<area shape="rect" id="node19" href="$LUAAIRegistry_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/LUAAIRegistry.h" alt="" coords="2443,637,2604,693"/>
+<area shape="rect" id="node19" href="$LUAAIRegistry_8h_source.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/LUAAIRegistry.h" alt="" coords="2443,637,2604,693"/>
 <area shape="rect" id="node18" href="$XMLTreeLoader_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/tree/loaders\l/xml/XMLTreeLoader.h" alt="" coords="2300,750,2453,821"/>
 <area shape="rect" id="node8" href="$ChangeHandler_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/ChangeHandler.h" alt="" coords="3733,869,3936,925"/>
 <area shape="rect" id="node9" href="$ServerImpl_8h.html" title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/ServerImpl.h" alt="" coords="3746,973,3922,1029"/>
