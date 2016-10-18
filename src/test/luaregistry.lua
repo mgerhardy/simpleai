@@ -18,9 +18,14 @@ function luatest:execute(ai, deltaMillis)
 	--print("LuaTest node execute called with parameters: ai=["..tostring(ai).."], deltaMillis=["..tostring(deltaMillis).."]")
 	local chr = ai:character()
 	local pos = chr:position()
+	local x = pos.x
 	pos.x = pos.x + 1.0
 	pos.y = 0.5
 	pos.z = 1.5
+	if chr:position().x ~= x then
+		print("error: modifying a vec should not update the character position")
+		return FAILED
+	end
 	if pos.r ~= 1.0 then
 		print("error: pos.r/x should be 1.0")
 		return FAILED
@@ -40,6 +45,11 @@ function luatest:execute(ai, deltaMillis)
 		print("error: ai should lead group 1")
 		return FAILED
 	end
+	local leader = groupMgr:leader(1)
+	if leader ~= ai then
+		print("error: ai should lead group 1")
+		return FAILED
+	end
 	if not groupMgr:isInGroup(1, ai) then
 		print("error: ai should be in group 1")
 		return FAILED
@@ -48,6 +58,21 @@ function luatest:execute(ai, deltaMillis)
 		print("error: ai should be in a group")
 		return FAILED
 	end
+	local stateRemove = groupMgr:remove(1, ai)
+	if not stateRemove then
+		print("error: could not remove ai to group 1")
+		return FAILED
+	end
+	if groupMgr:isLeader(1, ai) then
+		print("error: ai should not lead group 1")
+		return FAILED
+	end
+	if groupMgr:isInAnyGroup(ai) then
+		print("error: ai should not be in a group")
+		return FAILED
+	end
+	-- we can't do anything with this, as the position is only updated with the next tick.
+	groupMgr:position(1);
 	local aiFromZone = zone:ai(chr:id())
 	if aiFromZone == nil then
 		print("error: could not get ai from zone with id " .. chr:id())
@@ -57,6 +82,9 @@ function luatest:execute(ai, deltaMillis)
 	aggroMgr:addAggro(3, 0.3)
 	aggroMgr:addAggro(4, 0.4)
 	aggroMgr:addAggro(5, 0.5)
+	aggroMgr:setReduceByRatio(0.5, 2.0)
+	aggroMgr:setReduceByValue(1.0)
+	aggroMgr:resetReduceValue()
 	local aggroVal = aggroMgr:addAggro(2, 1.0)
 	if aggroVal ~= 1.0 then
 		print("error: expected aggroVal was 1.0 - but found was " .. aggroVal)

@@ -317,6 +317,9 @@ public:
 		{nullptr, nullptr}
 	};
 	std::vector<luaL_Reg> aggroMgrFuncs = {
+		{"setReduceByRatio", luaAI_aggromgrsetreducebyratio},
+		{"setReduceByValue", luaAI_aggromgrsetreducebyvalue},
+		{"resetReduceValue", luaAI_aggromgrresetreducevalue},
 		{"addAggro", luaAI_aggromgraddaggro},
 		{"highestEntry", luaAI_aggromgrhighestentry},
 		{"entries", luaAI_aggromgrentries},

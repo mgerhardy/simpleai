@@ -353,6 +353,26 @@ static int luaAI_aggromgrentries(lua_State* s) {
 	return 1;
 }
 
+static int luaAI_aggromgrsetreducebyratio(lua_State* s) {
+	AggroMgr* aggroMgr = luaAI_toaggromgr(s, 1);
+	const float reduceRatioSecond = luaL_checknumber(s, 2);
+	const float minAggro = luaL_checknumber(s, 3);
+	aggroMgr->setReduceByRatio(reduceRatioSecond, minAggro);
+	return 0;
+}
+static int luaAI_aggromgrsetreducebyvalue(lua_State* s) {
+	AggroMgr* aggroMgr = luaAI_toaggromgr(s, 1);
+	const float reduceValueSecond = luaL_checknumber(s, 2);
+	aggroMgr->setReduceByValue(reduceValueSecond);
+	return 0;
+}
+
+static int luaAI_aggromgrresetreducevalue(lua_State* s) {
+	AggroMgr* aggroMgr = luaAI_toaggromgr(s, 1);
+	aggroMgr->resetReduceValue();
+	return 0;
+}
+
 static int luaAI_aggromgraddaggro(lua_State* s) {
 	AggroMgr* aggroMgr = luaAI_toaggromgr(s, 1);
 	const CharacterId chrId = (CharacterId)luaL_checkinteger(s, 2);
