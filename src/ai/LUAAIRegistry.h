@@ -92,15 +92,15 @@ protected:
 	FilterFactoryMap _filterFactories;
 	SteeringFactoryMap _steeringFactories;
 
-	static LUAAIRegistry* luaGetContext(lua_State * s) {
-		return lua_aigetlightuserdata<LUAAIRegistry>(s, lua_metaregistry());
+	static LUAAIRegistry* luaAI_toregistry(lua_State * s) {
+		return luaAI_getlightuserdata<LUAAIRegistry>(s, luaAI_metaregistry());
 	}
 
-	static LuaNodeFactory* luaGetNodeFactoryContext(lua_State * s, int n) {
+	static LuaNodeFactory* luaAI_tonodefactory(lua_State * s, int n) {
 		return *(LuaNodeFactory **) lua_touserdata(s, n);
 	}
 
-	static LuaConditionFactory* luaGetConditionFactoryContext(lua_State * s, int n) {
+	static LuaConditionFactory* luaAI_toconditionfactory(lua_State * s, int n) {
 		return *(LuaConditionFactory **) lua_touserdata(s, n);
 	}
 
@@ -108,17 +108,17 @@ protected:
 		return *(LuaFilterFactory **) lua_touserdata(s, n);
 	}
 
-	static LuaSteeringFactory* luaGetSteeringFactoryContext(lua_State * s, int n) {
+	static LuaSteeringFactory* luaAI_tosteeringfactory(lua_State * s, int n) {
 		return *(LuaSteeringFactory **) lua_touserdata(s, n);
 	}
 
-	static int luaNodeEmptyExecute(lua_State* s) {
-		const LuaNodeFactory* factory = luaGetNodeFactoryContext(s, 1);
+	static int luaAI_nodeemptyexecute(lua_State* s) {
+		const LuaNodeFactory* factory = luaAI_tonodefactory(s, 1);
 		return luaL_error(s, "There is no execute function set for node: %s", factory->type().c_str());
 	}
 
-	static int luaNodeToString(lua_State* s) {
-		const LuaNodeFactory* factory = luaGetNodeFactoryContext(s, 1);
+	static int luaAI_nodetostring(lua_State* s) {
+		const LuaNodeFactory* factory = luaAI_tonodefactory(s, 1);
 		lua_pushfstring(s, "node: %s", factory->type().c_str());
 		return 1;
 	}
@@ -135,8 +135,8 @@ protected:
 	 " end
 	 * @endcode
 	 */
-	static int luaCreateNode(lua_State* s) {
-		LUAAIRegistry* r = luaGetContext(s);
+	static int luaAI_createnode(lua_State* s) {
+		LUAAIRegistry* r = luaAI_toregistry(s);
 		const std::string type = luaL_checkstring(s, -1);
 		const LUATreeNodeFactoryPtr& factory = std::make_shared<LuaNodeFactory>(s, type);
 		const bool inserted = r->registerNodeFactory(type, *factory);
@@ -144,32 +144,32 @@ protected:
 			return luaL_error(s, "tree node %s is already registered", type.c_str());
 		}
 
-		lua_ainewuserdata<LuaNodeFactory*>(s, factory.get());
+		luaAI_newuserdata<LuaNodeFactory*>(s, factory.get());
 		const luaL_Reg nodes[] = {
-			{"execute", luaNodeEmptyExecute},
-			{"__tostring", luaNodeToString},
-			{"__newindex", lua_ainewindex},
+			{"execute", luaAI_nodeemptyexecute},
+			{"__tostring", luaAI_nodetostring},
+			{"__newindex", luaAI_newindex},
 			{nullptr, nullptr}
 		};
-		lua_aisetupmetatable(s, type, nodes, "node");
+		luaAI_setupmetatable(s, type, nodes, "node");
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_treeNodeFactories.emplace(type, factory);
 		return 1;
 	}
 
-	static int luaConditionEmptyEvaluate(lua_State* s) {
-		const LuaConditionFactory* factory = luaGetConditionFactoryContext(s, 1);
+	static int luaAI_conditionemptyevaluate(lua_State* s) {
+		const LuaConditionFactory* factory = luaAI_toconditionfactory(s, 1);
 		return luaL_error(s, "There is no evaluate function set for condition: %s", factory->type().c_str());
 	}
 
-	static int luaConditionToString(lua_State* s) {
-		const LuaConditionFactory* factory = luaGetConditionFactoryContext(s, 1);
+	static int luaAI_conditiontostring(lua_State* s) {
+		const LuaConditionFactory* factory = luaAI_toconditionfactory(s, 1);
 		lua_pushfstring(s, "condition: %s", factory->type().c_str());
 		return 1;
 	}
 
-	static int luaCreateCondition(lua_State* s) {
-		LUAAIRegistry* r = luaGetContext(s);
+	static int luaAI_createcondition(lua_State* s) {
+		LUAAIRegistry* r = luaAI_toregistry(s);
 		const std::string type = luaL_checkstring(s, -1);
 		const LUAConditionFactoryPtr& factory = std::make_shared<LuaConditionFactory>(s, type);
 		const bool inserted = r->registerConditionFactory(type, *factory);
@@ -177,33 +177,32 @@ protected:
 			return luaL_error(s, "condition %s is already registered", type.c_str());
 		}
 
-		lua_ainewuserdata<LuaConditionFactory*>(s, factory.get());
+		luaAI_newuserdata<LuaConditionFactory*>(s, factory.get());
 		const luaL_Reg nodes[] = {
-			{"evaluate", luaConditionEmptyEvaluate},
-			{"__tostring", luaConditionToString},
-			{"__newindex", lua_ainewindex},
+			{"evaluate", luaAI_conditionemptyevaluate},
+			{"__tostring", luaAI_conditiontostring},
+			{"__newindex", luaAI_newindex},
 			{nullptr, nullptr}
 		};
-		lua_aisetupmetatable(s, type, nodes, "condition");
-
+		luaAI_setupmetatable(s, type, nodes, "condition");
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_conditionFactories.emplace(type, factory);
 		return 1;
 	}
 
-	static int luaFilterEmptyFilter(lua_State* s) {
+	static int luaAI_filteremptyfilter(lua_State* s) {
 		const LuaFilterFactory* factory = luaGetFilterFactoryContext(s, 1);
 		return luaL_error(s, "There is no filter function set for filter: %s", factory->type().c_str());
 	}
 
-	static int luaFilterToString(lua_State* s) {
+	static int luaAI_filtertostring(lua_State* s) {
 		const LuaFilterFactory* factory = luaGetFilterFactoryContext(s, 1);
 		lua_pushfstring(s, "filter: %s", factory->type().c_str());
 		return 1;
 	}
 
-	static int luaCreateFilter(lua_State* s) {
-		LUAAIRegistry* r = luaGetContext(s);
+	static int luaAI_createfilter(lua_State* s) {
+		LUAAIRegistry* r = luaAI_toregistry(s);
 		const std::string type = luaL_checkstring(s, -1);
 		const LUAFilterFactoryPtr& factory = std::make_shared<LuaFilterFactory>(s, type);
 		const bool inserted = r->registerFilterFactory(type, *factory);
@@ -211,33 +210,33 @@ protected:
 			return luaL_error(s, "filter %s is already registered", type.c_str());
 		}
 
-		lua_ainewuserdata<LuaFilterFactory*>(s, factory.get());
+		luaAI_newuserdata<LuaFilterFactory*>(s, factory.get());
 		const luaL_Reg nodes[] = {
-			{"filter", luaFilterEmptyFilter},
-			{"__tostring", luaFilterToString},
-			{"__newindex", lua_ainewindex},
+			{"filter", luaAI_filteremptyfilter},
+			{"__tostring", luaAI_filtertostring},
+			{"__newindex", luaAI_newindex},
 			{nullptr, nullptr}
 		};
-		lua_aisetupmetatable(s, type, nodes, "filter");
+		luaAI_setupmetatable(s, type, nodes, "filter");
 
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_filterFactories.emplace(type, factory);
 		return 1;
 	}
 
-	static int luaSteeringEmptyExecute(lua_State* s) {
-		const LuaSteeringFactory* factory = luaGetSteeringFactoryContext(s, 1);
+	static int luaAI_steeringemptyexecute(lua_State* s) {
+		const LuaSteeringFactory* factory = luaAI_tosteeringfactory(s, 1);
 		return luaL_error(s, "There is no execute() function set for steering: %s", factory->type().c_str());
 	}
 
-	static int luaSteeringToString(lua_State* s) {
-		const LuaSteeringFactory* factory = luaGetSteeringFactoryContext(s, 1);
+	static int luaAI_steeringtostring(lua_State* s) {
+		const LuaSteeringFactory* factory = luaAI_tosteeringfactory(s, 1);
 		lua_pushfstring(s, "steering: %s", factory->type().c_str());
 		return 1;
 	}
 
-	static int luaCreateSteering(lua_State* s) {
-		LUAAIRegistry* r = luaGetContext(s);
+	static int luaAI_createsteering(lua_State* s) {
+		LUAAIRegistry* r = luaAI_toregistry(s);
 		const std::string type = luaL_checkstring(s, -1);
 		const LUASteeringFactoryPtr& factory = std::make_shared<LuaSteeringFactory>(s, type);
 		const bool inserted = r->registerSteeringFactory(type, *factory);
@@ -245,14 +244,14 @@ protected:
 			return luaL_error(s, "steering %s is already registered", type.c_str());
 		}
 
-		lua_ainewuserdata<LuaSteeringFactory*>(s, factory.get());
+		luaAI_newuserdata<LuaSteeringFactory*>(s, factory.get());
 		const luaL_Reg nodes[] = {
-			{"filter", luaSteeringEmptyExecute},
-			{"__tostring", luaSteeringToString},
-			{"__newindex", lua_ainewindex},
+			{"filter", luaAI_steeringemptyexecute},
+			{"__tostring", luaAI_steeringtostring},
+			{"__newindex", luaAI_newindex},
 			{nullptr, nullptr}
 		};
-		lua_aisetupmetatable(s, type, nodes, "steering");
+		luaAI_setupmetatable(s, type, nodes, "steering");
 
 		ScopedWriteLock scopedLock(r->_lock);
 		r->_steeringFactories.emplace(type, factory);
@@ -265,78 +264,85 @@ public:
 	}
 
 	std::vector<luaL_Reg> aiFuncs = {
-		{"id", lua_aiid},
-		{"time", lua_aitime},
-		{"hasZone", lua_aihaszone},
-		{"zone", lua_aigetzone},
-		{"filteredEntities", lua_aifilteredentities},
-		{"setFilteredEntities", lua_aisetfilteredentities},
-		{"addFilteredEntity", lua_aiaddfilteredentity},
-		{"character", lua_aigetcharacter},
-		{"aggroMgr", lua_aigetaggromgr},
-		{"__tostring", lua_aitostring},
-		{"__eq", lua_aieq},
+		{"id", luaAI_aiid},
+		{"time", luaAI_aitime},
+		{"hasZone", luaAI_aihaszone},
+		{"zone", luaAI_aigetzone},
+		{"filteredEntities", luaAI_aifilteredentities},
+		{"setFilteredEntities", luaAI_aisetfilteredentities},
+		{"addFilteredEntity", luaAI_aiaddfilteredentity},
+		{"character", luaAI_aigetcharacter},
+		{"aggroMgr", luaAI_aigetaggromgr},
+		{"__tostring", luaAI_aitostring},
+		{"__eq", luaAI_aieq},
 		{nullptr, nullptr}
 	};
 	std::vector<luaL_Reg> vecFuncs = {
-		{"__add", lua_vecadd},
-		{"__sub", lua_vecsub},
-		{"__mul", lua_vecdot},
-		{"__div", lua_vecdiv},
-		{"__unm", lua_vecnegate},
-		{"__len", lua_veclen},
-		{"__eq", lua_veceq},
-		{"__tostring", lua_vectostring},
-		{"__index", lua_vecindex},
-		{"__newindex", lua_vecnewindex},
-		{"dot", lua_vecdot},
+		{"__add", luaAI_vecadd},
+		{"__sub", luaAI_vecsub},
+		{"__mul", luaAI_vecdot},
+		{"__div", luaAI_vecdiv},
+		{"__unm", luaAI_vecnegate},
+		{"__len", luaAI_veclen},
+		{"__eq", luaAI_veceq},
+		{"__tostring", luaAI_vectostring},
+		{"__index", luaAI_vecindex},
+		{"__newindex", luaAI_vecnewindex},
+		{"dot", luaAI_vecdot},
 		{nullptr, nullptr}
 	};
 	std::vector<luaL_Reg> zoneFuncs = {
-		{"size", lua_zonesize},
-		{"name", lua_zonename},
-		{"ai", lua_zoneai},
-		{"execute", lua_zoneexecute},
-		{"groupMgr", lua_zonegroupmgr},
-		{"__tostring", lua_zonetostring},
+		{"size", luaAI_zonesize},
+		{"name", luaAI_zonename},
+		{"ai", luaAI_zoneai},
+		{"execute", luaAI_zoneexecute},
+		{"groupMgr", luaAI_zonegroupmgr},
+		{"__tostring", luaAI_zonetostring},
 		{nullptr, nullptr}
 	};
 	std::vector<luaL_Reg> characterFuncs = {
-		{"id", lua_characterid},
-		{"position", lua_characterposition},
-		{"setPosition", lua_charactersetposition},
-		{"speed", lua_characterspeed},
-		{"setSpeed", lua_charactersetspeed},
-		{"orientation", lua_characterorientation},
-		{"setOrientation", lua_charactersetorientation},
-		{"setAttribute", lua_charactersetattribute},
-		{"attributes", lua_characterattributes},
-		{"__eq", lua_charactereq},
-		{"__tostring", lua_charactertostring},
+		{"id", luaAI_characterid},
+		{"position", luaAI_characterposition},
+		{"setPosition", luaAI_charactersetposition},
+		{"speed", luaAI_characterspeed},
+		{"setSpeed", luaAI_charactersetspeed},
+		{"orientation", luaAI_characterorientation},
+		{"setOrientation", luaAI_charactersetorientation},
+		{"setAttribute", luaAI_charactersetattribute},
+		{"attributes", luaAI_characterattributes},
+		{"__eq", luaAI_charactereq},
+		{"__tostring", luaAI_charactertostring},
 		{nullptr, nullptr}
 	};
 	std::vector<luaL_Reg> aggroMgrFuncs = {
-		{"addAggro", lua_aggromgraddaggro},
-		{"highestEntry", lua_aggromgrhighestentry},
-		{"entries", lua_aggromgrentries},
-		{"__tostring", lua_aggromgrtostring},
+		{"addAggro", luaAI_aggromgraddaggro},
+		{"highestEntry", luaAI_aggromgrhighestentry},
+		{"entries", luaAI_aggromgrentries},
+		{"__tostring", luaAI_aggromgrtostring},
 		{nullptr, nullptr}
 	};
 	std::vector<luaL_Reg> groupMgrFuncs = {
-		{"add", lua_groupmgradd},
-		{"remove", lua_groupmgrremove},
-		{"isLeader", lua_groupmgrisleader},
-		{"isInGroup", lua_groupmgrisingroup},
-		{"isInAnyGroup", lua_groupmgrisinanygroup},
-		{"size", lua_groupmgrsize},
-		{"position", lua_groupmgrposition},
-		{"leader", lua_groupmgrleader},
-		{"__tostring", lua_groupmgrtostring},
+		{"add", luaAI_groupmgradd},
+		{"remove", luaAI_groupmgrremove},
+		{"isLeader", luaAI_groupmgrisleader},
+		{"isInGroup", luaAI_groupmgrisingroup},
+		{"isInAnyGroup", luaAI_groupmgrisinanygroup},
+		{"size", luaAI_groupmgrsize},
+		{"position", luaAI_groupmgrposition},
+		{"leader", luaAI_groupmgrleader},
+		{"__tostring", luaAI_groupmgrtostring},
+		{nullptr, nullptr}
+	};
+	std::vector<luaL_Reg> registryFuncs = {
+		{"createNode", luaAI_createnode},
+		{"createCondition", luaAI_createcondition},
+		{"createFilter", luaAI_createfilter},
+		{"createSteering", luaAI_createsteering},
 		{nullptr, nullptr}
 	};
 
-	static int lua_aisetfilteredentities(lua_State* s) {
-		AI* ai = lua_ctxai(s, 1);
+	static int luaAI_aisetfilteredentities(lua_State* s) {
+		AI* ai = luaAI_toai(s, 1);
 		luaL_checktype(s, 2, LUA_TTABLE);
 
 		const int n = lua_rawlen(s, 2);
@@ -351,8 +357,8 @@ public:
 		return 0;
 	}
 
-	static int lua_aiaddfilteredentity(lua_State* s) {
-		AI* ai = lua_ctxai(s, 1);
+	static int luaAI_aiaddfilteredentity(lua_State* s) {
+		AI* ai = luaAI_toai(s, 1);
 		const CharacterId id = (CharacterId)luaL_checkinteger(s, 2);
 		ai->addFilteredEntity(id);
 		return 0;
@@ -375,7 +381,7 @@ public:
 	 */
 	int pushAIMetatable() {
 		ai_assert(_s != nullptr, "LUA state is not yet initialized");
-		return luaL_getmetatable(_s, lua_metaai());
+		return luaL_getmetatable(_s, luaAI_metaai());
 	}
 
 	/**
@@ -384,7 +390,7 @@ public:
 	 */
 	int pushCharacterMetatable() {
 		ai_assert(_s != nullptr, "LUA state is not yet initialized");
-		return luaL_getmetatable(_s, lua_metacharacter());
+		return luaL_getmetatable(_s, luaAI_metacharacter());
 	}
 
 	/**
@@ -403,26 +409,19 @@ public:
 		lua_gc(_s, LUA_GCSTOP, 0);
 		luaL_openlibs(_s);
 
-		luaL_Reg registryFuncs[] = {
-			{"createNode", luaCreateNode},
-			{"createCondition", luaCreateCondition},
-			{"createFilter", luaCreateFilter},
-			{"createSteering", luaCreateSteering},
-			{nullptr, nullptr}
-		};
-		lua_airegisterfuncs(_s, registryFuncs, "META_REGISTRY");
+		luaAI_registerfuncs(_s, &registryFuncs.front(), "META_REGISTRY");
 		lua_setglobal(_s, "REGISTRY");
 
 		// TODO: random
 
-		lua_aiglobalpointer(_s, this, lua_metaregistry());
+		luaAI_globalpointer(_s, this, luaAI_metaregistry());
 
-		registerAIFunc();
-		registerZoneFunc();
-		registerAggroMgrFunc();
-		registerCharacterFunc();
-		registerVecFunc();
-		registerGroupMgrFunc();
+		luaAI_registerfuncs(_s, &aiFuncs.front(), luaAI_metaai());
+		luaAI_registerfuncs(_s, &vecFuncs.front(), luaAI_metavec());
+		luaAI_registerfuncs(_s, &zoneFuncs.front(), luaAI_metazone());
+		luaAI_registerfuncs(_s, &characterFuncs.front(), luaAI_metacharacter());
+		luaAI_registerfuncs(_s, &aggroMgrFuncs.front(), luaAI_metaaggromgr());
+		luaAI_registerfuncs(_s, &groupMgrFuncs.front(), luaAI_metagroupmgr());
 
 		const char* script = ""
 			"UNKNOWN, CANNOTEXECUTE, RUNNING, FINISHED, FAILED, EXCEPTION = 0, 1, 2, 3, 4, 5\n";
@@ -477,30 +476,6 @@ public:
 			return false;
 		}
 		return true;
-	}
-
-	virtual void registerAIFunc() {
-		lua_airegisterfuncs(_s, &aiFuncs.front(), lua_metaai());
-	}
-
-	virtual void registerVecFunc() {
-		lua_airegisterfuncs(_s, &vecFuncs.front(), lua_metavec());
-	}
-
-	virtual void registerZoneFunc() {
-		lua_airegisterfuncs(_s, &zoneFuncs.front(), lua_metazone());
-	}
-
-	virtual void registerCharacterFunc() {
-		lua_airegisterfuncs(_s, &characterFuncs.front(), lua_metacharacter());
-	}
-
-	virtual void registerAggroMgrFunc() {
-		lua_airegisterfuncs(_s, &aggroMgrFuncs.front(), lua_metaaggromgr());
-	}
-
-	virtual void registerGroupMgrFunc() {
-		lua_airegisterfuncs(_s, &groupMgrFuncs.front(), lua_metagroupmgr());
 	}
 };
 

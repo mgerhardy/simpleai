@@ -46,7 +46,7 @@ protected:
 		lua_getfield(_s, LUA_REGISTRYINDEX, name.c_str());
 
 		// first parameter is ai
-		if (lua_pushai(_s, entity.get()) == 0) {
+		if (luaAI_pushai(_s, entity.get()) == 0) {
 			return;
 		}
 #if AI_LUA_SANTITY > 0
