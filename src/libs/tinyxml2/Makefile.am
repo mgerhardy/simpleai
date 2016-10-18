@@ -4,7 +4,7 @@ noinst_LTLIBRARIES = libtinyxml2.la
 
 libtinyxml2_la_SOURCES = tinyxml2.cpp
 
-libtinyxml2_la_CPPFLAGS = -I.
+libtinyxml2_la_CXXFLAGS = -I.
 
 libtinyxml2_la_LDFLAGS =
 
