@@ -89,8 +89,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-types">Protected Types</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classai_1_1LUAAIRegistry-members.html">List of all members</a>  </div>
@@ -140,24 +141,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>evaluate</b> (const s
 <tr class="memitem:a372137d91c6d9630c9a83201fbb4ea30"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1LUAAIRegistry.html#a372137d91c6d9630c9a83201fbb4ea30">evaluate</a> (const char *luaBuffer, size_t size)</td></tr>
 <tr class="memdesc:a372137d91c6d9630c9a83201fbb4ea30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load your lua scripts into the lua state of the registry. This can be called multiple times to e.g. load multiple files.  <a href="#a372137d91c6d9630c9a83201fbb4ea30">More...</a><br/></td></tr>
 <tr class="separator:a372137d91c6d9630c9a83201fbb4ea30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0a8317a3e913426732c9da963aa8045"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0a8317a3e913426732c9da963aa8045"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>registerAIFunc</b> ()</td></tr>
-<tr class="separator:aa0a8317a3e913426732c9da963aa8045"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10e7bc1f3d3ec042da3f1ccc95e492f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a10e7bc1f3d3ec042da3f1ccc95e492f3"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>registerVecFunc</b> ()</td></tr>
-<tr class="separator:a10e7bc1f3d3ec042da3f1ccc95e492f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a791069a6ec502d525dcc22cf04814cb8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a791069a6ec502d525dcc22cf04814cb8"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>registerZoneFunc</b> ()</td></tr>
-<tr class="separator:a791069a6ec502d525dcc22cf04814cb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68a11bf53214cf6f8337340fc5072644"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68a11bf53214cf6f8337340fc5072644"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>registerCharacterFunc</b> ()</td></tr>
-<tr class="separator:a68a11bf53214cf6f8337340fc5072644"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90de5e18b4cbf841df1c364d1c5c7192"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90de5e18b4cbf841df1c364d1c5c7192"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>registerAggroMgrFunc</b> ()</td></tr>
-<tr class="separator:a90de5e18b4cbf841df1c364d1c5c7192"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e50c0f6b954782d22e1cd0f478964f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4e50c0f6b954782d22e1cd0f478964f1"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>registerGroupMgrFunc</b> ()</td></tr>
-<tr class="separator:a4e50c0f6b954782d22e1cd0f478964f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classai_1_1AIRegistry"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classai_1_1AIRegistry')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classai_1_1AIRegistry.html">ai::AIRegistry</a></td></tr>
 <tr class="memitem:aa91c90830efcaf5306fc287c6f2898a7 inherit pub_methods_classai_1_1AIRegistry"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1AIRegistry.html#aa91c90830efcaf5306fc287c6f2898a7">registerNodeFactory</a> (const std::string &amp;type, const <a class="el" href="classai_1_1ITreeNodeFactory.html">ITreeNodeFactory</a> &amp;factory)</td></tr>
 <tr class="memdesc:aa91c90830efcaf5306fc287c6f2898a7 inherit pub_methods_classai_1_1AIRegistry"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a tree node factory of the given <code>type</code>.  <a href="#aa91c90830efcaf5306fc287c6f2898a7">More...</a><br/></td></tr>
@@ -210,6 +193,32 @@ SteeringPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <tr class="memdesc:a3a889fd304f6f22d18a9364230064a59 inherit pub_methods_classai_1_1AIRegistry"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <code>ISteering</code> for the given <code>type</code>. The <code>type</code> must be registered in the <code><a class="el" href="classai_1_1AIRegistry.html" title="The place to register your TreeNode and ICondition factories at. ">AIRegistry</a></code> for this to work. <br/></td></tr>
 <tr class="separator:a3a889fd304f6f22d18a9364230064a59 inherit pub_methods_classai_1_1AIRegistry"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a1f824802637c96db95e064acb1020669"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f824802637c96db95e064acb1020669"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_aisetfilteredentities</b> (lua_State *s)</td></tr>
+<tr class="separator:a1f824802637c96db95e064acb1020669"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a638909c9428b2bd22adfd90f2e115c6f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a638909c9428b2bd22adfd90f2e115c6f"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_aiaddfilteredentity</b> (lua_State *s)</td></tr>
+<tr class="separator:a638909c9428b2bd22adfd90f2e115c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ab6c893422628e1fe07b8d023988cfab4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; luaL_Reg &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>aiFuncs</b></td></tr>
+<tr class="separator:ab6c893422628e1fe07b8d023988cfab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad46b26640709181ed017cf97d85ea22a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; luaL_Reg &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>vecFuncs</b></td></tr>
+<tr class="separator:ad46b26640709181ed017cf97d85ea22a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4d662ce30dc0ca183a823dec91b4cc9"><td class="memItemLeft" align="right" valign="top">std::vector&lt; luaL_Reg &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>zoneFuncs</b></td></tr>
+<tr class="separator:ae4d662ce30dc0ca183a823dec91b4cc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa06ed71d48558bbbe3b0ffa808cb16bf"><td class="memItemLeft" align="right" valign="top">std::vector&lt; luaL_Reg &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>characterFuncs</b></td></tr>
+<tr class="separator:aa06ed71d48558bbbe3b0ffa808cb16bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5ef1c11a0af4fb5a713889282a89b28"><td class="memItemLeft" align="right" valign="top">std::vector&lt; luaL_Reg &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>aggroMgrFuncs</b></td></tr>
+<tr class="separator:ae5ef1c11a0af4fb5a713889282a89b28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72b5023fb98e87ed01c9a25fd4931cbe"><td class="memItemLeft" align="right" valign="top">std::vector&lt; luaL_Reg &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>groupMgrFuncs</b></td></tr>
+<tr class="separator:a72b5023fb98e87ed01c9a25fd4931cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83d16b659254c9d5d186d117ab7ddcfe"><td class="memItemLeft" align="right" valign="top">std::vector&lt; luaL_Reg &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>registryFuncs</b></td></tr>
+<tr class="separator:a83d16b659254c9d5d186d117ab7ddcfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-types"></a>
 Protected Types</h2></td></tr>
 <tr class="memitem:ab9a433e81948ec4dc19c6e7a7e9cc443"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab9a433e81948ec4dc19c6e7a7e9cc443"></a>
@@ -257,65 +266,59 @@ typedef std::map&lt; std::string, <br class="typebreak"/>
 LUASteeringFactoryPtr &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>SteeringFactoryMap</b></td></tr>
 <tr class="separator:ad12a19e7484ab4ad33977df057862a3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a68fb5d187d870068e6a8194e9775b9d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68fb5d187d870068e6a8194e9775b9d2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>registerFuncs</b> (const luaL_Reg *funcs, const char *name)</td></tr>
-<tr class="separator:a68fb5d187d870068e6a8194e9775b9d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
-<tr class="memitem:ae1ad2ad6351a5d6f6b6892eef1d827fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1ad2ad6351a5d6f6b6892eef1d827fe"></a>
-static <a class="el" href="classai_1_1LUAAIRegistry.html">LUAAIRegistry</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>luaGetContext</b> (lua_State *s)</td></tr>
-<tr class="separator:ae1ad2ad6351a5d6f6b6892eef1d827fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad706fe8626407758cbe536c9d55b0b06"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad706fe8626407758cbe536c9d55b0b06"></a>
-static <a class="el" href="classai_1_1LUATreeNode_1_1LUATreeNodeFactory.html">LuaNodeFactory</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>luaGetNodeFactoryContext</b> (lua_State *s, int n)</td></tr>
-<tr class="separator:ad706fe8626407758cbe536c9d55b0b06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a884ea8a0ff6e2645fa0b885ad0e0ca7a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a884ea8a0ff6e2645fa0b885ad0e0ca7a"></a>
-static <a class="el" href="classai_1_1LUACondition_1_1LUAConditionFactory.html">LuaConditionFactory</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>luaGetConditionFactoryContext</b> (lua_State *s, int n)</td></tr>
-<tr class="separator:a884ea8a0ff6e2645fa0b885ad0e0ca7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a646c78a04fcc714dcbc261e15a679da7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a646c78a04fcc714dcbc261e15a679da7"></a>
+static <a class="el" href="classai_1_1LUAAIRegistry.html">LUAAIRegistry</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_toregistry</b> (lua_State *s)</td></tr>
+<tr class="separator:a646c78a04fcc714dcbc261e15a679da7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac993534f5afa6c4d0497ce46fd257bf0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac993534f5afa6c4d0497ce46fd257bf0"></a>
+static <a class="el" href="classai_1_1LUATreeNode_1_1LUATreeNodeFactory.html">LuaNodeFactory</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_tonodefactory</b> (lua_State *s, int n)</td></tr>
+<tr class="separator:ac993534f5afa6c4d0497ce46fd257bf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2aca7986ae73e4fb410b8fda9275a7d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae2aca7986ae73e4fb410b8fda9275a7d"></a>
+static <a class="el" href="classai_1_1LUACondition_1_1LUAConditionFactory.html">LuaConditionFactory</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_toconditionfactory</b> (lua_State *s, int n)</td></tr>
+<tr class="separator:ae2aca7986ae73e4fb410b8fda9275a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a924393d2d9d1cffcdeb1ed86bb162254"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a924393d2d9d1cffcdeb1ed86bb162254"></a>
 static <a class="el" href="classai_1_1LUAFilter_1_1LUAFilterFactory.html">LuaFilterFactory</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>luaGetFilterFactoryContext</b> (lua_State *s, int n)</td></tr>
 <tr class="separator:a924393d2d9d1cffcdeb1ed86bb162254"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b3adf8e82572dcda704ca954c73ddd3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b3adf8e82572dcda704ca954c73ddd3"></a>
-static <a class="el" href="classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory.html">LuaSteeringFactory</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>luaGetSteeringFactoryContext</b> (lua_State *s, int n)</td></tr>
-<tr class="separator:a5b3adf8e82572dcda704ca954c73ddd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ebd2ecee19467562dfffab31e865bd0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ebd2ecee19467562dfffab31e865bd0"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaNodeEmptyExecute</b> (lua_State *s)</td></tr>
-<tr class="separator:a7ebd2ecee19467562dfffab31e865bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcd2ae653184661cedf9adb2981f5b31"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afcd2ae653184661cedf9adb2981f5b31"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaNodeToString</b> (lua_State *s)</td></tr>
-<tr class="separator:afcd2ae653184661cedf9adb2981f5b31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a996ede764442f7cc9b4a1987d9c63a67"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1LUAAIRegistry.html#a996ede764442f7cc9b4a1987d9c63a67">luaCreateNode</a> (lua_State *s)</td></tr>
-<tr class="memdesc:a996ede764442f7cc9b4a1987d9c63a67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new lua <a class="el" href="classai_1_1TreeNode.html">TreeNode</a>.  <a href="#a996ede764442f7cc9b4a1987d9c63a67">More...</a><br/></td></tr>
-<tr class="separator:a996ede764442f7cc9b4a1987d9c63a67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a294f5f8272fc9040c817a33e0d7572d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a294f5f8272fc9040c817a33e0d7572d3"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaConditionEmptyEvaluate</b> (lua_State *s)</td></tr>
-<tr class="separator:a294f5f8272fc9040c817a33e0d7572d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2df55241164b270c5186b627b672676c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2df55241164b270c5186b627b672676c"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaConditionToString</b> (lua_State *s)</td></tr>
-<tr class="separator:a2df55241164b270c5186b627b672676c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d682de185a318869f9ee8b700517700"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4d682de185a318869f9ee8b700517700"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaCreateCondition</b> (lua_State *s)</td></tr>
-<tr class="separator:a4d682de185a318869f9ee8b700517700"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e0f84cef8d2af6360951c8c2e278496"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e0f84cef8d2af6360951c8c2e278496"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaFilterEmptyFilter</b> (lua_State *s)</td></tr>
-<tr class="separator:a2e0f84cef8d2af6360951c8c2e278496"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a546e7e911f5fad4435ddf209da7277ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a546e7e911f5fad4435ddf209da7277ea"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaFilterToString</b> (lua_State *s)</td></tr>
-<tr class="separator:a546e7e911f5fad4435ddf209da7277ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7ff10ccf2b24f5f5949f8d5d0c931ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab7ff10ccf2b24f5f5949f8d5d0c931ab"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaCreateFilter</b> (lua_State *s)</td></tr>
-<tr class="separator:ab7ff10ccf2b24f5f5949f8d5d0c931ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ce80ef913d47365f32d862061fa8372"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ce80ef913d47365f32d862061fa8372"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaSteeringEmptyExecute</b> (lua_State *s)</td></tr>
-<tr class="separator:a3ce80ef913d47365f32d862061fa8372"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14f9a44ced7a81a79754e39196c8b39d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a14f9a44ced7a81a79754e39196c8b39d"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaSteeringToString</b> (lua_State *s)</td></tr>
-<tr class="separator:a14f9a44ced7a81a79754e39196c8b39d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a576248a5fa8f18dbec09de121b3e8c37"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a576248a5fa8f18dbec09de121b3e8c37"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaCreateSteering</b> (lua_State *s)</td></tr>
-<tr class="separator:a576248a5fa8f18dbec09de121b3e8c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add75654765be25130e36d0809d5fc4c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add75654765be25130e36d0809d5fc4c3"></a>
+static <a class="el" href="classai_1_1movement_1_1LUASteering_1_1LUASteeringFactory.html">LuaSteeringFactory</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_tosteeringfactory</b> (lua_State *s, int n)</td></tr>
+<tr class="separator:add75654765be25130e36d0809d5fc4c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ff5d0dd183e0d72584038c25a7659e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ff5d0dd183e0d72584038c25a7659e6"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_nodeemptyexecute</b> (lua_State *s)</td></tr>
+<tr class="separator:a1ff5d0dd183e0d72584038c25a7659e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6f5df6cc7d10a8260fe2a8d967f09ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6f5df6cc7d10a8260fe2a8d967f09ee"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_nodetostring</b> (lua_State *s)</td></tr>
+<tr class="separator:aa6f5df6cc7d10a8260fe2a8d967f09ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20fa73fb35d2ea301c46e90c6389dcfb"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1LUAAIRegistry.html#a20fa73fb35d2ea301c46e90c6389dcfb">luaAI_createnode</a> (lua_State *s)</td></tr>
+<tr class="memdesc:a20fa73fb35d2ea301c46e90c6389dcfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new lua <a class="el" href="classai_1_1TreeNode.html">TreeNode</a>.  <a href="#a20fa73fb35d2ea301c46e90c6389dcfb">More...</a><br/></td></tr>
+<tr class="separator:a20fa73fb35d2ea301c46e90c6389dcfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3068771c63d866254da6bce407669870"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3068771c63d866254da6bce407669870"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_conditionemptyevaluate</b> (lua_State *s)</td></tr>
+<tr class="separator:a3068771c63d866254da6bce407669870"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add6517c62d7528827fbf23a90e61544a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add6517c62d7528827fbf23a90e61544a"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_conditiontostring</b> (lua_State *s)</td></tr>
+<tr class="separator:add6517c62d7528827fbf23a90e61544a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56e7c468d8c3f6270f92e1c97d333ace"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56e7c468d8c3f6270f92e1c97d333ace"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_createcondition</b> (lua_State *s)</td></tr>
+<tr class="separator:a56e7c468d8c3f6270f92e1c97d333ace"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a280351e0717716ef24033736fbe7885c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a280351e0717716ef24033736fbe7885c"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_filteremptyfilter</b> (lua_State *s)</td></tr>
+<tr class="separator:a280351e0717716ef24033736fbe7885c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53628c7ad2dad3179543490684151c30"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53628c7ad2dad3179543490684151c30"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_filtertostring</b> (lua_State *s)</td></tr>
+<tr class="separator:a53628c7ad2dad3179543490684151c30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b86be3d431fdd9df59dd2ebb56706f9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b86be3d431fdd9df59dd2ebb56706f9"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_createfilter</b> (lua_State *s)</td></tr>
+<tr class="separator:a5b86be3d431fdd9df59dd2ebb56706f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f7c900f7133681c336182888025483e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5f7c900f7133681c336182888025483e"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_steeringemptyexecute</b> (lua_State *s)</td></tr>
+<tr class="separator:a5f7c900f7133681c336182888025483e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a717728920eb71ad0c6146a082b20ce6a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a717728920eb71ad0c6146a082b20ce6a"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_steeringtostring</b> (lua_State *s)</td></tr>
+<tr class="separator:a717728920eb71ad0c6146a082b20ce6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae59b0d168c019e1ffdb9901b6270fc10"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae59b0d168c019e1ffdb9901b6270fc10"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>luaAI_createsteering</b> (lua_State *s)</td></tr>
+<tr class="separator:ae59b0d168c019e1ffdb9901b6270fc10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -483,7 +486,7 @@ SteeringFactoryMap&#160;</td><td class="memItemRight" valign="bottom"><b>_steeri
 
 </div>
 </div>
-<a class="anchor" id="a996ede764442f7cc9b4a1987d9c63a67"></a>
+<a class="anchor" id="a20fa73fb35d2ea301c46e90c6389dcfb"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -491,7 +494,7 @@ SteeringFactoryMap&#160;</td><td class="memItemRight" valign="bottom"><b>_steeri
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static int ai::LUAAIRegistry::luaCreateNode </td>
+          <td class="memname">static int ai::LUAAIRegistry::luaAI_createnode </td>
           <td>(</td>
           <td class="paramtype">lua_State *&#160;</td>
           <td class="paramname"><em>s</em></td><td>)</td>
@@ -564,6 +567,170 @@ SteeringFactoryMap&#160;</td><td class="memItemRight" valign="bottom"><b>_steeri
 </div><div class="memdoc">
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classai_1_1LUAAIRegistry.html#a50c35e3b11aecd406f39d04c60323d6b">init()</a> </dd></dl>
 
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="ae5ef1c11a0af4fb5a713889282a89b28"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;luaL_Reg&gt; ai::LUAAIRegistry::aggroMgrFuncs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">        {<span class="stringliteral">&quot;addAggro&quot;</span>, luaAI_aggromgraddaggro},</div>
+<div class="line">        {<span class="stringliteral">&quot;highestEntry&quot;</span>, luaAI_aggromgrhighestentry},</div>
+<div class="line">        {<span class="stringliteral">&quot;entries&quot;</span>, luaAI_aggromgrentries},</div>
+<div class="line">        {<span class="stringliteral">&quot;__tostring&quot;</span>, luaAI_aggromgrtostring},</div>
+<div class="line">        {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="ab6c893422628e1fe07b8d023988cfab4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;luaL_Reg&gt; ai::LUAAIRegistry::aiFuncs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">        {<span class="stringliteral">&quot;id&quot;</span>, luaAI_aiid},</div>
+<div class="line">        {<span class="stringliteral">&quot;time&quot;</span>, luaAI_aitime},</div>
+<div class="line">        {<span class="stringliteral">&quot;hasZone&quot;</span>, luaAI_aihaszone},</div>
+<div class="line">        {<span class="stringliteral">&quot;zone&quot;</span>, luaAI_aigetzone},</div>
+<div class="line">        {<span class="stringliteral">&quot;filteredEntities&quot;</span>, luaAI_aifilteredentities},</div>
+<div class="line">        {<span class="stringliteral">&quot;setFilteredEntities&quot;</span>, luaAI_aisetfilteredentities},</div>
+<div class="line">        {<span class="stringliteral">&quot;addFilteredEntity&quot;</span>, luaAI_aiaddfilteredentity},</div>
+<div class="line">        {<span class="stringliteral">&quot;character&quot;</span>, luaAI_aigetcharacter},</div>
+<div class="line">        {<span class="stringliteral">&quot;aggroMgr&quot;</span>, luaAI_aigetaggromgr},</div>
+<div class="line">        {<span class="stringliteral">&quot;__tostring&quot;</span>, luaAI_aitostring},</div>
+<div class="line">        {<span class="stringliteral">&quot;__gc&quot;</span>, luaAI_aigc},</div>
+<div class="line">        {<span class="stringliteral">&quot;__eq&quot;</span>, luaAI_aieq},</div>
+<div class="line">        {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="aa06ed71d48558bbbe3b0ffa808cb16bf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;luaL_Reg&gt; ai::LUAAIRegistry::characterFuncs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">        {<span class="stringliteral">&quot;id&quot;</span>, luaAI_characterid},</div>
+<div class="line">        {<span class="stringliteral">&quot;position&quot;</span>, luaAI_characterposition},</div>
+<div class="line">        {<span class="stringliteral">&quot;setPosition&quot;</span>, luaAI_charactersetposition},</div>
+<div class="line">        {<span class="stringliteral">&quot;speed&quot;</span>, luaAI_characterspeed},</div>
+<div class="line">        {<span class="stringliteral">&quot;setSpeed&quot;</span>, luaAI_charactersetspeed},</div>
+<div class="line">        {<span class="stringliteral">&quot;orientation&quot;</span>, luaAI_characterorientation},</div>
+<div class="line">        {<span class="stringliteral">&quot;setOrientation&quot;</span>, luaAI_charactersetorientation},</div>
+<div class="line">        {<span class="stringliteral">&quot;setAttribute&quot;</span>, luaAI_charactersetattribute},</div>
+<div class="line">        {<span class="stringliteral">&quot;attributes&quot;</span>, luaAI_characterattributes},</div>
+<div class="line">        {<span class="stringliteral">&quot;__eq&quot;</span>, luaAI_charactereq},</div>
+<div class="line">        {<span class="stringliteral">&quot;__gc&quot;</span>, luaAI_charactergc},</div>
+<div class="line">        {<span class="stringliteral">&quot;__tostring&quot;</span>, luaAI_charactertostring},</div>
+<div class="line">        {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a72b5023fb98e87ed01c9a25fd4931cbe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;luaL_Reg&gt; ai::LUAAIRegistry::groupMgrFuncs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">        {<span class="stringliteral">&quot;add&quot;</span>, luaAI_groupmgradd},</div>
+<div class="line">        {<span class="stringliteral">&quot;remove&quot;</span>, luaAI_groupmgrremove},</div>
+<div class="line">        {<span class="stringliteral">&quot;isLeader&quot;</span>, luaAI_groupmgrisleader},</div>
+<div class="line">        {<span class="stringliteral">&quot;isInGroup&quot;</span>, luaAI_groupmgrisingroup},</div>
+<div class="line">        {<span class="stringliteral">&quot;isInAnyGroup&quot;</span>, luaAI_groupmgrisinanygroup},</div>
+<div class="line">        {<span class="stringliteral">&quot;size&quot;</span>, luaAI_groupmgrsize},</div>
+<div class="line">        {<span class="stringliteral">&quot;position&quot;</span>, luaAI_groupmgrposition},</div>
+<div class="line">        {<span class="stringliteral">&quot;leader&quot;</span>, luaAI_groupmgrleader},</div>
+<div class="line">        {<span class="stringliteral">&quot;__tostring&quot;</span>, luaAI_groupmgrtostring},</div>
+<div class="line">        {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a83d16b659254c9d5d186d117ab7ddcfe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;luaL_Reg&gt; ai::LUAAIRegistry::registryFuncs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">        {<span class="stringliteral">&quot;createNode&quot;</span>, <a class="code" href="classai_1_1LUAAIRegistry.html#a20fa73fb35d2ea301c46e90c6389dcfb">luaAI_createnode</a>},</div>
+<div class="line">        {<span class="stringliteral">&quot;createCondition&quot;</span>, luaAI_createcondition},</div>
+<div class="line">        {<span class="stringliteral">&quot;createFilter&quot;</span>, luaAI_createfilter},</div>
+<div class="line">        {<span class="stringliteral">&quot;createSteering&quot;</span>, luaAI_createsteering},</div>
+<div class="line">        {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="ad46b26640709181ed017cf97d85ea22a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;luaL_Reg&gt; ai::LUAAIRegistry::vecFuncs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">        {<span class="stringliteral">&quot;__add&quot;</span>, luaAI_vecadd},</div>
+<div class="line">        {<span class="stringliteral">&quot;__sub&quot;</span>, luaAI_vecsub},</div>
+<div class="line">        {<span class="stringliteral">&quot;__mul&quot;</span>, luaAI_vecdot},</div>
+<div class="line">        {<span class="stringliteral">&quot;__div&quot;</span>, luaAI_vecdiv},</div>
+<div class="line">        {<span class="stringliteral">&quot;__unm&quot;</span>, luaAI_vecnegate},</div>
+<div class="line">        {<span class="stringliteral">&quot;__len&quot;</span>, luaAI_veclen},</div>
+<div class="line">        {<span class="stringliteral">&quot;__eq&quot;</span>, luaAI_veceq},</div>
+<div class="line">        {<span class="stringliteral">&quot;__tostring&quot;</span>, luaAI_vectostring},</div>
+<div class="line">        {<span class="stringliteral">&quot;__index&quot;</span>, luaAI_vecindex},</div>
+<div class="line">        {<span class="stringliteral">&quot;__newindex&quot;</span>, luaAI_vecnewindex},</div>
+<div class="line">        {<span class="stringliteral">&quot;dot&quot;</span>, luaAI_vecdot},</div>
+<div class="line">        {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="ae4d662ce30dc0ca183a823dec91b4cc9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;luaL_Reg&gt; ai::LUAAIRegistry::zoneFuncs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">        {<span class="stringliteral">&quot;size&quot;</span>, luaAI_zonesize},</div>
+<div class="line">        {<span class="stringliteral">&quot;name&quot;</span>, luaAI_zonename},</div>
+<div class="line">        {<span class="stringliteral">&quot;ai&quot;</span>, luaAI_zoneai},</div>
+<div class="line">        {<span class="stringliteral">&quot;execute&quot;</span>, luaAI_zoneexecute},</div>
+<div class="line">        {<span class="stringliteral">&quot;groupMgr&quot;</span>, luaAI_zonegroupmgr},</div>
+<div class="line">        {<span class="stringliteral">&quot;__tostring&quot;</span>, luaAI_zonetostring},</div>
+<div class="line">        {<span class="keyword">nullptr</span>, <span class="keyword">nullptr</span>}</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
