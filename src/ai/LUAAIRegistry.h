@@ -264,6 +264,77 @@ public:
 		init();
 	}
 
+	std::vector<luaL_Reg> aiFuncs = {
+		{"id", lua_aiid},
+		{"time", lua_aitime},
+		{"hasZone", lua_aihaszone},
+		{"zone", lua_aigetzone},
+		{"filteredEntities", lua_aifilteredentities},
+		{"setFilteredEntities", lua_aisetfilteredentities},
+		{"addFilteredEntity", lua_aiaddfilteredentity},
+		{"character", lua_aigetcharacter},
+		{"aggroMgr", lua_aigetaggromgr},
+		{"__tostring", lua_aitostring},
+		{"__eq", lua_aieq},
+		{nullptr, nullptr}
+	};
+	std::vector<luaL_Reg> vecFuncs = {
+		{"__add", lua_vecadd},
+		{"__sub", lua_vecsub},
+		{"__mul", lua_vecdot},
+		{"__div", lua_vecdiv},
+		{"__unm", lua_vecnegate},
+		{"__len", lua_veclen},
+		{"__eq", lua_veceq},
+		{"__tostring", lua_vectostring},
+		{"__index", lua_vecindex},
+		{"__newindex", lua_vecnewindex},
+		{"dot", lua_vecdot},
+		{nullptr, nullptr}
+	};
+	std::vector<luaL_Reg> zoneFuncs = {
+		{"size", lua_zonesize},
+		{"name", lua_zonename},
+		{"ai", lua_zoneai},
+		{"execute", lua_zoneexecute},
+		{"groupMgr", lua_zonegroupmgr},
+		{"__tostring", lua_zonetostring},
+		{nullptr, nullptr}
+	};
+	std::vector<luaL_Reg> characterFuncs = {
+		{"id", lua_characterid},
+		{"position", lua_characterposition},
+		{"setPosition", lua_charactersetposition},
+		{"speed", lua_characterspeed},
+		{"setSpeed", lua_charactersetspeed},
+		{"orientation", lua_characterorientation},
+		{"setOrientation", lua_charactersetorientation},
+		{"setAttribute", lua_charactersetattribute},
+		{"attributes", lua_characterattributes},
+		{"__eq", lua_charactereq},
+		{"__tostring", lua_charactertostring},
+		{nullptr, nullptr}
+	};
+	std::vector<luaL_Reg> aggroMgrFuncs = {
+		{"addAggro", lua_aggromgraddaggro},
+		{"highestEntry", lua_aggromgrhighestentry},
+		{"entries", lua_aggromgrentries},
+		{"__tostring", lua_aggromgrtostring},
+		{nullptr, nullptr}
+	};
+	std::vector<luaL_Reg> groupMgrFuncs = {
+		{"add", lua_groupmgradd},
+		{"remove", lua_groupmgrremove},
+		{"isLeader", lua_groupmgrisleader},
+		{"isInGroup", lua_groupmgrisingroup},
+		{"isInAnyGroup", lua_groupmgrisinanygroup},
+		{"size", lua_groupmgrsize},
+		{"position", lua_groupmgrposition},
+		{"leader", lua_groupmgrleader},
+		{"__tostring", lua_groupmgrtostring},
+		{nullptr, nullptr}
+	};
+
 	static int lua_aisetfilteredentities(lua_State* s) {
 		AI* ai = lua_ctxai(s, 1);
 		luaL_checktype(s, 2, LUA_TTABLE);
@@ -409,98 +480,27 @@ public:
 	}
 
 	virtual void registerAIFunc() {
-		const luaL_Reg funcs[] = {
-			{"id", lua_aiid},
-			{"time", lua_aitime},
-			{"hasZone", lua_aihaszone},
-			{"zone", lua_aigetzone},
-			{"filteredEntities", lua_aifilteredentities},
-			{"setFilteredEntities", lua_aisetfilteredentities},
-			{"addFilteredEntity", lua_aiaddfilteredentity},
-			{"character", lua_aigetcharacter},
-			{"aggroMgr", lua_aigetaggromgr},
-			{"__tostring", lua_aitostring},
-			{"__eq", lua_aieq},
-			{nullptr, nullptr}
-		};
-		lua_airegisterfuncs(_s, funcs, lua_metaai());
+		lua_airegisterfuncs(_s, &aiFuncs.front(), lua_metaai());
 	}
 
 	virtual void registerVecFunc() {
-		const luaL_Reg funcs[] = {
-			{"__add", lua_vecadd},
-			{"__sub", lua_vecsub},
-			{"__mul", lua_vecdot},
-			{"__div", lua_vecdiv},
-			{"__unm", lua_vecnegate},
-			{"__len", lua_veclen},
-			{"__eq", lua_veceq},
-			{"__tostring", lua_vectostring},
-			{"__index", lua_vecindex},
-			{"__newindex", lua_vecnewindex},
-			{"dot", lua_vecdot},
-			{nullptr, nullptr}
-		};
-		lua_airegisterfuncs(_s, funcs, lua_metavec());
+		lua_airegisterfuncs(_s, &vecFuncs.front(), lua_metavec());
 	}
 
 	virtual void registerZoneFunc() {
-		const luaL_Reg funcs[] = {
-			// TODO: finish this - lots of stuff is missing here
-			{"size", lua_zonesize},
-			{"name", lua_zonename},
-			{"ai", lua_zoneai},
-			{"execute", lua_zoneexecute},
-			{"groupMgr", lua_zonegroupmgr},
-			{"__tostring", lua_zonetostring},
-			{nullptr, nullptr}
-		};
-		lua_airegisterfuncs(_s, funcs, lua_metazone());
+		lua_airegisterfuncs(_s, &zoneFuncs.front(), lua_metazone());
 	}
 
 	virtual void registerCharacterFunc() {
-		const luaL_Reg funcs[] = {
-			{"id", lua_characterid},
-			{"position", lua_characterposition},
-			{"setPosition", lua_charactersetposition},
-			{"speed", lua_characterspeed},
-			{"setSpeed", lua_charactersetspeed},
-			{"orientation", lua_characterorientation},
-			{"setOrientation", lua_charactersetorientation},
-			{"setAttribute", lua_charactersetattribute},
-			{"attributes", lua_characterattributes},
-			{"__eq", lua_charactereq},
-			{"__tostring", lua_charactertostring},
-			{nullptr, nullptr}
-		};
-		lua_airegisterfuncs(_s, funcs, lua_metacharacter());
+		lua_airegisterfuncs(_s, &characterFuncs.front(), lua_metacharacter());
 	}
 
 	virtual void registerAggroMgrFunc() {
-		const luaL_Reg funcs[] = {
-			{"addAggro", lua_aggromgraddaggro},
-			{"highestEntry", lua_aggromgrhighestentry},
-			{"entries", lua_aggromgrentries},
-			{"__tostring", lua_aggromgrtostring},
-			{nullptr, nullptr}
-		};
-		lua_airegisterfuncs(_s, funcs, lua_metaaggromgr());
+		lua_airegisterfuncs(_s, &aggroMgrFuncs.front(), lua_metaaggromgr());
 	}
 
 	virtual void registerGroupMgrFunc() {
-		const luaL_Reg funcs[] = {
-			{"add", lua_groupmgradd},
-			{"remove", lua_groupmgrremove},
-			{"isLeader", lua_groupmgrisleader},
-			{"isInGroup", lua_groupmgrisingroup},
-			{"isInAnyGroup", lua_groupmgrisinanygroup},
-			{"size", lua_groupmgrsize},
-			{"position", lua_groupmgrposition},
-			{"leader", lua_groupmgrleader},
-			{"__tostring", lua_groupmgrtostring},
-			{nullptr, nullptr}
-		};
-		lua_airegisterfuncs(_s, funcs, lua_metagroupmgr());
+		lua_airegisterfuncs(_s, &groupMgrFuncs.front(), lua_metagroupmgr());
 	}
 };
 
