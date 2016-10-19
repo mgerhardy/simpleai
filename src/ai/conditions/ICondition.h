@@ -90,9 +90,9 @@ private: \
 	CONDITION_CLASS(ConditionName) \
 public: \
 	static ConditionPtr& get() { \
-		THREAD_LOCAL ConditionName* c = nullptr; \
+		AI_THREAD_LOCAL ConditionName* c = nullptr; \
 		if (c == nullptr) { c = new ConditionName; } \
-		THREAD_LOCAL ConditionPtr _instance(c); \
+		AI_THREAD_LOCAL ConditionPtr _instance(c); \
 		return _instance; \
 	} \
 	CONDITION_FACTORY_SINGLETON
