@@ -24,7 +24,7 @@ simpleai_tests_SOURCES = \
 
 EXTRA_DIST = luaregistry.lua
 
-simpleai_tests_CXXFLAGS = @PTHREAD_CFLAGS@ -I$(top_srcdir)/src/libs -I$(top_srcdir)/src/libs/lua -I$(top_srcdir)/src/libs/tinyxml2 -I$(top_srcdir)/src/ai -I$(top_builddir)/src/ai -I$(top_builddir)/src/test/gtest/include -I$(top_builddir)/src/test/gtest
+simpleai_tests_CXXFLAGS = @PTHREAD_CFLAGS@ -std=c++11 -I$(top_srcdir)/src/libs -I$(top_srcdir)/src/libs/lua -I$(top_srcdir)/src/libs/tinyxml2 -I$(top_srcdir)/src/ai -I$(top_builddir)/src/ai -I$(top_builddir)/src/test/gtest/include -I$(top_builddir)/src/test/gtest
 simpleai_tests_LDFLAGS = @PTHREAD_LIBS@
 simpleai_tests_LDADD = ../ai/libsimpleai.la @MATH_LIBS@
 
