@@ -29,9 +29,13 @@ if test "x$CLANG" = "xyes"; then
 	AM_CXXFLAGS="$AM_CXXFLAGS -std=c++11 -Wdocumentation"
 fi
 
-AC_CHECK_PROGS([DOXYGEN], [doxygen])
-if test -z "$DOXYGEN";
-   then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
+AC_MSG_CHECKING([whether to build doxygen documentation])
+AC_ARG_ENABLE(doxygen,AS_HELP_STRING([--enable-doxygen=@<:@no/yes@:>@],[build doxygen documentation]),,[enable_doxygen=no])
+if test "x$enable_doxygen" = "xyes" ; then
+	AC_CHECK_PROGS([DOXYGEN], [doxygen])
+	if test -z "$DOXYGEN";
+		then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
+	fi
 fi
 AM_CONDITIONAL([HAVE_DOXYGEN],[test -n "$DOXYGEN"])
 AM_COND_IF([HAVE_DOXYGEN], [AC_CONFIG_FILES([docs/Doxyfile])])
@@ -43,23 +47,23 @@ AM_CXXFLAGS="-std=c++11"
 AC_MSG_CHECKING([whether to build with debug information])
 AC_ARG_ENABLE(debug,AS_HELP_STRING([--enable-debug=@<:@no/yes@:>@],[enable debug data generation]),,[enable_debug=no])
 if test "x$enable_debug" != "xno" ; then
-    AC_DEFINE([DEBUG],[],[Debug Mode])
-    AM_CXXFLAGS="-g -Wall -Wextra -O0 $AM_CXXFLAGS"
+	AC_DEFINE([DEBUG],[],[Debug Mode])
+	AM_CXXFLAGS="-g -Wall -Wextra -O0 $AM_CXXFLAGS"
 else
-    AC_DEFINE([NDEBUG],[],[No-debug Mode])
-    AM_CXXFLAGS="-O3 -ftree-vectorize -msse3 -Wall -Wextra $AM_CXXFLAGS"
+	AC_DEFINE([NDEBUG],[],[No-debug Mode])
+	AM_CXXFLAGS="-O3 -ftree-vectorize -msse3 -Wall -Wextra $AM_CXXFLAGS"
 fi
 AC_MSG_RESULT([$enable_debug])
 
 AC_MSG_CHECKING([whether to build with exception support])
 AC_ARG_ENABLE(exceptions,AS_HELP_STRING([--enable-exceptions=@<:@no/yes@:>@],[enable exception support]),,[enable_exceptions=no])
 if test "x$enable_exceptions" != "xyes" ; then
-    AC_SUBST([AI_EXCEPTIONS],0)
-    AC_SUBST([LUA_USE_LONGJMP],1)
-    AM_CXXFLAGS="-fno-exceptions $AM_CXXFLAGS"
+	AC_SUBST([AI_EXCEPTIONS],0)
+	AC_SUBST([LUA_USE_LONGJMP],1)
+	AM_CXXFLAGS="-fno-exceptions $AM_CXXFLAGS"
 else
-    AC_SUBST([AI_EXCEPTIONS],1)
-    AM_CXXFLAGS="-fexceptions $AM_CXXFLAGS"
+	AC_SUBST([AI_EXCEPTIONS],1)
+	AM_CXXFLAGS="-fexceptions $AM_CXXFLAGS"
 fi
 AM_CONDITIONAL(AI_EXCEPTIONS,test "x$enable_exceptions" = "xyes")
 AC_MSG_RESULT([$enable_exceptions])

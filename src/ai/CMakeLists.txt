@@ -163,6 +163,7 @@ if (SIMPLEAI_LUA)
 	list(APPEND simpleai_HEADERS
 		common/LUA.h
 		LUAAIRegistry.h
+		LUAFunctions.h
 		conditions/LUACondition.h
 		filter/LUAFilter.h
 		movement/LUASteering.h
