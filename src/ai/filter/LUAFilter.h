@@ -6,7 +6,7 @@
 #pragma once
 
 #include "IFilter.h"
-#include "common/LUA.h"
+#include "LUAFunctions.h"
 
 namespace ai {
 
@@ -105,9 +105,9 @@ public:
 			filterLUA(entity);
 #if AI_EXCEPTIONS
 		} catch (...) {
-			ai_log_error("Exception while evaluating lua filter")
-			return false;
+			ai_log_error("Exception while evaluating lua filter");
 		}
+		return false;
 #endif
 	}
 };

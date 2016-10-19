@@ -126,8 +126,8 @@ public:
 #if AI_EXCEPTIONS
 		} catch (...) {
 			ai_log_error("Exception while running lua tree node")
-			return state(entity, EXCEPTION);
 		}
+		return state(entity, EXCEPTION);
 #endif
 	}
 };

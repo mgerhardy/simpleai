@@ -115,9 +115,9 @@ public:
 			return evaluateLUA(entity);
 #if AI_EXCEPTIONS
 		} catch (...) {
-			ai_log_error("Exception while evaluating lua condition")
-			return false;
+			ai_log_error("Exception while evaluating lua condition");
 		}
+		return false;
 #endif
 	}
 };

@@ -5,7 +5,6 @@
 #pragma once
 
 #include "Steering.h"
-#include "common/LUA.h"
 #include "LUAFunctions.h"
 
 namespace ai {
@@ -125,9 +124,9 @@ public:
 			return executeLUA(entity, speed);
 #if AI_EXCEPTIONS
 		} catch (...) {
-			ai_log_error("Exception while running lua steering")
-			return MoveVector(INFINITE, 0.0f);
+			ai_log_error("Exception while running lua steering");
 		}
+		return MoveVector(INFINITE, 0.0f);
 #endif
 	}
 };
