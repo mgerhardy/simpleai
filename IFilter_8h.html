@@ -222,9 +222,9 @@ Macros</h2></td></tr>
 <div class="line">FILTER_CLASS(FilterName) \</div>
 <div class="line">public: \</div>
 <div class="line">    static FilterPtr&amp; <span class="keyword">get</span>() { \</div>
-<div class="line">        THREAD_LOCAL FilterName* c = <span class="keyword">nullptr</span>; \</div>
+<div class="line">        AI_THREAD_LOCAL FilterName* c = <span class="keyword">nullptr</span>; \</div>
 <div class="line">        if (c == <span class="keyword">nullptr</span>) { c = <span class="keyword">new</span> FilterName; } \</div>
-<div class="line">        THREAD_LOCAL FilterPtr _instance(c); \</div>
+<div class="line">        AI_THREAD_LOCAL FilterPtr _instance(c); \</div>
 <div class="line">        return _instance; \</div>
 <div class="line">    } \</div>
 <div class="line">    FILTER_FACTORY_SINGLETON</div>

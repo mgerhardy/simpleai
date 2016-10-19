@@ -151,7 +151,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor"></span>            <span class="keywordflow">return</span> factory-&gt;create(ctx);</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#if AI_EXCEPTIONS</span></div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor"></span>        } <span class="keywordflow">catch</span> (...) {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;Exception while trying to create a factory&quot;</span>)</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;Exception while trying to create a factory&quot;</span>);</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        }</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">return</span> std::shared_ptr&lt;TYPE&gt;();</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif</span></div>

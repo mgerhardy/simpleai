@@ -209,9 +209,9 @@ typedef Conditions::const_iterator&#160;</td><td class="memItemRight" valign="bo
 <div class="line"><a class="code" href="ICondition_8h.html#a52a75a637987f9804e2c814c4e4dd398">	CONDITION_CLASS</a>(ConditionName) \</div>
 <div class="line">public: \</div>
 <div class="line">    static ConditionPtr&amp; <span class="keyword">get</span>() { \</div>
-<div class="line">        THREAD_LOCAL ConditionName* c = <span class="keyword">nullptr</span>; \</div>
+<div class="line">        AI_THREAD_LOCAL ConditionName* c = <span class="keyword">nullptr</span>; \</div>
 <div class="line">        if (c == <span class="keyword">nullptr</span>) { c = <span class="keyword">new</span> ConditionName; } \</div>
-<div class="line">        THREAD_LOCAL ConditionPtr _instance(c); \</div>
+<div class="line">        AI_THREAD_LOCAL ConditionPtr _instance(c); \</div>
 <div class="line">        return _instance; \</div>
 <div class="line">    } <a class="code" href="ICondition_8h.html#a1d470244e0afaa69642bb08db6cd86ee">\</a></div>
 <div class="line"><a class="code" href="ICondition_8h.html#a1d470244e0afaa69642bb08db6cd86ee">	CONDITION_FACTORY_SINGLETON</a></div>
