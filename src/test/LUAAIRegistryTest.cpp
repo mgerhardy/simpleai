@@ -15,12 +15,14 @@ protected:
 	const ai::SteeringFactoryContext ctxSteering = ai::SteeringFactoryContext("");
 
 	static void SetUpTestCase() {
-		std::ifstream stream("src/test/luaregistry.lua");
-		if (!stream) {
-			stream = std::ifstream("luaregistry.lua");
+		std::ifstream stream1("src/test/luaregistry.lua");
+		std::ifstream stream2("luaregistry.lua");
+		std::ifstream *stream = &stream1;
+		if (!stream1) {
+			stream = &stream2;
 		}
 		std::stringstream buffer;
-		buffer << stream.rdbuf();
+		buffer << stream->rdbuf();
 		_luaCode = buffer.str();
 	}
 
