@@ -204,12 +204,25 @@ static int luaAI_pushvec(lua_State* s, const glm::vec3& v) {
 	return luaAI_pushudata<glm::vec3>(s, v, luaAI_metavec());
 }
 
+/***
+ * Get the position of the group (average)
+ * @tparam integer groupId
+ * @treturn vec The average position of the group
+ * @function groupMgr:position
+ */
 static int luaAI_groupmgrposition(lua_State* s) {
 	const GroupMgr* groupMgr = luaAI_togroupmgr(s, 1);
 	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
 	return luaAI_pushvec(s, groupMgr->getPosition(groupId));
 }
 
+/***
+ * Add an entity from the group
+ * @tparam integer groupId
+ * @tparam ai ai
+ * @treturn boolean Boolean to indicate whether the add was successful
+ * @function groupMgr:add
+ */
 static int luaAI_groupmgradd(lua_State* s) {
 	GroupMgr* groupMgr = luaAI_togroupmgr(s, 1);
 	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
@@ -219,6 +232,13 @@ static int luaAI_groupmgradd(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Remove an entity from the group
+ * @tparam integer groupId
+ * @tparam ai ai
+ * @treturn boolean Boolean to indicate whether the removal was successful
+ * @function groupMgr:remove
+ */
 static int luaAI_groupmgrremove(lua_State* s) {
 	GroupMgr* groupMgr = luaAI_togroupmgr(s, 1);
 	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
@@ -228,6 +248,13 @@ static int luaAI_groupmgrremove(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Checks whether a give ai is the group leader of a particular group
+ * @tparam integer groupId
+ * @tparam ai ai
+ * @treturn boolean Boolean to indicate whether the given AI is the group leader of the given group
+ * @function groupMgr:isLeader
+ */
 static int luaAI_groupmgrisleader(lua_State* s) {
 	const GroupMgr* groupMgr = luaAI_togroupmgr(s, 1);
 	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
@@ -237,6 +264,13 @@ static int luaAI_groupmgrisleader(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Checks whether a give ai is part of the given group
+ * @tparam integer groupId
+ * @tparam ai ai
+ * @treturn boolean Boolean to indicate whether the given AI is part of the given group
+ * @function groupMgr:isInGroup
+ */
 static int luaAI_groupmgrisingroup(lua_State* s) {
 	const GroupMgr* groupMgr = luaAI_togroupmgr(s, 1);
 	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
@@ -246,6 +280,12 @@ static int luaAI_groupmgrisingroup(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Checks whether a give ai is part of any group
+ * @tparam ai ai
+ * @treturn boolean Boolean to indicate whether the given AI is part of any group
+ * @function groupMgr:isInAnyGroup
+ */
 static int luaAI_groupmgrisinanygroup(lua_State* s) {
 	const GroupMgr* groupMgr = luaAI_togroupmgr(s, 1);
 	luaAI_AI* ai = luaAI_toai(s, 2);
@@ -254,6 +294,12 @@ static int luaAI_groupmgrisinanygroup(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Get the group size
+ * @tparam integer groupId
+ * @treturn integer Size of the group (members)
+ * @function groupMgr:size
+ */
 static int luaAI_groupmgrsize(lua_State* s) {
 	const GroupMgr* groupMgr = luaAI_togroupmgr(s, 1);
 	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
@@ -261,6 +307,12 @@ static int luaAI_groupmgrsize(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Get the group leader ai of a given group
+ * @tparam integer groupId
+ * @treturn ai AI of the group leader, or nil, if there is no such group
+ * @function groupMgr:leader
+ */
 static int luaAI_groupmgrleader(lua_State* s) {
 	const GroupMgr* groupMgr = luaAI_togroupmgr(s, 1);
 	const GroupId groupId = (GroupId)luaL_checkinteger(s, 2);
@@ -279,6 +331,11 @@ static int luaAI_groupmgrtostring(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Execute a function for all entities of the zone
+ * @tparam function The function to execute
+ * @function zone:execute
+ */
 static int luaAI_zoneexecute(lua_State* s) {
 	Zone* zone = luaAI_tozone(s, 1);
 	luaL_checktype(s, 2, LUA_TFUNCTION);
@@ -296,6 +353,11 @@ static int luaAI_zoneexecute(lua_State* s) {
 	return 0;
 }
 
+/***
+ * Get the group manager of the zone
+ * @treturn groupMgr The groupMgr of the zone
+ * @function zone:groupMgr
+ */
 static int luaAI_zonegroupmgr(lua_State* s) {
 	Zone* zone = luaAI_tozone(s, 1);
 	return luaAI_pushgroupmgr(s, &zone->getGroupMgr());
@@ -307,12 +369,24 @@ static int luaAI_zonetostring(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Get the name of the zone
+ * @treturn string The name of the zone
+ * @function zone:name
+ */
 static int luaAI_zonename(lua_State* s) {
 	const Zone* zone = luaAI_tozone(s, 1);
 	lua_pushstring(s, zone->getName().c_str());
 	return 1;
 }
 
+/***
+ * Get the ai instance for some character id in the zone
+ * @tparam integer id The character id to get the AI for
+ * @treturn ai AI instance for some character id in the zone, or nil if no such character
+ * was found in the zone
+ * @function zone:ai
+ */
 static int luaAI_zoneai(lua_State* s) {
 	Zone* zone = luaAI_tozone(s, 1);
 	const CharacterId id = (CharacterId)luaL_checkinteger(s, 2);
@@ -325,12 +399,23 @@ static int luaAI_zoneai(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Get the size of the zone - as in: How many entities are in that particular zone
+ * @treturn integer The amount of entities in the zone
+ * @function zone:size
+ */
 static int luaAI_zonesize(lua_State* s) {
 	const Zone* zone = luaAI_tozone(s, 1);
 	lua_pushinteger(s, zone->size());
 	return 1;
 }
 
+/***
+ * Get the highest aggro entry
+ * @treturn integer The current highest aggro entry character id or nil
+ * @treturn number The current highest aggro entry value or nil.
+ * @function aggroMgr:highestEntry
+ */
 static int luaAI_aggromgrhighestentry(lua_State* s) {
 	AggroMgr* aggroMgr = luaAI_toaggromgr(s, 1);
 	EntryPtr entry = aggroMgr->getHighestEntry();
@@ -344,6 +429,11 @@ static int luaAI_aggromgrhighestentry(lua_State* s) {
 	return 2;
 }
 
+/***
+ * Return the current aggro manager entries
+ * @treturn {integer, number, ...} Table with character id and aggro value
+ * @function aggroMgr:entries
+ */
 static int luaAI_aggromgrentries(lua_State* s) {
 	AggroMgr* aggroMgr = luaAI_toaggromgr(s, 1);
 	const AggroMgr::Entries& entries = aggroMgr->getEntries();
@@ -357,6 +447,12 @@ static int luaAI_aggromgrentries(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Set the reduction type to a ratio-per-second style
+ * @tparam number reduceRatioSecond
+ * @tparam number minAggro
+ * @function aggroMgr:reduceByRatio
+ */
 static int luaAI_aggromgrsetreducebyratio(lua_State* s) {
 	AggroMgr* aggroMgr = luaAI_toaggromgr(s, 1);
 	const float reduceRatioSecond = luaL_checknumber(s, 2);
@@ -364,6 +460,12 @@ static int luaAI_aggromgrsetreducebyratio(lua_State* s) {
 	aggroMgr->setReduceByRatio(reduceRatioSecond, minAggro);
 	return 0;
 }
+
+/***
+ * Set the reduction type to a value-by-second style
+ * @tparam number reduceValueSecond
+ * @function aggroMgr:reduceByValue
+ */
 static int luaAI_aggromgrsetreducebyvalue(lua_State* s) {
 	AggroMgr* aggroMgr = luaAI_toaggromgr(s, 1);
 	const float reduceValueSecond = luaL_checknumber(s, 2);
@@ -371,12 +473,23 @@ static int luaAI_aggromgrsetreducebyvalue(lua_State* s) {
 	return 0;
 }
 
+/***
+ * Reset the reduction values of the aggro manager
+ * @function aggroMgr:resetReduceValue
+ */
 static int luaAI_aggromgrresetreducevalue(lua_State* s) {
 	AggroMgr* aggroMgr = luaAI_toaggromgr(s, 1);
 	aggroMgr->resetReduceValue();
 	return 0;
 }
 
+/***
+ * Apply aggro on some other character
+ * @tparam integer id The character id to get aggro on
+ * @tparam number amount The amount of aggro to apply
+ * @treturn number The amount of aggro you have on the given entity
+ * @function aggroMgr:addAggro
+ */
 static int luaAI_aggromgraddaggro(lua_State* s) {
 	AggroMgr* aggroMgr = luaAI_toaggromgr(s, 1);
 	const CharacterId chrId = (CharacterId)luaL_checkinteger(s, 2);
@@ -393,7 +506,7 @@ static int luaAI_aggromgrtostring(lua_State* s) {
 
 /***
  * The character id
- * @return the id of a character (Integer)
+ * @treturn integer The id of a character
  * @function character:id
  */
 static int luaAI_characterid(lua_State* s) {
@@ -404,7 +517,7 @@ static int luaAI_characterid(lua_State* s) {
 
 /***
  * Get the position of the character
- * @return position of the character (Vec)
+ * @treturn vec position of the character
  * @function character:position
  */
 static int luaAI_characterposition(lua_State* s) {
@@ -414,7 +527,7 @@ static int luaAI_characterposition(lua_State* s) {
 
 /***
  * Set the position of the character
- * @param position (Vec)
+ * @tparam vec position
  * @function character:setPosition
  */
 static int luaAI_charactersetposition(lua_State* s) {
@@ -426,7 +539,7 @@ static int luaAI_charactersetposition(lua_State* s) {
 
 /***
  * Get the speed of the character
- * @return speed value of the character (Number)
+ * @treturn number Speed value of the character
  * @function character:speed
  */
 static int luaAI_characterspeed(lua_State* s) {
@@ -437,7 +550,7 @@ static int luaAI_characterspeed(lua_State* s) {
 
 /***
  * Get the orientation of the character
- * @return orientation value of the character (Number)
+ * @treturn number orientation value of the character
  * @function character:orientation
  */
 static int luaAI_characterorientation(lua_State* s) {
@@ -448,7 +561,7 @@ static int luaAI_characterorientation(lua_State* s) {
 
 /***
  * Set the speed for a character
- * @param speed (Number)
+ * @tparam number speed
  * @function character:setSpeed
  */
 static int luaAI_charactersetspeed(lua_State* s) {
@@ -460,7 +573,7 @@ static int luaAI_charactersetspeed(lua_State* s) {
 
 /***
  * Set the orientation for a character
- * @param orientation (Number)
+ * @tparam number orientation
  * @function character:setOrientation
  */
 static int luaAI_charactersetorientation(lua_State* s) {
@@ -472,7 +585,7 @@ static int luaAI_charactersetorientation(lua_State* s) {
 
 /***
  * Equal check for a character
- * @return boolean
+ * @treturn boolean
  * @function character:__eq
  */
 static int luaAI_charactereq(lua_State* s) {
@@ -485,7 +598,6 @@ static int luaAI_charactereq(lua_State* s) {
 
 /***
  * Garbage collector callback for a character
- * @return Garbage collector for a character
  * @function character:__gc
  */
 static int luaAI_charactergc(lua_State* s) {
@@ -496,7 +608,7 @@ static int luaAI_charactergc(lua_State* s) {
 
 /***
  * Pushes the table of character (debugger) attributes onto the stack
- * @return Table with the key/value pair of the character attributes
+ * @treturn {string, string, ....} Table with the key/value pair of the character attributes
  * @function character:attributes
  */
 static int luaAI_characterattributes(lua_State* s) {
@@ -516,8 +628,8 @@ static int luaAI_characterattributes(lua_State* s) {
 
 /***
  * Set a debugger attribute to the character
- * @param key The key of the attribute (String)
- * @param value The value of the attribute (String)
+ * @tparam string key The key of the attribute
+ * @tparam string value The value of the attribute
  * @function character:setAttribute
  */
 static int luaAI_charactersetattribute(lua_State* s) {
@@ -536,7 +648,7 @@ static int luaAI_charactertostring(lua_State* s) {
 
 /***
  * Get the character id
- * @return integer with the character id
+ * @treturn integer Integer with the character id
  * @function ai:id
  */
 static int luaAI_aiid(lua_State* s) {
@@ -547,7 +659,7 @@ static int luaAI_aiid(lua_State* s) {
 
 /***
  * Get the active lifetime of the ai
- * @return integer with the active lifetime of the ai
+ * @treturn integer Integer with the active lifetime of the ai
  * @function ai:time
  */
 static int luaAI_aitime(lua_State* s) {
@@ -558,7 +670,7 @@ static int luaAI_aitime(lua_State* s) {
 
 /***
  * Get the filtered entities of the ai
- * @return table with key/value (index, characterid) pairs of the filtered entities
+ * @treturn {integer, integer, ...} A table with key/value (index, characterid) pairs of the filtered entities
  * @function ai:filteredEntities
  */
 static int luaAI_aifilteredentities(lua_State* s) {
@@ -577,7 +689,7 @@ static int luaAI_aifilteredentities(lua_State* s) {
 
 /***
  * Get the zone of the ai
- * @return the zone where the ai is active in or nil
+ * @treturn zone The zone where the ai is active in or nil
  * @function ai:zone
  */
 static int luaAI_aigetzone(lua_State* s) {
@@ -587,8 +699,8 @@ static int luaAI_aigetzone(lua_State* s) {
 
 /***
  * Get the aggro mgr of the ai
- * @return the aggro manager of the ai
- * @function ai:aggroMGr
+ * @treturn aggroMgr the aggro manager of the ai
+ * @function ai:aggroMgr
  */
 static int luaAI_aigetaggromgr(lua_State* s) {
 	luaAI_AI* ai = luaAI_toai(s, 1);
@@ -597,7 +709,7 @@ static int luaAI_aigetaggromgr(lua_State* s) {
 
 /***
  * Get the character of the ai
- * @return the character of the ai
+ * @treturn character the character of the ai
  * @function ai:character
  */
 static int luaAI_aigetcharacter(lua_State* s) {
@@ -607,7 +719,7 @@ static int luaAI_aigetcharacter(lua_State* s) {
 
 /***
  * Check whether the ai has a zone
- * @return true if the ai has a zone, false otherwise
+ * @treturn boolean true if the ai has a zone, false otherwise
  * @function ai:hasZone
  */
 static int luaAI_aihaszone(lua_State* s) {
@@ -618,7 +730,7 @@ static int luaAI_aihaszone(lua_State* s) {
 
 /***
  * Equality for two ai instances
- * @return true if the two given ai's are equal
+ * @treturn boolean true if the two given ai's are equal
  * @function ai:__eq
  */
 static int luaAI_aieq(lua_State* s) {
@@ -629,6 +741,10 @@ static int luaAI_aieq(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Garbage collector callback for ai instances
+ * @function ai:__gc
+ */
 static int luaAI_aigc(lua_State* s) {
 	luaAI_AI* ai = luaAI_toai(s, -1);
 	ai->ai = AIPtr();
@@ -646,6 +762,13 @@ static int luaAI_aitostring(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Vector addition
+ * @tparam vec a
+ * @tparam vec b
+ * @treturn vec the sum of a + b
+ * @function vec:__add
+ */
 static int luaAI_vecadd(lua_State* s) {
 	const glm::vec3* a = luaAI_tovec(s, 1);
 	const glm::vec3* b = luaAI_tovec(s, 2);
@@ -653,6 +776,13 @@ static int luaAI_vecadd(lua_State* s) {
 	return luaAI_pushvec(s, c);
 }
 
+/***
+ * Vector dot product also as vec:__mul
+ * @tparam vec a
+ * @tparam vec b
+ * @treturn number The dot product of a and b
+ * @function vec:dot
+ */
 static int luaAI_vecdot(lua_State* s) {
 	const glm::vec3* a = luaAI_tovec(s, 1);
 	const glm::vec3* b = luaAI_tovec(s, 2);
@@ -661,6 +791,13 @@ static int luaAI_vecdot(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Vector div function
+ * @tparam vec a
+ * @tparam vec b
+ * @treturn vec a / b
+ * @function vec:__div
+ */
 static int luaAI_vecdiv(lua_State* s) {
 	const glm::vec3* a = luaAI_tovec(s, 1);
 	const glm::vec3* b = luaAI_tovec(s, 2);
@@ -684,6 +821,13 @@ static int luaAI_veceq(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Vector subtraction
+ * @tparam vec a
+ * @tparam vec b
+ * @treturn vec the result of a - b
+ * @function vec:__sub
+ */
 static int luaAI_vecsub(lua_State* s) {
 	const glm::vec3* a = luaAI_tovec(s, 1);
 	const glm::vec3* b = luaAI_tovec(s, 2);
@@ -692,6 +836,12 @@ static int luaAI_vecsub(lua_State* s) {
 	return 1;
 }
 
+/***
+ * Negates a given vector
+ * @tparam vec a
+ * @treturn vec The result of -a
+ * @function vec:__unm
+ */
 static int luaAI_vecnegate(lua_State* s) {
 	const glm::vec3* a = luaAI_tovec(s, 1);
 	luaAI_pushvec(s, -(*a));
