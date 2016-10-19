@@ -151,14 +151,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor"></span>            <span class="keywordflow">return</span> factory-&gt;create(ctx);</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#if AI_EXCEPTIONS</span></div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor"></span>        } <span class="keywordflow">catch</span> (...) {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordflow">return</span> std::shared_ptr&lt;TYPE&gt;();</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;Exception while trying to create a factory&quot;</span>)</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor"></span>    }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;};</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">return</span> std::shared_ptr&lt;TYPE&gt;();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor"></span>    }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;};</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
 <div class="ttc" id="Types_8h_html"><div class="ttname"><a href="Types_8h.html">Types.h</a></div></div>
+<div class="ttc" id="Types_8h_html_ad28c4d09dbf2e7bb44aa8ffd3c83e063"><div class="ttname"><a href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a></div><div class="ttdeci">#define ai_log_error(...)</div><div class="ttdoc">Logging macro to provide your own loggers. </div><div class="ttdef"><b>Definition:</b> Types.h:23</div></div>
 <div class="ttc" id="NonCopyable_8h_html"><div class="ttname"><a href="NonCopyable_8h.html">NonCopyable.h</a></div></div>
 <div class="ttc" id="classai_1_1IFactory_html"><div class="ttname"><a href="classai_1_1IFactory.html">ai::IFactory</a></div><div class="ttdef"><b>Definition:</b> IFactoryRegistry.h:14</div></div>
 <div class="ttc" id="classai_1_1NonCopyable_html"><div class="ttname"><a href="classai_1_1NonCopyable.html">ai::NonCopyable</a></div><div class="ttdef"><b>Definition:</b> NonCopyable.h:8</div></div>

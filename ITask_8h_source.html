@@ -120,29 +120,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor"></span>            <span class="keywordflow">return</span> state(entity, <a class="code" href="classai_1_1ITask.html#aa5d29aca24485d8a55432805dc26121c">doAction</a>(entity, deltaMillis));</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#if AI_EXCEPTIONS</span></div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor"></span>        } <span class="keywordflow">catch</span> (...) {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keywordflow">return</span> state(entity, EXCEPTION);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;Exception while running task %s of type %s&quot;</span>, _name.c_str(), _type.c_str())</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        }</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor"></span>    }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="classai_1_1ITask.html">ITask</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> std::string&amp; parameters, <span class="keyword">const</span> ConditionPtr&amp; condition) :</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <a class="code" href="classai_1_1TreeNode.html">TreeNode</a>(name, parameters, condition) {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    }</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">virtual</span> ~ITask() {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    }</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">virtual</span> TreeNodeStatus <a class="code" href="classai_1_1ITask.html#aa5d29aca24485d8a55432805dc26121c">doAction</a>(<span class="keyword">const</span> AIPtr&amp; entity, int64_t deltaMillis) = 0;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">bool</span> addChild(<span class="keyword">const</span> TreeNodePtr&amp; <span class="comment">/*child*/</span>)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;};</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">return</span> state(entity, EXCEPTION);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor"></span>    }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="classai_1_1ITask.html">ITask</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> std::string&amp; parameters, <span class="keyword">const</span> ConditionPtr&amp; condition) :</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <a class="code" href="classai_1_1TreeNode.html#a7762b2b3b9b3cd4887835a567d962824">TreeNode</a>(name, parameters, condition) {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classai_1_1ITask.html">ITask</a>() {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">virtual</span> TreeNodeStatus <a class="code" href="classai_1_1ITask.html#aa5d29aca24485d8a55432805dc26121c">doAction</a>(<span class="keyword">const</span> AIPtr&amp; entity, int64_t deltaMillis) = 0;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">bool</span> addChild(<span class="keyword">const</span> TreeNodePtr&amp; <span class="comment">/*child*/</span>)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;};</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
 <div class="ttc" id="classai_1_1ITask_html"><div class="ttname"><a href="classai_1_1ITask.html">ai::ITask</a></div><div class="ttdoc">A node for your real actions in the behaviour tree. </div><div class="ttdef"><b>Definition:</b> ITask.h:33</div></div>
 <div class="ttc" id="Types_8h_html"><div class="ttname"><a href="Types_8h.html">Types.h</a></div></div>
 <div class="ttc" id="classai_1_1ITask_html_a0fcaac3cbbc00985b89f76fb18b42dea"><div class="ttname"><a href="classai_1_1ITask.html#a0fcaac3cbbc00985b89f76fb18b42dea">ai::ITask::execute</a></div><div class="ttdeci">TreeNodeStatus execute(const AIPtr &amp;entity, int64_t deltaMillis) override</div><div class="ttdef"><b>Definition:</b> ITask.h:35</div></div>
+<div class="ttc" id="classai_1_1TreeNode_html_a7762b2b3b9b3cd4887835a567d962824"><div class="ttname"><a href="classai_1_1TreeNode.html#a7762b2b3b9b3cd4887835a567d962824">ai::TreeNode::TreeNode</a></div><div class="ttdeci">TreeNode(const std::string &amp;name, const std::string &amp;parameters, const ConditionPtr &amp;condition)</div><div class="ttdef"><b>Definition:</b> TreeNode.h:121</div></div>
+<div class="ttc" id="Types_8h_html_ad28c4d09dbf2e7bb44aa8ffd3c83e063"><div class="ttname"><a href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a></div><div class="ttdeci">#define ai_log_error(...)</div><div class="ttdoc">Logging macro to provide your own loggers. </div><div class="ttdef"><b>Definition:</b> Types.h:23</div></div>
 <div class="ttc" id="classai_1_1TreeNode_html_ae64bf701493943cb29488aa93a552a09"><div class="ttname"><a href="classai_1_1TreeNode.html#ae64bf701493943cb29488aa93a552a09">ai::TreeNode::execute</a></div><div class="ttdeci">virtual TreeNodeStatus execute(const AIPtr &amp;entity, int64_t deltaMillis)</div><div class="ttdef"><b>Definition:</b> TreeNodeImpl.h:184</div></div>
 <div class="ttc" id="classai_1_1TreeNode_html"><div class="ttname"><a href="classai_1_1TreeNode.html">ai::TreeNode</a></div><div class="ttdoc">The base class for all behaviour tree actions. </div><div class="ttdef"><b>Definition:</b> TreeNode.h:88</div></div>
 <div class="ttc" id="classai_1_1ITask_html_aa5d29aca24485d8a55432805dc26121c"><div class="ttname"><a href="classai_1_1ITask.html#aa5d29aca24485d8a55432805dc26121c">ai::ITask::doAction</a></div><div class="ttdeci">virtual TreeNodeStatus doAction(const AIPtr &amp;entity, int64_t deltaMillis)=0</div></div>
