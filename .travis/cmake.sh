@@ -15,9 +15,33 @@ if [ -z "$BUILD_MODE" ]; then
 fi
 
 if [ "$BUILD_TYPE" == "cmake" ]; then
-	mkdir -p simpleai-build
-	cd simpleai-build
-	cmake -DSIMPLEAI_DEBUGGER=ON -DCMAKE_BUILD_TYPE=$BUILD_MODE -G"Eclipse CDT4 - Unix Makefiles" ..
+	mkdir -p simpleai-build-with-debugger
+	cd simpleai-build-with-debugger
+	cmake -DSIMPLEAI_DEBUGGER=ON -DCMAKE_BUILD_TYPE=$BUILD_MODE -G"Unix Makefiles" ..
 	make
-fi
+	cd ..
 
+	mkdir -p simpleai-build-with-xml
+	cd simpleai-build-with-xml
+	cmake -DSIMPLEAI_XML=ON -DCMAKE_BUILD_TYPE=$BUILD_MODE -G"Unix Makefiles" ..
+	make
+	cd ..
+
+	mkdir -p simpleai-build-without-lua
+	cd simpleai-build-without-lua
+	cmake -DSIMPLEAI_LUA=OFF -DCMAKE_BUILD_TYPE=$BUILD_MODE -G"Unix Makefiles" ..
+	make
+	cd ..
+
+	mkdir -p simpleai-build-everything-disabled
+	cd simpleai-build-everything-disabled
+	cmake -DSIMPLEAI_LUA=OFF -DSIMPLEAI_TEST=OFF -DSIMPLEAI_RUN=OFF -DCMAKE_BUILD_TYPE=$BUILD_MODE -G"Unix Makefiles" ..
+	make
+	cd ..
+
+	mkdir -p simpleai-build-exceptions
+	cd simpleai-build-exceptions
+	cmake -DSIMPLEAI_EXCEPTIONS=ON -DCMAKE_BUILD_TYPE=$BUILD_MODE -G"Unix Makefiles" ..
+	make
+	cd ..
+fi
