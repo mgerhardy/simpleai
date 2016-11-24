@@ -1,7 +1,7 @@
 <map id="/home/travis/build/mgerhardy/simpleai/src/ai/server/AIUpdateNodeMessage.h" name="/home/travis/build/mgerhardy/simpleai/src/ai/server/AIUpdateNodeMessage.h">
 <area shape="rect" id="node2" href="$IProtocolMessage_8h.html" title="IProtocolMessage.h" alt="" coords="193,125,332,152"/>
 <area shape="rect" id="node8" href="$AIStubTypes_8h.html" title="AIStubTypes.h" alt="" coords="544,125,653,152"/>
-<area shape="rect" id="node10" href="$Math_8h.html" title="common/Math.h" alt="" coords="2015,200,2131,227"/>
+<area shape="rect" id="node10" href="$Math_8h.html" title="common/Math.h" alt="" coords="1999,200,2115,227"/>
 <area shape="rect" id="node11" href="$Types_8h.html" title="Types.h" alt="" coords="1545,573,1615,600"/>
 <area shape="rect" id="node25" href="$TreeNode_8h.html" title="tree/TreeNode.h" alt="" coords="666,200,781,227"/>
 <area shape="rect" id="node12" href="$Log_8h.html" title="Log.h" alt="" coords="1662,648,1716,675"/>
