@@ -1,4 +1,7 @@
 <map id="ai::AIRegistry::SteeringFactory" name="ai::AIRegistry::SteeringFactory">
-<area shape="rect" id="node2" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, movement\l::ISteering, SteeringFactoryContext \&gt;" alt="" coords="5,80,245,136"/>
-<area shape="rect" id="node3" href="$classai_1_1NonCopyable.html" title="ai::NonCopyable" alt="" coords="66,5,184,32"/>
+<area shape="rect" id="node2" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, movement\l::ISteering, SteeringFactoryContext \&gt;" alt="" coords="781,17,1021,73"/>
+<area shape="rect" id="node3" href="$classai_1_1NonCopyable.html" title="ai::NonCopyable" alt="" coords="514,5,633,32"/>
+<area shape="rect" id="node5" href="$classai_1_1IFactory.html" title="ai::IFactory\&lt; movement\l::ISteering, SteeringFactory\lContext \&gt;" alt="" coords="185,36,367,92"/>
+<area shape="rect" id="node6" title="STL class. " alt="" coords="236,116,316,143"/>
+<area shape="rect" id="node7" title="STL class. " alt="" coords="6,109,133,150"/>
 </map>

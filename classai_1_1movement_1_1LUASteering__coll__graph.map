@@ -1,4 +1,6 @@
 <map id="ai::movement::LUASteering" name="ai::movement::LUASteering">
-<area shape="rect" id="node2" href="$classai_1_1movement_1_1ISteering.html" title="Steering interface. " alt="" coords="15,80,176,107"/>
-<area shape="rect" id="node3" href="$classai_1_1__MemObject.html" title="MemObject" alt="" coords="51,5,140,32"/>
+<area shape="rect" id="node2" href="$classai_1_1movement_1_1ISteering.html" title="Steering interface. " alt="" coords="5,99,165,125"/>
+<area shape="rect" id="node3" href="$classai_1_1__MemObject.html" title="MemObject" alt="" coords="41,13,129,40"/>
+<area shape="rect" id="node4" title="STL class. " alt="" coords="189,99,268,125"/>
+<area shape="rect" id="node5" title="STL class. " alt="" coords="166,6,292,47"/>
 </map>

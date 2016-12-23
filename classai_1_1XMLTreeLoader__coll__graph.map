@@ -1,5 +1,7 @@
 <map id="ai::XMLTreeLoader" name="ai::XMLTreeLoader">
-<area shape="rect" id="node2" href="$classai_1_1ITreeLoader.html" title="This class must be extended to load behaviour trees. The contract here is that the parsing only happe..." alt="" coords="85,96,195,123"/>
-<area shape="rect" id="node3" href="$classai_1_1ReadWriteLock.html" title="ai::ReadWriteLock" alt="" coords="5,5,135,32"/>
-<area shape="rect" id="node4" href="$classai_1_1IAIFactory.html" title="ai::IAIFactory" alt="" coords="160,5,261,32"/>
+<area shape="rect" id="node2" href="$classai_1_1ITreeLoader.html" title="This class must be extended to load behaviour trees. The contract here is that the parsing only happe..." alt="" coords="179,296,288,323"/>
+<area shape="rect" id="node3" href="$classai_1_1ReadWriteLock.html" title="ai::ReadWriteLock" alt="" coords="5,197,135,224"/>
+<area shape="rect" id="node5" title="STL class. " alt="" coords="193,99,272,125"/>
+<area shape="rect" id="node6" title="STL class. " alt="" coords="170,6,296,47"/>
+<area shape="rect" id="node7" href="$classai_1_1IAIFactory.html" title="ai::IAIFactory" alt="" coords="331,197,432,224"/>
 </map>

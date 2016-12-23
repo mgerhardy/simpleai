@@ -1,5 +1,7 @@
 <map id="ai::Sequence" name="ai::Sequence">
-<area shape="rect" id="node2" href="$classai_1_1Selector.html" title="Base class for all type of TreeNode selectors. " alt="" coords="11,155,99,181"/>
-<area shape="rect" id="node3" href="$classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. " alt="" coords="6,80,103,107"/>
-<area shape="rect" id="node4" href="$classai_1_1__MemObject.html" title="MemObject" alt="" coords="10,5,99,32"/>
+<area shape="rect" id="node2" href="$classai_1_1Selector.html" title="Base class for all type of TreeNode selectors. " alt="" coords="115,296,203,323"/>
+<area shape="rect" id="node3" href="$classai_1_1TreeNode.html" title="The base class for all behaviour tree actions. " alt="" coords="110,219,207,245"/>
+<area shape="rect" id="node4" href="$classai_1_1__MemObject.html" title="MemObject" alt="" coords="5,99,93,125"/>
+<area shape="rect" id="node5" title="STL class. " alt="" coords="119,99,197,125"/>
+<area shape="rect" id="node6" title="STL class. " alt="" coords="95,6,221,47"/>
 </map>

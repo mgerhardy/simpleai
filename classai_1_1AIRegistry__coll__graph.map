@@ -1,14 +1,21 @@
 <map id="ai::AIRegistry" name="ai::AIRegistry">
-<area shape="rect" id="node2" href="$classai_1_1IAIFactory.html" title="ai::IAIFactory" alt="" coords="508,5,609,32"/>
-<area shape="rect" id="node3" href="$classai_1_1AIRegistry_1_1SteerNodeFactory.html" title="ai::AIRegistry::SteerNode\lFactory" alt="" coords="473,57,645,98"/>
-<area shape="rect" id="node4" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, TreeNode,\l SteerNodeFactoryContext \&gt;" alt="" coords="201,13,391,69"/>
-<area shape="rect" id="node5" href="$classai_1_1NonCopyable.html" title="ai::NonCopyable" alt="" coords="6,188,125,215"/>
-<area shape="rect" id="node7" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, ICondition,\l ConditionFactoryContext \&gt;" alt="" coords="205,93,387,149"/>
-<area shape="rect" id="node9" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, IFilter,\l FilterFactoryContext \&gt;" alt="" coords="217,173,375,229"/>
-<area shape="rect" id="node11" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, TreeNode,\l TreeNodeFactoryContext \&gt;" alt="" coords="203,253,389,309"/>
-<area shape="rect" id="node13" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, movement\l::ISteering, SteeringFactoryContext \&gt;" alt="" coords="176,333,416,389"/>
-<area shape="rect" id="node6" href="$classai_1_1AIRegistry_1_1ConditionFactory.html" title="ai::AIRegistry::Condition\lFactory" alt="" coords="476,122,641,163"/>
-<area shape="rect" id="node8" href="$classai_1_1AIRegistry_1_1FilterFactory.html" title="ai::AIRegistry::FilterFactory" alt="" coords="467,188,650,215"/>
-<area shape="rect" id="node10" href="$classai_1_1AIRegistry_1_1TreeNodeFactory.html" title="ai::AIRegistry::TreeNode\lFactory" alt="" coords="475,246,642,287"/>
-<area shape="rect" id="node12" href="$classai_1_1AIRegistry_1_1SteeringFactory.html" title="ai::AIRegistry::Steering\lFactory" alt="" coords="479,327,638,369"/>
+<area shape="rect" id="node2" href="$classai_1_1IAIFactory.html" title="ai::IAIFactory" alt="" coords="1209,49,1311,76"/>
+<area shape="rect" id="node3" href="$classai_1_1AIRegistry_1_1SteerNodeFactory.html" title="ai::AIRegistry::SteerNode\lFactory" alt="" coords="1174,166,1346,207"/>
+<area shape="rect" id="node4" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, TreeNode,\l SteerNodeFactoryContext \&gt;" alt="" coords="902,144,1093,200"/>
+<area shape="rect" id="node5" href="$classai_1_1NonCopyable.html" title="ai::NonCopyable" alt="" coords="566,208,685,235"/>
+<area shape="rect" id="node11" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, ICondition,\l ConditionFactoryContext \&gt;" alt="" coords="906,64,1089,120"/>
+<area shape="rect" id="node15" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, IFilter,\l FilterFactoryContext \&gt;" alt="" coords="919,304,1076,360"/>
+<area shape="rect" id="node19" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, TreeNode,\l TreeNodeFactoryContext \&gt;" alt="" coords="905,384,1090,440"/>
+<area shape="rect" id="node23" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, movement\l::ISteering, SteeringFactoryContext \&gt;" alt="" coords="877,224,1117,280"/>
+<area shape="rect" id="node7" href="$classai_1_1IFactory.html" title="ai::IFactory\&lt; TreeNode,\l SteerNodeFactoryContext \&gt;" alt="" coords="185,73,375,114"/>
+<area shape="rect" id="node8" title="STL class. " alt="" coords="240,216,320,243"/>
+<area shape="rect" id="node9" title="STL class. " alt="" coords="6,209,133,250"/>
+<area shape="rect" id="node10" href="$classai_1_1AIRegistry_1_1ConditionFactory.html" title="ai::AIRegistry::Condition\lFactory" alt="" coords="1177,101,1343,142"/>
+<area shape="rect" id="node13" href="$classai_1_1IFactory.html" title="ai::IFactory\&lt; ICondition,\l ConditionFactoryContext \&gt;" alt="" coords="189,7,371,49"/>
+<area shape="rect" id="node14" href="$classai_1_1AIRegistry_1_1FilterFactory.html" title="ai::AIRegistry::FilterFactory" alt="" coords="1169,303,1351,329"/>
+<area shape="rect" id="node17" href="$classai_1_1IFactory.html" title="ai::IFactory\&lt; IFilter,\l FilterFactoryContext \&gt;" alt="" coords="201,390,359,431"/>
+<area shape="rect" id="node18" href="$classai_1_1AIRegistry_1_1TreeNodeFactory.html" title="ai::AIRegistry::TreeNode\lFactory" alt="" coords="1177,365,1343,406"/>
+<area shape="rect" id="node21" href="$classai_1_1IFactory.html" title="ai::IFactory\&lt; TreeNode,\l TreeNodeFactoryContext \&gt;" alt="" coords="187,455,373,497"/>
+<area shape="rect" id="node22" href="$classai_1_1AIRegistry_1_1SteeringFactory.html" title="ai::AIRegistry::Steering\lFactory" alt="" coords="1181,231,1339,273"/>
+<area shape="rect" id="node25" href="$classai_1_1IFactory.html" title="ai::IFactory\&lt; movement\l::ISteering, SteeringFactory\lContext \&gt;" alt="" coords="189,292,371,348"/>
 </map>

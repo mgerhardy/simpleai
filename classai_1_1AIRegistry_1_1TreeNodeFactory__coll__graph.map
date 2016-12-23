@@ -1,4 +1,7 @@
 <map id="ai::AIRegistry::TreeNodeFactory" name="ai::AIRegistry::TreeNodeFactory">
-<area shape="rect" id="node2" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, TreeNode,\l TreeNodeFactoryContext \&gt;" alt="" coords="5,80,189,136"/>
-<area shape="rect" id="node3" href="$classai_1_1NonCopyable.html" title="ai::NonCopyable" alt="" coords="38,5,156,32"/>
+<area shape="rect" id="node2" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, TreeNode,\l TreeNodeFactoryContext \&gt;" alt="" coords="867,16,1053,72"/>
+<area shape="rect" id="node3" href="$classai_1_1NonCopyable.html" title="ai::NonCopyable" alt="" coords="558,5,677,32"/>
+<area shape="rect" id="node5" title="STL class. " alt="" coords="237,37,317,64"/>
+<area shape="rect" id="node6" title="STL class. " alt="" coords="6,30,133,71"/>
+<area shape="rect" id="node7" href="$classai_1_1IFactory.html" title="ai::IFactory\&lt; TreeNode,\l TreeNodeFactoryContext \&gt;" alt="" coords="185,89,370,130"/>
 </map>

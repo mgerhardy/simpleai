@@ -1,4 +1,7 @@
 <map id="ai::AIRegistry::FilterFactory" name="ai::AIRegistry::FilterFactory">
-<area shape="rect" id="node2" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, IFilter,\l FilterFactoryContext \&gt;" alt="" coords="17,80,175,136"/>
-<area shape="rect" id="node3" href="$classai_1_1NonCopyable.html" title="ai::NonCopyable" alt="" coords="37,5,155,32"/>
+<area shape="rect" id="node2" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, IFilter,\l FilterFactoryContext \&gt;" alt="" coords="784,16,941,72"/>
+<area shape="rect" id="node3" href="$classai_1_1NonCopyable.html" title="ai::NonCopyable" alt="" coords="502,5,621,32"/>
+<area shape="rect" id="node5" href="$classai_1_1IFactory.html" title="ai::IFactory\&lt; IFilter,\l FilterFactoryContext \&gt;" alt="" coords="184,37,341,78"/>
+<area shape="rect" id="node6" title="STL class. " alt="" coords="223,103,303,129"/>
+<area shape="rect" id="node7" title="STL class. " alt="" coords="6,95,133,137"/>
 </map>

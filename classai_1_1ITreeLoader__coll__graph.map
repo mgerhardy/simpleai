@@ -1,4 +1,6 @@
 <map id="ai::ITreeLoader" name="ai::ITreeLoader">
-<area shape="rect" id="node2" href="$classai_1_1ReadWriteLock.html" title="ai::ReadWriteLock" alt="" coords="5,5,135,32"/>
-<area shape="rect" id="node3" href="$classai_1_1IAIFactory.html" title="ai::IAIFactory" alt="" coords="160,5,261,32"/>
+<area shape="rect" id="node2" href="$classai_1_1ReadWriteLock.html" title="ai::ReadWriteLock" alt="" coords="5,197,135,224"/>
+<area shape="rect" id="node4" title="STL class. " alt="" coords="193,99,272,125"/>
+<area shape="rect" id="node5" title="STL class. " alt="" coords="170,6,296,47"/>
+<area shape="rect" id="node6" href="$classai_1_1IAIFactory.html" title="ai::IAIFactory" alt="" coords="331,197,432,224"/>
 </map>

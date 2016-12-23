@@ -1,4 +1,7 @@
 <map id="ai::AIRegistry::ConditionFactory" name="ai::AIRegistry::ConditionFactory">
-<area shape="rect" id="node2" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, ICondition,\l ConditionFactoryContext \&gt;" alt="" coords="5,80,187,136"/>
-<area shape="rect" id="node3" href="$classai_1_1NonCopyable.html" title="ai::NonCopyable" alt="" coords="37,5,155,32"/>
+<area shape="rect" id="node2" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, ICondition,\l ConditionFactoryContext \&gt;" alt="" coords="785,17,967,73"/>
+<area shape="rect" id="node3" href="$classai_1_1NonCopyable.html" title="ai::NonCopyable" alt="" coords="515,5,634,32"/>
+<area shape="rect" id="node5" href="$classai_1_1IFactory.html" title="ai::IFactory\&lt; ICondition,\l ConditionFactoryContext \&gt;" alt="" coords="185,45,367,86"/>
+<area shape="rect" id="node6" title="STL class. " alt="" coords="236,111,316,137"/>
+<area shape="rect" id="node7" title="STL class. " alt="" coords="6,103,133,145"/>
 </map>

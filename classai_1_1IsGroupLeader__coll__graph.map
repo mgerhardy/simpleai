@@ -1,4 +1,6 @@
 <map id="ai::IsGroupLeader" name="ai::IsGroupLeader">
-<area shape="rect" id="node2" href="$classai_1_1ICondition.html" title="A condition can be placed on a TreeNode to decide which node is going to get executed. In general they are stateless. If they are not, it should explicitly get noted. " alt="" coords="19,80,117,107"/>
-<area shape="rect" id="node3" href="$classai_1_1__MemObject.html" title="MemObject" alt="" coords="23,5,112,32"/>
+<area shape="rect" id="node2" href="$classai_1_1ICondition.html" title="A condition can be placed on a TreeNode to decide which node is going to get executed. In general they are stateless. If they are not, it should explicitly get noted. " alt="" coords="37,203,136,229"/>
+<area shape="rect" id="node3" href="$classai_1_1__MemObject.html" title="MemObject" alt="" coords="5,99,93,125"/>
+<area shape="rect" id="node4" title="STL class. " alt="" coords="119,99,197,125"/>
+<area shape="rect" id="node5" title="STL class. " alt="" coords="95,6,221,47"/>
 </map>
