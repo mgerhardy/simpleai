@@ -4,7 +4,7 @@ public class AIStateNodeStatic {
 	private final int _id;
 	private final String _name;
 	private final String _type;
-	private final String _parameter;
+	private final String _parameters;
 	private final String _conditionType;
 	private final String _conditionParameters;
 
