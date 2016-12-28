@@ -554,11 +554,13 @@ namespace detail
 
 	GLM_FUNC_QUALIFIER uint32 packSnorm3x10_1x2(vec4 const & v)
 	{
+		ivec4 const Pack(round(clamp(v,-1.0f, 1.0f) * vec4(511.f, 511.f, 511.f, 1.f)));
+
 		detail::i10i10i10i2 Result;
-		Result.data.x = int(round(clamp(v.x,-1.0f, 1.0f) * 511.f));
-		Result.data.y = int(round(clamp(v.y,-1.0f, 1.0f) * 511.f));
-		Result.data.z = int(round(clamp(v.z,-1.0f, 1.0f) * 511.f));
-		Result.data.w = int(round(clamp(v.w,-1.0f, 1.0f) *   1.f));
+		Result.data.x = Pack.x;
+		Result.data.y = Pack.y;
+		Result.data.z = Pack.z;
+		Result.data.w = Pack.w;
 		return Result.pack;
 	}
 
@@ -566,12 +568,10 @@ namespace detail
 	{
 		detail::i10i10i10i2 Unpack;
 		Unpack.pack = v;
-		vec4 Result;
-		Result.x = clamp(float(Unpack.data.x) / 511.f, -1.0f, 1.0f);
-		Result.y = clamp(float(Unpack.data.y) / 511.f, -1.0f, 1.0f);
-		Result.z = clamp(float(Unpack.data.z) / 511.f, -1.0f, 1.0f);
-		Result.w = clamp(float(Unpack.data.w) /   1.f, -1.0f, 1.0f);
-		return Result;
+
+		vec4 const Result(Unpack.data.x, Unpack.data.y, Unpack.data.z, Unpack.data.w);
+
+		return clamp(Result * vec4(1.f / 511.f, 1.f / 511.f, 1.f / 511.f, 1.f), -1.0f, 1.0f);
 	}
 
 	GLM_FUNC_QUALIFIER uint32 packUnorm3x10_1x2(vec4 const & v)
@@ -637,6 +637,22 @@ namespace detail
 		Unpack.pack = v;
 
 		return vec3(Unpack.data.x, Unpack.data.y, Unpack.data.z) * pow(2.0f, Unpack.data.w - 15.f - 9.f);
+	}
+
+	// Based on Brian Karis http://graphicrants.blogspot.fr/2009/04/rgbm-color-encoding.html
+	template <typename T, precision P>
+	GLM_FUNC_QUALIFIER tvec4<T, P> packRGBM(tvec3<T, P> const & rgb)
+	{
+		tvec3<T, P> const Color(rgb * static_cast<T>(1.0 / 6.0));
+		T Alpha = clamp(max(max(Color.x, Color.y), max(Color.z, static_cast<T>(1e-6))), static_cast<T>(0), static_cast<T>(1));
+		Alpha = ceil(Alpha * static_cast<T>(255.0)) / static_cast<T>(255.0);
+		return tvec4<T, P>(Color / Alpha, Alpha);
+	}
+
+	template <typename T, precision P>
+	GLM_FUNC_QUALIFIER tvec3<T, P> unpackRGBM(tvec4<T, P> const & rgbm)
+	{
+		return tvec3<T, P>(rgbm.x, rgbm.y, rgbm.z) * rgbm.w * static_cast<T>(6);
 	}
 
 	template <precision P, template <typename, precision> class vecType>

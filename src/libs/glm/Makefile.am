@@ -117,6 +117,9 @@ noinst_HEADERS = \
 	gtx/polar_coordinates.inl \
 	gtx/matrix_cross_product.hpp \
 	gtx/type_trait.hpp \
+	gtx/vec_swizzle.hpp \
+	gtx/color_encoding.hpp \
+	gtx/color_encoding.inl \
 	mat4x4.hpp \
 	simd/exponential.h \
 	simd/integer.h \

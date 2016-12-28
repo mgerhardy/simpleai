@@ -3,19 +3,6 @@
 
 namespace glm
 {
-#	ifdef GLM_STATIC_CONST_MEMBERS
-	template <typename T, precision P>
-	const tvec2<T, P> tvec2<T, P>::ZERO(static_cast<T>(0), static_cast<T>(0));
-
-	template <typename T, precision P>
-	const tvec2<T, P> tvec2<T, P>::X(static_cast<T>(1), static_cast<T>(0));
-
-	template <typename T, precision P>
-	const tvec2<T, P> tvec2<T, P>::Y(static_cast<T>(0), static_cast<T>(1));
-
-	template <typename T, precision P>
-	const tvec2<T, P> tvec2<T, P>::XY(static_cast<T>(1), static_cast<T>(1));
-#	endif
 	// -- Implicit basic constructors --
 
 #	if !GLM_HAS_DEFAULTED_FUNCTIONS || !defined(GLM_FORCE_NO_CTOR_INIT)
@@ -96,12 +83,6 @@ namespace glm
 	{}
 
 	// -- Component accesses --
-
-	template <typename T, precision P>
-	GLM_FUNC_QUALIFIER GLM_CONSTEXPR typename tvec2<T, P>::length_type tvec2<T, P>::length() const
-	{
-		return 2;
-	}
 
 	template <typename T, precision P>
 	GLM_FUNC_QUALIFIER T & tvec2<T, P>::operator[](typename tvec2<T, P>::length_type i)
