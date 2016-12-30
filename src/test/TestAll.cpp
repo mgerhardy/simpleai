@@ -81,7 +81,7 @@ extern "C" int main (int argc, char **argv)
 
 #if AI_EXCEPTIONS
 	} catch (const std::exception& e) {
-		ai_log_error("%s", e.what().c_str());
+		ai_log_error("%s", e.what());
 		return EXIT_FAILURE;
 	}
 #endif
