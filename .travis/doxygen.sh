@@ -26,6 +26,8 @@ if [ "$BUILD_TYPE" == "doxygen" ]; then
 	git add .
 	git config user.name "${COMMIT_USER}"
 	git config user.email "${COMMIT_EMAIL}"
+	# commit might be empty - don't error out on this
+	set +e
 	git commit -m "Automated documentation build for changeset ${CHANGESET}."
 	git push origin gh-pages
 	cd -
