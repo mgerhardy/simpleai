@@ -98,90 +98,91 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#ifdef WIN32</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;winsock2.h&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;ws2tcpip.h&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;ws2spi.h&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define SOCKET  int</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/select.h&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span>ai {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">class </span>IProtocolMessage;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="structai_1_1Client.html">   24</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structai_1_1Client.html">Client</a> {</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="structai_1_1Client.html">Client</a>(SOCKET _socket) :</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            socket(_socket), finished(<span class="keyword">false</span>), in(), out() {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    }</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    SOCKET socket;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">bool</span> finished;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    streamContainer in;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    streamContainer out;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;};</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classai_1_1INetworkListener.html">   34</a></span>&#160;<span class="keyword">class </span><a class="code" href="classai_1_1INetworkListener.html">INetworkListener</a> {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classai_1_1INetworkListener.html">INetworkListener</a>() {}</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onConnect(<a class="code" href="structai_1_1Client.html">Client</a>*) {}</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onDisconnect(<a class="code" href="structai_1_1Client.html">Client</a>*) {}</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;};</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classai_1_1Network.html">   42</a></span>&#160;<span class="keyword">class </span><a class="code" href="classai_1_1Network.html">Network</a> {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    uint16_t _port;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    std::string _hostname;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="comment">// the socket file descriptor</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    SOCKET _socketFD;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    fd_set _readFDSet;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    fd_set _writeFDSet;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    int64_t _time;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">typedef</span> std::list&lt;Client&gt; ClientSockets;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">typedef</span> ClientSockets::iterator ClientSocketsIter;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    ClientSockets _clientSockets;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    ClientSocketsIter closeClient (ClientSocketsIter&amp; i);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">typedef</span> std::list&lt;INetworkListener*&gt; Listeners;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    Listeners _listeners;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">bool</span> sendMessage(<a class="code" href="structai_1_1Client.html">Client</a>&amp; client);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="classai_1_1Network.html">Network</a>(uint16_t port = 10001, <span class="keyword">const</span> std::string&amp; hostname = <span class="stringliteral">&quot;0.0.0.0&quot;</span>);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classai_1_1Network.html">Network</a>();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">bool</span> start();</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">void</span> update(int64_t deltaTime);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span> addListener(<a class="code" href="classai_1_1INetworkListener.html">INetworkListener</a>* listener);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">void</span> removeListener(<a class="code" href="classai_1_1INetworkListener.html">INetworkListener</a>* listener);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">int</span> getConnectedClients() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1Network.html#a5882468e3e02e3767d75cfd070a49392">broadcast</a>(<span class="keyword">const</span> <a class="code" href="classai_1_1IProtocolMessage.html">IProtocolMessage</a>&amp; msg);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">bool</span> sendToClient(<a class="code" href="structai_1_1Client.html">Client</a>* client, <span class="keyword">const</span> <a class="code" href="classai_1_1IProtocolMessage.html">IProtocolMessage</a>&amp; msg);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;};</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> Network::getConnectedClients()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(_clientSockets.size());</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> Network::addListener(INetworkListener* listener) {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    _listeners.push_back(listener);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> Network::removeListener(INetworkListener* listener) {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    _listeners.remove(listener);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
-<div class="ttc" id="classai_1_1INetworkListener_html"><div class="ttname"><a href="classai_1_1INetworkListener.html">ai::INetworkListener</a></div><div class="ttdef"><b>Definition:</b> Network.h:34</div></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define NOMINMAX</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;winsock2.h&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;ws2tcpip.h&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;ws2spi.h&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define SOCKET  int</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/select.h&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">namespace </span>ai {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">class </span>IProtocolMessage;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="structai_1_1Client.html">   25</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structai_1_1Client.html">Client</a> {</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="structai_1_1Client.html">Client</a>(SOCKET _socket) :</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            socket(_socket), finished(<span class="keyword">false</span>), in(), out() {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    }</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    SOCKET socket;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">bool</span> finished;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    streamContainer in;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    streamContainer out;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;};</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classai_1_1INetworkListener.html">   35</a></span>&#160;<span class="keyword">class </span><a class="code" href="classai_1_1INetworkListener.html">INetworkListener</a> {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classai_1_1INetworkListener.html">INetworkListener</a>() {}</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onConnect(<a class="code" href="structai_1_1Client.html">Client</a>*) {}</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onDisconnect(<a class="code" href="structai_1_1Client.html">Client</a>*) {}</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;};</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classai_1_1Network.html">   43</a></span>&#160;<span class="keyword">class </span><a class="code" href="classai_1_1Network.html">Network</a> {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    uint16_t _port;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    std::string _hostname;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="comment">// the socket file descriptor</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    SOCKET _socketFD;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    fd_set _readFDSet;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    fd_set _writeFDSet;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    int64_t _time;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">typedef</span> std::list&lt;Client&gt; ClientSockets;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">typedef</span> ClientSockets::iterator ClientSocketsIter;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    ClientSockets _clientSockets;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    ClientSocketsIter closeClient (ClientSocketsIter&amp; i);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">typedef</span> std::list&lt;INetworkListener*&gt; Listeners;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    Listeners _listeners;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">bool</span> sendMessage(<a class="code" href="structai_1_1Client.html">Client</a>&amp; client);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <a class="code" href="classai_1_1Network.html">Network</a>(uint16_t port = 10001, <span class="keyword">const</span> std::string&amp; hostname = <span class="stringliteral">&quot;0.0.0.0&quot;</span>);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classai_1_1Network.html">Network</a>();</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">bool</span> start();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">void</span> update(int64_t deltaTime);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">void</span> addListener(<a class="code" href="classai_1_1INetworkListener.html">INetworkListener</a>* listener);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">void</span> removeListener(<a class="code" href="classai_1_1INetworkListener.html">INetworkListener</a>* listener);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">int</span> getConnectedClients() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1Network.html#a5882468e3e02e3767d75cfd070a49392">broadcast</a>(<span class="keyword">const</span> <a class="code" href="classai_1_1IProtocolMessage.html">IProtocolMessage</a>&amp; msg);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">bool</span> sendToClient(<a class="code" href="structai_1_1Client.html">Client</a>* client, <span class="keyword">const</span> <a class="code" href="classai_1_1IProtocolMessage.html">IProtocolMessage</a>&amp; msg);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;};</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> Network::getConnectedClients()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(_clientSockets.size());</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;}</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> Network::addListener(INetworkListener* listener) {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    _listeners.push_back(listener);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> Network::removeListener(INetworkListener* listener) {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    _listeners.remove(listener);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}</div>
+<div class="ttc" id="classai_1_1INetworkListener_html"><div class="ttname"><a href="classai_1_1INetworkListener.html">ai::INetworkListener</a></div><div class="ttdef"><b>Definition:</b> Network.h:35</div></div>
 <div class="ttc" id="classai_1_1IProtocolMessage_html"><div class="ttname"><a href="classai_1_1IProtocolMessage.html">ai::IProtocolMessage</a></div><div class="ttdoc">A protocol message is used for the serialization of the ai states for remote debugging. </div><div class="ttdef"><b>Definition:</b> IProtocolMessage.h:60</div></div>
-<div class="ttc" id="classai_1_1Network_html_a5882468e3e02e3767d75cfd070a49392"><div class="ttname"><a href="classai_1_1Network.html#a5882468e3e02e3767d75cfd070a49392">ai::Network::broadcast</a></div><div class="ttdeci">bool broadcast(const IProtocolMessage &amp;msg)</div><div class="ttdef"><b>Definition:</b> NetworkImpl.h:228</div></div>
+<div class="ttc" id="classai_1_1Network_html_a5882468e3e02e3767d75cfd070a49392"><div class="ttname"><a href="classai_1_1Network.html#a5882468e3e02e3767d75cfd070a49392">ai::Network::broadcast</a></div><div class="ttdeci">bool broadcast(const IProtocolMessage &amp;msg)</div><div class="ttdef"><b>Definition:</b> NetworkImpl.h:230</div></div>
 <div class="ttc" id="Thread_8h_html"><div class="ttname"><a href="Thread_8h.html">Thread.h</a></div></div>
-<div class="ttc" id="classai_1_1Network_html"><div class="ttname"><a href="classai_1_1Network.html">ai::Network</a></div><div class="ttdef"><b>Definition:</b> Network.h:42</div></div>
-<div class="ttc" id="structai_1_1Client_html"><div class="ttname"><a href="structai_1_1Client.html">ai::Client</a></div><div class="ttdef"><b>Definition:</b> Network.h:24</div></div>
+<div class="ttc" id="classai_1_1Network_html"><div class="ttname"><a href="classai_1_1Network.html">ai::Network</a></div><div class="ttdef"><b>Definition:</b> Network.h:43</div></div>
+<div class="ttc" id="structai_1_1Client_html"><div class="ttname"><a href="structai_1_1Client.html">ai::Client</a></div><div class="ttdef"><b>Definition:</b> Network.h:25</div></div>
 <div class="ttc" id="IProtocolHandler_8h_html"><div class="ttname"><a href="IProtocolHandler_8h.html">IProtocolHandler.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

@@ -162,8 +162,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            lua_pop(_s, lua_gettop(_s));</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordflow">return</span> TreeNodeStatus::EXCEPTION;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> state = luaL_checkinteger(_s, -1);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">if</span> (state &lt; 0 || state &gt;= (<span class="keywordtype">int</span>)TreeNodeStatus::MAX_TREENODESTATUS) {</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keyword">const</span> lua_Integer state = luaL_checkinteger(_s, -1);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">if</span> (state &lt; 0 || state &gt;= (lua_Integer)TreeNodeStatus::MAX_TREENODESTATUS) {</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <a class="code" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">ai_log_error</a>(<span class="stringliteral">&quot;LUA node: illegal tree node status returned: %i&quot;</span>, state);</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        }</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
