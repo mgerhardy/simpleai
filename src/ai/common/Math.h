@@ -35,7 +35,7 @@ inline glm::vec3 fromRadians(float radians) {
 	return glm::vec3(glm::cos(radians), 0.0f, glm::sin(radians));
 }
 
-inline double angle(const glm::vec3& v) {
+inline float angle(const glm::vec3& v) {
 	const float _angle = glm::atan(v.z, v.x);
 	return _angle;
 }

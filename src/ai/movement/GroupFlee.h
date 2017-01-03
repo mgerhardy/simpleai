@@ -36,7 +36,7 @@ public:
 			return MoveVector(target, 0.0f);
 		}
 		const glm::vec3& v = glm::normalize(ai->getCharacter()->getPosition() - target);
-		const double orientation = angle(v);
+		const float orientation = angle(v);
 		const MoveVector d(v * speed, orientation);
 		return d;
 	}
