@@ -9,11 +9,11 @@ public:
 			ai::ICharacterPtr e(new TestEntity(id));
 			ai::AIPtr ai(new ai::AI(ai::TreeNodePtr()));
 			ai->setCharacter(e);
-			ai::Entry* entry = mgr.addAggro(id, i);
-			entry->setReduceByValue(i);
+			ai::Entry* entry = mgr.addAggro(id, (float)i);
+			entry->setReduceByValue((float)i);
 		}
 		const ai::EntryPtr& entry = mgr.getHighestEntry();
-		ASSERT_TRUE(entry) << "Highest entry not set but aggro was added";
+		ASSERT_TRUE((bool)entry) << "Highest entry not set but aggro was added";
 		ASSERT_EQ(max, entry->getCharacterId())<< "Highest entry not what it should be. " << printAggroList(mgr);
 		mgr.update(1000);
 		ASSERT_EQ(0u, mgr.getEntries().size());
@@ -29,7 +29,7 @@ TEST_F(AggroTest, testAggroMgr) {
 	ai->setCharacter(entity);
 	mgr.addAggro(id, 1.0f);
 	const ai::EntryPtr& entry = mgr.getHighestEntry();
-	ASSERT_TRUE(entry) << "Highest entry not set but aggro was added";
+	ASSERT_TRUE((bool)entry) << "Highest entry not set but aggro was added";
 	ASSERT_EQ(id, entry->getCharacterId())<< "Highest entry not what it should be";
 	mgr.addAggro(id, 1.0f);
 	ASSERT_EQ(1u, mgr.getEntries().size())<< "Aggrolist contains more entries than expected";
@@ -58,8 +58,8 @@ TEST_F(AggroTest, testAggroMgrDegradeValue) {
 	const float reduceBySecond = 0.1f;
 	ai::AggroMgr mgr;
 	const ai::CharacterId id = 1;
-	ai::ICharacterPtr entity(new TestEntity(id));
-	ai::AIPtr ai(new ai::AI(ai::TreeNodePtr()));
+	ai::ICharacterPtr entity = std::make_shared<TestEntity>(id);
+	ai::AIPtr ai = std::make_shared<ai::AI>(ai::TreeNodePtr());
 	ai->setCharacter(entity);
 	mgr.addAggro(id, expectedAggro);
 	const ai::EntryPtr& entry = mgr.getHighestEntry();

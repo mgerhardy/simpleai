@@ -24,5 +24,5 @@ TEST_F(GeneralTest, testMath) {
 	const glm::vec3& angle = ai::fromRadians(glm::pi<float>());
 	ASSERT_FLOAT_EQ(-1.0f, angle.x);
 	ASSERT_FLOAT_EQ(0.0f, angle.y);
-	ASSERT_FLOAT_EQ(glm::pi<float>(), glm::abs(ai::angle(angle)));
+	ASSERT_FLOAT_EQ(glm::pi<double>(), glm::abs(ai::angle(angle)));
 }

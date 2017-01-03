@@ -254,7 +254,7 @@ int main(int argc, char **argv) {
 	const int amount = std::stoi(getOptParam(b, e, "-amount", "10"));
 	const short port = static_cast<short>(std::stoi(getOptParam(b, e, "-port", "10001")));
 	const std::string& filename = getOptParam(b, e, "-file");
-	const std::string& interface = getOptParam(b, e, "-interface", "0.0.0.0");
+	const std::string& netInterface = getOptParam(b, e, "-interface", "0.0.0.0");
 
 #ifdef AI_PROFILER
 	const std::string profilerOutput = getOptParam(b, e, "-profilerOutput", "simpleai-run.prof");
@@ -275,13 +275,13 @@ int main(int argc, char **argv) {
 	ai_log("spawn %i maps with seed %i", mapAmount, seed);
 	ai_log("automatic respawn: %s", (autospawn ? "true" : "false"));
 
-	ai::Server server(loader, port, interface);
+	ai::Server server(loader, port, netInterface);
 	if (!server.start()) {
 		ai_log_error("Could not start the server on port %i", port);
 		return EXIT_FAILURE;
 	}
 
-	ai_log("Started server on %s:%i", interface.c_str(), port);
+	ai_log("Started server on %s:%i", netInterface.c_str(), port);
 
 	std::vector<ai::example::GameMap*> maps;
 	for (int i = 1; i <= mapAmount; ++i) {

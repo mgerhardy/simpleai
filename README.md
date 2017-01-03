@@ -11,3 +11,8 @@ It's called simpleiai-run.
 
 The remote debugger network protocol can be inspected in wireshark with the included dissector
 lua script.
+
+The project is known to compile with:
+* clang 4.x
+* gcc 6.x
+* msvc 2015

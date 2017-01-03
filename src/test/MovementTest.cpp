@@ -15,7 +15,7 @@ TEST_F(MovementTest, testFlee) {
 	entity->setPosition(glm::vec3(-1, 0, 0));
 	const ai::MoveVector& mvLeft = flee.execute(ai, _speed);
 	EXPECT_EQ(glm::vec3(-_speed, 0.0f, 0.0f), mvLeft.getVector()) << ::testing::PrintToString(mvLeft.getVector());
-	EXPECT_FLOAT_EQ(M_PI, mvLeft.getOrientation(1.0f));
+	EXPECT_FLOAT_EQ(glm::pi<float>(), mvLeft.getOrientation(1.0f));
 
 	// flee to the right (positive x)
 	entity->setPosition(glm::vec3(1, 0, 0));
@@ -27,13 +27,13 @@ TEST_F(MovementTest, testFlee) {
 	entity->setPosition(glm::vec3(0, 0, 1));
 	const ai::MoveVector& mvPosZ = flee.execute(ai, _speed);
 	EXPECT_EQ(glm::vec3(0.0f, 0.0f, _speed), mvPosZ.getVector()) << ::testing::PrintToString(mvPosZ.getVector());
-	EXPECT_FLOAT_EQ(M_PI_2, mvPosZ.getOrientation(1.0f));
+	EXPECT_FLOAT_EQ(glm::half_pi<float>(), mvPosZ.getOrientation(1.0f));
 
 	// flee into negative z
 	entity->setPosition(glm::vec3(0, 0, -1));
 	const ai::MoveVector& mvNegZ = flee.execute(ai, _speed);
 	EXPECT_EQ(glm::vec3(0.0f, 0.0f, -_speed), mvNegZ.getVector()) << ::testing::PrintToString(mvNegZ.getVector());
-	EXPECT_FLOAT_EQ(M_PI_2 + M_PI, mvNegZ.getOrientation(1.0f));
+	EXPECT_FLOAT_EQ(glm::half_pi<float>() + glm::pi<float>(), mvNegZ.getOrientation(1.0f));
 }
 
 TEST_F(MovementTest, testWanderWithoutOrientationChange) {
@@ -97,7 +97,7 @@ TEST_F(MovementTest, testWeightedSteering) {
 
 	ai::movement::WeightedSteering w(s);
 	const ai::MoveVector& mv = w.execute(ai, 100.0f);
-	EXPECT_NEAR((M_PI * 0.8f) + (0.0f * 0.2f), mv.getOrientation(1.0f), 0.00001f);
+	EXPECT_NEAR((glm::pi<float>() * 0.8f) + (0.0f * 0.2f), mv.getOrientation(1.0f), 0.00001f);
 	const glm::vec3 result = glm::vec3(-_speed, 0.0f, 0.0f) * 0.8f + glm::vec3(_speed, 0.0f, 0.0f) * 0.2f;
 	EXPECT_EQ(result, mv.getVector());
 }

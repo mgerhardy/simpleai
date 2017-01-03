@@ -2,7 +2,9 @@
 #include <string>
 #include <fstream>
 #include <streambuf>
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 
 class LUAAIRegistryTest: public TestSuite {
 protected:
