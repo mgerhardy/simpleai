@@ -102,13 +102,13 @@ TEST_F(MessageTest, testAIStateMessage) {
 }
 
 TEST_F(MessageTest, testIProtocolMessageStep) {
-	ai::IProtocolMessage m(ai::PROTO_STEP);
+	ai::AIStepMessage m(1L);
 	ai::IProtocolMessage* d = serializeDeserialize(m);
 	ASSERT_EQ(m.getId(), d->getId());
 }
 
 TEST_F(MessageTest, testIProtocolMessageReset) {
-	ai::IProtocolMessage m(ai::PROTO_RESET);
+	ai::AIResetMessage m;
 	ai::IProtocolMessage* d = serializeDeserialize(m);
 	ASSERT_EQ(m.getId(), d->getId());
 }
