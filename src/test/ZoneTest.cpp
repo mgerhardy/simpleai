@@ -1,6 +1,19 @@
 #include "ZoneTest.h"
 
 class ZoneTest: public TestSuite {
+protected:
+	void massAdd(int n) {
+		ai::Zone zone("test1");
+		ai::TreeNodePtr root = std::make_shared<ai::PrioritySelector>("test", "", ai::True::get());
+		for (int i = 0; i < n; ++i) {
+			ai::ICharacterPtr character = std::make_shared<TestEntity>(i);
+			ai::AIPtr ai = std::make_shared<ai::AI>(root);
+			ai->setCharacter(character);
+			ASSERT_TRUE(zone.addAI(ai)) << "Could not add ai to the zone";
+		}
+		zone.update(0l);
+		ASSERT_EQ(n, (int)zone.size());
+	}
 };
 
 TEST_F(ZoneTest, testChanges) {
@@ -29,16 +42,26 @@ TEST_F(ZoneTest, testChanges) {
 	ASSERT_TRUE(zone.removeAI(ai2)) << "Could not remove ai from zone";
 }
 
+TEST_F(ZoneTest, testMassAdd10) {
+	massAdd(10);
+}
+
+TEST_F(ZoneTest, testMassAdd100) {
+	massAdd(100);
+}
+
+TEST_F(ZoneTest, testMassAdd1000) {
+	massAdd(1000);
+}
+
+TEST_F(ZoneTest, testMassAdd10000) {
+	massAdd(10000);
+}
+
+TEST_F(ZoneTest, testMassAdd100000) {
+	massAdd(100000);
+}
+
 TEST_F(ZoneTest, testMassAdd1000000) {
-	ai::Zone zone("test1");
-	ai::TreeNodePtr root = std::make_shared<ai::PrioritySelector>("test", "", ai::True::get());
-	const int n = 1000000;
-	for (int i = 0; i < n; ++i) {
-		ai::ICharacterPtr character = std::make_shared<TestEntity>(i);
-		ai::AIPtr ai = std::make_shared<ai::AI>(root);
-		ai->setCharacter(character);
-		ASSERT_TRUE(zone.addAI(ai)) << "Could not add ai to the zone";
-	}
-	zone.update(0l);
-	ASSERT_EQ(n, (int)zone.size());
+	massAdd(1000000);
 }
