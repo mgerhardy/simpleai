@@ -5,9 +5,26 @@ protected:
 	void massAdd(int n) {
 		ai::Zone zone("test1");
 		ai::TreeNodePtr root = std::make_shared<ai::PrioritySelector>("test", "", ai::True::get());
+		std::vector<ai::AIPtr> v(n);
 		for (int i = 0; i < n; ++i) {
 			ai::ICharacterPtr character = std::make_shared<TestEntity>(i);
 			ai::AIPtr ai = std::make_shared<ai::AI>(root);
+			ai->setPause(true);
+			ai->setCharacter(character);
+			v.push_back(ai);
+		}
+		ASSERT_TRUE(zone.addAIs(v)) << "Could not add ai to the zone";
+		zone.update(0l);
+		ASSERT_EQ(n, (int)zone.size());
+	}
+
+	void singleAdd(int n) {
+		ai::Zone zone("test1");
+		ai::TreeNodePtr root = std::make_shared<ai::PrioritySelector>("test", "", ai::True::get());
+		for (int i = 0; i < n; ++i) {
+			ai::ICharacterPtr character = std::make_shared<TestEntity>(i);
+			ai::AIPtr ai = std::make_shared<ai::AI>(root);
+			ai->setPause(true);
 			ai->setCharacter(character);
 			ASSERT_TRUE(zone.addAI(ai)) << "Could not add ai to the zone";
 		}
@@ -62,6 +79,22 @@ TEST_F(ZoneTest, testMassAdd100000) {
 	massAdd(100000);
 }
 
-TEST_F(ZoneTest, testMassAdd1000000) {
-	massAdd(1000000);
+TEST_F(ZoneTest, testSingleAdd10) {
+	singleAdd(10);
+}
+
+TEST_F(ZoneTest, testSingleAdd100) {
+	singleAdd(100);
+}
+
+TEST_F(ZoneTest, testSingleAdd1000) {
+	singleAdd(1000);
+}
+
+TEST_F(ZoneTest, testSingleAdd10000) {
+	singleAdd(10000);
+}
+
+TEST_F(ZoneTest, testSingleAdd100000) {
+	singleAdd(100000);
 }
