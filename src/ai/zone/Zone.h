@@ -414,19 +414,28 @@ inline bool Zone::removeAI(const AIPtr& ai) {
 
 inline void Zone::update(int64_t dt) {
 	{
-		ScopedWriteLock scopedLock(_scheduleLock);
-		for (const AIPtr& ai : _scheduledAdd) {
+		AIScheduleList scheduledRemove;
+		AIScheduleList scheduledAdd;
+		CharacterIdList scheduledDestroy;
+		{
+			ScopedWriteLock scopedLock(_scheduleLock);
+			scheduledAdd = _scheduledAdd;
+			scheduledRemove = _scheduledRemove;
+			scheduledDestroy = _scheduledDestroy;
+			_scheduledAdd.clear();
+			_scheduledRemove.clear();
+			_scheduledDestroy.clear();
+		}
+		ScopedWriteLock scopedLock(_lock);
+		for (const AIPtr& ai : scheduledAdd) {
 			doAddAI(ai);
 		}
-		_scheduledAdd.clear();
-		for (const AIPtr& ai : _scheduledRemove) {
+		for (const AIPtr& ai : scheduledRemove) {
 			doRemoveAI(ai);
 		}
-		_scheduledRemove.clear();
-		for (auto id : _scheduledDestroy) {
+		for (auto id : scheduledDestroy) {
 			doDestroyAI(id);
 		}
-		_scheduledDestroy.clear();
 	}
 
 	auto func = [&] (const AIPtr& ai) {
