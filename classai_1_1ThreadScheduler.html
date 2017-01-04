@@ -102,16 +102,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a86cc5efc3aacbb4272239c8cc717e2e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1ThreadScheduler.html#a86cc5efc3aacbb4272239c8cc717e2e9">~ThreadScheduler</a> ()</td></tr>
 <tr class="separator:a86cc5efc3aacbb4272239c8cc717e2e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96757b6a04806afefc6788f0a9702498"><td class="memTemplParams" colspan="2"><a class="anchor" id="a96757b6a04806afefc6788f0a9702498"></a>
-template&lt;class F , class... Args&gt; </td></tr>
-<tr class="memitem:a96757b6a04806afefc6788f0a9702498"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>schedule</b> (const std::chrono::milliseconds &amp;delay, F &amp;&amp;f, Args &amp;&amp;...args)</td></tr>
-<tr class="separator:a96757b6a04806afefc6788f0a9702498"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8be6b08b9f7101bb0ae57b925b5edcdd"><td class="memTemplParams" colspan="2">template&lt;class F , class... Args&gt; </td></tr>
-<tr class="memitem:a8be6b08b9f7101bb0ae57b925b5edcdd"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classai_1_1ThreadScheduler.html#a8be6b08b9f7101bb0ae57b925b5edcdd">scheduleAtFixedRate</a> (const std::chrono::milliseconds &amp;initialDelay, const std::chrono::milliseconds &amp;delay, F &amp;&amp;f, Args &amp;&amp;...args)</td></tr>
-<tr class="separator:a8be6b08b9f7101bb0ae57b925b5edcdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57f7d3ef6e5b17bcb4511140e487ec08"><td class="memTemplParams" colspan="2">template&lt;class F , class... Args&gt; </td></tr>
+<tr class="memitem:a57f7d3ef6e5b17bcb4511140e487ec08"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classai_1_1ThreadScheduler.html#a57f7d3ef6e5b17bcb4511140e487ec08">schedule</a> (const std::chrono::milliseconds &amp;delay, F &amp;&amp;f, Args &amp;&amp;...args)</td></tr>
+<tr class="memdesc:a57f7d3ef6e5b17bcb4511140e487ec08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the given functor once after the given delay has passed.  <a href="#a57f7d3ef6e5b17bcb4511140e487ec08">More...</a><br/></td></tr>
+<tr class="separator:a57f7d3ef6e5b17bcb4511140e487ec08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57a92f3b0f55c1eecdee884af873e012"><td class="memTemplParams" colspan="2">template&lt;class F , class... Args&gt; </td></tr>
+<tr class="memitem:a57a92f3b0f55c1eecdee884af873e012"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classai_1_1ThreadScheduler.html#a57a92f3b0f55c1eecdee884af873e012">scheduleAtFixedRate</a> (const std::chrono::milliseconds &amp;initialDelay, const std::chrono::milliseconds &amp;delay, F &amp;&amp;f, Args &amp;&amp;...args)</td></tr>
+<tr class="memdesc:a57a92f3b0f55c1eecdee884af873e012"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schedules a task for continuous execution.  <a href="#a57a92f3b0f55c1eecdee884af873e012">More...</a><br/></td></tr>
+<tr class="separator:a57a92f3b0f55c1eecdee884af873e012"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7b0109435185c29614b5512188020ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1ThreadScheduler.html#ae7b0109435185c29614b5512188020ee">cancel</a> (int timerId)</td></tr>
+<tr class="memdesc:ae7b0109435185c29614b5512188020ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels the given timer.  <a href="#ae7b0109435185c29614b5512188020ee">More...</a><br/></td></tr>
+<tr class="separator:ae7b0109435185c29614b5512188020ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Schedules tasks that executed with a fixed delay between their executions. </p>
+<div class="textblock"><p>Schedules tasks that are executed with a fixed delay between their executions and/or with a delay before their initial execution.</p>
+<dl class="section note"><dt>Note</dt><dd>There is a single thread that checks for scheduled tasks </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a86cc5efc3aacbb4272239c8cc717e2e9"></a>
 <div class="memitem">
@@ -138,7 +143,40 @@ template&lt;class F , class... Args&gt; </td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a8be6b08b9f7101bb0ae57b925b5edcdd"></a>
+<a class="anchor" id="ae7b0109435185c29614b5512188020ee"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ai::ThreadScheduler::cancel </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>timerId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cancels the given timer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">timerId</td><td>The timer id returned by <a class="el" href="classai_1_1ThreadScheduler.html#a57f7d3ef6e5b17bcb4511140e487ec08" title="Executes the given functor once after the given delay has passed. ">schedule()</a> or <a class="el" href="classai_1_1ThreadScheduler.html#a57a92f3b0f55c1eecdee884af873e012" title="Schedules a task for continuous execution. ">scheduleAtFixedRate()</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the timer was canceled, <code>false</code> otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a57f7d3ef6e5b17bcb4511140e487ec08"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -148,7 +186,59 @@ template&lt;class F , class... Args&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void ai::ThreadScheduler::scheduleAtFixedRate </td>
+          <td class="memname">int ai::ThreadScheduler::schedule </td>
+          <td>(</td>
+          <td class="paramtype">const std::chrono::milliseconds &amp;&#160;</td>
+          <td class="paramname"><em>delay</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">F &amp;&amp;&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Executes the given functor once after the given delay has passed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>The task to execute </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">delay</td><td>The period in milliseconds that must have been passed for the execution </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The timer id </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a57a92f3b0f55c1eecdee884af873e012"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class F , class... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ai::ThreadScheduler::scheduleAtFixedRate </td>
           <td>(</td>
           <td class="paramtype">const std::chrono::milliseconds &amp;&#160;</td>
           <td class="paramname"><em>initialDelay</em>, </td>
@@ -183,14 +273,17 @@ template&lt;class F , class... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Schedules a task for continuous execution. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>The task to execute </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">initialDelay</td><td>The milliseconds to delay the first execution </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">period</td><td>The period in milliseconds between successive executions </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">delay</td><td>The period in milliseconds between successive executions </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The timer id </dd></dl>
 
 </div>
 </div>
