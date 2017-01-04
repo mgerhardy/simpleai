@@ -48,14 +48,8 @@ std::vector<ai::AIPtr> ZoneTest::_v;
 
 TEST_F(ZoneTest, testChanges) {
 	ai::Zone zone("test1");
-	ai::TreeNodePtr root = std::make_shared<ai::PrioritySelector>("test", "", ai::True::get());
-	ai::ICharacterPtr character = std::make_shared<TestEntity>(1);
-	ai::AIPtr ai = std::make_shared<ai::AI>(root);
-	ai->setCharacter(character);
-
-	ai::ICharacterPtr character2 = std::make_shared<TestEntity>(2);
-	ai::AIPtr ai2 = std::make_shared<ai::AI>(root);
-	ai2->setCharacter(character2);
+	ai::AIPtr ai = _v[0];
+	ai::AIPtr ai2 = _v[1];
 
 	ASSERT_TRUE(zone.addAI(ai)) << "Could not add ai to the zone";
 	zone.setDebug(true);
