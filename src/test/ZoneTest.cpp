@@ -11,7 +11,6 @@ protected:
 		for (int i = 0; i < n; ++i) {
 			ai::ICharacterPtr character = std::make_shared<TestEntity>(i);
 			ai::AIPtr ai = std::make_shared<ai::AI>(root);
-			ai->setPause(true);
 			ai->setCharacter(character);
 			_v.push_back(ai);
 		}
