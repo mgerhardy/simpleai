@@ -1,15 +1,31 @@
 #include "AggroTest.h"
 
 class AggroTest: public TestSuite {
-public:
+protected:
+	static std::vector<ai::AIPtr> _v;
+
+	static void SetUpTestCase() {
+		ai::TreeNodePtr root = std::make_shared<ai::PrioritySelector>("test", "", ai::True::get());
+		const int n = 10000;
+		_v.reserve(n);
+		for (int i = 0; i < n; ++i) {
+			ai::ICharacterPtr character = std::make_shared<TestEntity>(i + 1);
+			ai::AIPtr ai = std::make_shared<ai::AI>(root);
+			ai->setPause(true);
+			ai->setCharacter(character);
+			_v.push_back(ai);
+		}
+	}
+
+	static void TearDownTestCase() {
+		_v.clear();
+	}
+
 	void doMassTest(int max) {
 		ai::AggroMgr mgr(max);
+		ASSERT_TRUE(max <= _v.size());
 		for (int i = 1; i <= max; ++i) {
-			const ai::CharacterId id = i;
-			ai::ICharacterPtr e(new TestEntity(id));
-			ai::AIPtr ai(new ai::AI(ai::TreeNodePtr()));
-			ai->setCharacter(e);
-			ai::Entry* entry = mgr.addAggro(id, (float)i);
+			ai::Entry* entry = mgr.addAggro(_v[i - 1]->getId(), (float)i);
 			entry->setReduceByValue((float)i);
 		}
 		const ai::EntryPtr& entry = mgr.getHighestEntry();
@@ -21,12 +37,12 @@ public:
 	}
 };
 
+std::vector<ai::AIPtr> AggroTest::_v;
+
 TEST_F(AggroTest, testAggroMgr) {
 	ai::AggroMgr mgr;
-	const ai::CharacterId id = 1;
-	ai::ICharacterPtr entity(new TestEntity(id));
-	ai::AIPtr ai(new ai::AI(ai::TreeNodePtr()));
-	ai->setCharacter(entity);
+	ai::AIPtr ai = _v[0];
+	ai::CharacterId id = ai->getId();
 	mgr.addAggro(id, 1.0f);
 	const ai::EntryPtr& entry = mgr.getHighestEntry();
 	ASSERT_TRUE((bool)entry) << "Highest entry not set but aggro was added";
@@ -57,10 +73,7 @@ TEST_F(AggroTest, testAggroMgrDegradeValue) {
 	const int seconds = 2;
 	const float reduceBySecond = 0.1f;
 	ai::AggroMgr mgr;
-	const ai::CharacterId id = 1;
-	ai::ICharacterPtr entity = std::make_shared<TestEntity>(id);
-	ai::AIPtr ai = std::make_shared<ai::AI>(ai::TreeNodePtr());
-	ai->setCharacter(entity);
+	ai::CharacterId id = _v[0]->getId();
 	mgr.addAggro(id, expectedAggro);
 	const ai::EntryPtr& entry = mgr.getHighestEntry();
 	entry->setReduceByValue(reduceBySecond);
