@@ -31,7 +31,7 @@ artifacts:
     path: simpleai-run.exe
 
 test_script:
-  - cmd: simpleai-tests --gtest_output=xml:tests.xml
+  - cmd: simpleai-tests --gtest_output=xml:tests.xml --gtest_filter=-ZoneTest*
 
 on_finish:
   - ps: (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\tests.xml))
