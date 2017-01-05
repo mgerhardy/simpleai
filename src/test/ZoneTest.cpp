@@ -23,7 +23,7 @@ protected:
 	void massAdd(int n) {
 		ai::Zone zone("test1");
 		std::vector<ai::AIPtr> v(n);
-		ASSERT_TRUE(n <= _v.size());
+		ASSERT_LE(n, (int)_v.size());
 		for (int i = 0; i < n; ++i) {
 			v.push_back(_v[i]);
 		}
@@ -34,7 +34,7 @@ protected:
 
 	void singleAdd(int n) {
 		ai::Zone zone("test1");
-		ASSERT_TRUE(n <= _v.size());
+		ASSERT_LE(n, (int)_v.size());
 		for (int i = 0; i < n; ++i) {
 			ASSERT_TRUE(zone.addAI(_v[i])) << "Could not add ai to the zone";
 		}
