@@ -142,8 +142,8 @@ public:
 		return LUAType(_state, name);
 	}
 
-	void setError (const std::string& error) {
-		_error = error;
+	void setError (const std::string& errorStr) {
+		_error = errorStr;
 	}
 
 	const std::string& error () const {

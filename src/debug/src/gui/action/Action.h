@@ -14,11 +14,11 @@ namespace debug {
 class Action: public QAction {
 Q_OBJECT
 protected:
-	Action(const QString& title, QObject* parent = nullptr) :
-			QAction(title, parent) {
+	Action(const QString& title, QObject* parentObj = nullptr) :
+			QAction(title, parentObj) {
 	}
-	Action(QObject* parent = nullptr) :
-			QAction(parent) {
+	Action(QObject* parentObj = nullptr) :
+			QAction(parentObj) {
 	}
 
 	// embedd stuff like e.g. a color dialog into a menu
