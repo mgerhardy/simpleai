@@ -93,8 +93,8 @@ public:
 		lua_State* _s;
 		std::string _type;
 	public:
-		LUATreeNodeFactory(lua_State* s, const std::string& type) :
-				_s(s), _type(type) {
+		LUATreeNodeFactory(lua_State* s, const std::string& typeStr) :
+				_s(s), _type(typeStr) {
 		}
 
 		inline const std::string& type() const {

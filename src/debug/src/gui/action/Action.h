@@ -26,11 +26,11 @@ protected:
 		QWidgetAction* action = new QWidgetAction(nullptr);
 		action->setDefaultWidget(dialog);
 
-		QMenu* menu = new QMenu();
-		menu->addAction(action);
-		connect(menu, SIGNAL(aboutToShow()), dialog, SLOT(show()));
-		connect(dialog, SIGNAL(finished(int)), menu, SLOT(hide()));
-		setMenu(menu);
+		QMenu* actionMenu = new QMenu();
+		actionMenu->addAction(action);
+		connect(actionMenu, SIGNAL(aboutToShow()), dialog, SLOT(show()));
+		connect(dialog, SIGNAL(finished(int)), actionMenu, SLOT(hide()));
+		setMenu(actionMenu);
 	}
 };
 
