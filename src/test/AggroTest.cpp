@@ -23,7 +23,7 @@ protected:
 
 	void doMassTest(int max) {
 		ai::AggroMgr mgr(max);
-		ASSERT_TRUE(max <= _v.size());
+		ASSERT_LE(max, (int)_v.size());
 		for (int i = 1; i <= max; ++i) {
 			ai::Entry* entry = mgr.addAggro(_v[i - 1]->getId(), (float)i);
 			entry->setReduceByValue((float)i);
