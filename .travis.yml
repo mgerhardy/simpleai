@@ -1,6 +1,6 @@
 language: cpp
 
-sudo: required
+sudo: false
 dist: trusty
 
 compiler:
@@ -42,13 +42,14 @@ addons:
     packages:
     - doxygen
     - graphviz
+    - qt5-default
+    - qtbase5-dev
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_9796cc8955c8_key -iv $encrypted_9796cc8955c8_iv
   -in .travis/travisci_rsa.enc -out .travis/travisci_rsa -d
 - chmod 0600 .travis/travisci_rsa
 - cp .travis/travisci_rsa ~/.ssh/id_rsa
-- source .travis/setup.sh
 
 script:
 - ".travis/configure.sh"
@@ -59,3 +60,4 @@ notifications:
   email: true
 
 cache: apt
+cache: ccache
