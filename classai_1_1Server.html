@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>The server can serialize the state of the AI and broadcast it to all connected clients.  
+<p>The server can serialize the state of the <a class="el" href="classai_1_1AI.html">AI</a> and broadcast it to all connected clients.  
  <a href="classai_1_1Server.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Server_8h_source.html">Server.h</a>&gt;</code></p>
@@ -150,19 +150,19 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:a063afb38021e6088dde131810ad3bfae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a381535947fed6c300b2a1bbba3617bae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a381535947fed6c300b2a1bbba3617bae"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1Server.html#a381535947fed6c300b2a1bbba3617bae">reset</a> ()</td></tr>
-<tr class="memdesc:a381535947fed6c300b2a1bbba3617bae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the AI states. <br/></td></tr>
+<tr class="memdesc:a381535947fed6c300b2a1bbba3617bae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the <a class="el" href="classai_1_1AI.html">AI</a> states. <br/></td></tr>
 <tr class="separator:a381535947fed6c300b2a1bbba3617bae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a407a9b6dbbd8bfd2eb7f2fc164163e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a407a9b6dbbd8bfd2eb7f2fc164163e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1Server.html#a5a407a9b6dbbd8bfd2eb7f2fc164163e">select</a> (const ClientId &amp;clientId, const CharacterId &amp;id)</td></tr>
-<tr class="memdesc:a5a407a9b6dbbd8bfd2eb7f2fc164163e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select a particular character (resp. AI instance) and send detail information to all the connected clients for this entity. <br/></td></tr>
+<tr class="memdesc:a5a407a9b6dbbd8bfd2eb7f2fc164163e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select a particular character (resp. <a class="el" href="classai_1_1AI.html">AI</a> instance) and send detail information to all the connected clients for this entity. <br/></td></tr>
 <tr class="separator:a5a407a9b6dbbd8bfd2eb7f2fc164163e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74c72e7b33bdf519a2d4118eb8b9cd4b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74c72e7b33bdf519a2d4118eb8b9cd4b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1Server.html#a74c72e7b33bdf519a2d4118eb8b9cd4b">pause</a> (const ClientId &amp;clientId, bool pause)</td></tr>
-<tr class="memdesc:a74c72e7b33bdf519a2d4118eb8b9cd4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will pause/unpause the execution of the behaviour trees for all watched AI instances. <br/></td></tr>
+<tr class="memdesc:a74c72e7b33bdf519a2d4118eb8b9cd4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will pause/unpause the execution of the behaviour trees for all watched <a class="el" href="classai_1_1AI.html">AI</a> instances. <br/></td></tr>
 <tr class="separator:a74c72e7b33bdf519a2d4118eb8b9cd4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8bd9054e936dc0ead1cd2b160811588f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8bd9054e936dc0ead1cd2b160811588f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1Server.html#a8bd9054e936dc0ead1cd2b160811588f">step</a> (int64_t stepMillis=1L)</td></tr>
-<tr class="memdesc:a8bd9054e936dc0ead1cd2b160811588f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs one step of the AI in pause mode. <br/></td></tr>
+<tr class="memdesc:a8bd9054e936dc0ead1cd2b160811588f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs one step of the <a class="el" href="classai_1_1AI.html">AI</a> in pause mode. <br/></td></tr>
 <tr class="separator:a8bd9054e936dc0ead1cd2b160811588f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ce1b388c6569d4e4eec39bcd787fc15"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ce1b388c6569d4e4eec39bcd787fc15"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1Server.html#a4ce1b388c6569d4e4eec39bcd787fc15">update</a> (int64_t deltaTime)</td></tr>
@@ -295,9 +295,9 @@ std::vector&lt; <a class="el" href="structai_1_1Server_1_1Event.html">Event</a> 
 <tr class="separator:acc15353b76f5ac076c1227bb7e1ebcae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The server can serialize the state of the AI and broadcast it to all connected clients. </p>
-<p>If you start a server, you can add the AI instances to it by calling addZone(). If you do so, make sure to remove it when you remove that particular Zone instance from your world. You should not do that from different threads. The server should only be managed from one thread.</p>
-<p>The server will broadcast the world state - that is: It will send out an <a class="el" href="classai_1_1AIStateMessage.html">AIStateMessage</a> to all connected clients. If someone selected a particular AI instance by sending <a class="el" href="classai_1_1AISelectMessage.html">AISelectMessage</a> to the server, it will also broadcast an <a class="el" href="classai_1_1AICharacterDetailsMessage.html">AICharacterDetailsMessage</a> to all connected clients.</p>
+<div class="textblock"><p>The server can serialize the state of the <a class="el" href="classai_1_1AI.html">AI</a> and broadcast it to all connected clients. </p>
+<p>If you start a server, you can add the <a class="el" href="classai_1_1AI.html">AI</a> instances to it by calling addZone(). If you do so, make sure to remove it when you remove that particular Zone instance from your world. You should not do that from different threads. The server should only be managed from one thread.</p>
+<p>The server will broadcast the world state - that is: It will send out an <a class="el" href="classai_1_1AIStateMessage.html">AIStateMessage</a> to all connected clients. If someone selected a particular <a class="el" href="classai_1_1AI.html">AI</a> instance by sending <a class="el" href="classai_1_1AISelectMessage.html">AISelectMessage</a> to the server, it will also broadcast an <a class="el" href="classai_1_1AICharacterDetailsMessage.html">AICharacterDetailsMessage</a> to all connected clients.</p>
 <p>You can only debug one Zone at the same time. The debugging session is shared between all connected clients. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a6f1a563cd200cb1f9af6510b970abdb4"></a>

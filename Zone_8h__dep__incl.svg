@@ -46,7 +46,7 @@ if (edges && edges.length) {
         </defs>
 
 <script type="text/javascript">
-var viewWidth = 2041;
+var viewWidth = 2469;
 var viewHeight = 788;
 var sectionId = 'dynsection-1';
 </script>
@@ -54,727 +54,757 @@ var sectionId = 'dynsection-1';
 <svg id="graph" class="graph">
 <g id="viewport">
 <title>/home/travis/build/mgerhardy/simpleai/src/ai/zone/Zone.h</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-784 2037,-784 2037,4 -4,4"/>
+<polygon fill="white" stroke="none" points="-4,4 -4,-784 2465,-784 2465,4 -4,4"/>
 <!-- Node1 -->
 <g id="node1" class="node"><title>Node1</title>
-<polygon fill="#bfbfbf" stroke="black" points="284,-738.5 284,-779.5 388,-779.5 388,-738.5 284,-738.5"/>
-<text text-anchor="start" x="292" y="-767.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="292" y="-756.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="336" y="-745.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/zone/Zone.h</text>
+<polygon fill="#bfbfbf" stroke="black" points="588,-738.5 588,-779.5 692,-779.5 692,-738.5 588,-738.5"/>
+<text text-anchor="start" x="596" y="-767.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="596" y="-756.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="640" y="-745.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/zone/Zone.h</text>
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
 <g id="a_node2"><a xlink:href="IsInGroup_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/conditions/IsInGroup.h">
-<polygon fill="white" stroke="black" points="74.5,-576.5 74.5,-617.5 219.5,-617.5 219.5,-576.5 74.5,-576.5"/>
-<text text-anchor="start" x="82.5" y="-605.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="82.5" y="-594.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="147" y="-583.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/conditions/IsInGroup.h</text>
+<polygon fill="white" stroke="black" points="28.5,-492.5 28.5,-533.5 173.5,-533.5 173.5,-492.5 28.5,-492.5"/>
+<text text-anchor="start" x="36.5" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="36.5" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="101" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/conditions/IsInGroup.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node2 -->
 <g id="edge1" class="edge"><title>Node1&#45;&gt;Node2</title>
-<path fill="none" stroke="midnightblue" d="M305.153,-731.886C267.294,-699.836 203.965,-646.224 170.069,-617.529"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="302.931,-734.591 312.825,-738.381 307.454,-729.248 302.931,-734.591"/>
+<path fill="none" stroke="midnightblue" d="M577.782,-739.137C546.552,-729.103 508.362,-715.967 475,-702 346.629,-648.256 201.032,-569.718 135.814,-533.554"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="577.072,-742.584 587.663,-742.283 579.196,-735.914 577.072,-742.584"/>
 </g>
 <!-- Node5 -->
 <g id="node5" class="node"><title>Node5</title>
 <g id="a_node5"><a xlink:href="Server_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/Server.h">
-<polygon fill="white" stroke="black" points="852.5,-240.5 852.5,-281.5 965.5,-281.5 965.5,-240.5 852.5,-240.5"/>
-<text text-anchor="start" x="860.5" y="-269.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="860.5" y="-258.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="909" y="-247.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/Server.h</text>
+<polygon fill="white" stroke="black" points="1176.5,-240.5 1176.5,-281.5 1289.5,-281.5 1289.5,-240.5 1176.5,-240.5"/>
+<text text-anchor="start" x="1184.5" y="-269.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1184.5" y="-258.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1233" y="-247.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/Server.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node5 -->
-<g id="edge75" class="edge"><title>Node1&#45;&gt;Node5</title>
-<path fill="none" stroke="midnightblue" d="M273.674,-752.136C186.309,-740.1 38,-704.051 38,-598 38,-598 38,-598 38,-434 38,-350.719 658.795,-285.465 852.187,-267.157"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="273.382,-755.628 283.751,-753.456 274.29,-748.687 273.382,-755.628"/>
+<g id="edge81" class="edge"><title>Node1&#45;&gt;Node5</title>
+<path fill="none" stroke="midnightblue" d="M674.014,-731.99C685.65,-722.779 698.6,-712.173 710,-702 789.021,-631.484 805.891,-610.628 879,-534 896.377,-515.787 898.28,-508.83 917,-492 1013.88,-404.901 1143.19,-319.075 1201.79,-281.606"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="671.521,-729.497 665.815,-738.424 675.842,-735.004 671.521,-729.497"/>
 </g>
 <!-- Node8 -->
 <g id="node8" class="node"><title>Node8</title>
 <g id="a_node8"><a xlink:href="SimpleAI_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/SimpleAI.h">
-<polygon fill="white" stroke="black" points="1432,-0.5 1432,-41.5 1536,-41.5 1536,-0.5 1432,-0.5"/>
-<text text-anchor="start" x="1440" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1440" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1484" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/SimpleAI.h</text>
+<polygon fill="white" stroke="black" points="1436,-0.5 1436,-41.5 1540,-41.5 1540,-0.5 1436,-0.5"/>
+<text text-anchor="start" x="1444" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1444" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1488" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/SimpleAI.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node8 -->
-<g id="edge76" class="edge"><title>Node1&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M273.88,-751.382C203.307,-742.845 93.5681,-726.16 60,-702 16.6887,-670.827 0,-651.363 0,-598 0,-598 0,-598 0,-176 0,-118.634 32.3717,-103.008 84,-78 206.937,-18.4516 1192,-20.2891 1431.61,-21.6339"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="273.652,-754.88 283.995,-752.583 274.477,-747.929 273.652,-754.88"/>
+<g id="edge82" class="edge"><title>Node1&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M577.677,-755.086C416.788,-745.875 0,-710.57 0,-592 0,-592 0,-592 0,-176 0,-94.8721 76.6004,-102.311 154,-78 277.705,-39.1443 1204.23,-25.4308 1435.71,-22.5923"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="577.718,-758.594 587.897,-755.656 578.108,-751.605 577.718,-758.594"/>
 </g>
 <!-- Node18 -->
 <g id="node18" class="node"><title>Node18</title>
 <g id="a_node18"><a xlink:href="IsGroupLeader_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/conditions/IsGroupLeader.h">
-<polygon fill="white" stroke="black" points="238,-576.5 238,-617.5 404,-617.5 404,-576.5 238,-576.5"/>
-<text text-anchor="start" x="246" y="-605.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="246" y="-594.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="321" y="-583.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/conditions/IsGroupLeader.h</text>
+<polygon fill="white" stroke="black" points="192,-492.5 192,-533.5 358,-533.5 358,-492.5 192,-492.5"/>
+<text text-anchor="start" x="200" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="200" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="275" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/conditions/IsGroupLeader.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node18 -->
-<g id="edge28" class="edge"><title>Node1&#45;&gt;Node18</title>
-<path fill="none" stroke="midnightblue" d="M327.231,-728.443C325.099,-719.98 323.113,-710.692 322,-702 318.264,-672.806 318.88,-638.626 319.821,-617.645"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="323.892,-729.504 329.857,-738.261 330.655,-727.696 323.892,-729.504"/>
+<g id="edge30" class="edge"><title>Node1&#45;&gt;Node18</title>
+<path fill="none" stroke="midnightblue" d="M601.808,-732.558C587.442,-722.983 570.967,-711.996 556,-702 463.99,-640.551 355.127,-567.666 304.115,-533.502"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="600.185,-735.682 610.447,-738.315 604.067,-729.857 600.185,-735.682"/>
 </g>
 <!-- Node19 -->
 <g id="node19" class="node"><title>Node19</title>
 <g id="a_node19"><a xlink:href="IsCloseToGroup_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/conditions/IsCloseTo\lGroup.h">
-<polygon fill="white" stroke="black" points="422.5,-571 422.5,-623 561.5,-623 561.5,-571 422.5,-571"/>
-<text text-anchor="start" x="430.5" y="-611" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="430.5" y="-600" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="start" x="430.5" y="-589" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/conditions/IsCloseTo</text>
-<text text-anchor="middle" x="492" y="-578" font-family="Helvetica,sans-Serif" font-size="10.00">Group.h</text>
+<polygon fill="white" stroke="black" points="1080.5,-649 1080.5,-701 1219.5,-701 1219.5,-649 1080.5,-649"/>
+<text text-anchor="start" x="1088.5" y="-689" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1088.5" y="-678" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="start" x="1088.5" y="-667" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/conditions/IsCloseTo</text>
+<text text-anchor="middle" x="1150" y="-656" font-family="Helvetica,sans-Serif" font-size="10.00">Group.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node19 -->
-<g id="edge30" class="edge"><title>Node1&#45;&gt;Node19</title>
-<path fill="none" stroke="midnightblue" d="M334.884,-728.115C335.617,-707.016 339.835,-679.195 355,-660 364.387,-648.119 393.396,-634.275 422.318,-622.687"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="331.384,-728.123 334.776,-738.16 338.384,-728.198 331.384,-728.123"/>
+<g id="edge33" class="edge"><title>Node1&#45;&gt;Node19</title>
+<path fill="none" stroke="midnightblue" d="M702.277,-747.987C797.856,-732.619 980.116,-703.315 1080.09,-687.24"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="701.5,-744.567 692.182,-749.61 702.611,-751.478 701.5,-744.567"/>
 </g>
 <!-- Node20 -->
 <g id="node20" class="node"><title>Node20</title>
 <g id="a_node20"><a xlink:href="SelectGroupLeader_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/filter/SelectGroupLeader.h">
-<polygon fill="white" stroke="black" points="364,-660.5 364,-701.5 524,-701.5 524,-660.5 364,-660.5"/>
-<text text-anchor="start" x="372" y="-689.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="372" y="-678.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="444" y="-667.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/filter/SelectGroupLeader.h</text>
+<polygon fill="white" stroke="black" points="376,-492.5 376,-533.5 536,-533.5 536,-492.5 376,-492.5"/>
+<text text-anchor="start" x="384" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="384" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="456" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/filter/SelectGroupLeader.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node20 -->
-<g id="edge32" class="edge"><title>Node1&#45;&gt;Node20</title>
-<path fill="none" stroke="midnightblue" d="M372.045,-732.635C386.466,-722.487 402.816,-710.982 416.282,-701.506"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="369.977,-729.811 363.813,-738.428 374.005,-735.535 369.977,-729.811"/>
+<g id="edge35" class="edge"><title>Node1&#45;&gt;Node20</title>
+<path fill="none" stroke="midnightblue" d="M619.16,-730.365C581.606,-680.564 503.45,-576.923 470.817,-533.648"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="616.438,-732.568 625.254,-738.445 622.027,-728.353 616.438,-732.568"/>
 </g>
 <!-- Node21 -->
 <g id="node21" class="node"><title>Node21</title>
 <g id="a_node21"><a xlink:href="SelectGroupMembers_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/filter/SelectGroupMembers.h">
-<polygon fill="white" stroke="black" points="542.5,-660.5 542.5,-701.5 713.5,-701.5 713.5,-660.5 542.5,-660.5"/>
-<text text-anchor="start" x="550.5" y="-689.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="550.5" y="-678.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="628" y="-667.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/filter/SelectGroupMembers.h</text>
+<polygon fill="white" stroke="black" points="554.5,-492.5 554.5,-533.5 725.5,-533.5 725.5,-492.5 554.5,-492.5"/>
+<text text-anchor="start" x="562.5" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="562.5" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="640" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/filter/SelectGroupMembers.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node21 -->
-<g id="edge34" class="edge"><title>Node1&#45;&gt;Node21</title>
-<path fill="none" stroke="midnightblue" d="M397.895,-741.89C443.175,-730.105 504.834,-714.057 552.929,-701.539"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="397,-738.507 388.204,-744.413 398.763,-745.281 397,-738.507"/>
+<g id="edge38" class="edge"><title>Node1&#45;&gt;Node21</title>
+<path fill="none" stroke="midnightblue" d="M640,-728.17C640,-677.579 640,-576.298 640,-533.648"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="636.5,-728.445 640,-738.445 643.5,-728.445 636.5,-728.445"/>
 </g>
 <!-- Node22 -->
 <g id="node22" class="node"><title>Node22</title>
 <g id="a_node22"><a xlink:href="SelectZone_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/filter/SelectZone.h">
-<polygon fill="white" stroke="black" points="732,-660.5 732,-701.5 858,-701.5 858,-660.5 732,-660.5"/>
-<text text-anchor="start" x="740" y="-689.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="740" y="-678.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="795" y="-667.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/filter/SelectZone.h</text>
+<polygon fill="white" stroke="black" points="744,-492.5 744,-533.5 870,-533.5 870,-492.5 744,-492.5"/>
+<text text-anchor="start" x="752" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="752" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="807" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/filter/SelectZone.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node22 -->
-<g id="edge36" class="edge"><title>Node1&#45;&gt;Node22</title>
-<path fill="none" stroke="midnightblue" d="M398.144,-751.376C474.768,-742.661 608.761,-725.632 722,-702 725.216,-701.329 728.5,-700.598 731.808,-699.826"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="397.722,-747.902 388.177,-752.5 398.506,-754.858 397.722,-747.902"/>
+<g id="edge41" class="edge"><title>Node1&#45;&gt;Node22</title>
+<path fill="none" stroke="midnightblue" d="M659.126,-730.055C693.292,-680.136 763.995,-576.834 793.552,-533.648"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="656.144,-728.216 653.384,-738.445 661.92,-732.169 656.144,-728.216"/>
 </g>
 <!-- Node23 -->
 <g id="node23" class="node"><title>Node23</title>
 <g id="a_node23"><a xlink:href="Steering_8h.html" target="_top" xlink:title="Defines some basic movement algorithms like Wandering, Seeking and Fleeing. ">
-<polygon fill="white" stroke="black" points="1204,-660.5 1204,-701.5 1344,-701.5 1344,-660.5 1204,-660.5"/>
-<text text-anchor="start" x="1212" y="-689.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1212" y="-678.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1274" y="-667.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/Steering.h</text>
+<polygon fill="white" stroke="black" points="1676,-654.5 1676,-695.5 1816,-695.5 1816,-654.5 1676,-654.5"/>
+<text text-anchor="start" x="1684" y="-683.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1684" y="-672.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1746" y="-661.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/Steering.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node23 -->
-<g id="edge38" class="edge"><title>Node1&#45;&gt;Node23</title>
-<path fill="none" stroke="midnightblue" d="M398.257,-752.956C566.139,-739.353 1027.39,-701.981 1203.97,-687.674"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="397.788,-749.482 388.103,-753.778 398.354,-756.459 397.788,-749.482"/>
+<g id="edge44" class="edge"><title>Node1&#45;&gt;Node23</title>
+<path fill="none" stroke="midnightblue" d="M702.416,-753.372C894.171,-739.156 1473.92,-696.173 1675.79,-681.206"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="701.944,-749.898 692.23,-754.128 702.462,-756.879 701.944,-749.898"/>
 </g>
 <!-- Node3 -->
 <g id="node3" class="node"><title>Node3</title>
 <g id="a_node3"><a xlink:href="AIRegistry_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/AIRegistry.h">
-<polygon fill="white" stroke="black" points="991,-414.5 991,-455.5 1095,-455.5 1095,-414.5 991,-414.5"/>
-<text text-anchor="start" x="999" y="-443.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="999" y="-432.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1043" y="-421.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/AIRegistry.h</text>
+<polygon fill="white" stroke="black" points="1428,-414.5 1428,-455.5 1532,-455.5 1532,-414.5 1428,-414.5"/>
+<text text-anchor="start" x="1436" y="-443.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1436" y="-432.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1480" y="-421.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/AIRegistry.h</text>
 </a>
 </g>
 </g>
 <!-- Node2&#45;&gt;Node3 -->
 <g id="edge2" class="edge"><title>Node2&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M197.919,-572.219C252.722,-547.759 343.073,-510.68 425,-492 630.87,-445.06 883.762,-437.171 990.996,-436.051"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="196.458,-569.038 188.773,-576.332 199.329,-575.423 196.458,-569.038"/>
+<path fill="none" stroke="midnightblue" d="M183.732,-492.095C449.471,-456.542 1219.69,-440.635 1427.73,-436.889"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="183.16,-488.641 173.733,-493.476 184.118,-495.575 183.16,-488.641"/>
+</g>
+<!-- Node2&#45;&gt;Node8 -->
+<g id="edge29" class="edge"><title>Node2&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M111.141,-482.511C121.161,-450.705 135,-398.381 135,-352 135,-352 135,-352 135,-176 135,-111.184 183.074,-102.697 243,-78 354.336,-32.115 1213.57,-23.6856 1435.71,-22.2676"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="107.793,-481.491 108.045,-492.083 114.453,-483.646 107.793,-481.491"/>
 </g>
 <!-- Node4 -->
 <g id="node4" class="node"><title>Node4</title>
 <g id="a_node4"><a xlink:href="ConditionParser_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/conditions/Condition\lParser.h">
-<polygon fill="white" stroke="black" points="975.5,-325 975.5,-377 1110.5,-377 1110.5,-325 975.5,-325"/>
-<text text-anchor="start" x="983.5" y="-365" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="983.5" y="-354" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="start" x="983.5" y="-343" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/conditions/Condition</text>
-<text text-anchor="middle" x="1043" y="-332" font-family="Helvetica,sans-Serif" font-size="10.00">Parser.h</text>
+<polygon fill="white" stroke="black" points="1412.5,-325 1412.5,-377 1547.5,-377 1547.5,-325 1412.5,-325"/>
+<text text-anchor="start" x="1420.5" y="-365" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1420.5" y="-354" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="start" x="1420.5" y="-343" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/conditions/Condition</text>
+<text text-anchor="middle" x="1480" y="-332" font-family="Helvetica,sans-Serif" font-size="10.00">Parser.h</text>
 </a>
 </g>
 </g>
 <!-- Node3&#45;&gt;Node4 -->
 <g id="edge3" class="edge"><title>Node3&#45;&gt;Node4</title>
-<path fill="none" stroke="midnightblue" d="M1043,-403.938C1043,-395.176 1043,-385.695 1043,-377.261"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1039.5,-404.15 1043,-414.15 1046.5,-404.15 1039.5,-404.15"/>
+<path fill="none" stroke="midnightblue" d="M1480,-403.938C1480,-395.176 1480,-385.695 1480,-377.261"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1476.5,-404.15 1480,-414.15 1483.5,-404.15 1476.5,-404.15"/>
 </g>
 <!-- Node3&#45;&gt;Node5 -->
-<g id="edge25" class="edge"><title>Node3&#45;&gt;Node5</title>
-<path fill="none" stroke="midnightblue" d="M992.061,-409.106C978.655,-400.684 965.127,-390.251 955,-378 931.12,-349.113 918.508,-306.294 912.84,-281.565"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="990.438,-412.214 1000.82,-414.349 994.035,-406.208 990.438,-412.214"/>
+<g id="edge26" class="edge"><title>Node3&#45;&gt;Node5</title>
+<path fill="none" stroke="midnightblue" d="M1443.43,-408.537C1393.71,-373.911 1305.83,-312.718 1261,-281.5"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1441.46,-411.427 1451.67,-414.269 1445.46,-405.683 1441.46,-411.427"/>
 </g>
 <!-- Node3&#45;&gt;Node8 -->
-<g id="edge26" class="edge"><title>Node3&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M1105.03,-430.528C1156.34,-425.206 1229.37,-411.782 1284,-378 1328.16,-350.689 1408.71,-243.896 1433,-198 1460.9,-145.279 1475.29,-75.3724 1480.99,-41.736"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1104.69,-427.044 1095.08,-431.488 1105.37,-434.012 1104.69,-427.044"/>
+<g id="edge27" class="edge"><title>Node3&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M1542.47,-429.066C1614.91,-422.078 1728.33,-406.814 1759,-378 1789.17,-349.657 1777.62,-329.047 1783,-288 1795.51,-192.556 1805.92,-137.184 1730,-78 1675.07,-35.1797 1593.14,-24.0995 1540.13,-21.7541"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1541.72,-425.621 1532.09,-430.038 1542.37,-432.59 1541.72,-425.621"/>
 </g>
 <!-- Node15 -->
 <g id="node15" class="node"><title>Node15</title>
 <g id="a_node15"><a xlink:href="LUATreeLoader_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/tree/loaders\l/lua/LUATreeLoader.h">
-<polygon fill="white" stroke="black" points="987,-235 987,-287 1099,-287 1099,-235 987,-235"/>
-<text text-anchor="start" x="995" y="-275" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="995" y="-264" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="start" x="995" y="-253" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/tree/loaders</text>
-<text text-anchor="middle" x="1043" y="-242" font-family="Helvetica,sans-Serif" font-size="10.00">/lua/LUATreeLoader.h</text>
+<polygon fill="white" stroke="black" points="1642,-235 1642,-287 1754,-287 1754,-235 1642,-235"/>
+<text text-anchor="start" x="1650" y="-275" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1650" y="-264" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="start" x="1650" y="-253" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/tree/loaders</text>
+<text text-anchor="middle" x="1698" y="-242" font-family="Helvetica,sans-Serif" font-size="10.00">/lua/LUATreeLoader.h</text>
 </a>
 </g>
 </g>
 <!-- Node3&#45;&gt;Node15 -->
-<g id="edge27" class="edge"><title>Node3&#45;&gt;Node15</title>
-<path fill="none" stroke="midnightblue" d="M993.513,-408.555C982.477,-400.38 972.216,-390.207 966,-378 955.109,-356.613 955.638,-345.648 966,-324 973.04,-309.293 985.458,-296.964 998.294,-287.272"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="991.825,-411.642 1002.05,-414.419 995.788,-405.872 991.825,-411.642"/>
+<g id="edge28" class="edge"><title>Node3&#45;&gt;Node15</title>
+<path fill="none" stroke="midnightblue" d="M1519.34,-408.555C1531.73,-399.64 1545.04,-389.069 1556,-378 1576.83,-356.967 1573.21,-344.04 1595,-324 1610.44,-309.801 1629.63,-297.195 1647.25,-287.12"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1517.12,-405.838 1510.95,-414.449 1521.15,-411.566 1517.12,-405.838"/>
 </g>
 <!-- Node17 -->
 <g id="node17" class="node"><title>Node17</title>
 <g id="a_node17"><a xlink:href="LUAAIRegistry_8h_source.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/LUAAIRegistry.h">
-<polygon fill="white" stroke="black" points="1353.5,-330.5 1353.5,-371.5 1474.5,-371.5 1474.5,-330.5 1353.5,-330.5"/>
-<text text-anchor="start" x="1361.5" y="-359.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1361.5" y="-348.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1414" y="-337.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/LUAAIRegistry.h</text>
+<polygon fill="white" stroke="black" points="1903.5,-330.5 1903.5,-371.5 2024.5,-371.5 2024.5,-330.5 1903.5,-330.5"/>
+<text text-anchor="start" x="1911.5" y="-359.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1911.5" y="-348.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1964" y="-337.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/LUAAIRegistry.h</text>
 </a>
 </g>
 </g>
 <!-- Node3&#45;&gt;Node17 -->
-<g id="edge24" class="edge"><title>Node3&#45;&gt;Node17</title>
-<path fill="none" stroke="midnightblue" d="M1105.24,-424.949C1165.55,-415.541 1259.34,-399.221 1339,-378 1346.06,-376.12 1353.41,-373.904 1360.63,-371.572"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1104.47,-421.527 1095.12,-426.512 1105.53,-428.445 1104.47,-421.527"/>
+<g id="edge25" class="edge"><title>Node3&#45;&gt;Node17</title>
+<path fill="none" stroke="midnightblue" d="M1542.17,-423.62C1609.07,-412.432 1718.59,-394.067 1813,-378 1842.76,-372.935 1875.82,-367.25 1903.39,-362.491"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1541.49,-420.184 1532.21,-425.285 1542.65,-427.088 1541.49,-420.184"/>
 </g>
 <!-- Node4&#45;&gt;Node5 -->
 <g id="edge4" class="edge"><title>Node4&#45;&gt;Node5</title>
-<path fill="none" stroke="midnightblue" d="M996.065,-319.177C977.068,-306.701 955.701,-292.669 938.889,-281.628"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="994.321,-322.219 1004.6,-324.783 998.164,-316.368 994.321,-322.219"/>
+<path fill="none" stroke="midnightblue" d="M1402.37,-322.343C1365.16,-309.085 1321.47,-293.521 1287.79,-281.52"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1401.58,-325.778 1412.18,-325.837 1403.93,-319.184 1401.58,-325.778"/>
+</g>
+<!-- Node4&#45;&gt;Node8 -->
+<g id="edge22" class="edge"><title>Node4&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M1475.77,-314.8C1474.76,-288.912 1478.15,-254.754 1499,-234 1571.08,-162.238 1658.98,-275.371 1725,-198 1788.12,-124.024 1627.47,-63.0184 1540.08,-36.3975"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1472.29,-315.21 1476.41,-324.973 1479.28,-314.774 1472.29,-315.21"/>
 </g>
 <!-- Node4&#45;&gt;Node15 -->
-<g id="edge22" class="edge"><title>Node4&#45;&gt;Node15</title>
-<path fill="none" stroke="midnightblue" d="M1043,-314.489C1043,-305.309 1043,-295.616 1043,-287.092"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1039.5,-314.547 1043,-324.547 1046.5,-314.547 1039.5,-314.547"/>
+<g id="edge23" class="edge"><title>Node4&#45;&gt;Node15</title>
+<path fill="none" stroke="midnightblue" d="M1551.53,-321.126C1580.81,-309.306 1614.2,-295.827 1641.7,-284.727"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1550.14,-317.912 1542.18,-324.901 1552.76,-324.403 1550.14,-317.912"/>
 </g>
 <!-- Node16 -->
 <g id="node16" class="node"><title>Node16</title>
 <g id="a_node16"><a xlink:href="XMLTreeLoader_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/tree/loaders\l/xml/XMLTreeLoader.h">
-<polygon fill="white" stroke="black" points="1130,-235 1130,-287 1246,-287 1246,-235 1130,-235"/>
-<text text-anchor="start" x="1138" y="-275" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1138" y="-264" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="start" x="1138" y="-253" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/tree/loaders</text>
-<text text-anchor="middle" x="1188" y="-242" font-family="Helvetica,sans-Serif" font-size="10.00">/xml/XMLTreeLoader.h</text>
+<polygon fill="white" stroke="black" points="1508,-235 1508,-287 1624,-287 1624,-235 1508,-235"/>
+<text text-anchor="start" x="1516" y="-275" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1516" y="-264" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="start" x="1516" y="-253" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/tree/loaders</text>
+<text text-anchor="middle" x="1566" y="-242" font-family="Helvetica,sans-Serif" font-size="10.00">/xml/XMLTreeLoader.h</text>
 </a>
 </g>
 </g>
 <!-- Node4&#45;&gt;Node16 -->
-<g id="edge23" class="edge"><title>Node4&#45;&gt;Node16</title>
-<path fill="none" stroke="midnightblue" d="M1093.41,-319.404C1110.73,-308.894 1129.91,-297.255 1146.44,-287.221"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1091.28,-316.602 1084.55,-324.783 1094.92,-322.587 1091.28,-316.602"/>
+<g id="edge24" class="edge"><title>Node4&#45;&gt;Node16</title>
+<path fill="none" stroke="midnightblue" d="M1512.11,-317.139C1521.83,-307.196 1532.34,-296.441 1541.48,-287.092"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1509.36,-314.949 1504.87,-324.547 1514.37,-319.841 1509.36,-314.949"/>
 </g>
 <!-- Node6 -->
 <g id="node6" class="node"><title>Node6</title>
 <g id="a_node6"><a xlink:href="ChangeHandler_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/ChangeHandler.h">
-<polygon fill="white" stroke="black" points="1021,-156.5 1021,-197.5 1173,-197.5 1173,-156.5 1021,-156.5"/>
-<text text-anchor="start" x="1029" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1029" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1097" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/ChangeHandler.h</text>
+<polygon fill="white" stroke="black" points="1376,-156.5 1376,-197.5 1528,-197.5 1528,-156.5 1376,-156.5"/>
+<text text-anchor="start" x="1384" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1384" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1452" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/ChangeHandler.h</text>
 </a>
 </g>
 </g>
 <!-- Node5&#45;&gt;Node6 -->
 <g id="edge5" class="edge"><title>Node5&#45;&gt;Node6</title>
-<path fill="none" stroke="midnightblue" d="M963.327,-236.304C991.45,-224.038 1025.38,-209.241 1052.01,-197.623"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="961.797,-233.153 954.031,-240.359 964.596,-239.569 961.797,-233.153"/>
+<path fill="none" stroke="midnightblue" d="M1294.76,-236.874C1327.9,-224.465 1368.3,-209.341 1399.84,-197.529"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1293.32,-233.679 1285.18,-240.463 1295.77,-240.234 1293.32,-233.679"/>
 </g>
 <!-- Node7 -->
 <g id="node7" class="node"><title>Node7</title>
 <g id="a_node7"><a xlink:href="ServerImpl_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/ServerImpl.h">
-<polygon fill="white" stroke="black" points="850,-78.5 850,-119.5 982,-119.5 982,-78.5 850,-78.5"/>
-<text text-anchor="start" x="858" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="858" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="916" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/ServerImpl.h</text>
+<polygon fill="white" stroke="black" points="1167,-78.5 1167,-119.5 1299,-119.5 1299,-78.5 1167,-78.5"/>
+<text text-anchor="start" x="1175" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1175" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1233" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/ServerImpl.h</text>
 </a>
 </g>
 </g>
 <!-- Node5&#45;&gt;Node7 -->
 <g id="edge16" class="edge"><title>Node5&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M967.217,-237.202C970.844,-236.05 974.458,-234.971 978,-234 1022.4,-221.832 1152.41,-233.266 1182,-198 1239.97,-128.909 1078.65,-108.516 982.279,-102.506"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="966.013,-233.914 957.632,-240.396 968.226,-240.556 966.013,-233.914"/>
+<path fill="none" stroke="midnightblue" d="M1290.45,-235.22C1305.36,-225.84 1319.57,-213.563 1328,-198 1336.89,-181.585 1337.26,-172.208 1328,-156 1318.88,-140.042 1303.24,-128.177 1287.26,-119.58"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1288.48,-232.32 1281.64,-240.41 1292.03,-238.352 1288.48,-232.32"/>
 </g>
 <!-- Node5&#45;&gt;Node8 -->
 <g id="edge21" class="edge"><title>Node5&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M842.27,-259.427C669.155,-257.25 215.958,-246.893 171,-198 158.365,-184.259 158.587,-169.942 171,-156 256.373,-60.111 1198.65,-29.4131 1431.97,-23.2552"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="842.235,-262.927 852.276,-259.548 842.319,-255.927 842.235,-262.927"/>
+<path fill="none" stroke="midnightblue" d="M1166.26,-259.484C991.972,-257.445 533.454,-247.394 488,-198 475.36,-184.264 475.708,-170.049 488,-156 551.185,-83.7832 1238.87,-37.0186 1435.67,-25.0447"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1166.29,-262.984 1176.33,-259.596 1166.37,-255.985 1166.29,-262.984"/>
 </g>
 <!-- Node9 -->
 <g id="node9" class="node"><title>Node9</title>
 <g id="a_node9"><a xlink:href="DeleteNodeHandler_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/DeleteNodeHandler.h">
-<polygon fill="white" stroke="black" points="1229,-156.5 1229,-197.5 1399,-197.5 1399,-156.5 1229,-156.5"/>
-<text text-anchor="start" x="1237" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1237" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1314" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/DeleteNodeHandler.h</text>
+<polygon fill="white" stroke="black" points="1546,-156.5 1546,-197.5 1716,-197.5 1716,-156.5 1546,-156.5"/>
+<text text-anchor="start" x="1554" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1554" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1631" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/DeleteNodeHandler.h</text>
 </a>
 </g>
 </g>
 <!-- Node5&#45;&gt;Node9 -->
 <g id="edge8" class="edge"><title>Node5&#45;&gt;Node9</title>
-<path fill="none" stroke="midnightblue" d="M966.989,-237.165C970.689,-236.014 974.381,-234.945 978,-234 1081.08,-207.068 1110.09,-216.554 1215,-198 1219.58,-197.191 1224.26,-196.335 1229,-195.45"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="965.623,-233.929 957.215,-240.376 967.808,-240.579 965.623,-233.929"/>
+<path fill="none" stroke="midnightblue" d="M1299.6,-246.586C1361.21,-234.136 1455.33,-215.016 1537,-198 1539.94,-197.387 1542.93,-196.762 1545.95,-196.129"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1298.73,-243.191 1289.62,-248.602 1300.11,-250.052 1298.73,-243.191"/>
 </g>
 <!-- Node10 -->
 <g id="node10" class="node"><title>Node10</title>
 <g id="a_node10"><a xlink:href="PauseHandler_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/PauseHandler.h">
-<polygon fill="white" stroke="black" points="180,-156.5 180,-197.5 326,-197.5 326,-156.5 180,-156.5"/>
-<text text-anchor="start" x="188" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="188" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="253" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/PauseHandler.h</text>
+<polygon fill="white" stroke="black" points="497,-156.5 497,-197.5 643,-197.5 643,-156.5 497,-156.5"/>
+<text text-anchor="start" x="505" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="505" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="570" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/PauseHandler.h</text>
 </a>
 </g>
 </g>
 <!-- Node5&#45;&gt;Node10 -->
 <g id="edge10" class="edge"><title>Node5&#45;&gt;Node10</title>
-<path fill="none" stroke="midnightblue" d="M842.394,-255.665C735.004,-248.037 517.201,-229.917 335,-198 332.113,-197.494 329.177,-196.946 326.217,-196.364"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="842.216,-259.162 852.437,-256.371 842.707,-252.179 842.216,-259.162"/>
+<path fill="none" stroke="midnightblue" d="M1166.01,-255.757C1057.46,-248.233 836.661,-230.225 652,-198 649.113,-197.496 646.177,-196.949 643.216,-196.368"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1165.94,-259.261 1176.16,-256.453 1166.42,-252.277 1165.94,-259.261"/>
 </g>
 <!-- Node11 -->
 <g id="node11" class="node"><title>Node11</title>
 <g id="a_node11"><a xlink:href="ResetHandler_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/ResetHandler.h">
-<polygon fill="white" stroke="black" points="344.5,-156.5 344.5,-197.5 489.5,-197.5 489.5,-156.5 344.5,-156.5"/>
-<text text-anchor="start" x="352.5" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="352.5" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="417" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/ResetHandler.h</text>
+<polygon fill="white" stroke="black" points="661.5,-156.5 661.5,-197.5 806.5,-197.5 806.5,-156.5 661.5,-156.5"/>
+<text text-anchor="start" x="669.5" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="669.5" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="734" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/ResetHandler.h</text>
 </a>
 </g>
 </g>
 <!-- Node5&#45;&gt;Node11 -->
 <g id="edge12" class="edge"><title>Node5&#45;&gt;Node11</title>
-<path fill="none" stroke="midnightblue" d="M842.244,-251.765C760.84,-241.296 619.227,-221.703 499,-198 495.981,-197.405 492.905,-196.773 489.803,-196.114"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="841.989,-255.261 852.353,-253.058 842.878,-248.318 841.989,-255.261"/>
+<path fill="none" stroke="midnightblue" d="M1166.4,-252.01C1083.81,-241.664 938.905,-222.073 816,-198 812.98,-197.409 809.904,-196.779 806.801,-196.123"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1166.04,-255.493 1176.4,-253.256 1166.91,-248.547 1166.04,-255.493"/>
 </g>
 <!-- Node12 -->
 <g id="node12" class="node"><title>Node12</title>
 <g id="a_node12"><a xlink:href="SelectHandler_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/SelectHandler.h">
-<polygon fill="white" stroke="black" points="508,-156.5 508,-197.5 654,-197.5 654,-156.5 508,-156.5"/>
-<text text-anchor="start" x="516" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="516" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="581" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/SelectHandler.h</text>
+<polygon fill="white" stroke="black" points="825,-156.5 825,-197.5 971,-197.5 971,-156.5 825,-156.5"/>
+<text text-anchor="start" x="833" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="833" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="898" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/SelectHandler.h</text>
 </a>
 </g>
 </g>
 <!-- Node5&#45;&gt;Node12 -->
 <g id="edge14" class="edge"><title>Node5&#45;&gt;Node12</title>
-<path fill="none" stroke="midnightblue" d="M842.304,-243.326C787.624,-229.656 710.338,-210.335 654.007,-196.252"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="841.691,-246.78 852.241,-245.81 843.389,-239.989 841.691,-246.78"/>
+<path fill="none" stroke="midnightblue" d="M1166.29,-243.672C1109.95,-229.879 1029.37,-210.156 971.244,-195.928"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1165.63,-247.112 1176.17,-246.09 1167.29,-240.313 1165.63,-247.112"/>
 </g>
 <!-- Node13 -->
 <g id="node13" class="node"><title>Node13</title>
 <g id="a_node13"><a xlink:href="StepHandler_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/StepHandler.h">
-<polygon fill="white" stroke="black" points="672.5,-156.5 672.5,-197.5 811.5,-197.5 811.5,-156.5 672.5,-156.5"/>
-<text text-anchor="start" x="680.5" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="680.5" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="742" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/StepHandler.h</text>
+<polygon fill="white" stroke="black" points="989.5,-156.5 989.5,-197.5 1128.5,-197.5 1128.5,-156.5 989.5,-156.5"/>
+<text text-anchor="start" x="997.5" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="997.5" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1059" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/StepHandler.h</text>
 </a>
 </g>
 </g>
 <!-- Node5&#45;&gt;Node13 -->
 <g id="edge17" class="edge"><title>Node5&#45;&gt;Node13</title>
-<path fill="none" stroke="midnightblue" d="M859.762,-235.823C834.975,-223.652 805.316,-209.089 781.963,-197.623"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="858.48,-239.093 868.999,-240.359 861.566,-232.81 858.48,-239.093"/>
+<path fill="none" stroke="midnightblue" d="M1182.04,-235.984C1156.14,-223.781 1125.08,-209.14 1100.64,-197.623"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1180.78,-239.262 1191.32,-240.359 1183.77,-232.93 1180.78,-239.262"/>
 </g>
 <!-- Node14 -->
 <g id="node14" class="node"><title>Node14</title>
 <g id="a_node14"><a xlink:href="UpdateNodeHandler_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/server/UpdateNodeHandler.h">
-<polygon fill="white" stroke="black" points="829.5,-156.5 829.5,-197.5 1002.5,-197.5 1002.5,-156.5 829.5,-156.5"/>
-<text text-anchor="start" x="837.5" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="837.5" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="916" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/UpdateNodeHandler.h</text>
+<polygon fill="white" stroke="black" points="1146.5,-156.5 1146.5,-197.5 1319.5,-197.5 1319.5,-156.5 1146.5,-156.5"/>
+<text text-anchor="start" x="1154.5" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1154.5" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1233" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/server/UpdateNodeHandler.h</text>
 </a>
 </g>
 </g>
 <!-- Node5&#45;&gt;Node14 -->
 <g id="edge19" class="edge"><title>Node5&#45;&gt;Node14</title>
-<path fill="none" stroke="midnightblue" d="M911.571,-229.881C912.489,-219.133 913.498,-207.309 914.321,-197.667"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="908.058,-229.889 910.695,-240.15 915.032,-230.484 908.058,-229.889"/>
+<path fill="none" stroke="midnightblue" d="M1233,-229.881C1233,-219.133 1233,-207.309 1233,-197.667"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1229.5,-230.15 1233,-240.15 1236.5,-230.15 1229.5,-230.15"/>
 </g>
 <!-- Node6&#45;&gt;Node7 -->
 <g id="edge6" class="edge"><title>Node6&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M1040.96,-152.469C1015.77,-141.892 986.393,-129.557 962.454,-119.506"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1039.81,-155.784 1050.39,-156.428 1042.52,-149.33 1039.81,-155.784"/>
+<path fill="none" stroke="midnightblue" d="M1385.8,-153.026C1354.97,-142.328 1318.68,-129.734 1289.21,-119.506"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1385.01,-156.456 1395.6,-156.428 1387.3,-149.843 1385.01,-156.456"/>
 </g>
 <!-- Node7&#45;&gt;Node8 -->
 <g id="edge7" class="edge"><title>Node7&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M992.255,-87.7969C1109.57,-72.0995 1331.3,-42.432 1431.95,-28.9641"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="991.716,-84.3377 982.268,-89.1331 992.644,-91.2759 991.716,-84.3377"/>
+<path fill="none" stroke="midnightblue" d="M1308.35,-75.5414C1349.37,-63.317 1399.08,-48.5002 1435.81,-37.5552"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1307.25,-72.2176 1298.67,-78.4281 1309.25,-78.926 1307.25,-72.2176"/>
 </g>
 <!-- Node9&#45;&gt;Node7 -->
 <g id="edge9" class="edge"><title>Node9&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M1218.87,-156.756C1217.57,-156.502 1216.28,-156.25 1215,-156 1135.04,-140.436 1042.88,-123.297 982.26,-112.131"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1218.47,-160.244 1228.96,-158.739 1219.82,-153.375 1218.47,-160.244"/>
+<path fill="none" stroke="midnightblue" d="M1536.12,-155.849C1448.5,-138.551 1358.64,-122.243 1299.22,-111.658"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1535.48,-159.289 1545.97,-157.799 1536.84,-152.423 1535.48,-159.289"/>
 </g>
 <!-- Node10&#45;&gt;Node7 -->
 <g id="edge11" class="edge"><title>Node10&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M336.173,-155.922C527.628,-124.153 743.394,-109.257 849.811,-103.289"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="335.492,-152.487 326.21,-157.594 336.651,-159.39 335.492,-152.487"/>
+<path fill="none" stroke="midnightblue" d="M653.173,-155.922C844.628,-124.153 1060.39,-109.257 1166.81,-103.289"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="652.492,-152.487 643.21,-157.594 653.651,-159.39 652.492,-152.487"/>
 </g>
 <!-- Node11&#45;&gt;Node7 -->
 <g id="edge13" class="edge"><title>Node11&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M499.893,-155.931C629.443,-131.918 769.511,-115.319 849.932,-106.689"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="498.976,-152.542 489.791,-157.823 500.264,-159.423 498.976,-152.542"/>
+<path fill="none" stroke="midnightblue" d="M816.893,-155.931C946.443,-131.918 1086.51,-115.319 1166.93,-106.689"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="815.976,-152.542 806.791,-157.823 817.264,-159.423 815.976,-152.542"/>
 </g>
 <!-- Node12&#45;&gt;Node7 -->
 <g id="edge15" class="edge"><title>Node12&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M664.427,-155.688C733.061,-139.789 801.157,-124.809 849.858,-114.235"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="663.248,-152.368 654.299,-158.04 664.832,-159.187 663.248,-152.368"/>
+<path fill="none" stroke="midnightblue" d="M981.427,-155.688C1050.06,-139.789 1118.16,-124.809 1166.86,-114.235"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="980.248,-152.368 971.299,-158.04 981.832,-159.187 980.248,-152.368"/>
 </g>
 <!-- Node13&#45;&gt;Node7 -->
 <g id="edge18" class="edge"><title>Node13&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M796.194,-152.329C820.338,-141.783 848.431,-129.513 871.343,-119.506"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="794.572,-149.218 786.809,-156.428 797.374,-155.633 794.572,-149.218"/>
+<path fill="none" stroke="midnightblue" d="M1113.19,-152.329C1137.34,-141.783 1165.43,-129.513 1188.34,-119.506"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1111.57,-149.218 1103.81,-156.428 1114.37,-155.633 1111.57,-149.218"/>
 </g>
 <!-- Node14&#45;&gt;Node7 -->
 <g id="edge20" class="edge"><title>Node14&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M916,-146.297C916,-137.301 916,-127.653 916,-119.506"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="912.5,-146.428 916,-156.428 919.5,-146.428 912.5,-146.428"/>
+<path fill="none" stroke="midnightblue" d="M1233,-146.297C1233,-137.301 1233,-127.653 1233,-119.506"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1229.5,-146.428 1233,-156.428 1236.5,-146.428 1229.5,-146.428"/>
 </g>
 <!-- Node18&#45;&gt;Node3 -->
-<g id="edge29" class="edge"><title>Node18&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M359.622,-571.153C399.753,-546.649 465.214,-510.291 527,-492 691.381,-443.338 896.421,-436.075 990.901,-435.555"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="357.635,-568.266 350.963,-576.496 361.312,-574.223 357.635,-568.266"/>
+<g id="edge31" class="edge"><title>Node18&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M368.177,-491.963C780.829,-437.995 1269.58,-435.03 1427.85,-435.601"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="367.593,-488.51 358.137,-493.288 368.509,-495.449 367.593,-488.51"/>
+</g>
+<!-- Node18&#45;&gt;Node8 -->
+<g id="edge32" class="edge"><title>Node18&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M264.859,-482.511C254.839,-450.705 241,-398.381 241,-352 241,-352 241,-352 241,-176 241,-128.786 243.314,-105.066 282,-78 329.9,-44.4878 1210.45,-26.8522 1435.81,-22.8754"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="261.547,-483.646 267.955,-492.083 268.207,-481.491 261.547,-483.646"/>
 </g>
 <!-- Node19&#45;&gt;Node3 -->
-<g id="edge31" class="edge"><title>Node19&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M510.019,-561.926C524.511,-538.156 547.188,-507.941 576,-492 646.289,-453.11 884.382,-440.92 990.828,-437.361"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="506.925,-560.284 504.87,-570.678 512.958,-563.834 506.925,-560.284"/>
+<g id="edge34" class="edge"><title>Node19&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M1193.19,-642.85C1262.27,-593.033 1395.63,-496.852 1452.84,-455.585"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1190.76,-640.291 1184.69,-648.98 1194.85,-645.969 1190.76,-640.291"/>
 </g>
 <!-- Node20&#45;&gt;Node3 -->
-<g id="edge33" class="edge"><title>Node20&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M519.322,-656.411C537.405,-648.219 555.622,-637.574 570,-624 617.986,-578.695 584.146,-530.143 638,-492 693.752,-452.513 894.659,-440.746 990.897,-437.339"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="517.697,-653.301 509.9,-660.475 520.468,-659.729 517.697,-653.301"/>
+<g id="edge36" class="edge"><title>Node20&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M546.475,-491.908C886.822,-444.652 1286.78,-437.31 1427.76,-436.185"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="545.84,-488.462 536.423,-493.317 546.812,-495.394 545.84,-488.462"/>
+</g>
+<!-- Node20&#45;&gt;Node8 -->
+<g id="edge37" class="edge"><title>Node20&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M397.13,-487.934C345.631,-462.518 279,-417.063 279,-352 279,-352 279,-352 279,-176 279,-128.786 281.335,-105.095 320,-78 366.265,-45.5793 1215.37,-27.1963 1435.98,-22.9541"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="395.694,-491.127 406.225,-492.295 398.721,-484.815 395.694,-491.127"/>
 </g>
 <!-- Node21&#45;&gt;Node3 -->
-<g id="edge35" class="edge"><title>Node21&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M624.866,-650.26C622.27,-608.467 624.505,-532.903 668,-492 713.675,-449.047 899.027,-439.01 990.885,-436.686"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="621.386,-650.654 625.63,-660.361 628.366,-650.126 621.386,-650.654"/>
+<g id="edge39" class="edge"><title>Node21&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M735.834,-491.989C1001.34,-454.906 1307.5,-441.62 1427.81,-437.546"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="735.025,-488.569 725.612,-493.432 736.003,-495.5 735.025,-488.569"/>
+</g>
+<!-- Node21&#45;&gt;Node8 -->
+<g id="edge40" class="edge"><title>Node21&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M560.251,-489.549C464.604,-460.205 317,-406.149 317,-352 317,-352 317,-352 317,-176 317,-128.436 320.837,-104.992 360,-78 404.8,-47.1222 1220.17,-27.6853 1435.96,-23.067"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="559.328,-492.926 569.914,-492.484 561.363,-486.228 559.328,-492.926"/>
 </g>
 <!-- Node22&#45;&gt;Node3 -->
-<g id="edge37" class="edge"><title>Node22&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M760.403,-654.156C713.552,-616.095 640.608,-543.876 685,-492 723.754,-446.712 901.299,-437.787 990.924,-436.205"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="758.243,-656.91 768.244,-660.408 762.607,-651.437 758.243,-656.91"/>
+<g id="edge42" class="edge"><title>Node22&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M880.404,-497.805C892.6,-495.691 905.137,-493.666 917,-492 1104.25,-465.709 1328.23,-447.293 1427.83,-439.774"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="879.501,-494.41 870.262,-499.596 880.718,-501.304 879.501,-494.41"/>
+</g>
+<!-- Node22&#45;&gt;Node8 -->
+<g id="edge43" class="edge"><title>Node22&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M733.936,-490.002C606.029,-450.975 355,-371.851 355,-352 355,-352 355,-352 355,-176 355,-127.694 361.796,-104.777 402,-78 488.569,-20.3421 1230.87,-20.4541 1435.79,-21.6019"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="733.089,-493.403 743.675,-492.969 735.129,-486.707 733.089,-493.403"/>
 </g>
 <!-- Node23&#45;&gt;Node3 -->
-<g id="edge58" class="edge"><title>Node23&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M1214.16,-656.103C1196.63,-647.497 1178.12,-636.715 1163,-624 1105.65,-575.786 1066.44,-493.049 1050.71,-455.524"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1212.68,-659.275 1223.21,-660.403 1215.68,-652.952 1212.68,-659.275"/>
+<g id="edge64" class="edge"><title>Node23&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M1665.73,-670.383C1619.33,-664.112 1563.17,-648.715 1527,-612 1484.5,-568.856 1479.28,-491.774 1479.35,-455.671"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1665.42,-673.871 1675.77,-671.621 1666.27,-666.924 1665.42,-673.871"/>
 </g>
 <!-- Node23&#45;&gt;Node8 -->
-<g id="edge74" class="edge"><title>Node23&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M1354.24,-679.285C1549.4,-675.384 2033,-651.815 2033,-514 2033,-514 2033,-514 2033,-176 2033,-73.4202 1673.18,-35.9993 1536.14,-25.4671"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1353.98,-675.789 1344.04,-679.476 1354.11,-682.788 1353.98,-675.789"/>
+<g id="edge80" class="edge"><title>Node23&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M1826.22,-672.842C2012.97,-667.98 2461,-642.885 2461,-514 2461,-514 2461,-514 2461,-176 2461,-54.1703 2323.85,-104.798 2205,-78 2078.1,-49.3861 1682.74,-30.2514 1540.04,-24.1223"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1826.1,-669.344 1816.19,-673.091 1826.27,-676.342 1826.1,-669.344"/>
 </g>
 <!-- Node24 -->
 <g id="node24" class="node"><title>Node24</title>
 <g id="a_node24"><a xlink:href="Steer_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/tree/Steer.h">
-<polygon fill="white" stroke="black" points="1148,-492.5 1148,-533.5 1252,-533.5 1252,-492.5 1148,-492.5"/>
-<text text-anchor="start" x="1156" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1156" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1200" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/tree/Steer.h</text>
+<polygon fill="white" stroke="black" points="1574,-492.5 1574,-533.5 1678,-533.5 1678,-492.5 1574,-492.5"/>
+<text text-anchor="start" x="1582" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1582" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1626" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/tree/Steer.h</text>
 </a>
 </g>
 </g>
 <!-- Node23&#45;&gt;Node24 -->
-<g id="edge39" class="edge"><title>Node23&#45;&gt;Node24</title>
-<path fill="none" stroke="midnightblue" d="M1207.12,-655.573C1193.92,-647.581 1181.76,-637.237 1174,-624 1157.23,-595.389 1173.93,-556.615 1187.22,-533.565"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1205.47,-658.663 1215.91,-660.492 1208.89,-652.554 1205.47,-658.663"/>
+<g id="edge45" class="edge"><title>Node23&#45;&gt;Node24</title>
+<path fill="none" stroke="midnightblue" d="M1746.77,-644.202C1745.91,-621.849 1741.53,-591.525 1726,-570 1714.12,-553.542 1695.83,-541.309 1678.13,-532.547"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1743.27,-644.521 1746.94,-654.461 1750.27,-644.403 1743.27,-644.521"/>
 </g>
 <!-- Node26 -->
 <g id="node26" class="node"><title>Node26</title>
 <g id="a_node26"><a xlink:href="SelectionSeek_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/movement/SelectionSeek.h">
-<polygon fill="white" stroke="black" points="849.5,-492.5 849.5,-533.5 1016.5,-533.5 1016.5,-492.5 849.5,-492.5"/>
-<text text-anchor="start" x="857.5" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="857.5" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="933" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/SelectionSeek.h</text>
+<polygon fill="white" stroke="black" points="2099.5,-492.5 2099.5,-533.5 2266.5,-533.5 2266.5,-492.5 2099.5,-492.5"/>
+<text text-anchor="start" x="2107.5" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="2107.5" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="2183" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/SelectionSeek.h</text>
 </a>
 </g>
 </g>
 <!-- Node23&#45;&gt;Node26 -->
-<g id="edge47" class="edge"><title>Node23&#45;&gt;Node26</title>
-<path fill="none" stroke="midnightblue" d="M1193.8,-679.108C1099.41,-676.158 951.024,-664.928 916,-624 894.39,-598.747 909.493,-557.772 921.73,-533.601"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1193.8,-682.609 1203.9,-679.399 1194,-675.612 1193.8,-682.609"/>
+<g id="edge53" class="edge"><title>Node23&#45;&gt;Node26</title>
+<path fill="none" stroke="midnightblue" d="M1817.82,-651.365C1853,-640.011 1895.89,-625.772 1934,-612 2004.78,-586.423 2085.69,-553.973 2135.57,-533.59"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1816.56,-648.093 1808.11,-654.488 1818.7,-654.757 1816.56,-648.093"/>
 </g>
 <!-- Node27 -->
 <g id="node27" class="node"><title>Node27</title>
 <g id="a_node27"><a xlink:href="SelectionFlee_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/movement/SelectionFlee.h">
-<polygon fill="white" stroke="black" points="925.5,-576.5 925.5,-617.5 1088.5,-617.5 1088.5,-576.5 925.5,-576.5"/>
-<text text-anchor="start" x="933.5" y="-605.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="933.5" y="-594.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1007" y="-583.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/SelectionFlee.h</text>
+<polygon fill="white" stroke="black" points="1316.5,-570.5 1316.5,-611.5 1479.5,-611.5 1479.5,-570.5 1316.5,-570.5"/>
+<text text-anchor="start" x="1324.5" y="-599.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1324.5" y="-588.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1398" y="-577.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/SelectionFlee.h</text>
 </a>
 </g>
 </g>
 <!-- Node23&#45;&gt;Node27 -->
-<g id="edge50" class="edge"><title>Node23&#45;&gt;Node27</title>
-<path fill="none" stroke="midnightblue" d="M1200.77,-657.51C1159.99,-644.986 1109.71,-629.544 1070.59,-617.529"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1199.8,-660.873 1210.39,-660.463 1201.85,-654.181 1199.8,-660.873"/>
+<g id="edge56" class="edge"><title>Node23&#45;&gt;Node27</title>
+<path fill="none" stroke="midnightblue" d="M1666.15,-655.185C1610.34,-642.035 1536.04,-624.528 1479.81,-611.277"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1665.46,-658.618 1676,-657.505 1667.06,-651.804 1665.46,-658.618"/>
 </g>
 <!-- Node28 -->
 <g id="node28" class="node"><title>Node28</title>
 <g id="a_node28"><a xlink:href="GroupFlee_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/movement/GroupFlee.h">
-<polygon fill="white" stroke="black" points="1270.5,-492.5 1270.5,-533.5 1419.5,-533.5 1419.5,-492.5 1270.5,-492.5"/>
-<text text-anchor="start" x="1278.5" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1278.5" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1345" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/GroupFlee.h</text>
+<polygon fill="white" stroke="black" points="2284.5,-492.5 2284.5,-533.5 2433.5,-533.5 2433.5,-492.5 2284.5,-492.5"/>
+<text text-anchor="start" x="2292.5" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="2292.5" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="2359" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/GroupFlee.h</text>
 </a>
 </g>
 </g>
 <!-- Node23&#45;&gt;Node28 -->
-<g id="edge52" class="edge"><title>Node23&#45;&gt;Node28</title>
-<path fill="none" stroke="midnightblue" d="M1340.6,-655.221C1353.53,-647.266 1365.4,-637.028 1373,-624 1389.78,-595.232 1372.2,-556.508 1358.32,-533.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1338.5,-652.391 1331.52,-660.369 1341.95,-658.479 1338.5,-652.391"/>
+<g id="edge58" class="edge"><title>Node23&#45;&gt;Node28</title>
+<path fill="none" stroke="midnightblue" d="M1826.11,-655.256C1876.66,-643.267 1943.26,-627.17 2002,-612 2102.5,-586.042 2218.28,-553.833 2290.06,-533.591"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1825.15,-651.887 1816.23,-657.597 1826.76,-658.699 1825.15,-651.887"/>
 </g>
 <!-- Node29 -->
 <g id="node29" class="node"><title>Node29</title>
 <g id="a_node29"><a xlink:href="GroupSeek_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/movement/GroupSeek.h">
-<polygon fill="white" stroke="black" points="1513,-492.5 1513,-533.5 1665,-533.5 1665,-492.5 1513,-492.5"/>
-<text text-anchor="start" x="1521" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1521" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1589" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/GroupSeek.h</text>
+<polygon fill="white" stroke="black" points="926,-492.5 926,-533.5 1078,-533.5 1078,-492.5 926,-492.5"/>
+<text text-anchor="start" x="934" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="934" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1002" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/GroupSeek.h</text>
 </a>
 </g>
 </g>
 <!-- Node23&#45;&gt;Node29 -->
-<g id="edge55" class="edge"><title>Node23&#45;&gt;Node29</title>
-<path fill="none" stroke="midnightblue" d="M1354.28,-672.607C1399.57,-665.478 1455.6,-651.479 1499,-624 1535.27,-601.031 1563.82,-558.468 1578.38,-533.558"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1353.57,-669.174 1344.2,-674.11 1354.6,-676.098 1353.57,-669.174"/>
+<g id="edge61" class="edge"><title>Node23&#45;&gt;Node29</title>
+<path fill="none" stroke="midnightblue" d="M1665.64,-669.331C1569.11,-662.427 1402.81,-646.4 1264,-612 1184.57,-592.316 1096.2,-556.087 1045.06,-533.621"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1665.41,-672.822 1675.63,-670.03 1665.9,-665.839 1665.41,-672.822"/>
 </g>
 <!-- Node30 -->
 <g id="node30" class="node"><title>Node30</title>
 <g id="a_node30"><a xlink:href="TargetFlee_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/movement/TargetFlee.h">
-<polygon fill="white" stroke="black" points="1683,-492.5 1683,-533.5 1833,-533.5 1833,-492.5 1683,-492.5"/>
-<text text-anchor="start" x="1691" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1691" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1758" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/TargetFlee.h</text>
+<polygon fill="white" stroke="black" points="1096,-492.5 1096,-533.5 1246,-533.5 1246,-492.5 1096,-492.5"/>
+<text text-anchor="start" x="1104" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1104" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1171" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/TargetFlee.h</text>
 </a>
 </g>
 </g>
 <!-- Node23&#45;&gt;Node30 -->
-<g id="edge59" class="edge"><title>Node23&#45;&gt;Node30</title>
-<path fill="none" stroke="midnightblue" d="M1354.36,-668.67C1407.92,-659.771 1479.34,-645.281 1540,-624 1609.2,-599.722 1684.43,-558.022 1725.94,-533.535"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1353.55,-665.257 1344.24,-670.322 1354.67,-672.166 1353.55,-665.257"/>
+<g id="edge65" class="edge"><title>Node23&#45;&gt;Node30</title>
+<path fill="none" stroke="midnightblue" d="M1665.26,-668.626C1556.21,-660.346 1368.39,-642.186 1307,-612 1283.03,-600.213 1285.14,-586.333 1264,-570 1246.55,-556.518 1225.63,-543.662 1208.05,-533.677"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1665.33,-672.14 1675.56,-669.396 1665.85,-665.16 1665.33,-672.14"/>
 </g>
 <!-- Node31 -->
 <g id="node31" class="node"><title>Node31</title>
 <g id="a_node31"><a xlink:href="TargetSeek_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/movement/TargetSeek.h">
-<polygon fill="white" stroke="black" points="1851,-492.5 1851,-533.5 2005,-533.5 2005,-492.5 1851,-492.5"/>
-<text text-anchor="start" x="1859" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1859" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1928" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/TargetSeek.h</text>
+<polygon fill="white" stroke="black" points="1696,-492.5 1696,-533.5 1850,-533.5 1850,-492.5 1696,-492.5"/>
+<text text-anchor="start" x="1704" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1704" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1773" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/TargetSeek.h</text>
 </a>
 </g>
 </g>
 <!-- Node23&#45;&gt;Node31 -->
-<g id="edge62" class="edge"><title>Node23&#45;&gt;Node31</title>
-<path fill="none" stroke="midnightblue" d="M1354.43,-670.533C1423.2,-661.513 1524.49,-646.029 1611,-624 1708.38,-599.204 1818.46,-557.879 1879.91,-533.56"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1353.56,-667.115 1344.1,-671.871 1354.46,-674.057 1353.56,-667.115"/>
+<g id="edge68" class="edge"><title>Node23&#45;&gt;Node31</title>
+<path fill="none" stroke="midnightblue" d="M1753.3,-644.223C1755.64,-634.043 1758.11,-622.561 1760,-612 1764.83,-584.968 1768.7,-553.445 1770.93,-533.604"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1749.82,-643.732 1750.93,-654.268 1756.63,-645.335 1749.82,-643.732"/>
 </g>
 <!-- Node32 -->
 <g id="node32" class="node"><title>Node32</title>
 <g id="a_node32"><a xlink:href="Wander_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/movement/Wander.h">
-<polygon fill="white" stroke="black" points="694.5,-492.5 694.5,-533.5 831.5,-533.5 831.5,-492.5 694.5,-492.5"/>
-<text text-anchor="start" x="702.5" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="702.5" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="763" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/Wander.h</text>
+<polygon fill="white" stroke="black" points="1944.5,-492.5 1944.5,-533.5 2081.5,-533.5 2081.5,-492.5 1944.5,-492.5"/>
+<text text-anchor="start" x="1952.5" y="-521.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1952.5" y="-510.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="2013" y="-499.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/Wander.h</text>
 </a>
 </g>
 </g>
 <!-- Node23&#45;&gt;Node32 -->
-<g id="edge65" class="edge"><title>Node23&#45;&gt;Node32</title>
-<path fill="none" stroke="midnightblue" d="M1193.68,-679.719C1116.04,-676.77 996.608,-665.056 902,-624 852.596,-602.561 805.782,-559.03 781.103,-533.629"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1193.76,-683.223 1203.88,-680.065 1194,-676.227 1193.76,-683.223"/>
+<g id="edge71" class="edge"><title>Node23&#45;&gt;Node32</title>
+<path fill="none" stroke="midnightblue" d="M1811.55,-650.7C1837.41,-640.358 1866.88,-627.098 1892,-612 1930.23,-589.023 1969.45,-554.953 1992.49,-533.636"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1810.23,-647.459 1802.2,-654.375 1812.79,-653.973 1810.23,-647.459"/>
 </g>
 <!-- Node33 -->
 <g id="node33" class="node"><title>Node33</title>
 <g id="a_node33"><a xlink:href="WeightedSteering_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/movement/WeightedSteering.h">
-<polygon fill="white" stroke="black" points="1183.5,-576.5 1183.5,-617.5 1364.5,-617.5 1364.5,-576.5 1183.5,-576.5"/>
-<text text-anchor="start" x="1191.5" y="-605.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1191.5" y="-594.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1274" y="-583.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/WeightedSteering.h</text>
+<polygon fill="white" stroke="black" points="1536.5,-570.5 1536.5,-611.5 1717.5,-611.5 1717.5,-570.5 1536.5,-570.5"/>
+<text text-anchor="start" x="1544.5" y="-599.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1544.5" y="-588.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1627" y="-577.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/WeightedSteering.h</text>
 </a>
 </g>
 </g>
 <!-- Node23&#45;&gt;Node33 -->
-<g id="edge68" class="edge"><title>Node23&#45;&gt;Node33</title>
-<path fill="none" stroke="midnightblue" d="M1274,-649.881C1274,-639.133 1274,-627.309 1274,-617.667"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1270.5,-650.15 1274,-660.15 1277.5,-650.15 1270.5,-650.15"/>
+<g id="edge74" class="edge"><title>Node23&#45;&gt;Node33</title>
+<path fill="none" stroke="midnightblue" d="M1708.83,-648.387C1691.68,-636.571 1671.64,-622.761 1655.68,-611.765"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1707.28,-651.567 1717.5,-654.359 1711.25,-645.803 1707.28,-651.567"/>
 </g>
 <!-- Node34 -->
 <g id="node34" class="node"><title>Node34</title>
 <g id="a_node34"><a xlink:href="LUASteering_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/movement/LUASteering.h">
-<polygon fill="white" stroke="black" points="1316.5,-414.5 1316.5,-455.5 1475.5,-455.5 1475.5,-414.5 1316.5,-414.5"/>
-<text text-anchor="start" x="1324.5" y="-443.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1324.5" y="-432.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1396" y="-421.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/LUASteering.h</text>
+<polygon fill="white" stroke="black" points="1866.5,-414.5 1866.5,-455.5 2025.5,-455.5 2025.5,-414.5 1866.5,-414.5"/>
+<text text-anchor="start" x="1874.5" y="-443.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1874.5" y="-432.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1946" y="-421.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/movement/LUASteering.h</text>
 </a>
 </g>
 </g>
 <!-- Node23&#45;&gt;Node34 -->
-<g id="edge72" class="edge"><title>Node23&#45;&gt;Node34</title>
-<path fill="none" stroke="midnightblue" d="M1345.19,-656.108C1361.82,-647.948 1378.34,-637.394 1391,-624 1432.85,-579.721 1443.64,-550.887 1428,-492 1424.55,-479.013 1417.3,-465.897 1410.58,-455.626"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1343.56,-653.007 1335.97,-660.399 1346.52,-659.354 1343.56,-653.007"/>
+<g id="edge78" class="edge"><title>Node23&#45;&gt;Node34</title>
+<path fill="none" stroke="midnightblue" d="M1769.36,-646.197C1810.29,-597.492 1893.97,-497.912 1929.48,-455.658"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1766.46,-644.21 1762.71,-654.118 1771.82,-648.714 1766.46,-644.21"/>
 </g>
 <!-- Node24&#45;&gt;Node3 -->
-<g id="edge40" class="edge"><title>Node24&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M1150.52,-488.049C1128.87,-477.566 1103.78,-465.424 1083.29,-455.506"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1149.04,-491.221 1159.57,-492.428 1152.09,-484.921 1149.04,-491.221"/>
+<g id="edge46" class="edge"><title>Node24&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M1579.45,-487.768C1559.44,-477.35 1536.36,-465.336 1517.47,-455.506"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1577.92,-490.915 1588.4,-492.428 1581.15,-484.706 1577.92,-490.915"/>
 </g>
 <!-- Node24&#45;&gt;Node8 -->
-<g id="edge41" class="edge"><title>Node24&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M1262.25,-492.214C1324.6,-481.207 1450.1,-489.205 1484,-456 1517.57,-423.12 1503,-398.987 1503,-352 1503,-352 1503,-352 1503,-176 1503,-127.51 1493.61,-71.0739 1488.03,-41.8385"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1261.17,-488.864 1252.09,-494.327 1262.59,-495.717 1261.17,-488.864"/>
+<g id="edge47" class="edge"><title>Node24&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M1669.95,-487.077C1706.78,-463.772 1757.61,-425.477 1785,-378 1834.48,-292.221 1826.75,-252.378 1804,-156 1795.1,-118.278 1795.78,-101.558 1765,-78 1730.37,-51.496 1610.29,-34.7996 1540.11,-27.069"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1668.04,-484.146 1661.38,-492.39 1671.73,-490.095 1668.04,-484.146"/>
 </g>
 <!-- Node25 -->
 <g id="node25" class="node"><title>Node25</title>
 <g id="a_node25"><a xlink:href="TreeNodeParser_8h.html" target="_top" xlink:title="/home/travis/build\l/mgerhardy/simpleai\l/src/ai/tree/TreeNodeParser.h">
-<polygon fill="white" stroke="black" points="1129,-330.5 1129,-371.5 1275,-371.5 1275,-330.5 1129,-330.5"/>
-<text text-anchor="start" x="1137" y="-359.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1137" y="-348.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
-<text text-anchor="middle" x="1202" y="-337.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/tree/TreeNodeParser.h</text>
+<polygon fill="white" stroke="black" points="1604,-330.5 1604,-371.5 1750,-371.5 1750,-330.5 1604,-330.5"/>
+<text text-anchor="start" x="1612" y="-359.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1612" y="-348.5" font-family="Helvetica,sans-Serif" font-size="10.00">/mgerhardy/simpleai</text>
+<text text-anchor="middle" x="1677" y="-337.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/ai/tree/TreeNodeParser.h</text>
 </a>
 </g>
 </g>
 <!-- Node24&#45;&gt;Node25 -->
-<g id="edge42" class="edge"><title>Node24&#45;&gt;Node25</title>
-<path fill="none" stroke="midnightblue" d="M1200.37,-482.206C1200.78,-449.962 1201.41,-399.458 1201.75,-371.78"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1196.87,-482.338 1200.25,-492.381 1203.87,-482.425 1196.87,-482.338"/>
+<g id="edge48" class="edge"><title>Node24&#45;&gt;Node25</title>
+<path fill="none" stroke="midnightblue" d="M1635.36,-482.625C1645.63,-450.402 1661.83,-399.578 1670.7,-371.78"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1631.96,-481.79 1632.25,-492.381 1638.63,-483.916 1631.96,-481.79"/>
 </g>
 <!-- Node25&#45;&gt;Node5 -->
-<g id="edge43" class="edge"><title>Node25&#45;&gt;Node5</title>
-<path fill="none" stroke="midnightblue" d="M1131.24,-327.556C1127.11,-326.331 1123,-325.137 1119,-324 1056.78,-306.327 1039.69,-307.432 978,-288 971.773,-286.038 965.288,-283.827 958.896,-281.542"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1130.34,-330.938 1140.92,-330.459 1132.35,-324.233 1130.34,-330.938"/>
+<g id="edge49" class="edge"><title>Node25&#45;&gt;Node5</title>
+<path fill="none" stroke="midnightblue" d="M1593.73,-331.856C1581.1,-329.176 1568.21,-326.484 1556,-324 1462.84,-305.052 1354.23,-284.524 1289.67,-272.487"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1593.28,-335.338 1603.79,-333.998 1594.74,-328.492 1593.28,-335.338"/>
 </g>
 <!-- Node25&#45;&gt;Node8 -->
-<g id="edge44" class="edge"><title>Node25&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M1250.23,-325.445C1296.65,-299.55 1365.84,-254.667 1408,-198 1441.82,-152.544 1426.96,-129.299 1451,-78 1456.84,-65.534 1464.61,-52.2314 1471.14,-41.7207"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1248.34,-322.487 1241.26,-330.369 1251.71,-328.623 1248.34,-322.487"/>
+<g id="edge50" class="edge"><title>Node25&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M1727.62,-324.686C1741.29,-315.18 1754.39,-302.967 1762,-288 1788.76,-235.366 1768.65,-210.931 1747,-156 1731.99,-117.912 1730.95,-102.293 1698,-78 1651.53,-43.744 1585.6,-30.4318 1540.06,-25.265"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1725.54,-321.862 1719.07,-330.255 1729.36,-327.725 1725.54,-321.862"/>
 </g>
 <!-- Node25&#45;&gt;Node15 -->
-<g id="edge45" class="edge"><title>Node25&#45;&gt;Node15</title>
-<path fill="none" stroke="midnightblue" d="M1157.71,-325.49C1136.03,-313.49 1109.97,-299.067 1088.17,-287.002"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1156.27,-328.69 1166.71,-330.47 1159.66,-322.565 1156.27,-328.69"/>
+<g id="edge51" class="edge"><title>Node25&#45;&gt;Node15</title>
+<path fill="none" stroke="midnightblue" d="M1684.02,-320.591C1686.6,-309.757 1689.51,-297.592 1691.99,-287.166"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1680.58,-319.931 1681.66,-330.47 1687.39,-321.556 1680.58,-319.931"/>
 </g>
 <!-- Node25&#45;&gt;Node16 -->
-<g id="edge46" class="edge"><title>Node25&#45;&gt;Node16</title>
-<path fill="none" stroke="midnightblue" d="M1197.32,-320.591C1195.6,-309.757 1193.66,-297.592 1192,-287.166"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1193.87,-321.144 1198.89,-330.47 1200.78,-320.044 1193.87,-321.144"/>
+<g id="edge52" class="edge"><title>Node25&#45;&gt;Node16</title>
+<path fill="none" stroke="midnightblue" d="M1644.48,-324.221C1629.75,-312.538 1612.39,-298.774 1597.74,-287.166"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1642.35,-327 1652.37,-330.47 1646.7,-321.515 1642.35,-327"/>
 </g>
 <!-- Node26&#45;&gt;Node3 -->
-<g id="edge48" class="edge"><title>Node26&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M969.712,-486.635C984.401,-476.487 1001.05,-464.982 1014.77,-455.506"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="967.566,-483.864 961.328,-492.428 971.545,-489.623 967.566,-483.864"/>
+<g id="edge54" class="edge"><title>Node26&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M2089.35,-492.003C1877.06,-460.123 1636.09,-444.441 1532.07,-438.663"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="2089.02,-495.494 2099.44,-493.533 2090.07,-488.573 2089.02,-495.494"/>
 </g>
 <!-- Node26&#45;&gt;Node8 -->
-<g id="edge49" class="edge"><title>Node26&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M839.482,-492.084C658.235,-461.214 114,-513.257 114,-352 114,-352 114,-352 114,-176 114,-99.3182 183.328,-102.472 256,-78 368.442,-40.135 1212.13,-25.7979 1431.83,-22.6848"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="838.894,-495.535 849.366,-493.926 840.177,-488.654 838.894,-495.535"/>
+<g id="edge55" class="edge"><title>Node26&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M2174.97,-482.477C2167.02,-450.559 2156,-398.063 2156,-352 2156,-352 2156,-352 2156,-176 2156,-124.221 2137.25,-104.882 2093,-78 2046.29,-49.6254 1678.69,-30.4907 1540.38,-24.232"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="2171.66,-483.655 2177.54,-492.474 2178.44,-481.918 2171.66,-483.655"/>
 </g>
 <!-- Node27&#45;&gt;Node3 -->
-<g id="edge51" class="edge"><title>Node27&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M1016.2,-566.595C1019.23,-556.34 1022.47,-544.717 1025,-534 1031.37,-507.065 1036.81,-475.517 1039.99,-455.644"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1012.8,-565.725 1013.27,-576.31 1019.5,-567.745 1012.8,-565.725"/>
+<g id="edge57" class="edge"><title>Node27&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M1413.14,-561.565C1429.5,-530.847 1455.13,-482.705 1469.44,-455.832"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1410,-560.024 1408.39,-570.496 1416.17,-563.314 1410,-560.024"/>
 </g>
 <!-- Node28&#45;&gt;Node3 -->
-<g id="edge53" class="edge"><title>Node28&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M1260.59,-490.758C1207.44,-477.382 1140.52,-460.541 1095.02,-449.092"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1259.8,-494.167 1270.35,-493.213 1261.5,-487.379 1259.8,-494.167"/>
+<g id="edge59" class="edge"><title>Node28&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M2274.17,-492.062C2111.87,-468.909 1681.97,-446.076 1532.23,-438.561"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="2274.06,-495.584 2284.47,-493.587 2275.09,-488.659 2274.06,-495.584"/>
 </g>
 <!-- Node28&#45;&gt;Node8 -->
-<g id="edge54" class="edge"><title>Node28&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M1429.76,-492.744C1466.7,-482.722 1504.44,-469.713 1517,-456 1549.04,-421.015 1541,-399.437 1541,-352 1541,-352 1541,-352 1541,-176 1541,-131.157 1533.9,-119.538 1517,-78 1511.86,-65.3519 1504.2,-52.1496 1497.56,-41.7426"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1428.66,-489.414 1419.89,-495.358 1430.46,-496.18 1428.66,-489.414"/>
+<g id="edge60" class="edge"><title>Node28&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M2334.67,-484.482C2310.5,-454.217 2277,-403.07 2277,-352 2277,-352 2277,-352 2277,-176 2277,-97.8485 2204.7,-103.99 2131,-78 2022.29,-39.664 1672.97,-26.7769 1540.03,-23.1947"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="2332.16,-486.936 2341.21,-492.446 2337.57,-482.496 2332.16,-486.936"/>
 </g>
 <!-- Node29&#45;&gt;Node3 -->
-<g id="edge56" class="edge"><title>Node29&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M1502.66,-499.981C1388.09,-484.035 1189.39,-456.377 1095.29,-443.279"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1502.41,-503.48 1512.79,-501.393 1503.37,-496.547 1502.41,-503.48"/>
+<g id="edge62" class="edge"><title>Node29&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M1088.32,-491.827C1215.67,-468.193 1354.39,-450.597 1427.94,-441.912"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1087.57,-488.405 1078.39,-493.686 1088.86,-495.286 1087.57,-488.405"/>
 </g>
 <!-- Node29&#45;&gt;Node8 -->
-<g id="edge57" class="edge"><title>Node29&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M1597.32,-482.496C1605.58,-450.594 1617,-398.111 1617,-352 1617,-352 1617,-352 1617,-176 1617,-131.157 1620.78,-113.199 1593,-78 1578.57,-59.7138 1556.54,-46.8253 1536.05,-38.0625"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1593.85,-481.923 1594.67,-492.487 1600.62,-483.722 1593.85,-481.923"/>
+<g id="edge63" class="edge"><title>Node29&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M915.988,-495.42C748.096,-460.587 393,-373.709 393,-262 393,-262 393,-262 393,-176 393,-125.16 408.432,-104.201 452,-78 536.705,-27.0593 1237.79,-22.3043 1435.99,-21.9839"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="915.294,-498.851 925.794,-497.44 916.706,-491.994 915.294,-498.851"/>
 </g>
 <!-- Node30&#45;&gt;Node3 -->
-<g id="edge60" class="edge"><title>Node30&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M1672.46,-492.003C1585.16,-480.169 1229.77,-451.064 1095.02,-440.18"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1672.14,-495.495 1682.55,-493.489 1673.16,-488.569 1672.14,-495.495"/>
+<g id="edge66" class="edge"><title>Node30&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M1255.93,-491.11C1310.94,-477.581 1380.82,-460.395 1427.79,-448.842"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1255.07,-487.718 1246.19,-493.505 1256.74,-494.516 1255.07,-487.718"/>
 </g>
 <!-- Node30&#45;&gt;Node8 -->
-<g id="edge61" class="edge"><title>Node30&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M1742.98,-483.404C1727.94,-452.05 1707,-399.823 1707,-352 1707,-352 1707,-352 1707,-176 1707,-93.3098 1601.9,-51.5747 1536,-33.5345"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1739.87,-485.012 1747.43,-492.436 1746.15,-481.919 1739.87,-485.012"/>
+<g id="edge67" class="edge"><title>Node30&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M1092.37,-489.686C901.827,-435.071 431,-296.613 431,-262 431,-262 431,-262 431,-176 431,-98.2171 502.36,-103.046 576,-78 736.884,-23.2824 1267.26,-20.9288 1435.98,-21.6165"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1091.47,-493.07 1102.05,-492.458 1093.4,-486.341 1091.47,-493.07"/>
 </g>
 <!-- Node31&#45;&gt;Node3 -->
-<g id="edge63" class="edge"><title>Node31&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M1840.85,-492.122C1603.97,-457.668 1541.02,-472.752 1307,-456 1233.42,-450.732 1148.33,-444.208 1095.09,-440.074"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1840.4,-495.594 1850.8,-493.584 1841.41,-488.668 1840.4,-495.594"/>
+<g id="edge69" class="edge"><title>Node31&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M1687.64,-489.859C1637.3,-476.801 1575.22,-460.697 1532.11,-449.517"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1686.99,-493.305 1697.55,-492.428 1688.74,-486.529 1686.99,-493.305"/>
 </g>
 <!-- Node31&#45;&gt;Node8 -->
-<g id="edge64" class="edge"><title>Node31&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M1900.89,-484.837C1874.07,-454.959 1837,-404.216 1837,-352 1837,-352 1837,-352 1837,-176 1837,-46.2861 1634.28,-24.7308 1536.09,-21.8982"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1898.45,-487.353 1907.8,-492.333 1903.6,-482.608 1898.45,-487.353"/>
+<g id="edge70" class="edge"><title>Node31&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M1787.6,-482.767C1825.27,-402.779 1914.75,-179.536 1795,-78 1757.29,-46.0273 1617.33,-31.1808 1540.06,-25.2912"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1784.23,-481.692 1783.07,-492.223 1790.55,-484.716 1784.23,-481.692"/>
 </g>
 <!-- Node32&#45;&gt;Node3 -->
-<g id="edge66" class="edge"><title>Node32&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M841.529,-490.685C889.205,-477.744 948.748,-461.583 990.7,-450.196"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="840.588,-487.314 831.854,-493.311 842.422,-494.069 840.588,-487.314"/>
+<g id="edge72" class="edge"><title>Node32&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M1934.34,-500.784C1824,-485.05 1626.26,-456.856 1532.32,-443.46"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1934.02,-504.273 1944.41,-502.22 1935,-497.343 1934.02,-504.273"/>
 </g>
 <!-- Node32&#45;&gt;Node8 -->
-<g id="edge67" class="edge"><title>Node32&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M684.209,-512.836C539.718,-513.074 239.007,-507.167 150,-456 100.819,-427.727 76,-408.729 76,-352 76,-352 76,-352 76,-176 76,-125.388 90.5618,-103.975 134,-78 190.623,-44.1407 1190.56,-26.541 1431.9,-22.7751"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="684.346,-516.336 694.337,-512.809 684.328,-509.336 684.346,-516.336"/>
+<g id="edge73" class="edge"><title>Node32&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M2044.44,-485.295C2052.86,-476.715 2061.22,-466.651 2067,-456 2089.62,-414.302 2091,-399.437 2091,-352 2091,-352 2091,-352 2091,-176 2091,-131.157 2100.9,-107.35 2067,-78 2027.58,-43.8769 1675.02,-28.3665 1540.15,-23.6441"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="2041.82,-482.955 2037.08,-492.43 2046.7,-487.979 2041.82,-482.955"/>
 </g>
 <!-- Node33&#45;&gt;Node3 -->
-<g id="edge70" class="edge"><title>Node33&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M1210.14,-572.364C1186.74,-562.266 1160.69,-549.261 1139,-534 1130.28,-527.867 1086.82,-482.398 1061.46,-455.6"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1209.07,-575.711 1219.65,-576.371 1211.79,-569.261 1209.07,-575.711"/>
+<g id="edge76" class="edge"><title>Node33&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M1596.42,-563.717C1586.19,-554.569 1574.87,-544.071 1565,-534 1539.62,-508.103 1512.54,-476.019 1495.94,-455.772"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1594.19,-566.417 1604,-570.421 1598.83,-561.174 1594.19,-566.417"/>
 </g>
 <!-- Node33&#45;&gt;Node8 -->
-<g id="edge71" class="edge"><title>Node33&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M1340.52,-572.85C1368.19,-562.297 1400.27,-548.842 1428,-534 1520.67,-484.406 1579,-457.104 1579,-352 1579,-352 1579,-352 1579,-176 1579,-128.956 1564.86,-117.3 1539,-78 1530.16,-64.567 1517.79,-51.6196 1507.01,-41.5641"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1339.05,-569.662 1330.93,-576.46 1341.52,-576.213 1339.05,-569.662"/>
+<g id="edge77" class="edge"><title>Node33&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M1727.47,-571.774C1768.95,-562.712 1817.04,-550.184 1859,-534 1895.37,-519.973 1900.5,-508.098 1936,-492 1978.26,-472.838 2004.12,-491.498 2034,-456 2064.26,-420.054 2053,-398.987 2053,-352 2053,-352 2053,-352 2053,-176 2053,-70.2646 1680.01,-34.6851 1540.14,-25.0601"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1726.68,-568.366 1717.63,-573.887 1728.15,-575.21 1726.68,-568.366"/>
 </g>
 <!-- Node33&#45;&gt;Node24 -->
-<g id="edge69" class="edge"><title>Node33&#45;&gt;Node24</title>
-<path fill="none" stroke="midnightblue" d="M1249.22,-568.544C1238.91,-557.119 1227.17,-544.113 1217.75,-533.667"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1246.79,-571.071 1256.09,-576.15 1251.99,-566.381 1246.79,-571.071"/>
+<g id="edge75" class="edge"><title>Node33&#45;&gt;Node24</title>
+<path fill="none" stroke="midnightblue" d="M1626.61,-560.297C1626.49,-551.301 1626.36,-541.653 1626.26,-533.506"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1623.11,-560.475 1626.74,-570.428 1630.11,-560.383 1623.11,-560.475"/>
 </g>
 <!-- Node34&#45;&gt;Node17 -->
-<g id="edge73" class="edge"><title>Node34&#45;&gt;Node17</title>
-<path fill="none" stroke="midnightblue" d="M1402.54,-404.217C1404.92,-393.379 1407.54,-381.409 1409.68,-371.667"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1399.08,-403.632 1400.36,-414.15 1405.92,-405.133 1399.08,-403.632"/>
+<g id="edge79" class="edge"><title>Node34&#45;&gt;Node17</title>
+<path fill="none" stroke="midnightblue" d="M1952.54,-404.217C1954.92,-393.379 1957.54,-381.409 1959.68,-371.667"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1949.08,-403.632 1950.36,-414.15 1955.92,-405.133 1949.08,-403.632"/>
 </g>
 </g>
 </svg>

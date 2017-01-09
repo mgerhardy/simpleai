@@ -1,0 +1,5 @@
+<map id="ai::AI" name="ai::AI">
+<area shape="rect" id="node2" href="$classai_1_1NonCopyable.html" title="ai::NonCopyable" alt="" coords="450,5,569,32"/>
+<area shape="rect" id="node8" href="$classai_1_1AggroMgr.html" title="Manages the aggro values for one AI instance. There are several ways to degrade the aggro values..." alt="" coords="461,369,557,396"/>
+<area shape="rect" id="node10" href="$classai_1_1Entry.html" title="One entry for the AggroMgr. " alt="" coords="6,369,77,396"/>
+</map>

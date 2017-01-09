@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -117,32 +117,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define AI_NOTHING_SELECTED (-1)</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">class </span>AI : <span class="keyword">public</span> NonCopyable, <span class="keyword">public</span> std::enable_shared_from_this&lt;AI&gt; {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span>TreeNode;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span>LUAAIRegistry;</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classai_1_1AI.html">   41</a></span>&#160;<span class="keyword">class </span><a class="code" href="classai_1_1AI.html">AI</a> : <span class="keyword">public</span> <a class="code" href="classai_1_1NonCopyable.html">NonCopyable</a>, <span class="keyword">public</span> std::enable_shared_from_this&lt;AI&gt; {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classai_1_1TreeNode.html">TreeNode</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classai_1_1LUAAIRegistry.html">LUAAIRegistry</a>;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span>IFilter;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span>Filter;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span>Server;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classai_1_1Filter.html">Filter</a>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classai_1_1Server.html">Server</a>;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">typedef</span> std::unordered_map&lt;int, TreeNodeStatus&gt; NodeStates;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    NodeStates _lastStatus;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">typedef</span> std::unordered_map&lt;int, uint64_t&gt; LastExecMap;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    LastExecMap _lastExecMillis;</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#af8d3fb225322ace298f0f98e9c24681c">   51</a></span>&#160;    <span class="keyword">typedef</span> std::unordered_map&lt;int, TreeNodeStatus&gt; <a class="code" href="classai_1_1AI.html#af8d3fb225322ace298f0f98e9c24681c">NodeStates</a>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="classai_1_1AI.html#af8d3fb225322ace298f0f98e9c24681c">NodeStates</a> _lastStatus;</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#a68ef5681a4b74d4af9ad5f4a8f6fb0b9">   56</a></span>&#160;    <span class="keyword">typedef</span> std::unordered_map&lt;int, uint64_t&gt; <a class="code" href="classai_1_1AI.html#a68ef5681a4b74d4af9ad5f4a8f6fb0b9">LastExecMap</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="classai_1_1AI.html#a68ef5681a4b74d4af9ad5f4a8f6fb0b9">LastExecMap</a> _lastExecMillis;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">mutable</span> FilteredEntities _filteredEntities;</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#a54100528adabadab13bed16fa9c64dca">   64</a></span>&#160;    <span class="keyword">mutable</span> FilteredEntities <a class="code" href="classai_1_1AI.html#a54100528adabadab13bed16fa9c64dca">_filteredEntities</a>;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">void</span> setFilteredEntities(<span class="keyword">const</span> FilteredEntities&amp; filteredEntities);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span> addFilteredEntity(CharacterId <span class="keywordtype">id</span>);</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">typedef</span> std::unordered_map&lt;int, int&gt; SelectorStates;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    SelectorStates _selectorStates;</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#a49c6cc984e7858eb8b90f09f8d74ba4c">   74</a></span>&#160;    <span class="keyword">typedef</span> std::unordered_map&lt;int, int&gt; <a class="code" href="classai_1_1AI.html#a49c6cc984e7858eb8b90f09f8d74ba4c">SelectorStates</a>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="classai_1_1AI.html#a49c6cc984e7858eb8b90f09f8d74ba4c">SelectorStates</a> _selectorStates;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">typedef</span> std::unordered_map&lt;int, int&gt; LimitStates;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    LimitStates _limitStates;</div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#a1af2f9e021566c30739cc6a2266f8fd7">   80</a></span>&#160;    <span class="keyword">typedef</span> std::unordered_map&lt;int, int&gt; <a class="code" href="classai_1_1AI.html#a1af2f9e021566c30739cc6a2266f8fd7">LimitStates</a>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="classai_1_1AI.html#a1af2f9e021566c30739cc6a2266f8fd7">LimitStates</a> _limitStates;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    TreeNodePtr _behaviour;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    AggroMgr _aggroMgr;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="classai_1_1AggroMgr.html">AggroMgr</a> _aggroMgr;</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    ICharacterPtr _character;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
@@ -155,28 +155,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    std::atomic_bool _reset;</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keyword">explicit</span> AI(<span class="keyword">const</span> TreeNodePtr&amp; behaviour) :</div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#a33cb1988e90e90d9a0bbefd94822cccd">  100</a></span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classai_1_1AI.html#a33cb1988e90e90d9a0bbefd94822cccd">AI</a>(<span class="keyword">const</span> TreeNodePtr&amp; behaviour) :</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            _behaviour(behaviour), _pause(false), _debuggingActive(false), _time(0L), _zone(nullptr), _reset(false) {</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">virtual</span> ~AI() {</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classai_1_1AI.html">AI</a>() {</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    }</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> update(int64_t dt, <span class="keywordtype">bool</span> debuggingActive);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classai_1_1AI.html#a3e9f570c2ae4199a0a8d3db545115615">update</a>(int64_t dt, <span class="keywordtype">bool</span> debuggingActive);</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordtype">void</span> setZone(Zone* zone);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    Zone* getZone() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordtype">bool</span> hasZone() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classai_1_1AI.html#a8ad0b6924bccf3590f664326f5c0c28e">setZone</a>(Zone* zone);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    Zone* <a class="code" href="classai_1_1AI.html#adb99314e96ce2f28caf8c7519c995c41">getZone</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1AI.html#ac250785a42b0607adc0289964fc9ae96">hasZone</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordtype">void</span> setPause(<span class="keywordtype">bool</span> pause);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classai_1_1AI.html#ab8b96f8e1c512d358e0d6689e0a9fe80">setPause</a>(<span class="keywordtype">bool</span> pause);</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="keywordtype">bool</span> isPause() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1AI.html#aa3edb898dd68fa9c625f53075c60b8b1">isPause</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keywordtype">bool</span> isDebuggingActive() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1AI.html#a13a16ddf553c45e01158b957bbc44f08">isDebuggingActive</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    TreeNodePtr getBehaviour() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    TreeNodePtr setBehaviour(<span class="keyword">const</span> TreeNodePtr&amp; newBehaviour);</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    ICharacterPtr getCharacter() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keywordtype">void</span> setCharacter(<span class="keyword">const</span> ICharacterPtr&amp; character);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    TreeNodePtr <a class="code" href="classai_1_1AI.html#a7dfcfda0edd7eaf55bc8c6cda5d3a067">getBehaviour</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    TreeNodePtr <a class="code" href="classai_1_1AI.html#a7bfbf07cc1b6c373345c32455ba28516">setBehaviour</a>(<span class="keyword">const</span> TreeNodePtr&amp; newBehaviour);</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    ICharacterPtr <a class="code" href="classai_1_1AI.html#ae9f10635677138cbabee84d91205488a">getCharacter</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classai_1_1AI.html#a05ba6aa50e4c2fd57735e65703a8042b">setCharacter</a>(<span class="keyword">const</span> ICharacterPtr&amp; character);</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> CharacterType&gt;</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keyword">inline</span> CharacterType&amp; getCharacterCast()<span class="keyword"> const </span>{</div>
@@ -187,77 +187,77 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    CharacterId getId() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    AggroMgr&amp; getAggroMgr();</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keyword">const</span> AggroMgr&amp; getAggroMgr() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    AggroMgr&amp; <a class="code" href="classai_1_1AI.html#af12ecc91666f2b63fb2bcc30e2fe3a5a">getAggroMgr</a>();</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keyword">const</span> AggroMgr&amp; <a class="code" href="classai_1_1AI.html#af12ecc91666f2b63fb2bcc30e2fe3a5a">getAggroMgr</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keyword">const</span> FilteredEntities&amp; getFilteredEntities() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keyword">const</span> FilteredEntities&amp; <a class="code" href="classai_1_1AI.html#aa9b083730a8d563ed4255398f19c470e">getFilteredEntities</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keyword">inline</span> std::shared_ptr&lt;AI&gt; ptr() {</div>
+<div class="line"><a name="l00195"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#a6943a54a914c636f8867a6f9d8821c7c">  195</a></span>&#160;    <span class="keyword">inline</span> std::shared_ptr&lt;AI&gt; <a class="code" href="classai_1_1AI.html#a6943a54a914c636f8867a6f9d8821c7c">ptr</a>() {</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        <span class="keywordflow">return</span> shared_from_this();</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    }</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;};</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="keyword">inline</span> TreeNodePtr AI::getBehaviour()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00200"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#a7dfcfda0edd7eaf55bc8c6cda5d3a067">  200</a></span>&#160;<span class="keyword">inline</span> TreeNodePtr <a class="code" href="classai_1_1AI.html#a7dfcfda0edd7eaf55bc8c6cda5d3a067">AI::getBehaviour</a>()<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="keywordflow">return</span> _behaviour;</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;}</div>
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="keyword">inline</span> TreeNodePtr AI::setBehaviour(<span class="keyword">const</span> TreeNodePtr&amp; newBehaviour) {</div>
+<div class="line"><a name="l00204"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#a7bfbf07cc1b6c373345c32455ba28516">  204</a></span>&#160;<span class="keyword">inline</span> TreeNodePtr <a class="code" href="classai_1_1AI.html#a7bfbf07cc1b6c373345c32455ba28516">AI::setBehaviour</a>(<span class="keyword">const</span> TreeNodePtr&amp; newBehaviour) {</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    TreeNodePtr current = _behaviour;</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    _behaviour = newBehaviour;</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    _reset = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <span class="keywordflow">return</span> current;</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;}</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> AI::setPause(<span class="keywordtype">bool</span> pause) {</div>
+<div class="line"><a name="l00211"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#ab8b96f8e1c512d358e0d6689e0a9fe80">  211</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classai_1_1AI.html#ab8b96f8e1c512d358e0d6689e0a9fe80">AI::setPause</a>(<span class="keywordtype">bool</span> pause) {</div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    _pause = pause;</div>
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;}</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> AI::isPause()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00215"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#aa3edb898dd68fa9c625f53075c60b8b1">  215</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classai_1_1AI.html#aa3edb898dd68fa9c625f53075c60b8b1">AI::isPause</a>()<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    <span class="keywordflow">return</span> _pause;</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;}</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="keyword">inline</span> ICharacterPtr AI::getCharacter()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00219"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#ae9f10635677138cbabee84d91205488a">  219</a></span>&#160;<span class="keyword">inline</span> ICharacterPtr <a class="code" href="classai_1_1AI.html#ae9f10635677138cbabee84d91205488a">AI::getCharacter</a>()<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keywordflow">return</span> _character;</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;}</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> AI::setCharacter(<span class="keyword">const</span> ICharacterPtr&amp; character) {</div>
+<div class="line"><a name="l00223"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#a05ba6aa50e4c2fd57735e65703a8042b">  223</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classai_1_1AI.html#a05ba6aa50e4c2fd57735e65703a8042b">AI::setCharacter</a>(<span class="keyword">const</span> ICharacterPtr&amp; character) {</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <a class="code" href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a>(!_character, <span class="stringliteral">&quot;There is already a character set&quot;</span>);</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    _character = character;</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;}</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="keyword">inline</span> AggroMgr&amp; AI::getAggroMgr() {</div>
+<div class="line"><a name="l00228"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#af12ecc91666f2b63fb2bcc30e2fe3a5a">  228</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classai_1_1AggroMgr.html">AggroMgr</a>&amp; <a class="code" href="classai_1_1AI.html#af12ecc91666f2b63fb2bcc30e2fe3a5a">AI::getAggroMgr</a>() {</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordflow">return</span> _aggroMgr;</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;}</div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="keyword">inline</span> <span class="keyword">const</span> AggroMgr&amp; AI::getAggroMgr()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00232"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#a99099f0eeeaab3e482fd9a23e41c28db">  232</a></span>&#160;<span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classai_1_1AggroMgr.html">AggroMgr</a>&amp; <a class="code" href="classai_1_1AI.html#af12ecc91666f2b63fb2bcc30e2fe3a5a">AI::getAggroMgr</a>()<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="keywordflow">return</span> _aggroMgr;</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;}</div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="keyword">inline</span> <span class="keyword">const</span> FilteredEntities&amp; AI::getFilteredEntities()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="keywordflow">return</span> _filteredEntities;</div>
+<div class="line"><a name="l00236"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#aa9b083730a8d563ed4255398f19c470e">  236</a></span>&#160;<span class="keyword">inline</span> <span class="keyword">const</span> FilteredEntities&amp; <a class="code" href="classai_1_1AI.html#aa9b083730a8d563ed4255398f19c470e">AI::getFilteredEntities</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classai_1_1AI.html#a54100528adabadab13bed16fa9c64dca">_filteredEntities</a>;</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;}</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> AI::setFilteredEntities(<span class="keyword">const</span> FilteredEntities&amp; filteredEntities) {</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    _filteredEntities = filteredEntities;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    <a class="code" href="classai_1_1AI.html#a54100528adabadab13bed16fa9c64dca">_filteredEntities</a> = filteredEntities;</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;}</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;</div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> AI::addFilteredEntity(CharacterId <span class="keywordtype">id</span>) {</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    _filteredEntities.push_back(<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    <a class="code" href="classai_1_1AI.html#a54100528adabadab13bed16fa9c64dca">_filteredEntities</a>.push_back(<span class="keywordtype">id</span>);</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;}</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> AI::isDebuggingActive()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00248"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#a13a16ddf553c45e01158b957bbc44f08">  248</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classai_1_1AI.html#a13a16ddf553c45e01158b957bbc44f08">AI::isDebuggingActive</a>()<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    <span class="keywordflow">return</span> _debuggingActive;</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;}</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> AI::setZone(Zone* zone) {</div>
+<div class="line"><a name="l00252"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#a8ad0b6924bccf3590f664326f5c0c28e">  252</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classai_1_1AI.html#a8ad0b6924bccf3590f664326f5c0c28e">AI::setZone</a>(Zone* zone) {</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    _zone = zone;</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;}</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="keyword">inline</span> Zone* AI::getZone()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00256"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#adb99314e96ce2f28caf8c7519c995c41">  256</a></span>&#160;<span class="keyword">inline</span> Zone* <a class="code" href="classai_1_1AI.html#adb99314e96ce2f28caf8c7519c995c41">AI::getZone</a>()<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keywordflow">return</span> _zone;</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;}</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> AI::hasZone()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00260"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#ac250785a42b0607adc0289964fc9ae96">  260</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classai_1_1AI.html#ac250785a42b0607adc0289964fc9ae96">AI::hasZone</a>()<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <span class="keywordflow">return</span> _zone != <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;}</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
@@ -272,8 +272,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="keywordflow">return</span> _character-&gt;getId();</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;}</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> AI::update(int64_t dt, <span class="keywordtype">bool</span> debuggingActive) {</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keywordflow">if</span> (isPause()) {</div>
+<div class="line"><a name="l00275"></a><span class="lineno"><a class="line" href="classai_1_1AI.html#a3e9f570c2ae4199a0a8d3db545115615">  275</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classai_1_1AI.html#a3e9f570c2ae4199a0a8d3db545115615">AI::update</a>(int64_t dt, <span class="keywordtype">bool</span> debuggingActive) {</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classai_1_1AI.html#aa3edb898dd68fa9c625f53075c60b8b1">isPause</a>()) {</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    }</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;</div>
@@ -286,27 +286,55 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        _reset = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        _lastStatus.clear();</div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        _lastExecMillis.clear();</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        _filteredEntities.clear();</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        <a class="code" href="classai_1_1AI.html#a54100528adabadab13bed16fa9c64dca">_filteredEntities</a>.clear();</div>
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        _selectorStates.clear();</div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    }</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    _debuggingActive = debuggingActive;</div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    _time += dt;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    _aggroMgr.update(dt);</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    _aggroMgr.<a class="code" href="classai_1_1AggroMgr.html#a85139d95b8fef8abae8984375078af27">update</a>(dt);</div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;}</div>
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;</div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="keyword">typedef</span> std::shared_ptr&lt;AI&gt; AIPtr;</div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
 <div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;}</div>
+<div class="ttc" id="classai_1_1AI_html_a3e9f570c2ae4199a0a8d3db545115615"><div class="ttname"><a href="classai_1_1AI.html#a3e9f570c2ae4199a0a8d3db545115615">ai::AI::update</a></div><div class="ttdeci">virtual void update(int64_t dt, bool debuggingActive)</div><div class="ttdoc">Update the behaviour and the aggro values if the entity is not on hold. </div><div class="ttdef"><b>Definition:</b> AI.h:275</div></div>
 <div class="ttc" id="Types_8h_html_adb3840229c4143eb2b8e2fe2d4ee8163"><div class="ttname"><a href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a></div><div class="ttdeci">#define ai_assert(condition,...)</div><div class="ttdoc">Provide your own assert - this is only executed in DEBUG mode. </div><div class="ttdef"><b>Definition:</b> Types.h:75</div></div>
+<div class="ttc" id="classai_1_1AggroMgr_html"><div class="ttname"><a href="classai_1_1AggroMgr.html">ai::AggroMgr</a></div><div class="ttdoc">Manages the aggro values for one AI instance. There are several ways to degrade the aggro values...</div><div class="ttdef"><b>Definition:</b> AggroMgr.h:21</div></div>
+<div class="ttc" id="classai_1_1AI_html_adb99314e96ce2f28caf8c7519c995c41"><div class="ttname"><a href="classai_1_1AI.html#adb99314e96ce2f28caf8c7519c995c41">ai::AI::getZone</a></div><div class="ttdeci">Zone * getZone() const </div><div class="ttdef"><b>Definition:</b> AI.h:256</div></div>
+<div class="ttc" id="classai_1_1AI_html_a6943a54a914c636f8867a6f9d8821c7c"><div class="ttname"><a href="classai_1_1AI.html#a6943a54a914c636f8867a6f9d8821c7c">ai::AI::ptr</a></div><div class="ttdeci">std::shared_ptr&lt; AI &gt; ptr()</div><div class="ttdef"><b>Definition:</b> AI.h:195</div></div>
 <div class="ttc" id="Types_8h_html"><div class="ttname"><a href="Types_8h.html">Types.h</a></div></div>
+<div class="ttc" id="classai_1_1AI_html_aa9b083730a8d563ed4255398f19c470e"><div class="ttname"><a href="classai_1_1AI.html#aa9b083730a8d563ed4255398f19c470e">ai::AI::getFilteredEntities</a></div><div class="ttdeci">const FilteredEntities &amp; getFilteredEntities() const </div><div class="ttdoc">FilteredEntities is holding a list of CharacterIds that were selected by the Select condition...</div><div class="ttdef"><b>Definition:</b> AI.h:236</div></div>
 <div class="ttc" id="Math_8h_html"><div class="ttname"><a href="Math_8h.html">Math.h</a></div></div>
+<div class="ttc" id="classai_1_1AI_html_ac250785a42b0607adc0289964fc9ae96"><div class="ttname"><a href="classai_1_1AI.html#ac250785a42b0607adc0289964fc9ae96">ai::AI::hasZone</a></div><div class="ttdeci">bool hasZone() const </div><div class="ttdoc">Returns true if the entity is already in a Zone. This must not be managed manually, the Zone is doing that already. </div><div class="ttdef"><b>Definition:</b> AI.h:260</div></div>
 <div class="ttc" id="NonCopyable_8h_html"><div class="ttname"><a href="NonCopyable_8h.html">NonCopyable.h</a></div></div>
 <div class="ttc" id="GroupId_8h_html"><div class="ttname"><a href="GroupId_8h.html">GroupId.h</a></div></div>
 <div class="ttc" id="ICharacter_8h_html"><div class="ttname"><a href="ICharacter_8h.html">ICharacter.h</a></div></div>
+<div class="ttc" id="classai_1_1AI_html_a7bfbf07cc1b6c373345c32455ba28516"><div class="ttname"><a href="classai_1_1AI.html#a7bfbf07cc1b6c373345c32455ba28516">ai::AI::setBehaviour</a></div><div class="ttdeci">TreeNodePtr setBehaviour(const TreeNodePtr &amp;newBehaviour)</div><div class="ttdoc">Set a new behaviour. </div><div class="ttdef"><b>Definition:</b> AI.h:204</div></div>
 <div class="ttc" id="AggroMgr_8h_html"><div class="ttname"><a href="AggroMgr_8h.html">AggroMgr.h</a></div></div>
+<div class="ttc" id="classai_1_1AI_html_af8d3fb225322ace298f0f98e9c24681c"><div class="ttname"><a href="classai_1_1AI.html#af8d3fb225322ace298f0f98e9c24681c">ai::AI::NodeStates</a></div><div class="ttdeci">std::unordered_map&lt; int, TreeNodeStatus &gt; NodeStates</div><div class="ttdef"><b>Definition:</b> AI.h:51</div></div>
+<div class="ttc" id="classai_1_1AI_html_a33cb1988e90e90d9a0bbefd94822cccd"><div class="ttname"><a href="classai_1_1AI.html#a33cb1988e90e90d9a0bbefd94822cccd">ai::AI::AI</a></div><div class="ttdeci">AI(const TreeNodePtr &amp;behaviour)</div><div class="ttdef"><b>Definition:</b> AI.h:100</div></div>
+<div class="ttc" id="classai_1_1AI_html_a1af2f9e021566c30739cc6a2266f8fd7"><div class="ttname"><a href="classai_1_1AI.html#a1af2f9e021566c30739cc6a2266f8fd7">ai::AI::LimitStates</a></div><div class="ttdeci">std::unordered_map&lt; int, int &gt; LimitStates</div><div class="ttdef"><b>Definition:</b> AI.h:80</div></div>
+<div class="ttc" id="classai_1_1AI_html_a49c6cc984e7858eb8b90f09f8d74ba4c"><div class="ttname"><a href="classai_1_1AI.html#a49c6cc984e7858eb8b90f09f8d74ba4c">ai::AI::SelectorStates</a></div><div class="ttdeci">std::unordered_map&lt; int, int &gt; SelectorStates</div><div class="ttdef"><b>Definition:</b> AI.h:74</div></div>
 <div class="ttc" id="Thread_8h_html"><div class="ttname"><a href="Thread_8h.html">Thread.h</a></div></div>
+<div class="ttc" id="classai_1_1AI_html"><div class="ttname"><a href="classai_1_1AI.html">ai::AI</a></div><div class="ttdoc">This is the type the library works with. It interacts with it&#39;s real world entity by the ICharacter i...</div><div class="ttdef"><b>Definition:</b> AI.h:41</div></div>
+<div class="ttc" id="classai_1_1TreeNode_html"><div class="ttname"><a href="classai_1_1TreeNode.html">ai::TreeNode</a></div><div class="ttdoc">The base class for all behaviour tree actions. </div><div class="ttdef"><b>Definition:</b> TreeNode.h:88</div></div>
+<div class="ttc" id="classai_1_1AI_html_a8ad0b6924bccf3590f664326f5c0c28e"><div class="ttname"><a href="classai_1_1AI.html#a8ad0b6924bccf3590f664326f5c0c28e">ai::AI::setZone</a></div><div class="ttdeci">void setZone(Zone *zone)</div><div class="ttdoc">Set the new Zone this entity is in. </div><div class="ttdef"><b>Definition:</b> AI.h:252</div></div>
+<div class="ttc" id="classai_1_1AI_html_a7dfcfda0edd7eaf55bc8c6cda5d3a067"><div class="ttname"><a href="classai_1_1AI.html#a7dfcfda0edd7eaf55bc8c6cda5d3a067">ai::AI::getBehaviour</a></div><div class="ttdeci">TreeNodePtr getBehaviour() const </div><div class="ttdoc">Get the current behaviour for this ai. </div><div class="ttdef"><b>Definition:</b> AI.h:200</div></div>
+<div class="ttc" id="classai_1_1LUAAIRegistry_html"><div class="ttname"><a href="classai_1_1LUAAIRegistry.html">ai::LUAAIRegistry</a></div><div class="ttdoc">Allows you to register lua TreeNodes, Conditions, Filters and ISteerings. </div><div class="ttdef"><b>Definition:</b> LUAAIRegistry.h:69</div></div>
+<div class="ttc" id="classai_1_1AI_html_aa3edb898dd68fa9c625f53075c60b8b1"><div class="ttname"><a href="classai_1_1AI.html#aa3edb898dd68fa9c625f53075c60b8b1">ai::AI::isPause</a></div><div class="ttdeci">bool isPause() const </div><div class="ttdoc">don&#39;t update the entity as long as it is paused </div><div class="ttdef"><b>Definition:</b> AI.h:215</div></div>
 <div class="ttc" id="ITreeLoader_8h_html"><div class="ttname"><a href="ITreeLoader_8h.html">ITreeLoader.h</a></div></div>
+<div class="ttc" id="classai_1_1NonCopyable_html"><div class="ttname"><a href="classai_1_1NonCopyable.html">ai::NonCopyable</a></div><div class="ttdef"><b>Definition:</b> NonCopyable.h:8</div></div>
+<div class="ttc" id="classai_1_1AI_html_ae9f10635677138cbabee84d91205488a"><div class="ttname"><a href="classai_1_1AI.html#ae9f10635677138cbabee84d91205488a">ai::AI::getCharacter</a></div><div class="ttdeci">ICharacterPtr getCharacter() const </div><div class="ttdef"><b>Definition:</b> AI.h:219</div></div>
+<div class="ttc" id="classai_1_1AI_html_a05ba6aa50e4c2fd57735e65703a8042b"><div class="ttname"><a href="classai_1_1AI.html#a05ba6aa50e4c2fd57735e65703a8042b">ai::AI::setCharacter</a></div><div class="ttdeci">void setCharacter(const ICharacterPtr &amp;character)</div><div class="ttdef"><b>Definition:</b> AI.h:223</div></div>
+<div class="ttc" id="classai_1_1AI_html_af12ecc91666f2b63fb2bcc30e2fe3a5a"><div class="ttname"><a href="classai_1_1AI.html#af12ecc91666f2b63fb2bcc30e2fe3a5a">ai::AI::getAggroMgr</a></div><div class="ttdeci">AggroMgr &amp; getAggroMgr()</div><div class="ttdef"><b>Definition:</b> AI.h:228</div></div>
+<div class="ttc" id="classai_1_1AggroMgr_html_a85139d95b8fef8abae8984375078af27"><div class="ttname"><a href="classai_1_1AggroMgr.html#a85139d95b8fef8abae8984375078af27">ai::AggroMgr::update</a></div><div class="ttdeci">void update(int64_t deltaMillis)</div><div class="ttdoc">this will update the aggro list according to the reduction type of an entry. </div><div class="ttdef"><b>Definition:</b> AggroMgr.h:131</div></div>
+<div class="ttc" id="classai_1_1AI_html_a68ef5681a4b74d4af9ad5f4a8f6fb0b9"><div class="ttname"><a href="classai_1_1AI.html#a68ef5681a4b74d4af9ad5f4a8f6fb0b9">ai::AI::LastExecMap</a></div><div class="ttdeci">std::unordered_map&lt; int, uint64_t &gt; LastExecMap</div><div class="ttdef"><b>Definition:</b> AI.h:56</div></div>
+<div class="ttc" id="classai_1_1Filter_html"><div class="ttname"><a href="classai_1_1Filter.html">ai::Filter</a></div><div class="ttdoc">The filter condition executes some selection filters (IFilter) and evaluates to true if the resulting...</div><div class="ttdef"><b>Definition:</b> Filter.h:20</div></div>
+<div class="ttc" id="classai_1_1AI_html_a54100528adabadab13bed16fa9c64dca"><div class="ttname"><a href="classai_1_1AI.html#a54100528adabadab13bed16fa9c64dca">ai::AI::_filteredEntities</a></div><div class="ttdeci">FilteredEntities _filteredEntities</div><div class="ttdef"><b>Definition:</b> AI.h:64</div></div>
+<div class="ttc" id="classai_1_1Server_html"><div class="ttname"><a href="classai_1_1Server.html">ai::Server</a></div><div class="ttdoc">The server can serialize the state of the AI and broadcast it to all connected clients. </div><div class="ttdef"><b>Definition:</b> Server.h:50</div></div>
+<div class="ttc" id="classai_1_1AI_html_a13a16ddf553c45e01158b957bbc44f08"><div class="ttname"><a href="classai_1_1AI.html#a13a16ddf553c45e01158b957bbc44f08">ai::AI::isDebuggingActive</a></div><div class="ttdeci">bool isDebuggingActive() const </div><div class="ttdef"><b>Definition:</b> AI.h:248</div></div>
+<div class="ttc" id="classai_1_1AI_html_ab8b96f8e1c512d358e0d6689e0a9fe80"><div class="ttname"><a href="classai_1_1AI.html#ab8b96f8e1c512d358e0d6689e0a9fe80">ai::AI::setPause</a></div><div class="ttdeci">void setPause(bool pause)</div><div class="ttdoc">don&#39;t update the entity as long as it is paused </div><div class="ttdef"><b>Definition:</b> AI.h:211</div></div>
 <div class="ttc" id="TreeNode_8h_html"><div class="ttname"><a href="TreeNode_8h.html">TreeNode.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

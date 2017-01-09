@@ -1,16 +1,17 @@
 <map id="ai::NonCopyable" name="ai::NonCopyable">
-<area shape="rect" id="node2" href="$classai_1_1ICharacter.html" title="Class that should be extended by the AI controlled entity class. " alt="" coords="243,5,344,32"/>
-<area shape="rect" id="node3" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; KEY, TYPE, CTX \&gt;" alt="" coords="218,57,369,98"/>
-<area shape="rect" id="node4" href="$classai_1_1lua_1_1LUA.html" title="ai::lua::LUA" alt="" coords="248,123,339,149"/>
-<area shape="rect" id="node5" href="$classai_1_1ProtocolMessageFactory.html" title="ai::ProtocolMessageFactory" alt="" coords="201,173,386,200"/>
-<area shape="rect" id="node6" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, ICondition,\l ConditionFactoryContext \&gt;" alt="" coords="202,224,385,280"/>
-<area shape="rect" id="node8" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, IFilter,\l FilterFactoryContext \&gt;" alt="" coords="215,304,372,360"/>
-<area shape="rect" id="node10" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, movement\l::ISteering, SteeringFactoryContext \&gt;" alt="" coords="173,384,413,440"/>
-<area shape="rect" id="node12" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, TreeNode,\l SteerNodeFactoryContext \&gt;" alt="" coords="198,464,389,520"/>
-<area shape="rect" id="node14" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, TreeNode,\l TreeNodeFactoryContext \&gt;" alt="" coords="201,544,386,600"/>
-<area shape="rect" id="node7" href="$classai_1_1AIRegistry_1_1ConditionFactory.html" title="ai::AIRegistry::Condition\lFactory" alt="" coords="471,231,636,273"/>
-<area shape="rect" id="node9" href="$classai_1_1AIRegistry_1_1FilterFactory.html" title="ai::AIRegistry::FilterFactory" alt="" coords="462,319,645,345"/>
-<area shape="rect" id="node11" href="$classai_1_1AIRegistry_1_1SteeringFactory.html" title="ai::AIRegistry::Steering\lFactory" alt="" coords="474,391,633,433"/>
-<area shape="rect" id="node13" href="$classai_1_1AIRegistry_1_1SteerNodeFactory.html" title="ai::AIRegistry::SteerNode\lFactory" alt="" coords="467,471,639,513"/>
-<area shape="rect" id="node15" href="$classai_1_1AIRegistry_1_1TreeNodeFactory.html" title="ai::AIRegistry::TreeNode\lFactory" alt="" coords="470,551,637,593"/>
+<area shape="rect" id="node2" href="$classai_1_1AI.html" title="This is the type the library works with. It interacts with it&#39;s real world entity by the ICharacter i..." alt="" coords="267,5,320,32"/>
+<area shape="rect" id="node3" href="$classai_1_1ICharacter.html" title="Class that should be extended by the AI controlled entity class. " alt="" coords="243,56,344,83"/>
+<area shape="rect" id="node4" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; KEY, TYPE, CTX \&gt;" alt="" coords="218,107,369,149"/>
+<area shape="rect" id="node5" href="$classai_1_1lua_1_1LUA.html" title="ai::lua::LUA" alt="" coords="248,173,339,200"/>
+<area shape="rect" id="node6" href="$classai_1_1ProtocolMessageFactory.html" title="ai::ProtocolMessageFactory" alt="" coords="201,224,386,251"/>
+<area shape="rect" id="node7" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, ICondition,\l ConditionFactoryContext \&gt;" alt="" coords="202,275,385,331"/>
+<area shape="rect" id="node9" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, IFilter,\l FilterFactoryContext \&gt;" alt="" coords="215,355,372,411"/>
+<area shape="rect" id="node11" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, movement\l::ISteering, SteeringFactoryContext \&gt;" alt="" coords="173,435,413,491"/>
+<area shape="rect" id="node13" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, TreeNode,\l SteerNodeFactoryContext \&gt;" alt="" coords="198,515,389,571"/>
+<area shape="rect" id="node15" href="$classai_1_1IFactoryRegistry.html" title="ai::IFactoryRegistry\l\&lt; std::string, TreeNode,\l TreeNodeFactoryContext \&gt;" alt="" coords="201,595,386,651"/>
+<area shape="rect" id="node8" href="$classai_1_1AIRegistry_1_1ConditionFactory.html" title="ai::AIRegistry::Condition\lFactory" alt="" coords="471,282,636,323"/>
+<area shape="rect" id="node10" href="$classai_1_1AIRegistry_1_1FilterFactory.html" title="ai::AIRegistry::FilterFactory" alt="" coords="462,369,645,396"/>
+<area shape="rect" id="node12" href="$classai_1_1AIRegistry_1_1SteeringFactory.html" title="ai::AIRegistry::Steering\lFactory" alt="" coords="474,442,633,483"/>
+<area shape="rect" id="node14" href="$classai_1_1AIRegistry_1_1SteerNodeFactory.html" title="ai::AIRegistry::SteerNode\lFactory" alt="" coords="467,522,639,563"/>
+<area shape="rect" id="node16" href="$classai_1_1AIRegistry_1_1TreeNodeFactory.html" title="ai::AIRegistry::TreeNode\lFactory" alt="" coords="470,602,637,643"/>
 </map>

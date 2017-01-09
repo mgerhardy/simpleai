@@ -65,7 +65,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -81,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="purpose"></a>
 Purpose</h1>
-<p>SimpleAI is a small and (hopefully) easy to use C++ library for behaviour tree based AI. It's main focus is about games - but of course it can be used for other things, too. The project is released under the MIT license and thus can be used for open source as well as commercial and closed source projects. If you use it, it would be nice to provide a link to the github page.</p>
+<p>SimpleAI is a small and (hopefully) easy to use C++ library for behaviour tree based <a class="el" href="classai_1_1AI.html">AI</a>. It's main focus is about games - but of course it can be used for other things, too. The project is released under the MIT license and thus can be used for open source as well as commercial and closed source projects. If you use it, it would be nice to provide a link to the github page.</p>
 <ul>
 <li><a href="http://github.com/mgerhardy/simpleai/">GitHub page</a></li>
 <li>Small example use case:<ul>
@@ -200,7 +200,7 @@ Running it:</h1>
 <ul>
 <li><code>./simpleai-run -file src/run/behaviours.lua</code></li>
 </ul>
-<p>After you ran it, you can connect with the remote debugger and inspect the live state of every spawned AI entity.</p>
+<p>After you ran it, you can connect with the remote debugger and inspect the live state of every spawned <a class="el" href="classai_1_1AI.html">AI</a> entity.</p>
 <h1><a class="anchor" id="using"></a>
 Using it:</h1>
 <ul>
@@ -211,7 +211,7 @@ Using it:</h1>
 <li>Assign attributes to your characters that should be shown in the debuggers live view.</li>
 </ul>
 <p>As the name states, it should be easy to use and to integrate into your application. You have the ability to create new customized actions, override existing ones with your own implementations and so on.</p>
-<p>To integrate the AI into your application, your entity class should implement or include the <a class="el" href="classai_1_1ICharacter.html">ICharacter</a> interface. You only have to call the <a class="el" href="classai_1_1ICharacter.html#aeb7d0c33745a9444cdf5604f14254c3c">ICharacter::update()</a> method to get the AI and the character updated. You can view the included <code>simpleai-run</code> tool for getting an idea on how to do this.</p>
+<p>To integrate the <a class="el" href="classai_1_1AI.html">AI</a> into your application, your entity class should implement or include the <a class="el" href="classai_1_1ICharacter.html">ICharacter</a> interface. You only have to call the <a class="el" href="classai_1_1ICharacter.html#aeb7d0c33745a9444cdf5604f14254c3c">ICharacter::update()</a> method to get the <a class="el" href="classai_1_1AI.html">AI</a> and the character updated. You can view the included <code>simpleai-run</code> tool for getting an idea on how to do this.</p>
 <p>Once this step is done, you can go on with creating new actions for your application. All you have to do for this is to extend <a class="el" href="classai_1_1ITask.html">ITask</a>. The entity instance given to the <a class="el" href="classai_1_1ITask.html#aa5d29aca24485d8a55432805dc26121c">ITask::doAction()</a> method contains the <a class="el" href="classai_1_1ICharacter.html">ICharacter</a> that you bound to your application entity.</p>
 <p>After implementing these actions, all you have to do in order to use them with e.g. the existing <a class="el" href="classai_1_1LUATreeLoader.html">LUATreeLoader</a> is to add them to the registry. Just call <a class="el" href="classai_1_1AIRegistry.html#aa91c90830efcaf5306fc287c6f2898a7">AIRegistry::registerNodeFactory()</a> on your <a class="el" href="classai_1_1AIRegistry.html">AIRegistry</a> instance and you are ready to write LUA scripts with it. Again, as a reference, just check out the example code. You can also create nodes, conditions, filter and steering methods via LUA directly. See <a class="el" href="classai_1_1LUAAIRegistry.html">LUAAIRegistry</a> for more information about this.</p>
 <p>Note the usage of a few macros that makes your life easier:</p>
@@ -228,7 +228,7 @@ Using it:</h1>
 <div class="line"><a class="code" href="classai_1_1LUATreeLoader.html">ai::LUATreeLoader</a> loader(registry);</div>
 <div class="line">loader.init(allMyLuaBehaviourTreesInThisString);</div>
 <div class="line"><span class="keyword">const</span> ai::TreeNodePtr&amp; root = loader.load(<span class="stringliteral">&quot;BehaviourNameEgDefensiveBehaviour&quot;</span>);</div>
-</div><!-- fragment --><p>The root node created by the load method should be given to your <a class="el" href="classai_1_1ICharacter.html">ICharacter</a> implementation which holds an instance of the AI class. Each SimpleAI controlled entity in your world will have one of them.</p>
+</div><!-- fragment --><p>The root node created by the load method should be given to your <a class="el" href="classai_1_1ICharacter.html">ICharacter</a> implementation which holds an instance of the <a class="el" href="classai_1_1AI.html">AI</a> class. Each SimpleAI controlled entity in your world will have one of them.</p>
 <h1><a class="anchor" id="debugging"></a>
 Remote Debugging</h1>
 <div class="image">
@@ -243,7 +243,7 @@ Remote Debugging</h1>
 <li>Show the attributes that are assigned to an entity (<a class="el" href="classai_1_1ICharacter.html#a043926e1f73b90f846179b9a24217100" title="Set an attribute that can be used for debugging. ">ai::ICharacter::setAttribute()</a>)</li>
 <li>Pause execution of a zone</li>
 <li>Single step in a <a class="el" href="group__Zone.html">Zone</a> (after it was paused)</li>
-<li>Reset states of the AI in a <a class="el" href="group__Zone.html">Zone</a></li>
+<li>Reset states of the <a class="el" href="classai_1_1AI.html">AI</a> in a <a class="el" href="group__Zone.html">Zone</a></li>
 <li>Live editing of the behaviour tree (update, add, remove)</li>
 </ul>
 <p>Examples on how to customize the debugger</p>

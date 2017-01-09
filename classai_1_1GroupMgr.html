@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -96,7 +96,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Maintains the groups a <code>AI</code> can be in.  
+<p>Maintains the groups a <code><a class="el" href="classai_1_1AI.html" title="This is the type the library works with. It interacts with it&#39;s real world entity by the ICharacter i...">AI</a></code> can be in.  
  <a href="classai_1_1GroupMgr.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="GroupMgr_8h_source.html">GroupMgr.h</a>&gt;</code></p>
@@ -104,7 +104,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8110fd8206339befd09ff4f071760c03"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1GroupMgr.html#a8110fd8206339befd09ff4f071760c03">add</a> (GroupId id, const AIPtr &amp;ai)</td></tr>
-<tr class="memdesc:a8110fd8206339befd09ff4f071760c03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new group member to the given GroupId. If the group does not yet exists, it it created and the given AI instance will be the leader of the group.  <a href="#a8110fd8206339befd09ff4f071760c03">More...</a><br/></td></tr>
+<tr class="memdesc:a8110fd8206339befd09ff4f071760c03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new group member to the given GroupId. If the group does not yet exists, it it created and the given <a class="el" href="classai_1_1AI.html">AI</a> instance will be the leader of the group.  <a href="#a8110fd8206339befd09ff4f071760c03">More...</a><br/></td></tr>
 <tr class="separator:a8110fd8206339befd09ff4f071760c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adfb81003bd45be80b177a7097fbb281f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adfb81003bd45be80b177a7097fbb281f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (int64_t deltaTime)</td></tr>
@@ -113,7 +113,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (int64_t d
 <tr class="memdesc:a378fe9099261a8645daaf13fd1f0edd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a group member from the given GroupId. If the member is the group leader, a new leader will be picked randomly. If after the removal of the member only one other member is left in the group, the group is destroyed.  <a href="#a378fe9099261a8645daaf13fd1f0edd9">More...</a><br/></td></tr>
 <tr class="separator:a378fe9099261a8645daaf13fd1f0edd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f231c640ed707abb82ef1a92264afc2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1GroupMgr.html#a2f231c640ed707abb82ef1a92264afc2">removeFromAllGroups</a> (const AIPtr &amp;ai)</td></tr>
-<tr class="memdesc:a2f231c640ed707abb82ef1a92264afc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use this method to remove a AI instance from all the group it is part of. Useful if you e.g. destroy a AI instance.  <a href="#a2f231c640ed707abb82ef1a92264afc2">More...</a><br/></td></tr>
+<tr class="memdesc:a2f231c640ed707abb82ef1a92264afc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use this method to remove a <a class="el" href="classai_1_1AI.html">AI</a> instance from all the group it is part of. Useful if you e.g. destroy a <a class="el" href="classai_1_1AI.html">AI</a> instance.  <a href="#a2f231c640ed707abb82ef1a92264afc2">More...</a><br/></td></tr>
 <tr class="separator:a2f231c640ed707abb82ef1a92264afc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f97666fdb81870a21706b22da83be69"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1GroupMgr.html#a4f97666fdb81870a21706b22da83be69">getPosition</a> (GroupId id) const </td></tr>
 <tr class="memdesc:a4f97666fdb81870a21706b22da83be69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the average position of the group.  <a href="#a4f97666fdb81870a21706b22da83be69">More...</a><br/></td></tr>
@@ -134,8 +134,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (int64_t d
 <tr class="separator:ad99549b47998a09de1e9ebd65aa4000e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Maintains the groups a <code>AI</code> can be in. </p>
-<dl class="section note"><dt>Note</dt><dd>Keep in mind that if you destroy an <code>AI</code> somewhere in the game, to also remove it from the groups.</dd></dl>
+<div class="textblock"><p>Maintains the groups a <code><a class="el" href="classai_1_1AI.html" title="This is the type the library works with. It interacts with it&#39;s real world entity by the ICharacter i...">AI</a></code> can be in. </p>
+<dl class="section note"><dt>Note</dt><dd>Keep in mind that if you destroy an <code><a class="el" href="classai_1_1AI.html" title="This is the type the library works with. It interacts with it&#39;s real world entity by the ICharacter i...">AI</a></code> somewhere in the game, to also remove it from the groups.</dd></dl>
 <p>Every Zone has its own <code><a class="el" href="classai_1_1GroupMgr.html" title="Maintains the groups a AI can be in. ">GroupMgr</a></code> instance. It is automatically updated with the zone. The average group position is only updated once per <code>update()</code> call. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a8110fd8206339befd09ff4f071760c03"></a>
@@ -170,11 +170,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (int64_t d
 </table>
 </div><div class="memdoc">
 
-<p>Adds a new group member to the given GroupId. If the group does not yet exists, it it created and the given AI instance will be the leader of the group. </p>
+<p>Adds a new group member to the given GroupId. If the group does not yet exists, it it created and the given <a class="el" href="classai_1_1AI.html">AI</a> instance will be the leader of the group. </p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classai_1_1GroupMgr.html#a378fe9099261a8645daaf13fd1f0edd9" title="Removes a group member from the given GroupId. If the member is the group leader, a new leader will b...">remove()</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ai</td><td>The AI to add to the group. Keep in mind that you have to remove it manually from any group whenever you destroy the AI instance. </td></tr>
+    <tr><td class="paramname">ai</td><td>The <a class="el" href="classai_1_1AI.html">AI</a> to add to the group. Keep in mind that you have to remove it manually from any group whenever you destroy the <a class="el" href="classai_1_1AI.html">AI</a> instance. </td></tr>
   </table>
   </dd>
 </dl>
@@ -396,11 +396,11 @@ This method performs a read lock on the group manager </dd></dl>
 <p>Removes a group member from the given GroupId. If the member is the group leader, a new leader will be picked randomly. If after the removal of the member only one other member is left in the group, the group is destroyed. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ai</td><td>The AI to remove from this the group. </td></tr>
+    <tr><td class="paramname">ai</td><td>The <a class="el" href="classai_1_1AI.html">AI</a> to remove from this the group. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the given AI was removed from the group, <code>false</code> if the removal failed (e.g. the AI instance was not part of the group)</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the given <a class="el" href="classai_1_1AI.html">AI</a> was removed from the group, <code>false</code> if the removal failed (e.g. the <a class="el" href="classai_1_1AI.html">AI</a> instance was not part of the group)</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This method performs a write lock on the group manager </dd></dl>
 
 </div>
@@ -427,7 +427,7 @@ This method performs a read lock on the group manager </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p>Use this method to remove a AI instance from all the group it is part of. Useful if you e.g. destroy a AI instance. </p>
+<p>Use this method to remove a <a class="el" href="classai_1_1AI.html">AI</a> instance from all the group it is part of. Useful if you e.g. destroy a <a class="el" href="classai_1_1AI.html">AI</a> instance. </p>
 <dl class="section note"><dt>Note</dt><dd>This method performs a write lock on the group manager </dd></dl>
 
 </div>

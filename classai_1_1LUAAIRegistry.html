@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -123,7 +123,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a0497ee987d071e19804695dde52cf05e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access to the lua state.  <a href="#a0497ee987d071e19804695dde52cf05e">More...</a><br/></td></tr>
 <tr class="separator:a0497ee987d071e19804695dde52cf05e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ad8e9ba008c69a849bf04a2facb44f6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1LUAAIRegistry.html#a0ad8e9ba008c69a849bf04a2facb44f6">pushAIMetatable</a> ()</td></tr>
-<tr class="memdesc:a0ad8e9ba008c69a849bf04a2facb44f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pushes the AI metatable onto the stack. This allows anyone to modify it to provide own functions and data that is applied to the <code>ai</code> parameters of the lua functions.  <a href="#a0ad8e9ba008c69a849bf04a2facb44f6">More...</a><br/></td></tr>
+<tr class="memdesc:a0ad8e9ba008c69a849bf04a2facb44f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pushes the <a class="el" href="classai_1_1AI.html" title="This is the type the library works with. It interacts with it&#39;s real world entity by the ICharacter i...">AI</a> metatable onto the stack. This allows anyone to modify it to provide own functions and data that is applied to the <code>ai</code> parameters of the lua functions.  <a href="#a0ad8e9ba008c69a849bf04a2facb44f6">More...</a><br/></td></tr>
 <tr class="separator:a0ad8e9ba008c69a849bf04a2facb44f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb47582572f578d95383a0da9b98e18e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb47582572f578d95383a0da9b98e18e"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classai_1_1LUAAIRegistry.html#abb47582572f578d95383a0da9b98e18e">pushCharacterMetatable</a> ()</td></tr>
@@ -394,7 +394,7 @@ SteeringFactoryMap&#160;</td><td class="memItemRight" valign="bottom"><b>_steeri
 <div class="line">end</div>
 </div><!-- fragment --></dd></dl>
 <p>Use <code>SomeName</code> later on in your behaviour trees to use this <a class="el" href="classai_1_1ICondition.html">ICondition</a></p>
-<dl class="section user"><dt>AI metatable</dt><dd>There is a metatable that you can modify by calling <a class="el" href="classai_1_1LUAAIRegistry.html#a0ad8e9ba008c69a849bf04a2facb44f6">LUAAIRegistry::pushAIMetatable()</a>. This metatable is applied to all AI pointers that are forwarded to the lua functions. </dd></dl>
+<dl class="section user"><dt>AI metatable</dt><dd>There is a metatable that you can modify by calling <a class="el" href="classai_1_1LUAAIRegistry.html#a0ad8e9ba008c69a849bf04a2facb44f6">LUAAIRegistry::pushAIMetatable()</a>. This metatable is applied to all <a class="el" href="classai_1_1AI.html">AI</a> pointers that are forwarded to the lua functions. </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a372137d91c6d9630c9a83201fbb4ea30"></a>
 <div class="memitem">
@@ -505,8 +505,8 @@ SteeringFactoryMap&#160;</td><td class="memItemRight" valign="bottom"><b>_steeri
 </table>
 </div><div class="memdoc">
 
-<p>Pushes the AI metatable onto the stack. This allows anyone to modify it to provide own functions and data that is applied to the <code>ai</code> parameters of the lua functions. </p>
-<dl class="section note"><dt>Note</dt><dd>lua_ctxai() can be used in your lua c callbacks to get access to the AI pointer:<div class="fragment"><div class="line"><span class="keyword">const</span> AI* ai = lua_ctxai(s, 1); </div>
+<p>Pushes the <a class="el" href="classai_1_1AI.html" title="This is the type the library works with. It interacts with it&#39;s real world entity by the ICharacter i...">AI</a> metatable onto the stack. This allows anyone to modify it to provide own functions and data that is applied to the <code>ai</code> parameters of the lua functions. </p>
+<dl class="section note"><dt>Note</dt><dd>lua_ctxai() can be used in your lua c callbacks to get access to the <a class="el" href="classai_1_1AI.html">AI</a> pointer:<div class="fragment"><div class="line"><span class="keyword">const</span> AI* ai = lua_ctxai(s, 1); </div>
 </div><!-- fragment --> </dd></dl>
 
 </div>

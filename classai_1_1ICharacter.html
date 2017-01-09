@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -96,7 +96,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Class that should be extended by the AI controlled entity class.  
+<p>Class that should be extended by the <a class="el" href="classai_1_1AI.html">AI</a> controlled entity class.  
  <a href="classai_1_1ICharacter.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="ICharacter_8h_source.html">ICharacter.h</a>&gt;</code></p>
@@ -173,8 +173,8 @@ CharacterAttributes&#160;</td><td class="memItemRight" valign="bottom"><b>_attri
 <tr class="separator:a1c2ee0f80456d3261e41ddfd6ac608cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class that should be extended by the AI controlled entity class. </p>
-<p>It uses a CharacterId to identify the character in the game. The AI class has a reference to its controlled <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the AI controlled entity class. ">ICharacter</a></code> instance.</p>
+<div class="textblock"><p>Class that should be extended by the <a class="el" href="classai_1_1AI.html">AI</a> controlled entity class. </p>
+<p>It uses a CharacterId to identify the character in the game. The <a class="el" href="classai_1_1AI.html">AI</a> class has a reference to its controlled <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the AI controlled entity class. ">ICharacter</a></code> instance.</p>
 <dl class="section note"><dt>Note</dt><dd>Update the values of the <code><a class="el" href="classai_1_1ICharacter.html" title="Class that should be extended by the AI controlled entity class. ">ICharacter</a></code> class only in in the <a class="el" href="classai_1_1ICharacter.html#aeb7d0c33745a9444cdf5604f14254c3c">ICharacter::update()</a> method or from within the Zone callbacks. Otherwise you will run into race conditions if you run with multiple threads.</dd></dl>
 <p>You often need access to your world your character is living in. You need access to this data to resolve the CharacterId's in the IFilter implementations, to interact with other entities that are not SimpleAI controlled and so on. You can use the provided character_cast function in your <a class="el" href="classai_1_1TreeNode.html">TreeNode</a>, IFilter or <a class="el" href="classai_1_1ICondition.html">ICondition</a> implementations. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -285,7 +285,7 @@ CharacterAttributes&#160;</td><td class="memItemRight" valign="bottom"><b>_attri
 </div><div class="memdoc">
 
 <p>Set an attribute that can be used for debugging. </p>
-<dl class="section see"><dt>See Also</dt><dd>AI::isDebuggingActive() </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classai_1_1AI.html#a13a16ddf553c45e01158b957bbc44f08">AI::isDebuggingActive()</a> </dd></dl>
 
 </div>
 </div>
@@ -310,7 +310,7 @@ CharacterAttributes&#160;</td><td class="memItemRight" valign="bottom"><b>_attri
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This is virtual because you might want to override this in your implementation to make sure that the new orientation is also forwarded to your AI controlled entity.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This is virtual because you might want to override this in your implementation to make sure that the new orientation is also forwarded to your <a class="el" href="classai_1_1AI.html" title="This is the type the library works with. It interacts with it&#39;s real world entity by the ICharacter i...">AI</a> controlled entity.</dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classai_1_1ICharacter.html#a673db029f937c710d3f582cf00ceb46f">getOrientation()</a> </dd></dl>
 
 </div>
@@ -336,7 +336,7 @@ CharacterAttributes&#160;</td><td class="memItemRight" valign="bottom"><b>_attri
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This is virtual because you might want to override this in your implementation to make sure that the new position is also forwarded to your AI controlled entity. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This is virtual because you might want to override this in your implementation to make sure that the new position is also forwarded to your <a class="el" href="classai_1_1AI.html" title="This is the type the library works with. It interacts with it&#39;s real world entity by the ICharacter i...">AI</a> controlled entity. </dd></dl>
 
 </div>
 </div>

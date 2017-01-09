@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_7ethreadscheduler',['~ThreadScheduler',['../classai_1_1ThreadScheduler.html#a86cc5efc3aacbb4272239c8cc717e2e9',1,'ai::ThreadScheduler']]]
+  ['visit',['visit',['../classai_1_1GroupMgr.html#ad856ca83b6c89f1f42f9d6a552342993',1,'ai::GroupMgr']]]
 ];
