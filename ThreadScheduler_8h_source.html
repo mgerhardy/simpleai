@@ -93,7 +93,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;chrono&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;queue&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;functional&gt;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;thread&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;future&gt;</span></div>
@@ -126,90 +126,95 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        }</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    };</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    std::set&lt;ScheduledTask&gt; _tasks;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    std::atomic_int _timerId {0};</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    std::atomic_bool _stop;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    std::atomic_bool _notEmpty;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    std::mutex _mutex;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    std::thread _thread;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="classai_1_1ThreadScheduler.html">ThreadScheduler</a>() : _stop(<span class="keyword">false</span>), _notEmpty(<span class="keyword">false</span>) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        _thread = std::thread([<span class="keyword">this</span>] {</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordflow">for</span> (;;) {</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                <span class="keywordflow">if</span> (this-&gt;_stop) {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                <span class="keywordflow">if</span> (this-&gt;_notEmpty) {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                    <span class="keyword">auto</span> epoch = std::chrono::system_clock::now().time_since_epoch();</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                    <span class="keyword">auto</span> now = std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(epoch);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                    std::unique_lock&lt;std::mutex&gt; lock(_mutex);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                    <span class="keywordflow">while</span> (!this-&gt;_tasks.empty() &amp;&amp; this-&gt;_tasks.begin()-&gt;_execTime &lt;= now) {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                        <span class="keywordflow">if</span> (this-&gt;_stop) {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                            <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                        }</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                        <span class="keyword">auto</span> iter = this-&gt;_tasks.begin();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                        <span class="keyword">const</span> ScheduledTask&amp; t = *iter;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                        <span class="keywordflow">if</span> (t()) {</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                            <span class="keyword">auto</span> callback = t._callback;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                            <span class="keyword">auto</span> delay = t._delay;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                            <span class="keyword">auto</span> timerId = t._timerId;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                            <span class="keyword">auto</span> execTime = t._execTime;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                            this-&gt;_tasks.erase(iter);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                            _tasks.emplace(<span class="keyword">this</span>, std::move(callback), execTime + delay, delay, timerId);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                            this-&gt;_tasks.erase(iter);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                        }</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                    }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                    <span class="keywordflow">if</span> (this-&gt;_stop) {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                    }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                    this-&gt;_notEmpty = !this-&gt;_tasks.empty();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                std::this_thread::sleep_for(std::chrono::milliseconds(1));</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        });</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="classai_1_1ThreadScheduler.html#a86cc5efc3aacbb4272239c8cc717e2e9">   97</a></span>&#160;    <a class="code" href="classai_1_1ThreadScheduler.html#a86cc5efc3aacbb4272239c8cc717e2e9">~ThreadScheduler</a>() {</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        _stop = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        _thread.join();</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class </span>F, <span class="keyword">class </span>... Args&gt;</div>
-<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="classai_1_1ThreadScheduler.html#a57f7d3ef6e5b17bcb4511140e487ec08">  109</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classai_1_1ThreadScheduler.html#a57f7d3ef6e5b17bcb4511140e487ec08">schedule</a>(<span class="keyword">const</span> std::chrono::milliseconds&amp; delay, F&amp;&amp; f, Args&amp;&amp;... args) {</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classai_1_1ThreadScheduler.html#a57a92f3b0f55c1eecdee884af873e012">scheduleAtFixedRate</a>(delay, std::chrono::milliseconds(), std::forward&lt;F&gt;(f), std::forward&lt;Args&gt;(args)...);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    }</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class </span>F, <span class="keyword">class </span>... Args&gt;</div>
-<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="classai_1_1ThreadScheduler.html#a57a92f3b0f55c1eecdee884af873e012">  121</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classai_1_1ThreadScheduler.html#a57a92f3b0f55c1eecdee884af873e012">scheduleAtFixedRate</a>(<span class="keyword">const</span> std::chrono::milliseconds&amp; initialDelay, <span class="keyword">const</span> std::chrono::milliseconds&amp; delay, F&amp;&amp; f, Args&amp;&amp;... args) {</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keyword">auto</span> task = std::bind(std::forward&lt;F&gt;(f), std::forward&lt;Args&gt;(args)...);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keyword">auto</span> epoch = std::chrono::system_clock::now().time_since_epoch();</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keyword">auto</span> now = std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(epoch);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> timerId = ++_timerId;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        std::unique_lock&lt;std::mutex&gt; lock(_mutex);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        _tasks.emplace(<span class="keyword">this</span>, std::move(task), now + initialDelay, delay, timerId);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        _notEmpty = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordflow">return</span> timerId;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    }</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
-<div class="line"><a name="l00137"></a><span class="lineno"><a class="line" href="classai_1_1ThreadScheduler.html#ae7b0109435185c29614b5512188020ee">  137</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1ThreadScheduler.html#ae7b0109435185c29614b5512188020ee">cancel</a>(<span class="keywordtype">int</span> timerId) {</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        std::unique_lock&lt;std::mutex&gt; lock(_mutex);</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        <span class="keyword">auto</span> it = std::find_if(_tasks.begin(), _tasks.end(), [=] (<span class="keyword">const</span> ScheduledTask&amp; task) { <span class="keywordflow">return</span> task._timerId == timerId; });</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        <span class="keywordflow">if</span> (it == _tasks.end()) {</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        };</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        _tasks.erase(it);</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    }</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;};</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;}</div>
-<div class="ttc" id="classai_1_1ThreadScheduler_html_a57f7d3ef6e5b17bcb4511140e487ec08"><div class="ttname"><a href="classai_1_1ThreadScheduler.html#a57f7d3ef6e5b17bcb4511140e487ec08">ai::ThreadScheduler::schedule</a></div><div class="ttdeci">int schedule(const std::chrono::milliseconds &amp;delay, F &amp;&amp;f, Args &amp;&amp;...args)</div><div class="ttdoc">Executes the given functor once after the given delay has passed. </div><div class="ttdef"><b>Definition:</b> ThreadScheduler.h:109</div></div>
-<div class="ttc" id="classai_1_1ThreadScheduler_html_ae7b0109435185c29614b5512188020ee"><div class="ttname"><a href="classai_1_1ThreadScheduler.html#ae7b0109435185c29614b5512188020ee">ai::ThreadScheduler::cancel</a></div><div class="ttdeci">bool cancel(int timerId)</div><div class="ttdoc">Cancels the given timer. </div><div class="ttdef"><b>Definition:</b> ThreadScheduler.h:137</div></div>
-<div class="ttc" id="classai_1_1ThreadScheduler_html_a86cc5efc3aacbb4272239c8cc717e2e9"><div class="ttname"><a href="classai_1_1ThreadScheduler.html#a86cc5efc3aacbb4272239c8cc717e2e9">ai::ThreadScheduler::~ThreadScheduler</a></div><div class="ttdeci">~ThreadScheduler()</div><div class="ttdef"><b>Definition:</b> ThreadScheduler.h:97</div></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">class </span>prioqueue: <span class="keyword">public</span> std::priority_queue&lt;ScheduledTask&gt; {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordtype">bool</span> <span class="keyword">remove</span>(<span class="keywordtype">int</span> timerId) {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keyword">auto</span> it = std::find_if(this-&gt;c.begin(), this-&gt;c.end(), [=] (<span class="keyword">const</span> ScheduledTask&amp; task) { <span class="keywordflow">return</span> task._timerId == timerId; });</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keywordflow">if</span> (it == this-&gt;c.end()) {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            };</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            this-&gt;c.erase(it);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    };</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    prioqueue _tasks;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    std::atomic_int _timerId {0};</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    std::atomic_bool _stop;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    std::atomic_bool _notEmpty;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    std::mutex _mutex;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    std::thread _thread;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="classai_1_1ThreadScheduler.html">ThreadScheduler</a>() : _stop(<span class="keyword">false</span>), _notEmpty(<span class="keyword">false</span>) {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        _thread = std::thread([<span class="keyword">this</span>] {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordflow">for</span> (;;) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                <span class="keywordflow">if</span> (this-&gt;_stop) {</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                <span class="keywordflow">if</span> (this-&gt;_notEmpty) {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                    <span class="keyword">auto</span> epoch = std::chrono::system_clock::now().time_since_epoch();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                    <span class="keyword">auto</span> now = std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(epoch);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                    std::unique_lock&lt;std::mutex&gt; lock(_mutex);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                    <span class="keywordflow">while</span> (!this-&gt;_tasks.empty() &amp;&amp; this-&gt;_tasks.top()._execTime &lt;= now) {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                        <span class="keywordflow">if</span> (this-&gt;_stop) {</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                            <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                        }</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                        <span class="keyword">const</span> ScheduledTask&amp; t = this-&gt;_tasks.top();</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                        <span class="keywordflow">if</span> (t()) {</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                            <span class="keyword">auto</span> callback = t._callback;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                            <span class="keyword">auto</span> delay = t._delay;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                            <span class="keyword">auto</span> timerId = t._timerId;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                            <span class="keyword">auto</span> execTime = t._execTime;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                            this-&gt;_tasks.pop();</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                            _tasks.emplace(<span class="keyword">this</span>, std::move(callback), execTime + delay, delay, timerId);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                            this-&gt;_tasks.pop();</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                        }</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;                    }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                    <span class="keywordflow">if</span> (this-&gt;_stop) {</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                    }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                    this-&gt;_notEmpty = !this-&gt;_tasks.empty();</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                std::this_thread::sleep_for(std::chrono::milliseconds(1));</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        });</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="classai_1_1ThreadScheduler.html#a86cc5efc3aacbb4272239c8cc717e2e9">  107</a></span>&#160;    <a class="code" href="classai_1_1ThreadScheduler.html#a86cc5efc3aacbb4272239c8cc717e2e9">~ThreadScheduler</a>() {</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        _stop = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        _thread.join();</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class </span>F, <span class="keyword">class </span>... Args&gt;</div>
+<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="classai_1_1ThreadScheduler.html#a57f7d3ef6e5b17bcb4511140e487ec08">  119</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classai_1_1ThreadScheduler.html#a57f7d3ef6e5b17bcb4511140e487ec08">schedule</a>(<span class="keyword">const</span> std::chrono::milliseconds&amp; delay, F&amp;&amp; f, Args&amp;&amp;... args) {</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classai_1_1ThreadScheduler.html#a57a92f3b0f55c1eecdee884af873e012">scheduleAtFixedRate</a>(delay, std::chrono::milliseconds(), std::forward&lt;F&gt;(f), std::forward&lt;Args&gt;(args)...);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    }</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class </span>F, <span class="keyword">class </span>... Args&gt;</div>
+<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="classai_1_1ThreadScheduler.html#a57a92f3b0f55c1eecdee884af873e012">  131</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classai_1_1ThreadScheduler.html#a57a92f3b0f55c1eecdee884af873e012">scheduleAtFixedRate</a>(<span class="keyword">const</span> std::chrono::milliseconds&amp; initialDelay, <span class="keyword">const</span> std::chrono::milliseconds&amp; delay, F&amp;&amp; f, Args&amp;&amp;... args) {</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <span class="keyword">auto</span> task = std::bind(std::forward&lt;F&gt;(f), std::forward&lt;Args&gt;(args)...);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        <span class="keyword">auto</span> epoch = std::chrono::system_clock::now().time_since_epoch();</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keyword">auto</span> now = std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(epoch);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> timerId = ++_timerId;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        std::unique_lock&lt;std::mutex&gt; lock(_mutex);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        _tasks.emplace(<span class="keyword">this</span>, std::move(task), now + initialDelay, delay, timerId);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        _notEmpty = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        <span class="keywordflow">return</span> timerId;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    }</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;</div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="classai_1_1ThreadScheduler.html#ae7b0109435185c29614b5512188020ee">  147</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classai_1_1ThreadScheduler.html#ae7b0109435185c29614b5512188020ee">cancel</a>(<span class="keywordtype">int</span> timerId) {</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        std::unique_lock&lt;std::mutex&gt; lock(_mutex);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <span class="keywordflow">return</span> _tasks.remove(timerId);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    }</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;};</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;}</div>
+<div class="ttc" id="classai_1_1ThreadScheduler_html_a57f7d3ef6e5b17bcb4511140e487ec08"><div class="ttname"><a href="classai_1_1ThreadScheduler.html#a57f7d3ef6e5b17bcb4511140e487ec08">ai::ThreadScheduler::schedule</a></div><div class="ttdeci">int schedule(const std::chrono::milliseconds &amp;delay, F &amp;&amp;f, Args &amp;&amp;...args)</div><div class="ttdoc">Executes the given functor once after the given delay has passed. </div><div class="ttdef"><b>Definition:</b> ThreadScheduler.h:119</div></div>
+<div class="ttc" id="classai_1_1ThreadScheduler_html_ae7b0109435185c29614b5512188020ee"><div class="ttname"><a href="classai_1_1ThreadScheduler.html#ae7b0109435185c29614b5512188020ee">ai::ThreadScheduler::cancel</a></div><div class="ttdeci">bool cancel(int timerId)</div><div class="ttdoc">Cancels the given timer. </div><div class="ttdef"><b>Definition:</b> ThreadScheduler.h:147</div></div>
+<div class="ttc" id="classai_1_1ThreadScheduler_html_a86cc5efc3aacbb4272239c8cc717e2e9"><div class="ttname"><a href="classai_1_1ThreadScheduler.html#a86cc5efc3aacbb4272239c8cc717e2e9">ai::ThreadScheduler::~ThreadScheduler</a></div><div class="ttdeci">~ThreadScheduler()</div><div class="ttdef"><b>Definition:</b> ThreadScheduler.h:107</div></div>
 <div class="ttc" id="classai_1_1ThreadScheduler_html"><div class="ttname"><a href="classai_1_1ThreadScheduler.html">ai::ThreadScheduler</a></div><div class="ttdef"><b>Definition:</b> ThreadScheduler.h:22</div></div>
-<div class="ttc" id="classai_1_1ThreadScheduler_html_a57a92f3b0f55c1eecdee884af873e012"><div class="ttname"><a href="classai_1_1ThreadScheduler.html#a57a92f3b0f55c1eecdee884af873e012">ai::ThreadScheduler::scheduleAtFixedRate</a></div><div class="ttdeci">int scheduleAtFixedRate(const std::chrono::milliseconds &amp;initialDelay, const std::chrono::milliseconds &amp;delay, F &amp;&amp;f, Args &amp;&amp;...args)</div><div class="ttdoc">Schedules a task for continuous execution. </div><div class="ttdef"><b>Definition:</b> ThreadScheduler.h:121</div></div>
+<div class="ttc" id="classai_1_1ThreadScheduler_html_a57a92f3b0f55c1eecdee884af873e012"><div class="ttname"><a href="classai_1_1ThreadScheduler.html#a57a92f3b0f55c1eecdee884af873e012">ai::ThreadScheduler::scheduleAtFixedRate</a></div><div class="ttdeci">int scheduleAtFixedRate(const std::chrono::milliseconds &amp;initialDelay, const std::chrono::milliseconds &amp;delay, F &amp;&amp;f, Args &amp;&amp;...args)</div><div class="ttdoc">Schedules a task for continuous execution. </div><div class="ttdef"><b>Definition:</b> ThreadScheduler.h:131</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
