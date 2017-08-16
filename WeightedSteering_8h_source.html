@@ -119,7 +119,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="classai_1_1MoveVector.html">MoveVector</a> execute (<span class="keyword">const</span> AIPtr&amp; ai, <span class="keywordtype">float</span> speed)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordtype">float</span> totalWeight = 0.0f;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        glm::vec3 vecBlended;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        glm::vec3 vecBlended(0.0f);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">float</span> angularBlended = 0.0f;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">const</span> <a class="code" href="structai_1_1movement_1_1WeightedData.html">WeightedData</a>&amp; wd : _steerings) {</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keyword">const</span> <span class="keywordtype">float</span> weight = wd.weight;</div>
