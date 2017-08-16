@@ -183,7 +183,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        glm::vec3 averagePosition;</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        {</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            ScopedReadLock lock(_groupLock);</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            averagePosition = std::accumulate(group.members.begin(), group.members.end(), glm::vec3(), AveragePositionFunctor());</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            averagePosition = std::accumulate(group.members.begin(), group.members.end(), glm::vec3(0.0f), AveragePositionFunctor());</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;            averagePosition *= 1.0f / (float) group.members.size();</div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        }</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        ScopedWriteLock lock(_groupLock);</div>
