@@ -168,7 +168,7 @@ inline void GroupMgr::update(int64_t) {
 		glm::vec3 averagePosition;
 		{
 			ScopedReadLock lock(_groupLock);
-			averagePosition = std::accumulate(group.members.begin(), group.members.end(), glm::vec3(), AveragePositionFunctor());
+			averagePosition = std::accumulate(group.members.begin(), group.members.end(), glm::vec3(0.0f), AveragePositionFunctor());
 			averagePosition *= 1.0f / (float) group.members.size();
 		}
 		ScopedWriteLock lock(_groupLock);
