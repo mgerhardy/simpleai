@@ -127,6 +127,7 @@ namespace ai {
  * @sa NOTHING_SELECTED
  */
 typedef int CharacterId;
+#define PRIChrId PRId32
 
 /**
  * @brief ICharacter attributes for the remote \ref debugger
