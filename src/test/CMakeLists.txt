@@ -15,7 +15,6 @@ set(SRC
 	TestAll.cpp
 	TestEntity.h
 	TestShared.cpp TestShared.h
-	ThreadTest.cpp ThreadTest.h
 	XMLTreeLoaderTest.cpp XMLTreeLoaderTest.h
 	ZoneTest.cpp ZoneTest.h
 

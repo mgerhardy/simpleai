@@ -9,6 +9,7 @@
 #include <thread>
 #include <future>
 #include <atomic>
+#include <algorithm>
 #include <mutex>
 
 namespace ai {

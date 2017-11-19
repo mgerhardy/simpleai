@@ -1,3 +1,4 @@
+#include "ThreadScheduler.h"
 #include <string>
 #include <fstream>
 #include <streambuf>

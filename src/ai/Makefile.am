@@ -20,7 +20,6 @@ nobase_library_include_HEADERS = \
 	common/String.h \
 	common/Thread.h \
 	common/ThreadPool.h \
-	common/ThreadScheduler.h \
 	common/Types.h \
 	conditions/And.h \
 	conditions/ConditionParser.h \
