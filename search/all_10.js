@@ -1,8 +1,6 @@
 var searchData=
 [
   ['simpleai_20documentation',['SimpleAI documentation',['../index.html',1,'']]],
-  ['schedule',['schedule',['../classai_1_1ThreadScheduler.html#a57f7d3ef6e5b17bcb4511140e487ec08',1,'ai::ThreadScheduler']]],
-  ['scheduleatfixedrate',['scheduleAtFixedRate',['../classai_1_1ThreadScheduler.html#a57a92f3b0f55c1eecdee884af873e012',1,'ai::ThreadScheduler']]],
   ['scopedreadlock',['ScopedReadLock',['../classai_1_1ScopedReadLock.html',1,'ai']]],
   ['scopedwritelock',['ScopedWriteLock',['../classai_1_1ScopedWriteLock.html',1,'ai']]],
   ['select',['select',['../classai_1_1Server.html#a5a407a9b6dbbd8bfd2eb7f2fc164163e',1,'ai::Server']]],

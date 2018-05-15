@@ -1,7 +1,7 @@
 <map id="/home/travis/build/mgerhardy/simpleai/src/ai/server/Network.h" name="/home/travis/build/mgerhardy/simpleai/src/ai/server/Network.h">
-<area shape="rect" id="node2" href="$IProtocolHandler_8h.html" title="IProtocolHandler.h" alt="" coords="207,109,336,136"/>
-<area shape="rect" id="node17" href="$Thread_8h.html" title="common/Thread.h" alt="" coords="415,109,541,136"/>
-<area shape="rect" id="node4" href="$IProtocolMessage_8h.html" title="IProtocolMessage.h" alt="" coords="201,184,340,211"/>
-<area shape="rect" id="node10" href="$Types_8h.html" title="common/Types.h" alt="" coords="415,184,537,211"/>
-<area shape="rect" id="node11" href="$Log_8h.html" title="Log.h" alt="" coords="578,259,632,285"/>
+<area shape="rect" id="node2" href="$IProtocolHandler_8h.html" title="IProtocolHandler.h" alt="" coords="215,109,344,136"/>
+<area shape="rect" id="node18" href="$Thread_8h.html" title="common/Thread.h" alt="" coords="423,109,549,136"/>
+<area shape="rect" id="node4" href="$IProtocolMessage_8h.html" title="IProtocolMessage.h" alt="" coords="209,184,348,211"/>
+<area shape="rect" id="node10" href="$Types_8h.html" title="common/Types.h" alt="" coords="423,184,545,211"/>
+<area shape="rect" id="node11" href="$Log_8h.html" title="Log.h" alt="" coords="489,259,543,285"/>
 </map>

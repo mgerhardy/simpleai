@@ -1,19 +1,19 @@
 <map id="/home/travis/build/mgerhardy/simpleai/src/ai/AI.h" name="/home/travis/build/mgerhardy/simpleai/src/ai/AI.h">
-<area shape="rect" id="node4" href="$GroupId_8h.html" title="group/GroupId.h" alt="" coords="2697,109,2812,136"/>
-<area shape="rect" id="node5" href="$AggroMgr_8h.html" title="aggro/AggroMgr.h" alt="" coords="1540,259,1665,285"/>
-<area shape="rect" id="node7" href="$ICharacter_8h.html" title="ICharacter.h" alt="" coords="1194,333,1288,360"/>
-<area shape="rect" id="node8" href="$NonCopyable_8h.html" title="common/NonCopyable.h" alt="" coords="2014,483,2180,509"/>
-<area shape="rect" id="node9" href="$Math_8h.html" title="common/Math.h" alt="" coords="725,408,840,435"/>
-<area shape="rect" id="node10" href="$Types_8h.html" title="Types.h" alt="" coords="1244,483,1313,509"/>
-<area shape="rect" id="node27" href="$TreeNode_8h.html" title="tree/TreeNode.h" alt="" coords="2090,109,2205,136"/>
-<area shape="rect" id="node31" href="$Thread_8h.html" title="common/Thread.h" alt="" coords="991,408,1117,435"/>
-<area shape="rect" id="node40" href="$ITreeLoader_8h.html" title="tree/loaders/ITreeLoader.h" alt="" coords="1466,333,1640,360"/>
-<area shape="rect" id="node26" href="$Entry_8h.html" title="aggro/Entry.h" alt="" coords="1295,408,1395,435"/>
-<area shape="rect" id="node11" href="$Log_8h.html" title="Log.h" alt="" coords="1251,557,1305,584"/>
-<area shape="rect" id="node28" href="$MemoryAllocator_8h.html" title="common/MemoryAllocator.h" alt="" coords="1925,333,2109,360"/>
-<area shape="rect" id="node29" href="$ICondition_8h.html" title="Condition related stuff. " alt="" coords="2212,259,2365,285"/>
-<area shape="rect" id="node39" href="$True_8h.html" title="conditions/True.h" alt="" coords="2236,184,2359,211"/>
-<area shape="rect" id="node34" href="$AIFactories_8h.html" title="AIFactories.h" alt="" coords="2239,333,2339,360"/>
-<area shape="rect" id="node35" href="$IAIFactory_8h.html" title="IAIFactory.h" alt="" coords="2287,408,2381,435"/>
-<area shape="rect" id="node37" href="$IFactoryRegistry_8h.html" title="common/IFactoryRegistry.h" alt="" coords="1876,408,2060,435"/>
+<area shape="rect" id="node4" href="$GroupId_8h.html" title="group/GroupId.h" alt="" coords="2139,109,2253,136"/>
+<area shape="rect" id="node5" href="$AggroMgr_8h.html" title="aggro/AggroMgr.h" alt="" coords="1724,259,1849,285"/>
+<area shape="rect" id="node7" href="$ICharacter_8h.html" title="ICharacter.h" alt="" coords="1233,333,1327,360"/>
+<area shape="rect" id="node8" href="$NonCopyable_8h.html" title="common/NonCopyable.h" alt="" coords="1694,483,1860,509"/>
+<area shape="rect" id="node9" href="$Math_8h.html" title="common/Math.h" alt="" coords="598,408,713,435"/>
+<area shape="rect" id="node10" href="$Types_8h.html" title="Types.h" alt="" coords="1249,483,1319,509"/>
+<area shape="rect" id="node28" href="$TreeNode_8h.html" title="tree/TreeNode.h" alt="" coords="1998,109,2113,136"/>
+<area shape="rect" id="node32" href="$Thread_8h.html" title="common/Thread.h" alt="" coords="991,408,1117,435"/>
+<area shape="rect" id="node41" href="$ITreeLoader_8h.html" title="tree/loaders/ITreeLoader.h" alt="" coords="1505,333,1679,360"/>
+<area shape="rect" id="node27" href="$Entry_8h.html" title="aggro/Entry.h" alt="" coords="1295,408,1395,435"/>
+<area shape="rect" id="node11" href="$Log_8h.html" title="Log.h" alt="" coords="1197,557,1251,584"/>
+<area shape="rect" id="node29" href="$MemoryAllocator_8h.html" title="common/MemoryAllocator.h" alt="" coords="2029,333,2213,360"/>
+<area shape="rect" id="node30" href="$ICondition_8h.html" title="Condition related stuff. " alt="" coords="2327,259,2480,285"/>
+<area shape="rect" id="node40" href="$True_8h.html" title="conditions/True.h" alt="" coords="2377,184,2500,211"/>
+<area shape="rect" id="node35" href="$AIFactories_8h.html" title="AIFactories.h" alt="" coords="2341,333,2440,360"/>
+<area shape="rect" id="node36" href="$IAIFactory_8h.html" title="IAIFactory.h" alt="" coords="2338,408,2432,435"/>
+<area shape="rect" id="node38" href="$IFactoryRegistry_8h.html" title="common/IFactoryRegistry.h" alt="" coords="1673,408,1857,435"/>
 </map>

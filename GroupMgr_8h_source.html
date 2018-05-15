@@ -180,7 +180,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    ScopedReadLock scopedLock(_lock);</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = _groups.begin(); i != _groups.end(); ++i) {</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        Group&amp; group = i-&gt;second;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        glm::vec3 averagePosition;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        glm::vec3 averagePosition(0.0f);</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        {</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            ScopedReadLock lock(_groupLock);</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            averagePosition = std::accumulate(group.members.begin(), group.members.end(), glm::vec3(0.0f), AveragePositionFunctor());</div>

@@ -1,21 +1,21 @@
 <map id="/home/travis/build/mgerhardy/simpleai/src/ai/conditions/Filter.h" name="/home/travis/build/mgerhardy/simpleai/src/ai/conditions/Filter.h">
 <area shape="rect" id="node2" href="$ICondition_8h.html" title="Condition related stuff. " alt="" coords="248,408,401,435"/>
-<area shape="rect" id="node25" href="$IFilter_8h.html" title="filter/IFilter.h" alt="" coords="841,109,935,136"/>
+<area shape="rect" id="node26" href="$IFilter_8h.html" title="filter/IFilter.h" alt="" coords="841,109,935,136"/>
 <area shape="rect" id="node7" href="$MemoryAllocator_8h.html" title="common/MemoryAllocator.h" alt="" coords="515,483,700,509"/>
 <area shape="rect" id="node8" href="$Thread_8h.html" title="common/Thread.h" alt="" coords="822,557,948,584"/>
-<area shape="rect" id="node19" href="$AIFactories_8h.html" title="AIFactories.h" alt="" coords="289,483,388,509"/>
+<area shape="rect" id="node20" href="$AIFactories_8h.html" title="AIFactories.h" alt="" coords="289,483,388,509"/>
 <area shape="rect" id="node9" href="$Types_8h.html" title="Types.h" alt="" coords="1435,632,1504,659"/>
-<area shape="rect" id="node10" href="$Log_8h.html" title="Log.h" alt="" coords="1526,707,1580,733"/>
-<area shape="rect" id="node20" href="$IAIFactory_8h.html" title="IAIFactory.h" alt="" coords="347,557,441,584"/>
-<area shape="rect" id="node22" href="$IFactoryRegistry_8h.html" title="common/IFactoryRegistry.h" alt="" coords="1075,557,1259,584"/>
-<area shape="rect" id="node23" href="$NonCopyable_8h.html" title="common/NonCopyable.h" alt="" coords="1529,632,1695,659"/>
-<area shape="rect" id="node26" href="$ICharacter_8h.html" title="ICharacter.h" alt="" coords="1662,483,1756,509"/>
-<area shape="rect" id="node35" href="$AI_8h.html" title="AI.h" alt="" coords="1369,184,1415,211"/>
-<area shape="rect" id="node27" href="$Math_8h.html" title="common/Math.h" alt="" coords="2073,557,2188,584"/>
-<area shape="rect" id="node36" href="$GroupId_8h.html" title="group/GroupId.h" alt="" coords="1383,259,1497,285"/>
-<area shape="rect" id="node37" href="$AggroMgr_8h.html" title="aggro/AggroMgr.h" alt="" coords="877,408,1003,435"/>
-<area shape="rect" id="node40" href="$TreeNode_8h.html" title="tree/TreeNode.h" alt="" coords="630,259,745,285"/>
-<area shape="rect" id="node42" href="$ITreeLoader_8h.html" title="tree/loaders/ITreeLoader.h" alt="" coords="1205,483,1379,509"/>
-<area shape="rect" id="node39" href="$Entry_8h.html" title="aggro/Entry.h" alt="" coords="1486,557,1585,584"/>
-<area shape="rect" id="node41" href="$True_8h.html" title="conditions/True.h" alt="" coords="477,333,600,360"/>
+<area shape="rect" id="node10" href="$Log_8h.html" title="Log.h" alt="" coords="1631,707,1685,733"/>
+<area shape="rect" id="node21" href="$IAIFactory_8h.html" title="IAIFactory.h" alt="" coords="347,557,441,584"/>
+<area shape="rect" id="node23" href="$IFactoryRegistry_8h.html" title="common/IFactoryRegistry.h" alt="" coords="1075,557,1259,584"/>
+<area shape="rect" id="node24" href="$NonCopyable_8h.html" title="common/NonCopyable.h" alt="" coords="1529,632,1695,659"/>
+<area shape="rect" id="node27" href="$ICharacter_8h.html" title="ICharacter.h" alt="" coords="1662,483,1756,509"/>
+<area shape="rect" id="node36" href="$AI_8h.html" title="AI.h" alt="" coords="1369,184,1415,211"/>
+<area shape="rect" id="node28" href="$Math_8h.html" title="common/Math.h" alt="" coords="2073,557,2188,584"/>
+<area shape="rect" id="node37" href="$GroupId_8h.html" title="group/GroupId.h" alt="" coords="1383,259,1497,285"/>
+<area shape="rect" id="node38" href="$AggroMgr_8h.html" title="aggro/AggroMgr.h" alt="" coords="877,408,1003,435"/>
+<area shape="rect" id="node41" href="$TreeNode_8h.html" title="tree/TreeNode.h" alt="" coords="630,259,745,285"/>
+<area shape="rect" id="node43" href="$ITreeLoader_8h.html" title="tree/loaders/ITreeLoader.h" alt="" coords="1205,483,1379,509"/>
+<area shape="rect" id="node40" href="$Entry_8h.html" title="aggro/Entry.h" alt="" coords="1486,557,1585,584"/>
+<area shape="rect" id="node42" href="$True_8h.html" title="conditions/True.h" alt="" coords="477,333,600,360"/>
 </map>

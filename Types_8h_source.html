@@ -95,95 +95,97 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Log_8h.html">Log.h</a>&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;cassert&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;cstdio&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#ifndef ai_log</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="Types_8h.html#a972ad5c272bfbd0af82fdc644919f005">   16</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ai_log(...) ai::Log::info(__VA_ARGS__)</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#ifndef ai_log_error</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">   23</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ai_log_error(...) ai::Log::error(__VA_ARGS__)</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifndef ai_log_warn</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="Types_8h.html#a8a5418f66452a6130754f2313896da1c">   30</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ai_log_warn(...) ai::Log::warn(__VA_ARGS__)</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#ifndef ai_log_debug</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="Types_8h.html#af243f74139afd922c824ae3166af02b6">   37</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ai_log_debug(...) ai::Log::debug(__VA_ARGS__)</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#ifndef ai_log_trace</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="Types_8h.html#a72a24d8ece9683d088500cece1938d12">   44</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ai_log_trace(...) ai::Log::trace(__VA_ARGS__)</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#if !(__GNUC__ || __GNUC__)</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __PRETTY_FUNCTION__ __FUNCSIG__</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#ifndef ai_assert_always</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #if (__clang_analyzer__)</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor"></span><span class="preprocessor">        #define ai_assert_always(condition, ...) assert(condition)</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #else</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="Types_8h.html#a03102fc7745cf71c4de600d4ddd28a98">   58</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">        #define ai_assert_always(condition, ...) \</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">            if ( !(condition) ) { \</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">                ai_log_error(__VA_ARGS__); \</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">                ai_log_error(&quot;%s:%i&quot;, __FILE__, __LINE__); \</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">                assert(condition); \</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">            }</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #endif</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#ifndef ai_assert</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #ifdef DEBUG</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor"></span><span class="preprocessor">        #define ai_assert ai_assert_always</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #else</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">   75</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">        #define ai_assert(condition, ...)</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #endif</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">class</span> S&gt;</div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="Types_8h.html#a72bf67d0e82d8ba4f5a72e09443389fd">   84</a></span>&#160;<span class="keyword">inline</span> T <a class="code" href="Types_8h.html#a72bf67d0e82d8ba4f5a72e09443389fd">ai_assert_cast</a>(<span class="keyword">const</span> S <span class="keywordtype">object</span>) {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#ifdef __cpp_rtti</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor"></span>    <a class="code" href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a>(dynamic_cast&lt;T&gt;(<span class="keywordtype">object</span>) == static_cast&lt;T&gt;(<span class="keywordtype">object</span>), <span class="stringliteral">&quot;Types don&#39;t match&quot;</span>);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor"></span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(object);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#define AI_STRINGIFY_INTERNAL(x) #x</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define AI_STRINGIFY(x) AI_STRINGIFY_INTERNAL(x)</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#ifndef AI_EXCEPTIONS</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="Types_8h.html#add3429e39431a179b815f7a5289afbee">   99</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define AI_EXCEPTIONS 0</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#ifndef AI_LUA_SANTITY</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="Types_8h.html#a5b6b45a8aaaa3f7570d23577ebc63324">  106</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define AI_LUA_SANTITY 1</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#   ifdef SIMPLEAI_EXPORT</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#       define SIMPLEAI_LIB __declspec(dllexport)</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#   elif defined(SIMPLEAI_IMPORT)</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#       define SIMPLEAI_LIB __declspec(dllimport)</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#   else</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#       define SIMPLEAI_LIB</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#   endif</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#   define SIMPLEAI_LIB</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="keyword">namespace </span>ai {</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">int</span> CharacterId;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="keyword">typedef</span> std::unordered_map&lt;std::string, std::string&gt; CharacterAttributes;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;}</div>
-<div class="ttc" id="Types_8h_html_adb3840229c4143eb2b8e2fe2d4ee8163"><div class="ttname"><a href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a></div><div class="ttdeci">#define ai_assert(condition,...)</div><div class="ttdoc">Provide your own assert - this is only executed in DEBUG mode. </div><div class="ttdef"><b>Definition:</b> Types.h:75</div></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;assert.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;inttypes.h&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#ifndef ai_log</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="Types_8h.html#a972ad5c272bfbd0af82fdc644919f005">   17</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ai_log(...) ai::Log::info(__VA_ARGS__)</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#ifndef ai_log_error</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="Types_8h.html#ad28c4d09dbf2e7bb44aa8ffd3c83e063">   24</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ai_log_error(...) ai::Log::error(__VA_ARGS__)</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifndef ai_log_warn</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="Types_8h.html#a8a5418f66452a6130754f2313896da1c">   31</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ai_log_warn(...) ai::Log::warn(__VA_ARGS__)</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifndef ai_log_debug</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="Types_8h.html#af243f74139afd922c824ae3166af02b6">   38</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ai_log_debug(...) ai::Log::debug(__VA_ARGS__)</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#ifndef ai_log_trace</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="Types_8h.html#a72a24d8ece9683d088500cece1938d12">   45</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ai_log_trace(...) ai::Log::trace(__VA_ARGS__)</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#if !(__GNUC__ || __GNUC__)</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __PRETTY_FUNCTION__ __FUNCSIG__</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#ifndef ai_assert_always</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #if (__clang_analyzer__)</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor"></span><span class="preprocessor">        #define ai_assert_always(condition, ...) assert(condition)</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #else</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="Types_8h.html#a03102fc7745cf71c4de600d4ddd28a98">   59</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">        #define ai_assert_always(condition, ...) \</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">            if ( !(condition) ) { \</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">                ai_log_error(__VA_ARGS__); \</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">                ai_log_error(&quot;%s:%i&quot;, __FILE__, __LINE__); \</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">                assert(condition); \</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">            }</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #endif</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#ifndef ai_assert</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #ifdef DEBUG</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor"></span><span class="preprocessor">        #define ai_assert ai_assert_always</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #else</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">   76</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">        #define ai_assert(condition, ...)</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #endif</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">class</span> S&gt;</div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="Types_8h.html#a72bf67d0e82d8ba4f5a72e09443389fd">   85</a></span>&#160;<span class="keyword">inline</span> T <a class="code" href="Types_8h.html#a72bf67d0e82d8ba4f5a72e09443389fd">ai_assert_cast</a>(<span class="keyword">const</span> S <span class="keywordtype">object</span>) {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#ifdef __cpp_rtti</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor"></span>    <a class="code" href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a>(dynamic_cast&lt;T&gt;(<span class="keywordtype">object</span>) == static_cast&lt;T&gt;(<span class="keywordtype">object</span>), <span class="stringliteral">&quot;Types don&#39;t match&quot;</span>);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor"></span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(object);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#define AI_STRINGIFY_INTERNAL(x) #x</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define AI_STRINGIFY(x) AI_STRINGIFY_INTERNAL(x)</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#ifndef AI_EXCEPTIONS</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="Types_8h.html#add3429e39431a179b815f7a5289afbee">  100</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define AI_EXCEPTIONS 0</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">#ifndef AI_LUA_SANTITY</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="Types_8h.html#a5b6b45a8aaaa3f7570d23577ebc63324">  107</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define AI_LUA_SANTITY 1</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#   ifdef SIMPLEAI_EXPORT</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#       define SIMPLEAI_LIB __declspec(dllexport)</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#   elif defined(SIMPLEAI_IMPORT)</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#       define SIMPLEAI_LIB __declspec(dllimport)</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#   else</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#       define SIMPLEAI_LIB</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#   endif</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#   define SIMPLEAI_LIB</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keyword">namespace </span>ai {</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">int</span> CharacterId;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">#define PRIChrId PRId32</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="keyword">typedef</span> std::unordered_map&lt;std::string, std::string&gt; CharacterAttributes;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}</div>
+<div class="ttc" id="Types_8h_html_adb3840229c4143eb2b8e2fe2d4ee8163"><div class="ttname"><a href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">ai_assert</a></div><div class="ttdeci">#define ai_assert(condition,...)</div><div class="ttdoc">Provide your own assert - this is only executed in DEBUG mode. </div><div class="ttdef"><b>Definition:</b> Types.h:76</div></div>
 <div class="ttc" id="Log_8h_html"><div class="ttname"><a href="Log_8h.html">Log.h</a></div></div>
-<div class="ttc" id="Types_8h_html_a72bf67d0e82d8ba4f5a72e09443389fd"><div class="ttname"><a href="Types_8h.html#a72bf67d0e82d8ba4f5a72e09443389fd">ai_assert_cast</a></div><div class="ttdeci">T ai_assert_cast(const S object)</div><div class="ttdoc">If you compile with RTTI activated, you get additional sanity checks when using this macro to perform...</div><div class="ttdef"><b>Definition:</b> Types.h:84</div></div>
+<div class="ttc" id="Types_8h_html_a72bf67d0e82d8ba4f5a72e09443389fd"><div class="ttname"><a href="Types_8h.html#a72bf67d0e82d8ba4f5a72e09443389fd">ai_assert_cast</a></div><div class="ttdeci">T ai_assert_cast(const S object)</div><div class="ttdoc">If you compile with RTTI activated, you get additional sanity checks when using this macro to perform...</div><div class="ttdef"><b>Definition:</b> Types.h:85</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
