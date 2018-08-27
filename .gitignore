@@ -57,3 +57,5 @@ CMakeCache.txt
 /simpleai-debugger
 /simpleai-tests
 /build/
+
+/SimpleAI.h

@@ -1,0 +1,8 @@
+{
+	"project": "SimpleAI",
+	"target": "SimpleAI.h",
+	"sources": [
+		"src/ai/SimpleAI.h"
+	],
+	"include_paths": ["src/ai"]
+}

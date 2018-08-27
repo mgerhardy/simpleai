@@ -137,3 +137,6 @@ doc: cmake
 simpleai-run simpleai-debugger simpleai-tests: cmake
 	$(call COMPILE, $@)
 	$(Q)$(VALGRIND_CMD) $(DEBUG_CMD) $(VOGL_CMD) ./$@ $(ARGS)
+
+amalgamate:
+	$(Q)third_party/amalgamate/amalgamate.py -c third_party/amalgamate/config.json -s . --verbose=yes
