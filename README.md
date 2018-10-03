@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/mgerhardy/simpleai.svg?branch=master)](https://travis-ci.org/mgerhardy/simpleai)
 [![Build status](https://ci.appveyor.com/api/projects/status/lo1co9g9xfxft4ui?svg=true)](https://ci.appveyor.com/project/mgerhardy/simpleai)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d549361de7964845984a6e505379ba33)](https://www.codacy.com/app/martin-gerhardy/simpleai?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mgerhardy/simpleai&amp;utm_campaign=Badge_Grade)
+[![Code Quality: Cpp](https://img.shields.io/lgtm/grade/cpp/g/mgerhardy/simpleai.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/mgerhardy/simpleai/context:cpp)
+[![Total Alerts](https://img.shields.io/lgtm/alerts/g/mgerhardy/simpleai.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/mgerhardy/simpleai/alerts)
 
 # Documentation
 
