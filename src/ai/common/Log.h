@@ -3,9 +3,11 @@
  */
 #pragma once
 
-#include <cstdio>
-#include <cstdarg>
-#include <cstring>
+#ifndef SIMPLEAI_SKIP_LOG
+
+#include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
 
 namespace ai {
 namespace Log {
@@ -68,3 +70,4 @@ static inline void error(const char* msg, ...) {
 
 }
 }
+#endif
