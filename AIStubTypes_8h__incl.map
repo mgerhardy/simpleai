@@ -1,14 +1,14 @@
 <map id="/home/travis/build/mgerhardy/simpleai/src/ai/server/AIStubTypes.h" name="/home/travis/build/mgerhardy/simpleai/src/ai/server/AIStubTypes.h">
 <area shape="rect" id="node4" href="$Math_8h.html" title="common/Math.h" alt="" coords="453,109,568,136"/>
 <area shape="rect" id="node5" href="$Types_8h.html" title="Types.h" alt="" coords="1019,483,1088,509"/>
-<area shape="rect" id="node19" href="$TreeNode_8h.html" title="tree/TreeNode.h" alt="" coords="1298,109,1413,136"/>
-<area shape="rect" id="node6" href="$Log_8h.html" title="Log.h" alt="" coords="994,557,1048,584"/>
-<area shape="rect" id="node20" href="$MemoryAllocator_8h.html" title="common/MemoryAllocator.h" alt="" coords="1214,333,1399,360"/>
-<area shape="rect" id="node22" href="$ICondition_8h.html" title="Condition related stuff. " alt="" coords="1511,259,1664,285"/>
-<area shape="rect" id="node34" href="$True_8h.html" title="conditions/True.h" alt="" coords="1344,184,1467,211"/>
-<area shape="rect" id="node24" href="$Thread_8h.html" title="common/Thread.h" alt="" coords="1423,333,1549,360"/>
-<area shape="rect" id="node28" href="$AIFactories_8h.html" title="AIFactories.h" alt="" coords="1771,333,1871,360"/>
-<area shape="rect" id="node29" href="$IAIFactory_8h.html" title="IAIFactory.h" alt="" coords="1825,408,1919,435"/>
-<area shape="rect" id="node31" href="$IFactoryRegistry_8h.html" title="common/IFactoryRegistry.h" alt="" coords="1616,408,1800,435"/>
-<area shape="rect" id="node32" href="$NonCopyable_8h.html" title="common/NonCopyable.h" alt="" coords="1591,483,1757,509"/>
+<area shape="rect" id="node20" href="$TreeNode_8h.html" title="tree/TreeNode.h" alt="" coords="1298,109,1413,136"/>
+<area shape="rect" id="node6" href="$Log_8h.html" title="Log.h" alt="" coords="973,557,1027,584"/>
+<area shape="rect" id="node21" href="$MemoryAllocator_8h.html" title="common/MemoryAllocator.h" alt="" coords="1214,333,1399,360"/>
+<area shape="rect" id="node23" href="$ICondition_8h.html" title="Condition related stuff. " alt="" coords="1511,259,1664,285"/>
+<area shape="rect" id="node35" href="$True_8h.html" title="conditions/True.h" alt="" coords="1344,184,1467,211"/>
+<area shape="rect" id="node25" href="$Thread_8h.html" title="common/Thread.h" alt="" coords="1423,333,1549,360"/>
+<area shape="rect" id="node29" href="$AIFactories_8h.html" title="AIFactories.h" alt="" coords="1771,333,1871,360"/>
+<area shape="rect" id="node30" href="$IAIFactory_8h.html" title="IAIFactory.h" alt="" coords="1825,408,1919,435"/>
+<area shape="rect" id="node32" href="$IFactoryRegistry_8h.html" title="common/IFactoryRegistry.h" alt="" coords="1616,408,1800,435"/>
+<area shape="rect" id="node33" href="$NonCopyable_8h.html" title="common/NonCopyable.h" alt="" coords="1591,483,1757,509"/>
 </map>

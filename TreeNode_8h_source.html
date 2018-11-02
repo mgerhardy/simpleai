@@ -119,9 +119,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;};</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
 <div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="TreeNode_8h.html#aafb7648de47362ff1c6d6922b266bd88">   54</a></span>&#160;<span class="preprocessor">#define NODE_FACTORY(NodeName) \</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">    class Factory: public ITreeNodeFactory { \</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">    class Factory: public ::ai::ITreeNodeFactory { \</span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">    public: \</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">        TreeNodePtr create (const TreeNodeFactoryContext *ctx) const override { \</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">        ::ai::TreeNodePtr create (const ::ai::TreeNodeFactoryContext *ctx) const override { \</span></div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">            return std::make_shared&lt;NodeName&gt;(ctx-&gt;name, ctx-&gt;parameters, ctx-&gt;condition); \</span></div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">        } \</span></div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">    }; \</span></div>
@@ -131,8 +131,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">    }</span></div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="TreeNode_8h.html#a0fcb2656e45428254808415d643360ef">   69</a></span>&#160;<span class="preprocessor">#define NODE_CLASS(NodeName) \</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">    NodeName(const std::string&amp; name, const std::string&amp; parameters, const ConditionPtr&amp; condition) : \</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">        TreeNode(name, parameters, condition) { \</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">    NodeName(const std::string&amp; name, const std::string&amp; parameters, const ::ai::ConditionPtr&amp; condition) : \</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">        ::ai::TreeNode(name, parameters, condition) { \</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">        _type = AI_STRINGIFY(NodeName); \</span></div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">    } \</span></div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">    virtual ~NodeName() { \</span></div>

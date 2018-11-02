@@ -161,8 +161,8 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">NodeName(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> std::string&amp; parameters, <span class="keyword">const</span> ConditionPtr&amp; condition) : \</div>
-<div class="line">        TreeNode(name, parameters, condition) { \</div>
+<b>Value:</b><div class="fragment"><div class="line">NodeName(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> std::string&amp; parameters, const ::ai::ConditionPtr&amp; condition) : \</div>
+<div class="line">        ::ai::TreeNode(name, parameters, condition) { \</div>
 <div class="line">        _type = AI_STRINGIFY(NodeName); \</div>
 <div class="line">    } \</div>
 <div class="line">    virtual ~NodeName() { \</div>
@@ -188,9 +188,9 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">class </span>Factory: <span class="keyword">public</span> ITreeNodeFactory { \</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">class </span>Factory: <span class="keyword">public</span> <a class="code" href="classai_1_1ITreeNodeFactory.html">::ai::ITreeNodeFactory</a> { \</div>
 <div class="line">    public: \</div>
-<div class="line">        TreeNodePtr create (<span class="keyword">const</span> TreeNodeFactoryContext *ctx)<span class="keyword"> const override </span>{ \</div>
+<div class="line">        ::ai::TreeNodePtr create (const ::ai::TreeNodeFactoryContext *ctx)<span class="keyword"> const override </span>{ \</div>
 <div class="line">            return std::make_shared&lt;NodeName&gt;(ctx-&gt;name, ctx-&gt;parameters, ctx-&gt;condition); \</div>
 <div class="line">        } \</div>
 <div class="line">    }; \</div>
@@ -198,6 +198,7 @@ Enumerations</h2></td></tr>
 <div class="line">        static Factory FACTORY; \</div>
 <div class="line">        return FACTORY; \</div>
 <div class="line">    }</div>
+<div class="ttc" id="classai_1_1ITreeNodeFactory_html"><div class="ttname"><a href="classai_1_1ITreeNodeFactory.html">ai::ITreeNodeFactory</a></div><div class="ttdoc">This factory will create tree nodes. It uses the TreeNodeFactoryContext to collect all the needed dat...</div><div class="ttdef"><b>Definition:</b> AIFactories.h:68</div></div>
 </div><!-- fragment -->
 <p>A node factory macro to ease and unify the registration at AIRegistry. </p>
 

@@ -141,12 +141,12 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">FilterName(<span class="keyword">const</span> std::string&amp; parameters, <span class="keyword">const</span> Filters&amp; filters) : \</div>
-<div class="line">        IFilter(#FilterName, parameters), _filters(filters) { <a class="code" href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">\</a></div>
+<b>Value:</b><div class="fragment"><div class="line">FilterName(<span class="keyword">const</span> std::string&amp; parameters, const ::ai::Filters&amp; filters) : \</div>
+<div class="line">        ::ai::IFilter(#FilterName, parameters), _filters(filters) { <a class="code" href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">\</a></div>
 <div class="line"><a class="code" href="Types_8h.html#adb3840229c4143eb2b8e2fe2d4ee8163">		ai_assert</a>(_filters.size() &gt; 1, #FilterName <span class="stringliteral">&quot; must contain at least two sub filters&quot;</span>); \</div>
 <div class="line">    } \</div>
 <div class="line">protected: \</div>
-<div class="line">    const Filters _filters; \</div>
+<div class="line">    const ::ai::Filters _filters; \</div>
 <div class="line">public: \</div>
 <div class="line">    virtual ~FilterName() { \</div>
 <div class="line">    }</div>
@@ -168,9 +168,9 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>: \</div>
-<div class="line">    class Factory: <span class="keyword">public</span> IFilterFactory { \</div>
+<div class="line">    class Factory: public ::ai::IFilterFactory { \</div>
 <div class="line">    public: \</div>
-<div class="line">        FilterPtr create (<span class="keyword">const</span> FilterFactoryContext *ctx)<span class="keyword"> const override </span>{ \</div>
+<div class="line">        ::ai::FilterPtr create (const ::ai::FilterFactoryContext *ctx)<span class="keyword"> const override </span>{ \</div>
 <div class="line">            return std::make_shared&lt;FilterName&gt;(ctx-&gt;parameters, ctx-&gt;filters); \</div>
 <div class="line">        } \</div>
 <div class="line">    }; \</div>
@@ -195,7 +195,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">explicit</span> FilterName(<span class="keyword">const</span> std::string&amp; parameters = <span class="stringliteral">&quot;&quot;</span>) : \</div>
-<div class="line">        IFilter(#FilterName, parameters) { \</div>
+<div class="line">        ::ai::IFilter(#FilterName, parameters) { \</div>
 <div class="line">    } \</div>
 <div class="line">public: \</div>
 <div class="line">    virtual ~FilterName() { \</div>
@@ -219,10 +219,10 @@ Macros</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">private</span>: \</div>
 <div class="line">FILTER_CLASS(FilterName) \</div>
 <div class="line">public: \</div>
-<div class="line">    static FilterPtr&amp; <span class="keyword">get</span>() { \</div>
+<div class="line">    static ::ai::FilterPtr&amp; <span class="keyword">get</span>() { \</div>
 <div class="line">        AI_THREAD_LOCAL FilterName* c = <span class="keyword">nullptr</span>; \</div>
 <div class="line">        if (c == <span class="keyword">nullptr</span>) { c = <span class="keyword">new</span> FilterName; } \</div>
-<div class="line">        AI_THREAD_LOCAL FilterPtr _instance(c); \</div>
+<div class="line">        AI_THREAD_LOCAL ::ai::FilterPtr _instance(c); \</div>
 <div class="line">        return _instance; \</div>
 <div class="line">    } \</div>
 <div class="line">    FILTER_FACTORY_SINGLETON</div>
@@ -243,9 +243,9 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>: \</div>
-<div class="line">    class Factory: <span class="keyword">public</span> IFilterFactory { \</div>
+<div class="line">    class Factory: public ::ai::IFilterFactory { \</div>
 <div class="line">    public: \</div>
-<div class="line">        FilterPtr create (<span class="keyword">const</span> FilterFactoryContext *ctx)<span class="keyword"> const override </span>{ \</div>
+<div class="line">        ::ai::FilterPtr create (const ::ai::FilterFactoryContext *ctx)<span class="keyword"> const override </span>{ \</div>
 <div class="line">            return std::make_shared&lt;FilterName&gt;(ctx-&gt;parameters); \</div>
 <div class="line">        } \</div>
 <div class="line">    }; \</div>
@@ -266,8 +266,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>: \</div>
-<div class="line">    class Factory: <span class="keyword">public</span> IFilterFactory { \</div>
-<div class="line">        FilterPtr create (<span class="keyword">const</span> FilterFactoryContext *<span class="comment">/*ctx*/</span>)<span class="keyword"> const override </span>{ \</div>
+<div class="line">    class Factory: public ::ai::IFilterFactory { \</div>
+<div class="line">        ::ai::FilterPtr create (const ::ai::FilterFactoryContext *<span class="comment">/*ctx*/</span>)<span class="keyword"> const override </span>{ \</div>
 <div class="line">            return <span class="keyword">get</span>(); \</div>
 <div class="line">        } \</div>
 <div class="line">    }; \</div>

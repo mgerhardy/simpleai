@@ -177,7 +177,7 @@ typedef Conditions::const_iterator&#160;</td><td class="memItemRight" valign="bo
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">explicit</span> ConditionName(<span class="keyword">const</span> std::string&amp; parameters = <span class="stringliteral">&quot;&quot;</span>) : \</div>
-<div class="line">        ICondition(#ConditionName, parameters) { \</div>
+<div class="line">        ::ai::ICondition(#ConditionName, parameters) { \</div>
 <div class="line">    } \</div>
 <div class="line">public: \</div>
 <div class="line">    virtual ~ConditionName() { \</div>
@@ -231,9 +231,9 @@ typedef Conditions::const_iterator&#160;</td><td class="memItemRight" valign="bo
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>: \</div>
-<div class="line">    class Factory: <span class="keyword">public</span> IConditionFactory { \</div>
+<div class="line">    class Factory: public ::ai::IConditionFactory { \</div>
 <div class="line">    public: \</div>
-<div class="line">        ConditionPtr create (<span class="keyword">const</span> ConditionFactoryContext *ctx)<span class="keyword"> const override </span>{ \</div>
+<div class="line">        ::ai::ConditionPtr create (const ::ai::ConditionFactoryContext *ctx)<span class="keyword"> const override </span>{ \</div>
 <div class="line">            return std::make_shared&lt;ConditionName&gt;(ctx-&gt;parameters); \</div>
 <div class="line">        } \</div>
 <div class="line">    }; \</div>
@@ -260,9 +260,9 @@ typedef Conditions::const_iterator&#160;</td><td class="memItemRight" valign="bo
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>: \</div>
-<div class="line">    class Factory: <span class="keyword">public</span> IConditionFactory { \</div>
+<div class="line">    class Factory: public ::ai::IConditionFactory { \</div>
 <div class="line">    public: \</div>
-<div class="line">        ConditionPtr create (<span class="keyword">const</span> ConditionFactoryContext *ctx) <span class="keyword">const override</span>; \</div>
+<div class="line">        ::ai::ConditionPtr create (const ::ai::ConditionFactoryContext *ctx) <span class="keyword">const override</span>; \</div>
 <div class="line">    }; \</div>
 <div class="line">    static <span class="keyword">const</span> Factory&amp; getFactory() { \</div>
 <div class="line">        static Factory FACTORY; \</div>
@@ -283,8 +283,8 @@ typedef Conditions::const_iterator&#160;</td><td class="memItemRight" valign="bo
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>: \</div>
-<div class="line">    class Factory: <span class="keyword">public</span> IConditionFactory { \</div>
-<div class="line">        ConditionPtr create (<span class="keyword">const</span> ConditionFactoryContext *<span class="comment">/*ctx*/</span>)<span class="keyword"> const </span>{ \</div>
+<div class="line">    class Factory: public ::ai::IConditionFactory { \</div>
+<div class="line">        ::ai::ConditionPtr create (const ::ai::ConditionFactoryContext *<span class="comment">/*ctx*/</span>)<span class="keyword"> const </span>{ \</div>
 <div class="line">            return <span class="keyword">get</span>(); \</div>
 <div class="line">        } \</div>
 <div class="line">    }; \</div>
@@ -306,10 +306,10 @@ typedef Conditions::const_iterator&#160;</td><td class="memItemRight" valign="bo
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordtype">void</span> getConditionNameWithValue(std::stringstream&amp; s, <span class="keyword">const</span> AIPtr&amp; entity)<span class="keyword"> override </span>{ \</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordtype">void</span> getConditionNameWithValue(std::stringstream&amp; s, const ::ai::AIPtr&amp; entity)<span class="keyword"> override </span>{ \</div>
 <div class="line">        bool first = <span class="keyword">true</span>; \</div>
 <div class="line">        s &lt;&lt; <span class="stringliteral">&quot;(&quot;</span>; \</div>
-<div class="line">        for (ConditionsConstIter i = _conditions.begin(); i != _conditions.end(); ++i) { \</div>
+<div class="line">        for (::ai::ConditionsConstIter i = _conditions.begin(); i != _conditions.end(); ++i) { \</div>
 <div class="line">            if (!first) { \</div>
 <div class="line">                s &lt;&lt; <span class="stringliteral">&quot;,&quot;</span>; \</div>
 <div class="line">            } \</div>

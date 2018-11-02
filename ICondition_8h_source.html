@@ -109,7 +109,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
 <div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="ICondition_8h.html#a52a75a637987f9804e2c814c4e4dd398">   29</a></span>&#160;<span class="preprocessor">#define CONDITION_CLASS(ConditionName) \</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">    explicit ConditionName(const std::string&amp; parameters = &quot;&quot;) : \</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">        ICondition(#ConditionName, parameters) { \</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">        ::ai::ICondition(#ConditionName, parameters) { \</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">    } \</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">public: \</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">    virtual ~ConditionName() { \</span></div>
@@ -117,9 +117,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="ICondition_8h.html#ae203ad42d47cc7c60a5fb2666a6745e2">   41</a></span>&#160;<span class="preprocessor">#define CONDITION_FACTORY_NO_IMPL(ConditionName) \</span></div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">public: \</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">    class Factory: public IConditionFactory { \</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">    class Factory: public ::ai::IConditionFactory { \</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">    public: \</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">        ConditionPtr create (const ConditionFactoryContext *ctx) const override; \</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">        ::ai::ConditionPtr create (const ::ai::ConditionFactoryContext *ctx) const override; \</span></div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">    }; \</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">    static const Factory&amp; getFactory() { \</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">        static Factory FACTORY; \</span></div>
@@ -128,9 +128,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="ICondition_8h.html#a8421b2a7870a3f33182c9780b7a35ac2">   55</a></span>&#160;<span class="preprocessor">#define CONDITION_FACTORY(ConditionName) \</span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">public: \</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">    class Factory: public IConditionFactory { \</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">    class Factory: public ::ai::IConditionFactory { \</span></div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">    public: \</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">        ConditionPtr create (const ConditionFactoryContext *ctx) const override { \</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">        ::ai::ConditionPtr create (const ::ai::ConditionFactoryContext *ctx) const override { \</span></div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">            return std::make_shared&lt;ConditionName&gt;(ctx-&gt;parameters); \</span></div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">        } \</span></div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">    }; \</span></div>
@@ -141,8 +141,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="ICondition_8h.html#a1d470244e0afaa69642bb08db6cd86ee">   73</a></span>&#160;<span class="preprocessor">#define CONDITION_FACTORY_SINGLETON \</span></div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">public: \</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">    class Factory: public IConditionFactory { \</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">        ConditionPtr create (const ConditionFactoryContext *</span><span class="comment">/*ctx*/</span><span class="preprocessor">) const { \</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">    class Factory: public ::ai::IConditionFactory { \</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">        ::ai::ConditionPtr create (const ::ai::ConditionFactoryContext *</span><span class="comment">/*ctx*/</span><span class="preprocessor">) const { \</span></div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">            return get(); \</span></div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">        } \</span></div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">    }; \</span></div>
@@ -164,10 +164,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">    CONDITION_FACTORY_SINGLETON</span></div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#define CONDITION_PRINT_SUBCONDITIONS_GETCONDITIONNAMEWITHVALUE \</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">    void getConditionNameWithValue(std::stringstream&amp; s, const AIPtr&amp; entity) override { \</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">    void getConditionNameWithValue(std::stringstream&amp; s, const ::ai::AIPtr&amp; entity) override { \</span></div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">        bool first = true; \</span></div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">        s &lt;&lt; &quot;(&quot;; \</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">        for (ConditionsConstIter i = _conditions.begin(); i != _conditions.end(); ++i) { \</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">        for (::ai::ConditionsConstIter i = _conditions.begin(); i != _conditions.end(); ++i) { \</span></div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">            if (!first) { \</span></div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">                s &lt;&lt; &quot;,&quot;; \</span></div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">            } \</span></div>
