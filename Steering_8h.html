@@ -151,9 +151,9 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>: \</div>
-<div class="line">    class Factory: <span class="keyword">public</span> ISteeringFactory { \</div>
+<div class="line">    class Factory: public ::ai::ISteeringFactory { \</div>
 <div class="line">    public: \</div>
-<div class="line">        SteeringPtr create (<span class="keyword">const</span> SteeringFactoryContext *ctx)<span class="keyword"> const override </span>{ \</div>
+<div class="line">        ::ai::SteeringPtr create (const ::ai::SteeringFactoryContext *ctx)<span class="keyword"> const override </span>{ \</div>
 <div class="line">            return std::make_shared&lt;SteeringName&gt;(ctx-&gt;parameters); \</div>
 <div class="line">        } \</div>
 <div class="line">    }; \</div>
@@ -174,8 +174,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>: \</div>
-<div class="line">    class Factory: <span class="keyword">public</span> ISteeringFactory { \</div>
-<div class="line">        SteeringPtr create (<span class="keyword">const</span> SteeringFactoryContext *<span class="comment">/*ctx*/</span>)<span class="keyword"> const </span>{ \</div>
+<div class="line">    class Factory: public ::ai::ISteeringFactory { \</div>
+<div class="line">        ::ai::SteeringPtr create (const ::ai::SteeringFactoryContext *<span class="comment">/*ctx*/</span>)<span class="keyword"> const </span>{ \</div>
 <div class="line">            return <span class="keyword">get</span>(); \</div>
 <div class="line">        } \</div>
 <div class="line">    }; \</div>
